@@ -55,8 +55,8 @@
 		6218D0771E4E95FB00299989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6218D0831E4E97EA00299989 /* UserGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGuideViewController.h; path = Administration/UserGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		6218D0841E4E97EA00299989 /* UserGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGuideViewController.m; path = Administration/UserGuideViewController.m; sourceTree = SOURCE_ROOT; };
-		6218D0861E4E990400299989 /* MainAryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainAryViewController.h; path = ../MainAryViewController.h; sourceTree = "<group>"; };
-		6218D0871E4E990400299989 /* MainAryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainAryViewController.m; path = ../MainAryViewController.m; sourceTree = "<group>"; };
+		6218D0861E4E990400299989 /* MainAryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainAryViewController.h; path = ../../MainAryViewController.h; sourceTree = "<group>"; };
+		6218D0871E4E990400299989 /* MainAryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainAryViewController.m; path = ../../MainAryViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,14 +107,14 @@
 		6218D04F1E4E95FB00299989 /* Administration */ = {
 			isa = PBXGroup;
 			children = (
+				6218D0931E4EB9B900299989 /* Find */,
+				6218D0921E4EB4D000299989 /* LoginRegisterView */,
 				6218D0911E4E9B0F00299989 /* Intercalate */,
 				6218D0901E4E9AE200299989 /* Contacts */,
 				6218D08B1E4E99AE00299989 /* MainAry */,
 				6218D08F1E4E9A3900299989 /* UserGuide */,
 				6218D0531E4E95FB00299989 /* AppDelegate.h */,
 				6218D0541E4E95FB00299989 /* AppDelegate.m */,
-				6218D0861E4E990400299989 /* MainAryViewController.h */,
-				6218D0871E4E990400299989 /* MainAryViewController.m */,
 				6218D0561E4E95FB00299989 /* ViewController.h */,
 				6218D0571E4E95FB00299989 /* ViewController.m */,
 				6218D0591E4E95FB00299989 /* Main.storyboard */,
@@ -155,6 +155,8 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				6218D0861E4E990400299989 /* MainAryViewController.h */,
+				6218D0871E4E990400299989 /* MainAryViewController.m */,
 			);
 			path = MainAry;
 			sourceTree = "<group>";
@@ -180,6 +182,20 @@
 			children = (
 			);
 			path = Intercalate;
+			sourceTree = "<group>";
+		};
+		6218D0921E4EB4D000299989 /* LoginRegisterView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoginRegisterView;
+			sourceTree = "<group>";
+		};
+		6218D0931E4EB9B900299989 /* Find */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Find;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -551,6 +567,7 @@
 				6218D07C1E4E95FB00299989 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6218D07D1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "AdministrationTests" */ = {
 			isa = XCConfigurationList;
@@ -559,6 +576,7 @@
 				6218D07F1E4E95FB00299989 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6218D0801E4E95FB00299989 /* Build configuration list for PBXNativeTarget "AdministrationUITests" */ = {
 			isa = XCConfigurationList;
@@ -567,6 +585,7 @@
 				6218D0821E4E95FB00299989 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
