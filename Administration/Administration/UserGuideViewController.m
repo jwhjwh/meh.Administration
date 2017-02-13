@@ -1,7 +1,7 @@
 //
 //  UserGuideViewController.m
 //  Administration
-//
+//  引导页
 //  Created by 九尾狐 on 2017/2/11.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
@@ -27,28 +27,28 @@
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [scrollView setContentSize:CGSizeMake(self.view.frame.size.width*4, 0)];
     [scrollView setPagingEnabled:YES];  //视图整页显示
-    // [scrollView setBounces:NO]; //避免弹跳效果,避免把根视图露出来
+     [scrollView setBounces:NO]; //避免弹跳效果,避免把根视图露出来
     
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [imageview setImage:[UIImage imageNamed:@"back.jpg"]];
+    [imageview setImage:[UIImage imageNamed:@"01.jpg"]];
     [scrollView addSubview:imageview];
     [imageview release];
     
     
     UIImageView *imageview1 = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [imageview1 setImage:[UIImage imageNamed:@"1.png"]];
+    [imageview1 setImage:[UIImage imageNamed:@"02.png"]];
     [scrollView addSubview:imageview1];
     [imageview1 release];
     
     
     UIImageView *imageview2 = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width *2, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [imageview2 setImage:[UIImage imageNamed:@"2.png"]];
+    [imageview2 setImage:[UIImage imageNamed:@"03.png"]];
     [scrollView addSubview:imageview2];
     [imageview2 release];
     
     
     UIImageView *imageview3 = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width *3, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [imageview3 setImage:[UIImage imageNamed:@"3.png"]];
+    [imageview3 setImage:[UIImage imageNamed:@"04.png"]];
     imageview3.userInteractionEnabled = YES;    //打开imageview3的用户交互;否则下面的button无法响应
     [scrollView addSubview:imageview3];
     [imageview3 release];
