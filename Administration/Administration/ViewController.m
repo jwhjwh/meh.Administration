@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     NSLog(@"dsfsdfds");
-    NSString *st ;
+    NSString *st =@"13233";
     
 }
 
