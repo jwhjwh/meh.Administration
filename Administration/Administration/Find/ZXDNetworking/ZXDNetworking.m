@@ -7,6 +7,7 @@
 //
 
 #import "ZXDNetworking.h"
+#import <CommonCrypto/CommonCrypto.h>
 #ifdef DEBUG
 #define PPLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
@@ -85,5 +86,24 @@ static ZXDNetworking *zxdworking=nil;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     
     return manager;
+}
++(NSString *)encryptStringWithMD5:(NSString *)inputStr{
+    
+    const char *fooData = [inputStr UTF8String];
+    
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    
+    CC_MD5(fooData,(unsigned int)strlen(fooData),result);
+    
+    NSMutableString *saveResult = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH];
+    
+    for(int i = 0;i<CC_MD5_DIGEST_LENGTH;i++){
+        
+        [saveResult appendFormat:@"%02X",result[i]];//注意：这边如果是x则输出32位小写加密字符串，如果是X则输出32位大写字符串
+        
+    }
+    
+    return saveResult;
+    
 }
 @end

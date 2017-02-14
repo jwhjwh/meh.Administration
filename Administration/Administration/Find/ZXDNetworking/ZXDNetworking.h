@@ -17,6 +17,7 @@ typedef void(^Failure)(NSError *error);
  *  声明单例方法
  */
 +(instancetype)shareManager;
++(NSString *)encryptStringWithMD5:(NSString *)inputStr;
 /**
  *  封装的GET请求
  *
