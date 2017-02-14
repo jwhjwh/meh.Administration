@@ -18,7 +18,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor redColor];
-    
     [self initGuide];   //加载新用户指导页面
     // Do any additional setup after loading the view.
 }
@@ -26,6 +25,10 @@
 {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [scrollView setContentSize:CGSizeMake(self.view.frame.size.width*4, 0)];
+    
+    
+    [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏scrollview的滚动条
+
     [scrollView setPagingEnabled:YES];  //视图整页显示
      [scrollView setBounces:NO]; //避免弹跳效果,避免把根视图露出来
     
@@ -55,9 +58,26 @@
     
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];//在imageview3上加载一个透明的button
-    [button setTitle:nil forState:UIControlStateNormal];
-    button.backgroundColor = [UIColor greenColor];
-    [button setFrame:CGRectMake(self.view.frame.size.width-100, self.view.frame.size.height-50, 100, 50)];
+    [button setTitle:@"登陆" forState:UIControlStateNormal];
+    button.tintColor = [UIColor whiteColor];
+    [button.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    
+    [button.layer setCornerRadius:10];
+    
+    [button.layer setBorderWidth:2];//设置边界的宽度
+    
+    
+    
+    //设置按钮的边界颜色
+    
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    
+    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){255,255,255,1});
+    
+    [button.layer setBorderColor:color];
+    
+    
+    [button setFrame:CGRectMake(self.view.frame.size.width/2-50, self.view.frame.size.height-150, 100, 50)];
     [button addTarget:self action:@selector(firstpressed) forControlEvents:UIControlEventTouchUpInside];
     [imageview3 addSubview:button];
     

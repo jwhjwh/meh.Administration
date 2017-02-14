@@ -21,10 +21,6 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     NSLog(@"dsfsdfds");
-    NSString *st =@"1354654875";
-
-    NSArray *ar;
-
     //asfhioenmtsdhoig
 
 }
