@@ -11,8 +11,21 @@
 
 
 #import "ViewController.h"
-#import "MainAryViewController.h"
-#import "UserGuideViewController.h"
+
+#import "MainViewController.h" //首页
+
+#import "IntercalateController.h"//设置
+
+#import "ContactsController.h" //联系人
+
+#import "UserGuideViewController.h"//引导页
+
+#import "XCQ_tabbarViewController.h"//tabbar
+
+
+
+
+
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

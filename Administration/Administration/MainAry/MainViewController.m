@@ -1,18 +1,18 @@
 //
-//  MainAryViewController.m
+//  MainViewController.m
 //  Administration
-//  首页
-//  Created by 九尾狐 on 2017/2/11.
+//
+//  Created by 九尾狐 on 2017/2/14.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "MainAryViewController.h"
+#import "MainViewController.h"
 
-@interface MainAryViewController ()
+@interface MainViewController ()
 
 @end
 
-@implementation MainAryViewController
+@implementation MainViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

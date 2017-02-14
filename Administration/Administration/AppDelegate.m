@@ -20,7 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
@@ -29,36 +29,43 @@
         //如果是第一次启动的话,使用UserGuideViewController (用户引导页面) 作为根视图
         UserGuideViewController *userGuideViewController = [[UserGuideViewController alloc] init];
         self.window.rootViewController = userGuideViewController;
-        [userGuideViewController release];
+        //[userGuideViewController release];
     }
-    else
-    {
-        NSLog(@"不是第一次启动");
-        //如果不是第一次启动的话,使用LoginViewController作为根视图
-        ViewController *VC = [[ViewController alloc] init];
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        NSString *name = [userDefault objectForKey:@"name"];
-        if (name == nil){
-            self.window.rootViewController = VC;
-            [VC release];
-            
-        }
+//    else
+//    {
+//        NSLog(@"不是第一次启动");
+//        //如果不是第一次启动的话,使用LoginViewController作为根视图
+//        ViewController *VC = [[ViewController alloc] init];
+//        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//        NSString *name = [userDefault objectForKey:@"name"];
+//        if (name == nil){
+//            self.window.rootViewController = VC;
+//            [VC release];
+//            
+//        }
         else{
             
-            ViewController *VC = [[ViewController alloc] init];
-            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-            NSString *name = [userDefault objectForKey:@"name"];
-            NSLog(@"账号是:%@",name);
-            MainAryViewController *Main = [[MainAryViewController alloc]init];
-            self.window.rootViewController = Main;
+//            ViewController *VC = [[ViewController alloc] init];
+//            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//            NSString *name = [userDefault objectForKey:@"name"];
+//            NSLog(@"账号是:%@",name);
+            NSArray *selectedArr = @[@"ic_c_backetball",@"ic_c_eat",@"ic_c_leaf"]  ;
+            NSArray *unSeleceArr = @[@"ic_c_backetball_gray",@"ic_c_eat_gray",@"ic_c_leaf_gray"] ;
+            NSArray *titleArr = @[@"篮球",@"美食",@"叶子"] ;
             
+            
+            XCQ_tabbarViewController *xcq_tab = [[XCQ_tabbarViewController alloc]initWithNomarImageArr:unSeleceArr
+                                                                                     andSelectImageArr:selectedArr
+                                                                                           andtitleArr:titleArr];
+            xcq_tab.modalTransitionStyle =UIModalTransitionStyleCrossDissolve ;
+            
+            self.window.rootViewController = xcq_tab ;
             
         }
         
-    }
+   // }
     
-    
-    
+
     self.window.backgroundColor = [UIColor whiteColor];
     
     [self.window makeKeyAndVisible];
