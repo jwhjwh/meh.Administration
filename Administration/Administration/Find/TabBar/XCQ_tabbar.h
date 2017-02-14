@@ -4,7 +4,7 @@
     自定义tabbar 上的按钮，可以定义选中和非选中的图片与标题
  **/
 
-#define XCQRandColor [UIColor colorWithRed:arc4random()%256/255.0 green:arc4random()%256/255.0 blue:arc4random()%256/255.0 alpha:arc4random()%256/255.0]
+
 
 @interface XCQ_tabbar : UIView
 //未选中图片

@@ -455,6 +455,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F803F421E52D964005F53CE /* HDSingleton */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = HDSingleton;
+			path = ../HDSingleton;
+			sourceTree = "<group>";
+		};
 		6218D0441E4E95FA00299989 = {
 			isa = PBXGroup;
 			children = (
@@ -588,6 +596,7 @@
 		62656B3E1E5295D00085A2BD /* AFNetworking3.0 */ = {
 			isa = PBXGroup;
 			children = (
+				1F803F421E52D964005F53CE /* HDSingleton */,
 				62656B3F1E5295D00085A2BD /* AFNetworking */,
 				62656B4D1E5295D00085A2BD /* LICENSE */,
 				62656B4E1E5295D00085A2BD /* README.md */,

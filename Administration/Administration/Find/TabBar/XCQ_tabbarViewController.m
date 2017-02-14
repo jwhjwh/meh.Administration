@@ -114,9 +114,7 @@
         ContactsController *ContactsVC= [[ContactsController alloc]init];
        
         
-        MainVC.view.backgroundColor = XCQRandColor ;
-        IntercalateVC.view.backgroundColor = XCQRandColor ;
-        ContactsVC.view.backgroundColor = XCQRandColor ;
+    
         
         
         NSArray *VCArr =@[MainVC,ContactsVC,IntercalateVC] ;
@@ -127,7 +125,7 @@
         for (NSInteger i = 0; i < 3; i++)
         {
             UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:VCArr[i]];
-            navi.navigationBar.barTintColor = [UIColor orangeColor];
+            navi.navigationBar.barTintColor = [UIColor colorWithRed:155/256.0 green:89/256.0 blue:183/256.0 alpha:1];
             navi.edgesForExtendedLayout = UIRectEdgeNone ;
             navi.navigationController.navigationBar.translucent = NO ;
             

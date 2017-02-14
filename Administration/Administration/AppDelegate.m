@@ -29,7 +29,7 @@
         //如果是第一次启动的话,使用UserGuideViewController (用户引导页面) 作为根视图
         UserGuideViewController *userGuideViewController = [[UserGuideViewController alloc] init];
         self.window.rootViewController = userGuideViewController;
-        //[userGuideViewController release];
+        [userGuideViewController release];
     }
 //    else
 //    {
