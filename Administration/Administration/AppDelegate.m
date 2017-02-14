@@ -49,9 +49,9 @@
 //            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
 //            NSString *name = [userDefault objectForKey:@"name"];
 //            NSLog(@"账号是:%@",name);
-            NSArray *selectedArr = @[@"ic_c_backetball",@"ic_c_eat",@"ic_c_leaf"]  ;
-            NSArray *unSeleceArr = @[@"ic_c_backetball_gray",@"ic_c_eat_gray",@"ic_c_leaf_gray"] ;
-            NSArray *titleArr = @[@"篮球",@"美食",@"叶子"] ;
+            NSArray *selectedArr = @[@"zihome",@"zilianxiren",@"zishezhi"]  ;
+            NSArray *unSeleceArr = @[@"huihome",@"huilianxiren",@"huishezhi"] ;
+            NSArray *titleArr = @[@"首页",@"联系人",@"设置"] ;
             
             
             XCQ_tabbarViewController *xcq_tab = [[XCQ_tabbarViewController alloc]initWithNomarImageArr:unSeleceArr
