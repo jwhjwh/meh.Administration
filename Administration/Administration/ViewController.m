@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+
 @interface ViewController ()<UITextFieldDelegate>
 @property (strong,nonatomic) UITextField *PassText;//密码
 @property (strong,nonatomic) UITextField *valiText;//识别码
@@ -29,8 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    self.view.backgroundColor = [UIColor redColor];
-//
+
 
     
     UIImageView *customBackgournd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj01"]];
