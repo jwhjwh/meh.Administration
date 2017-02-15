@@ -32,6 +32,7 @@
     UIImageView *customBackgournd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj01"]];
     
     [self.view addSubview:customBackgournd];
+    
     [customBackgournd  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
@@ -51,7 +52,8 @@
 //    }];
     // Do any additional setup after loading the view, typically from a nib.
     
-    //asfhioenmtsdhoig
+    
+    
     [self logIng];
 }
 -(void)logIng{
