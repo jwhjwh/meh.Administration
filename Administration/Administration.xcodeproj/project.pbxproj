@@ -32,6 +32,9 @@
 		6218D06B1E4E95FB00299989 /* AdministrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D06A1E4E95FB00299989 /* AdministrationTests.m */; };
 		6218D0761E4E95FB00299989 /* AdministrationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0751E4E95FB00299989 /* AdministrationUITests.m */; };
 		6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0841E4E97EA00299989 /* UserGuideViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
+		62345B461E53F4FA001760F8 /* bj01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B431E53F4FA001760F8 /* bj01@2x.png */; };
+		62345B471E53F4FA001760F8 /* bj01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B441E53F4FA001760F8 /* bj01@3x.png */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -130,7 +133,6 @@
 		62656D501E52B5700085A2BD /* ztgb.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D241E52B5700085A2BD /* ztgb.png */; };
 		62656D511E52B5700085A2BD /* ztkq.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D251E52B5700085A2BD /* ztkq.png */; };
 		62656D521E52B5700085A2BD /* denglutioao.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D271E52B5700085A2BD /* denglutioao.png */; };
-		62656D531E52B5700085A2BD /* shibniema.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D281E52B5700085A2BD /* shibniema.png */; };
 		62656D541E52B5700085A2BD /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D291E52B5700085A2BD /* touxiang.png */; };
 		62656D551E52B5700085A2BD /* yonghumima.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D2A1E52B5700085A2BD /* yonghumima.png */; };
 		62656D561E52B5700085A2BD /* yonghuming.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D2B1E52B5700085A2BD /* yonghuming.png */; };
@@ -154,6 +156,7 @@
 		62656D6D1E52D29D0085A2BD /* 02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D691E52D29D0085A2BD /* 02.png */; };
 		62656D6E1E52D29D0085A2BD /* 03.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D6A1E52D29D0085A2BD /* 03.png */; };
 		62656D6F1E52D29D0085A2BD /* 04.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D6B1E52D29D0085A2BD /* 04.png */; };
+		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +230,9 @@
 		6218D0771E4E95FB00299989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6218D0831E4E97EA00299989 /* UserGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGuideViewController.h; path = Administration/UserGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		6218D0841E4E97EA00299989 /* UserGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGuideViewController.m; path = Administration/UserGuideViewController.m; sourceTree = SOURCE_ROOT; };
+		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
+		62345B431E53F4FA001760F8 /* bj01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@2x.png"; sourceTree = "<group>"; };
+		62345B441E53F4FA001760F8 /* bj01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@3x.png"; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -406,7 +412,6 @@
 		62656D241E52B5700085A2BD /* ztgb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ztgb.png; sourceTree = "<group>"; };
 		62656D251E52B5700085A2BD /* ztkq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ztkq.png; sourceTree = "<group>"; };
 		62656D271E52B5700085A2BD /* denglutioao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = denglutioao.png; sourceTree = "<group>"; };
-		62656D281E52B5700085A2BD /* shibniema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibniema.png; sourceTree = "<group>"; };
 		62656D291E52B5700085A2BD /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
 		62656D2A1E52B5700085A2BD /* yonghumima.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yonghumima.png; sourceTree = "<group>"; };
 		62656D2B1E52B5700085A2BD /* yonghuming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yonghuming.png; sourceTree = "<group>"; };
@@ -430,6 +435,7 @@
 		62656D691E52D29D0085A2BD /* 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 02.png; sourceTree = "<group>"; };
 		62656D6A1E52D29D0085A2BD /* 03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03.png; sourceTree = "<group>"; };
 		62656D6B1E52D29D0085A2BD /* 04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 04.png; sourceTree = "<group>"; };
+		6287AA1F1E543802004F6387 /* shibiema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibiema.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -648,6 +654,16 @@
 				62656B751E5295D70085A2BD /* Masonry */,
 			);
 			path = Find;
+			sourceTree = "<group>";
+		};
+		62345B411E53F4FA001760F8 /* background */ = {
+			isa = PBXGroup;
+			children = (
+				62345B421E53F4FA001760F8 /* bj01@1x.png */,
+				62345B431E53F4FA001760F8 /* bj01@2x.png */,
+				62345B441E53F4FA001760F8 /* bj01@3x.png */,
+			);
+			path = background;
 			sourceTree = "<group>";
 		};
 		62656B751E5295D70085A2BD /* Masonry */ = {
@@ -1010,8 +1026,9 @@
 		62656D261E52B5700085A2BD /* Log */ = {
 			isa = PBXGroup;
 			children = (
+				62345B411E53F4FA001760F8 /* background */,
 				62656D271E52B5700085A2BD /* denglutioao.png */,
-				62656D281E52B5700085A2BD /* shibniema.png */,
+				6287AA1F1E543802004F6387 /* shibiema.png */,
 				62656D291E52B5700085A2BD /* touxiang.png */,
 				62656D2A1E52B5700085A2BD /* yonghumima.png */,
 				62656D2B1E52B5700085A2BD /* yonghuming.png */,
@@ -1171,10 +1188,10 @@
 				62656D461E52B5700085A2BD /* jiantou_03.png in Resources */,
 				62656D591E52B5700085A2BD /* dianpugenzong.png in Resources */,
 				62656D511E52B5700085A2BD /* ztkq.png in Resources */,
+				62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */,
 				62656D561E52B5700085A2BD /* yonghuming.png in Resources */,
 				6218D0601E4E95FB00299989 /* LaunchScreen.storyboard in Resources */,
 				62656D521E52B5700085A2BD /* denglutioao.png in Resources */,
-				62656D531E52B5700085A2BD /* shibniema.png in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
 				62656D491E52B5700085A2BD /* xinbanben.png in Resources */,
@@ -1190,6 +1207,7 @@
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62656D451E52B5700085A2BD /* gunyubangzhu.png in Resources */,
+				62345B471E53F4FA001760F8 /* bj01@3x.png in Resources */,
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62656C5D1E529BC10085A2BD /* IQKeyboardManager.bundle in Resources */,
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,
@@ -1198,10 +1216,12 @@
 				62656D3F1E52B5700085A2BD /* shichang.png in Resources */,
 				62656D5A1E52B5700085A2BD /* gongsigonggao.png in Resources */,
 				62656D4F1E52B5700085A2BD /* zhanghaoguanli.png in Resources */,
+				62345B461E53F4FA001760F8 /* bj01@2x.png in Resources */,
 				62656D3E1E52B5700085A2BD /* neiqin.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxianguanl.png in Resources */,
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
+				6287AA201E543802004F6387 /* shibiema.png in Resources */,
 				62656D4E1E52B5700085A2BD /* zhanghaoanquan.png in Resources */,
 				62656D4D1E52B5700085A2BD /* yuanhuan_03.png in Resources */,
 				62656D5D1E52B5700085A2BD /* laba.png in Resources */,
