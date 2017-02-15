@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
+#import "NoticeView.h"
 #define MenuH 160
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///
@@ -19,6 +20,8 @@
 @property (nonatomic,retain)UILabel *numberLabel;
 ///轮播图
 @property (nonatomic, strong) XLsn0wLoop *loop;
+///
+@property (nonatomic, strong) NoticeView *noticeView ;
 ///
 @property(nonatomic,strong)UITableView *tableView;
 ///
@@ -45,9 +48,7 @@
 
 -(void)naveigtionAddSubView{
     self.title=@"首页";
-    //[self.navigationController setNavigationBarHidden:YES animated:YES];
-    //创建一个高20的假状态栏背景
-    self.view.backgroundColor=[UIColor redColor];
+    
     _logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(12,4,36,36)];
 //    _logoImage.layer.masksToBounds = YES;
 //    // 设置圆角半径
@@ -89,12 +90,17 @@
 
 - (void)addLoop {
     
-    self.loop = [[XLsn0wLoop alloc] initWithFrame:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, 240)];
+    self.loop = [[XLsn0wLoop alloc] initWithFrame:CGRectMake(0,64, [UIScreen mainScreen].bounds.size.width, 200)];
     [self.view addSubview:self.loop];
-    _tableView=[[UITableView alloc]initWithFrame:CGRectMake(0,self.loop.frame.size.height,Scree_width,MenuH) style:UITableViewStylePlain];
+    _tableView=[[UITableView alloc]initWithFrame:CGRectMake(0,self.loop.bottom,Scree_width,MenuH) style:UITableViewStylePlain];
+    _tableView.scrollEnabled =NO; //设置tableview 不能滚动
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;//去掉下滑线
     _tableView.delegate=self;
     _tableView.dataSource=self;
     [self.view addSubview:_tableView];
+    
+    _noticeView=[[NoticeView alloc]initWithFrame:CGRectMake(15, self.loop.bottom+MenuH+10, Scree_width-30, 80)];
+    [self.view addSubview:_noticeView];
     self.loop.xlsn0wDelegate = self;
     self.loop.time = 2;
     [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];

@@ -22,9 +22,13 @@
 }
 #pragma mark 初始化控件
 - (void)initSubView {
-    
+    [self.layer setMasksToBounds:YES];
+    [self.layer setCornerRadius:12.5];
+    //        self.idLabel.backgroundColor = [UIColor colorWithRed:43/256.0 green:180/256.0 blue:183/256.0 alpha:1];
+    self.layer.borderWidth = 1.0;
+    self.layer.borderColor =[UIColor RGBNav].CGColor;
     _TopLineView = [[ZYJHeadLineView alloc]initWithFrame:CGRectMake(0, 0, kMidViewWidth, kMidViewHeight)];
-    _TopLineView.center = CGPointMake(Scree_width/2.0, Scree_height/2.0-150);
+    _TopLineView.center = CGPointMake(self.frame.size.width/2.0, self.frame.size.height/2.0);
     _TopLineView.backgroundColor = [UIColor whiteColor];
     __weak __typeof(self)weakSelf = self;
     _TopLineView.clickBlock = ^(NSInteger index){

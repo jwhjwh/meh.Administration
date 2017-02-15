@@ -32,18 +32,18 @@
         self.window.rootViewController = userGuideViewController;
         [userGuideViewController release];
     }
-    else
-    {
-        NSLog(@"不是第一次启动");
-        //如果不是第一次启动的话,使用LoginViewController作为根视图
-        ViewController *VC = [[ViewController alloc] init];
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        NSString *name = [userDefault objectForKey:@"name"];
-        if (name == nil){
-            self.window.rootViewController = VC;
-            [VC release];
-            
-        }
+//    else
+//    {
+//        NSLog(@"不是第一次启动");
+//        //如果不是第一次启动的话,使用LoginViewController作为根视图
+//        ViewController *VC = [[ViewController alloc] init];
+//        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//        NSString *name = [userDefault objectForKey:@"name"];
+//        if (name == nil){
+//            self.window.rootViewController = VC;
+//            [VC release];
+//            
+//        }
         else{
             
 //            ViewController *VC = [[ViewController alloc] init];
@@ -64,7 +64,7 @@
             
         }
         
-    }
+//    }
     
 
     self.window.backgroundColor = [UIColor whiteColor];
