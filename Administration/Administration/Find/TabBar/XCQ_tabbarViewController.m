@@ -125,17 +125,18 @@
         for (NSInteger i = 0; i < 3; i++)
         {
             UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:VCArr[i]];
-            navi.navigationBar.barTintColor = [UIColor colorWithRed:155/256.0 green:89/256.0 blue:183/256.0 alpha:1];
+            navi.navigationBar.barTintColor = [UIColor RGBNav];
             navi.edgesForExtendedLayout = UIRectEdgeNone ;
             navi.navigationController.navigationBar.translucent = NO ;
             
-            // 导航栏字体的颜色
-            [navi.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor blackColor]}];
+                       // 导航栏字体的颜色
+            [navi.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17],NSForegroundColorAttributeName:[UIColor whiteColor]}];
             
             navi.tabBarItem.image = [UIImage imageNamed:nomarImageArr[i]];
             navi.tabBarItem.selectedImage = [UIImage imageNamed:selectImageArr[i]];
+           
             navi.tabBarItem.title = titleArr[i];
-            navi.modalTransitionStyle = UIModalTransitionStyleCrossDissolve ;
+            navi.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             [viewControllers addObject:navi];
         }
         self.viewControllers = viewControllers;

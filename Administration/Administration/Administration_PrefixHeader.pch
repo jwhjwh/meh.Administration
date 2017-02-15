@@ -28,8 +28,11 @@
 
 #define USER_DEFAULTS [NSUserDefaults standardUserDefaults]
 #define FILE_MANAGER  [NSFileManager defaultManager]
-#define KURLHeader @"http://api.hbkmjb.com/Business"
-#define KURLImageUrl @"http://api.hbkmjb.com/"
+#define RGBNav  colorWithRed:155/256.0 green:89/256.0 blue:183/256.0 alpha:1
+#define Scree_width  [[UIScreen mainScreen] bounds].size.width
+#define Scree_height  [[UIScreen mainScreen] bounds].size.height
+#define KURLHeader @"http://192.168.1.129:8080"
+#define KURLImageUrl @""
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
