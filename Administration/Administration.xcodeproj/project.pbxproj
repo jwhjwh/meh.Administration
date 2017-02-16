@@ -31,6 +31,9 @@
 		1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FDE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m */; };
 		1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FE01E52F7CA005F53CE /* UIWebView+AFNetworking.m */; };
 		1F803FF31E52F848005F53CE /* ZXDNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FF21E52F848005F53CE /* ZXDNetworking.m */; };
+		62004CBB1E553D7100F73C2C /* ss_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 62004CBA1E553D7100F73C2C /* ss_ico.png */; };
+		62004CC01E554B8A00F73C2C /* ZJLXRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62004CBE1E554B8A00F73C2C /* ZJLXRTableViewCell.m */; };
+		62004CC11E554B8A00F73C2C /* ZJLXRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62004CBF1E554B8A00F73C2C /* ZJLXRTableViewCell.xib */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6218D0581E4E95FB00299989 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0571E4E95FB00299989 /* ViewController.m */; };
@@ -119,8 +122,6 @@
 		62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656CF81E52AFDE0085A2BD /* MainViewController.m */; };
 		62656D3E1E52B5700085A2BD /* neiqin.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D111E52B5700085A2BD /* neiqin.png */; };
 		62656D3F1E52B5700085A2BD /* shichang.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D121E52B5700085A2BD /* shichang.png */; };
-		62656D401E52B5700085A2BD /* sosuokuang.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D131E52B5700085A2BD /* sosuokuang.png */; };
-		62656D411E52B5700085A2BD /* susuo.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D141E52B5700085A2BD /* susuo.png */; };
 		62656D421E52B5700085A2BD /* wuliu.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D151E52B5700085A2BD /* wuliu.png */; };
 		62656D431E52B5700085A2BD /* yewu.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D161E52B5700085A2BD /* yewu.png */; };
 		62656D441E52B5700085A2BD /* dingwei.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D181E52B5700085A2BD /* dingwei.png */; };
@@ -232,6 +233,10 @@
 		1F803FE01E52F7CA005F53CE /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		1F803FF11E52F848005F53CE /* ZXDNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDNetworking.h; sourceTree = "<group>"; };
 		1F803FF21E52F848005F53CE /* ZXDNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDNetworking.m; sourceTree = "<group>"; };
+		62004CBA1E553D7100F73C2C /* ss_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ss_ico.png; sourceTree = "<group>"; };
+		62004CBD1E554B8A00F73C2C /* ZJLXRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJLXRTableViewCell.h; sourceTree = "<group>"; };
+		62004CBE1E554B8A00F73C2C /* ZJLXRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJLXRTableViewCell.m; sourceTree = "<group>"; };
+		62004CBF1E554B8A00F73C2C /* ZJLXRTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLXRTableViewCell.xib; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -409,8 +414,6 @@
 		62656CF81E52AFDE0085A2BD /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		62656D111E52B5700085A2BD /* neiqin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = neiqin.png; sourceTree = "<group>"; };
 		62656D121E52B5700085A2BD /* shichang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shichang.png; sourceTree = "<group>"; };
-		62656D131E52B5700085A2BD /* sosuokuang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sosuokuang.png; sourceTree = "<group>"; };
-		62656D141E52B5700085A2BD /* susuo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = susuo.png; sourceTree = "<group>"; };
 		62656D151E52B5700085A2BD /* wuliu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wuliu.png; sourceTree = "<group>"; };
 		62656D161E52B5700085A2BD /* yewu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yewu.png; sourceTree = "<group>"; };
 		62656D181E52B5700085A2BD /* dingwei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingwei.png; sourceTree = "<group>"; };
@@ -672,6 +675,9 @@
 			children = (
 				62656CE41E52AB2E0085A2BD /* ContactsController.h */,
 				62656CE51E52AB2E0085A2BD /* ContactsController.m */,
+				62004CBD1E554B8A00F73C2C /* ZJLXRTableViewCell.h */,
+				62004CBE1E554B8A00F73C2C /* ZJLXRTableViewCell.m */,
+				62004CBF1E554B8A00F73C2C /* ZJLXRTableViewCell.xib */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -1037,10 +1043,9 @@
 		62656D101E52B5700085A2BD /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				62004CBA1E553D7100F73C2C /* ss_ico.png */,
 				62656D111E52B5700085A2BD /* neiqin.png */,
 				62656D121E52B5700085A2BD /* shichang.png */,
-				62656D131E52B5700085A2BD /* sosuokuang.png */,
-				62656D141E52B5700085A2BD /* susuo.png */,
 				62656D151E52B5700085A2BD /* wuliu.png */,
 				62656D161E52B5700085A2BD /* yewu.png */,
 			);
@@ -1252,7 +1257,6 @@
 				1F6E31411E543CE1006069ED /* menuData.plist in Resources */,
 				62656D491E52B5700085A2BD /* xinbanben.png in Resources */,
 				62656D541E52B5700085A2BD /* touxiang.png in Resources */,
-				62656D401E52B5700085A2BD /* sosuokuang.png in Resources */,
 				62656D5F1E52B5700085A2BD /* xulie.png in Resources */,
 				62656D551E52B5700085A2BD /* yonghumima.png in Resources */,
 				62656D441E52B5700085A2BD /* dingwei.png in Resources */,
@@ -1263,6 +1267,10 @@
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62656D451E52B5700085A2BD /* gunyubangzhu.png in Resources */,
+
+				62004CC11E554B8A00F73C2C /* ZJLXRTableViewCell.xib in Resources */,
+				62345B471E53F4FA001760F8 /* bj01@3x.png in Resources */,
+
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62656C5D1E529BC10085A2BD /* IQKeyboardManager.bundle in Resources */,
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,
@@ -1273,13 +1281,13 @@
 				62656D4F1E52B5700085A2BD /* zhanghaoguanli.png in Resources */,
 				62656D3E1E52B5700085A2BD /* neiqin.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
+				62004CBB1E553D7100F73C2C /* ss_ico.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxianguanl.png in Resources */,
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
 				62656D4E1E52B5700085A2BD /* zhanghaoanquan.png in Resources */,
 				62656D4D1E52B5700085A2BD /* yuanhuan_03.png in Resources */,
 				62656D5D1E52B5700085A2BD /* laba.png in Resources */,
-				62656D411E52B5700085A2BD /* susuo.png in Resources */,
 				62656D6E1E52D29D0085A2BD /* 03.png in Resources */,
 				62656D421E52B5700085A2BD /* wuliu.png in Resources */,
 				62656BD41E5295DC0085A2BD /* MJRefresh.bundle in Resources */,
@@ -1393,6 +1401,7 @@
 				62656BD81E5295DC0085A2BD /* UIView+MJExtension.m in Sources */,
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
+				62004CC01E554B8A00F73C2C /* ZJLXRTableViewCell.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,

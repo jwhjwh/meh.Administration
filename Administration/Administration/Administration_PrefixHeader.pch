@@ -20,6 +20,8 @@
 
 #import "UserGuideViewController.h"//引导页
 
+#import "ZJLXRTableViewCell.h"//联系人列表
+
 #import "XCQ_tabbarViewController.h"//tabbar
 
 #import "AFNetworking.h"

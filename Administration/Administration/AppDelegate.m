@@ -44,6 +44,7 @@
 //            [VC release];
 //            
 //        }
+    
         else{
             
 //            ViewController *VC = [[ViewController alloc] init];
@@ -64,7 +65,11 @@
             
         }
         
+
+    //}
+
 //    }
+
     
 
     self.window.backgroundColor = [UIColor whiteColor];
