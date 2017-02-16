@@ -12,6 +12,8 @@
 #define kMidViewWidth   250
 #define kMidViewHeight  50
 @interface NoticeView : UIView
+@property (nonatomic,retain)UILabel *label;
+@property (nonatomic,retain)UIImageView *image;
 @property(nonatomic,strong)NSMutableArray*dataArr;
 @property (nonatomic,strong) ZYJHeadLineView *TopLineView;
 @end

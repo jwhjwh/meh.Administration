@@ -12,19 +12,19 @@
 #import "NoticeView.h"
 #define MenuH 160
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
-///
+///头像
 @property (nonatomic,retain)UIImageView *logoImage;
-///
+///消息按钮
 @property (nonatomic,retain)UIButton *masgeButton;
-///
+///消息数量
 @property (nonatomic,retain)UILabel *numberLabel;
 ///轮播图
 @property (nonatomic, strong) XLsn0wLoop *loop;
-///
+///公告
 @property (nonatomic, strong) NoticeView *noticeView ;
-///
+///主题
 @property(nonatomic,strong)UITableView *tableView;
-///
+///主题数组设置
 @property(nonatomic,strong)NSMutableArray *menuArray;
 @end
 
@@ -89,18 +89,20 @@
 }
 
 - (void)addLoop {
-    
-    self.loop = [[XLsn0wLoop alloc] initWithFrame:CGRectMake(0,64, [UIScreen mainScreen].bounds.size.width, 200)];
+    //轮播图
+    self.loop = [[XLsn0wLoop alloc] init];
     [self.view addSubview:self.loop];
-    _tableView=[[UITableView alloc]initWithFrame:CGRectMake(0,self.loop.bottom,Scree_width,MenuH) style:UITableViewStylePlain];
-    _tableView.scrollEnabled =NO; //设置tableview 不能滚动
+    //主题内容
+    _tableView=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+       _tableView.scrollEnabled =NO; //设置tableview 不能滚动
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;//去掉下滑线
     _tableView.delegate=self;
     _tableView.dataSource=self;
     [self.view addSubview:_tableView];
-    
+    //公告
     _noticeView=[[NoticeView alloc]initWithFrame:CGRectMake(15, self.loop.bottom+MenuH+10, Scree_width-30, 80)];
     [self.view addSubview:_noticeView];
+    
     self.loop.xlsn0wDelegate = self;
     self.loop.time = 2;
     [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];
@@ -110,9 +112,24 @@
                              @"http://tpic.home.news.cn/xhCloudNewsPic/xhpic1501/M07/1B/9C/wKhTlVeRvImESafHAAAAAGHVmt8775.gif",
                              @"http://www.pp3.cn/uploads/201606/2016060401.jpg"];
     
-    
-    
-    
+    [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        make.height.equalTo(self.view.mas_height).multipliedBy(1/4.f);    }];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.loop.mas_bottom);
+        make.height.mas_equalTo(MenuH);
+    }];
+    [self.noticeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left).offset(12);
+        make.right.mas_equalTo(self.view.mas_right).offset(-12);
+        make.top.mas_equalTo(self.tableView.mas_bottom).offset(10);
+        make.height.equalTo(self.view.mas_height).multipliedBy(1/10.f);
+    }];
+  
 }
 
 

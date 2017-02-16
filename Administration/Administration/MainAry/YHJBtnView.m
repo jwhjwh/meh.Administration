@@ -32,7 +32,7 @@
             UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, imageTopH+imageWidth,frameWidth, imageWidth/2)];
             titleLabel.text=title;
             titleLabel.textAlignment=NSTextAlignmentCenter;
-            titleLabel.font=[UIFont systemFontOfSize:15];
+            titleLabel.font=[UIFont systemFontOfSize:12];
             [self addSubview:titleLabel];
         }
     }

@@ -41,8 +41,6 @@
 		6218D0761E4E95FB00299989 /* AdministrationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0751E4E95FB00299989 /* AdministrationUITests.m */; };
 		6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0841E4E97EA00299989 /* UserGuideViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
-		62345B461E53F4FA001760F8 /* bj01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B431E53F4FA001760F8 /* bj01@2x.png */; };
-		62345B471E53F4FA001760F8 /* bj01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B441E53F4FA001760F8 /* bj01@3x.png */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -253,8 +251,6 @@
 		6218D0831E4E97EA00299989 /* UserGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGuideViewController.h; path = Administration/UserGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		6218D0841E4E97EA00299989 /* UserGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGuideViewController.m; path = Administration/UserGuideViewController.m; sourceTree = SOURCE_ROOT; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
-		62345B431E53F4FA001760F8 /* bj01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@2x.png"; sourceTree = "<group>"; };
-		62345B441E53F4FA001760F8 /* bj01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@3x.png"; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -720,8 +716,6 @@
 			isa = PBXGroup;
 			children = (
 				62345B421E53F4FA001760F8 /* bj01@1x.png */,
-				62345B431E53F4FA001760F8 /* bj01@2x.png */,
-				62345B441E53F4FA001760F8 /* bj01@3x.png */,
 			);
 			path = background;
 			sourceTree = "<group>";
@@ -1269,7 +1263,6 @@
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62656D451E52B5700085A2BD /* gunyubangzhu.png in Resources */,
-				62345B471E53F4FA001760F8 /* bj01@3x.png in Resources */,
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62656C5D1E529BC10085A2BD /* IQKeyboardManager.bundle in Resources */,
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,
@@ -1278,7 +1271,6 @@
 				62656D3F1E52B5700085A2BD /* shichang.png in Resources */,
 				62656D5A1E52B5700085A2BD /* gongsigonggao.png in Resources */,
 				62656D4F1E52B5700085A2BD /* zhanghaoguanli.png in Resources */,
-				62345B461E53F4FA001760F8 /* bj01@2x.png in Resources */,
 				62656D3E1E52B5700085A2BD /* neiqin.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxianguanl.png in Resources */,

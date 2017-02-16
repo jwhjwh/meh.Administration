@@ -33,17 +33,11 @@
 
 
     
-    UIImageView *customBackgournd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj01"]];
-   
- 
+    UIImageView *customBackgournd = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Scree_width,Scree_height)];
+    customBackgournd.image=[UIImage imageNamed:@"bj01@1x"];
     [self.view addSubview:customBackgournd];
     
-    [customBackgournd  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(0);
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.right.equalTo(self.view.mas_right).offset(0);
-        make.bottom.equalTo(self.view.mas_bottom).offset(0);
-    }];
+  
 //    NSString * token = [USER_DEFAULTS valueForKey:@"token"];
 //    NSString *urlStr =[NSString stringWithFormat:@"%@/Goods/getGoodsLack",KURLHeader];
 //    NSDictionary *info=@{@"token":token};
