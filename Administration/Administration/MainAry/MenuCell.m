@@ -15,13 +15,13 @@
 
 @property(nonatomic,strong)UIView *secondVC;
 
-@property(nonatomic,strong)UIPageControl *pageControl;
+//@property(nonatomic,strong)UIPageControl *pageControl;
 
 @end
 
 #define MenuH 160
 #define Num 1
-#define pageH 20
+#define pageH 0
 @implementation MenuCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier menuArray:(NSMutableArray *)menuArray
@@ -33,6 +33,8 @@
         UIScrollView *scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,Scree_width,MenuH+pageH)];
         scrollView.contentSize=CGSizeMake(Num*Scree_width,MenuH+pageH);
         scrollView.pagingEnabled=YES;
+        //禁止滑动
+        //scrollView.alwaysBounceVertical = NO;
         scrollView.delegate=self;
         scrollView.showsHorizontalScrollIndicator=NO;
         [scrollView addSubview:_firstVC];
@@ -85,12 +87,12 @@
                 [btnView addGestureRecognizer:tap];
             }
         }
-        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(Scree_width/2-pageH,MenuH,0,pageH)];
-        _pageControl.currentPage=0;
-        _pageControl.numberOfPages=Num;
-        [self addSubview:_pageControl];
-     [_pageControl setCurrentPageIndicatorTintColor:[UIColor redColor]];
-        [_pageControl setPageIndicatorTintColor:[UIColor grayColor]];
+//        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(Scree_width/2-pageH,MenuH,0,pageH)];
+//        _pageControl.currentPage=0;
+//        _pageControl.numberOfPages=Num;
+//        [self addSubview:_pageControl];
+//     [_pageControl setCurrentPageIndicatorTintColor:[UIColor redColor]];
+//        [_pageControl setPageIndicatorTintColor:[UIColor grayColor]];
     }
     return self;
 }
@@ -106,7 +108,13 @@
     CGFloat scrollViewW = scrollView.frame.size.width;
     CGFloat x = scrollView.contentOffset.x;
     int page = (x + scrollViewW/2)/scrollViewW;
-    _pageControl.currentPage = page;
+//    _pageControl.currentPage = page;
+    
+    
+    
+    
+    
+    
 //    int page=(scrollView.contentOffset.x+scrollView.frame.size.width/2)/scrollView.frame.size.width;
 //    _pageControl.currentPage=page;
     

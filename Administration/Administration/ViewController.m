@@ -30,8 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    self.view.backgroundColor = [UIColor redColor];
-//
+
 
     
     UIImageView *customBackgournd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj01"]];

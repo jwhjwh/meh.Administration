@@ -164,6 +164,7 @@
 		62656D6E1E52D29D0085A2BD /* 03.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D6A1E52D29D0085A2BD /* 03.png */; };
 		62656D6F1E52D29D0085A2BD /* 04.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D6B1E52D29D0085A2BD /* 04.png */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
+		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -455,6 +456,8 @@
 		62656D6A1E52D29D0085A2BD /* 03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03.png; sourceTree = "<group>"; };
 		62656D6B1E52D29D0085A2BD /* 04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 04.png; sourceTree = "<group>"; };
 		6287AA1F1E543802004F6387 /* shibiema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibiema.png; sourceTree = "<group>"; };
+		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
+		F711583D1E548ED400E0B763 /* UIView+WLFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WLFrame.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -696,6 +699,7 @@
 		6218D0931E4EB9B900299989 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				F711583B1E548E9D00E0B763 /* UIview+WLFrame */,
 				1F6E312F1E5425F6006069ED /* XLsn0wLoop */,
 				1F803FF01E52F848005F53CE /* ZXDNetworking */,
 				1F803FBE1E52F7CA005F53CE /* AFNetworking */,
@@ -1124,6 +1128,15 @@
 			path = guide;
 			sourceTree = "<group>";
 		};
+		F711583B1E548E9D00E0B763 /* UIview+WLFrame */ = {
+			isa = PBXGroup;
+			children = (
+				F711583C1E548ED400E0B763 /* UIView+WLFrame.h */,
+				F711583D1E548ED400E0B763 /* UIView+WLFrame.m */,
+			);
+			path = "UIview+WLFrame";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1371,6 +1384,7 @@
 				1F6E31461E5448FB006069ED /* NoticeView.m in Sources */,
 				1F803FE41E52F7CA005F53CE /* AFURLRequestSerialization.m in Sources */,
 				1F803FEB1E52F7CA005F53CE /* UIButton+AFNetworking.m in Sources */,
+				F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */,
 				62656BCC1E5295DB0085A2BD /* MJRefreshAutoNormalFooter.m in Sources */,
 				62656BCE1E5295DB0085A2BD /* MJRefreshBackGifFooter.m in Sources */,
 				1F803FE71E52F7CA005F53CE /* AFAutoPurgingImageCache.m in Sources */,
