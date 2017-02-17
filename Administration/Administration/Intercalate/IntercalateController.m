@@ -7,18 +7,14 @@
 //
 
 #import "IntercalateController.h"
-#define MAINLABEL_TAG 1
-#define SECONDLABEL_TAG 2
-#define PHOTO_TAG 3
-
+#import "ManagementViewController.h"
 @interface IntercalateController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
 }
-@property (strong,nonatomic) UITableView *InterTable;
-@property (strong,nonatomic) UITableViewCell *InterCell;
-@property (strong,nonatomic) NSArray *InterImageAry;
+
 @property (strong,nonatomic) NSArray *InterNameAry;
+@property (nonatomic, strong) NSMutableArray *InterImageAry;
 
 
 @end
@@ -29,13 +25,26 @@
     [super viewDidLoad];
     self.title=@"设置";
     [self InterTableUI];
+    [self makeData];
+     [self setExtraCellLineHidden:tableview];
     _InterNameAry = [[NSArray alloc]initWithObjects:@"账号管理",@"账号安全",@"定位",@"关于软件与帮助",@"意见反馈",nil];
-    _InterImageAry = [[NSArray alloc]initWithObjects:@"zhanghaoguanli",@"zhanghaoanquan",@"dingwei",@"gunyubangzhu",@"yijianliuyan",nil];
     
+}
+- (void)makeData{
+    self.InterImageAry = [NSMutableArray array];
+    for (int i = 0; i < 5; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Inder%d.png",i]];
+        [self.InterImageAry addObject:image];
+        
+    }
 }
 -(void)InterTableUI
 {
     tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 20,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    tableview.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
+    tableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    tableview.scrollEnabled =NO;
     tableview.dataSource=self;
     tableview.delegate =self;
     [self.view addSubview:tableview];
@@ -49,6 +58,7 @@
 {
     return 5;
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //定义个静态字符串为了防止与其他类的tableivew重复
@@ -57,19 +67,51 @@
     UITableViewCell *cell = [tableview  dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell ==nil)
     {
+        
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.textLabel.text = _InterNameAry[indexPath.row];
     
-    //cell.imageView.image = _InterImageAry[indexPath.row];
-    UIImage *image1 = [UIImage imageNamed:@"zhanghaoguanli"];
-    cell.imageView.image = image1;
+    cell.imageView.image = _InterImageAry[indexPath.row];
     
+    CGSize itemSize = CGSizeMake(23, 23);
+    UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
+    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+    [cell.imageView.image drawInRect:imageRect];
+    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
-    
-    
-    
+    if ([cell.textLabel.text  isEqual: @"账号管理"]) {
+        UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 5, 40, 40)];
+        TXImage.image = [UIImage imageNamed:@"tx23.png"];
+        TXImage.backgroundColor = [UIColor whiteColor];
+        TXImage.layer.masksToBounds = YES;
+        TXImage.layer.cornerRadius = 20.0;//设置圆角
+        [tableview addSubview:TXImage];
+        NSLog(@"加上图片了么");
+
+    };
     return cell;
+    
+}
+-(void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ManagementViewController *MageVC = [[ManagementViewController alloc]init];
+    if (indexPath.row == 0) {
+        [self.navigationController showViewController:MageVC sender:nil];
+    }
     
 }
 - (void)didReceiveMemoryWarning {
@@ -79,6 +121,11 @@
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
 /*
  #pragma mark - Navigation
  
@@ -88,6 +135,9 @@
  // Pass the selected object to the new view controller.
  }
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
 
 @end
