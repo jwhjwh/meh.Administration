@@ -65,7 +65,7 @@
     self.tabBar.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 49, [UIScreen mainScreen].bounds.size.width, 49);
     //    [NSNotificationCenter defaultCenter] postNotificationName:@"KpzTabbarSelectNotification" object:3
     
-    NSLog(@"之前点击的下标为%li",self.selectedIndex);
+   
     
     if (self.currentButton != btn)
     {

@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ZxdObject : NSObject
-
++(void)rootController;
 @end

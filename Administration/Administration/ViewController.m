@@ -15,13 +15,15 @@
 @property (strong,nonatomic) UITextField *valiText;//识别码
 @property (strong,nonatomic) UIImageView *HeadView;//头像
 @property (strong,nonatomic) UIImageView *rentouView;//人头图片
-@property (strong,nonatomic) UIImageView *suoziView;//🔒图片
+@property (strong,nonatomic) UIImageView *suoziView;//图片
 @property (strong,nonatomic) UIImageView *shibieView;//识别码图片
 @property (strong,nonatomic) UIView *view1;//第一条线
 @property (strong,nonatomic) UIView *view2;//第二条线
 @property (strong,nonatomic) UIView *view3;//第三条线
 @property (strong,nonatomic) UIButton *logBtn;//登陆按钮
-
+@property (strong,nonatomic) NSString *nameStr;//第二条线
+@property (strong,nonatomic) NSString *passStr;//第三条线
+@property (strong,nonatomic) NSString *shibieStr;//登陆按钮
 @property (strong,nonatomic) MainViewController *Main;
 @end
 
@@ -44,19 +46,9 @@
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
     }];
   
-//    NSString * token = [USER_DEFAULTS valueForKey:@"token"];
-//    NSString *urlStr =[NSString stringWithFormat:@"%@/Goods/getGoodsLack",KURLHeader];
-//    NSDictionary *info=@{@"token":token};
-//    
-//    NSString *string =[ZXDNetworking encryptStringWithMD5:token];
-//    NSDictionary *dict=@{@"params":string};
-//     [[ZXDNetworking shareManager]POST:urlStr parameters:dict success:^(id responseObject) {
-//        
-//    } failure:^(NSError *error) {
-//        
-//    }];
 
-    // Do any additional setup after loading the view, typically from a nib.
+
+   
     
     
     
@@ -65,7 +57,7 @@
 -(void)logIng{
     //头像
     _HeadView = [[UIImageView alloc]init];
-    [_HeadView setImage:[UIImage imageNamed:@"touxiang.png"]];
+    [_HeadView setImage:[UIImage imageNamed:@"tx100.png"]];
     _HeadView.backgroundColor = [UIColor whiteColor];
     _HeadView.layer.masksToBounds = YES;
     _HeadView.layer.cornerRadius = 50.0;//设置圆角
@@ -104,7 +96,7 @@
     
     //第一条线 188  176 195
     _view1 = [[UIView alloc]init];
-    _view1.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
+    _view1.backgroundColor = [UIColor RGBview];
     [self.view addSubview:_view1];
     [_view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(40);
@@ -112,7 +104,7 @@
         make.right.equalTo(self.view.mas_right).offset(-40);
         make.height.mas_equalTo(2);
     }];
-    //🔒图片
+    //图片
     _suoziView = [[UIImageView alloc]init];
     [_suoziView setImage:[UIImage imageNamed:@"yonghumima"]];
     [self.view addSubview:_suoziView];
@@ -138,7 +130,7 @@
     
     //第二条线
     _view2 = [[UIView alloc]init];
-    _view2.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
+    _view2.backgroundColor = [UIColor RGBview];
     [self.view addSubview:_view2];
     [_view2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_view1.mas_left).offset(0);
@@ -170,7 +162,7 @@
     
     //第三条线
     _view3 = [[UIView alloc]init];
-    _view3.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
+    _view3.backgroundColor = [UIColor RGBview];
     [self.view addSubview:_view3];
     [_view3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_view1.mas_left).offset(0);
@@ -179,13 +171,11 @@
         make.height.mas_equalTo(2);
     }];
     //登陆按钮
-    _logBtn = [[UIButton alloc]init];
-    UIImage *imageBtn = [UIImage imageNamed:@"denglutioao"];
-    // [_logBtn setImage:imageBtn forState:UIControlStateNormal];//背景图片
-    [_logBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    _logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_logBtn setBackgroundImage:[UIImage imageNamed:@"denglutioao"] forState:UIControlStateNormal];
     _logBtn.layer.masksToBounds = YES;
     _logBtn.layer.cornerRadius = 25.0;//设置圆角
-    [_logBtn addTarget:self action:@selector(TouchLog)forControlEvents: UIControlEventTouchDragInside];
+    [_logBtn addTarget:self action:@selector(TouchLog:)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_logBtn];
     [_logBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view3.mas_bottom).offset(40);
@@ -193,20 +183,108 @@
         make.right.mas_equalTo(_view1.mas_right).offset(0);
         make.height.mas_equalTo(60);
     }];
+  [_NameText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+  [_PassText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_valiText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
+
+-(void)textFieldDidChange :(UITextField *)textField{
+    if (textField==_NameText) {
+        _nameStr= textField.text;
+    }else if (textField ==_PassText){
+        _passStr= textField.text;
+
+    }else if (textField==_valiText){
+        _shibieStr= textField.text;
+
+    }
+}
 
 
+
+
+
+
+-(void)TouchLog:(UIButton*)sender{
+
+    if (_nameStr.length==11||_shibieStr!=nil||_passStr!=nil) {
+        
+    }
+    NSString *urlStr =[NSString stringWithFormat:@"%@user/login.action",KURLHeader];
+    NSString *pastr =[ZXDNetworking encryptStringWithMD5:_passStr];
+    NSString *shiStr =[ZXDNetworking encryptStringWithMD5:_shibieStr];
+     NSString *ltokenStr =[NSString stringWithFormat:@"%@%@%@%@",pastr,shiStr, [USER_DEFAULTS  objectForKey:@"Ltoken"],logokey];
+    NSString *ltoken=[ZXDNetworking encryptStringWithMD5:ltokenStr];
+    NSDictionary *info=@{@"mobile":_nameStr,@"ltoken":ltoken,@"password":pastr,@"udid":shiStr,@"appkey":logokey};
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            //APPKey
+            NSString *ApLtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"token"]];
+            //用户ID
+            NSString *userStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"id"]];
+            
+         //  角色
+            NSString * companyinfoid=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleId"]];
+            
+            [USER_DEFAULTS setObject:companyinfoid forKey:@"roleId"];
+            [USER_DEFAULTS setObject:ApLtokenStr forKey:@"token"];
+            [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
+            [ZxdObject rootController];
+        }
+      
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
 }
--(void)TouchLog{
-    //    MainViewController *Main = [[MainViewController alloc]init];
-    //    [Main dismissViewControllerAnimated:YES completion:nil];
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    
+    if (textField==_NameText) {
+        _view1.backgroundColor=[UIColor RGBNav];
+        _view2.backgroundColor = [UIColor RGBview];
+        _view3.backgroundColor = [UIColor RGBview];
+    } else if (textField==_PassText) {
+         _view2.backgroundColor=[UIColor RGBNav];
+        _view1.backgroundColor = [UIColor RGBview];
+        _view3.backgroundColor = [UIColor RGBview];
+    } else {
+         _view3.backgroundColor=[UIColor RGBNav];
+        _view2.backgroundColor = [UIColor RGBview];
+        _view1.backgroundColor = [UIColor RGBview];
+    }
     
 }
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField==_NameText){
+        if (range.location==10) {
+            _nameStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+            NSString *urlStr =[NSString stringWithFormat:@"%@user/queryicon.action",KURLHeader];
+            NSDictionary *info=@{@"mobile":_nameStr};
+            [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+                NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
+                  NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLImageUrl,[responseObject valueForKey:@"images"]];
+            
+                [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"placeholder"]];
+            [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
+            [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
+                
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:NO];
+        }else if (range.location >= 11){
+        return NO;
+        }
+    
+    
+    }
+    return YES;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 

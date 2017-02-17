@@ -19,65 +19,69 @@ static ZXDNetworking *zxdworking=nil;
 /**
  *  声明单例方法
  */
-+(instancetype)shareManager{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-       zxdworking= [[ZXDNetworking alloc]init];
-    
-    });
-    return zxdworking;
-}
-
-+ (instancetype)allocWithZone:(struct _NSZone *)zone {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        zxdworking = [super allocWithZone:zone];
-    });
-    return zxdworking;
-}
-- (void)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure{
-     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//+(instancetype)shareManager{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//       zxdworking= [[ZXDNetworking alloc]init];
+//    
+//    });
+//    return zxdworking;
+//}
+//
+//+ (instancetype)allocWithZone:(struct _NSZone *)zone {
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        zxdworking = [super allocWithZone:zone];
+//    });
+//    return zxdworking;
+//}
++ (void)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure view:(UIView*)view MBPro:(BOOL)MBPor{
+    if (MBPor==YES) {
+        [MBProgressHUD showHUDAddedTo:view animated:YES];
+    }
+  
      AFHTTPSessionManager *manager = [self createAFHTTPSessionManager];
     [manager GET:URLString parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        [MBProgressHUD hideHUDForView: view animated:NO];
         success(responseObject);
-        PPLog(@"responseObject = %@",responseObject);
-
+        PPLog(@"responseObject ++++= %@",responseObject);
+       
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        [MBProgressHUD hideHUDForView: view animated:NO];
         
         failure ? failure(error) : nil;
-        PPLog(@"error = %@",error);
+        PPLog(@"error ----= %@",error);
     }];
 }
 
 
-- (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure view:(UIView*)view{
-    // [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
++(void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure view:(UIView*)view{
+  
      [MBProgressHUD showHUDAddedTo:view animated:YES];
      AFHTTPSessionManager *manager = [self createAFHTTPSessionManager];
     [manager POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-      //  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [MBProgressHUD hideHUDForView: view animated:YES];
+      
+        [MBProgressHUD hideHUDForView: view animated:NO];
 
         success(responseObject);
-        PPLog(@"responseObject = %@",responseObject);
+        PPLog(@"responseObject --=++ %@",responseObject);
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
+        [MBProgressHUD hideHUDForView: view animated:NO];
         failure ? failure(error) : nil;
-        PPLog(@"error = %@",error);
+        PPLog(@"error =+++++++88 %@",error);
     }];
 }
 
 #pragma mark - 设置AFHTTPSessionManager相关属性
 
--(AFHTTPSessionManager *)createAFHTTPSessionManager
++(AFHTTPSessionManager *)createAFHTTPSessionManager
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //设置请求参数的类型:HTTP (AFJSONRequestSerializer,AFHTTPRequestSerializer)
@@ -93,21 +97,37 @@ static ZXDNetworking *zxdworking=nil;
 }
 +(NSString *)encryptStringWithMD5:(NSString *)inputStr{
     
-    const char *fooData = [inputStr UTF8String];
-    
+//    const char *fooData = [inputStr UTF8String];
+//    
+//    unsigned char result[CC_MD5_DIGEST_LENGTH];
+//    
+//    CC_MD5(fooData,(unsigned int)strlen(fooData),result);
+//    
+//    NSMutableString *saveResult = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH];
+//    
+//    for(int i = 0;i<CC_MD5_DIGEST_LENGTH;i++){
+//        
+//        [saveResult appendFormat:@"%02X",result[i]];//注意：这边如果是x则输出32位小写加密字符串，如果是X则输出32位大写字符串
+//        
+//    }
+//    
+//    return saveResult;
+    NSString *input=[self substringToIndexString:inputStr];
+    const char *cStr = [input UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(cStr, strlen(cStr), result);
     
-    CC_MD5(fooData,(unsigned int)strlen(fooData),result);
-    
-    NSMutableString *saveResult = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH];
-    
-    for(int i = 0;i<CC_MD5_DIGEST_LENGTH;i++){
-        
-        [saveResult appendFormat:@"%02X",result[i]];//注意：这边如果是x则输出32位小写加密字符串，如果是X则输出32位大写字符串
-        
-    }
-    
-    return saveResult;
+    return [[NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+             result[0], result[1], result[2], result[3],
+             result[4], result[5], result[6], result[7],
+             result[8], result[9], result[10], result[11],
+             result[12], result[13], result[14], result[15]
+             ] lowercaseString];
     
 }
++(NSString*)substringToIndexString:(NSString*)string{
+   return  [string stringByAppendingString:[string substringToIndex:5]];
+}
+
+
 @end

@@ -32,43 +32,29 @@
         self.window.rootViewController = userGuideViewController;
         [userGuideViewController release];
     }
-//    else
-//    {
-//        NSLog(@"不是第一次启动");
-//        //如果不是第一次启动的话,使用LoginViewController作为根视图
-//        ViewController *VC = [[ViewController alloc] init];
-//        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-//        NSString *name = [userDefault objectForKey:@"name"];
-//        if (name == nil){
-//            self.window.rootViewController = VC;
-//            [VC release];
-//            
-//        }
+    else
+    {
+        NSLog(@"不是第一次启动");
+        //如果不是第一次启动的话,使用LoginViewController作为根视图
+        ViewController *VC = [[ViewController alloc] init];
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        NSString *name = [userDefault objectForKey:@"name"];
+        if (name == nil){
+            self.window.rootViewController = VC;
+            [VC release];
+            
+        }
     
         else{
             
-//            ViewController *VC = [[ViewController alloc] init];
-//            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-//            NSString *name = [userDefault objectForKey:@"name"];
-//            NSLog(@"账号是:%@",name);
-            NSArray *selectedArr = @[@"zihome",@"zilianxiren",@"zishezhi"]  ;
-            NSArray *unSeleceArr = @[@"huihome",@"huilianxiren",@"huishezhi"] ;
-            NSArray *titleArr = @[@"首页",@"联系人",@"设置"] ;
-            
-            
-            XCQ_tabbarViewController *xcq_tab = [[XCQ_tabbarViewController alloc]initWithNomarImageArr:unSeleceArr
-                                                                                     andSelectImageArr:selectedArr
-                                                                                           andtitleArr:titleArr];
-            xcq_tab.modalTransitionStyle =UIModalTransitionStyleCrossDissolve ;
-            
-            self.window.rootViewController = xcq_tab ;
-            
+
+            [ZxdObject rootController];
+
         }
         
 
-    //}
 
-//    }
+   }
 
     
 

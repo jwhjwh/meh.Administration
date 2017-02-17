@@ -18,6 +18,8 @@ typedef void(^Failure)(NSError *error);
  */
 +(instancetype)shareManager;
 +(NSString *)encryptStringWithMD5:(NSString *)inputStr;
+
++(NSString*)substringToIndexString:(NSString*)string;
 /**
  *  封装的GET请求
  *
@@ -26,7 +28,7 @@ typedef void(^Failure)(NSError *error);
  *  @param success    请求成功回调
  *  @param failure    请求失败回调
  */
-- (void)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure;
++ (void)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure view:(UIView*)view MBPro:(BOOL)MBPor;
 
 /**
  *  封装的POST请求
@@ -36,7 +38,7 @@ typedef void(^Failure)(NSError *error);
  *  @param success    请求成功回调
  *  @param failure    请求失败回调
  */
-- (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure;
++ (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure view:(UIView*)view;
 
 /**
  *  封装POST图片上传(多张图片) // 可扩展成多个别的数据上传如:mp3等

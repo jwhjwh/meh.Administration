@@ -61,7 +61,8 @@
     //设置图形样子
     maskLayer.path = maskPath.CGPath;
     _logoImage.layer.mask = maskLayer;
-    _logoImage.backgroundColor=[UIColor redColor];
+    NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
+    [_logoImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     [self.navigationController.navigationBar addSubview:_logoImage];
     
     _masgeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,14 +78,60 @@
     [_masgeButton addSubview:_numberLabel];
 }
 -(void)initData
-{
-    // 第一种方式 加载plist
-    //    NSString *plistPath=[[NSBundle mainBundle]pathForResource:@"menuData" ofType:@"plist"];
-    //    _menuArray=[[NSMutableArray alloc]initWithContentsOfFile:plistPath];
-    
-    // 第二种方式 加载plist
+{ // 第二种方式 加载plist
     NSString *plistPath=[[NSBundle mainBundle] pathForResource:@"menuData.plist" ofType:nil];
     _menuArray=[[NSMutableArray alloc]initWithContentsOfFile:plistPath];
+    NSString *str = [USER_DEFAULTS objectForKey:@"roleId"];
+    //判断角色的设定主题的现实
+
+    if ([str isEqualToString:@""]) {
+            //内勤人员
+        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+       
+    }else if ([str isEqualToString:@""]) {
+            //业务
+        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
+        
+    }else if ([str isEqualToString:@""]) {
+            //业务经理
+        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",
+                       @"报表管理"];
+       
+    }else if ([str isEqualToString:@""]) {
+        // 老板
+        NSArray *arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",
+                       @"公司公告", @"图片报岗"];
+        
+    }else if ([str isEqualToString:@""]) {
+        // 品牌经理
+        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+        
+    }else if ([str isEqualToString:@""]) {
+        // 物流
+
+        NSArray *arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
+        
+    }
+
+    
+    NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+      NSArray *arr= [responseObject valueForKey:@"logoImg"];
+        NSMutableArray *array=[NSMutableArray array];
+        for (NSDictionary *dic in arr) {
+            NSString *Url= [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"]];
+            [array addObject:Url];
+        }
+        self.loop.imageArray=array;
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
+   
     
 }
 
@@ -106,12 +153,7 @@
     self.loop.xlsn0wDelegate = self;
     self.loop.time = 2;
     [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];
-    //支持gif动态图
-    self.loop.imageArray = @[@"http://i3.hoopchina.com.cn/u/1212/19/386/16355386/2d4f91db_530x.gif",
-                             @"http://pic2015.5442.com/2015/1118/8/18.jpg%21960.jpg",
-                             @"http://tpic.home.news.cn/xhCloudNewsPic/xhpic1501/M07/1B/9C/wKhTlVeRvImESafHAAAAAGHVmt8775.gif",
-                             @"http://www.pp3.cn/uploads/201606/2016060401.jpg"];
-    
+
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);

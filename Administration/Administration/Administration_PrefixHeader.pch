@@ -28,19 +28,21 @@
 #import "ZXDNetworking.h"
 #import "Masonry.h"
 #import "UIView+WLFrame.h"
-
-
+#import "UIImageView+WebCache.h"
+#import "ZxdObject.h"
 #define USER_DEFAULTS [NSUserDefaults standardUserDefaults]
 #define FILE_MANAGER  [NSFileManager defaultManager]
 #define RGBNav  colorWithRed:155/256.0 green:89/256.0 blue:183/256.0 alpha:1
-
+#define RGBview colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1
 #define Scree_width  [[UIScreen mainScreen] bounds].size.width
 #define Scree_height  [[UIScreen mainScreen] bounds].size.height
 
 #define kWidth [UIScreen mainScreen].bounds.size.width / 750
 #define kHeight [UIScreen mainScreen].bounds.size.height / 1334
-#define KURLHeader @"http://192.168.1.129:8080"
-#define KURLImageUrl @""
+#define KURLHeader @"http://192.168.1.129:8080/ReportManagement/"
+#define KURLImageUrl @"http://192.168.1.129:8080/ReportManagement/"
+
+#define logokey @"JWHKJ"
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 

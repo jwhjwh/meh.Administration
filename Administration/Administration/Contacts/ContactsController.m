@@ -34,7 +34,7 @@
 -(void)UIBtn{
     //搜索按钮
     _sousuoBtn = [[UIButton alloc]init];
-    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico"];
+    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
     _sousuoBtn.layer.masksToBounds = YES;
     _sousuoBtn.layer.cornerRadius = 5.0;
@@ -57,7 +57,7 @@
     }
     //分割线
     _view1 = [[UIView alloc]init];
-    _view1.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
+    _view1.backgroundColor = [UIColor RGBview];
     [self.view addSubview:_view1];
     [_view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(0);
@@ -68,7 +68,7 @@
     //最近联系人
     _lxLabel = [[UILabel alloc]init];
     _lxLabel.text= @"最近联系人";
-    _lxLabel.textColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
+    _lxLabel.textColor = [UIColor RGBview];
     _lxLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:_lxLabel];
     [_lxLabel mas_makeConstraints:^(MASConstraintMaker *make) {

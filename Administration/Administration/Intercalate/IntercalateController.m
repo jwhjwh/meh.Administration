@@ -78,9 +78,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-<<<<<<< HEAD
 
-=======
 /*
  #pragma mark - Navigation
  
@@ -90,6 +88,6 @@
  // Pass the selected object to the new view controller.
  }
  */
->>>>>>> 157ab2d1bff474978c15c8ba7101d01d85740451
+
 
 @end
