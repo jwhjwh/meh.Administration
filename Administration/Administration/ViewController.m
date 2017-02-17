@@ -65,7 +65,7 @@
 -(void)logIng{
     //头像
     _HeadView = [[UIImageView alloc]init];
-    [_HeadView setImage:[UIImage imageNamed:@"touxiang.png"]];
+    [_HeadView setImage:[UIImage imageNamed:@"tx100.png"]];
     _HeadView.backgroundColor = [UIColor whiteColor];
     _HeadView.layer.masksToBounds = YES;
     _HeadView.layer.cornerRadius = 50.0;//设置圆角

@@ -12,13 +12,14 @@
 #define Width_Space 20.0f        // 2个按钮之间的横间距
 #define Height_Space 20.0f      // 竖间距
 #define Button_Height 65.0f    // 高
-#define Button_Width 55.0f      // 宽
+#define Button_Width 50.0f      // 宽
 @interface ContactsController ()<UITabBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (strong,nonatomic) UIView *view1;//第一条线
 @property (strong,nonatomic) UILabel * lxLabel;//最近联系人Label
 @property (strong,nonatomic) UITableView *ZJLXTable;//最近联系人列表
 @property (nonatomic,strong)NSMutableArray *dataArray;//数据源
+@property (nonatomic,strong)NSMutableArray *ImageAry;//各部门图片
 
 
 @end
@@ -28,16 +29,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"通讯录";
-    
+    [self makeData];
     [self UIBtn];
+}
+- (void)makeData{
+    self.ImageAry = [NSMutableArray array];
+    for (int i = 0; i < 5; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Inder%d.png",i]];
+        [self.ImageAry addObject:image];
+        
+    }
 }
 -(void)UIBtn{
     //搜索按钮
     _sousuoBtn = [[UIButton alloc]init];
-    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico"];
+    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
     _sousuoBtn.layer.masksToBounds = YES;
-    _sousuoBtn.layer.cornerRadius = 5.0;
+    _sousuoBtn.layer.cornerRadius = 8.0;
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchDragInside];
     [self.view addSubview:_sousuoBtn];
     [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -51,8 +60,11 @@
         NSInteger index = i % 4;
         NSInteger page = i / 4;
         UIButton *aBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        aBt.backgroundColor = [UIColor redColor];
+        aBt.backgroundColor = [UIColor clearColor];
         aBt.frame = CGRectMake(index * (Scree_width/4)+Height_Space, page  * (Button_Height + Height_Space)+Start_Y+70, Button_Width, Button_Height);
+
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Contact%d",i]];
+        [aBt setBackgroundImage:image forState:UIControlStateNormal];
         [self.view addSubview:aBt];
     }
     //分割线
