@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZYJHeadLineModel.h"
+
 #import "ZYJHeadLineView.h"
 #define kMidViewWidth   250
 #define kMidViewHeight  50
 @interface NoticeView : UIView
 @property (nonatomic,retain)UILabel *label;
-@property (nonatomic,retain)UIImageView *image;
-@property(nonatomic,strong)NSMutableArray*dataArr;
+// 喇叭
+@property (nonatomic,retain)UIImageView *hornImage;
+//原点
+@property (nonatomic,retain)UIImageView *fullImage;
+@property(nonatomic,strong)NSMutableArray *dataArr;
 @property (nonatomic,strong) ZYJHeadLineView *TopLineView;
 @end
