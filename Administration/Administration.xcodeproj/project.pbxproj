@@ -1102,15 +1102,15 @@
 		62656D171E52B5700085A2BD /* Intercalate */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
+
 				1F5745681E56F45A00E4A47C /* tx23.png */,
 				62656D181E52B5700085A2BD /* dingwei.png */,
 				62656D191E52B5700085A2BD /* gunyubangzhu.png */,
-=======
+
 				62EBA2391E56A85D00F657DB /* tx23.png */,
 				62656D181E52B5700085A2BD /* Inder2.png */,
 				62656D191E52B5700085A2BD /* Inder3.png */,
->>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
+
 				62656D1A1E52B5700085A2BD /* jiantou_03.png */,
 				62656D1B1E52B5700085A2BD /* tianjia.png */,
 				62656D1C1E52B5700085A2BD /* weixuanzhong.png */,
@@ -1132,11 +1132,11 @@
 			children = (
 				62345B411E53F4FA001760F8 /* background */,
 				62656D271E52B5700085A2BD /* denglutioao.png */,
-<<<<<<< HEAD
+
 				1F5745661E56F45400E4A47C /* tx100.png */,
-=======
+
 				62EBA23D1E56AAF900F657DB /* tx100.png */,
->>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
+
 				6287AA1F1E543802004F6387 /* shibiema.png */,
 				62656D2A1E52B5700085A2BD /* yonghumima.png */,
 				62656D2B1E52B5700085A2BD /* yonghuming.png */,
@@ -1422,11 +1422,11 @@
 				62656D4C1E52B5700085A2BD /* Inder4.png in Resources */,
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
-<<<<<<< HEAD
+
 				62656D451E52B5700085A2BD /* gunyubangzhu.png in Resources */,
-=======
+
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
->>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
+
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62EBA2341E56939300F657DB /* Contact2.png in Resources */,
 				62656C5D1E529BC10085A2BD /* IQKeyboardManager.bundle in Resources */,
@@ -1438,11 +1438,11 @@
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
 				62EBA2361E56939300F657DB /* Contact1.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxianguanl.png in Resources */,
-<<<<<<< HEAD
+
 				1F5745671E56F45400E4A47C /* tx100.png in Resources */,
-=======
+
 				62EBA23E1E56AAF900F657DB /* tx100.png in Resources */,
->>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
+
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
 				1F5208201E5579E7001DE4C2 /* ZJLXRTableViewCell.xib in Resources */,
