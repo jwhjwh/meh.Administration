@@ -36,6 +36,7 @@
 -(void)InterTableUI
 {
     tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 20,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    
     tableview.dataSource=self;
     tableview.delegate =self;
     [self.view addSubview:tableview];
@@ -72,6 +73,18 @@
     return cell;
     
 }
+
+// 隐藏多余cell
+-(void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
