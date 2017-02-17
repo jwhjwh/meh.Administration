@@ -207,9 +207,20 @@
 
 -(void)TouchLog:(UIButton*)sender{
 
-    if (_nameStr.length==11||_shibieStr!=nil||_passStr!=nil) {
+    if (_nameStr==nil||_shibieStr==nil||_passStr==nil) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请将信息填写完整" andInterval:2.0];
+        return;
+    }else if (_passStr==nil){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入密码" andInterval:2.0];
+        return;
+
+      ;
+    }else if (_nameStr==nil){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入电话号码" andInterval:2.0];
+        return;
+    }else{
         
-    }
+
     NSString *urlStr =[NSString stringWithFormat:@"%@user/login.action",KURLHeader];
     NSString *pastr =[ZXDNetworking encryptStringWithMD5:_passStr];
     NSString *shiStr =[ZXDNetworking encryptStringWithMD5:_shibieStr];
@@ -235,7 +246,9 @@
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
+  
     
+  }
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     

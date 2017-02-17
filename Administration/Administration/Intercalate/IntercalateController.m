@@ -121,23 +121,6 @@
 }
 
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-<<<<<<< HEAD
-
-=======
->>>>>>> 3c16d8735add14945ad9c9e4c7feab60242699cd
 
 @end
