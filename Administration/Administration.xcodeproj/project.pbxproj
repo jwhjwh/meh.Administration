@@ -1267,6 +1267,9 @@
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62656D451E52B5700085A2BD /* gunyubangzhu.png in Resources */,
+
+				62004CC11E554B8A00F73C2C /* ZJLXRTableViewCell.xib in Resources */,
+
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62656C5D1E529BC10085A2BD /* IQKeyboardManager.bundle in Resources */,
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,

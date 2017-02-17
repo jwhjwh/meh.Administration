@@ -7,6 +7,7 @@
 //
 
 #import "ZXDNetworking.h"
+#import "MBProgressHUD.h"
 #import <CommonCrypto/CommonCrypto.h>
 #ifdef DEBUG
 #define PPLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
@@ -53,13 +54,16 @@ static ZXDNetworking *zxdworking=nil;
 }
 
 
-- (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure{
-     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+- (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(Success)success failure:(Failure)failure view:(UIView*)view{
+    // [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+     [MBProgressHUD showHUDAddedTo:view animated:YES];
      AFHTTPSessionManager *manager = [self createAFHTTPSessionManager];
     [manager POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+      //  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [MBProgressHUD hideHUDForView: view animated:YES];
+
         success(responseObject);
         PPLog(@"responseObject = %@",responseObject);
 
