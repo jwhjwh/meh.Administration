@@ -1,16 +1,12 @@
 //
 //  WJTextView.m
-<<<<<<< HEAD
+
 //  Administration
 //
 //  Created by 九尾狐 on 2017/2/18.
 //  Copyright © 2017年 九尾狐. All rights reserved.
-=======
-//  WJTextView
-//
-//  Created by 高文杰 on 16/3/1.
-//  Copyright © 2016年 高文杰. All rights reserved.
->>>>>>> 5b3d5cc2bd071d5acdae4e5786719c31c7395774
+
+
 //
 
 #import "WJTextView.h"
@@ -28,11 +24,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-<<<<<<< HEAD
-        
-=======
-   
->>>>>>> 5b3d5cc2bd071d5acdae4e5786719c31c7395774
+
         UILabel *placehoderLabel = [[UILabel alloc]init];
         placehoderLabel.numberOfLines = 0;
         [self addSubview:placehoderLabel];
@@ -80,22 +72,14 @@
 }
 
 - (void)layoutSubviews{
-<<<<<<< HEAD
-    
-=======
-   
->>>>>>> 5b3d5cc2bd071d5acdae4e5786719c31c7395774
+
     [super layoutSubviews];
     CGSize maxSize = CGSizeMake(self.placehoderLabel.frame.size.width-10, MAXFLOAT);
     CGRect LabelFrame = [self.placehoder boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.placehoderLabel.font,NSFontAttributeName, nil] context:nil];
     self.placehoderLabel.frame = CGRectMake(5, 8, self.frame.size.width - 10, LabelFrame.size.height);
     
     CGRect textFrame = [self.text boundingRectWithSize:CGSizeMake(self.frame.size.width-10,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.font,NSFontAttributeName, nil] context:nil];
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 5b3d5cc2bd071d5acdae4e5786719c31c7395774
     
     if (textFrame.size.height > self.frame.size.height && self.isAutoHeight) {
         
