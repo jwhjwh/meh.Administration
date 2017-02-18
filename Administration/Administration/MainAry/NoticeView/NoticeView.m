@@ -7,7 +7,7 @@
 //
 
 #import "NoticeView.h"
-#import "ZYJHeadLineModel.h"
+
 @implementation NoticeView
 
 
@@ -22,7 +22,7 @@
 }
 #pragma mark 初始化控件
 - (void)initSubView {
-    _dataArr=[[NSMutableArray alloc]init];
+  
     [self.layer setMasksToBounds:YES];
     [self.layer setCornerRadius:12.5];
     self.layer.borderWidth = 1.0;
@@ -37,30 +37,50 @@
     
     _fullImage.image=[UIImage imageNamed:@"xulie"];
     [self addSubview:_fullImage];
-    _label=[[UILabel alloc]initWithFrame:CGRectMake(_fullImage.right, 0, 80,20)];
-    _label.text=@"全体员工";
+    _label=[[UILabel alloc]initWithFrame:CGRectMake(_fullImage.right, 0,self.frame.size.width-10,20)];
+   
     _label.font = [UIFont systemFontOfSize:10];
     [self addSubview:_label];
     _TopLineView = [[ZYJHeadLineView alloc]initWithFrame:CGRectMake(_hornImage.right+5, _hornImage.top-1,kMidViewWidth, kMidViewHeight)];
-    __weak __typeof(self)weakSelf = self;
-    _TopLineView.clickBlock = ^(NSInteger index){
-        ZYJHeadLineModel *model = weakSelf.dataArr[index];
-        NSLog(@"%@,%@",model.type,model.title);
-    };
+//    __weak __typeof(self)weakSelf = self;
+//    _TopLineView.clickBlock = ^(NSInteger index){
+//        ZYJHeadLineModel *model = weakSelf.dataArr[index];
+//       
+//    };
     [self addSubview:_TopLineView];
   
-  
-   
-    NSArray *arr1 = @[@"推荐",@"最热",@"最新",@"关注",@"反馈"];
-    NSArray *arr2 = @[@"大降价了啊",@"iPhone7分期",@"这个苹果蛮脆的",@"来尝个香蕉吧",@"越来越香了啊你的秀发"];
-    for (int i=0; i<arr2.count; i++) {
-        ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
-        model.type = arr1[i];
-        model.title = arr2[i];
-        [_dataArr addObject:model];
-    }
-       NSLog(@"dataArr:%@",_dataArr);
-    [_TopLineView setVerticalShowDataArr:_dataArr];
-}
+    NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/getLatest.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"comId":compid};
+    
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        NSDictionary *dic=[responseObject valueForKey:@"adminNotice"];
+        NSString *contStr=[NSString stringWithFormat:@"%@",[dic valueForKey:@"content"]];
+        //通过字符切割成数组
+        NSArray *contArr= [contStr componentsSeparatedByString:@"，"];
+        _label.text=[NSString stringWithFormat:@"%@",[dic valueForKey:@"title"]];
+       
+        _dataArr=[[NSMutableArray alloc]init];
+        
+        for (int i=0; i<contArr.count; i++) {
+            ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
+            model.title = contArr[i];
+            [_dataArr addObject:model];
+        }
+        NSLog(@"%@",_dataArr);
+        [_TopLineView setVerticalShowDataArr:_dataArr];
+        
+        
+    } failure:^(NSError *error) {
+        
+    } view:nil MBPro:YES];
 
+   
+   
+}
+-(void)array:(NSArray*)array title:(NSString *)title {
+    
+}
 @end

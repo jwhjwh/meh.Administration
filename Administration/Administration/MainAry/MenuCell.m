@@ -7,7 +7,7 @@
 //
 
 #import "MenuCell.h"
-
+#import "ZYJHeadLineModel.h"
 
 @interface MenuCell ()<UIScrollViewDelegate>
 
@@ -44,8 +44,9 @@
         for (int i=0;i<menuArray.count;i++) {
             if (i<4) {
                 CGRect frame=CGRectMake(i*Scree_width/4,0,Scree_width/4,MenuH/2);
-                NSString *title=[menuArray[i] objectForKey:@"title"];
-                NSString *imageStr=[menuArray[i] objectForKey:@"image"];
+                ZYJHeadLineModel *model =menuArray[i];
+                NSString *title=model.title;
+                NSString *imageStr=model.type;
             
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
                 btnView.tag=10+i;
@@ -56,8 +57,9 @@
             else if (i<8)
             {
                 CGRect frame=CGRectMake((i-4)*Scree_width/4,MenuH/2,Scree_width/4,MenuH/2);
-                NSString *title=[menuArray[i] objectForKey:@"title"];
-                NSString *imageStr=[menuArray[i] objectForKey:@"image"];
+                ZYJHeadLineModel *model =menuArray[i];
+                NSString *title=model.title;
+                NSString *imageStr=model.type;
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
                 btnView.tag=10+i;
                 [_firstVC addSubview:btnView];
@@ -67,8 +69,9 @@
             else if (i<12)
             {
                 CGRect frame=CGRectMake((i-8)*Scree_width/4,0,Scree_width/4,MenuH/2);
-                NSString *title=[menuArray[i] objectForKey:@"title"];
-                NSString *imageStr=[menuArray[i] objectForKey:@"image"];
+                ZYJHeadLineModel *model =menuArray[i];
+                NSString *title=model.title;
+                NSString *imageStr=model.type;
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
                 btnView.tag=10+i;
                 [_secondVC addSubview:btnView];
@@ -78,8 +81,9 @@
             else
             {
                 CGRect frame=CGRectMake((i-12)*Scree_width/4,MenuH/2,Scree_width/4,MenuH/2);
-                NSString *title=[menuArray[i] objectForKey:@"title"];
-                NSString *imageStr=[menuArray[i] objectForKey:@"image"];
+                ZYJHeadLineModel *model =menuArray[i];
+                NSString *title=model.title;
+                NSString *imageStr=model.type;
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
                 btnView.tag=10+i;
                 [_secondVC addSubview:btnView];

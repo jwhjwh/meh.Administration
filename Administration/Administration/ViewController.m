@@ -190,7 +190,9 @@
 
 -(void)textFieldDidChange :(UITextField *)textField{
     if (textField==_NameText) {
+        
         _nameStr= textField.text;
+       
     }else if (textField ==_PassText){
         _passStr= textField.text;
 
@@ -207,16 +209,19 @@
 
 -(void)TouchLog:(UIButton*)sender{
 
-    if (_nameStr==nil||_shibieStr==nil||_passStr==nil) {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请将信息填写完整" andInterval:2.0];
+    if (_nameStr==nil&& _shibieStr==nil&&_passStr==nil) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请将信息填写完整" andInterval:1.0];
         return;
     }else if (_passStr==nil){
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入密码" andInterval:2.0];
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入密码" andInterval:1.0];
         return;
 
       ;
     }else if (_nameStr==nil){
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入电话号码" andInterval:2.0];
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入电话号码" andInterval:1.0];
+        return;
+    }else if (_shibieStr==nil){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入识别码" andInterval:1.0];
         return;
     }else{
         
@@ -227,6 +232,7 @@
      NSString *ltokenStr =[NSString stringWithFormat:@"%@%@%@%@",pastr,shiStr, [USER_DEFAULTS  objectForKey:@"Ltoken"],logokey];
     NSString *ltoken=[ZXDNetworking encryptStringWithMD5:ltokenStr];
     NSDictionary *info=@{@"mobile":_nameStr,@"ltoken":ltoken,@"password":pastr,@"udid":shiStr,@"appkey":logokey};
+        NSLog(@"%@",info);
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             //APPKey
@@ -235,12 +241,21 @@
             NSString *userStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"id"]];
             
          //  角色
-            NSString * companyinfoid=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleId"]];
-            
-            [USER_DEFAULTS setObject:companyinfoid forKey:@"roleId"];
+            NSString * roleId=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleId"]];
+            //公司ID
+                NSString * companyinfoid=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"companyinfoid"]];
+            //用户名字
+            NSString * name=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"name"]];
+            //用户手机号 phone
+            [USER_DEFAULTS setObject:_nameStr forKey:@"phone"];
+            [USER_DEFAULTS setObject:roleId forKey:@"roleId"];
+            [USER_DEFAULTS setObject:companyinfoid forKey:@"companyinfoid"];
             [USER_DEFAULTS setObject:ApLtokenStr forKey:@"token"];
             [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
+            [USER_DEFAULTS setObject:name forKey:@"name"];
             [ZxdObject rootController];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
         }
       
     } failure:^(NSError *error) {
@@ -278,7 +293,7 @@
                 NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
                   NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLImageUrl,[responseObject valueForKey:@"images"]];
             
-                [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"placeholder"]];
+                [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]];
             [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
             [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
                 

@@ -24,16 +24,6 @@
 
 #import "XCQ_tabbarViewController.h"//tabbar
 
-//------------------------二级界面
-#import "SecurityViewController.h" //账号安全
-#import "ManagementViewController.h"//账号管理
-#import "SearchViewController.h"//人员搜索页
-#import "VersionViewController.h"//版本信息
-#import "OpinionViewController.h"//意见反馈
-#import "PersonnelViewController.h"//联系人->>各部门人员
-#import "PositioningViewController.h"//定位
-
-
 #import "AFNetworking.h"
 #import "ZXDNetworking.h"
 #import "Masonry.h"
@@ -41,6 +31,7 @@
 #import "UIImageView+WebCache.h"
 #import "ZxdObject.h"
 #import "ELNAlerTool.h"
+#import "ZYJHeadLineModel.h"
 #define USER_DEFAULTS [NSUserDefaults standardUserDefaults]
 #define FILE_MANAGER  [NSFileManager defaultManager]
 #define RGBNav  colorWithRed:155/256.0 green:89/256.0 blue:183/256.0 alpha:1

@@ -19,7 +19,6 @@
 @property (strong,nonatomic) UIView *view2;//二条线
 
 
-
 @end
 
 @implementation ManagementViewController
@@ -36,8 +35,6 @@
 
 -(void)ManafementUI{
     
-    
-    
     _view1 = [[UIView alloc]init];
     _view1.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
     [self.view addSubview:_view1];
@@ -50,7 +47,8 @@
     
     
     UIImageView *TXImage = [[UIImageView alloc]init];
-    TXImage.image = [UIImage imageNamed:@"tx23.png"];
+    NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
+    [TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     TXImage.backgroundColor = [UIColor redColor];
     TXImage.layer.masksToBounds = YES;
     TXImage.layer.cornerRadius = 20.0;//设置圆角
@@ -61,7 +59,7 @@
         make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
     _NameLabel = [[UILabel alloc]init];
-    _NameLabel.text = @"流芒";
+    _NameLabel.text =[USER_DEFAULTS  objectForKey:@"name"];
     [self.view addSubview:_NameLabel];
     [_NameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(TXImage.mas_top).offset(0);
@@ -69,9 +67,8 @@
         make.size.mas_equalTo(CGSizeMake(100, 20));
     }];
     _TelLabel = [[UILabel alloc]init];
-    _TelLabel.text = @"18800000088";
+    _TelLabel.text = [USER_DEFAULTS  objectForKey:@"phone"];
     _TelLabel.font = [UIFont boldSystemFontOfSize:10.6f];
-    _TelLabel.textColor = [UIColor RGBview];
     [self.view addSubview:_TelLabel];
     [_TelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_NameLabel.mas_bottom).offset(10);
@@ -129,7 +126,7 @@
     
     if ([cell.textLabel.text  isEqual: @"个人信息"]) {
        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-        NSLog(@"加上箭头了么");
+       
     
     };
     return cell;
@@ -148,7 +145,13 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (indexPath.row==0) {
+        
+    }else{
+        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+        ViewController *VC= [[ViewController alloc]init];
+        [self presentViewController:VC animated:YES completion:nil];
+    }
     
 }
 - (void)didReceiveMemoryWarning {
