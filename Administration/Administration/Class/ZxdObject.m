@@ -12,7 +12,7 @@
 +(void)rootController{
     NSArray *selectedArr = @[@"zihome",@"zilianxiren",@"zishezhi"]  ;
     NSArray *unSeleceArr = @[@"huihome",@"huilianxiren",@"huishezhi"] ;
-    NSArray *titleArr = @[@"首页",@"联系人",@"设置"] ;
+    NSArray *titleArr = @[@"首页",@"通讯录",@"设置"] ;
     XCQ_tabbarViewController *xcq_tab = [[XCQ_tabbarViewController alloc]initWithNomarImageArr:unSeleceArr
                                                                              andSelectImageArr:selectedArr
                                                                                    andtitleArr:titleArr];

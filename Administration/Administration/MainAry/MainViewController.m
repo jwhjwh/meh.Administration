@@ -26,6 +26,11 @@
 @property(nonatomic,strong)UITableView *tableView;
 ///主题数组设置
 @property(nonatomic,strong)NSMutableArray *menuArray;
+//标题名
+@property(nonatomic,strong)NSArray *arr;
+//标题图片
+@property(nonatomic,strong)NSArray *arr1;
+
 @end
 
 @implementation MainViewController
@@ -40,19 +45,17 @@
     }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor=[UIColor whiteColor];
+    [self initData];
     [self naveigtionAddSubView];
     [self addLoop];
-    [self initData];
+    
 }
 
 
 -(void)naveigtionAddSubView{
     self.title=@"首页";
-    
     _logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(12,4,36,36)];
-//    _logoImage.layer.masksToBounds = YES;
-//    // 设置圆角半径
-//    _logoImage.layer.cornerRadius = 18.0f;
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii: _logoImage.bounds.size];
     
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
@@ -61,59 +64,73 @@
     //设置图形样子
     maskLayer.path = maskPath.CGPath;
     _logoImage.layer.mask = maskLayer;
-    NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
+     NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
     [_logoImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     [self.navigationController.navigationBar addSubview:_logoImage];
     
     _masgeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _masgeButton.frame =CGRectMake(Scree_width - 12-36,4,36,36);
     [_masgeButton addTarget:self action:@selector(masgeClick:) forControlEvents:UIControlEventTouchUpInside];
-    _masgeButton.backgroundColor=[UIColor blueColor];
+    [_masgeButton setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
     [self.navigationController.navigationBar addSubview:_masgeButton];
-    _numberLabel=[[UILabel alloc]initWithFrame:CGRectMake(_masgeButton.frame.size.width-6,6, 10, 10)];
+    _numberLabel=[[UILabel alloc]initWithFrame:CGRectMake(_masgeButton.frame.size.width-6,1, 10, 10)];
     _numberLabel.layer.masksToBounds = YES;
     // 设置圆角半径
     _numberLabel.layer.cornerRadius =5.0f;
     _numberLabel.backgroundColor=[UIColor redColor];
     [_masgeButton addSubview:_numberLabel];
+    
 }
 -(void)initData
-{ // 第二种方式 加载plist
-    NSString *plistPath=[[NSBundle mainBundle] pathForResource:@"menuData.plist" ofType:nil];
-    _menuArray=[[NSMutableArray alloc]initWithContentsOfFile:plistPath];
+{
     NSString *str = [USER_DEFAULTS objectForKey:@"roleId"];
     //判断角色的设定主题的现实
 
-    if ([str isEqualToString:@""]) {
+    if ([str isEqualToString:@"3"]) {
             //内勤人员
-        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+        _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
        
-    }else if ([str isEqualToString:@""]) {
+    }else if ([str isEqualToString:@"5"]) {
             //业务
-        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
-        
-    }else if ([str isEqualToString:@""]) {
+       _arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
+         _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi",@"gongsigonggao", @"mobaijilu", @"baogang"];
+    }else if ([str isEqualToString:@"8"]) {
             //业务经理
-        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",
-                       @"报表管理"];
+        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",@"报表管理"];
+        _arr1=@[@"dianpugenzong",@"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"mobaijilu",@"baogang",@"baobiaoguanli"];
        
-    }else if ([str isEqualToString:@""]) {
+    }else if ([str isEqualToString:@"1"]) {
         // 老板
-        NSArray *arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",
-                       @"公司公告", @"图片报岗"];
-        
-    }else if ([str isEqualToString:@""]) {
+        _arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",@"公司公告", @"图片报岗"];
+       _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
+    }else if ([str isEqualToString:@"6"]) {
         // 品牌经理
-        NSArray *arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+       _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
         
-    }else if ([str isEqualToString:@""]) {
+    }else if ([str isEqualToString:@"4"]) {
         // 物流
 
-        NSArray *arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
-        
+        _arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
+    _arr1=@[@"dianpugenzong",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+    }else if ([str isEqualToString:@"7"]){
+        //行政管理员
+        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+        _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+    }else if ([str isEqualToString:@"2"]){
+        //市场美导
+        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+        _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
+    }
+    _menuArray=[NSMutableArray array];
+    for (int i=0; i<_arr1.count; i++) {
+        ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
+        model.type  = _arr1[i];
+        model.title = _arr[i];
+        [_menuArray addObject:model];
     }
 
-    
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -131,13 +148,18 @@
         
     } view:self.view MBPro:YES];
     
+    
    
     
 }
 
+
 - (void)addLoop {
     //轮播图
     self.loop = [[XLsn0wLoop alloc] init];
+    self.loop.xlsn0wDelegate = self;
+    self.loop.time = 2;
+    [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];
     [self.view addSubview:self.loop];
     //主题内容
     _tableView=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -150,9 +172,7 @@
     _noticeView=[[NoticeView alloc]initWithFrame:CGRectMake(15, self.loop.bottom+MenuH+10, Scree_width-30, 80)];
     [self.view addSubview:_noticeView];
     
-    self.loop.xlsn0wDelegate = self;
-    self.loop.time = 2;
-    [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];
+    
 
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);

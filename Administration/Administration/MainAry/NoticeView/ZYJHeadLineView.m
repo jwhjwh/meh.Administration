@@ -56,9 +56,9 @@
 - (void)setVerticalShowDataArr:(NSMutableArray *)dataArr
 {
     _dataArr = dataArr;
-    NSLog(@"dataArr-->%@",dataArr);
+   
     ZYJHeadLineModel *model = _dataArr[count];
-
+   NSLog(@"dataArr-->%@",model.title);
     self.currentLabel.text = model.title;
 
 }
@@ -116,26 +116,26 @@
     
     
     if (flag == 0) {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             self.currentView.frame = CGRectMake(0, -self.frame.size.height, self.frame.size.width, self.frame.size.height);
         } completion:^(BOOL finished) {
             flag = 1;
             self.currentView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.frame.size.height);
         }];
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             self.hidenView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
         } completion:^(BOOL finished) {
             
         }];
     }else{
         
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             self.hidenView.frame = CGRectMake(0, -self.frame.size.height, self.frame.size.width, self.frame.size.height);
         } completion:^(BOOL finished) {
             flag = 0;
             self.hidenView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.frame.size.width);
         }];
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             self.currentView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
         } completion:^(BOOL finished) {
             

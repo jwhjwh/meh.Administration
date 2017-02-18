@@ -22,47 +22,30 @@
     [NSThread sleepForTimeInterval:2.0];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    NSString *token=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"token"]];
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
-        NSLog(@"第一次启动");
+       
         //如果是第一次启动的话,使用UserGuideViewController (用户引导页面) 作为根视图
         UserGuideViewController *userGuideViewController = [[UserGuideViewController alloc] init];
         self.window.rootViewController = userGuideViewController;
         [userGuideViewController release];
     }
-    else
-    {
-        NSLog(@"不是第一次启动");
+    else if(token.length==0){
+      
         //如果不是第一次启动的话,使用LoginViewController作为根视图
         ViewController *VC = [[ViewController alloc] init];
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        NSString *name = [userDefault objectForKey:@"name"];
-        if (name == nil){
-            self.window.rootViewController = VC;
-            [VC release];
-            
-        }
-    
-        else{
-            
-
-            [ZxdObject rootController];
-
-        }
+        self.window.rootViewController = VC;
+       
+    }else{
         
-
-
+        [ZxdObject rootController];
+        
    }
 
-    
-
     self.window.backgroundColor = [UIColor whiteColor];
-    
     [self.window makeKeyAndVisible];
-
-    
     
     return YES;
 }
