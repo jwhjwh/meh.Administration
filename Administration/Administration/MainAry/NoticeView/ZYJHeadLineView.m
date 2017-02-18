@@ -45,8 +45,8 @@
     [self createCurrentView];
     [self createHidenView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dealTap:)];
-    [self addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dealTap:)];
+//    [self addGestureRecognizer:tap];
     //改进
     UILongPressGestureRecognizer*longPress=[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(dealLongPress:)];
     [self addGestureRecognizer:longPress];
@@ -81,10 +81,10 @@
     
     
 }
-- (void)dealTap:(UITapGestureRecognizer *)tap
-{
-    self.clickBlock(count);
-}
+//- (void)dealTap:(UITapGestureRecognizer *)tap
+//{
+//    self.clickBlock(count);
+//}
 
 - (void)createTimer
 {

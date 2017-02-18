@@ -196,6 +196,7 @@ static NSString *cache;
 #pragma mark 设置scrollView的contentSize
 - (void)setScrollViewContentSize {
     if (_images.count > 1) {
+        _scrollView.alwaysBounceVertical = NO;
         self.scrollView.contentSize = CGSizeMake(self.width * 5, 0);
         self.scrollView.contentOffset = CGPointMake(self.width * 2, 0);
         self.currImageView.frame = CGRectMake(self.width * 2, 0, self.width, self.height);
@@ -211,6 +212,7 @@ static NSString *cache;
         
         [self startTimer];
     } else {
+        _scrollView.alwaysBounceVertical = NO;
         //只要一张图片时，scrollview不可滚动，且关闭定时器
         self.scrollView.contentSize = CGSizeZero;
         self.scrollView.contentOffset = CGPointZero;
@@ -314,6 +316,7 @@ static NSString *cache;
     [super layoutSubviews];
     //有导航控制器时，会默认在scrollview上方添加64的内边距，这里强制设置为0
     _scrollView.contentInset = UIEdgeInsetsZero;
+    //禁止滑动
     
     _scrollView.frame = self.bounds;
     _describeLabel.frame = CGRectMake(0, self.height - DES_LABEL_H, self.width, DES_LABEL_H);
