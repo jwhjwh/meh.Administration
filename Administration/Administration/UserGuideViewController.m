@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor redColor];
     [self initGuide];   //加载新用户指导页面
     // Do any additional setup after loading the view.
 }
@@ -33,7 +33,7 @@
      [scrollView setBounces:NO]; //避免弹跳效果,避免把根视图露出来
     
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [imageview setImage:[UIImage imageNamed:@"01.png"]];
+    [imageview setImage:[UIImage imageNamed:@"01.jpg"]];
     [scrollView addSubview:imageview];
     [imageview release];
     

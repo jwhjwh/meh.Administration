@@ -19,7 +19,6 @@
 @property (strong,nonatomic) UIView *view2;//二条线
 
 
-
 @end
 
 @implementation ManagementViewController
@@ -35,8 +34,6 @@
 }
 
 -(void)ManafementUI{
-    
-    
     
     _view1 = [[UIView alloc]init];
     _view1.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
@@ -71,7 +68,6 @@
     _TelLabel = [[UILabel alloc]init];
     _TelLabel.text = @"18800000088";
     _TelLabel.font = [UIFont boldSystemFontOfSize:10.6f];
-    _TelLabel.textColor = [UIColor RGBview];
     [self.view addSubview:_TelLabel];
     [_TelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_NameLabel.mas_bottom).offset(10);

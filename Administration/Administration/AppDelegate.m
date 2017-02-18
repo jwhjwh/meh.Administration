@@ -46,10 +46,14 @@
         }
     
         else{
+            
+
             [ZxdObject rootController];
 
         }
         
+
+
    }
 
     

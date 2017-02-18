@@ -108,40 +108,9 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int a = indexPath.row;
-    switch (a) {
-        case 0:{
-            //账号管理
-            ManagementViewController *MageVC = [[ManagementViewController alloc]init];
-            [self.navigationController showViewController:MageVC sender:nil];
-        }
-            break;
-        case 1:{
-            //账号安全
-            SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
-            [self.navigationController showViewController:SecurtyVC sender:nil];
-        }
-            break;
-        case 2:{
-            //定位
-            PositioningViewController *PositionVC = [[PositioningViewController alloc]init];
-            [self.navigationController showViewController:PositionVC sender:nil];
-        }
-            break;
-        case 3:{
-            //版本信息
-            VersionViewController *VersionVC = [[VersionViewController alloc]init];
-            [self.navigationController showViewController:VersionVC sender:nil];
-        }
-            break;
-        case 4:{
-            //意见反馈
-            OpinionViewController *OpinionVC =[[OpinionViewController alloc]init];
-            [self.navigationController showViewController:OpinionVC sender:nil];
-        }
-            break;
-        default:
-            break;
+    ManagementViewController *MageVC = [[ManagementViewController alloc]init];
+    if (indexPath.row == 0) {
+        [self.navigationController showViewController:MageVC sender:nil];
     }
     
 }
