@@ -1,5 +1,3 @@
-//
-//  WJTextView.m
 
 //  Administration
 //
@@ -7,7 +5,6 @@
 //  Copyright © 2017年 九尾狐. All rights reserved.
 
 
-//
 
 #import "WJTextView.h"
 

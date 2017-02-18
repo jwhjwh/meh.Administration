@@ -60,6 +60,7 @@
     }];
     _NameLabel = [[UILabel alloc]init];
     _NameLabel.text =[USER_DEFAULTS  objectForKey:@"name"];
+    _NameLabel.textColor = [UIColor blackColor];
     [self.view addSubview:_NameLabel];
     [_NameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(TXImage.mas_top).offset(0);
@@ -68,6 +69,7 @@
     }];
     _TelLabel = [[UILabel alloc]init];
     _TelLabel.text = [USER_DEFAULTS  objectForKey:@"phone"];
+    _TelLabel.textColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
     _TelLabel.font = [UIFont boldSystemFontOfSize:10.6f];
     [self.view addSubview:_TelLabel];
     [_TelLabel mas_makeConstraints:^(MASConstraintMaker *make) {

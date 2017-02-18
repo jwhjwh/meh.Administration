@@ -26,7 +26,7 @@
     self.title=@"设置";
     [self InterTableUI];
     [self makeData];
-     [self setExtraCellLineHidden:tableview];
+    [self setExtraCellLineHidden:tableview];
     _InterNameAry = [[NSArray alloc]initWithObjects:@"账号管理",@"账号安全",@"定位",@"关于软件与帮助",@"意见反馈",nil];
     
 }
@@ -84,14 +84,13 @@
     
     if ([cell.textLabel.text  isEqual: @"账号管理"]) {
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 5, 40, 40)];
-        NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
-        [TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        TXImage.image = [UIImage imageNamed:@"tx23.png"];
         TXImage.backgroundColor = [UIColor whiteColor];
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [tableview addSubview:TXImage];
-      
-
+        NSLog(@"加上图片了么");
+        
     };
     return cell;
     
@@ -109,9 +108,40 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ManagementViewController *MageVC = [[ManagementViewController alloc]init];
-    if (indexPath.row == 0) {
-        [self.navigationController showViewController:MageVC sender:nil];
+    int a = indexPath.row;
+    switch (a) {
+        case 0:{
+            //账号管理
+            ManagementViewController *MageVC = [[ManagementViewController alloc]init];
+            [self.navigationController showViewController:MageVC sender:nil];
+        }
+            break;
+        case 1:{
+            //账号安全
+            SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
+            [self.navigationController showViewController:SecurtyVC sender:nil];
+        }
+            break;
+        case 2:{
+            //定位
+            PositioningViewController *PositionVC = [[PositioningViewController alloc]init];
+            [self.navigationController showViewController:PositionVC sender:nil];
+        }
+            break;
+        case 3:{
+            //版本信息
+            VersionViewController *VersionVC = [[VersionViewController alloc]init];
+            [self.navigationController showViewController:VersionVC sender:nil];
+        }
+            break;
+        case 4:{
+            //意见反馈
+            OpinionViewController *OpinionVC =[[OpinionViewController alloc]init];
+            [self.navigationController showViewController:OpinionVC sender:nil];
+        }
+            break;
+        default:
+            break;
     }
     
 }
