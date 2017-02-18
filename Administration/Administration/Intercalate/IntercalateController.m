@@ -84,12 +84,13 @@
     
     if ([cell.textLabel.text  isEqual: @"账号管理"]) {
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 5, 40, 40)];
-        TXImage.image = [UIImage imageNamed:@"tx23.png"];
+        NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
+        [TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         TXImage.backgroundColor = [UIColor whiteColor];
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [tableview addSubview:TXImage];
-        NSLog(@"加上图片了么");
+      
 
     };
     return cell;

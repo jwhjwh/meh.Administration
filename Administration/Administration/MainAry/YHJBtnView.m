@@ -22,7 +22,7 @@
         {
             // image
             UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake((frameWidth-imageWidth)/2,imageTopH,imageWidth,imageWidth)];
-            imageView.backgroundColor=[UIColor greenColor];
+            imageView.backgroundColor=[UIColor whiteColor];
             imageView.image=[UIImage imageNamed:imageStr];
             [self addSubview:imageView];
         }
