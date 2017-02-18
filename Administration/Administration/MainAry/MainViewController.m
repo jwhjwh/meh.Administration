@@ -7,6 +7,8 @@
 //
 
 #import "MainViewController.h"
+#import "GonggaoxqController.h"
+#import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
 #import "NoticeView.h"
@@ -36,18 +38,19 @@
 @implementation MainViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-  
+    [self naveigtionAddSubView];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-        
+    [_logoImage  removeFromSuperview];
+    [_masgeButton removeFromSuperview];
+    [_numberLabel removeFromSuperview];
     }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     [self initData];
-    [self naveigtionAddSubView];
+    
     [self addLoop];
     
 }
@@ -171,7 +174,9 @@
     //公告
     _noticeView=[[NoticeView alloc]initWithFrame:CGRectMake(15, self.loop.bottom+MenuH+10, Scree_width-30, 80)];
     [self.view addSubview:_noticeView];
-    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(noticeTap:)];
+    [_noticeView addGestureRecognizer:tap];
+
     
 
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -220,7 +225,13 @@
     NSLog(@"点击了第%ld张图片", index);
 }
 -(void)masgeClick:(UIButton*)sender{
-    NSLog(@"134");
+  
+    MessageController *MessageVC=[[MessageController alloc]init];
+    [self.navigationController pushViewController:MessageVC animated:YES];
+}
+-(void)noticeTap:(UITapGestureRecognizer*)sender{
+    GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+    [self.navigationController pushViewController:gongVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
