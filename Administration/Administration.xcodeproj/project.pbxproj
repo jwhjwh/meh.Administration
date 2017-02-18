@@ -53,6 +53,10 @@
 		6218D06B1E4E95FB00299989 /* AdministrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D06A1E4E95FB00299989 /* AdministrationTests.m */; };
 		6218D0761E4E95FB00299989 /* AdministrationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0751E4E95FB00299989 /* AdministrationUITests.m */; };
 		6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0841E4E97EA00299989 /* UserGuideViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+
+		621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5C1E1E5843190051C6CC /* WJTextView.m */; };
+		621A5C211E5843B50051C6CC /* banben100.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A5C201E5843B50051C6CC /* banben100.png */; };
+
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
@@ -288,6 +292,11 @@
 		6218D0771E4E95FB00299989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6218D0831E4E97EA00299989 /* UserGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGuideViewController.h; path = Administration/UserGuideViewController.h; sourceTree = SOURCE_ROOT; };
 		6218D0841E4E97EA00299989 /* UserGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGuideViewController.m; path = Administration/UserGuideViewController.m; sourceTree = SOURCE_ROOT; };
+
+		621A5C1D1E5843190051C6CC /* WJTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJTextView.h; sourceTree = "<group>"; };
+		621A5C1E1E5843190051C6CC /* WJTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJTextView.m; sourceTree = "<group>"; };
+		621A5C201E5843B50051C6CC /* banben100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banben100.png; sourceTree = "<group>"; };
+
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
@@ -785,6 +794,17 @@
 			path = Find;
 			sourceTree = "<group>";
 		};
+
+		621A5C1C1E5842F60051C6CC /* WJTextView */ = {
+			isa = PBXGroup;
+			children = (
+				621A5C1D1E5843190051C6CC /* WJTextView.h */,
+				621A5C1E1E5843190051C6CC /* WJTextView.m */,
+			);
+			path = WJTextView;
+			sourceTree = "<group>";
+		};
+
 		62345B411E53F4FA001760F8 /* background */ = {
 			isa = PBXGroup;
 			children = (
@@ -1122,6 +1142,9 @@
 		62656D171E52B5700085A2BD /* Intercalate */ = {
 			isa = PBXGroup;
 			children = (
+
+				621A5C201E5843B50051C6CC /* banben100.png */,
+
 				1F5745681E56F45A00E4A47C /* tx23.png */,
 				62EBA2391E56A85D00F657DB /* tx23.png */,
 				62656D181E52B5700085A2BD /* Inder2.png */,
@@ -1247,6 +1270,9 @@
 		62EBA24C1E56CAF700F657DB /* Opinion */ = {
 			isa = PBXGroup;
 			children = (
+
+				621A5C1C1E5842F60051C6CC /* WJTextView */,
+
 				62EBA2571E56CB9B00F657DB /* OpinionViewController.h */,
 				62EBA2581E56CB9B00F657DB /* OpinionViewController.m */,
 			);
@@ -1435,6 +1461,9 @@
 				62656D441E52B5700085A2BD /* Inder2.png in Resources */,
 				1F4DBB521E58420800733CF7 /* fanhui.png in Resources */,
 				62656D501E52B5700085A2BD /* ztgb.png in Resources */,
+
+				621A5C211E5843B50051C6CC /* banben100.png in Resources */,
+
 				62656D4B1E52B5700085A2BD /* xuanzhong.png in Resources */,
 				62656D581E52B5700085A2BD /* dianjiaxinxi.png in Resources */,
 				62656D4C1E52B5700085A2BD /* Inder4.png in Resources */,
@@ -1590,6 +1619,9 @@
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
+
+				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
+
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
