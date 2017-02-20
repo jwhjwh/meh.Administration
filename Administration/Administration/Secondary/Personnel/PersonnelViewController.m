@@ -16,6 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title=@"人员";//从上级界面传过来title
+     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
 

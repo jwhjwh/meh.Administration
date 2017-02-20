@@ -7,7 +7,7 @@
 //
 
 #import "ManagementViewController.h"
-
+#import "EditDataViewController.h"
 @interface ManagementViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
@@ -148,7 +148,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-        
+        EditDataViewController *EditVC = [[EditDataViewController alloc]init];
+         [self.navigationController showViewController:EditVC sender:nil];
     }else{
         [USER_DEFAULTS  setObject:@"" forKey:@"token"];
         ViewController *VC= [[ViewController alloc]init];

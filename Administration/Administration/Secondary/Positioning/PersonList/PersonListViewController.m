@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title=@"我的位置";
     // Do any additional setup after loading the view.
 }
 

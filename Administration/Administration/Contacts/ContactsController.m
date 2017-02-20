@@ -30,16 +30,8 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationItem.title=@"通讯录";
-    [self makeData];
+    
     [self UIBtn];
-}
-- (void)makeData{
-    self.ImageAry = [NSMutableArray array];
-    for (int i = 0; i < 5; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Inder%d.png",i]];
-        [self.ImageAry addObject:image];
-        
-    }
 }
 -(void)UIBtn{
     //搜索按钮
@@ -48,7 +40,7 @@
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
     _sousuoBtn.layer.masksToBounds = YES;
     _sousuoBtn.layer.cornerRadius = 8.0;
-    [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchDragInside];
+    [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_sousuoBtn];
     [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo (self.view.mas_left).offset(10);
@@ -66,6 +58,8 @@
 
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Contact%d",i]];
         [aBt setBackgroundImage:image forState:UIControlStateNormal];
+        aBt.tag= i;
+        [aBt addTarget:self action:@selector(TouchAbt) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:aBt];
     }
     //分割线
@@ -106,7 +100,14 @@
 
 }
 -(void)Touchsearch{
+    //SearchViewController
+    SearchViewController *SearchVC = [[SearchViewController alloc]init];
+    [self.navigationController showViewController:SearchVC sender:nil];
 
+}
+-(void)TouchAbt{
+    PersonnelViewController *PersonVC = [[PersonnelViewController alloc]init];
+    [self.navigationController showViewController:PersonVC sender:nil];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
