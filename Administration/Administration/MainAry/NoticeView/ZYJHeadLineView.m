@@ -45,8 +45,8 @@
     [self createCurrentView];
     [self createHidenView];
     
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dealTap:)];
-//    [self addGestureRecognizer:tap];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dealTap:)];
+    [_currentView addGestureRecognizer:tap];
     //改进
     UILongPressGestureRecognizer*longPress=[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(dealLongPress:)];
     [self addGestureRecognizer:longPress];
@@ -81,14 +81,15 @@
     
     
 }
-//- (void)dealTap:(UITapGestureRecognizer *)tap
-//{
-//    self.clickBlock(count);
-//}
+- (void)dealTap:(UITapGestureRecognizer *)tap
+{
+    self.clickBlock(count);
+    
+}
 
 - (void)createTimer
 {
-    _timer=[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dealTimer) userInfo:nil repeats:YES];
+    _timer=[NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(dealTimer) userInfo:nil repeats:YES];
 }
 
 #pragma mark - 跑马灯操作
@@ -117,26 +118,26 @@
     
     if (flag == 0) {
         [UIView animateWithDuration:1.0 animations:^{
-            self.currentView.frame = CGRectMake(0, -self.frame.size.height, self.frame.size.width, self.frame.size.height);
+            self.currentView.frame = CGRectMake(0, -self.frame.size.height, self.frame.size.width,20);
         } completion:^(BOOL finished) {
             flag = 1;
-            self.currentView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.frame.size.height);
+            self.currentView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width,20);
         }];
         [UIView animateWithDuration:1.0 animations:^{
-            self.hidenView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+            self.hidenView.frame = CGRectMake(0, 0, self.frame.size.width, 20);
         } completion:^(BOOL finished) {
             
         }];
     }else{
         
         [UIView animateWithDuration:1.0 animations:^{
-            self.hidenView.frame = CGRectMake(0, -self.frame.size.height, self.frame.size.width, self.frame.size.height);
+            self.hidenView.frame = CGRectMake(0, -self.frame.size.height, self.frame.size.width, 20);
         } completion:^(BOOL finished) {
             flag = 0;
-            self.hidenView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.frame.size.width);
+            self.hidenView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, 20);
         }];
         [UIView animateWithDuration:1.0 animations:^{
-            self.currentView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+            self.currentView.frame = CGRectMake(0, 0, self.frame.size.width, 20);
         } completion:^(BOOL finished) {
             
         }];
@@ -147,11 +148,11 @@
 {
     ZYJHeadLineModel *model = _dataArr[count];
     
-    self.currentView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    self.currentView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 20)];
     [self addSubview:self.currentView];
   
     //内容标题
-    self.currentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 3, self.currentView.frame.size.width, self.currentView.frame.size.height-30)];
+    self.currentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 3, self.currentView.frame.size.width, 20)];
     self.currentLabel.text = model.title;
     self.currentLabel.textAlignment = NSTextAlignmentLeft;
     self.currentLabel.textColor = [UIColor blackColor];
@@ -164,12 +165,12 @@
 
 - (void)createHidenView
 {
-    self.hidenView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height, self.frame.size.width, self.frame.size.height)];
+    self.hidenView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height, self.frame.size.width, 20)];
     [self addSubview:self.hidenView];
     
 
     //内容标题
-    self.hidenLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 3, self.hidenView.frame.size.width, self.hidenView.frame.size.height-30)];
+    self.hidenLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 3, self.hidenView.frame.size.width, 20)];
     self.hidenLabel.text = @"";
     self.hidenLabel.textAlignment = NSTextAlignmentLeft;
     self.hidenLabel.textColor = [UIColor blackColor];

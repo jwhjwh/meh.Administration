@@ -54,7 +54,8 @@ UIImage *gifImageNamed(NSString *imageName);
  *  其他属性都有默认值，可不设置
  */
 @interface XLsn0wLoop : UIView
-
+//滚动视图
+@property (nonatomic, strong) UIScrollView *scrollView;
 
 #pragma mark 属性
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F4DBB471E57E01500733CF7 /* xx_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB461E57E01500733CF7 /* xx_ico01.png */; };
 		1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB481E5828B400733CF7 /* baogang.png */; };
 		1F4DBB4B1E5828B400733CF7 /* baobiaoguanli.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */; };
@@ -208,6 +209,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F37861A1E5AE34400CAD616 /* mesgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesgeModel.h; sourceTree = "<group>"; };
+		1F37861B1E5AE34400CAD616 /* mesgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesgeModel.m; sourceTree = "<group>"; };
 		1F4DBB461E57E01500733CF7 /* xx_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico01.png; sourceTree = "<group>"; };
 		1F4DBB481E5828B400733CF7 /* baogang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baogang.png; sourceTree = "<group>"; };
 		1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baobiaoguanli.png; sourceTree = "<group>"; };
@@ -552,6 +555,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F3786191E5AE31400CAD616 /* modle */ = {
+			isa = PBXGroup;
+			children = (
+				1F37861A1E5AE34400CAD616 /* mesgeModel.h */,
+				1F37861B1E5AE34400CAD616 /* mesgeModel.m */,
+			);
+			name = modle;
+			sourceTree = "<group>";
+		};
 		1F5745621E56C63F00E4A47C /* Class */ = {
 			isa = PBXGroup;
 			children = (
@@ -1338,6 +1350,7 @@
 				F736D1641E589245003A1A39 /* GongTableViewCell.m */,
 				F736D1661E589288003A1A39 /* MesgeTableViewCell.h */,
 				F736D1671E589288003A1A39 /* MesgeTableViewCell.m */,
+				1F3786191E5AE31400CAD616 /* modle */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -1637,6 +1650,7 @@
 				1F4DBB501E583BB200733CF7 /* GonggaoxqController.m in Sources */,
 				F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */,
 				62656CD81E52A6600085A2BD /* SDWebImageDownloader.m in Sources */,
+				1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */,
 				62656BD31E5295DC0085A2BD /* MJRefreshStateHeader.m in Sources */,
 				62656CE11E52A6600085A2BD /* UIImageView+WebCache.m in Sources */,
 				62656BD71E5295DC0085A2BD /* UIScrollView+MJRefresh.m in Sources */,

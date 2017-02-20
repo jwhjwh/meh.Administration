@@ -42,11 +42,7 @@
     _label.font = [UIFont systemFontOfSize:10];
     [self addSubview:_label];
     _TopLineView = [[ZYJHeadLineView alloc]initWithFrame:CGRectMake(_hornImage.right+5, _hornImage.top-1,kMidViewWidth, kMidViewHeight)];
-//    __weak __typeof(self)weakSelf = self;
-//    _TopLineView.clickBlock = ^(NSInteger index){
-//        ZYJHeadLineModel *model = weakSelf.dataArr[index];
-//       
-//    };
+
     [self addSubview:_TopLineView];
   
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/getLatest.action",KURLHeader];

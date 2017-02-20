@@ -32,26 +32,28 @@
 @property(nonatomic,strong)NSArray *arr;
 //标题图片
 @property(nonatomic,strong)NSArray *arr1;
-
+//判断红的消息
+@property(nonatomic,retain)NSString *number;
 @end
 
 @implementation MainViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self naveigtionAddSubView];
+   
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_logoImage  removeFromSuperview];
     [_masgeButton removeFromSuperview];
-    [_numberLabel removeFromSuperview];
-    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor=[UIColor whiteColor];
     [self initData];
-    
     [self addLoop];
+   
     
 }
 
@@ -79,10 +81,11 @@
     _numberLabel=[[UILabel alloc]initWithFrame:CGRectMake(_masgeButton.frame.size.width-6,1, 10, 10)];
     _numberLabel.layer.masksToBounds = YES;
     // 设置圆角半径
-    _numberLabel.layer.cornerRadius =5.0f;
+    if ([_number isEqualToString: @"1" ]) {
     _numberLabel.backgroundColor=[UIColor redColor];
+    }
+    _numberLabel.layer.cornerRadius =5.0f;
     [_masgeButton addSubview:_numberLabel];
-    
 }
 -(void)initData
 {
@@ -151,8 +154,22 @@
         
     } view:self.view MBPro:YES];
     
-    
    
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@marketReport/queryNewSum.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"message"]isEqualToString:@"1"]) {
+            _number=@"1";
+             _numberLabel.backgroundColor=[UIColor redColor];
+        } else {
+             _numberLabel.backgroundColor=[UIColor clearColor];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
     
 }
 
@@ -164,6 +181,7 @@
     self.loop.time = 2;
     [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];
     [self.view addSubview:self.loop];
+ 
     //主题内容
     _tableView=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
        _tableView.scrollEnabled =NO; //设置tableview 不能滚动
@@ -176,14 +194,19 @@
     [self.view addSubview:_noticeView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(noticeTap:)];
     [_noticeView addGestureRecognizer:tap];
-
-    
-
+    __weak __typeof(self)weakSelf = self;
+    _noticeView.TopLineView.clickBlock = ^(NSInteger index){
+        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+        [weakSelf.navigationController pushViewController:gongVC animated:YES];
+        
+    };
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
-        make.height.equalTo(self.view.mas_height).multipliedBy(2/7.f);    }];
+        make.top.mas_equalTo(self.view.mas_top).offset(0);
+        make.height.equalTo(self.view.mas_height).multipliedBy(3/8.f);
+    }];
+    
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
@@ -194,7 +217,7 @@
         make.left.mas_equalTo(self.view.mas_left).offset(12);
         make.right.mas_equalTo(self.view.mas_right).offset(-12);
         make.top.mas_equalTo(self.tableView.mas_bottom).offset(10);
-        make.height.equalTo(self.view.mas_height).multipliedBy(1/10.f);
+        make.height.equalTo(self.view.mas_height).multipliedBy(1/8.f);
     }];
   
 }

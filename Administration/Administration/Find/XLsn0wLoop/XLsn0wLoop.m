@@ -14,8 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *images;
 //图片描述控件，默认在底部
 @property (nonatomic, strong) UILabel *describeLabel;
-//滚动视图
-@property (nonatomic, strong) UIScrollView *scrollView;
+
 //分页控件
 @property (nonatomic, strong) UIPageControl *pageControl;
 //当前显示的imageView
@@ -66,6 +65,7 @@ static NSString *cache;
 #pragma mark 初始化控件
 - (void)initSubView {
     self.autoCache = YES;
+     _scrollView.alwaysBounceVertical = NO;
     [self addSubview:self.scrollView];
     [self addSubview:self.describeLabel];
     [self addSubview:self.pageControl];
@@ -196,7 +196,7 @@ static NSString *cache;
 #pragma mark 设置scrollView的contentSize
 - (void)setScrollViewContentSize {
     if (_images.count > 1) {
-        _scrollView.alwaysBounceVertical = NO;
+    
         self.scrollView.contentSize = CGSizeMake(self.width * 5, 0);
         self.scrollView.contentOffset = CGPointMake(self.width * 2, 0);
         self.currImageView.frame = CGRectMake(self.width * 2, 0, self.width, self.height);
@@ -212,7 +212,7 @@ static NSString *cache;
         
         [self startTimer];
     } else {
-        _scrollView.alwaysBounceVertical = NO;
+       
         //只要一张图片时，scrollview不可滚动，且关闭定时器
         self.scrollView.contentSize = CGSizeZero;
         self.scrollView.contentOffset = CGPointZero;
@@ -317,7 +317,6 @@ static NSString *cache;
     //有导航控制器时，会默认在scrollview上方添加64的内边距，这里强制设置为0
     _scrollView.contentInset = UIEdgeInsetsZero;
     //禁止滑动
-    
     _scrollView.frame = self.bounds;
     _describeLabel.frame = CGRectMake(0, self.height - DES_LABEL_H, self.width, DES_LABEL_H);
     //重新计算pageControl的位置
@@ -434,6 +433,7 @@ float durationWithSourceAtIndex(CGImageSourceRef source, NSUInteger index) {
     CGFloat offsetX = scrollView.contentOffset.x;
     //滚动过程中改变pageControl的当前页码
     [self changeCurrentPageWithOffset:offsetX];
+  
     //向右滚动
     if (offsetX < self.width * 2) {
         if (_changeMode == ChangeModeFade) {
@@ -457,6 +457,7 @@ float durationWithSourceAtIndex(CGImageSourceRef source, NSUInteger index) {
         self.otherImageView.image = self.images[self.nextIndex];
         if (offsetX >= self.width * 3) [self changeToNext];
     }
+  
 }
 
 - (void)changeToNext {
