@@ -8,6 +8,7 @@
 
 #import "MessageController.h"
 #import "MesgeTableViewCell.h"
+#import "mesgeModel.h"
 @interface MessageController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *dataArray;
@@ -45,12 +46,20 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject );
+        self.dataArray = [NSMutableArray array];
+        NSArray *array=[responseObject valueForKey:@""];
+        for (NSDictionary *dic in array) {
+            mesgeModel *model=[[mesgeModel alloc]init];
+            [model setValuesForKeysWithDictionary:dic];
+            [self.dataArray addObject:model];
+        }
+        [self.tableView reloadData];
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
     
-    self.dataArray=[[NSMutableArray alloc]initWithObjects:@"112312",@"112213", nil];
+    
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -77,7 +86,7 @@
     }
     if (self.dataArray.count > 0) {
         cell = [[MesgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-//        cell.coModel = self.BidCouponDataArray[indexPath.row];
+        cell.model = self.dataArray[indexPath.row];
 //        cell.view.image =[UIImage imageNamed:@"daishiyon@2x"];
 //        cell.priceLabel.textColor=[UIColor colorWithRed:58/256.0 green:147/256.0 blue:223.0/256.0 alpha:1];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

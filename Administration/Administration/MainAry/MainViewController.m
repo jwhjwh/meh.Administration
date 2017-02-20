@@ -89,46 +89,73 @@
 }
 -(void)initData
 {
-    NSString *str = [USER_DEFAULTS objectForKey:@"roleId"];
+    int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
     //判断角色的设定主题的现实
-
-    if ([str isEqualToString:@"3"]) {
+    switch (str) {
+        case 1:
+            // 老板
+            _arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",@"公司公告", @"图片报岗"];
+            _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
+            break;
+        case 2:
+            //市场美导
+            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
+            break;
+        case 3:
             //内勤人员
-        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
-        _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
-       
-    }else if ([str isEqualToString:@"5"]) {
+            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+            _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+            break;
+        case 4:
+            // 物流
+            _arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
+        _arr1=@[@"dianpugenzong",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+            break;
+        case 5:
             //业务
-       _arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
-         _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi",@"gongsigonggao", @"mobaijilu", @"baogang"];
-    }else if ([str isEqualToString:@"8"]) {
+            _arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
+            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi",@"gongsigonggao", @"mobaijilu", @"baogang"];
+            break;
+        case 6:
+            // 品牌经理
+            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+            break;
+        case 7:
+            //行政管理员
+            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+            break;
+        case 8:
             //业务经理
-        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",@"报表管理"];
-        _arr1=@[@"dianpugenzong",@"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"mobaijilu",@"baogang",@"baobiaoguanli"];
-       
-    }else if ([str isEqualToString:@"1"]) {
-        // 老板
-        _arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",@"公司公告", @"图片报岗"];
-       _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
-    }else if ([str isEqualToString:@"6"]) {
-        // 品牌经理
-        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
-       _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
-        
-    }else if ([str isEqualToString:@"4"]) {
-        // 物流
-
-        _arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
-    _arr1=@[@"dianpugenzong",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
-    }else if ([str isEqualToString:@"7"]){
-        //行政管理员
-        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
-        _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
-    }else if ([str isEqualToString:@"2"]){
-        //市场美导
-        _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
-        _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
+            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",@"报表管理"];
+            _arr1=@[@"dianpugenzong",@"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"mobaijilu",@"baogang",@"baobiaoguanli"];
+            break;
+        default:
+            break;
     }
+//    if ([str isEqualToString:@"3"]) {
+//        
+//       
+//       
+//    }else if ([str isEqualToString:@"5"]) {
+//      
+//    }else if ([str isEqualToString:@"8"]) {
+//        
+//       
+//    }else if ([str isEqualToString:@"1"]) {
+//       
+//    }else if ([str isEqualToString:@"6"]) {
+//     
+//        
+//    }else if ([str isEqualToString:@"4"]) {
+//      
+//    }else if ([str isEqualToString:@"7"]){
+//   
+//    }else if ([str isEqualToString:@"2"]){
+//     
+//    }
     _menuArray=[NSMutableArray array];
     for (int i=0; i<_arr1.count; i++) {
         ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
