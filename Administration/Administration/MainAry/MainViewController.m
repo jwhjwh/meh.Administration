@@ -91,6 +91,8 @@
 {
     NSString *str = [USER_DEFAULTS objectForKey:@"roleId"];
     //判断角色的设定主题的现实
+    NSLog(@"------%@",str);
+    
 
     if ([str isEqualToString:@"3"]) {
             //内勤人员
@@ -140,8 +142,9 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSLog(@"%@",USER_DEFAULTS);
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    
+   
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
       NSArray *arr= [responseObject valueForKey:@"logoImg"];
         NSMutableArray *array=[NSMutableArray array];

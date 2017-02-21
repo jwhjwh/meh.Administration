@@ -31,9 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-
-
     
     UIImageView *customBackgournd = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Scree_width,Scree_height)];
     customBackgournd.image=[UIImage imageNamed:@"bj01@1x"];
@@ -232,7 +229,6 @@
      NSString *ltokenStr =[NSString stringWithFormat:@"%@%@%@%@",pastr,shiStr, [USER_DEFAULTS  objectForKey:@"Ltoken"],logokey];
     NSString *ltoken=[ZXDNetworking encryptStringWithMD5:ltokenStr];
     NSDictionary *info=@{@"mobile":_nameStr,@"ltoken":ltoken,@"password":pastr,@"udid":shiStr,@"appkey":logokey};
-        NSLog(@"%@",info);
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             //APPKey
@@ -253,6 +249,7 @@
             [USER_DEFAULTS setObject:ApLtokenStr forKey:@"token"];
             [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
             [USER_DEFAULTS setObject:name forKey:@"name"];
+            
             [ZxdObject rootController];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];

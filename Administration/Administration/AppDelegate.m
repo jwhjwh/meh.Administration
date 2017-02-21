@@ -39,9 +39,7 @@
         self.window.rootViewController = VC;
        
     }else{
-        
         [ZxdObject rootController];
-        
    }
 
     self.window.backgroundColor = [UIColor whiteColor];
