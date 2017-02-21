@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface mesgeModel : NSObject
+//判断
 @property (nonatomic,retain)NSString *flag;
-@property (nonatomic,retain)NSString *name;
-@property (nonatomic,retain)NSString *updateTime;
+//判断显示年月周总结
+@property (nonatomic,retain)NSString *tableName;
+//截取时间
+@property (nonatomic,retain)NSString *dates;
 @end

@@ -25,5 +25,11 @@
 
     [alert dismissViewControllerAnimated:YES completion:nil];
 }
-
++(CGFloat)heighOfString:(NSString*)string font:(UIFont*)font width:(CGFloat)width{
+  
+    NSDictionary *parameterDic=[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+     CGRect bounds = [string boundingRectWithSize:CGSizeMake(width, 0)options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:parameterDic context:nil];
+    
+    return bounds.size.height;
+}
 @end

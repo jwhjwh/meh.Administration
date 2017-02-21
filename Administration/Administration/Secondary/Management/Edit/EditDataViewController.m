@@ -36,8 +36,6 @@
 -(void)InterTableUI
 {
     tableview = [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
-    tableview.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
-    tableview.scrollEnabled =YES;
     tableview.dataSource=self;
     tableview.delegate =self;
     [self.view addSubview:tableview];

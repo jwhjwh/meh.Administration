@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "GongModel.h"
 @interface GongTableViewCell : UITableViewCell
 ///头像
 @property (nonatomic,retain)UIImageView *logoImage;
@@ -19,4 +19,6 @@
 @property (nonatomic,retain)UILabel *whoLabel;
 ///内容
 @property (nonatomic,retain)UILabel *contLabel;
+@property (nonatomic,retain)GongModel *gongModel;
+
 @end

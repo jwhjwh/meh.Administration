@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "GonggaoxqController.h"
+#import "EditDataViewController.h"
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -15,7 +16,7 @@
 #define MenuH 160
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
-@property (nonatomic,retain)UIImageView *logoImage;
+@property (nonatomic,retain)UIButton *logoImage;
 ///消息按钮
 @property (nonatomic,retain)UIButton *masgeButton;
 ///消息数量
@@ -40,7 +41,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self naveigtionAddSubView];
-   
+    self.tabBarController.tabBar.hidden=NO;
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -53,16 +55,14 @@
     self.view.backgroundColor=[UIColor whiteColor];
     [self initData];
     [self addLoop];
-   
-    
 }
 
 
 -(void)naveigtionAddSubView{
     self.title=@"首页";
-    _logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(12,4,36,36)];
+    _logoImage = [UIButton buttonWithType:UIButtonTypeCustom] ;
+    _logoImage.frame =CGRectMake(12,4,36,36);
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii: _logoImage.bounds.size];
-    
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
     //设置大小
     maskLayer.frame = _logoImage.bounds;
@@ -70,17 +70,18 @@
     maskLayer.path = maskPath.CGPath;
     _logoImage.layer.mask = maskLayer;
      NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
-    [_logoImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+   [_logoImage sd_setBackgroundImageWithURL:[NSURL URLWithString:logoStr] forState:UIControlStateNormal placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [_logoImage addTarget:self action:@selector(xinxiTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:_logoImage];
-    
+   
     _masgeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _masgeButton.frame =CGRectMake(Scree_width - 12-36,4,36,36);
+    _masgeButton.frame = CGRectMake(Scree_width - 12-36,4,36,36);
     [_masgeButton addTarget:self action:@selector(masgeClick:) forControlEvents:UIControlEventTouchUpInside];
     [_masgeButton setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
     [self.navigationController.navigationBar addSubview:_masgeButton];
     _numberLabel=[[UILabel alloc]initWithFrame:CGRectMake(_masgeButton.frame.size.width-6,1, 10, 10)];
     _numberLabel.layer.masksToBounds = YES;
-    // 设置圆角半径
+    //设置圆角半径
     if ([_number isEqualToString: @"1" ]) {
     _numberLabel.backgroundColor=[UIColor redColor];
     }
@@ -90,6 +91,7 @@
 -(void)initData
 {
     int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
+    NSLog(@"+++====%d",str);
     //判断角色的设定主题的现实
     switch (str) {
         case 1:
@@ -135,27 +137,6 @@
         default:
             break;
     }
-//    if ([str isEqualToString:@"3"]) {
-//        
-//       
-//       
-//    }else if ([str isEqualToString:@"5"]) {
-//      
-//    }else if ([str isEqualToString:@"8"]) {
-//        
-//       
-//    }else if ([str isEqualToString:@"1"]) {
-//       
-//    }else if ([str isEqualToString:@"6"]) {
-//     
-//        
-//    }else if ([str isEqualToString:@"4"]) {
-//      
-//    }else if ([str isEqualToString:@"7"]){
-//   
-//    }else if ([str isEqualToString:@"2"]){
-//     
-//    }
     _menuArray=[NSMutableArray array];
     for (int i=0; i<_arr1.count; i++) {
         ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
@@ -167,6 +148,7 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSLog(@"===+%@,===%@",urlStr,appKeyStr);
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
@@ -180,8 +162,6 @@
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
-   
     
     NSString *uStr =[NSString stringWithFormat:@"%@marketReport/queryNewSum.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -279,15 +259,18 @@
     MessageController *MessageVC=[[MessageController alloc]init];
     [self.navigationController pushViewController:MessageVC animated:YES];
 }
+//公告
 -(void)noticeTap:(UITapGestureRecognizer*)sender{
     GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
     [self.navigationController pushViewController:gongVC animated:YES];
+}
+//个人信息
+-(void)xinxiTap:(UIButton *)sender{
+    EditDataViewController *editVC=[[EditDataViewController alloc]init];
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 @end
