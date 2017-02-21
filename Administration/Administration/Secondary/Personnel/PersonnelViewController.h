@@ -10,4 +10,5 @@
 
 @interface PersonnelViewController : UIViewController
 
+@property (strong,nonatomic) NSString *roleld;
 @end

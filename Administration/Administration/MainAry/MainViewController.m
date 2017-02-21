@@ -93,6 +93,12 @@
     int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
     NSLog(@"+++====%d",str);
     //判断角色的设定主题的现实
+
+  
+    
+
+ 
+
     switch (str) {
         case 1:
             // 老板
@@ -105,6 +111,7 @@
             _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
             break;
         case 3:
+
             //内勤人员
             _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
             _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
@@ -148,9 +155,13 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+
     NSLog(@"===+%@,===%@",urlStr,appKeyStr);
+
+    NSLog(@"%@",USER_DEFAULTS);
+
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    
+   
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
       NSArray *arr= [responseObject valueForKey:@"logoImg"];
         NSMutableArray *array=[NSMutableArray array];
