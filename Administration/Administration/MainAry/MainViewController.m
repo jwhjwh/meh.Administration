@@ -164,40 +164,77 @@
         [_menuArray addObject:model];
     }
 
-    NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
-    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    
-    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-      NSArray *arr= [responseObject valueForKey:@"logoImg"];
-        NSMutableArray *array=[NSMutableArray array];
-        for (NSDictionary *dic in arr) {
-            NSString *Url= [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"]];
-            [array addObject:Url];
-        }
-        self.loop.imageArray=array;
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
+
     
    
-    
-    NSString *uStr =[NSString stringWithFormat:@"%@marketReport/queryNewSum.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"message"]isEqualToString:@"1"]) {
-            _number=@"1";
-             _numberLabel.backgroundColor=[UIColor redColor];
-        } else {
-             _numberLabel.backgroundColor=[UIColor clearColor];
-        }
-    } failure:^(NSError *error) {
+    // 创建信号量
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    // 创建全局并行
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, queue, ^{
         
-    } view:self.view MBPro:YES];
+        
+        
+        dispatch_semaphore_signal(semaphore);
+        
+        
+    });
+    dispatch_group_async(group, queue, ^{
+        
+        NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
+        NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+        NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+        
+        [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+            dispatch_semaphore_signal(semaphore);
+            NSArray *arr= [responseObject valueForKey:@"logoImg"];
+            NSMutableArray *array=[NSMutableArray array];
+            for (NSDictionary *dic in arr) {
+                NSString *Url= [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"]];
+                [array addObject:Url];
+            }
+            self.loop.imageArray=array;
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+       
+        
+    });
+    dispatch_group_async(group, queue, ^{
+        
+        NSString *uStr =[NSString stringWithFormat:@"%@marketReport/queryNewSum.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+            dispatch_semaphore_signal(semaphore);
+            if ([[responseObject valueForKey:@"message"]isEqualToString:@"1"]) {
+                _number=@"1";
+                _numberLabel.backgroundColor=[UIColor redColor];
+            } else {
+                _numberLabel.backgroundColor=[UIColor clearColor];
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+        
+  
+    });
     
+    dispatch_group_notify(group, queue, ^{
+        
+        //在这里 进行请求后的方法
+        
+        
+        // 三个请求对应三次信号等待
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        
+    });
+
 }
 
 
