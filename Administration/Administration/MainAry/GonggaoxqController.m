@@ -9,6 +9,12 @@
 #import "GonggaoxqController.h"
 #import "GongTableViewCell.h"
 @interface GonggaoxqController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    int page;
+    
+    int totalPage;//总页数
+    
+}
 @property(nonatomic,strong)UITableView *tableView;
 
 @property(nonatomic,strong)NSMutableArray *dataArray;
@@ -39,16 +45,71 @@
     self.tableView .delegate = self;
     self.tableView .dataSource = self;
     [self.view addSubview: self.tableView ];
+  
+    
+    self.dataArray = [NSMutableArray array];
+    [self getNetworkData:NO];
+    page = 1;
+    
+    __weak typeof(self) weakSelf = self;
+    //默认【下拉刷新】
+    [self.tableView addLegendHeaderWithRefreshingBlock:^{
+        _dataArray = [NSMutableArray array];
+        [weakSelf getNetworkData:YES];
+    }];
+    
+    //默认【上拉加载】
+    [self.tableView addLegendFooterWithRefreshingBlock:^{
+        [weakSelf getNetworkData:NO];
+    }];
+    
+
+}
+/**
+ *  停止刷新
+ */
+-(void)endRefresh{
+    
+    if (page == 1) {
+        [self.tableView.header endRefreshing];
+    }
+    [self.tableView.footer endRefreshing];
+}
+-(void)getNetworkData:(BOOL)isRefresh{
+    if (isRefresh) {
+        page = 1;
+    }else{
+        page++;
+    }
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/queryNotice.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         NSLog(@"%@",responseObject);
+        
+        NSString *str =[[responseObject valueForKey:@"data" ] valueForKey:@"count"];
+        // NSLog(@"%@",str);
+        totalPage = [str intValue];
+        if (page <= totalPage||totalPage==0) {
+            [self endRefresh];
+            if (page==1) {
+                [self.tableView.footer  setTitle:@"" forState:MJRefreshFooterStateIdle];
+                
+            }
+            
+        }
+        
+        
+        [self.tableView reloadData];
+        if (page>=totalPage) {
+            [self.tableView.footer endRefreshing];
+            
+        }
+        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-      self.dataArray=[[NSMutableArray alloc]initWithObjects:@"112312",@"112213", nil];
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
