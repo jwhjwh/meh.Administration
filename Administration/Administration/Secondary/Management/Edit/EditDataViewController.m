@@ -36,8 +36,10 @@
 -(void)InterTableUI
 {
     tableview = [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
-    tableview.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
+
+    
     tableview.scrollEnabled =YES;
+
     tableview.dataSource=self;
     tableview.delegate =self;
     [self.view addSubview:tableview];
@@ -143,13 +145,14 @@
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
     UIView *view = [UIView new];
-    view.backgroundColor = [UIColor whiteColor];
+    view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
     
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+{ if (section == 4 ){
+    return 0;
+    }
     return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

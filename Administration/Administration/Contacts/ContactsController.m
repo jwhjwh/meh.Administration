@@ -59,7 +59,7 @@
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Contact%d",i]];
         [aBt setBackgroundImage:image forState:UIControlStateNormal];
         aBt.tag= i;
-        [aBt addTarget:self action:@selector(TouchAbt) forControlEvents:UIControlEventTouchUpInside];
+        [aBt addTarget:self action:@selector(TouchAbt:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:aBt];
     }
     //分割线
@@ -105,9 +105,34 @@
     [self.navigationController showViewController:SearchVC sender:nil];
 
 }
--(void)TouchAbt{
+-(void)TouchAbt:(UIButton *)aBt{
     PersonnelViewController *PersonVC = [[PersonnelViewController alloc]init];
-    [self.navigationController showViewController:PersonVC sender:nil];
+    switch (aBt.tag) {
+        case 0:
+            PersonVC.roleld= @"2";
+            [self.navigationController showViewController:PersonVC sender:nil];
+            break;
+        case 1:
+            PersonVC.roleld= @"5";
+            [self.navigationController showViewController:PersonVC sender:nil];
+            break;
+        case 2:
+            PersonVC.roleld= @"3";
+            [self.navigationController showViewController:PersonVC sender:nil];
+            break;
+        case 3:
+            PersonVC.roleld= @"4";
+            [self.navigationController showViewController:PersonVC sender:nil];
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    
+    
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
