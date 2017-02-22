@@ -105,6 +105,16 @@
             [self.dataArray addObject:model];
         }
         [self.tableView reloadData];
+//        if ([msgString isEqualToString:@"0"]) {
+//            self.SpecialTableView.footer.state = MJRefreshFooterStateNoMoreData;
+//            return;
+//            
+//        }
+//        
+//        if ([msgString isEqualToString:@"0"]) {
+//            [self.SpecialTableView.footer endRefreshing];
+//            
+//        }
         if (page>=totalPage) {
             [self.tableView.footer endRefreshing];
         }

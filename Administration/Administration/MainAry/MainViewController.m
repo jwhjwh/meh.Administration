@@ -93,12 +93,7 @@
     int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
     NSLog(@"+++====%d",str);
     //判断角色的设定主题的现实
-
-  
     
-
- 
-
     switch (str) {
         case 1:
             // 老板
@@ -151,17 +146,12 @@
         model.title = _arr[i];
         [_menuArray addObject:model];
     }
-
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-
     NSLog(@"===+%@,===%@",urlStr,appKeyStr);
-
     NSLog(@"%@",USER_DEFAULTS);
-
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-   
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
       NSArray *arr= [responseObject valueForKey:@"logoImg"];
         NSMutableArray *array=[NSMutableArray array];
@@ -178,21 +168,20 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"message"]isEqualToString:@"1"]) {
-            _number=@"1";
-             _numberLabel.backgroundColor=[UIColor redColor];
-        } else {
-             _numberLabel.backgroundColor=[UIColor clearColor];
-        }
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
     
+        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+            if ([[responseObject valueForKey:@"message"]isEqualToString:@"1"]) {
+                _number=@"1";
+                _numberLabel.backgroundColor=[UIColor redColor];
+            } else {
+                _numberLabel.backgroundColor=[UIColor clearColor];
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+
 }
-
-
-- (void)addLoop {
+-(void)addLoop {
     //轮播图
     self.loop = [[XLsn0wLoop alloc] init];
     self.loop.xlsn0wDelegate = self;
@@ -284,4 +273,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 @end
