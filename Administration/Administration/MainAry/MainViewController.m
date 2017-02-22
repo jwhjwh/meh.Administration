@@ -91,12 +91,7 @@
 {
     int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
     //判断角色的设定主题的现实
-<<<<<<< HEAD
-    NSLog(@"------%@",str);
-    
 
-    if ([str isEqualToString:@"3"]) {
-=======
     switch (str) {
         case 1:
             // 老板
@@ -109,7 +104,7 @@
             _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
             break;
         case 3:
->>>>>>> 3c3c586207249e039ad5fa3505fdffa5a59bc61c
+
             //内勤人员
             _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
             _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
@@ -207,9 +202,7 @@
     } view:self.view MBPro:YES];
     
 }
-
-
-- (void)addLoop {
+-(void)addLoop {
     //轮播图
     self.loop = [[XLsn0wLoop alloc] init];
     self.loop.xlsn0wDelegate = self;
@@ -295,7 +288,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 
 @end
