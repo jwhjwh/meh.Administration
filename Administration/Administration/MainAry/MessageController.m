@@ -7,6 +7,7 @@
 //
 
 #import "MessageController.h"
+#import "MessagexqController.h"
 #import "MesgeTableViewCell.h"
 #import "mesgeModel.h"
 @interface MessageController ()<UITableViewDataSource,UITableViewDelegate>
@@ -20,11 +21,6 @@
     [super viewWillAppear:animated];
     
     self.tabBarController.tabBar.hidden=YES;
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    self.tabBarController.tabBar.hidden=NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,7 +48,6 @@
             mesgeModel *model=[[mesgeModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [self.dataArray addObject:model];
-            
         }
     
         [self.tableView reloadData];
@@ -96,9 +91,32 @@
     return cell;
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    
+{   mesgeModel *model=self.dataArray[indexPath.row];
+    MessagexqController *messageVC =[[MessagexqController alloc]init];
+    messageVC.flagStr=[NSString stringWithFormat:@"%d",model.flag];
+    messageVC.IdStr=[NSString stringWithFormat:@"%@",model.ID];
+    messageVC.remarkStr=[NSString stringWithFormat:@"%@",model.remark];
+
+    if ([model.tableName isEqualToString:@"MarketDayReport"]|| [model.tableName isEqualToString:@"ClerkDayReport"]
+        || [model.tableName isEqualToString:@"SecretaryDayReport"]) {
+        messageVC.codeStr=@"2";
+        messageVC.sortStr=@"1";
+    } else if ([model.tableName isEqualToString:@"MarketWeekPlanReport"]|| [model.tableName isEqualToString:@"ClerkWeekPlanReport"]
+               || [model.tableName isEqualToString:@"SecretaryWeekPlanReport"]) {
+        messageVC.codeStr=@"1";
+        messageVC.sortStr=@"2";
+    } else if ([model.tableName isEqualToString:@"MarketMonthPlanReport" ]|| [model.tableName isEqualToString:@"SecretaryMonthPlanReport"]) {
+        messageVC.codeStr=@"1";
+        messageVC.sortStr=@"3";
+    } else if ([model.tableName isEqualToString:@"MarketMonthSumReport"] || [model.tableName isEqualToString:@"SecretaryMonthSumReport"]) {
+        messageVC.codeStr=@"2";
+        messageVC.sortStr=@"3";
+    } else if ([model.tableName isEqualToString:@"MarketWeekSumReport"] || [model.tableName isEqualToString:@"SecretaryWeekSumReport"]
+               || [model.tableName isEqualToString:@"ClerkWeekSumReport"]) {
+        messageVC.codeStr=@"2";
+        messageVC.sortStr=@"2";
+    }
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 
 

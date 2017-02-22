@@ -52,22 +52,24 @@
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"comId":compid};
     
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        NSDictionary *dic=[responseObject valueForKey:@"adminNotice"];
-        NSString *contStr=[NSString stringWithFormat:@"%@",[dic valueForKey:@"content"]];
-        //通过字符切割成数组
-        NSArray *contArr= [contStr componentsSeparatedByString:@"，"];
-        _label.text=[NSString stringWithFormat:@"%@",[dic valueForKey:@"title"]];
-       
-        _dataArr=[[NSMutableArray alloc]init];
-        
-        for (int i=0; i<contArr.count; i++) {
-            ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
-            model.title = contArr[i];
-            [_dataArr addObject:model];
+        NSString * statStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];
+        if ([statStr isEqualToString:@"0000"]) {
+            NSDictionary *dic=[responseObject valueForKey:@"adminNotice"];
+            NSString *contStr=[NSString stringWithFormat:@"%@",[dic valueForKey:@"content"]];
+            //通过字符切割成数组
+            NSArray *contArr= [contStr componentsSeparatedByString:@"，"];
+            _label.text=[NSString stringWithFormat:@"%@",[dic valueForKey:@"title"]];
+            
+            _dataArr=[[NSMutableArray alloc]init];
+            
+            for (int i=0; i<contArr.count; i++) {
+                ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
+                model.title = contArr[i];
+                [_dataArr addObject:model];
+            }
+            NSLog(@"%@",_dataArr);
+            [_TopLineView setVerticalShowDataArr:_dataArr];
         }
-        NSLog(@"%@",_dataArr);
-        [_TopLineView setVerticalShowDataArr:_dataArr];
-        
         
     } failure:^(NSError *error) {
         

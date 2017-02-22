@@ -31,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeTop;
     self.view.backgroundColor=[UIColor whiteColor];
     self.title=@"最新公告";
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -39,7 +40,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight+49)];
+    self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     self.tableView .delegate = self;
     self.tableView .dataSource = self;
     [self.view addSubview: self.tableView ];
@@ -105,19 +106,15 @@
             [self.dataArray addObject:model];
         }
         [self.tableView reloadData];
-//        if ([msgString isEqualToString:@"0"]) {
-//            self.SpecialTableView.footer.state = MJRefreshFooterStateNoMoreData;
-//            return;
-//            
-//        }
-//        
-//        if ([msgString isEqualToString:@"0"]) {
-//            [self.SpecialTableView.footer endRefreshing];
-//            
-//        }
-        if (page>=totalPage) {
-            [self.tableView.footer endRefreshing];
+        if (array.count==0) {
+            self.tableView.footer.state = MJRefreshFooterStateNoMoreData;
+            return;
+            
         }
+
+//        if (page>=totalPage) {
+//            [self.tableView.footer endRefreshing];
+//        }
         
     } failure:^(NSError *error) {
         

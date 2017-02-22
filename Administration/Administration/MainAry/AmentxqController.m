@@ -7,7 +7,6 @@
 //
 
 #import "AmentxqController.h"
-
 @interface AmentxqController ()
 @property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,strong)UILabel *tileLabel;
@@ -29,9 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    _Heigh = [ELNAlerTool heighOfString:_gonModel.content font:[UIFont systemFontOfSize:16] width:self.view.frame.size.width-20];
-    self.edgesForExtendedLayout = UIRectEdgeTop;
     self.title=@"公告";
-     self.view.backgroundColor=[UIColor whiteColor];
+    self.view.backgroundColor=[UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -63,7 +61,7 @@
     [self.scrollView addSubview:_whoLabel];
     _contLabel=[[UILabel alloc]init];
     _contLabel.numberOfLines=0;
-    _contLabel.backgroundColor=[UIColor grayColor];
+    _contLabel.backgroundColor=[UIColor colorWithRed:(243/255.0) green:(243/255.0) blue:(243/255.0) alpha:1];
     [self.scrollView addSubview:_contLabel];
  
     [_logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
