@@ -7,11 +7,12 @@
 //
 
 #import "EditDataViewController.h"
-
+#import "EditModel.h"
 @interface EditDataViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
 }
+@property (strong,nonatomic) NSMutableArray *InterNameAry;
 @end
 
 @implementation EditDataViewController
@@ -29,6 +30,7 @@
     [super viewDidLoad];
     self.title=@"编辑资料";
     [self InterTableUI];
+    [self loadDataFromServer];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setExtraCellLineHidden:tableview];
     // Do any additional setup after loading the view.
@@ -44,18 +46,66 @@
     tableview.delegate =self;
     [self.view addSubview:tableview];
 }
+
+-(void)loadDataFromServer{
+    NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],};
+    NSLog(@"---------------------%@--%@",dic[@"appkey"],dic[@"usersid"]);
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        _InterNameAry=[NSMutableArray array];
+        
+      if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+
+              EditModel *model = [[EditModel alloc]init];
+              [model setValuesForKeysWithDictionary:responseObject[@"userInfo"]];
+          
+          /**account;//账号
+           *rname;//职位
+           *brandName;//所属品牌
+           *name;//真实姓名
+           *birthday;//出生年月
+           *age;//年龄
+           *idNo;//身份证号
+           *address;//现居地址
+           *wcode;//微信
+           *qcode;//qq号
+           *interests;//兴趣爱好
+           *sdasd;//个性签名
+           *roleId;//职位id*/
+          _InterNameAry = [[NSMutableArray alloc]initWithObjects:model.account,model.rname,model.brandName,model.name,model.birthday,model.account,model.idNo,model.address,model.wcode,model.qcode,model.interests,model.sdasd,model.roleId ,nil];
+//          _InterNameAry = [[NSMutableArray alloc]initWithObjects:model.account,model.rname,model.brandName,model.name,model.birthday,model.account,model.idNo,model.address,model.wcode,model.qcode,model.interests,model.sdasd,model.roleId ,nil];
+          
+          [tableview reloadData];
+       } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];
+       }
+     
+    }
+    
+               failure:^(NSError *error) {
+        
+              }
+                 view:self.view MBPro:YES];
+    
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     return 5;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    EditModel *model = [[EditModel alloc]init];
 
     switch (section) {
         case 0:
             return 1;
             break;
         case 1:
+            if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
+                return 3;
+            }
             return 2;
             break;
         case 2:
@@ -78,15 +128,15 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-    if (0 == indexPath.section) {
+        if (0 == indexPath.section) {
         cell.textLabel.text = @"头像";
          }else if (1 == indexPath.section){
              if (0 == indexPath.row) {
                 cell.textLabel.text = @"账号";
                  }else if (1 == indexPath.row){
                     cell.textLabel.text = @"职位";
-                     
+                 }else if (2 == indexPath.row){
+                     cell.textLabel.text = @"所属品牌";
                  }
             }else if (2 == indexPath.section){
                 if (0 == indexPath.row) {
@@ -116,8 +166,10 @@
                 }
             }
     if ([cell.textLabel.text  isEqual: @"头像"]) {
+        NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
+        
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        TXImage.image = [UIImage imageNamed:@"tx23.png"];
+        [TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         TXImage.backgroundColor = [UIColor whiteColor];
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
@@ -136,6 +188,7 @@
         text1.clearButtonMode = UITextFieldViewModeWhileEditing;
         text1.adjustsFontSizeToFitWidth = YES;
         
+        text1.text = _InterNameAry[indexPath.section];
         [cell addSubview:text1];
     }
     

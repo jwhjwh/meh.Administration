@@ -73,6 +73,7 @@
             for (NSDictionary *newDict in resuAry) {
                 PersonModel *model = [[PersonModel alloc]init];
                 [model setValuesForKeysWithDictionary:newDict];
+                
                 [self.InterNameAry addObject:model];
             }
             [self.tableView reloadData];
