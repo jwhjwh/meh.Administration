@@ -25,6 +25,9 @@
 
     [alert dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+
 +(CGFloat)heighOfString:(NSString*)string font:(UIFont*)font width:(CGFloat)width{
   
     NSDictionary *parameterDic=[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];

@@ -20,7 +20,6 @@
     self.TelLabel.text = model.account;
 }
 
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

@@ -12,4 +12,6 @@
 //显示提示 并且在time秒之后自动关闭提示框
 + (void)showAlertMassgeWithController:(UIViewController *)ctr  andMessage:(NSString *)message andInterval:(NSTimeInterval)time;
 +(CGFloat)heighOfString:(NSString*)string font:(UIFont*)font width:(CGFloat)width;
++(void)leftItiemButtonImagePopWithController:(UIViewController *)ctr;
++(void)buttonLiftItem:(UIButton*)sender cvt:(UIAlertController *)vc;
 @end

@@ -64,9 +64,8 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"roleId":_roleld};
-    NSLog(@"---------------------%@--%@--%@",dic[@"appkey"],dic[@"roleId"],dic[@"usersid"]);
+  
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        //NSLog(@"%@",responseObject);
         _InterNameAry=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *resuAry = responseObject[@"userList"];
@@ -76,8 +75,8 @@
                 [self.InterNameAry addObject:model];
             }
             [self.tableView reloadData];
-        } else {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
         }
 
     }
@@ -95,7 +94,7 @@
     
     [cell loadDataFromModel:model];
    
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+//    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     return cell;
 
 }

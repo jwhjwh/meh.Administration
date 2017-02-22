@@ -15,4 +15,8 @@
 @property (nonatomic,retain)NSString *tableName;
 //截取时间
 @property (nonatomic,retain)NSString *dates;
+//id
+@property (nonatomic,retain)NSString  *ID;
+//截取时间
+@property (nonatomic,retain)NSString *remark;
 @end

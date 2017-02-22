@@ -10,6 +10,7 @@
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
+		1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */; };
 		1F4DBB471E57E01500733CF7 /* xx_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB461E57E01500733CF7 /* xx_ico01.png */; };
 		1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB481E5828B400733CF7 /* baogang.png */; };
 		1F4DBB4B1E5828B400733CF7 /* baobiaoguanli.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */; };
@@ -216,6 +217,8 @@
 		1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GongModel.m; sourceTree = "<group>"; };
 		1F3E7BC51E5BED7F005E5A45 /* AmentxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmentxqController.h; sourceTree = "<group>"; };
 		1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmentxqController.m; sourceTree = "<group>"; };
+		1F45878E1E5D2DB6001BD9B3 /* MessagexqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagexqController.h; sourceTree = "<group>"; };
+		1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagexqController.m; sourceTree = "<group>"; };
 		1F4DBB461E57E01500733CF7 /* xx_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico01.png; sourceTree = "<group>"; };
 		1F4DBB481E5828B400733CF7 /* baogang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baogang.png; sourceTree = "<group>"; };
 		1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baobiaoguanli.png; sourceTree = "<group>"; };
@@ -791,6 +794,8 @@
 				1F4DBB541E58426700733CF7 /* MessageController.m */,
 				1F3E7BC51E5BED7F005E5A45 /* AmentxqController.h */,
 				1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */,
+				1F45878E1E5D2DB6001BD9B3 /* MessagexqController.h */,
+				1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */,
 				F736D1621E5891EE003A1A39 /* TableViewCell */,
 				1F6E31431E5448A1006069ED /* NoticeView */,
 				1F6E31391E54397A006069ED /* ZxdBtnview */,
@@ -1648,6 +1653,7 @@
 				62656BE71E5296390085A2BD /* ELNAlerTool.m in Sources */,
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
+				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
 				62656B931E5295D70085A2BD /* MASViewAttribute.m in Sources */,
 				F767DBEA1E5B1B08000D4FB7 /* MJRefreshFooter.m in Sources */,
 			);
