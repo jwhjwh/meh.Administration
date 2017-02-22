@@ -63,7 +63,7 @@
     [self.scrollView addSubview:_whoLabel];
     _contLabel=[[UILabel alloc]init];
     _contLabel.numberOfLines=0;
-    _contLabel.backgroundColor=[UIColor lightGrayColor];
+    _contLabel.backgroundColor=[UIColor grayColor];
     [self.scrollView addSubview:_contLabel];
  
     [_logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
