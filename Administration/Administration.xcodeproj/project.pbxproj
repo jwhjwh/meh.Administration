@@ -50,6 +50,12 @@
 		6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */; };
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
+		620731211E5D1DA200BCF51C /* JinnLockCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731171E5D1DA200BCF51C /* JinnLockCircle.m */; };
+		620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731191E5D1DA200BCF51C /* JinnLockIndicator.m */; };
+		620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207311B1E5D1DA200BCF51C /* JinnLockSudoko.m */; };
+		620731241E5D1DA200BCF51C /* JinnLockTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207311E1E5D1DA200BCF51C /* JinnLockTool.m */; };
+		620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731201E5D1DA200BCF51C /* JinnLockViewController.m */; };
+		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6218D0581E4E95FB00299989 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0571E4E95FB00299989 /* ViewController.m */; };
@@ -281,6 +287,19 @@
 		6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonneTableViewCell.xib; sourceTree = "<group>"; };
 		6200D6941E5BDF600014F9F3 /* PersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonModel.h; sourceTree = "<group>"; };
 		6200D6951E5BDF600014F9F3 /* PersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonModel.m; sourceTree = "<group>"; };
+		620731161E5D1DA200BCF51C /* JinnLockCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockCircle.h; sourceTree = "<group>"; };
+		620731171E5D1DA200BCF51C /* JinnLockCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JinnLockCircle.m; sourceTree = "<group>"; };
+		620731181E5D1DA200BCF51C /* JinnLockIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockIndicator.h; sourceTree = "<group>"; };
+		620731191E5D1DA200BCF51C /* JinnLockIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JinnLockIndicator.m; sourceTree = "<group>"; };
+		6207311A1E5D1DA200BCF51C /* JinnLockSudoko.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockSudoko.h; sourceTree = "<group>"; };
+		6207311B1E5D1DA200BCF51C /* JinnLockSudoko.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JinnLockSudoko.m; sourceTree = "<group>"; };
+		6207311C1E5D1DA200BCF51C /* JinnLockConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockConfig.h; sourceTree = "<group>"; };
+		6207311D1E5D1DA200BCF51C /* JinnLockTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockTool.h; sourceTree = "<group>"; };
+		6207311E1E5D1DA200BCF51C /* JinnLockTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JinnLockTool.m; sourceTree = "<group>"; };
+		6207311F1E5D1DA200BCF51C /* JinnLockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockViewController.h; sourceTree = "<group>"; };
+		620731201E5D1DA200BCF51C /* JinnLockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JinnLockViewController.m; sourceTree = "<group>"; };
+		620731261E5D1DB900BCF51C /* LockSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockSettingViewController.h; sourceTree = "<group>"; };
+		620731271E5D1DB900BCF51C /* LockSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockSettingViewController.m; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -651,6 +670,42 @@
 				1F803FF21E52F848005F53CE /* ZXDNetworking.m */,
 			);
 			path = ZXDNetworking;
+			sourceTree = "<group>";
+		};
+		620731131E5D1D9500BCF51C /* JinnLockExample */ = {
+			isa = PBXGroup;
+			children = (
+				620731261E5D1DB900BCF51C /* LockSettingViewController.h */,
+				620731271E5D1DB900BCF51C /* LockSettingViewController.m */,
+				620731141E5D1DA200BCF51C /* JinnLock */,
+			);
+			path = JinnLockExample;
+			sourceTree = "<group>";
+		};
+		620731141E5D1DA200BCF51C /* JinnLock */ = {
+			isa = PBXGroup;
+			children = (
+				620731151E5D1DA200BCF51C /* Classes */,
+				6207311C1E5D1DA200BCF51C /* JinnLockConfig.h */,
+				6207311D1E5D1DA200BCF51C /* JinnLockTool.h */,
+				6207311E1E5D1DA200BCF51C /* JinnLockTool.m */,
+				6207311F1E5D1DA200BCF51C /* JinnLockViewController.h */,
+				620731201E5D1DA200BCF51C /* JinnLockViewController.m */,
+			);
+			path = JinnLock;
+			sourceTree = "<group>";
+		};
+		620731151E5D1DA200BCF51C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				620731161E5D1DA200BCF51C /* JinnLockCircle.h */,
+				620731171E5D1DA200BCF51C /* JinnLockCircle.m */,
+				620731181E5D1DA200BCF51C /* JinnLockIndicator.h */,
+				620731191E5D1DA200BCF51C /* JinnLockIndicator.m */,
+				6207311A1E5D1DA200BCF51C /* JinnLockSudoko.h */,
+				6207311B1E5D1DA200BCF51C /* JinnLockSudoko.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		6218D0441E4E95FA00299989 = {
@@ -1149,6 +1204,7 @@
 		62EBA2491E56CA9000F657DB /* Security */ = {
 			isa = PBXGroup;
 			children = (
+				620731131E5D1D9500BCF51C /* JinnLockExample */,
 				62EBA24E1E56CB4900F657DB /* SecurityViewController.h */,
 				62EBA24F1E56CB4900F657DB /* SecurityViewController.m */,
 			);
@@ -1481,6 +1537,7 @@
 				F767DBEF1E5B1B08000D4FB7 /* MJRefreshLegendHeader.m in Sources */,
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
 				62656CE31E52A6600085A2BD /* UIView+WebCacheOperation.m in Sources */,
+				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
 				F767DBEB1E5B1B08000D4FB7 /* MJRefreshGifFooter.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
@@ -1507,12 +1564,14 @@
 				1F4DBB551E58426700733CF7 /* MessageController.m in Sources */,
 				62656CD71E52A6600085A2BD /* SDWebImageDecoder.m in Sources */,
 				62656C501E529BC10085A2BD /* IQUIScrollView+Additions.m in Sources */,
+				620731211E5D1DA200BCF51C /* JinnLockCircle.m in Sources */,
 				F767DBEE1E5B1B08000D4FB7 /* MJRefreshLegendFooter.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
 				6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */,
 				1F803FEC1E52F7CA005F53CE /* UIImageView+AFNetworking.m in Sources */,
 				F767DBF21E5B1B08000D4FB7 /* UIView+MJExtension.m in Sources */,
 				1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */,
+				620731241E5D1DA200BCF51C /* JinnLockTool.m in Sources */,
 				1F803FE51E52F7CA005F53CE /* AFURLResponseSerialization.m in Sources */,
 				62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */,
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
@@ -1564,8 +1623,10 @@
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
+				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
+				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
@@ -1581,6 +1642,7 @@
 				62656CD81E52A6600085A2BD /* SDWebImageDownloader.m in Sources */,
 				1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */,
 				62656CE11E52A6600085A2BD /* UIImageView+WebCache.m in Sources */,
+				620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */,
 				62656C521E529BC10085A2BD /* IQUIView+Hierarchy.m in Sources */,
 				62656CD31E52A6600085A2BD /* NSImage+WebCache.m in Sources */,
 				62656BE71E5296390085A2BD /* ELNAlerTool.m in Sources */,
