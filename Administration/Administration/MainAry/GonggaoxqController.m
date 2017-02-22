@@ -7,7 +7,9 @@
 //
 
 #import "GonggaoxqController.h"
+#import "AmentxqController.h"
 #import "GongTableViewCell.h"
+#import "GongModel.h"
 @interface GonggaoxqController ()<UITableViewDataSource,UITableViewDelegate>
 {
     int page;
@@ -26,11 +28,7 @@
 
     self.tabBarController.tabBar.hidden=YES;
 }
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
- 
-    self.tabBarController.tabBar.hidden=NO;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
@@ -81,14 +79,16 @@
     }else{
         page++;
     }
+    NSString *pageStr=[NSString stringWithFormat:@"%d",page];
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/queryNotice.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pageNo":pageStr,@"comId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         NSLog(@"%@",responseObject);
         
         NSString *str =[[responseObject valueForKey:@"data" ] valueForKey:@"count"];
+        NSArray *array=[responseObject valueForKey:@"nlist"];
         // NSLog(@"%@",str);
         totalPage = [str intValue];
         if (page <= totalPage||totalPage==0) {
@@ -99,12 +99,24 @@
             }
             
         }
-        
-        
+        for (NSDictionary *dic in array) {
+            GongModel *model=[[GongModel alloc]init];
+            [model setValuesForKeysWithDictionary:dic];
+            [self.dataArray addObject:model];
+        }
         [self.tableView reloadData];
+//        if ([msgString isEqualToString:@"0"]) {
+//            self.SpecialTableView.footer.state = MJRefreshFooterStateNoMoreData;
+//            return;
+//            
+//        }
+//        
+//        if ([msgString isEqualToString:@"0"]) {
+//            [self.SpecialTableView.footer endRefreshing];
+//            
+//        }
         if (page>=totalPage) {
             [self.tableView.footer endRefreshing];
-            
         }
         
     } failure:^(NSError *error) {
@@ -119,7 +131,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.dataArray.count;
     
     
     
@@ -136,9 +148,8 @@
     }
     if (self.dataArray.count > 0) {
         cell = [[GongTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-        //        cell.coModel = self.BidCouponDataArray[indexPath.row];
-        //        cell.view.image =[UIImage imageNamed:@"daishiyon@2x"];
-        //        cell.priceLabel.textColor=[UIColor colorWithRed:58/256.0 green:147/256.0 blue:223.0/256.0 alpha:1];
+            cell.gongModel = self.dataArray[indexPath.row];
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
@@ -146,6 +157,9 @@
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    AmentxqController *amentVC=[[AmentxqController alloc]init];
+    amentVC.gonModel=self.dataArray[indexPath.row];
+    [self.navigationController pushViewController:amentVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

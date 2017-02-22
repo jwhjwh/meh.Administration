@@ -42,6 +42,7 @@
 #import "ZxdObject.h"
 #import "ELNAlerTool.h"
 #import "ZYJHeadLineModel.h"
+#import "UIButton+WebCache.h"
 #define USER_DEFAULTS [NSUserDefaults standardUserDefaults]
 #define FILE_MANAGER  [NSFileManager defaultManager]
 #define RGBNav  colorWithRed:155/256.0 green:89/256.0 blue:183/256.0 alpha:1

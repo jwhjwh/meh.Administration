@@ -20,25 +20,25 @@
     _logoImage=[[UIImageView alloc]init];
     _logoImage.layer.masksToBounds = YES;
     // 设置圆角半径
-    _logoImage.image=[UIImage imageNamed:@"tx100"];
     _logoImage.layer.cornerRadius =24.0f;
     [self addSubview:_logoImage];
     _timeLabel=[[UILabel alloc]init];
-    _timeLabel.text=@"2017-19-11 15:20";
+    
+    _timeLabel.textAlignment=NSTextAlignmentRight;
     _timeLabel.font=[UIFont systemFontOfSize:14];
     _timeLabel.textColor=[UIColor lightGrayColor];
     [self addSubview:_timeLabel];
     
     _titleLabel=[[UILabel alloc]init];
-    _titleLabel.text=@"fafdsfasdf";
+    
     [self addSubview:_titleLabel];
     _whoLabel=[[UILabel alloc]init];
-    _whoLabel.text=@"1212321341";
+  
     _whoLabel.font=[UIFont systemFontOfSize:14];
     _whoLabel.textColor=[UIColor lightGrayColor];
     [self addSubview:_whoLabel];
     _contLabel=[[UILabel alloc]init];
-  _contLabel.text=@"dfhasoifjskdajfbsahdiofjalksdfhsadfohsdaoifdsfsdfdsf";
+    _contLabel.font=[UIFont systemFontOfSize:16];
     _contLabel.numberOfLines=0;
     [self addSubview:_contLabel];
     [_logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -80,8 +80,18 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-  
 }
-
+-(void)setGongModel:(GongModel *)gongModel{
+    _titleLabel.text=gongModel.title;
+    NSString *timeStr = [gongModel.time substringWithRange:NSMakeRange(5,11)];
+    _timeLabel.text=timeStr;
+    _contLabel.text=gongModel.content;
+      [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImageUrl,gongModel.url]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    if (gongModel.roleId ==1) {
+          _whoLabel.text=@"来自老板";
+    } else if (gongModel.roleId == 7){
+         _whoLabel.text=@"来自行政";
+    }
+    
+}
 @end

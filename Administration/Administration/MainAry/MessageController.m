@@ -46,14 +46,15 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        NSLog(@"%@",responseObject );
         self.dataArray = [NSMutableArray array];
-        NSArray *array=[responseObject valueForKey:@""];
+        NSArray *array=[responseObject valueForKey:@"Sums"];
         for (NSDictionary *dic in array) {
             mesgeModel *model=[[mesgeModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [self.dataArray addObject:model];
+            
         }
+    
         [self.tableView reloadData];
     } failure:^(NSError *error) {
         
@@ -69,7 +70,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.dataArray.count;
 
 
     
@@ -96,6 +97,8 @@
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
 }
 
 
