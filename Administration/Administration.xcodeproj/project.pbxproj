@@ -179,6 +179,8 @@
 		62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */; };
 		62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2711E56D1C300F657DB /* ManagementViewController.m */; };
 		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
+		F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AB1E5DB9AE00ABA6EF /* MessageView.m */; };
+		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
 		F736D1651E589245003A1A39 /* GongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F736D1641E589245003A1A39 /* GongTableViewCell.m */; };
 		F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F736D1671E589288003A1A39 /* MesgeTableViewCell.m */; };
 		F767DBE81E5B1B08000D4FB7 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F767DBD31E5B1B08000D4FB7 /* MJRefreshComponent.m */; };
@@ -508,6 +510,10 @@
 		62EBA2711E56D1C300F657DB /* ManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagementViewController.m; sourceTree = "<group>"; };
 		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
 		F711583D1E548ED400E0B763 /* UIView+WLFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WLFrame.m"; sourceTree = "<group>"; };
+		F73320AA1E5DB9AE00ABA6EF /* MessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
+		F73320AB1E5DB9AE00ABA6EF /* MessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageView.m; sourceTree = "<group>"; };
+		F73320AD1E5DBE7E00ABA6EF /* mesagexqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesagexqCell.h; sourceTree = "<group>"; };
+		F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesagexqCell.m; sourceTree = "<group>"; };
 		F736D1631E589245003A1A39 /* GongTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GongTableViewCell.h; sourceTree = "<group>"; };
 		F736D1641E589245003A1A39 /* GongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GongTableViewCell.m; sourceTree = "<group>"; };
 		F736D1661E589288003A1A39 /* MesgeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MesgeTableViewCell.h; sourceTree = "<group>"; };
@@ -799,6 +805,8 @@
 				1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */,
 				1F45878E1E5D2DB6001BD9B3 /* MessagexqController.h */,
 				1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */,
+				F73320AA1E5DB9AE00ABA6EF /* MessageView.h */,
+				F73320AB1E5DB9AE00ABA6EF /* MessageView.m */,
 				F736D1621E5891EE003A1A39 /* TableViewCell */,
 				1F6E31431E5448A1006069ED /* NoticeView */,
 				1F6E31391E54397A006069ED /* ZxdBtnview */,
@@ -1317,6 +1325,8 @@
 				F736D1641E589245003A1A39 /* GongTableViewCell.m */,
 				F736D1661E589288003A1A39 /* MesgeTableViewCell.h */,
 				F736D1671E589288003A1A39 /* MesgeTableViewCell.m */,
+				F73320AD1E5DBE7E00ABA6EF /* mesagexqCell.h */,
+				F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */,
 				1F3786191E5AE31400CAD616 /* modle */,
 			);
 			path = TableViewCell;
@@ -1564,6 +1574,7 @@
 				62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */,
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,
 				62656B961E5295D70085A2BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */,
 				62656BDF1E5295E50085A2BD /* MBProgressHUD.m in Sources */,
 				62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */,
 				1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */,
@@ -1632,6 +1643,7 @@
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				62656CDD1E52A6600085A2BD /* UIImage+GIF.m in Sources */,
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
+				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
