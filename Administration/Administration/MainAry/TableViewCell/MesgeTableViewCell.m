@@ -102,7 +102,7 @@
                || [model.tableName isEqualToString:@"ClerkWeekSumReport"]) {
         _contLabel.text=@"周总结有新的动态";
     }
-    if ([model.flag isEqual:@"1"]) {
+    if (model.flag==1) {
         _logeImage.image=[UIImage imageNamed:@"baobiaoguanli"];
         _titleLabel.text=@"报表管理";
     }else{

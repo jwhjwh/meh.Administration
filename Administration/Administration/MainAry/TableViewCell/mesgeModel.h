@@ -10,7 +10,7 @@
 
 @interface mesgeModel : NSObject
 //判断
-@property (nonatomic,retain)NSString *flag;
+@property (nonatomic,assign)int flag;
 //判断显示年月周总结
 @property (nonatomic,retain)NSString *tableName;
 //截取时间
