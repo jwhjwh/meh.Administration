@@ -13,6 +13,10 @@
     UITableView *tableview;
 }
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
+
+@property (nonatomic,retain)UIButton *masgeButton; //编辑提交按钮
+
+@property (nonatomic,strong) UITextField *text1;//编辑
 @end
 
 @implementation EditDataViewController
@@ -23,7 +27,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+    [_masgeButton removeFromSuperview];
     self.tabBarController.tabBar.hidden=NO;
 }
 - (void)viewDidLoad {
@@ -37,14 +41,36 @@
 }
 -(void)InterTableUI
 {
-    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
-
+    _masgeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _masgeButton.frame = CGRectMake(Scree_width - 12-36,4,40,36);
+    _masgeButton.tag=1;
+    [_masgeButton addTarget:self action:@selector(masgeClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_masgeButton setTitle:@"编辑" forState:UIControlStateNormal];
+   
+    [self.navigationController.navigationBar addSubview:_masgeButton];
     
+    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
     tableview.scrollEnabled =YES;
-
     tableview.dataSource=self;
     tableview.delegate =self;
     [self.view addSubview:tableview];
+    
+    
+}
+-(void)masgeClick:(UIButton*)sender{
+    
+    
+    if (sender.tag==2) {
+        sender.tag=1;
+        [_masgeButton setTitle:@"编辑" forState:UIControlStateNormal];
+        NSLog(@"🐷🐷🐷🐷伟昊");
+    }else{
+        sender.tag=2;
+        [_masgeButton setTitle:@"完成" forState:UIControlStateNormal];
+        
+        
+        NSLog(@"🐷伟昊");
+    }
 }
 
 -(void)loadDataFromServer{
@@ -52,47 +78,39 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],};
-    NSLog(@"---------------------%@--%@",dic[@"appkey"],dic[@"usersid"]);
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _InterNameAry=[NSMutableArray array];
-        
       if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-
               EditModel *model = [[EditModel alloc]init];
               [model setValuesForKeysWithDictionary:responseObject[@"userInfo"]];
-          
-          /**account;//账号
-           *rname;//职位
-           *brandName;//所属品牌
-           *name;//真实姓名
-           *birthday;//出生年月
-           *age;//年龄
-           *idNo;//身份证号
-           *address;//现居地址
-           *wcode;//微信
-           *qcode;//qq号
-           *interests;//兴趣爱好
-           *sdasd;//个性签名
-           *roleId;//职位id*/
-          _InterNameAry = [[NSMutableArray alloc]initWithObjects:model.account,model.rname,model.brandName,model.name,model.birthday,model.account,model.idNo,model.address,model.wcode,model.qcode,model.interests,model.sdasd,model.roleId ,nil];
-//          _InterNameAry = [[NSMutableArray alloc]initWithObjects:model.account,model.rname,model.brandName,model.name,model.birthday,model.account,model.idNo,model.address,model.wcode,model.qcode,model.interests,model.sdasd,model.roleId ,nil];
-          
+          model.birthday = [model.birthday substringToIndex:10];
+          if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
+              
+              
+              NSArray *arr=@[model.account,model.rname,model.brandName,];
+              NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
+              NSArray *arr2=@[model.account,model.wcode,model.qcode];
+              NSArray *arr3=@[model.interests,model.sdasd];
+              _InterNameAry = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
+          }else{
+              NSArray *arr=@[model.account,model.rname];
+              NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
+              NSArray *arr2=@[model.account,model.wcode,model.qcode];
+              NSArray *arr3=@[model.interests,model.sdasd];
+              _InterNameAry = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
+          }
           [tableview reloadData];
        } else {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];
        }
-     
     }
-    
                failure:^(NSError *error) {
-        
               }
                  view:self.view MBPro:YES];
-    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return 5;
+    return _InterNameAry.count+1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -133,36 +151,47 @@
          }else if (1 == indexPath.section){
              if (0 == indexPath.row) {
                 cell.textLabel.text = @"账号";
+                
                  }else if (1 == indexPath.row){
                     cell.textLabel.text = @"职位";
+                    
                  }else if (2 == indexPath.row){
                      cell.textLabel.text = @"所属品牌";
+                    
                  }
             }else if (2 == indexPath.section){
                 if (0 == indexPath.row) {
                     cell.textLabel.text = @"真实姓名";
+                    
                 } else if (1 == indexPath.row) {
                     cell.textLabel.text = @"出生日期";
+                    
                 }else if (2 == indexPath.row){
                     cell.textLabel.text = @"年龄";
+                   
                 }else if (3 == indexPath.row){
                     cell.textLabel.text = @"身份证号";
+                    
                 }else if (4 == indexPath.row){
                     cell.textLabel.text = @"现住地址";
+                    
                 }
             }else if (3 == indexPath.section){
                 if (0 == indexPath.row) {
                     cell.textLabel.text = @"手机号";
+                    
                 }else if (1 == indexPath.row){
                     cell.textLabel.text = @"微信号";
-                }else {
+                                   }else {
                     cell.textLabel.text = @"QQ号";
-                }
+                                    }
             }else{
                 if (0 == indexPath.row) {
                     cell.textLabel.text =@"兴趣爱好";
+                   
                 }else{
                     cell.textLabel.text  = @"个性签名";
+                    
                 }
             }
     if ([cell.textLabel.text  isEqual: @"头像"]) {
@@ -174,22 +203,33 @@
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [tableview addSubview:TXImage];
-        NSLog(@"加上图片了么");
         
     };
     if (indexPath.section >=1) {
         CGRect labelRect2 = CGRectMake(150, 0, self.view.bounds.size.width-150, 50);
-        UITextField *text1 = [[UITextField alloc] initWithFrame:labelRect2];
-        text1.backgroundColor=[UIColor whiteColor];
+        _text1 = [[UITextField alloc] initWithFrame:labelRect2];
+        _text1.backgroundColor=[UIColor whiteColor];
         if ([cell.textLabel.text isEqual: @"身份证号"]) {
-            text1.placeholder =@"必填";
+            _text1.placeholder =@"必填";
         }
-        text1.font = [UIFont boldSystemFontOfSize:15.6f];
-        text1.clearButtonMode = UITextFieldViewModeWhileEditing;
-        text1.adjustsFontSizeToFitWidth = YES;
+        _text1.font = [UIFont boldSystemFontOfSize:15.6f];
+        _text1.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _text1.adjustsFontSizeToFitWidth = YES;
+        _text1.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+        [cell addSubview:_text1];
+        _text1.enabled = NO;
+        _text1.userInteractionEnabled = NO;
         
-        text1.text = _InterNameAry[indexPath.section];
-        [cell addSubview:text1];
+        for (int a = 0;a<_InterNameAry.count;a++) {
+            _text1.tag = a;
+            
+        }
+        
+        
+    
+    
+        
+       
     }
     
        return cell;
@@ -231,6 +271,7 @@
         }
     }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

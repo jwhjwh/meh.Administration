@@ -31,31 +31,31 @@ address = "\U6cb3\U5317\U7701\U77f3\U5bb6\U5e84\U5e02\U8f9b\U96c6\U5e02\U738b\U5
  wcode = mateng;  微信
 
  */
-@property (strong,nonatomic) NSString *account;//账号
+@property (strong,nonatomic) NSString *account;   //账号
 
-@property (strong,nonatomic) NSString *rname;//职位
+@property (strong,nonatomic) NSString *rname;     //职位
 
-@property (strong,nonatomic) NSString *brandName;//所属品牌
+@property (strong,nonatomic) NSString *brandName; //所属品牌
 
-@property (strong,nonatomic) NSString *name;//真实姓名
+@property (strong,nonatomic) NSString *name;      //真实姓名
 
-@property (strong,nonatomic) NSString *birthday;//出生年月
+@property (strong,nonatomic) NSString *birthday;  //出生年月
 
-@property (strong,nonatomic) NSString *age;//年龄
+@property (strong,nonatomic) NSString *age;       //年龄
 
-@property (strong,nonatomic) NSString *idNo;//身份证号
+@property (strong,nonatomic) NSString *idNo;      //身份证号
 
-@property (strong,nonatomic) NSString *address;//现居地址
+@property (strong,nonatomic) NSString *address;   //现居地址
 
-@property (strong,nonatomic) NSString *wcode;//微信
+@property (strong,nonatomic) NSString *wcode;     //微信
 
-@property (strong,nonatomic) NSString *qcode;//qq号
+@property (strong,nonatomic) NSString *qcode;      //qq号
 
-@property (strong,nonatomic) NSString *interests;//兴趣爱好
+@property (strong,nonatomic) NSString *interests; //兴趣爱好
 
-@property (strong,nonatomic) NSString *sdasd;//个性签名
+@property (strong,nonatomic) NSString *sdasd;     //个性签名
 
-@property (strong,nonatomic) NSString *roleId;//职位id
+@property (strong,nonatomic) NSString *roleId;     //职位id
 
 
 
