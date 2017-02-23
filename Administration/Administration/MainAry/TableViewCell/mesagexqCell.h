@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface mesagexqCell : UITableViewCell
-
+@property (nonatomic,retain)UILabel *biaoLabel;
+@property (nonatomic,retain)UIButton *button;
+@property (nonatomic,retain)UITextView *TextField;
 @end

@@ -18,7 +18,11 @@
 @end
 
 @implementation PersonnelViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     int a = _roleld.intValue;
@@ -42,19 +46,24 @@
     [self ManafementUI];
     self.view.backgroundColor = [UIColor whiteColor];
    [self setExtraCellLineHidden:self.tableView];
-    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     
 }
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void)ManafementUI{
+    //
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64,self.view.bounds.size.width,self.view.bounds.size.height-64) style:UITableViewStylePlain];
-    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    
     [self.view addSubview:self.tableView];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"PersonneTableViewCell" bundle:nil] forCellReuseIdentifier:@"CARRY"];
 
 
@@ -111,7 +120,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0;
+    return 52.0;
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
@@ -120,19 +129,15 @@
     [tableView setTableFooterView:view];
     
 }
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   PersonModel *model =self.InterNameAry[indexPath.row];
+   UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:model.icon];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

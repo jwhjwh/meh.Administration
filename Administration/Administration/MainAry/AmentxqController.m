@@ -37,7 +37,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     _scrollView=[[UIScrollView alloc]init];
-    _scrollView.showsVerticalScrollIndicator = NO;;
+    _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     _logoImage=[[UIImageView alloc]init];
     _logoImage.layer.masksToBounds = YES;

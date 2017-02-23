@@ -93,10 +93,18 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   mesgeModel *model=self.dataArray[indexPath.row];
     MessagexqController *messageVC =[[MessagexqController alloc]init];
-    messageVC.flagStr=[NSString stringWithFormat:@"%d",model.flag];
+   NSString *tabStr =[NSString stringWithFormat:@"%@",model.tableName];
     messageVC.IdStr=[NSString stringWithFormat:@"%@",model.ID];
     messageVC.remarkStr=[NSString stringWithFormat:@"%@",model.remark];
-
+    
+    if([tabStr  hasPrefix:@"Clerk"]){
+        messageVC.flagStr=@"4";
+    } else if ([tabStr  hasPrefix:@"Market"]){
+        messageVC.flagStr=@"2";
+    }else if ([tabStr  hasPrefix:@"Secre"]){
+        messageVC.flagStr=@"6";
+    }
+    
     if ([model.tableName isEqualToString:@"MarketDayReport"]|| [model.tableName isEqualToString:@"ClerkDayReport"]
         || [model.tableName isEqualToString:@"SecretaryDayReport"]) {
         messageVC.codeStr=@"2";

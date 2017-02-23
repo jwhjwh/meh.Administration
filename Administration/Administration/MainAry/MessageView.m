@@ -26,11 +26,11 @@
     CGFloat selfWidth=self.frame.size.width;
     CGFloat selfHeight=self.frame.size.height;
     //创建一个UILable 并添加到self
-    self.label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, selfWidth/3, selfHeight)];
+    self.label=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 60, selfHeight)];
    
     [self addSubview:self.label];
     //创建一个UITextField 并添加到self
-    self.textField=[[UITextField alloc]initWithFrame:CGRectMake(selfWidth/3, 0, selfWidth/3*2, selfHeight)];
+    self.textField=[[UITextField alloc]initWithFrame:CGRectMake(70, 0, Scree_width-70, selfHeight)];
     [self addSubview:self.textField];
     self.view=[[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-1, Scree_width, 1)];
     self.view.backgroundColor=[UIColor blackColor];
