@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LVModel.h"
 @interface ZJLXRTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *TXImage;//头像
 @property (weak, nonatomic) IBOutlet UILabel *NameLabel;//姓名
 @property (weak, nonatomic) IBOutlet UILabel *TelLabel;//电话
 @property (weak, nonatomic) IBOutlet UILabel *TimeLabel;//时间
+@property (nonatomic,retain)LVModel *model;
 @end

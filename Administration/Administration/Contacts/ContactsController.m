@@ -7,6 +7,8 @@
 //
 
 #import "ContactsController.h"
+#import "LVModel.h"
+#import "LVFmdbTool.h"
 #define Start_X 10.0f           // 第一个按钮的X坐标
 #define Start_Y 50.0f           // 第一个按钮的Y坐标
 #define Width_Space 20.0f        // 2个按钮之间的横间距
@@ -27,7 +29,10 @@
 @implementation ContactsController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+   NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
+    self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
+    [self.ZJLXTable reloadData];
+    NSLog(@"%lu",(unsigned long)self.dataArray.count);
     self.tabBarController.tabBar.hidden=NO;
 }
 - (void)viewDidLoad {
@@ -144,11 +149,12 @@
     ZJLXRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE"forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.model=self.dataArray[indexPath.row];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 30;
+    return 35;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;

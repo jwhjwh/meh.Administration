@@ -21,4 +21,10 @@
     // Configure the view for the selected state
 }
 
+-(void)setModel:(LVModel *)model{
+     NSLog(@"%@,==%@, --%@",model.name,model.Call,model.image);
+    self.NameLabel.text=model.name;
+    self.TelLabel.text=model.Call;
+   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.image];
+}
 @end

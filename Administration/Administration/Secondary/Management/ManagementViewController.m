@@ -8,6 +8,7 @@
 
 #import "ManagementViewController.h"
 #import "EditDataViewController.h"
+#import "LVFmdbTool.h"
 @interface ManagementViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
@@ -30,7 +31,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setExtraCellLineHidden:tableview];
     _InterNameAry = [[NSArray alloc]initWithObjects:@"个人信息",@"退出当前帐号",nil];
-    // Do any additional setup after loading the view.
+   
 }
 
 -(void)ManafementUI{
@@ -154,6 +155,7 @@
         [USER_DEFAULTS  setObject:@"" forKey:@"token"];
         ViewController *VC= [[ViewController alloc]init];
         [self presentViewController:VC animated:YES completion:nil];
+        [LVFmdbTool deleteData:nil];
     }
     
 }

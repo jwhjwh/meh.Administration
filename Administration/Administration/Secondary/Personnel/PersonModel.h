@@ -21,13 +21,13 @@
  state = "<null>";
  
  */
-@property (strong,nonatomic) NSString *account;//手机号
+@property (assign,nonatomic) NSInteger account;//手机号
 
 @property (strong,nonatomic) NSString *icon;//头像
 
 @property (strong,nonatomic) NSString *name;// 姓名
 
-@property (strong,nonatomic) NSString * nameid;//用户id
+@property (strong,nonatomic) NSString *nameid;//用户id
 
 @property (strong,nonatomic) NSString *roleld;//人员类型
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0102081E5FC09600802571 /* LVFmdbTool.m */; };
+		1F01020C1E5FC0C300802571 /* LVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F01020B1E5FC0C300802571 /* LVModel.m */; };
+		1F0102101E5FDEC300802571 /* ZJLXRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F01020F1E5FDEC300802571 /* ZJLXRTableViewCell.xib */; };
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
@@ -19,7 +22,6 @@
 		1F4DBB521E58420800733CF7 /* fanhui.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB511E58420800733CF7 /* fanhui.png */; };
 		1F4DBB551E58426700733CF7 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4DBB541E58426700733CF7 /* MessageController.m */; };
 		1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52081D1E5579E7001DE4C2 /* ZJLXRTableViewCell.m */; };
-		1F5208201E5579E7001DE4C2 /* ZJLXRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F52081E1E5579E7001DE4C2 /* ZJLXRTableViewCell.xib */; };
 		1F5208221E557A4E001DE4C2 /* ss_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5208211E557A4E001DE4C2 /* ss_ico01.png */; };
 		1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5208241E5590A8001DE4C2 /* ZYJHeadLineView.m */; };
 		1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5208261E5590A8001DE4C2 /* ZYJHeadLineModel.m */; };
@@ -222,6 +224,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F0102071E5FC09600802571 /* LVFmdbTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LVFmdbTool.h; sourceTree = "<group>"; };
+		1F0102081E5FC09600802571 /* LVFmdbTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LVFmdbTool.m; sourceTree = "<group>"; };
+		1F01020A1E5FC0C300802571 /* LVModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LVModel.h; sourceTree = "<group>"; };
+		1F01020B1E5FC0C300802571 /* LVModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LVModel.m; sourceTree = "<group>"; };
+		1F01020F1E5FDEC300802571 /* ZJLXRTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLXRTableViewCell.xib; sourceTree = "<group>"; };
 		1F37861A1E5AE34400CAD616 /* mesgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesgeModel.h; sourceTree = "<group>"; };
 		1F37861B1E5AE34400CAD616 /* mesgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesgeModel.m; sourceTree = "<group>"; };
 		1F3E7BC21E5BD6B1005E5A45 /* GongModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GongModel.h; sourceTree = "<group>"; };
@@ -241,7 +248,6 @@
 		1F4DBB541E58426700733CF7 /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 		1F52081C1E5579E7001DE4C2 /* ZJLXRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJLXRTableViewCell.h; sourceTree = "<group>"; };
 		1F52081D1E5579E7001DE4C2 /* ZJLXRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJLXRTableViewCell.m; sourceTree = "<group>"; };
-		1F52081E1E5579E7001DE4C2 /* ZJLXRTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLXRTableViewCell.xib; sourceTree = "<group>"; };
 		1F5208211E557A4E001DE4C2 /* ss_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ss_ico01.png; sourceTree = "<group>"; };
 		1F5208231E5590A8001DE4C2 /* ZYJHeadLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYJHeadLineView.h; sourceTree = "<group>"; };
 		1F5208241E5590A8001DE4C2 /* ZYJHeadLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYJHeadLineView.m; sourceTree = "<group>"; };
@@ -638,6 +644,10 @@
 				1F59AF2F1E5EE16C0000722A /* FMDB.h */,
 				1F59AF301E5EE16C0000722A /* FMResultSet.h */,
 				1F59AF311E5EE16C0000722A /* FMResultSet.m */,
+				1F0102071E5FC09600802571 /* LVFmdbTool.h */,
+				1F0102081E5FC09600802571 /* LVFmdbTool.m */,
+				1F01020A1E5FC0C300802571 /* LVModel.h */,
+				1F01020B1E5FC0C300802571 /* LVModel.m */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -880,7 +890,7 @@
 				62656CE51E52AB2E0085A2BD /* ContactsController.m */,
 				1F52081C1E5579E7001DE4C2 /* ZJLXRTableViewCell.h */,
 				1F52081D1E5579E7001DE4C2 /* ZJLXRTableViewCell.m */,
-				1F52081E1E5579E7001DE4C2 /* ZJLXRTableViewCell.xib */,
+				1F01020F1E5FDEC300802571 /* ZJLXRTableViewCell.xib */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -1531,6 +1541,7 @@
 				1F5745691E56F45A00E4A47C /* tx23.png in Resources */,
 				62656D561E52B5700085A2BD /* yonghuming.png in Resources */,
 				6218D0601E4E95FB00299989 /* LaunchScreen.storyboard in Resources */,
+				1F0102101E5FDEC300802571 /* ZJLXRTableViewCell.xib in Resources */,
 				62656D521E52B5700085A2BD /* denglutioao.png in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
@@ -1567,7 +1578,6 @@
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
 				1F59AF211E5E76750000722A /* tjpco01.png in Resources */,
-				1F5208201E5579E7001DE4C2 /* ZJLXRTableViewCell.xib in Resources */,
 				62656D4E1E52B5700085A2BD /* Inder1.png in Resources */,
 				62656D4D1E52B5700085A2BD /* yuanhuan_03.png in Resources */,
 				1F4DBB4B1E5828B400733CF7 /* baobiaoguanli.png in Resources */,
@@ -1634,6 +1644,7 @@
 				62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */,
 				1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */,
 				6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */,
+				1F01020C1E5FC0C300802571 /* LVModel.m in Sources */,
 				62656C4F1E529BC10085A2BD /* IQNSArray+Sort.m in Sources */,
 				62656CD61E52A6600085A2BD /* SDWebImageCompat.m in Sources */,
 				1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1659,6 +1670,7 @@
 				6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */,
 				62656CD51E52A6600085A2BD /* SDImageCacheConfig.m in Sources */,
 				62EBA2561E56CB8600F657DB /* VersionViewController.m in Sources */,
+				1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */,
 				F767DBE91E5B1B08000D4FB7 /* MJRefreshConst.m in Sources */,
 				62656CD91E52A6600085A2BD /* SDWebImageDownloaderOperation.m in Sources */,
 				62656B901E5295D70085A2BD /* MASConstraint.m in Sources */,

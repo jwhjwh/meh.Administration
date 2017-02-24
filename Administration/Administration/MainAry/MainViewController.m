@@ -149,8 +149,6 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSLog(@"===+%@,===%@",urlStr,appKeyStr);
-    NSLog(@"%@",USER_DEFAULTS);
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
       NSArray *arr= [responseObject valueForKey:@"logoImg"];

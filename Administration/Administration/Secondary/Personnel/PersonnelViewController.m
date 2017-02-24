@@ -9,12 +9,14 @@
 #import "PersonnelViewController.h"
 #import "PersonneTableViewCell.h"
 #import "PersonModel.h"
+#import "LVModel.h"
+#import "LVFmdbTool.h"
 @interface PersonnelViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (nonatomic,strong)UITableView *tableView;
-
+@property (nonatomic,assign)int a;
 @end
 
 @implementation PersonnelViewController
@@ -25,8 +27,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    int a = _roleld.intValue;
-    switch (a) {
+    _a = _roleld.intValue;
+    switch (_a) {
         case 2:
             self.navigationItem.title=@"市场人员";
             break;
@@ -99,7 +101,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PersonneTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CARRY" forIndexPath:indexPath];
-    PersonModel *model= _InterNameAry[indexPath.section];
+    PersonModel *model= _InterNameAry[indexPath.row];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     
     [cell loadDataFromModel:model];
@@ -109,14 +111,11 @@
 
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
-{
-    return _InterNameAry.count;
-}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 
 {
-    return 1;
+    return _InterNameAry.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -130,14 +129,42 @@
     
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   PersonModel *model =self.InterNameAry[indexPath.row];
-   UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:model.icon];
+{   PersonModel *pmodel =self.InterNameAry[indexPath.row];
+    
+   
+    //首先,需要获取沙盒路径
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    // 拼接图片名为"currentImage.png"的路径
+    NSString *imageFilePath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"currentImage%d%ld.png",_a,indexPath.row]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString: [NSString stringWithFormat:@"%@%@",KURLHeader,pmodel.icon]]];
+    //转换为图片保存到以上的沙盒路径中
+    UIImage * currentImage = [UIImage imageWithData:data];
+    //其中参数0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
+    [UIImageJPEGRepresentation(currentImage, 0.5) writeToFile:imageFilePath  atomically:YES];
+    NSString * imgData = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"currentImage%d%ld.png",_a,indexPath.row]];
+    NSLog(@"====++++++%@",imgData);
+    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@", pmodel.nameid];
 
-    NSLog(@"%@",model.icon);
+    NSArray *modals = [LVFmdbTool queryData:fuzzyQuerySql];
+    if (modals.count>0) {
+        NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
+        [LVFmdbTool deleteData:delesql];
+    }
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData];
+        BOOL isInsert =  [LVFmdbTool insertModel:models];
+    if (isInsert) {
+        
+     NSLog(@"插入数据成功");
+        
+    } else {
+        NSLog(@"插入数据失败");
+    }
+    
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 
