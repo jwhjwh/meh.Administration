@@ -56,6 +56,22 @@
 #define KURLImageUrl @"http://192.168.1.129:8080/ReportManagement/"
 
 #define logokey @"JWHKJ"
+
+//------------------修改密码界面---------------------------
+
+//字体
+#define FONT(Font) [UIFont systemFontOfSize:Font]
+//自适应宽高
+#define ADAPTATION_WIDTH(Width) [UIScreen mainScreen].bounds.size.width * (Width) / 414
+#define ADAPTATION_HEIGHT(Height) [UIScreen mainScreen].bounds.size.height * (Height) / 736
+
+//颜色
+#define  GetColor(RED,GREEN,BLUE,ALPHAl) [UIColor colorWithRed:RED / 255.0 green:GREEN / 255.0 blue:BLUE / 255.0 alpha:ALPHAl]
+
+
+
+
+
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
