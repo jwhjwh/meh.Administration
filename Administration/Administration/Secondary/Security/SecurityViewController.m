@@ -106,12 +106,13 @@
         [_alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             
             textField.backgroundColor = [UIColor colorWithRed:252.0/35 green:255.0/123 blue:255.0/198 alpha:1];
-            _Emailstr = textField.text;
+            
             UIAlertAction *aa = [UIAlertAction actionWithTitle:c style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
+               
+
             }];
             UIAlertAction *bb = [UIAlertAction actionWithTitle:d style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+                 _Emailstr = textField.text;
                 [self emailNTW];
             }];
             
@@ -136,6 +137,7 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"emails":_Emailstr};
+    NSLog(@"%@",dic);
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请前往邮箱进行验证" andInterval:1.0];
