@@ -132,6 +132,8 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   PersonModel *model =self.InterNameAry[indexPath.row];
    UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:model.icon];
+
+    NSLog(@"%@",model.icon);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
