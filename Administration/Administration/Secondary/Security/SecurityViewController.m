@@ -7,8 +7,8 @@
 //
 
 #import "SecurityViewController.h"
-#import "LockSettingViewController.h"
-
+#import "LockSettingViewController.h"//手势锁
+#import "ModifyViewController.h"//修改密码
 @interface SecurityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
@@ -16,6 +16,8 @@
 
 @property (strong,nonatomic) NSArray *InterNameAry;
 @property (strong,nonnull) NSString *BDStr;
+@property (strong,nonatomic) NSString *Emailstr;
+@property(nonatomic,strong)UIAlertController *alert;
 @end
 
 @implementation SecurityViewController
@@ -83,21 +85,71 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *a = NSLocalizedString(@"修改邮箱地址", nil);
+    NSString *b = NSLocalizedString(@"如果你改了邮箱地址，你需要对邮箱地址重新进行验证", nil);
+    NSString *c = NSLocalizedString(@"取消绑定", nil);
+    NSString *d = NSLocalizedString(@"申请绑定", nil);
+
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row == 0)
     {
         [self.navigationController pushViewController:[[LockSettingViewController alloc] init] animated:YES];
     }
-
     
+    else if (indexPath.row == 1){
+        [self.navigationController pushViewController:[[ModifyViewController alloc]init] animated:YES];
+    }else
+    {
+        self.alert = [UIAlertController alertControllerWithTitle:a message:b preferredStyle:UIAlertControllerStyleAlert];
+        [_alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            
+            textField.backgroundColor = [UIColor colorWithRed:252.0/35 green:255.0/123 blue:255.0/198 alpha:1];
+            _Emailstr = textField.text;
+            UIAlertAction *aa = [UIAlertAction actionWithTitle:c style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *bb = [UIAlertAction actionWithTitle:d style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+                [self emailNTW];
+            }];
+            
+            [self.alert addAction:aa];
+            [self.alert addAction:bb];
+        }];
+        
+        
+        [self presentViewController:_alert animated:YES completion:nil];
+
+    }
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
+}
+-(void)emailNTW{
+    NSString *uStr =[NSString stringWithFormat:@"%@user/bindingemail.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"emails":_Emailstr};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请前往邮箱进行验证" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"邮箱已经被注册" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"3000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"邮件发送失败" andInterval:1.0];
+        }else
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新发送" andInterval:1.0];
+        }
+    } failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -13,7 +13,7 @@
 
 -(void)loadDataFromModel:(PersonModel *)model
 {
-    NSString *uStr =[NSString stringWithFormat:@"%@user/findAllUser.action%@",KURLHeader,model.icon];
+    NSString *uStr =[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon];
     [self.TXImage sd_setImageWithURL:[NSURL URLWithString:uStr]placeholderImage:[UIImage imageNamed:@"tx100"]];
     self.NameLabel.text = model.name;
     self.TelLabel.text = model.account;
