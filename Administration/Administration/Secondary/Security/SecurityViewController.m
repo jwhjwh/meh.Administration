@@ -113,6 +113,7 @@
             }];
             UIAlertAction *bb = [UIAlertAction actionWithTitle:d style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                  _Emailstr = textField.text;
+               
                 [self emailNTW];
             }];
             

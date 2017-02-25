@@ -12,10 +12,15 @@
 
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-    
+    if ([value isEqualToString:@"nil"]) {
+        value = @"1";
+        return ;
+    }
     
     
 }
+
+
 //kvc取值操作  取值误操作
 -(instancetype)valueForUndefinedKey:(NSString *)key
 {
