@@ -264,9 +264,13 @@
         CGRect labelRect2 = CGRectMake(150, 0, self.view.bounds.size.width-150, 50);
         _text1 = [[UITextField alloc] initWithFrame:labelRect2];
         _text1.backgroundColor=[UIColor whiteColor];
-        if ([cell.textLabel.text isEqual: @"身份证号"]) {
-            _text1.placeholder =@"必填";
+        
+        if (_Open == YES) {
+            if ([cell.textLabel.text isEqual: @"身份证号"]) {
+                _text1.placeholder =@"必填";
+            }
         }
+        
         _text1.font = [UIFont boldSystemFontOfSize:15.6f];
         _text1.clearButtonMode = UITextFieldViewModeWhileEditing;
         _text1.adjustsFontSizeToFitWidth = YES;
