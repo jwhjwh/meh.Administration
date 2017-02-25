@@ -89,8 +89,6 @@
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [tableview addSubview:TXImage];
-        NSLog(@"加上图片了么");
-        
     };
     return cell;
     

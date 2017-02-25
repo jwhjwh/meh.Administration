@@ -24,12 +24,12 @@ static FMDatabase *_fmdb;
     [_fmdb open];
     
 #warning 必须先打开数据库才能创建表。。。否则提示数据库没有打开
-    [_fmdb executeUpdate:@"CREATE TABLE IF NOT EXISTS t_modals(id INTEGER PRIMARY KEY, name TEXT NOT NULL, Call TEXT NOT NULL, ID_No TEXT NOT NULL,image TEXT  NOT NULL,time TEXT NOT NULL)"];
+    [_fmdb executeUpdate:@"CREATE TABLE IF NOT EXISTS t_modals(id INTEGER PRIMARY KEY, name TEXT NOT NULL, Call TEXT NOT NULL, ID_No TEXT NOT NULL,image TEXT  NOT NULL,time TEXT NOT NULL,roleld TEXT NOT NULL)"];
    
 }
 
 + (BOOL)insertModel:(LVModel *)model {
-    NSString *insertSql =  [NSString stringWithFormat:@"INSERT INTO t_modals(name, Call, ID_No,image,time) VALUES ('%@', '%@', '%@','%@','%@')",model.name,model.Call,model.ID_No,model.image,model.time];
+    NSString *insertSql =  [NSString stringWithFormat:@"INSERT INTO t_modals(name, Call, ID_No,image,time,roleld) VALUES ('%@', '%@', '%@','%@','%@','%@')",model.name,model.Call,model.ID_No,model.image,model.time,model.roleld];
     return [_fmdb executeUpdate:insertSql];
 }
 
@@ -48,8 +48,9 @@ static FMDatabase *_fmdb;
         NSString *Call = [set stringForColumn:@"Call"];
         NSString *ID_No = [set stringForColumn:@"ID_No"];
         NSString *image =[set stringForColumn:@"image"];
-         NSString *time =[set stringForColumn:@"time"];
-        LVModel *modal = [LVModel modalWith:name call:Call no:ID_No image:image time:time];
+        NSString *time =[set stringForColumn:@"time"];
+        NSString *roleld =[set stringForColumn:@"roleld"];
+        LVModel *modal = [LVModel modalWith:name call:Call no:ID_No image:image time:time roleld:roleld];
         [arrM addObject:modal];
     }
     

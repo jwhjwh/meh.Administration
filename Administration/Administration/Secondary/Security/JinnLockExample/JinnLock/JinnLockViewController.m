@@ -406,7 +406,7 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
             break;
         case JinnLockAppearModePresent:
         {
-            [self dismissViewControllerAnimated:NO completion:nil];
+             [ZxdObject rootController];
         }
             break;
         default:

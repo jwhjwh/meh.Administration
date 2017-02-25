@@ -10,6 +10,9 @@
 		1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0102081E5FC09600802571 /* LVFmdbTool.m */; };
 		1F01020C1E5FC0C300802571 /* LVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F01020B1E5FC0C300802571 /* LVModel.m */; };
 		1F0102121E6036AB00802571 /* ZJLXRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */; };
+		1F33F1191E611528000733F8 /* inftionxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1181E611528000733F8 /* inftionxqController.m */; };
+		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
+		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
@@ -232,6 +235,12 @@
 		1F01020A1E5FC0C300802571 /* LVModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LVModel.h; sourceTree = "<group>"; };
 		1F01020B1E5FC0C300802571 /* LVModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LVModel.m; sourceTree = "<group>"; };
 		1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLXRTableViewCell.xib; sourceTree = "<group>"; };
+		1F33F1171E611528000733F8 /* inftionxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionxqController.h; sourceTree = "<group>"; };
+		1F33F1181E611528000733F8 /* inftionxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionxqController.m; sourceTree = "<group>"; };
+		1F33F11A1E61179F000733F8 /* inftionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionTableViewCell.h; sourceTree = "<group>"; };
+		1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionTableViewCell.m; sourceTree = "<group>"; };
+		1F33F11D1E613875000733F8 /* AlertViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewExtension.h; sourceTree = "<group>"; };
+		1F33F11E1E613875000733F8 /* AlertViewExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewExtension.m; sourceTree = "<group>"; };
 		1F37861A1E5AE34400CAD616 /* mesgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesgeModel.h; sourceTree = "<group>"; };
 		1F37861B1E5AE34400CAD616 /* mesgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesgeModel.m; sourceTree = "<group>"; };
 		1F3E7BC21E5BD6B1005E5A45 /* GongModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GongModel.h; sourceTree = "<group>"; };
@@ -1002,6 +1011,8 @@
 		62656BE41E5296390085A2BD /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				1F33F11D1E613875000733F8 /* AlertViewExtension.h */,
+				1F33F11E1E613875000733F8 /* AlertViewExtension.m */,
 				62656BE51E5296390085A2BD /* ELNAlerTool.h */,
 				62656BE61E5296390085A2BD /* ELNAlerTool.m */,
 			);
@@ -1343,6 +1354,10 @@
 			children = (
 				62EBA25A1E56CBBE00F657DB /* PersonnelViewController.h */,
 				62EBA25B1E56CBBE00F657DB /* PersonnelViewController.m */,
+				1F33F1171E611528000733F8 /* inftionxqController.h */,
+				1F33F1181E611528000733F8 /* inftionxqController.m */,
+				1F33F11A1E61179F000733F8 /* inftionTableViewCell.h */,
+				1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */,
 				6200D6941E5BDF600014F9F3 /* PersonModel.h */,
 				6200D6951E5BDF600014F9F3 /* PersonModel.m */,
 				6200D68E1E5BDA760014F9F3 /* PersonneTableViewCell.h */,
@@ -1655,6 +1670,7 @@
 				F767DBE81E5B1B08000D4FB7 /* MJRefreshComponent.m in Sources */,
 				1F6E313E1E5439C2006069ED /* MenuCell.m in Sources */,
 				1F6E313F1E5439C2006069ED /* YHJBtnView.m in Sources */,
+				1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */,
 				62656CDE1E52A6600085A2BD /* UIImage+MultiFormat.m in Sources */,
 				62EBA2601E56CC1500F657DB /* SearchViewController.m in Sources */,
 				62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */,
@@ -1748,6 +1764,7 @@
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,
+				1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */,
 				62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */,
 				62656C581E529BC10085A2BD /* IQBarButtonItem.m in Sources */,
 				1F4DBB501E583BB200733CF7 /* GonggaoxqController.m in Sources */,
@@ -1762,6 +1779,7 @@
 				62656CD31E52A6600085A2BD /* NSImage+WebCache.m in Sources */,
 				62656BE71E5296390085A2BD /* ELNAlerTool.m in Sources */,
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
+				1F33F1191E611528000733F8 /* inftionxqController.m in Sources */,
 				1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */,
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,

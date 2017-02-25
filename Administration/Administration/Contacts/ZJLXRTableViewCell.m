@@ -12,7 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    _TXImage.layer.masksToBounds = YES;
+    _TXImage.layer.cornerRadius =22.5f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
