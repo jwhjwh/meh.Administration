@@ -8,7 +8,7 @@
 
 #import "EditDataViewController.h"
 #import "EditModel.h"
-
+#import "NSDictionary+DeleteNull.h"
 
 @interface EditDataViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -96,7 +96,8 @@
         _InterNameAry=[NSMutableArray array];
       if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
               EditModel *model = [[EditModel alloc]init];
-              [model setValuesForKeysWithDictionary:responseObject[@"userInfo"]];
+              [model setValuesForKeysWithDictionary: [NSDictionary changeType:responseObject[@"userInfo"]]];
+        
           model.birthday = [model.birthday substringToIndex:10];
            _Role = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
           NSLog(@"role::%@",_Role);

@@ -8,7 +8,10 @@
 
 #import "SearchViewController.h"
 #import "PersonneTableViewCell.h"
+#import "inftionxqController.h"
 #import "PersonModel.h"
+#import "LVModel.h"
+#import "LVFmdbTool.h"
 @interface SearchViewController ()<UITextViewDelegate, UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, retain) NSMutableArray *searchDataArray;
 @property (nonatomic, retain) UITableView *searchTableView;
@@ -98,6 +101,42 @@
     
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    PersonModel *pmodel =self.searchDataArray[indexPath.row];
+    //首先,需要获取沙盒路径
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    // 拼接图片名为"currentImage.png"的路径
+    NSString *imageFilePath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"Image%ld.png",indexPath.row]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString: [NSString stringWithFormat:@"%@%@",KURLHeader,pmodel.icon]]];
+    //转换为图片保存到以上的沙盒路径中
+    UIImage * currentImage = [UIImage imageWithData:data];
+    //其中参数0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
+    [UIImageJPEGRepresentation(currentImage, 0.5) writeToFile:imageFilePath  atomically:YES];
+    NSString * imgData = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"Image%ld.png",indexPath.row]];
+    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@",pmodel.nameid];
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM/dd hh:mm"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    NSArray *modals = [LVFmdbTool queryData:fuzzyQuerySql];
+    if (modals.count>0) {
+        NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
+        [LVFmdbTool deleteData:delesql];
+    }
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.roleId];
+    BOOL isInsert =  [LVFmdbTool insertModel:models];
+    if (isInsert) {
+        
+        NSLog(@"插入数据成功");
+        
+    } else {
+        NSLog(@"插入数据失败");
+    }
+    inftionxqController *imftionVC=[[inftionxqController alloc]init];
+    LVModel *lmodel=self.searchDataArray[indexPath.row];
+    imftionVC.roleld=lmodel.roleld;
+    [self.navigationController pushViewController:imftionVC animated:YES];
+}
 -(void)upDataSearchSpecialOffe{
     NSString *uStr =[NSString stringWithFormat:@"%@user/findAllUser.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -105,7 +144,6 @@
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"key":self.searchBar.text};
     
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-       
         _searchDataArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *resuAry = responseObject[@"userList"];
@@ -127,6 +165,7 @@
                   view:self.view MBPro:YES];
 
 }
+
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
     UIView *view = [UIView new];

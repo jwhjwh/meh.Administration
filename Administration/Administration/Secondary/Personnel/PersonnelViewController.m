@@ -8,6 +8,7 @@
 
 #import "PersonnelViewController.h"
 #import "PersonneTableViewCell.h"
+#import "inftionxqController.h"
 #import "PersonModel.h"
 #import "LVModel.h"
 #import "LVFmdbTool.h"
@@ -44,8 +45,9 @@
         default:
             break;
     }
-    [self loadDataFromServer];
+    
     [self ManafementUI];
+    [self loadDataFromServer];
     self.view.backgroundColor = [UIColor whiteColor];
    [self setExtraCellLineHidden:self.tableView];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -152,7 +154,7 @@
         NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
         [LVFmdbTool deleteData:delesql];
     }
-    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString];
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.roleId];
         BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {
         
@@ -161,7 +163,9 @@
     } else {
         NSLog(@"插入数据失败");
     }
-    
+    inftionxqController *imftionVC=[[inftionxqController alloc]init];
+    imftionVC.roleld=pmodel.roleId;
+    [self.navigationController pushViewController:imftionVC animated:YES];
 
 }
 - (void)didReceiveMemoryWarning {

@@ -7,6 +7,8 @@
 //
 
 #import "ContactsController.h"
+#import "inftionxqController.h"
+
 #import "LVModel.h"
 #import "LVFmdbTool.h"
 #define Start_X 10.0f           // 第一个按钮的X坐标
@@ -32,7 +34,6 @@
    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
     [self.ZJLXTable reloadData];
-    NSLog(@"%lu",(unsigned long)self.dataArray.count);
     self.tabBarController.tabBar.hidden=NO;
 }
 - (void)viewDidLoad {
@@ -154,12 +155,17 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 35;
+    return 45;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    inftionxqController *imftionVC=[[inftionxqController alloc]init];
+    LVModel *lmodel=self.dataArray[indexPath.row];
+    imftionVC.roleld=lmodel.roleld;
+    [self.navigationController pushViewController:imftionVC animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

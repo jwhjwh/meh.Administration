@@ -20,7 +20,10 @@
 @end
 
 @implementation IntercalateController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"设置";
@@ -89,8 +92,6 @@
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [tableview addSubview:TXImage];
-        NSLog(@"加上图片了么");
-        
     };
     return cell;
     
