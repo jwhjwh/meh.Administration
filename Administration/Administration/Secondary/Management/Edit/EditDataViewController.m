@@ -8,6 +8,8 @@
 
 #import "EditDataViewController.h"
 #import "EditModel.h"
+
+
 @interface EditDataViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
@@ -17,6 +19,12 @@
 @property (nonatomic,retain)UIButton *masgeButton; //编辑提交按钮
 
 @property (nonatomic,strong) UITextField *text1;//编辑
+
+@property (nonnull,strong)NSString *Role;
+
+@property (nonatomic,assign) BOOL hide;
+@property (nonatomic,assign) BOOL Open;
+
 @end
 
 @implementation EditDataViewController
@@ -33,6 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"编辑资料";
+     _Open = NO;
     [self InterTableUI];
     [self loadDataFromServer];
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -63,12 +72,16 @@
     if (sender.tag==2) {
         sender.tag=1;
         [_masgeButton setTitle:@"编辑" forState:UIControlStateNormal];
+        _Open = NO;
+        
+        _text1.userInteractionEnabled  = NO;
         NSLog(@"🐷🐷🐷🐷伟昊");
     }else{
         sender.tag=2;
         [_masgeButton setTitle:@"完成" forState:UIControlStateNormal];
         
-        
+        _Open = YES;
+          _text1.userInteractionEnabled  = YES;
         NSLog(@"🐷伟昊");
     }
 }
@@ -79,14 +92,45 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        NSLog(@"+++++++++++%@",responseObject);
         _InterNameAry=[NSMutableArray array];
       if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
               EditModel *model = [[EditModel alloc]init];
               [model setValuesForKeysWithDictionary:responseObject[@"userInfo"]];
           model.birthday = [model.birthday substringToIndex:10];
+           _Role = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
+          NSLog(@"role::%@",_Role);
+         int roleId = [_Role intValue];
+          switch (roleId) {
+              case 0:
+                  model.rname = @"老板";
+                  break;
+              case 2:
+                  model.rname = @"市场美导";
+                  break;
+              case 3:
+                  model.rname = @"内勤";
+                  break;
+              case 4:
+                  model.rname = @"物流";
+                  break;
+              case 5:
+                  model.rname = @"业务人员";
+                  break;
+              case 6:
+                  model.rname = @"品牌经理";
+                  break;
+              case 7:
+                  model.rname = @"行政";
+                  break;
+              case 8:
+                  model.rname = @"业务经理";
+                  break;
+                  
+              default:
+                  break;
+          }
           if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
-              
-              
               NSArray *arr=@[model.account,model.rname,model.brandName,];
               NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
               NSArray *arr2=@[model.account,model.wcode,model.qcode];
@@ -114,17 +158,18 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    EditModel *model = [[EditModel alloc]init];
-
+    
     switch (section) {
         case 0:
             return 1;
             break;
         case 1:
-            if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
+            if ([_Role isEqualToString:@"6"]||[_Role isEqualToString:@"2"]) {
                 return 3;
-            }
+            }else{
             return 2;
+            }
+            
             break;
         case 2:
             return 5;
@@ -157,7 +202,6 @@
                     
                  }else if (2 == indexPath.row){
                      cell.textLabel.text = @"所属品牌";
-                    
                  }
             }else if (2 == indexPath.section){
                 if (0 == indexPath.row) {
@@ -194,7 +238,18 @@
                     
                 }
             }
-    if ([cell.textLabel.text  isEqual: @"头像"]) {
+//    if ([_Role isEqualToString:@"6"]||[_Role isEqualToString:@"2"]) {
+//        NSArray *ary1 = [[NSArray alloc]initWithObjects:@"头像",@"账号",@"职位",@"所属品牌",@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址",@"手机号",@"微信号",@"QQ号",@"兴趣爱好",@"个性签名", nil];
+//        cell.textLabel.text = ary1[indexPath.section][indexPath.row];
+//    }else{
+//        NSArray *ary2 =[[NSArray alloc]initWithObjects:@"头像",@"账号",@"职位",@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址",@"手机号",@"微信号",@"QQ号",@"兴趣爱好",@"个性签名", nil];
+//        
+//        cell.textLabel.text = ary2[indexPath.section][indexPath.row];
+//
+//    
+//    }
+    
+        if ([cell.textLabel.text  isEqual: @"头像"]) {
         NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
         
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
@@ -217,8 +272,8 @@
         _text1.adjustsFontSizeToFitWidth = YES;
         _text1.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
         [cell addSubview:_text1];
-        _text1.enabled = NO;
-        _text1.userInteractionEnabled = NO;
+        //_text1.enabled = NO;
+        _text1.userInteractionEnabled =  _Open;
         
         for (int a = 0;a<_InterNameAry.count;a++) {
             _text1.tag = a;
@@ -253,7 +308,26 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (_Open == YES) {
+        
+        if (indexPath.section == 0) {
+           
+            NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
+            
+        }else if (indexPath.section == 2){
+             NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
+        }else if (indexPath.section == 3){
+             NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
+            
+        }else if (indexPath.section == 4){
+             NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
+        }else{
+             NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);        }
+
+        
+    }else{
+        
+    }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == tableview)
