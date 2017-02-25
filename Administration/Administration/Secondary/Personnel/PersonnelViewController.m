@@ -142,9 +142,11 @@
     //其中参数0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
     [UIImageJPEGRepresentation(currentImage, 0.5) writeToFile:imageFilePath  atomically:YES];
     NSString * imgData = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"currentImage%d%ld.png",_a,indexPath.row]];
-    NSLog(@"====++++++%@",imgData);
     NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@", pmodel.nameid];
-
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM/dd hh:mm"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
     NSArray *modals = [LVFmdbTool queryData:fuzzyQuerySql];
     if (modals.count>0) {
         NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];

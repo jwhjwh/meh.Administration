@@ -102,7 +102,7 @@
     NSString *timeStr = [_gonModel.time substringWithRange:NSMakeRange(5,11)];
     _timeLabel.text=timeStr;
     _contLabel.text=_gonModel.content;
-    [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImageUrl,_gonModel.url]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_gonModel.url]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     if (_gonModel.roleId ==1) {
         _whoLabel.text=@"来自老板";
     } else if (_gonModel.roleId == 7){

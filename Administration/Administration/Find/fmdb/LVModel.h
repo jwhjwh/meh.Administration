@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *ID_No;
 
 @property (nonatomic, retain)NSString *image;
-
-+ (instancetype)modalWith:(NSString *)name call:(NSString*)Call no:(NSString *)ID_No image:(NSString *)image;
+@property (nonatomic,retain)NSString *time;
++ (instancetype)modalWith:(NSString *)name call:(NSString*)Call no:(NSString *)ID_No image:(NSString *)image time:(NSString*)time;
 
 @end

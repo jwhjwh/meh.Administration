@@ -24,12 +24,12 @@ static FMDatabase *_fmdb;
     [_fmdb open];
     
 #warning 必须先打开数据库才能创建表。。。否则提示数据库没有打开
-    [_fmdb executeUpdate:@"CREATE TABLE IF NOT EXISTS t_modals(id INTEGER PRIMARY KEY, name TEXT NOT NULL, Call TEXT NOT NULL, ID_No TEXT NOT NULL,image TEXT  NOT NULL)"];
+    [_fmdb executeUpdate:@"CREATE TABLE IF NOT EXISTS t_modals(id INTEGER PRIMARY KEY, name TEXT NOT NULL, Call TEXT NOT NULL, ID_No TEXT NOT NULL,image TEXT  NOT NULL,time TEXT NOT NULL)"];
    
 }
 
 + (BOOL)insertModel:(LVModel *)model {
-    NSString *insertSql =  [NSString stringWithFormat:@"INSERT INTO t_modals(name, Call, ID_No,image) VALUES ('%@', '%@', '%@','%@')",model.name,model.Call,model.ID_No,model.image];
+    NSString *insertSql =  [NSString stringWithFormat:@"INSERT INTO t_modals(name, Call, ID_No,image,time) VALUES ('%@', '%@', '%@','%@','%@')",model.name,model.Call,model.ID_No,model.image,model.time];
     return [_fmdb executeUpdate:insertSql];
 }
 
