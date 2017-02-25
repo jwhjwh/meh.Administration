@@ -22,9 +22,9 @@
 }
 
 -(void)setModel:(LVModel *)model{
-     NSLog(@"%@,==%@, --%@",model.name,model.Call,model.image);
-    self.NameLabel.text=model.name;
-    self.TelLabel.text=model.Call;
+   self.NameLabel.text=model.name;
+   self.TelLabel.text=model.Call;
    self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.image];
+   self.TimeLabel.text=model.time;
 }
 @end

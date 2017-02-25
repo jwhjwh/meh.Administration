@@ -152,7 +152,7 @@
         NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
         [LVFmdbTool deleteData:delesql];
     }
-    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData];
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString];
         BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {
         

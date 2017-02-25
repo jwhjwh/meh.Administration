@@ -48,7 +48,8 @@ static FMDatabase *_fmdb;
         NSString *Call = [set stringForColumn:@"Call"];
         NSString *ID_No = [set stringForColumn:@"ID_No"];
         NSString *image =[set stringForColumn:@"image"];
-        LVModel *modal = [LVModel modalWith:name call:Call no:ID_No image:image];
+         NSString *time =[set stringForColumn:@"time"];
+        LVModel *modal = [LVModel modalWith:name call:Call no:ID_No image:image time:time];
         [arrM addObject:modal];
     }
     
