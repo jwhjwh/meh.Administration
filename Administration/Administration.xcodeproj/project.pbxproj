@@ -13,6 +13,7 @@
 		1F33F1191E611528000733F8 /* inftionxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1181E611528000733F8 /* inftionxqController.m */; };
 		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
 		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
+		1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1241E617820000733F8 /* NSDictionary+DeleteNull.m */; };
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
@@ -241,6 +242,8 @@
 		1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionTableViewCell.m; sourceTree = "<group>"; };
 		1F33F11D1E613875000733F8 /* AlertViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewExtension.h; sourceTree = "<group>"; };
 		1F33F11E1E613875000733F8 /* AlertViewExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewExtension.m; sourceTree = "<group>"; };
+		1F33F1231E617820000733F8 /* NSDictionary+DeleteNull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DeleteNull.h"; sourceTree = "<group>"; };
+		1F33F1241E617820000733F8 /* NSDictionary+DeleteNull.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DeleteNull.m"; sourceTree = "<group>"; };
 		1F37861A1E5AE34400CAD616 /* mesgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesgeModel.h; sourceTree = "<group>"; };
 		1F37861B1E5AE34400CAD616 /* mesgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesgeModel.m; sourceTree = "<group>"; };
 		1F3E7BC21E5BD6B1005E5A45 /* GongModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GongModel.h; sourceTree = "<group>"; };
@@ -944,6 +947,8 @@
 				62656BE41E5296390085A2BD /* Alert */,
 				62656BD91E5295E50085A2BD /* MBProgressHUD */,
 				62656B751E5295D70085A2BD /* Masonry */,
+				1F33F1231E617820000733F8 /* NSDictionary+DeleteNull.h */,
+				1F33F1241E617820000733F8 /* NSDictionary+DeleteNull.m */,
 			);
 			path = Find;
 			sourceTree = "<group>";
@@ -1755,6 +1760,7 @@
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
+				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,

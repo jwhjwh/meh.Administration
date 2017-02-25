@@ -20,7 +20,10 @@
 @end
 
 @implementation IntercalateController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"设置";
