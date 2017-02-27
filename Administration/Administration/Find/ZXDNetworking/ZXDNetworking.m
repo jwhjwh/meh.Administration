@@ -7,7 +7,6 @@
 //
 
 #import "ZXDNetworking.h"
-#import "MBProgressHUD.h"
 #import <CommonCrypto/CommonCrypto.h>
 #ifdef DEBUG
 #define PPLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

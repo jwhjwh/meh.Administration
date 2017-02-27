@@ -10,18 +10,32 @@
 #import "inftionTableViewCell.h"
 #import "AlertViewExtension.h"
 #import "EditModel.h"
-@interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate>
+#import "GBAlertView.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import "SJABHelper.h"
+///iOS 9的新框架
+#import <ContactsUI/ContactsUI.h>
+#define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
+@interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate,ABPeoplePickerNavigationControllerDelegate,CNContactPickerDelegate>
 {
      AlertViewExtension *alert;
 }
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
 @property (nonatomic,retain)NSArray *arr;
+@property (nonatomic,retain)NSString *logImage;//头像
+@property (nonatomic,retain)NSString *callNum;//电话
+@property (nonatomic,retain)NSString *callName;//姓名
 
 @end
 
 @implementation inftionxqController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"信息";
@@ -35,7 +49,7 @@
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];
-    [self loadDataFromServer ];
+    [self loadDataFromServer];
   
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -44,7 +58,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
+   
     return [_arr[section]count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -68,24 +82,56 @@
     }
     if (indexPath.section==0) {
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        [TXImage sd_setImageWithURL:[NSURL URLWithString:@"tx23"] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        [TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         TXImage.backgroundColor = [UIColor whiteColor];
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [cell addSubview:TXImage];
     }
-    if (indexPath.section==0&&indexPath.row==0) {
+    if (indexPath.section==3&&indexPath.row==0) {
         UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
-        [TXImage setImage:[UIImage imageNamed:@""] forState: UIControlStateNormal];
+        [TXImage setImage:[UIImage imageNamed:@"phone"] forState: UIControlStateNormal];
         [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
-        TXImage.frame=CGRectMake(self.view.bounds.size.width-80,cell.center.y, 40, 40);
+        TXImage.frame=CGRectMake(self.view.bounds.size.width-80,5, 40, 40);
         [cell addSubview:TXImage];
     }
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     
     cell.mingLabel.text=_arr[indexPath.section][indexPath.row];
-    cell.xingLabel.text=self.infoArray[indexPath.section][indexPath.row];
+    
+    if (indexPath.section>0) {
+        cell.xingLabel.text=[NSString stringWithFormat:@"%@",_infoArray[indexPath.section-1][indexPath.row]];
+    }
+    
     return cell;
+}
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section==3&&indexPath.row==0) {
+       
+        NSArray *titles = @[@"呼叫",@"添加到手机通讯录"];
+        
+        [GBAlertView showWithtTtles:titles itemIndex:^(NSInteger itemIndex) {
+            
+            if (itemIndex==0) {
+                NSString *num = [[NSString alloc]initWithFormat:@"telprompt://%@",_callNum];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
+            }else{
+                if ([SJABHelper existPhone:_callNum] == ABHelperExistSpecificContact)
+                {
+
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:[NSString stringWithFormat:@"手机号码：%@已存在通讯录",_callNum] andInterval:1.0];
+                }
+                else
+                {
+                    if ([SJABHelper addContactName:_callName phoneNum:_callNum withLabel:@"同事"])
+                    {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加到通讯录成功" andInterval:1.0];
+                    };
+                }
+                
+            }
+        }];
+    }
 }
 //打电话
 -(void)callIphone:(UIButton*)sender{
@@ -100,9 +146,9 @@
     if (btn.tag == 2000) {
         [alert removeFromSuperview];
     }else{
-//        NSString *num = [[NSString alloc]initWithFormat:@"telprompt://%@",isnumber];
-//        //而这个方法则打电话前先弹框 是否打电话 然后打完电话之后回到程序中 网上说这个方法可能不合法 无法通过审核
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
+        NSString *num = [[NSString alloc]initWithFormat:@"telprompt://%@",_callNum];
+        //而这个方法则打电话前先弹框 是否打电话 然后打完电话之后回到程序中 网上说这个方法可能不合法 无法通过审核
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
     }
 }
 -(void)buttonLiftItem{
@@ -112,13 +158,18 @@
     NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":_roleld};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":_IDStr};
+    NSLog(@"+==%@",dic);
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             EditModel *model = [[EditModel alloc]init];
-            [model setValuesForKeysWithDictionary:responseObject[@"userInfo"]];
+            [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
             model.birthday = [model.birthday substringToIndex:10];
+             _logImage=model.icon;
+            _callNum=[NSString stringWithFormat:@"%@",model.account];
+            _callName=model.name;
+         
             if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属品牌"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
@@ -126,17 +177,18 @@
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
-                _infoArray = [[NSMutableArray alloc]initWithObjects:@"",arr,arr1,arr2,arr3,nil];
+                _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
             }else{
                 _arr=@[@[@"头像"],@[@"账号",@"职位"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 NSArray *arr=@[model.account,model.rname];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
-                _infoArray = [[NSMutableArray alloc]initWithObjects:@"",arr,arr1,arr2,arr3,nil];
+                _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
             }
+        
             [_infonTableview reloadData];
-        } else  {
+        } else  { 
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];
         }
     }
@@ -144,12 +196,124 @@
                }
                   view:self.view MBPro:YES];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark ---- 调用系统通讯录
+- (void)JudgeAddressBookPower {
+    ///获取通讯录权限，调用系统通讯录
+    [self CheckAddressBookAuthorization:^(bool isAuthorized , bool isUp_ios_9) {
+        if (isAuthorized) {
+            [self callAddressBook:isUp_ios_9];
+        }else {
+            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
+        }
+    }];
+}
 
+- (void)CheckAddressBookAuthorization:(void (^)(bool isAuthorized , bool isUp_ios_9))block {
+    if (Is_up_Ios_9) {
+        CNContactStore * contactStore = [[CNContactStore alloc]init];
+        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined) {
+            [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * __nullable error) {
+                if (error)
+                {
+                    NSLog(@"Error: %@", error);
+                }
+                else if (!granted)
+                {
+                    
+                    block(NO,YES);
+                }
+                else
+                {
+                    block(YES,YES);
+                }
+            }];
+        }
+        else if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized){
+            block(YES,YES);
+        }
+        else {
+            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
+        }
+    }else {
+        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+        ABAuthorizationStatus authStatus = ABAddressBookGetAuthorizationStatus();
+        
+        if (authStatus == kABAuthorizationStatusNotDetermined)
+        {
+            ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error)
+                    {
+                        NSLog(@"Error: %@", (__bridge NSError *)error);
+                    }
+                    else if (!granted)
+                    {
+                        
+                        block(NO,NO);
+                    }
+                    else
+                    {
+                        block(YES,NO);
+                    }
+                });
+            });
+        }else if (authStatus == kABAuthorizationStatusAuthorized)
+        {
+            block(YES,NO);
+        }else {
+            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
+        }
+    }
+}
+
+- (void)callAddressBook:(BOOL)isUp_ios_9 {
+    if (isUp_ios_9) {
+        CNContactPickerViewController *contactPicker = [[CNContactPickerViewController alloc] init];
+        contactPicker.delegate = self;
+        contactPicker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+        [self presentViewController:contactPicker animated:YES completion:nil];
+    }else {
+        ABPeoplePickerNavigationController *peoplePicker = [[ABPeoplePickerNavigationController alloc] init];
+        peoplePicker.peoplePickerDelegate = self;
+        [self presentViewController:peoplePicker animated:YES completion:nil];
+        
+    }
+}
+
+#pragma mark -- CNContactPickerDelegate
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty {
+    CNPhoneNumber *phoneNumber = (CNPhoneNumber *)contactProperty.value;
+    [self dismissViewControllerAnimated:YES completion:^{
+        /// 联系人
+        NSString *text1 = [NSString stringWithFormat:@"%@%@",contactProperty.contact.familyName,contactProperty.contact.givenName];
+        /// 电话
+        NSString *text2 = phoneNumber.stringValue;
+        //        text2 = [text2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        NSLog(@"联系人：%@, 电话：%@",text1,text2);
+    }];
+}
+
+#pragma mark -- ABPeoplePickerNavigationControllerDelegate
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
+    
+    ABMultiValueRef valuesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
+    CFIndex index = ABMultiValueGetIndexForIdentifier(valuesRef,identifier);
+    CFStringRef value = ABMultiValueCopyValueAtIndex(valuesRef,index);
+    CFStringRef anFullName = ABRecordCopyCompositeName(person);
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        /// 联系人
+        NSString *text1 = [NSString stringWithFormat:@"%@",anFullName];
+        /// 电话
+        NSString *text2 = (__bridge NSString*)value;
+        //        text2 = [text2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        NSLog(@"联系人：%@, 电话：%@",text1,text2);
+    }];
+}
 
 @end

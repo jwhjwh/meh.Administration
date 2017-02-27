@@ -25,7 +25,7 @@
     return resDic;
 }
 
-//将NSDictionary中的Null类型的项目转化成@""
+//将NSArray中的Null类型的项目转化成@""
 +(NSArray *)nullArr:(NSArray *)myArr
 {
     NSMutableArray *resArr = [[NSMutableArray alloc] init];

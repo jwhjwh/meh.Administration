@@ -154,7 +154,7 @@
         NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
         [LVFmdbTool deleteData:delesql];
     }
-    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.roleId];
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.nameid];
         BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {
         
@@ -164,7 +164,7 @@
         NSLog(@"插入数据失败");
     }
     inftionxqController *imftionVC=[[inftionxqController alloc]init];
-    imftionVC.roleld=pmodel.roleId;
+    imftionVC.IDStr=pmodel.nameid;
     [self.navigationController pushViewController:imftionVC animated:YES];
 
 }

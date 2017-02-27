@@ -18,6 +18,9 @@
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
 		1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */; };
+		1F4A98EB1E63AEFC003492DF /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A98EA1E63AEFC003492DF /* phone.png */; };
+		1F4A98EE1E640103003492DF /* GBAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A98ED1E640103003492DF /* GBAlertView.m */; };
+		1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A98F11E6405D0003492DF /* SJABHelper.m */; };
 		1F4DBB471E57E01500733CF7 /* xx_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB461E57E01500733CF7 /* xx_ico01.png */; };
 		1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB481E5828B400733CF7 /* baogang.png */; };
 		1F4DBB4B1E5828B400733CF7 /* baobiaoguanli.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */; };
@@ -252,6 +255,11 @@
 		1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmentxqController.m; sourceTree = "<group>"; };
 		1F45878E1E5D2DB6001BD9B3 /* MessagexqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagexqController.h; sourceTree = "<group>"; };
 		1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagexqController.m; sourceTree = "<group>"; };
+		1F4A98EA1E63AEFC003492DF /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
+		1F4A98EC1E640103003492DF /* GBAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBAlertView.h; sourceTree = "<group>"; };
+		1F4A98ED1E640103003492DF /* GBAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBAlertView.m; sourceTree = "<group>"; };
+		1F4A98F01E6405D0003492DF /* SJABHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJABHelper.h; sourceTree = "<group>"; };
+		1F4A98F11E6405D0003492DF /* SJABHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJABHelper.m; sourceTree = "<group>"; };
 		1F4DBB461E57E01500733CF7 /* xx_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico01.png; sourceTree = "<group>"; };
 		1F4DBB481E5828B400733CF7 /* baogang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baogang.png; sourceTree = "<group>"; };
 		1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baobiaoguanli.png; sourceTree = "<group>"; };
@@ -632,6 +640,15 @@
 			name = modle;
 			sourceTree = "<group>";
 		};
+		1F4A98EF1E6405A8003492DF /* SJABHelper */ = {
+			isa = PBXGroup;
+			children = (
+				1F4A98F01E6405D0003492DF /* SJABHelper.h */,
+				1F4A98F11E6405D0003492DF /* SJABHelper.m */,
+			);
+			path = SJABHelper;
+			sourceTree = "<group>";
+		};
 		1F5745621E56C63F00E4A47C /* Class */ = {
 			isa = PBXGroup;
 			children = (
@@ -933,6 +950,7 @@
 		6218D0931E4EB9B900299989 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				1F4A98EF1E6405A8003492DF /* SJABHelper */,
 				1F59AF261E5EE16C0000722A /* fmdb */,
 				F767DBD01E5B1B08000D4FB7 /* MJRefresh */,
 				F711583B1E548E9D00E0B763 /* UIview+WLFrame */,
@@ -1020,6 +1038,8 @@
 				1F33F11E1E613875000733F8 /* AlertViewExtension.m */,
 				62656BE51E5296390085A2BD /* ELNAlerTool.h */,
 				62656BE61E5296390085A2BD /* ELNAlerTool.m */,
+				1F4A98EC1E640103003492DF /* GBAlertView.h */,
+				1F4A98ED1E640103003492DF /* GBAlertView.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -1208,6 +1228,7 @@
 		62656D171E52B5700085A2BD /* Intercalate */ = {
 			isa = PBXGroup;
 			children = (
+				1F4A98EA1E63AEFC003492DF /* phone.png */,
 				621A5C201E5843B50051C6CC /* banben100.png */,
 				1F5745681E56F45A00E4A47C /* tx23.png */,
 				62656D181E52B5700085A2BD /* Inder2.png */,
@@ -1627,6 +1648,7 @@
 				62656D471E52B5700085A2BD /* tianjia.png in Resources */,
 				1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */,
 				62656D6C1E52D29D0085A2BD /* 01.png in Resources */,
+				1F4A98EB1E63AEFC003492DF /* phone.png in Resources */,
 				62656D651E52B5700085A2BD /* zilianxiren.png in Resources */,
 				62656D481E52B5700085A2BD /* weixuanzhong.png in Resources */,
 				62EBA2331E56939300F657DB /* Contact3.png in Resources */,
@@ -1731,6 +1753,7 @@
 				1F803FF31E52F848005F53CE /* ZXDNetworking.m in Sources */,
 				62656C511E529BC10085A2BD /* IQUITextFieldView+Additions.m in Sources */,
 				62656CF51E52AF720085A2BD /* XCQ_tabbar.m in Sources */,
+				1F4A98EE1E640103003492DF /* GBAlertView.m in Sources */,
 				62656C531E529BC10085A2BD /* IQUIViewController+Additions.m in Sources */,
 				62656C5C1E529BC10085A2BD /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				62656C5A1E529BC10085A2BD /* IQTitleBarButtonItem.m in Sources */,
@@ -1756,6 +1779,7 @@
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
+				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
