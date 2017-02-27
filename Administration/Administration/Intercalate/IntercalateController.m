@@ -8,6 +8,7 @@
 
 #import "IntercalateController.h"
 #import "ManagementViewController.h"
+
 @interface IntercalateController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
@@ -15,6 +16,8 @@
 
 @property (strong,nonatomic) NSArray *InterNameAry;
 @property (nonatomic, strong) NSMutableArray *InterImageAry;
+
+
 
 
 @end
@@ -119,8 +122,26 @@
             break;
         case 1:{
             //账号安全
-            SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
-            [self.navigationController showViewController:SecurtyVC sender:nil];
+            NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
+            NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+            NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+            
+            NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+            [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                    NSDictionary *resuAry = responseObject[@"userInfo"];
+                    _emailYesOrNo = resuAry[@"email"];
+                    NSLog(@"email:%@",_emailYesOrNo);
+                    SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
+                    SecurtyVC.emailYes = _emailYesOrNo;
+                    [self.navigationController showViewController:SecurtyVC sender:nil];
+                }
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:YES];
+
+            
+            
         }
             break;
         case 2:{
@@ -146,6 +167,8 @@
     }
     
 }
+-(void)emailNetWork{
+    }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

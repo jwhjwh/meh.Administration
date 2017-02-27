@@ -10,4 +10,6 @@
 
 @interface SecurityViewController : UIViewController
 
+
+@property (nonatomic,strong) NSString *emailYes;
 @end
