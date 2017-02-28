@@ -9,12 +9,14 @@
 #import "PersonnelViewController.h"
 #import "PersonneTableViewCell.h"
 #import "inftionxqController.h"
+#import "SearchViewController.h"
 #import "PersonModel.h"
 #import "LVModel.h"
 #import "LVFmdbTool.h"
 @interface PersonnelViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 
+@property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,assign)int a;
@@ -62,9 +64,17 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)ManafementUI{
-    //
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64,self.view.bounds.size.width,self.view.bounds.size.height-64) style:UITableViewStylePlain];
+    //搜索按钮
+    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _sousuoBtn.frame =CGRectMake(10,70,self.view.frame.size.width-20,40);
+    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
+    [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    _sousuoBtn.layer.masksToBounds = YES;
+    _sousuoBtn.layer.cornerRadius = 8.0;
+    [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
+    [self.view addSubview:_sousuoBtn];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 134,self.view.bounds.size.width,self.view.bounds.size.height-134) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -77,7 +87,6 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"roleId":_roleld};
-  
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _InterNameAry=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -94,7 +103,6 @@
         }
 
     }
-     
         failure:^(NSError *error) {
         
     }
@@ -121,7 +129,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 52.0;
+    return 60;
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
@@ -167,6 +175,11 @@
     imftionVC.IDStr=pmodel.nameid;
     [self.navigationController pushViewController:imftionVC animated:YES];
 
+}
+-(void)Touchsearch{
+    SearchViewController *SearchVC = [[SearchViewController alloc]init];
+    SearchVC.roleId=_roleld;
+    [self.navigationController showViewController:SearchVC sender:nil];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -35,7 +35,8 @@
     self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight+49)];
     self.tableView .delegate = self;
     self.tableView .dataSource = self;
-    [self.view addSubview: self.tableView ];
+    [ZXDNetworking setExtraCellLineHidden:self.tableView];
+    [self.view addSubview: self.tableView];
     
     NSString *urlStr =[NSString stringWithFormat:@"%@marketReport/newInfo.action.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -86,7 +87,7 @@
 //        cell.view.image =[UIImage imageNamed:@"daishiyon@2x"];
 //        cell.priceLabel.textColor=[UIColor colorWithRed:58/256.0 green:147/256.0 blue:223.0/256.0 alpha:1];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-       
+      
     }
     return cell;
 }

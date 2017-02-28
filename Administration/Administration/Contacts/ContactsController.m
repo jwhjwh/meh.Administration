@@ -25,7 +25,6 @@
 @property (nonatomic,strong)NSMutableArray *dataArray;//数据源
 @property (nonatomic,strong)NSMutableArray *ImageAry;//各部门图片
 
-
 @end
 
 @implementation ContactsController
@@ -45,7 +44,7 @@
 }
 -(void)UIBtn{
     //搜索按钮
-    _sousuoBtn = [[UIButton alloc]init];
+    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
     _sousuoBtn.layer.masksToBounds = YES;
@@ -155,7 +154,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return 49;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;

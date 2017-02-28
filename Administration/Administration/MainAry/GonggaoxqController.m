@@ -43,13 +43,11 @@
     self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     self.tableView .delegate = self;
     self.tableView .dataSource = self;
+    [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview: self.tableView ];
-  
-    
     self.dataArray = [NSMutableArray array];
     [self getNetworkData:NO];
     page = 1;
-    
     __weak typeof(self) weakSelf = self;
     //默认【下拉刷新】
     [self.tableView addLegendHeaderWithRefreshingBlock:^{

@@ -39,9 +39,20 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     _InterNameAry = [[NSArray alloc]initWithObjects:@"手势密码锁定",@"修改密码",@"邮箱地址",nil];
+    NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     
-   
-    // Do any additional setup after loading the view.
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSDictionary *resuAry = responseObject[@"userInfo"];
+            _emailYes =[NSDictionary changeType:resuAry[@"email"]];
+            [tableview reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 
 
@@ -68,13 +79,13 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-        
+
     }
     cell.textLabel.text = _InterNameAry[indexPath.row];
     
     if ([cell.textLabel.text  isEqual: @"邮箱地址"]) {
        
-        if (_emailYes == nil || _emailYes == NULL ||[_emailYes isEqualToString:@""]) {
+        if ([_emailYes isEqualToString:@""]) {
             UILabel *BDLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 105, 40, 40)];
             BDLabel.text = @"未绑定";
             BDLabel.font = [UIFont boldSystemFontOfSize:10.6f];
@@ -122,7 +133,7 @@
         [self.navigationController pushViewController:[[ModifyViewController alloc]init] animated:YES];
     }else
     {
-        if (_emailYes == nil || _emailYes == NULL ||[_emailYes isEqualToString:@""]) {
+        if ([_emailYes isEqualToString:@""]) {
             self.alert = [UIAlertController alertControllerWithTitle:a message:b preferredStyle:UIAlertControllerStyleAlert];
             [_alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 

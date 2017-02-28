@@ -11,15 +11,15 @@
 #import "AlertViewExtension.h"
 #import "EditModel.h"
 #import "GBAlertView.h"
-#import <AddressBook/AddressBook.h>
-#import <AddressBookUI/AddressBookUI.h>
+
 #import "SJABHelper.h"
-///iOS 9的新框架
-#import <ContactsUI/ContactsUI.h>
+
+#import "DongImage.h"
 #define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
-@interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate,ABPeoplePickerNavigationControllerDelegate,CNContactPickerDelegate>
+@interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate>
 {
      AlertViewExtension *alert;
+    UIScrollView *_scrollView;
 }
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
@@ -27,6 +27,7 @@
 @property (nonatomic,retain)NSString *logImage;//头像
 @property (nonatomic,retain)NSString *callNum;//电话
 @property (nonatomic,retain)NSString *callName;//姓名
+@property (nonatomic,retain)UIImageView *TXImage;
 
 @end
 
@@ -45,7 +46,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+49) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];
@@ -62,7 +63,7 @@
     return [_arr[section]count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{ if (section == 0 ){
+{ if (section == 4 ){
     return 0;
 }
     return 10;
@@ -81,12 +82,17 @@
         cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     if (indexPath.section==0) {
-        UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        [TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
-        TXImage.backgroundColor = [UIColor whiteColor];
-        TXImage.layer.masksToBounds = YES;
-        TXImage.layer.cornerRadius = 20.0;//设置圆角
-        [cell addSubview:TXImage];
+       _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
+        [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        _TXImage.userInteractionEnabled=YES;
+        _TXImage.backgroundColor = [UIColor whiteColor];
+        _TXImage.layer.masksToBounds = YES;
+        _TXImage.layer.cornerRadius = 20.0;//设置圆角
+        [cell addSubview:_TXImage];
+        UITapGestureRecognizer *tapSingleGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewGestureAction:)];//添加单击的手势
+        tapSingleGR.numberOfTapsRequired = 1; //设置单击几次才触发方法
+        [_TXImage addGestureRecognizer:tapSingleGR];
+        
     }
     if (indexPath.section==3&&indexPath.row==0) {
         UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -203,119 +209,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark ---- 调用系统通讯录
-- (void)JudgeAddressBookPower {
-    ///获取通讯录权限，调用系统通讯录
-    [self CheckAddressBookAuthorization:^(bool isAuthorized , bool isUp_ios_9) {
-        if (isAuthorized) {
-            [self callAddressBook:isUp_ios_9];
-        }else {
-            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
-        }
-    }];
-}
 
-- (void)CheckAddressBookAuthorization:(void (^)(bool isAuthorized , bool isUp_ios_9))block {
-    if (Is_up_Ios_9) {
-        CNContactStore * contactStore = [[CNContactStore alloc]init];
-        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined) {
-            [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * __nullable error) {
-                if (error)
-                {
-                    NSLog(@"Error: %@", error);
-                }
-                else if (!granted)
-                {
-                    
-                    block(NO,YES);
-                }
-                else
-                {
-                    block(YES,YES);
-                }
-            }];
-        }
-        else if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized){
-            block(YES,YES);
-        }
-        else {
-            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
-        }
-    }else {
-        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-        ABAuthorizationStatus authStatus = ABAddressBookGetAuthorizationStatus();
-        
-        if (authStatus == kABAuthorizationStatusNotDetermined)
-        {
-            ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (error)
-                    {
-                        NSLog(@"Error: %@", (__bridge NSError *)error);
-                    }
-                    else if (!granted)
-                    {
-                        
-                        block(NO,NO);
-                    }
-                    else
-                    {
-                        block(YES,NO);
-                    }
-                });
-            });
-        }else if (authStatus == kABAuthorizationStatusAuthorized)
-        {
-            block(YES,NO);
-        }else {
-            NSLog(@"请到设置>隐私>通讯录打开本应用的权限设置");
-        }
-    }
-}
 
-- (void)callAddressBook:(BOOL)isUp_ios_9 {
-    if (isUp_ios_9) {
-        CNContactPickerViewController *contactPicker = [[CNContactPickerViewController alloc] init];
-        contactPicker.delegate = self;
-        contactPicker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
-        [self presentViewController:contactPicker animated:YES completion:nil];
-    }else {
-        ABPeoplePickerNavigationController *peoplePicker = [[ABPeoplePickerNavigationController alloc] init];
-        peoplePicker.peoplePickerDelegate = self;
-        [self presentViewController:peoplePicker animated:YES completion:nil];
-        
-    }
+-(void)imageViewGestureAction:(UIGestureRecognizer *)tap{
+   [DongImage showImage:_TXImage];
 }
-
-#pragma mark -- CNContactPickerDelegate
-- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty {
-    CNPhoneNumber *phoneNumber = (CNPhoneNumber *)contactProperty.value;
-    [self dismissViewControllerAnimated:YES completion:^{
-        /// 联系人
-        NSString *text1 = [NSString stringWithFormat:@"%@%@",contactProperty.contact.familyName,contactProperty.contact.givenName];
-        /// 电话
-        NSString *text2 = phoneNumber.stringValue;
-        //        text2 = [text2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        NSLog(@"联系人：%@, 电话：%@",text1,text2);
-    }];
-}
-
-#pragma mark -- ABPeoplePickerNavigationControllerDelegate
-- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
-    
-    ABMultiValueRef valuesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
-    CFIndex index = ABMultiValueGetIndexForIdentifier(valuesRef,identifier);
-    CFStringRef value = ABMultiValueCopyValueAtIndex(valuesRef,index);
-    CFStringRef anFullName = ABRecordCopyCompositeName(person);
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        /// 联系人
-        NSString *text1 = [NSString stringWithFormat:@"%@",anFullName];
-        /// 电话
-        NSString *text2 = (__bridge NSString*)value;
-        //        text2 = [text2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        NSLog(@"联系人：%@, 电话：%@",text1,text2);
-    }];
-}
-
 @end

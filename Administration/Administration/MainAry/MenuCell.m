@@ -19,7 +19,7 @@
 
 @end
 
-#define MenuH 160
+#define MenuH 190
 #define Num 1
 #define pageH 0
 @implementation MenuCell

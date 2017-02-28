@@ -14,6 +14,8 @@
 #define PPLog(...)
 #endif
 static ZXDNetworking *zxdworking=nil;
+//原始尺寸
+static CGRect oldframe;
 @implementation ZXDNetworking
 /**
  *  声明单例方法
@@ -89,7 +91,6 @@ static ZXDNetworking *zxdworking=nil;
     manager.requestSerializer.timeoutInterval = 30.f;
     //设置服务器返回结果的类型:JSON (AFJSONResponseSerializer,AFHTTPResponseSerializer)
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     
     return manager;
@@ -127,6 +128,13 @@ static ZXDNetworking *zxdworking=nil;
 +(NSString*)substringToIndexString:(NSString*)string{
    return  [string stringByAppendingString:[string substringToIndex:5]];
 }
-
+//  去除Cell多余的线
++(void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    
+}
 
 @end

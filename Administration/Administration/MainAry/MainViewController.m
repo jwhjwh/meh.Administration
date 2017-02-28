@@ -13,7 +13,7 @@
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
 #import "NoticeView.h"
-#define MenuH 160
+#define MenuH 190
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
 @property (nonatomic,retain)UIButton *logoImage;
@@ -77,7 +77,7 @@
     _masgeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _masgeButton.frame = CGRectMake(Scree_width - 12-36,4,36,36);
     [_masgeButton addTarget:self action:@selector(masgeClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_masgeButton setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
+    [_masgeButton setImage:[UIImage imageNamed:@"xx_ico1"] forState:UIControlStateNormal];
     [self.navigationController.navigationBar addSubview:_masgeButton];
     _numberLabel=[[UILabel alloc]initWithFrame:CGRectMake(_masgeButton.frame.size.width-6,1, 10, 10)];
     _numberLabel.layer.masksToBounds = YES;
@@ -91,7 +91,7 @@
 -(void)initData
 {
     int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
-    NSLog(@"+++====%d",str);
+   
     //判断角色的设定主题的现实
     
     switch (str) {
@@ -209,7 +209,7 @@
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
         make.top.mas_equalTo(self.view.mas_top).offset(0);
-        make.height.equalTo(self.view.mas_height).multipliedBy(3/8.f);
+        make.height.equalTo(self.view.mas_height).multipliedBy(1/3.f);
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -221,8 +221,8 @@
     [self.noticeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(12);
         make.right.mas_equalTo(self.view.mas_right).offset(-12);
-        make.top.mas_equalTo(self.tableView.mas_bottom).offset(10);
-        make.height.equalTo(self.view.mas_height).multipliedBy(1/8.f);
+        make.top.mas_equalTo(self.tableView.mas_bottom).offset(15);
+        make.height.equalTo(self.view.mas_height).multipliedBy(1/6.f);
     }];
   
 }

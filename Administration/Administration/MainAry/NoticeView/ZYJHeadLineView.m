@@ -58,7 +58,6 @@
     _dataArr = dataArr;
    
     ZYJHeadLineModel *model = _dataArr[count];
-   NSLog(@"dataArr-->%@",model.title);
     self.currentLabel.text = model.title;
 
 }
@@ -156,7 +155,7 @@
     self.currentLabel.text = model.title;
     self.currentLabel.textAlignment = NSTextAlignmentLeft;
     self.currentLabel.textColor = [UIColor blackColor];
-    self.currentLabel.font = [UIFont systemFontOfSize:12];
+    self.currentLabel.font = [UIFont systemFontOfSize:15];
     [self.currentView addSubview:self.currentLabel];
     
     
@@ -174,7 +173,7 @@
     self.hidenLabel.text = @"";
     self.hidenLabel.textAlignment = NSTextAlignmentLeft;
     self.hidenLabel.textColor = [UIColor blackColor];
-    self.hidenLabel.font = [UIFont systemFontOfSize:12];
+    self.hidenLabel.font = [UIFont systemFontOfSize:15];
     [self.hidenView addSubview:self.hidenLabel];
     
   

@@ -83,8 +83,8 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = _InterNameAry[indexPath.row];
-    
     cell.imageView.image = _InterImageAry[indexPath.row];
     
     CGSize itemSize = CGSizeMake(23, 23);
@@ -134,26 +134,9 @@
             break;
         case 1:{
             //账号安全
-            NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
-            NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-            NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-            
-            NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-            [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                    NSDictionary *resuAry = responseObject[@"userInfo"];
-                    _emailYesOrNo = resuAry[@"email"];
-                   
-                    SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
-                    SecurtyVC.emailYes = _emailYesOrNo;
-                    [self.navigationController showViewController:SecurtyVC sender:nil];
-                }
-            } failure:^(NSError *error) {
-                
-            } view:self.view MBPro:YES];
 
-            
-            
+            SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
+            [self.navigationController showViewController:SecurtyVC sender:nil];
         }
             break;
         case 2:{
@@ -212,44 +195,38 @@
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
+      NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
+     NSString *encodedImageStr = [pictureData base64EncodedStringWithOptions:0];
     [self dismissViewControllerAnimated:YES completion:nil];
     NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":   [USER_DEFAULTS objectForKey:@"roleId"]};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"1",@"file":encodedImageStr};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
-    NSLog(@"%@",dic);
     [manager POST:urlStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyMMddHHmm";
         NSString *fileName = [formatter stringFromDate:[NSDate date]];
         NSString *nameStr = @"file";
          [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
-        
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-     
-        
-        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+     [MBProgressHUD hideHUDForView: self.view animated:NO];        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
         NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
-        //              NSLog(@"头像===%@", dic);
         NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
-        [MBProgressHUD showHUDAddedTo:self.view animated:NO];
-        if ([status isEqualToString:@"1"]) {
-            NSString *msgStr = [NSString stringWithFormat:@"%@", [[dic valueForKey:@"data"] valueForKey:@"avatar"]];
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存头像成功" andInterval:1.0];
-          
+        if ([status isEqualToString:@"0000"]) {
+            NSString *msgStr = [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"] ];
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存头像成功" andInterval:1.0];
          [USER_DEFAULTS  setObject:msgStr forKey:@"logoImage"];
             _TXImage.image=self.goodPicture;
             [tableview reloadData];
         } else {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"头像上传失败" andInterval:1.0];
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"头像上传失败" andInterval:1.0];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -260,7 +237,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
-    // Dispose of any resources that can be recreated.
 }
 
 
