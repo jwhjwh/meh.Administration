@@ -11,7 +11,7 @@
 @interface IntercalateController : UIViewController
 
 
-
+@property (nonatomic,strong) NSString *emailYesOrNo;
 
 
 @end

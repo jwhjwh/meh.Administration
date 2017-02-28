@@ -8,19 +8,24 @@
 
 #import "EditDataViewController.h"
 #import "EditModel.h"
+#import "NSDictionary+DeleteNull.h"
+#import "PW_DatePickerView.h"
 
-
-@interface EditDataViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface EditDataViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate>
 {
     UITableView *tableview;
 }
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 
+@property (nonatomic,strong) PW_DatePickerView *PWpickerView;
+
 @property (nonatomic,retain)UIButton *masgeButton; //编辑提交按钮
 
 @property (nonatomic,strong) UITextField *text1;//编辑
 
-@property (nonnull,strong)NSString *Role;
+@property (nonatomic,strong)NSString *Role;
+
+@property (nonatomic,strong)NSString *RQiStr;
 
 @property (nonatomic,assign) BOOL hide;
 @property (nonatomic,assign) BOOL Open;
@@ -75,13 +80,22 @@
         _Open = NO;
         
         _text1.userInteractionEnabled  = NO;
+        [tableview reloadData];
         NSLog(@"🐷🐷🐷🐷伟昊");
     }else{
         sender.tag=2;
         [_masgeButton setTitle:@"完成" forState:UIControlStateNormal];
         
         _Open = YES;
-          _text1.userInteractionEnabled  = YES;
+        if (!(_text1.tag ==4)) {
+            
+            
+        }else{
+            
+        }
+         _text1.userInteractionEnabled  = YES;
+        [tableview reloadData];
+       
         NSLog(@"🐷伟昊");
     }
 }
@@ -265,9 +279,13 @@
         CGRect labelRect2 = CGRectMake(150, 0, self.view.bounds.size.width-150, 50);
         _text1 = [[UITextField alloc] initWithFrame:labelRect2];
         _text1.backgroundColor=[UIColor whiteColor];
-        if ([cell.textLabel.text isEqual: @"身份证号"]) {
-            _text1.placeholder =@"必填";
+        
+        if (_Open == YES) {
+            if ([cell.textLabel.text isEqual: @"身份证号"]) {
+                _text1.placeholder =@"必填";
+            }
         }
+        
         _text1.font = [UIFont boldSystemFontOfSize:15.6f];
         _text1.clearButtonMode = UITextFieldViewModeWhileEditing;
         _text1.adjustsFontSizeToFitWidth = YES;
@@ -310,14 +328,26 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_Open == YES) {
+        NSLog(@"%ld",(long)_text1.tag);
         
         if (indexPath.section == 0) {
            
             NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
             
         }else if (indexPath.section == 2){
-             NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
+            if (indexPath.row == 1) {
+                self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
+                self.PWpickerView.delegate = self;
+                [self.PWpickerView show];
+                
+                _text1.text = _RQiStr;
+                NSLog(@"%@",_text1.text);
+                
+            }
+            [tableview reloadData];
+            NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
         }else if (indexPath.section == 3){
+            
              NSLog(@"点的是第%ld组第%ld行",indexPath.section,(long)indexPath.row);
             
         }else if (indexPath.section == 4){
@@ -341,7 +371,12 @@
         }
     }
 }
-
+- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString
+{
+    
+    _RQiStr = [NSString stringWithFormat:@"%@",dateString];
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

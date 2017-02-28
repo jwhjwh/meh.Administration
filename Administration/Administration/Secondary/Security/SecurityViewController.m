@@ -9,15 +9,19 @@
 #import "SecurityViewController.h"
 #import "LockSettingViewController.h"//手势锁
 #import "ModifyViewController.h"//修改密码
+#import "EmailViewController.h"//解除绑定邮箱
+#import "IntercalateController.h"
+
 @interface SecurityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
 }
 
 @property (strong,nonatomic) NSArray *InterNameAry;
-@property (strong,nonnull) NSString *BDStr;
 @property (strong,nonatomic) NSString *Emailstr;
 @property(nonatomic,strong)UIAlertController *alert;
+
+
 @end
 
 @implementation SecurityViewController
@@ -28,14 +32,20 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     self.title=@"账号安全";
     [self ManafementUI];
-    self.view.backgroundColor = [UIColor whiteColor];
     [self setExtraCellLineHidden:tableview];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     _InterNameAry = [[NSArray alloc]initWithObjects:@"手势密码锁定",@"修改密码",@"邮箱地址",nil];
-    _BDStr = @"未绑定";
+    
+   
     // Do any additional setup after loading the view.
 }
+
+
+
 -(void)ManafementUI{
     tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 20,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
     tableview.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
@@ -63,14 +73,19 @@
     cell.textLabel.text = _InterNameAry[indexPath.row];
     
     if ([cell.textLabel.text  isEqual: @"邮箱地址"]) {
-        UILabel *BDLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 105, 40, 40)];
-        BDLabel.text = _BDStr;
-        BDLabel.font = [UIFont boldSystemFontOfSize:10.6f];
-        BDLabel.textColor = [UIColor RGBview];
-        [tableview addSubview:BDLabel];
+       
+        if (_emailYes == nil || _emailYes == NULL ||[_emailYes isEqualToString:@""]) {
+            UILabel *BDLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 105, 40, 40)];
+            BDLabel.text = @"未绑定";
+            BDLabel.font = [UIFont boldSystemFontOfSize:10.6f];
+            BDLabel.textColor = [UIColor RGBview];
+            [tableview addSubview:BDLabel];
+        }
         
-    };
-    //jwhdzkj
+            
+        };
+
+        //jwhdzkj
     return cell;
     
 }
@@ -106,28 +121,36 @@
         [self.navigationController pushViewController:[[ModifyViewController alloc]init] animated:YES];
     }else
     {
-        self.alert = [UIAlertController alertControllerWithTitle:a message:b preferredStyle:UIAlertControllerStyleAlert];
-        [_alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            
-            textField.backgroundColor = [UIColor colorWithRed:252.0/35 green:255.0/123 blue:255.0/198 alpha:1];
-            
-            UIAlertAction *aa = [UIAlertAction actionWithTitle:c style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-               
-
+        if (_emailYes == nil || _emailYes == NULL ||[_emailYes isEqualToString:@""]) {
+            self.alert = [UIAlertController alertControllerWithTitle:a message:b preferredStyle:UIAlertControllerStyleAlert];
+            [_alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                
+                textField.backgroundColor = [UIColor colorWithRed:252.0/35 green:255.0/123 blue:255.0/198 alpha:1];
+                
+                UIAlertAction *aa = [UIAlertAction actionWithTitle:c style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    
+                }];
+                UIAlertAction *bb = [UIAlertAction actionWithTitle:d style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    _Emailstr = textField.text;
+                    
+                    [self emailNTW];
+                }];
+                
+                [self.alert addAction:aa];
+                [self.alert addAction:bb];
             }];
-            UIAlertAction *bb = [UIAlertAction actionWithTitle:d style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                 _Emailstr = textField.text;
-               
-                [self emailNTW];
-            }];
             
-            [self.alert addAction:aa];
-            [self.alert addAction:bb];
-        }];
-        
-        
-        [self presentViewController:_alert animated:YES completion:nil];
+            
+            [self presentViewController:_alert animated:YES completion:nil];
 
+        }else{
+            EmailViewController *emailVc = [[EmailViewController alloc]init];
+            emailVc.emailStr =_emailYes;
+            [self.navigationController pushViewController:emailVc animated:YES];
+
+        }
+        
     }
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
@@ -140,9 +163,7 @@
     NSString *uStr =[NSString stringWithFormat:@"%@user/bindingemail.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"emails":_Emailstr};
-    NSLog(@"%@",dic);
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请前往邮箱进行验证" andInterval:1.0];
