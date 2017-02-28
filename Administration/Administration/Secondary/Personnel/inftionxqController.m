@@ -155,6 +155,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)loadDataFromServer{
+    
+    
     NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
