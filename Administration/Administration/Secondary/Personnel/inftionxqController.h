@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface inftionxqController : UIViewController
-@property (nonatomic,retain)NSString *roleld;
+
+@property (nonatomic,retain)NSString *IDStr;
 @end

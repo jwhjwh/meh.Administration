@@ -100,7 +100,6 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-       
         _InterNameAry=[NSMutableArray array];
       if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
               EditModel *model = [[EditModel alloc]init];
@@ -140,7 +139,7 @@
                   break;
           }
           if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
-              NSArray *arr=@[model.account,model.rname,model.brandName,];
+              NSArray *arr=@[model.account,model.rname,model.brandName];
               NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
               NSArray *arr2=@[model.account,model.wcode,model.qcode];
               NSArray *arr3=@[model.interests,model.sdasd];

@@ -134,7 +134,7 @@
     }
     inftionxqController *imftionVC=[[inftionxqController alloc]init];
     LVModel *lmodel=self.searchDataArray[indexPath.row];
-    imftionVC.roleld=lmodel.roleld;
+    imftionVC.IDStr=lmodel.roleld;
     [self.navigationController pushViewController:imftionVC animated:YES];
 }
 -(void)upDataSearchSpecialOffe{

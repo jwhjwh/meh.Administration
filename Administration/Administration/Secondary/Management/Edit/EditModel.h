@@ -55,7 +55,7 @@ address = "\U6cb3\U5317\U7701\U77f3\U5bb6\U5e84\U5e02\U8f9b\U96c6\U5e02\U738b\U5
 
 @property (strong,nonatomic) NSString *roleId;     //职位id
 
-
+@property (strong,nonatomic) NSString *icon;
 
 
 
