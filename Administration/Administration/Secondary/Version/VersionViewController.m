@@ -22,7 +22,11 @@
 @end
 
 @implementation VersionViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"版本信息";
@@ -90,6 +94,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
+    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     cell.textLabel.text = _InterNameAry[indexPath.row];
     if ([cell.textLabel.text  isEqual: @"版本更新"]) {
         [cell setAccessoryType:UITableViewCellAccessoryNone];

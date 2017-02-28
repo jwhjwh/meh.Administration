@@ -17,11 +17,12 @@
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
+		1F45719C1E654C1A008E4E34 /* DongImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F45719B1E654C1A008E4E34 /* DongImage.m */; };
+		1F4571A01E6571FA008E4E34 /* xx_ico1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F45719F1E6571FA008E4E34 /* xx_ico1.png */; };
 		1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */; };
 		1F4A98EB1E63AEFC003492DF /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4A98EA1E63AEFC003492DF /* phone.png */; };
 		1F4A98EE1E640103003492DF /* GBAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A98ED1E640103003492DF /* GBAlertView.m */; };
 		1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A98F11E6405D0003492DF /* SJABHelper.m */; };
-		1F4DBB471E57E01500733CF7 /* xx_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB461E57E01500733CF7 /* xx_ico01.png */; };
 		1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB481E5828B400733CF7 /* baogang.png */; };
 		1F4DBB4B1E5828B400733CF7 /* baobiaoguanli.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */; };
 		1F4DBB4D1E582D7000733CF7 /* mobaijilu.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DBB4C1E582D7000733CF7 /* mobaijilu.png */; };
@@ -255,6 +256,9 @@
 		1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GongModel.m; sourceTree = "<group>"; };
 		1F3E7BC51E5BED7F005E5A45 /* AmentxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmentxqController.h; sourceTree = "<group>"; };
 		1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmentxqController.m; sourceTree = "<group>"; };
+		1F45719A1E654C1A008E4E34 /* DongImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DongImage.h; sourceTree = "<group>"; };
+		1F45719B1E654C1A008E4E34 /* DongImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DongImage.m; sourceTree = "<group>"; };
+		1F45719F1E6571FA008E4E34 /* xx_ico1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico1.png; sourceTree = "<group>"; };
 		1F45878E1E5D2DB6001BD9B3 /* MessagexqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagexqController.h; sourceTree = "<group>"; };
 		1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagexqController.m; sourceTree = "<group>"; };
 		1F4A98EA1E63AEFC003492DF /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
@@ -262,7 +266,6 @@
 		1F4A98ED1E640103003492DF /* GBAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBAlertView.m; sourceTree = "<group>"; };
 		1F4A98F01E6405D0003492DF /* SJABHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJABHelper.h; sourceTree = "<group>"; };
 		1F4A98F11E6405D0003492DF /* SJABHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJABHelper.m; sourceTree = "<group>"; };
-		1F4DBB461E57E01500733CF7 /* xx_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico01.png; sourceTree = "<group>"; };
 		1F4DBB481E5828B400733CF7 /* baogang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baogang.png; sourceTree = "<group>"; };
 		1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baobiaoguanli.png; sourceTree = "<group>"; };
 		1F4DBB4C1E582D7000733CF7 /* mobaijilu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mobaijilu.png; sourceTree = "<group>"; };
@@ -646,6 +649,15 @@
 			name = modle;
 			sourceTree = "<group>";
 		};
+		1F4571991E654BDE008E4E34 /* DongImage */ = {
+			isa = PBXGroup;
+			children = (
+				1F45719A1E654C1A008E4E34 /* DongImage.h */,
+				1F45719B1E654C1A008E4E34 /* DongImage.m */,
+			);
+			path = DongImage;
+			sourceTree = "<group>";
+		};
 		1F4A98EF1E6405A8003492DF /* SJABHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -956,6 +968,7 @@
 		6218D0931E4EB9B900299989 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				1F4571991E654BDE008E4E34 /* DongImage */,
 				1F4A98EF1E6405A8003492DF /* SJABHelper */,
 				1F59AF261E5EE16C0000722A /* fmdb */,
 				F767DBD01E5B1B08000D4FB7 /* MJRefresh */,
@@ -1291,10 +1304,10 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1F45719F1E6571FA008E4E34 /* xx_ico1.png */,
 				1F59AF1F1E5E76750000722A /* tjpco01.png */,
 				1F59AF201E5E76750000722A /* tjpco02.png */,
 				1F4DBB511E58420800733CF7 /* fanhui.png */,
-				1F4DBB461E57E01500733CF7 /* xx_ico01.png */,
 				1F4DBB481E5828B400733CF7 /* baogang.png */,
 				1F4DBB4C1E582D7000733CF7 /* mobaijilu.png */,
 				1F4DBB491E5828B400733CF7 /* baobiaoguanli.png */,
@@ -1643,6 +1656,7 @@
 				62656D581E52B5700085A2BD /* dianjiaxinxi.png in Resources */,
 				6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */,
 				62656D4C1E52B5700085A2BD /* Inder4.png in Resources */,
+				1F4571A01E6571FA008E4E34 /* xx_ico1.png in Resources */,
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
@@ -1656,7 +1670,6 @@
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,
 				62656D5B1E52B5700085A2BD /* jingyingpinpai.png in Resources */,
 				62656D5A1E52B5700085A2BD /* gongsigonggao.png in Resources */,
-				1F4DBB471E57E01500733CF7 /* xx_ico01.png in Resources */,
 				62EBA2351E56939300F657DB /* Contact0.png in Resources */,
 				62656D4F1E52B5700085A2BD /* Inder0.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
@@ -1780,6 +1793,7 @@
 				62EBA2671E56CCCE00F657DB /* PersonListViewController.m in Sources */,
 				1F803FF31E52F848005F53CE /* ZXDNetworking.m in Sources */,
 				62656C511E529BC10085A2BD /* IQUITextFieldView+Additions.m in Sources */,
+				1F45719C1E654C1A008E4E34 /* DongImage.m in Sources */,
 				62656CF51E52AF720085A2BD /* XCQ_tabbar.m in Sources */,
 				1F4A98EE1E640103003492DF /* GBAlertView.m in Sources */,
 				62656C531E529BC10085A2BD /* IQUIViewController+Additions.m in Sources */,

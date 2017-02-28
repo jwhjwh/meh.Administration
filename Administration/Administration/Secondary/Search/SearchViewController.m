@@ -141,8 +141,11 @@
     NSString *uStr =[NSString stringWithFormat:@"%@user/findAllUser.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"key":self.searchBar.text};
-    
+    if (_roleId.length==0) {
+       _roleId=@"";
+    }
+         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"roleId":_roleId,@"key":self.searchBar.text};
+
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _searchDataArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

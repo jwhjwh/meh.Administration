@@ -45,7 +45,7 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":_codeStr,@"Sort":_sortStr,@"flag":_flagStr,@"id":_IdStr,@"remark":_remarkStr};
-    NSLog(@"++==%@",info);
+
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
 //        self.dataArray = [NSMutableArray array];
 //        NSArray *array=[responseObject valueForKey:@"Sums"];

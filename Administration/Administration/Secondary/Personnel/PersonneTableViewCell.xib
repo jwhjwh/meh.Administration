@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="188110000012" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8Q-0O-mGi">
@@ -34,9 +34,9 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张云芳" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0p-by-KDI">
-                        <rect key="frame" x="65" y="5" width="80" height="20"/>
+                        <rect key="frame" x="65" y="5" width="120" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="oQV-vm-dvC"/>
+                            <constraint firstAttribute="width" constant="120" id="oQV-vm-dvC"/>
                             <constraint firstAttribute="height" constant="20" id="seA-ds-NRE"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>

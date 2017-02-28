@@ -96,7 +96,7 @@
          _text1.userInteractionEnabled  = YES;
         [tableview reloadData];
        
-        NSLog(@"🐷伟昊");
+       
     }
 }
 
