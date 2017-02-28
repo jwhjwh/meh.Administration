@@ -68,7 +68,7 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-        NSLog(@"加上箭头了么");
+        
     }
     cell.textLabel.text = _InterNameAry[indexPath.row];
     

@@ -131,7 +131,7 @@
                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                     NSDictionary *resuAry = responseObject[@"userInfo"];
                     _emailYesOrNo = resuAry[@"email"];
-                    NSLog(@"email:%@",_emailYesOrNo);
+                   
                     SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
                     SecurtyVC.emailYes = _emailYesOrNo;
                     [self.navigationController showViewController:SecurtyVC sender:nil];

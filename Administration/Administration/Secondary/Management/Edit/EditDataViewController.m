@@ -87,12 +87,6 @@
         [_masgeButton setTitle:@"完成" forState:UIControlStateNormal];
         
         _Open = YES;
-        if (!(_text1.tag ==4)) {
-            
-            
-        }else{
-            
-        }
          _text1.userInteractionEnabled  = YES;
         [tableview reloadData];
        
@@ -106,7 +100,7 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        NSLog(@"+++++++++++%@",responseObject);
+       
         _InterNameAry=[NSMutableArray array];
       if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
               EditModel *model = [[EditModel alloc]init];
@@ -114,7 +108,7 @@
         
           model.birthday = [model.birthday substringToIndex:10];
            _Role = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
-          NSLog(@"role::%@",_Role);
+          
          int roleId = [_Role intValue];
           switch (roleId) {
               case 0:
@@ -328,7 +322,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_Open == YES) {
-        NSLog(@"%ld",(long)_text1.tag);
+       
         
         if (indexPath.section == 0) {
            
