@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)EmailUI{
-    NSLog(@"%@",_emailStr);
+    
     UIView *view1 =[[UIView alloc]init];
     view1.backgroundColor = GetColor(211, 210, 211, 1);
     [self.view addSubview:view1];
@@ -87,7 +87,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    NSLog(@"%@",dic);
+    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"解除成功" andInterval:1.0];

@@ -79,7 +79,11 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+<<<<<<< HEAD
     
+=======
+        
+>>>>>>> e91a78c176ea9b3745d35b538a7476716fe320be
     }
     cell.textLabel.text = _InterNameAry[indexPath.row];
     

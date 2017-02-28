@@ -219,7 +219,7 @@
     NSString *lodpassMD = [ZXDNetworking encryptStringWithMD5:_oldString];
     NSString *newPassMD = [ZXDNetworking encryptStringWithMD5:_oneString];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"mobile":[USER_DEFAULTS  objectForKey:@"phone"],@"usedPass":lodpassMD,@"password":newPassMD};
-    NSLog(@"%@",dic);
+    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             

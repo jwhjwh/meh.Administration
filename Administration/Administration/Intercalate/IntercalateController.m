@@ -134,6 +134,7 @@
             break;
         case 1:{
             //账号安全
+
             SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
             [self.navigationController showViewController:SecurtyVC sender:nil];
         }
