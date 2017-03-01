@@ -89,6 +89,7 @@
             BDLabel.text = @"未绑定";
             BDLabel.font = [UIFont boldSystemFontOfSize:10.6f];
             BDLabel.textColor = [UIColor RGBview];
+            
             [tableview addSubview:BDLabel];
         }
         

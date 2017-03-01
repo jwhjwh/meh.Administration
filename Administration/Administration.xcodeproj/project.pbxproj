@@ -76,6 +76,7 @@
 		620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731201E5D1DA200BCF51C /* JinnLockViewController.m */; };
 		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
+		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6218D0581E4E95FB00299989 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0571E4E95FB00299989 /* ViewController.m */; };
@@ -364,6 +365,8 @@
 		620731271E5D1DB900BCF51C /* LockSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockSettingViewController.m; sourceTree = "<group>"; };
 		620731291E5D6F9100BCF51C /* EditModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditModel.h; sourceTree = "<group>"; };
 		6207312A1E5D6F9100BCF51C /* EditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModel.m; sourceTree = "<group>"; };
+		620A8AC91E6575BE005CA222 /* DateEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateEditViewController.h; sourceTree = "<group>"; };
+		620A8ACA1E6575BE005CA222 /* DateEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateEditViewController.m; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -831,6 +834,15 @@
 				6207311B1E5D1DA200BCF51C /* JinnLockSudoko.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		620A8AC81E6575A5005CA222 /* DateEdit */ = {
+			isa = PBXGroup;
+			children = (
+				620A8AC91E6575BE005CA222 /* DateEditViewController.h */,
+				620A8ACA1E6575BE005CA222 /* DateEditViewController.m */,
+			);
+			path = DateEdit;
 			sourceTree = "<group>";
 		};
 		6218D0441E4E95FA00299989 = {
@@ -1463,6 +1475,7 @@
 		62EBA26C1E56D1AE00F657DB /* Edit */ = {
 			isa = PBXGroup;
 			children = (
+				620A8AC81E6575A5005CA222 /* DateEdit */,
 				62EBA26D1E56D1AE00F657DB /* EditDataViewController.h */,
 				62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */,
 				620731291E5D6F9100BCF51C /* EditModel.h */,
@@ -1743,6 +1756,7 @@
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,
 				62656B961E5295D70085A2BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,
+				620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */,
 				F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */,
 				62656BDF1E5295E50085A2BD /* MBProgressHUD.m in Sources */,
 				62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */,
