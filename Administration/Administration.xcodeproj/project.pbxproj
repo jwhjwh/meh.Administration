@@ -92,6 +92,7 @@
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
+		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -396,6 +397,8 @@
 		6220B6E41E641806007017BA /* PW_DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PW_DatePickerView.h; sourceTree = "<group>"; };
 		6220B6E51E641806007017BA /* PW_DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PW_DatePickerView.m; sourceTree = "<group>"; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
+		624F11F81E66BBD80089C252 /* CityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseViewController.h; sourceTree = "<group>"; };
+		624F11F91E66BBD80089C252 /* CityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseViewController.m; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -842,6 +845,7 @@
 		620A8AC81E6575A5005CA222 /* DateEdit */ = {
 			isa = PBXGroup;
 			children = (
+				624F11F71E66BBC20089C252 /* CityChoose */,
 				620A8AC91E6575BE005CA222 /* DateEditViewController.h */,
 				620A8ACA1E6575BE005CA222 /* DateEditViewController.m */,
 			);
@@ -1038,6 +1042,15 @@
 				62345B421E53F4FA001760F8 /* bj01@1x.png */,
 			);
 			path = background;
+			sourceTree = "<group>";
+		};
+		624F11F71E66BBC20089C252 /* CityChoose */ = {
+			isa = PBXGroup;
+			children = (
+				624F11F81E66BBD80089C252 /* CityChooseViewController.h */,
+				624F11F91E66BBD80089C252 /* CityChooseViewController.m */,
+			);
+			path = CityChoose;
 			sourceTree = "<group>";
 		};
 		62656B751E5295D70085A2BD /* Masonry */ = {
@@ -1853,6 +1866,7 @@
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
+				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,

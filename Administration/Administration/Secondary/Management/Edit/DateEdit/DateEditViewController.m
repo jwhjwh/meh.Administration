@@ -17,7 +17,9 @@
 
 @property (nonatomic,retain)NSArray *arr;
 @property (nonatomic,strong) UITextField *text1;//编辑
-@property (nonatomic,strong) UILabel *DayLabel;//编辑
+@property (nonatomic,strong) UILabel *DayLabel;//出生日期
+@property (nonatomic,strong) UILabel *AddLabel;//现住地址
+//address
 @end
 
 @implementation DateEditViewController
@@ -97,37 +99,55 @@
         [infonTableview addSubview:TXImage];
         
     };
-    if (indexPath.section >=1) {
-        CGRect labelRect2 = CGRectMake(150, 0, self.view.bounds.size.width-170, 50);
-        if (indexPath.row<0) {
+    CGRect labelRect2 = CGRectMake(150, 0, self.view.bounds.size.width-170, 50);
+    if (indexPath.section ==1) {
+        if (indexPath.row == 0) {
             _DayLabel = [[UILabel alloc]initWithFrame:labelRect2];
-            _DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row-7]];
-            [infonTableview addSubview:_DayLabel];
+            _DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+            _DayLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+            [cell addSubview:_DayLabel];
+        }else if(indexPath.row == 1){
+            UITextField *ageField =[[UITextField alloc]initWithFrame:labelRect2];
+            ageField.backgroundColor=[UIColor whiteColor];
+            ageField.font = [UIFont boldSystemFontOfSize:13.0f];
+            ageField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            ageField.adjustsFontSizeToFitWidth = YES;
+            ageField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+             [cell addSubview:ageField];
+        }else if (indexPath.row == 2){
+            UITextField *idNoField =[[UITextField alloc]initWithFrame:labelRect2];
+            idNoField.backgroundColor=[UIColor whiteColor];
+            idNoField.font = [UIFont boldSystemFontOfSize:13.0f];
+            idNoField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            idNoField.adjustsFontSizeToFitWidth = YES;
+            idNoField.placeholder =@"必填";
+            idNoField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+            [cell addSubview:idNoField];
+        }else if (indexPath.row == 3){
+            _AddLabel = [[UILabel alloc]initWithFrame:labelRect2];
+            _AddLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+            _AddLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+            [cell addSubview:_AddLabel];
         }
+    }else if(indexPath.section == 2){
+        UITextField *codeField =[[UITextField alloc]initWithFrame:labelRect2];
+        codeField.backgroundColor=[UIColor whiteColor];
+        codeField.font = [UIFont boldSystemFontOfSize:13.0f];
+        codeField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        codeField.adjustsFontSizeToFitWidth = YES;
+        codeField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+        [cell addSubview:codeField];
+    }else if (indexPath.section == 3){
+        UITextField *PersonField =[[UITextField alloc]initWithFrame:labelRect2];
+        PersonField.backgroundColor=[UIColor whiteColor];
+        PersonField.font = [UIFont boldSystemFontOfSize:13.0f];
+        PersonField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        PersonField.adjustsFontSizeToFitWidth = YES;
+        PersonField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
         
-        _text1 = [[UITextField alloc] initWithFrame:labelRect2];
-        _text1.backgroundColor=[UIColor whiteColor];
-        _text1.font = [UIFont boldSystemFontOfSize:13.0f];
-        _text1.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _text1.adjustsFontSizeToFitWidth = YES;
-        _text1.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
-        [cell addSubview:_text1];
-        if (indexPath.section == 1) {
-            if (indexPath.row <1) {
-                 _text1.userInteractionEnabled =  NO;
-                
-            }else if (indexPath.row == 3){
-                _text1.userInteractionEnabled =  NO;
-               
-            }
-        }
-       
-    }
-    if ([cell.textLabel.text isEqualToString:@"身份证号"]){
-        _text1.placeholder =@"必填";
-    }
+        [cell addSubview:PersonField];
 
-
+    }
     return cell;
 }
 
