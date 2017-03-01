@@ -13,8 +13,6 @@
 
 @interface EditDataViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,retain)UIButton *masgeButton; //编辑提交按钮
-
 
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
@@ -22,6 +20,8 @@
 @property (nonatomic,retain)NSString *logImage;//头像
 @property (nonatomic,assign) BOOL hide;
 @property (nonatomic,assign) BOOL Open;
+
+@property (nonatomic,strong) NSMutableArray *theValueAry;
 
 @end
 
@@ -37,12 +37,12 @@
 }
 -(void)InterTableUI
 {
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"编辑"
                                    style:UIBarButtonItemStylePlain
                                    target:self
                                    action:@selector(masgegeClick)];
-    self.navigationItem.rightBarButtonItem = leftButton;
+    self.navigationItem.rightBarButtonItem = rightButton;
     
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
@@ -54,7 +54,10 @@
     
 }
 -(void)masgegeClick{
+    
+    
     DateEditViewController *DateEditVC = [[DateEditViewController alloc]init];
+    DateEditVC.InterNameAry = _theValueAry;
     [self.navigationController showViewController:DateEditVC sender:nil];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -125,14 +128,19 @@
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
+                NSArray *arr4 =@[model.birthday,model.age,model.idNo,model.address];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
+                _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
             }else{
                 _arr=@[@[@"头像"],@[@"账号",@"职位"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 NSArray *arr=@[model.account,model.rname];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
+                NSArray *arr4 =@[model.birthday,model.age,model.idNo,model.address];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
+                _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
+                
             }
             
             [_infonTableview reloadData];

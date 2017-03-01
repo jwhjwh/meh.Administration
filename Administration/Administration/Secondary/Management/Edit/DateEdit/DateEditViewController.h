@@ -10,4 +10,6 @@
 
 @interface DateEditViewController : UIViewController
 
+@property (strong,nonatomic) NSMutableArray *InterNameAry;
+
 @end
