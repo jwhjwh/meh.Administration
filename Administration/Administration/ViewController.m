@@ -215,7 +215,6 @@
 
 
 -(void)TouchLog:(UIButton*)sender{
-
     if (_nameStr==nil&& _shibieStr==nil&&_passStr==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请将信息填写完整" andInterval:1.0];
         return;
@@ -262,7 +261,11 @@
             
             [ZxdObject rootController];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新输入手机号机" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时请重新登录" andInterval:1.0];
         }
       
     } failure:^(NSError *error) {
@@ -305,6 +308,8 @@
                 [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]];
             [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
             [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入用户名不存在" andInterval:1.0];
                 }
             } failure:^(NSError *error) {
                 

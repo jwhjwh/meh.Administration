@@ -8,7 +8,6 @@
 
 #import "MenuCell.h"
 #import "ZYJHeadLineModel.h"
-
 @interface MenuCell ()<UIScrollViewDelegate>
 
 @property(nonatomic,strong)UIView *firstVC;
@@ -104,7 +103,9 @@
 -(void)OnTapBtnView:(UITapGestureRecognizer *)sender
 {
     NSLog(@"tag:%ld",sender.view.tag);
-}
+    self.resultBLock(sender.view.tag);
+  
+ }
 
 #pragma mark - UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView

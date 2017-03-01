@@ -84,35 +84,44 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pageNo":pageStr,@"comId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
-        
-        NSString *str =[[responseObject valueForKey:@"data" ] valueForKey:@"count"];
-        NSArray *array=[responseObject valueForKey:@"nlist"];
-        // NSLog(@"%@",str);
-        totalPage = [str intValue];
-        if (page <= totalPage||totalPage==0) {
-            [self endRefresh];
-            if (page==1) {
-                [self.tableView.footer  setTitle:@"" forState:MJRefreshFooterStateIdle];
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSString *str =[[responseObject valueForKey:@"data" ] valueForKey:@"count"];
+            NSArray *array=[responseObject valueForKey:@"nlist"];
+            // NSLog(@"%@",str);
+            totalPage = [str intValue];
+            if (page <= totalPage||totalPage==0) {
+                [self endRefresh];
+                if (page==1) {
+                    [self.tableView.footer  setTitle:@"" forState:MJRefreshFooterStateIdle];
+                    
+                }
+                
+            }
+            for (NSDictionary *dic in array) {
+                GongModel *model=[[GongModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [self.dataArray addObject:model];
+            }
+            [self.tableView reloadData];
+            if (array.count==0) {
+                self.tableView.footer.state = MJRefreshFooterStateNoMoreData;
+                return;
                 
             }
             
-        }
-        for (NSDictionary *dic in array) {
-            GongModel *model=[[GongModel alloc]init];
-            [model setValuesForKeysWithDictionary:dic];
-            [self.dataArray addObject:model];
-        }
-        [self.tableView reloadData];
-        if (array.count==0) {
-            self.tableView.footer.state = MJRefreshFooterStateNoMoreData;
-            return;
+            //        if (page>=totalPage) {
+            //            [self.tableView.footer endRefreshing];
+            //        }
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
         }
-
-//        if (page>=totalPage) {
-//            [self.tableView.footer endRefreshing];
-//        }
         
     } failure:^(NSError *error) {
         

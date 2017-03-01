@@ -196,12 +196,11 @@
 {
     self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
       NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
-     NSString *encodedImageStr = [pictureData base64EncodedStringWithOptions:0];
     [self dismissViewControllerAnimated:YES completion:nil];
     NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"1",@"file":encodedImageStr};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"1"};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];

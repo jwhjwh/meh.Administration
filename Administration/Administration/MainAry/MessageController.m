@@ -43,14 +43,25 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        self.dataArray = [NSMutableArray array];
-        NSArray *array=[responseObject valueForKey:@"Sums"];
-        for (NSDictionary *dic in array) {
-            mesgeModel *model=[[mesgeModel alloc]init];
-            [model setValuesForKeysWithDictionary:dic];
-            [self.dataArray addObject:model];
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            self.dataArray = [NSMutableArray array];
+            NSArray *array=[responseObject valueForKey:@"Sums"];
+            for (NSDictionary *dic in array) {
+                mesgeModel *model=[[mesgeModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [self.dataArray addObject:model];
+            }
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
         }
-    
+        
         [self.tableView reloadData];
     } failure:^(NSError *error) {
         

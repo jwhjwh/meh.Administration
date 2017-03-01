@@ -42,6 +42,7 @@
 #import "UIImageView+WebCache.h"
 #import "ZxdObject.h"
 #import "ELNAlerTool.h"
+#import "PWAlertView.h"
 #import "ZYJHeadLineModel.h"
 #import "UIButton+WebCache.h"
 #import "NSDictionary+DeleteNull.h"
