@@ -246,6 +246,140 @@
         cell=[[MenuCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier menuArray:_menuArray];
     }
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    cell.resultBLock = ^(NSInteger index){
+        int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
+        
+        //判断角色的设定主题的现实
+        
+        switch (str) {
+            case 1:
+                
+                //            // 老板
+                //            _arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",@"公司公告", @"图片报岗"];
+                //            _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        
+                    }
+                        
+                        break;
+                    case 14:{
+                        
+                    }
+                        
+                    case 15:{
+                        
+                    }
+                        
+                        break;
+                    case 16:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 17:{
+                        
+                    }
+                        
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+                break;
+            case 2:
+                //            //市场美导
+                //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+                //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
+                break;
+            case 3:
+                
+                //            //内勤人员
+                //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
+                //            _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+                break;
+            case 4:
+                //            // 物流
+                //            _arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
+                //            _arr1=@[@"dianpugenzong",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+                break;
+            case 5:
+                //业务
+                //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
+                //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi",@"gongsigonggao", @"mobaijilu", @"baogang"];
+                break;
+            case 6:
+                //            // 品牌经理
+                //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+                //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+                break;
+            case 7:
+                //            //行政管理员
+                //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
+                //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+                break;
+            case 8:
+                //            //业务经理
+                //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",@"报表管理"];
+                //            _arr1=@[@"dianpugenzong",@"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"mobaijilu",@"baogang",@"baobiaoguanli"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 14:{
+                        
+                    }
+                        
+                    case 15:{
+                        
+                    }
+                        break;
+                    case 16:{
+                     
+                    }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+
+    };
     return cell;
 }
 #pragma mark XRCarouselViewDelegate

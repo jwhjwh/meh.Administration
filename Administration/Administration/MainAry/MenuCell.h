@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "YHJBtnView.h"
-
+//点击按钮回调
+typedef void(^ResultBLock)(NSInteger index);
 @interface MenuCell : UITableViewCell
 
+@property (nonatomic,copy)ResultBLock resultBLock;
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier menuArray:(NSMutableArray *)menuArray;
 
 @end

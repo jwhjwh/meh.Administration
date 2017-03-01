@@ -11,19 +11,15 @@
 #import "ModifyViewController.h"//修改密码
 #import "EmailViewController.h"//解除绑定邮箱
 #import "IntercalateController.h"
-
 @interface SecurityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableview;
 }
-
 @property (strong,nonatomic) NSArray *InterNameAry;
 @property (strong,nonatomic) NSString *Emailstr;
 @property(nonatomic,strong)UIAlertController *alert;
 
-
 @end
-
 @implementation SecurityViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -81,7 +77,6 @@
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.textLabel.text = _InterNameAry[indexPath.row];
-    
     if ([cell.textLabel.text  isEqual: @"邮箱地址"]) {
        
         if ([_emailYes isEqualToString:@""]) {
@@ -89,12 +84,9 @@
             BDLabel.text = @"未绑定";
             BDLabel.font = [UIFont boldSystemFontOfSize:10.6f];
             BDLabel.textColor = [UIColor RGBview];
-            
             [tableview addSubview:BDLabel];
         }
-        
-            
-        };
+};
 
         //jwhdzkj
     return cell;
@@ -119,10 +111,7 @@
     NSString *b = NSLocalizedString(@"如果你改了邮箱地址，你需要对邮箱地址重新进行验证", nil);
     NSString *c = NSLocalizedString(@"取消绑定", nil);
     NSString *d = NSLocalizedString(@"申请绑定", nil);
-
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (indexPath.row == 0)
     {
         [self.navigationController pushViewController:[[LockSettingViewController alloc] init] animated:YES];
@@ -179,8 +168,7 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"邮箱已经被注册" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"3000"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"邮件发送失败" andInterval:1.0];
-        }else
-        {
+        }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新发送" andInterval:1.0];
         }
     } failure:^(NSError *error) {

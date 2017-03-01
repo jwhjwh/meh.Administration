@@ -49,11 +49,15 @@ static CGRect oldframe;
         [MBProgressHUD hideHUDForView: view animated:NO];
         success(responseObject);
         PPLog(@"responseObject ++++= %@",responseObject);
-       
+   
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         [MBProgressHUD hideHUDForView: view animated:NO];
-        
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"网络不给力，请检查网络！" sureBtn:@"好的" cancleBtn:nil];
+        alertView.resultIndex = ^(NSInteger index){
+            
+        };
+        [alertView showMKPAlertView];
         failure ? failure(error) : nil;
         PPLog(@"error ----= %@",error);
     }];
@@ -74,7 +78,11 @@ static CGRect oldframe;
         PPLog(@"responseObject --=++ %@",responseObject);
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [MBProgressHUD hideHUDForView: view animated:NO];
+        [MBProgressHUD hideHUDForView: view animated:NO];  PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"网络不给力，请检查网络！" sureBtn:@"好的" cancleBtn:nil];
+        alertView.resultIndex = ^(NSInteger index){
+            
+        };
+        [alertView showMKPAlertView];
         failure ? failure(error) : nil;
         PPLog(@"error =+++++++88 %@",error);
     }];
@@ -95,6 +103,7 @@ static CGRect oldframe;
     
     return manager;
 }
+
 +(NSString *)encryptStringWithMD5:(NSString *)inputStr{
     
 //    const char *fooData = [inputStr UTF8String];

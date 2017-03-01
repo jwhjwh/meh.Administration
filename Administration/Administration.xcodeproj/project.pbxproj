@@ -44,6 +44,7 @@
 		1F59AF341E5EE16C0000722A /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF2C1E5EE16C0000722A /* FMDatabasePool.m */; };
 		1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF2E1E5EE16C0000722A /* FMDatabaseQueue.m */; };
 		1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF311E5EE16C0000722A /* FMResultSet.m */; };
+		1F6119EC1E665C620044641E /* PWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119EB1E665C620044641E /* PWAlertView.m */; };
 		1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E31311E5425F6006069ED /* XLsn0wLoop.m */; };
 		1F6E31341E5425F6006069ED /* XLsn0wLoop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E31321E5425F6006069ED /* XLsn0wLoop.png */; };
 		1F6E313E1E5439C2006069ED /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E313B1E5439C2006069ED /* MenuCell.m */; };
@@ -300,6 +301,8 @@
 		1F59AF2F1E5EE16C0000722A /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		1F59AF301E5EE16C0000722A /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		1F59AF311E5EE16C0000722A /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		1F6119EA1E665C620044641E /* PWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWAlertView.h; sourceTree = "<group>"; };
+		1F6119EB1E665C620044641E /* PWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWAlertView.m; sourceTree = "<group>"; };
 		1F6E31301E5425F6006069ED /* XLsn0wLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLsn0wLoop.h; sourceTree = "<group>"; };
 		1F6E31311E5425F6006069ED /* XLsn0wLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLsn0wLoop.m; sourceTree = "<group>"; };
 		1F6E31321E5425F6006069ED /* XLsn0wLoop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XLsn0wLoop.png; sourceTree = "<group>"; };
@@ -1089,6 +1092,8 @@
 				62656BE61E5296390085A2BD /* ELNAlerTool.m */,
 				1F4A98EC1E640103003492DF /* GBAlertView.h */,
 				1F4A98ED1E640103003492DF /* GBAlertView.m */,
+				1F6119EA1E665C620044641E /* PWAlertView.h */,
+				1F6119EB1E665C620044641E /* PWAlertView.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -1783,6 +1788,7 @@
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
 				62656CD21E52A6600085A2BD /* NSData+ImageContentType.m in Sources */,
 				62656C551E529BC10085A2BD /* IQKeyboardManager.m in Sources */,
+				1F6119EC1E665C620044641E /* PWAlertView.m in Sources */,
 				1F803FE61E52F7CA005F53CE /* AFURLSessionManager.m in Sources */,
 				62656B971E5295D70085A2BD /* View+MASAdditions.m in Sources */,
 				6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */,
