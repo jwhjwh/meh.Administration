@@ -87,6 +87,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"roleId":_roleld};
+    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _InterNameAry=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -94,7 +95,6 @@
             for (NSDictionary *newDict in resuAry) {
                 PersonModel *model = [[PersonModel alloc]init];
                 [model setValuesForKeysWithDictionary:newDict];
-                
                 [self.InterNameAry addObject:model];
             }
             [self.tableView reloadData];

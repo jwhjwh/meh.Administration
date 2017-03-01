@@ -45,6 +45,9 @@
 		1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF2E1E5EE16C0000722A /* FMDatabaseQueue.m */; };
 		1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF311E5EE16C0000722A /* FMResultSet.m */; };
 		1F6119EC1E665C620044641E /* PWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119EB1E665C620044641E /* PWAlertView.m */; };
+		1F6119F31E66BF2D0044641E /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6119EE1E66BF2D0044641E /* Arrow.png */; };
+		1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119F01E66BF2D0044641E /* YUFoldingSectionHeader.m */; };
+		1F6119F51E66BF2D0044641E /* YUFoldingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119F21E66BF2D0044641E /* YUFoldingTableView.m */; };
 		1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E31311E5425F6006069ED /* XLsn0wLoop.m */; };
 		1F6E31341E5425F6006069ED /* XLsn0wLoop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E31321E5425F6006069ED /* XLsn0wLoop.png */; };
 		1F6E313E1E5439C2006069ED /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E313B1E5439C2006069ED /* MenuCell.m */; };
@@ -303,6 +306,11 @@
 		1F59AF311E5EE16C0000722A /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		1F6119EA1E665C620044641E /* PWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWAlertView.h; sourceTree = "<group>"; };
 		1F6119EB1E665C620044641E /* PWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWAlertView.m; sourceTree = "<group>"; };
+		1F6119EE1E66BF2D0044641E /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
+		1F6119EF1E66BF2D0044641E /* YUFoldingSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUFoldingSectionHeader.h; sourceTree = "<group>"; };
+		1F6119F01E66BF2D0044641E /* YUFoldingSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUFoldingSectionHeader.m; sourceTree = "<group>"; };
+		1F6119F11E66BF2D0044641E /* YUFoldingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUFoldingTableView.h; sourceTree = "<group>"; };
+		1F6119F21E66BF2D0044641E /* YUFoldingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUFoldingTableView.m; sourceTree = "<group>"; };
 		1F6E31301E5425F6006069ED /* XLsn0wLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLsn0wLoop.h; sourceTree = "<group>"; };
 		1F6E31311E5425F6006069ED /* XLsn0wLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLsn0wLoop.m; sourceTree = "<group>"; };
 		1F6E31321E5425F6006069ED /* XLsn0wLoop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XLsn0wLoop.png; sourceTree = "<group>"; };
@@ -710,6 +718,18 @@
 				1F01020B1E5FC0C300802571 /* LVModel.m */,
 			);
 			path = fmdb;
+			sourceTree = "<group>";
+		};
+		1F6119ED1E66BF2D0044641E /* YUFoldingTableView */ = {
+			isa = PBXGroup;
+			children = (
+				1F6119EE1E66BF2D0044641E /* Arrow.png */,
+				1F6119EF1E66BF2D0044641E /* YUFoldingSectionHeader.h */,
+				1F6119F01E66BF2D0044641E /* YUFoldingSectionHeader.m */,
+				1F6119F11E66BF2D0044641E /* YUFoldingTableView.h */,
+				1F6119F21E66BF2D0044641E /* YUFoldingTableView.m */,
+			);
+			path = YUFoldingTableView;
 			sourceTree = "<group>";
 		};
 		1F6E312F1E5425F6006069ED /* XLsn0wLoop */ = {
@@ -1407,6 +1427,7 @@
 				62EBA2641E56CC9700F657DB /* PersonList */,
 				62EBA2511E56CB6E00F657DB /* PositioningViewController.h */,
 				62EBA2521E56CB6E00F657DB /* PositioningViewController.m */,
+				1F6119ED1E66BF2D0044641E /* YUFoldingTableView */,
 			);
 			path = Positioning;
 			sourceTree = "<group>";
@@ -1714,6 +1735,7 @@
 				1F4DBB4D1E582D7000733CF7 /* mobaijilu.png in Resources */,
 				62656D601E52B5700085A2BD /* yuangongguanli.png in Resources */,
 				1F5208221E557A4E001DE4C2 /* ss_ico01.png in Resources */,
+				1F6119F31E66BF2D0044641E /* Arrow.png in Resources */,
 				1F6E31341E5425F6006069ED /* XLsn0wLoop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1785,6 +1807,7 @@
 				620731241E5D1DA200BCF51C /* JinnLockTool.m in Sources */,
 				1F803FE51E52F7CA005F53CE /* AFURLResponseSerialization.m in Sources */,
 				62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */,
+				1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */,
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
 				62656CD21E52A6600085A2BD /* NSData+ImageContentType.m in Sources */,
 				62656C551E529BC10085A2BD /* IQKeyboardManager.m in Sources */,
@@ -1839,6 +1862,7 @@
 				62656CDD1E52A6600085A2BD /* UIImage+GIF.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
+				1F6119F51E66BF2D0044641E /* YUFoldingTableView.m in Sources */,
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,

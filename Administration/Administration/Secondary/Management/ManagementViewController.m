@@ -9,11 +9,13 @@
 #import "ManagementViewController.h"
 #import "EditDataViewController.h"
 #import "LVFmdbTool.h"
-
-@interface ManagementViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "AlertViewExtension.h"
+@interface ManagementViewController ()<UITableViewDataSource,UITableViewDelegate,alertviewExtensionDelegate>
 {
+    AlertViewExtension *alert;
     UITableView *tableview;
 }
+
 @property (strong,nonatomic) NSArray *InterNameAry;
 @property (strong,nonatomic) UILabel *NameLabel;//姓名
 @property (strong,nonatomic) UILabel *TelLabel;//账号
@@ -157,12 +159,25 @@
         EditDataViewController *EditVC = [[EditDataViewController alloc]init];
          [self.navigationController showViewController:EditVC sender:nil];
     }else{
+        alert =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
+        alert.delegate=self;
+        [alert setbackviewframeWidth:300 Andheight:150];
+        [alert settipeTitleStr:@"是否退出账号?" Andfont:14];
+        [self.view addSubview:alert];
+      
+    }
+    
+}
+-(void)clickBtnSelector:(UIButton *)btn
+{
+    if (btn.tag == 2000) {
+        [alert removeFromSuperview];
+    }else{
         [USER_DEFAULTS  setObject:@"" forKey:@"token"];
         ViewController *VC= [[ViewController alloc]init];
         [self presentViewController:VC animated:YES completion:nil];
         [LVFmdbTool deleteData:nil];
     }
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
