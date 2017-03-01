@@ -79,11 +79,6 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-<<<<<<< HEAD
-    
-=======
-        
->>>>>>> e91a78c176ea9b3745d35b538a7476716fe320be
     }
     cell.textLabel.text = _InterNameAry[indexPath.row];
     
@@ -148,14 +143,11 @@
                 }];
                 UIAlertAction *bb = [UIAlertAction actionWithTitle:d style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     _Emailstr = textField.text;
-                    
                     [self emailNTW];
                 }];
-                
                 [self.alert addAction:aa];
                 [self.alert addAction:bb];
             }];
-            
             
             [self presentViewController:_alert animated:YES completion:nil];
 

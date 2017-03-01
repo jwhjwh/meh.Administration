@@ -95,10 +95,12 @@
     //最近联系人列表
     _ZJLXTable = [[UITableView alloc]init];
     _ZJLXTable.backgroundColor = [UIColor whiteColor];
-    _ZJLXTable.separatorStyle = UITableViewCellSelectionStyleNone;
+   // _ZJLXTable.separatorStyle = UITableViewCellSelectionStyleNone;
     _ZJLXTable.delegate = self;
     _ZJLXTable.dataSource = self;
     [self.view addSubview:_ZJLXTable];
+    //去除多余的cell线
+    [ZXDNetworking setExtraCellLineHidden:_ZJLXTable];
     [_ZJLXTable registerNib:[UINib nibWithNibName:@"ZJLXRTableViewCell" bundle:nil] forCellReuseIdentifier:@"BASE"];
     [_ZJLXTable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_lxLabel.mas_bottom).offset(10);
