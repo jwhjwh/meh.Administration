@@ -122,7 +122,6 @@
     PersonneTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CARRY" forIndexPath:indexPath];
     PersonModel *model= _InterNameAry[indexPath.row];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
-    
     [cell loadDataFromModel:model];
    
 //    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
