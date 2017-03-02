@@ -96,6 +96,8 @@
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
+		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
+		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -407,6 +409,9 @@
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
 		624F11F81E66BBD80089C252 /* CityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseViewController.h; sourceTree = "<group>"; };
 		624F11F91E66BBD80089C252 /* CityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseViewController.m; sourceTree = "<group>"; };
+		625355731E67AF8F0041F123 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
+		625355741E67AF8F0041F123 /* CityChoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChoose.h; sourceTree = "<group>"; };
+		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -1067,10 +1072,21 @@
 		624F11F71E66BBC20089C252 /* CityChoose */ = {
 			isa = PBXGroup;
 			children = (
+				625355721E67AF8F0041F123 /* CityChooseVeiw */,
 				624F11F81E66BBD80089C252 /* CityChooseViewController.h */,
 				624F11F91E66BBD80089C252 /* CityChooseViewController.m */,
 			);
 			path = CityChoose;
+			sourceTree = "<group>";
+		};
+		625355721E67AF8F0041F123 /* CityChooseVeiw */ = {
+			isa = PBXGroup;
+			children = (
+				625355731E67AF8F0041F123 /* city.plist */,
+				625355741E67AF8F0041F123 /* CityChoose.h */,
+				625355751E67AF8F0041F123 /* CityChoose.m */,
+			);
+			path = CityChooseVeiw;
 			sourceTree = "<group>";
 		};
 		62656B751E5295D70085A2BD /* Masonry */ = {
@@ -1700,6 +1716,7 @@
 				62656D5F1E52B5700085A2BD /* xulie.png in Resources */,
 				62656D551E52B5700085A2BD /* yonghumima.png in Resources */,
 				62656D441E52B5700085A2BD /* Inder2.png in Resources */,
+				625355761E67AF8F0041F123 /* city.plist in Resources */,
 				1F4DBB521E58420800733CF7 /* fanhui.png in Resources */,
 				62656D501E52B5700085A2BD /* ztgb.png in Resources */,
 				621A5C211E5843B50051C6CC /* banben100.png in Resources */,
@@ -1856,6 +1873,7 @@
 				62656C5C1E529BC10085A2BD /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				62656C5A1E529BC10085A2BD /* IQTitleBarButtonItem.m in Sources */,
 				1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */,
+				625355771E67AF8F0041F123 /* CityChoose.m in Sources */,
 				1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */,
 				62656CD41E52A6600085A2BD /* SDImageCache.m in Sources */,
 				1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */,
