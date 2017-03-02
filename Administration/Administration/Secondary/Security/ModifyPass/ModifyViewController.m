@@ -189,7 +189,7 @@
         _twoString = _twoField.text;
         BOOL dog = [_oneString isEqual:_twoString];
         if (dog == YES) {
-            //[ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+           
             [self loadDataFromServer];
         }else{
              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"两次密码输入不相同" andInterval:1.0];

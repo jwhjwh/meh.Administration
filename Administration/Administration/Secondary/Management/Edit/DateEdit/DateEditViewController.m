@@ -8,6 +8,7 @@
 
 #import "DateEditViewController.h"
 #import "PW_DatePickerView.h"
+#import "CityChooseViewController.h"
 
 @interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate>
 {
@@ -19,11 +20,34 @@
 @property (nonatomic,strong) UITextField *text1;//编辑
 @property (nonatomic,strong) UILabel *DayLabel;//出生日期
 @property (nonatomic,strong) UILabel *AddLabel;//现住地址
+
 //address
+/*
+ Birthday    出生年月
+ Age         年龄
+ IdNo        身份证号
+ Address     现居地址
+ Wcode       微信号
+ Qcode       qq号
+ Interests   兴趣爱好
+ SDASD       个性签名
+ */
+
+@property (nonatomic,strong) NSString *Age;
+@property (nonatomic,strong) NSString *IdNo;
+
+@property (nonatomic,strong) NSString *Wcode;
+@property (nonatomic,strong) NSString *Qcode;
+@property (nonatomic,strong) NSString *Interests;
+@property (nonatomic,strong) NSString *SDASD;
 @end
 
 @implementation DateEditViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"编辑资料";
@@ -32,6 +56,7 @@
     _arr=@[@[@"头像"],@[@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
     // Do any additional setup after loading the view.
 }
+
 -(void)InterTableUI
 {
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
@@ -47,8 +72,26 @@
     [self.view addSubview:infonTableview];
 }
 -(void)masgegeClick{
-   //提交数据
+
+    NSString *uStr =[NSString stringWithFormat:@"%@user/addUserInfo.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSLog(@"%@%@%@%@",_DayLabel.text,_Age,_IdNo,_AddLabel.text);
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Birthday":_DayLabel.text,@"Age":_Age,@"IdNo":_IdNo,@"Address":_AddLabel.text,@"Wcode":_Wcode,@"Qcode":_Qcode,@"Interests":_Interests,@"SDASD":_SDASD};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+        }else{
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
 }
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     return _arr.count;
@@ -73,6 +116,7 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger row = [indexPath row];
     static NSString *CellIdentifier =@"Cell";
     //定义cell的复用性当处理大量数据时减少内存开销
     UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -99,7 +143,7 @@
         [infonTableview addSubview:TXImage];
         
     };
-    CGRect labelRect2 = CGRectMake(150, 0, self.view.bounds.size.width-170, 50);
+    CGRect labelRect2 = CGRectMake(150, 1, self.view.bounds.size.width-170, 48);
     if (indexPath.section ==1) {
         if (indexPath.row == 0) {
             _DayLabel = [[UILabel alloc]initWithFrame:labelRect2];
@@ -113,6 +157,8 @@
             ageField.clearButtonMode = UITextFieldViewModeWhileEditing;
             ageField.adjustsFontSizeToFitWidth = YES;
             ageField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+            _Age = ageField.text;
+            [ageField addTarget:self action:@selector(ageFieldText:) forControlEvents:UIControlEventEditingChanged];
              [cell addSubview:ageField];
         }else if (indexPath.row == 2){
             UITextField *idNoField =[[UITextField alloc]initWithFrame:labelRect2];
@@ -122,6 +168,8 @@
             idNoField.adjustsFontSizeToFitWidth = YES;
             idNoField.placeholder =@"必填";
             idNoField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+            _IdNo = idNoField.text;
+            [idNoField addTarget:self action:@selector(idNoFieldText:) forControlEvents:UIControlEventEditingChanged];
             [cell addSubview:idNoField];
         }else if (indexPath.row == 3){
             _AddLabel = [[UILabel alloc]initWithFrame:labelRect2];
@@ -136,6 +184,23 @@
         codeField.clearButtonMode = UITextFieldViewModeWhileEditing;
         codeField.adjustsFontSizeToFitWidth = YES;
         codeField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+         [codeField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        codeField.tag = row;
+        switch (codeField.tag) {
+            case 0:
+                break;
+            case 1:
+                self.Wcode = codeField.text;
+                NSLog(@"Age:%@,%@",self.Age,codeField.text);
+                break;
+            case 2:
+                self.Qcode = codeField.text;
+                NSLog(@"IdNo:%@,%@",self.IdNo,codeField.text);
+                break;
+            default:
+                break;
+        }
+
         [cell addSubview:codeField];
     }else if (indexPath.section == 3){
         UITextField *PersonField =[[UITextField alloc]initWithFrame:labelRect2];
@@ -144,7 +209,22 @@
         PersonField.clearButtonMode = UITextFieldViewModeWhileEditing;
         PersonField.adjustsFontSizeToFitWidth = YES;
         PersonField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
-        
+         [PersonField addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
+         PersonField.tag = row;
+        switch (PersonField.tag) {
+            case 0:
+                self.Interests = PersonField.text;
+                NSLog(@"Interests:%@,%@",self.Interests,PersonField.text);
+                break;
+            case 1:
+                self.SDASD = PersonField.text;
+                NSLog(@"Interests:%@,%@",self.Age,PersonField.text);
+                break;
+                
+            default:
+                break;
+        }
+
         [cell addSubview:PersonField];
 
     }
@@ -153,26 +233,69 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (indexPath.section == 1) {
         if (indexPath.row <1) {
-            NSLog(@"点的出生日期");
             self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
             self.PWpickerView.delegate = self;
             [self.PWpickerView show];
             
         }else if (indexPath.row == 3){
-            NSLog(@"点的现住地址");
+
+            CityChooseViewController *CityVC = [[CityChooseViewController alloc]init];
+            [CityVC returnText:^(NSString *showText) {
+                NSLog(@"showtext:%@",showText);
+                self.AddLabel.text = showText;
+                //代码块中没有第二个视图控制器，所以不会造成循环引用
+            }];
+            
+
+            [self.navigationController showViewController:CityVC sender:nil];
         }
     }
 }
 - (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString
 {
     _DayLabel.text  = dateString;
-    
-    
-    NSLog(@"%@",dateString);
-    NSLog(@"%@",_DayLabel.text);
-    
+}
+- (void)ageFieldText:(UITextField *)textField{
+    self.Age = textField.text;
+}
+- (void)idNoFieldText:(UITextField *)textField{
+    self.IdNo = textField.text;
+}
+- (void)textFieldWithText:(UITextField *)textField
+{
+    switch (textField.tag) {
+        case 0:
+            break;
+        case 1:
+            self.Wcode = textField.text;
+            NSLog(@"Age:%@,%@",self.Age,textField.text);
+            break;
+        case 2:
+            self.Qcode = textField.text;
+            NSLog(@"IdNo:%@,%@",self.IdNo,textField.text);
+            break;
+        default:
+            break;
+    }
+}
+- (void)PersonFieldText:(UITextField *)textField{
+    switch (textField.tag) {
+        case 0:
+            self.Interests = textField.text;
+            NSLog(@"Interests:%@,%@",self.Interests,textField.text);
+            break;
+        case 1:
+            self.SDASD = textField.text;
+            NSLog(@"Interests:%@,%@",self.Age,textField.text);
+            break;
+        
+        default:
+            break;
+    }
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
