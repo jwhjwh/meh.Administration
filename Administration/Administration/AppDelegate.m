@@ -22,6 +22,7 @@
     [NSThread sleepForTimeInterval:2.0];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     NSString *token=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"token"]];
+    NSLog(@"%@",token);
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
@@ -30,8 +31,7 @@
         UserGuideViewController *userGuideViewController = [[UserGuideViewController alloc] init];
         self.window.rootViewController = userGuideViewController;
         [userGuideViewController release];
-    }
-    else if(token.length==0){
+    }else if(token.length==0||[token isEqualToString:@"(null)"]){
       
         //如果不是第一次启动的话,使用LoginViewController作为根视图
         ViewController *VC = [[ViewController alloc] init];

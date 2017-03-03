@@ -10,4 +10,6 @@
 
 @interface PerLomapController : UIViewController
 @property (nonatomic,retain)NSString *uesrId;
+@property (nonatomic,retain)NSString *account;
+@property (nonatomic,retain)NSString *name;
 @end

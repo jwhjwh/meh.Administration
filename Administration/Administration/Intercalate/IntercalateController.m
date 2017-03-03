@@ -134,9 +134,9 @@
             break;
         case 1:{
             //账号安全
-
             SecurityViewController *SecurtyVC = [[SecurityViewController alloc]init];
-            [self.navigationController showViewController:SecurtyVC sender:nil];
+            [self.navigationController pushViewController:SecurtyVC animated:YES];
+
         }
             break;
         case 2:{
@@ -145,10 +145,10 @@
             if (str==1||str==7) {
        
                 PositioningViewController *PositionVC = [[PositioningViewController alloc]init];
-                 [self.navigationController pushViewController:PositionVC animated:nil];
+                 [self.navigationController pushViewController:PositionVC animated:YES];
             }else{
                 LomapViewController *lomapVC=[[LomapViewController alloc]init];
-                [self.navigationController pushViewController:lomapVC animated:nil];
+                [self.navigationController pushViewController:lomapVC animated:YES];
             }
         }
             break;

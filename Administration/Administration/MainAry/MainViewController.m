@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "GonggaoxqController.h"
 #import "EditDataViewController.h"
+#import "PermissionsViewController.h"
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -133,7 +134,7 @@
             break;
         case 8:
             //业务经理
-            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"业务陌拜",@"图片报岗",@"报表管理"];
+            _arr=@[@"店家跟踪",@"我的报表", @"店家信息",@"公司公告", @"业务陌拜",@"图片报岗",@"报表管理"];
             _arr1=@[@"dianpugenzong",@"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"mobaijilu",@"baogang",@"baobiaoguanli"];
             break;
         default:
@@ -259,7 +260,8 @@
                 //            _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        PermissionsViewController *PermissionsVC=[[PermissionsViewController alloc]init];
+                        [self.navigationController pushViewController:PermissionsVC animated:YES];
                     }
                         break;
                     case 11:{

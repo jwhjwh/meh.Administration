@@ -68,6 +68,8 @@
 		1F6E313F1E5439C2006069ED /* YHJBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E313D1E5439C2006069ED /* YHJBtnView.m */; };
 		1F6E31411E543CE1006069ED /* menuData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E31401E543CE1006069ED /* menuData.plist */; };
 		1F6E31461E5448FB006069ED /* NoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E31451E5448FB006069ED /* NoticeView.m */; };
+		1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */; };
+		1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F76A6F41E6967230063B3D7 /* managViewController.m */; };
 		1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC01E52F7CA005F53CE /* AFHTTPSessionManager.m */; };
 		1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC31E52F7CA005F53CE /* AFNetworkReachabilityManager.m */; };
 		1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC51E52F7CA005F53CE /* AFSecurityPolicy.m */; };
@@ -112,6 +114,7 @@
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
 		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
+		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -210,6 +213,8 @@
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
+		62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF61E68FD36003F3A84 /* CreateViewController.m */; };
+		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
 		62EBA2331E56939300F657DB /* Contact3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA22F1E56939300F657DB /* Contact3.png */; };
 		62EBA2341E56939300F657DB /* Contact2.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA2301E56939300F657DB /* Contact2.png */; };
 		62EBA2351E56939300F657DB /* Contact0.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA2311E56939300F657DB /* Contact0.png */; };
@@ -354,6 +359,10 @@
 		1F6E31401E543CE1006069ED /* menuData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = menuData.plist; sourceTree = "<group>"; };
 		1F6E31441E5448FB006069ED /* NoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeView.h; sourceTree = "<group>"; };
 		1F6E31451E5448FB006069ED /* NoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeView.m; sourceTree = "<group>"; };
+		1F76A6EC1E690F840063B3D7 /* YLDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLDropDownMenu.h; sourceTree = "<group>"; };
+		1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLDropDownMenu.m; sourceTree = "<group>"; };
+		1F76A6F31E6967230063B3D7 /* managViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = managViewController.h; sourceTree = "<group>"; };
+		1F76A6F41E6967230063B3D7 /* managViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = managViewController.m; sourceTree = "<group>"; };
 		1F803FBF1E52F7CA005F53CE /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		1F803FC01E52F7CA005F53CE /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		1F803FC11E52F7CA005F53CE /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -442,6 +451,8 @@
 		625355731E67AF8F0041F123 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
 		625355741E67AF8F0041F123 /* CityChoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChoose.h; sourceTree = "<group>"; };
 		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
+		6253557C1E681E740041F123 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionsViewController.h; sourceTree = "<group>"; };
+		6253557D1E681E740041F123 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionsViewController.m; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -602,6 +613,10 @@
 		626D96D81E600A7C002208D6 /* 对-未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-未选.png"; sourceTree = "<group>"; };
 		626D96D91E600A7C002208D6 /* 对-选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-选中.png"; sourceTree = "<group>"; };
 		6287AA1F1E543802004F6387 /* shibiema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibiema.png; sourceTree = "<group>"; };
+		62942BF51E68FD36003F3A84 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
+		62942BF61E68FD36003F3A84 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
+		62942BF81E6948F3003F3A84 /* SelectAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectAlert.h; sourceTree = "<group>"; };
+		62942BF91E6948F3003F3A84 /* SelectAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectAlert.m; sourceTree = "<group>"; };
 		62EBA22F1E56939300F657DB /* Contact3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact3.png; sourceTree = "<group>"; };
 		62EBA2301E56939300F657DB /* Contact2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact2.png; sourceTree = "<group>"; };
 		62EBA2311E56939300F657DB /* Contact0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact0.png; sourceTree = "<group>"; };
@@ -825,6 +840,15 @@
 			path = NoticeView;
 			sourceTree = "<group>";
 		};
+		1F76A6F21E6965040063B3D7 /* yuangongguan */ = {
+			isa = PBXGroup;
+			children = (
+				1F76A6F31E6967230063B3D7 /* managViewController.h */,
+				1F76A6F41E6967230063B3D7 /* managViewController.m */,
+			);
+			path = yuangongguan;
+			sourceTree = "<group>";
+		};
 		1F803FBE1E52F7CA005F53CE /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1003,6 +1027,7 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				625355781E6817780041F123 /* Permissions */,
 				62656CF71E52AFDE0085A2BD /* MainViewController.h */,
 				62656CF81E52AFDE0085A2BD /* MainViewController.m */,
 				1F4DBB4E1E583BB200733CF7 /* GonggaoxqController.h */,
@@ -1015,6 +1040,7 @@
 				1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */,
 				F73320AA1E5DB9AE00ABA6EF /* MessageView.h */,
 				F73320AB1E5DB9AE00ABA6EF /* MessageView.m */,
+				1F76A6F21E6965040063B3D7 /* yuangongguan */,
 				F736D1621E5891EE003A1A39 /* TableViewCell */,
 				1F6E31431E5448A1006069ED /* NoticeView */,
 				1F6E31391E54397A006069ED /* ZxdBtnview */,
@@ -1137,6 +1163,16 @@
 				625355751E67AF8F0041F123 /* CityChoose.m */,
 			);
 			path = CityChooseVeiw;
+			sourceTree = "<group>";
+		};
+		625355781E6817780041F123 /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				62942BF41E68FD22003F3A84 /* Create */,
+				6253557C1E681E740041F123 /* PermissionsViewController.h */,
+				6253557D1E681E740041F123 /* PermissionsViewController.m */,
+			);
+			path = Permissions;
 			sourceTree = "<group>";
 		};
 		62656B751E5295D70085A2BD /* Masonry */ = {
@@ -1477,6 +1513,17 @@
 			path = ModifyPass;
 			sourceTree = "<group>";
 		};
+		62942BF41E68FD22003F3A84 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				62942BF81E6948F3003F3A84 /* SelectAlert.h */,
+				62942BF91E6948F3003F3A84 /* SelectAlert.m */,
+				62942BF51E68FD36003F3A84 /* CreateViewController.h */,
+				62942BF61E68FD36003F3A84 /* CreateViewController.m */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
 		62EBA2431E56CA0300F657DB /* Secondary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1511,6 +1558,10 @@
 				62EBA2521E56CB6E00F657DB /* PositioningViewController.m */,
 				1F52C3981E6810F800AF6180 /* PerLomapController.h */,
 				1F52C3991E6810F800AF6180 /* PerLomapController.mm */,
+
+				1F76A6EC1E690F840063B3D7 /* YLDropDownMenu.h */,
+				1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */,
+
 				1F52C3871E67AA3400AF6180 /* LomapViewController.h */,
 				1F52C3881E67AA3400AF6180 /* LomapViewController.mm */,
 				1F6119ED1E66BF2D0044641E /* YUFoldingTableView */,
@@ -1894,6 +1945,7 @@
 				620731211E5D1DA200BCF51C /* JinnLockCircle.m in Sources */,
 				F767DBEE1E5B1B08000D4FB7 /* MJRefreshLegendFooter.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
+				1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */,
 				1F803FEC1E52F7CA005F53CE /* UIImageView+AFNetworking.m in Sources */,
@@ -1922,6 +1974,7 @@
 				62656C5B1E529BC10085A2BD /* IQToolbar.m in Sources */,
 				62656B941E5295D70085A2BD /* MASViewConstraint.m in Sources */,
 				F767DBED1E5B1B08000D4FB7 /* MJRefreshHeader.m in Sources */,
+				62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */,
 				62656CDF1E52A6600085A2BD /* UIImage+WebP.m in Sources */,
 				F767DBF11E5B1B08000D4FB7 /* UIScrollView+MJRefresh.m in Sources */,
 				1F803FED1E52F7CA005F53CE /* UIProgressView+AFNetworking.m in Sources */,
@@ -1968,6 +2021,7 @@
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
+				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
@@ -1976,6 +2030,7 @@
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
+				62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,
 				1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */,
 				62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */,
@@ -1985,6 +2040,7 @@
 				F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */,
 				62656CD81E52A6600085A2BD /* SDWebImageDownloader.m in Sources */,
 				1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */,
+				6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */,
 				62656CE11E52A6600085A2BD /* UIImageView+WebCache.m in Sources */,
 				1F59AF341E5EE16C0000722A /* FMDatabasePool.m in Sources */,
 				620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */,

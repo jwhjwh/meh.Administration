@@ -21,18 +21,6 @@
 @property (nonatomic,strong) UILabel *DayLabel;//出生日期
 @property (nonatomic,strong) UILabel *AddLabel;//现住地址
 
-//address
-/*
- Birthday    出生年月
- Age         年龄
- IdNo        身份证号
- Address     现居地址
- Wcode       微信号
- Qcode       qq号
- Interests   兴趣爱好
- SDASD       个性签名
- */
-
 @property (nonatomic,strong) NSString *Age;
 @property (nonatomic,strong) NSString *IdNo;
 

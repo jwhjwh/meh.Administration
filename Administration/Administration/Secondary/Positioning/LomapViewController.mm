@@ -62,7 +62,7 @@
     BMKLocationViewDisplayParam *userlocationStyle = [[BMKLocationViewDisplayParam alloc] init];
     userlocationStyle.isRotateAngleValid = YES;
     userlocationStyle.isAccuracyCircleShow = NO;
-    [_mapView updateLocationData:self.userLocation ];
+    [_mapView updateLocationData:self.userLocation];
 }
 /**
  *用户位置更新后，会调用此函数

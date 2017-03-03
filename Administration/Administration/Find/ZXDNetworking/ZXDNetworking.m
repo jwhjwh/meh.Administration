@@ -8,6 +8,7 @@
 
 #import "ZXDNetworking.h"
 #import <CommonCrypto/CommonCrypto.h>
+#import "MBProgressHUD+Add.h"
 #ifdef DEBUG
 #define PPLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
@@ -52,12 +53,8 @@ static CGRect oldframe;
    
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        [MBProgressHUD hideHUDForView: view animated:NO];
-        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"网络不给力，请检查网络！" sureBtn:@"好的" cancleBtn:nil];
-        alertView.resultIndex = ^(NSInteger index){
-            
-        };
-        [alertView showMKPAlertView];
+        [MBProgressHUD showError:@"网络错误" toView:view];
+     
         failure ? failure(error) : nil;
         PPLog(@"error ----= %@",error);
     }];
