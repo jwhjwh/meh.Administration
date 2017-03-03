@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "GonggaoxqController.h"
 #import "EditDataViewController.h"
+#import "PermissionsViewController.h"
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -259,7 +260,8 @@
                 //            _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        PermissionsViewController *PermissionsVC=[[PermissionsViewController alloc]init];
+                        [self.navigationController pushViewController:PermissionsVC animated:YES];
                     }
                         break;
                     case 11:{
