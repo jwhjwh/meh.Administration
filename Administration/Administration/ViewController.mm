@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+@interface ViewController ()<UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
 
-
-@interface ViewController ()<UITextFieldDelegate>
 @property (strong,nonatomic) UITextField *NameText; // 用户名
 @property (strong,nonatomic) UITextField *PassText;//密码
 @property (strong,nonatomic) UITextField *valiText;//识别码
@@ -25,6 +27,13 @@
 @property (strong,nonatomic) NSString *passStr;//第三条线
 @property (strong,nonatomic) NSString *shibieStr;//登陆按钮
 @property (strong,nonatomic) MainViewController *Main;
+@property (nonatomic, strong) BMKLocationService *locService;
+@property (nonatomic, strong) BMKGeoCodeSearch *geoCode;
+@property (nonatomic, assign) CGFloat longitude;  // 经度
+
+@property (nonatomic, assign) CGFloat latitude; // 纬度
+@property (nonatomic,retain)NSString *ctiy; //城市信息
+@property (nonatomic, assign) BOOL isGeoSearch;
 @end
 
 @implementation ViewController
@@ -39,6 +48,16 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
+- (BMKGeoCodeSearch *)geoCode
+{
+    if (!_geoCode)
+    {
+        _geoCode = [[BMKGeoCodeSearch alloc] init];
+        _geoCode.delegate = self;
+    }
+    return _geoCode;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -52,15 +71,52 @@
         make.right.equalTo(self.view.mas_right).offset(0);
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
     }];
-  
-
-
-   
-    
-    
-    
+   [NSTimer scheduledTimerWithTimeInterval:900 target:self selector:@selector(getResults)
+                                                  userInfo:nil repeats:YES];
     [self logIng];
+    [self startLocation];
 }
+-(void)getResults{
+ [self huoqudiliweizhi];
+}
+- (void)startLocation
+{
+    
+    // 初始化BMKLocationService
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    //启动LocationService
+    [_locService startUserLocationService];
+}
+//处理位置坐标更新
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"当前位置信息：didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    
+    self.longitude = userLocation.location.coordinate.longitude;
+    self.latitude = userLocation.location.coordinate.latitude;
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        for (CLPlacemark *placeMark in placemarks)
+        {
+            NSDictionary *addressDic=placeMark.addressDictionary;
+            
+            NSString *state=[addressDic objectForKey:@"State"];
+            NSString *city=[addressDic objectForKey:@"City"];
+            NSString *subLocality=[addressDic objectForKey:@"SubLocality"];
+            NSString *street=[addressDic objectForKey:@"Street"];
+            _ctiy=[NSString stringWithFormat:@"%@%@%@%@",state,city,subLocality,street];
+            NSLog(@"+++%@+__%@__%@===%@",state,city,subLocality,street);
+                      //找到了当前位置城市后就关闭服务
+            [_locService stopUserLocationService];
+       
+        }
+
+        
+    }];
+   
+}
+
 -(void)logIng{
     //头像
     _HeadView = [[UIImageView alloc]init];
@@ -208,12 +264,6 @@
 
     }
 }
-
-
-
-
-
-
 -(void)TouchLog:(UIButton*)sender{
     if (_nameStr==nil&& _shibieStr==nil&&_passStr==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请将信息填写完整" andInterval:1.0];
@@ -260,6 +310,9 @@
             [USER_DEFAULTS setObject:name forKey:@"name"];
             
             [ZxdObject rootController];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self huoqudiliweizhi];
+            });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新输入手机号机" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
@@ -274,6 +327,22 @@
   
     
   }
+}
+
+-(void)huoqudiliweizhi{
+    NSString *urlStr =[NSString stringWithFormat:@"%@location/addLoc.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *companyid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    if ([NSString stringWithFormat:@"%f",_latitude].length>0&&[NSString stringWithFormat:@"%f",_latitude].length>0&&_ctiy.length>0&&[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"token"]].length>0) {
+ 
+        NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+        NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"log":[NSString stringWithFormat:@"%f",_longitude],@"lat":[NSString stringWithFormat:@"%f",_latitude],@"comid":companyid,@"address":_ctiy};
+        [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+            
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:NO];
+    }
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     

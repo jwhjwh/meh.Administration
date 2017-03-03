@@ -8,7 +8,7 @@
 
 #import "IntercalateController.h"
 #import "ManagementViewController.h"
-
+#import "LomapViewController.h"
 @interface IntercalateController ()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 
@@ -141,8 +141,15 @@
             break;
         case 2:{
             //定位
-            PositioningViewController *PositionVC = [[PositioningViewController alloc]init];
-            [self.navigationController showViewController:PositionVC sender:nil];
+             int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
+            if (str==1||str==7) {
+       
+                PositioningViewController *PositionVC = [[PositioningViewController alloc]init];
+                 [self.navigationController pushViewController:PositionVC animated:nil];
+            }else{
+                LomapViewController *lomapVC=[[LomapViewController alloc]init];
+                [self.navigationController pushViewController:lomapVC animated:nil];
+            }
         }
             break;
         case 3:{

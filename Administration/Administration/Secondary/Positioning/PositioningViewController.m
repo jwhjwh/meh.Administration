@@ -9,10 +9,12 @@
 #import "PositioningViewController.h"
 #import "YUFoldingTableView.h"
 #import "PersonneTableViewCell.h"
+#import "PerLomapController.h"
 #import "PersonModel.h"
 @interface PositioningViewController ()<YUFoldingTableViewDelegate>
 @property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
-@property (nonatomic, weak) YUFoldingTableView *foldingTableView;@property (strong,nonatomic) NSMutableArray *InterNameAry;
+@property (nonatomic, weak) YUFoldingTableView *foldingTableView;
+@property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (strong,nonatomic) NSArray *array;
 @property (strong,nonatomic) NSMutableArray *shiNameAry;
 @property (strong,nonatomic) NSMutableArray *neiNameAry;
@@ -35,14 +37,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self suabView];
+    
 }
 -(void)suabView{
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     YUFoldingTableView *foldingTableView = [[YUFoldingTableView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
     _foldingTableView = foldingTableView;
-    
-    [self.view addSubview:foldingTableView];
+    [self.view addSubview:_foldingTableView];
     foldingTableView.foldingDelegate = self;
     [self.foldingTableView registerNib:[UINib nibWithNibName:@"PersonneTableViewCell" bundle:nil] forCellReuseIdentifier:@"CARRY"];
 }
@@ -51,9 +53,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
-    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-    
         _shiNameAry=[NSMutableArray array];
         _neiNameAry=[NSMutableArray array];
         _yeNameAry=[NSMutableArray array];
@@ -117,8 +117,7 @@
         
     }failure:^(NSError *error) {
         
-    }
-                  view:self.view MBPro:YES];
+    }view:self.view MBPro:YES];
 }
 #pragma mark - YUFoldingTableViewDelegate / required（必须实现的代理）
 // 返回箭头的位置
@@ -154,13 +153,17 @@
     
     PersonneTableViewCell *cell = [yuTableView dequeueReusableCellWithIdentifier:@"CARRY" forIndexPath:indexPath];
     PersonModel *model= _InterNameAry[indexPath.section][indexPath.row];
-    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
+     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
      [cell loadDataFromModel:model];
     return cell;
 }
 - (void )yuFoldingTableView:(YUFoldingTableView *)yuTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [yuTableView deselectRowAtIndexPath:indexPath animated:YES];
+    PersonModel *model= _InterNameAry[indexPath.section][indexPath.row];
+    PerLomapController *perLomaVC=[[PerLomapController alloc]init];
+    perLomaVC.uesrId=model.nameid;
+   [self.navigationController pushViewController:perLomaVC animated:YES];
 }
 
 

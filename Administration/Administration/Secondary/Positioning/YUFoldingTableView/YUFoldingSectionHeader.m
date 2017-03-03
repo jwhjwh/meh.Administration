@@ -71,10 +71,10 @@
     return _arrowImageView;
 }
 -(CAShapeLayer *)sepertorLine
-{
+{// 充当cell分割线
     if (!_sepertorLine) {
         _sepertorLine = [CAShapeLayer layer];
-        _sepertorLine.strokeColor = [UIColor whiteColor].CGColor;
+        _sepertorLine.strokeColor = [UIColor blackColor].CGColor;
         _sepertorLine.lineWidth = YUFoldingSepertorLineWidth;
     }
     return _sepertorLine;
