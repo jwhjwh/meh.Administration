@@ -177,6 +177,7 @@
         ViewController *VC= [[ViewController alloc]init];
         [self presentViewController:VC animated:YES completion:nil];
         [LVFmdbTool deleteData:nil];
+         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Launch"];
     }
 }
 - (void)didReceiveMemoryWarning {

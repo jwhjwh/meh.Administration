@@ -39,23 +39,12 @@
 @implementation ViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
-- (BMKGeoCodeSearch *)geoCode
-{
-    if (!_geoCode)
-    {
-        _geoCode = [[BMKGeoCodeSearch alloc] init];
-        _geoCode.delegate = self;
-    }
-    return _geoCode;
 }
 
 - (void)viewDidLoad {
@@ -81,7 +70,6 @@
 }
 - (void)startLocation
 {
-    
     // 初始化BMKLocationService
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
@@ -99,6 +87,7 @@
     [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         for (CLPlacemark *placeMark in placemarks)
         {
+         
             NSDictionary *addressDic=placeMark.addressDictionary;
             
             NSString *state=[addressDic objectForKey:@"State"];
@@ -109,10 +98,7 @@
             NSLog(@"+++%@+__%@__%@===%@",state,city,subLocality,street);
                       //找到了当前位置城市后就关闭服务
             [_locService stopUserLocationService];
-       
         }
-
-        
     }];
    
 }
@@ -148,6 +134,7 @@
     _NameText.keyboardType = UIKeyboardTypeNumberPad;//键盘格式
     _NameText.backgroundColor = [UIColor clearColor];
     _NameText.placeholder = @"用户名";
+    [_NameText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:_NameText];
     [_NameText
      mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -253,9 +240,27 @@
 
 -(void)textFieldDidChange :(UITextField *)textField{
     if (textField==_NameText) {
-        
         _nameStr= textField.text;
-       
+        if (_nameStr.length==11) {
+            NSString *urlStr =[NSString stringWithFormat:@"%@user/queryicon.action",KURLHeader];
+            NSLog(@"%@",_nameStr);
+            NSDictionary *info=@{@"mobile":_nameStr};
+            [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                    NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
+                    NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
+                    
+                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]];
+                    [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
+                    [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入用户名不存在" andInterval:1.0];
+                }
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:NO];
+        }
+        
     }else if (textField ==_PassText){
         _passStr= textField.text;
 
@@ -364,34 +369,12 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if(textField==_NameText){
-        if (range.location==10) {
-            _nameStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
-            NSString *urlStr =[NSString stringWithFormat:@"%@user/queryicon.action",KURLHeader];
-            NSLog(@"%@",_nameStr);
-            NSDictionary *info=@{@"mobile":_nameStr};
-            [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
-                  NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
-            
-                [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]];
-            [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
-            [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
-                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入用户名不存在" andInterval:1.0];
-                }
-            } failure:^(NSError *error) {
-                
-            } view:self.view MBPro:NO];
-        }else if (range.location >= 11){
+       if (range.location >= 11){
         return NO;
         }
-    
-    
     }
     return YES;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
