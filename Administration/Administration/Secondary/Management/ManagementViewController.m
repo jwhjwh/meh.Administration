@@ -161,7 +161,7 @@
     }else{
         alert =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
         alert.delegate=self;
-        [alert setbackviewframeWidth:300 Andheight:150];
+        [alert setbackviewframeWidth:300 Andheight:150]; 
         [alert settipeTitleStr:@"是否退出账号?" Andfont:14];
         [self.view addSubview:alert];
       
