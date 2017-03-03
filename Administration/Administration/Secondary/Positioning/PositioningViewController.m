@@ -163,6 +163,8 @@
     PersonModel *model= _InterNameAry[indexPath.section][indexPath.row];
     PerLomapController *perLomaVC=[[PerLomapController alloc]init];
     perLomaVC.uesrId=model.nameid;
+    perLomaVC.name=model.name;
+    perLomaVC.account=[NSString stringWithFormat:@"%ld",(long)model.account];
    [self.navigationController pushViewController:perLomaVC animated:YES];
 }
 

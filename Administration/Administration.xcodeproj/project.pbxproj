@@ -46,7 +46,7 @@
 		1F52C38B1E67B74100AF6180 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F52C38A1E67B74100AF6180 /* mapapi.bundle */; };
 		1F52C38D1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C38C1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework */; };
 		1F52C3971E67F19900AF6180 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */; };
-		1F52C39A1E6810F800AF6180 /* PerLomapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.m */; };
+		1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.mm */; };
 		1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5745641E56C6A400E4A47C /* ZxdObject.m */; };
 		1F5745671E56F45400E4A47C /* tx100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745661E56F45400E4A47C /* tx100.png */; };
 		1F5745691E56F45A00E4A47C /* tx23.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745681E56F45A00E4A47C /* tx23.png */; };
@@ -68,6 +68,8 @@
 		1F6E313F1E5439C2006069ED /* YHJBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E313D1E5439C2006069ED /* YHJBtnView.m */; };
 		1F6E31411E543CE1006069ED /* menuData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E31401E543CE1006069ED /* menuData.plist */; };
 		1F6E31461E5448FB006069ED /* NoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E31451E5448FB006069ED /* NoticeView.m */; };
+		1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */; };
+		1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F76A6F41E6967230063B3D7 /* managViewController.m */; };
 		1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC01E52F7CA005F53CE /* AFHTTPSessionManager.m */; };
 		1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC31E52F7CA005F53CE /* AFNetworkReachabilityManager.m */; };
 		1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC51E52F7CA005F53CE /* AFSecurityPolicy.m */; };
@@ -321,7 +323,7 @@
 		1F52C38C1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
 		1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
 		1F52C3981E6810F800AF6180 /* PerLomapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerLomapController.h; sourceTree = "<group>"; };
-		1F52C3991E6810F800AF6180 /* PerLomapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerLomapController.m; sourceTree = "<group>"; };
+		1F52C3991E6810F800AF6180 /* PerLomapController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PerLomapController.mm; sourceTree = "<group>"; };
 		1F5745631E56C6A400E4A47C /* ZxdObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZxdObject.h; sourceTree = "<group>"; };
 		1F5745641E56C6A400E4A47C /* ZxdObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZxdObject.m; sourceTree = "<group>"; };
 		1F5745661E56F45400E4A47C /* tx100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tx100.png; sourceTree = "<group>"; };
@@ -357,6 +359,10 @@
 		1F6E31401E543CE1006069ED /* menuData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = menuData.plist; sourceTree = "<group>"; };
 		1F6E31441E5448FB006069ED /* NoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeView.h; sourceTree = "<group>"; };
 		1F6E31451E5448FB006069ED /* NoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeView.m; sourceTree = "<group>"; };
+		1F76A6EC1E690F840063B3D7 /* YLDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLDropDownMenu.h; sourceTree = "<group>"; };
+		1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLDropDownMenu.m; sourceTree = "<group>"; };
+		1F76A6F31E6967230063B3D7 /* managViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = managViewController.h; sourceTree = "<group>"; };
+		1F76A6F41E6967230063B3D7 /* managViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = managViewController.m; sourceTree = "<group>"; };
 		1F803FBF1E52F7CA005F53CE /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		1F803FC01E52F7CA005F53CE /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		1F803FC11E52F7CA005F53CE /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -834,6 +840,15 @@
 			path = NoticeView;
 			sourceTree = "<group>";
 		};
+		1F76A6F21E6965040063B3D7 /* yuangongguan */ = {
+			isa = PBXGroup;
+			children = (
+				1F76A6F31E6967230063B3D7 /* managViewController.h */,
+				1F76A6F41E6967230063B3D7 /* managViewController.m */,
+			);
+			path = yuangongguan;
+			sourceTree = "<group>";
+		};
 		1F803FBE1E52F7CA005F53CE /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1025,6 +1040,7 @@
 				1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */,
 				F73320AA1E5DB9AE00ABA6EF /* MessageView.h */,
 				F73320AB1E5DB9AE00ABA6EF /* MessageView.m */,
+				1F76A6F21E6965040063B3D7 /* yuangongguan */,
 				F736D1621E5891EE003A1A39 /* TableViewCell */,
 				1F6E31431E5448A1006069ED /* NoticeView */,
 				1F6E31391E54397A006069ED /* ZxdBtnview */,
@@ -1541,7 +1557,9 @@
 				62EBA2511E56CB6E00F657DB /* PositioningViewController.h */,
 				62EBA2521E56CB6E00F657DB /* PositioningViewController.m */,
 				1F52C3981E6810F800AF6180 /* PerLomapController.h */,
-				1F52C3991E6810F800AF6180 /* PerLomapController.m */,
+				1F52C3991E6810F800AF6180 /* PerLomapController.mm */,
+				1F76A6EC1E690F840063B3D7 /* YLDropDownMenu.h */,
+				1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */,
 				1F52C3871E67AA3400AF6180 /* LomapViewController.h */,
 				1F52C3881E67AA3400AF6180 /* LomapViewController.mm */,
 				1F6119ED1E66BF2D0044641E /* YUFoldingTableView */,
@@ -1904,7 +1922,7 @@
 				62656CDE1E52A6600085A2BD /* UIImage+MultiFormat.m in Sources */,
 				62EBA2601E56CC1500F657DB /* SearchViewController.m in Sources */,
 				62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */,
-				1F52C39A1E6810F800AF6180 /* PerLomapController.m in Sources */,
+				1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */,
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,
 				62656B961E5295D70085A2BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,
@@ -1925,6 +1943,7 @@
 				620731211E5D1DA200BCF51C /* JinnLockCircle.m in Sources */,
 				F767DBEE1E5B1B08000D4FB7 /* MJRefreshLegendFooter.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
+				1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */,
 				1F803FEC1E52F7CA005F53CE /* UIImageView+AFNetworking.m in Sources */,
@@ -2000,6 +2019,7 @@
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
+				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
