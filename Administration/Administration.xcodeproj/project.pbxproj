@@ -46,7 +46,7 @@
 		1F52C38B1E67B74100AF6180 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F52C38A1E67B74100AF6180 /* mapapi.bundle */; };
 		1F52C38D1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C38C1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework */; };
 		1F52C3971E67F19900AF6180 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */; };
-		1F52C39A1E6810F800AF6180 /* PerLomapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.m */; };
+		1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.mm */; };
 		1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5745641E56C6A400E4A47C /* ZxdObject.m */; };
 		1F5745671E56F45400E4A47C /* tx100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745661E56F45400E4A47C /* tx100.png */; };
 		1F5745691E56F45A00E4A47C /* tx23.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745681E56F45A00E4A47C /* tx23.png */; };
@@ -318,7 +318,7 @@
 		1F52C38C1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
 		1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
 		1F52C3981E6810F800AF6180 /* PerLomapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerLomapController.h; sourceTree = "<group>"; };
-		1F52C3991E6810F800AF6180 /* PerLomapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerLomapController.m; sourceTree = "<group>"; };
+		1F52C3991E6810F800AF6180 /* PerLomapController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PerLomapController.mm; sourceTree = "<group>"; };
 		1F5745631E56C6A400E4A47C /* ZxdObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZxdObject.h; sourceTree = "<group>"; };
 		1F5745641E56C6A400E4A47C /* ZxdObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZxdObject.m; sourceTree = "<group>"; };
 		1F5745661E56F45400E4A47C /* tx100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tx100.png; sourceTree = "<group>"; };
@@ -1510,7 +1510,7 @@
 				62EBA2511E56CB6E00F657DB /* PositioningViewController.h */,
 				62EBA2521E56CB6E00F657DB /* PositioningViewController.m */,
 				1F52C3981E6810F800AF6180 /* PerLomapController.h */,
-				1F52C3991E6810F800AF6180 /* PerLomapController.m */,
+				1F52C3991E6810F800AF6180 /* PerLomapController.mm */,
 				1F52C3871E67AA3400AF6180 /* LomapViewController.h */,
 				1F52C3881E67AA3400AF6180 /* LomapViewController.mm */,
 				1F6119ED1E66BF2D0044641E /* YUFoldingTableView */,
@@ -1778,11 +1778,8 @@
 				62656D5F1E52B5700085A2BD /* xulie.png in Resources */,
 				62656D551E52B5700085A2BD /* yonghumima.png in Resources */,
 				62656D441E52B5700085A2BD /* Inder2.png in Resources */,
-
 				1F52C38B1E67B74100AF6180 /* mapapi.bundle in Resources */,
-
 				625355761E67AF8F0041F123 /* city.plist in Resources */,
-
 				1F4DBB521E58420800733CF7 /* fanhui.png in Resources */,
 				62656D501E52B5700085A2BD /* ztgb.png in Resources */,
 				621A5C211E5843B50051C6CC /* banben100.png in Resources */,
@@ -1876,7 +1873,7 @@
 				62656CDE1E52A6600085A2BD /* UIImage+MultiFormat.m in Sources */,
 				62EBA2601E56CC1500F657DB /* SearchViewController.m in Sources */,
 				62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */,
-				1F52C39A1E6810F800AF6180 /* PerLomapController.m in Sources */,
+				1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */,
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,
 				62656B961E5295D70085A2BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,

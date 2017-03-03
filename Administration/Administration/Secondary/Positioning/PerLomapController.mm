@@ -7,16 +7,26 @@
 //
 
 #import "PerLomapController.h"
-
+#import <BaiduMapAPI_Map/BMKMapView.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 @interface PerLomapController ()
+{
+    BMKMapView *_mapView;
+   
+}
+@property (nonatomic, retain) NSString *longitude;  // 经度
 
+@property (nonatomic, retain) NSString *latitude; // 纬度
+//地名
+@property (nonatomic, copy) NSString *addressName;
 @end
 
 @implementation PerLomapController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning {
