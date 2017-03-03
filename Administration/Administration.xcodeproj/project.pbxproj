@@ -114,6 +114,7 @@
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
 		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
+		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -448,6 +449,8 @@
 		625355731E67AF8F0041F123 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
 		625355741E67AF8F0041F123 /* CityChoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChoose.h; sourceTree = "<group>"; };
 		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
+		6253557C1E681E740041F123 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionsViewController.h; sourceTree = "<group>"; };
+		6253557D1E681E740041F123 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionsViewController.m; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -1018,6 +1021,10 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				6253557B1E6819490041F123 /* Store */,
+				6253557A1E6819320041F123 /* Report */,
+				625355791E68190D0041F123 /* Tracking */,
+				625355781E6817780041F123 /* Permissions */,
 				62656CF71E52AFDE0085A2BD /* MainViewController.h */,
 				62656CF81E52AFDE0085A2BD /* MainViewController.m */,
 				1F4DBB4E1E583BB200733CF7 /* GonggaoxqController.h */,
@@ -1153,6 +1160,36 @@
 				625355751E67AF8F0041F123 /* CityChoose.m */,
 			);
 			path = CityChooseVeiw;
+			sourceTree = "<group>";
+		};
+		625355781E6817780041F123 /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				6253557C1E681E740041F123 /* PermissionsViewController.h */,
+				6253557D1E681E740041F123 /* PermissionsViewController.m */,
+			);
+			path = Permissions;
+			sourceTree = "<group>";
+		};
+		625355791E68190D0041F123 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tracking;
+			sourceTree = "<group>";
+		};
+		6253557A1E6819320041F123 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		6253557B1E6819490041F123 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 		62656B751E5295D70085A2BD /* Masonry */ = {
@@ -2005,6 +2042,7 @@
 				F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */,
 				62656CD81E52A6600085A2BD /* SDWebImageDownloader.m in Sources */,
 				1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */,
+				6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */,
 				62656CE11E52A6600085A2BD /* UIImageView+WebCache.m in Sources */,
 				1F59AF341E5EE16C0000722A /* FMDatabasePool.m in Sources */,
 				620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */,
