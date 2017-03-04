@@ -11,8 +11,8 @@
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
 #import <BaiduMapAPI_Utils/BMKGeometry.h>
 
-@interface LomapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKLocationServiceDelegate>{
-    BMKMapView *_mapView;
+@interface LomapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKLocationServiceDelegate>
+{
     BMKLocationService *_locService;
    
 }
