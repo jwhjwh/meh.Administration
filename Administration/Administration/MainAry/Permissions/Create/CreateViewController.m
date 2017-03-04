@@ -8,10 +8,13 @@
 
 #import "CreateViewController.h"
 #import "SelectAlert.h"
+#import "LrdDateModel.h"
+#import "LrdAlertTableView.h"
 @interface CreateViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
     NSArray *titles;
+    
 }
 
 @property (nonatomic,retain)NSArray *arr;
@@ -26,6 +29,9 @@
 @property (nonatomic,strong)UITextField *PassField;
 @property (nonatomic,strong)UITextField *QRPassField;
 @property (nonatomic,strong) NSString *MobileStr;
+@property (nonatomic,strong) NSString *codeStr;
+
+@property (nonatomic,strong)UILabel *PINPLabel;
 @end
 
 @implementation CreateViewController
@@ -33,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"创建角色";
-    [self InterTableUI];
+    
     _hide = YES;
     _Open = NO;
    // [self setExtraCellLineHidden:infonTableview];
@@ -42,10 +48,11 @@
     _arr = @[@"角色",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
     _HSarr = @[@"选择角色",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
     titles = @[@"品牌经理",@"市场美导",@"业务人员",@"内勤人员",@"物流人员",@"行政管理人员",@"业务经理"];
+    [self InterTableUI];
     // Do any additional setup after loading the view.
 }
 -(void)InterTableUI{
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,50,self.view.bounds.size.width,372) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,50,self.view.bounds.size.width,52*(_arr.count+2)) style:UITableViewStylePlain];
     infonTableview.scrollEnabled =NO;
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
@@ -106,7 +113,7 @@
     }
 }
 -(void)action_button{
-    NSLog(@"不用点");
+    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
@@ -134,15 +141,16 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         
     }
+     cell.textLabel.text = _arr[indexPath.row];
     CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-240, 48);
-    if (indexPath.row ==0) {
+    if ([cell.textLabel.text isEqualToString:@"角色"] ) {
         _JSLabel = [[UILabel alloc]initWithFrame:labelRect2];
         _JSLabel.text = _HSarr[indexPath.row];
         _JSLabel.textColor = GetColor(199, 199, 205, 1);
         _JSLabel.font = [UIFont boldSystemFontOfSize:13.0f];
         [cell addSubview:_JSLabel];
         
-    }else if(indexPath.row<4){
+    }else if([cell.textLabel.text isEqualToString:@"姓名"]||[cell.textLabel.text isEqualToString:@"手机号"]||[cell.textLabel.text isEqualToString:@"验证码"]){
         _codeField =[[UITextField alloc]initWithFrame:labelRect2];
         _codeField.backgroundColor=[UIColor whiteColor];
         _codeField.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -153,7 +161,7 @@
         _codeField.placeholder =_HSarr[indexPath.row];
         [cell addSubview:_codeField];
         
-        if (indexPath.row == 2) {
+        if ([cell.textLabel.text isEqualToString:@"手机号"]) {
             UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
             [TXImage setTitle:@"获取验证码" forState:UIControlStateNormal];
             [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
@@ -162,7 +170,13 @@
             TXImage.backgroundColor = GetColor(144, 75, 174, 1);
             [cell addSubview:TXImage];
         }
-    }else if (indexPath.row==4){
+    }else if ([cell.textLabel.text isEqualToString:@"品牌"]){
+        _PINPLabel = [[UILabel alloc]initWithFrame:labelRect2];
+        _PINPLabel.textColor = GetColor(199, 199, 205, 1);
+        _PINPLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+        [cell addSubview:_PINPLabel];
+        
+    }else if ([cell.textLabel.text isEqualToString:@"密码"]){
         _PassField =[[UITextField alloc]initWithFrame:labelRect2];
         _PassField.backgroundColor=[UIColor whiteColor];
         _PassField.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -173,7 +187,7 @@
         _PassField.secureTextEntry= YES;
         [cell addSubview:_PassField];
        
-    }else if (indexPath.row == 5){
+    }else if ([cell.textLabel.text isEqualToString:@"确认密码"]){
         _QRPassField =[[UITextField alloc]initWithFrame:labelRect2];
         _QRPassField.backgroundColor=[UIColor whiteColor];
         _QRPassField.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -185,26 +199,40 @@
         [cell addSubview:_QRPassField];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = _arr[indexPath.row];
+   
     
     return cell;
 }
 -(void)callIphone:(UIButton*)sender{
-    NSString *urlStr = [NSString stringWithFormat:@"%@user/sendMessage.action", KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"mobile":_MobileStr};
-    NSLog(@"%@%@",urlStr,dic);
-    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
-        {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"短信已发送，请注意查收" andInterval:1.0];
+    
+    if (_MobileStr  == nil) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入11位手机号" andInterval:1.0];
+    }else if (_MobileStr.length<11){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入11位手机号" andInterval:1.0];
+    }
+    else{
+        NSString *urlStr = [NSString stringWithFormat:@"%@user/sendMessage.action", KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"mobile":_MobileStr};
+        NSLog(@"%@%@",urlStr,dic);
+        [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+            {
+                _codeStr = [responseObject objectForKey:@"code"];
+                NSLog(@"_codeStr:%@",_codeStr);
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"短信已发送，请注意查收" andInterval:1.0];
+            }else{
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络堵塞了" andInterval:1.0];
+            }
+        } failure:^(NSError *error) {
             
-        }
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
+        } view:self.view MBPro:YES];
 
+    
+    }
+    
+    
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
@@ -228,6 +256,7 @@
 
 - (void)textFieldWithText:(UITextField *)textField
 {
+    NSLog(@"tag:%ld",(long)textField.tag);
     switch (textField.tag) {
         case 1:
             
@@ -247,10 +276,8 @@
             if (textField.text.length>6) {
                 NSString *lengthstr = textField.text;
                 textField.text = [lengthstr substringToIndex:6];
-                
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"最多输入6位" andInterval:1.0];
             }
-
              NSLog(@"验证码:%@",textField.text);
             break;
         default:
@@ -259,16 +286,75 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0 ) {
-        [SelectAlert showWithTitle:@"选择职业" titles:titles selectIndex:^(NSInteger selectIndex) {
-            NSLog(@"选择了第%ld个",selectIndex);
-        } selectValue:^(NSString *selectValue) {
-            NSLog(@"选择的值为%@",selectValue);
-            _JSLabel.text = selectValue;
-            _JSLabel.textColor= [UIColor blackColor];
-            //self.titleLabel.text = selectValue;
-        } showCloseButton:NO];
-
+        [self showAlert];
+    }else if (indexPath.row ==2){
+        NSLog(@"点是什么什么品牌");
+        [self pinpaiAlerStr];
+        
     }
+
+}
+-(void)pinpaiAlerStr{
+    NSString *urlStr = [NSString stringWithFormat:@"%@brand/querybrand.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+      
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+        {
+            NSArray *resultAry = responseObject[@"brandlist"];
+            
+            for (NSDictionary *newDict in resultAry) {
+                LrdDateModel *lrdModel = [[LrdDateModel alloc]init];
+                [lrdModel setValuesForKeysWithDictionary:newDict];
+                }
+        }else{
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"查询品牌失败,请重试" andInterval:1.0];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+-(void)showAlert{
+    [SelectAlert showWithTitle:@"选择职业" titles:titles selectIndex:^(NSInteger selectIndex) {
+        if (selectIndex == 0 ||selectIndex == 1) {
+            if (_arr.count == 7) {
+                
+            }else{
+                _arr = @[@"角色",@"姓名",@"品牌",@"手机号",@"验证码",@"密码",@"确认密码"];
+                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+                [indexPaths addObject: indexPath];
+                //这个位置应该在修改tableView之前将数据源先进行修改,否则会崩溃........必须向tableView的数据源数组中相应的添加一条数据
+                [infonTableview beginUpdates];
+                [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
+                [infonTableview endUpdates];
+            }
+        }else{
+            if (_arr.count == 7) {
+                [infonTableview beginUpdates];
+                _arr = @[@"角色",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
+                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:0]];
+                [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
+                [infonTableview endUpdates];
+            }
+            else{
+                
+            }
+            
+        }
+        //[infonTableview reloadData];
+        NSLog(@"选择了第%ld个",(long)selectIndex);
+    } selectValue:^(NSString *selectValue) {
+        NSLog(@"选择的值为%@",selectValue);
+        
+        _JSLabel.text = selectValue;
+        _JSLabel.textColor= [UIColor blackColor];
+        //self.titleLabel.text = selectValue;
+        
+    } showCloseButton:NO];
+    
 
 }
 - (void)didReceiveMemoryWarning {
