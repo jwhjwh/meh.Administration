@@ -13,7 +13,6 @@
 #import "GBAlertView.h"
 
 #import "SJABHelper.h"
-
 #import "DongImage.h"
 #define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
 @interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate>
@@ -181,7 +180,7 @@
             if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属品牌"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
-                NSArray *arr=@[model.account,model.rname,model.brandName,];
+                NSArray *arr=@[model.account,model.rname,model.brandName];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];

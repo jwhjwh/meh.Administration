@@ -18,6 +18,7 @@
 }
 - (void) addSubviews {
     _mingLabel=[[UILabel alloc]init];
+    _mingLabel.font=[UIFont systemFontOfSize:16];
     [self addSubview:_mingLabel];
     _xingLabel=[[UILabel alloc]init];
     _xingLabel.numberOfLines=0;

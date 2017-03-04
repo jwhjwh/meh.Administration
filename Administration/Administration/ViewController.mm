@@ -250,7 +250,7 @@
                     NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
                     NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
                     
-                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]];
+                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:0];
                     [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
                     [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
                 }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {

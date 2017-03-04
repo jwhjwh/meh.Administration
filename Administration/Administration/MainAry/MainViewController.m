@@ -10,6 +10,7 @@
 #import "GonggaoxqController.h"
 #import "EditDataViewController.h"
 #import "PermissionsViewController.h"
+#import "managViewController.h"
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -280,7 +281,8 @@
                         
                         break;
                     case 14:{
-                        
+                        managViewController *managVc=[[managViewController alloc]init];
+                        [self.navigationController pushViewController:managVc animated:YES];
                     }
                         
                     case 15:{

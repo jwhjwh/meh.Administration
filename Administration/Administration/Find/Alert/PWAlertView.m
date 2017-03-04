@@ -40,7 +40,7 @@
         
         
         self.frame = [UIScreen mainScreen].bounds;
-        self.backgroundColor = [UIColor grayColor];
+        self.backgroundColor = [UIColor  colorWithRed:129/255.0 green:129/255.0 blue:129/255.0 alpha:0.7];
         self.alertView = [[UIView alloc]init];
         self.alertView.backgroundColor = [UIColor whiteColor];
         self.alertView.layer.cornerRadius = 5.0;
