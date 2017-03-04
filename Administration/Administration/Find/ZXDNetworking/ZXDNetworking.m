@@ -52,7 +52,7 @@ static CGRect oldframe;
         PPLog(@"responseObject ++++= %@",responseObject);
    
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        [MBProgressHUD hideHUDForView: view animated:NO];
         [MBProgressHUD showError:@"网络错误" toView:view];
      
         failure ? failure(error) : nil;

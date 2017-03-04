@@ -7,13 +7,13 @@
 //
 
 #import "PositioningViewController.h"
-#import "YUFoldingTableView.h"
+#import "YUFoldingSectionHeader.h"
 #import "PersonneTableViewCell.h"
 #import "PerLomapController.h"
 #import "PersonModel.h"
-@interface PositioningViewController ()<YUFoldingTableViewDelegate>
+@interface PositioningViewController ()<YUFoldingSectionHeaderDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
-@property (nonatomic, weak) YUFoldingTableView *foldingTableView;
+
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (strong,nonatomic) NSArray *array;
 @property (strong,nonatomic) NSMutableArray *shiNameAry;
@@ -24,6 +24,8 @@
 @property (strong,nonatomic) NSMutableArray *xingNameAry;
 @property (nonatomic, strong) NSMutableArray *mArray;
 @property (nonatomic, strong) NSMutableArray *tempMArray; // 用于判断手风琴的某个层级是否展开
+@property (nonatomic, strong) NSMutableArray *statusArray;
+@property (nonatomic,retain)UITableView *tableView;
 @end
 
 @implementation PositioningViewController
@@ -35,19 +37,29 @@
     [super viewDidLoad];
     self.title=@"员工位置";
     self.view.backgroundColor = [UIColor whiteColor];
-    [self loadData];
     [self suabView];
-    
+    [self loadData];
 }
 -(void)suabView{
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    YUFoldingTableView *foldingTableView = [[YUFoldingTableView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
-    _foldingTableView = foldingTableView;
-    [self.view addSubview:_foldingTableView];
-    foldingTableView.foldingDelegate = self;
-    [self.foldingTableView registerNib:[UINib nibWithNibName:@"PersonneTableViewCell" bundle:nil] forCellReuseIdentifier:@"CARRY"];
+    _tableView= [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
+    [self.view addSubview:_tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource=self;
+    [self.tableView registerNib:[UINib nibWithNibName:@"PersonneTableViewCell" bundle:nil] forCellReuseIdentifier:@"CARRY"];
+    [ZXDNetworking setExtraCellLineHidden:self.tableView];
+    // 添加监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onChangeStatusBarOrientationNotification:)  name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
+
+-(void)onChangeStatusBarOrientationNotification:(NSNotification *)notification
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 -(void)loadData{
     NSString *uStr =[NSString stringWithFormat:@"%@user/findAllUser.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -71,36 +83,36 @@
                         [_shiNameAry addObject:model];
                         break;
                     case 3:
-                         [_neiNameAry addObject:model];
+                        [_neiNameAry addObject:model];
                         break;
                     case 4:
-                         [_wuNameAry addObject:model];
+                        [_wuNameAry addObject:model];
                         break;
                     case 5:
-                         [_yeNameAry addObject:model];
+                        [_yeNameAry addObject:model];
                         break;
                     case 6:
-                         [_pinNameAry addObject:model];
+                        [_pinNameAry addObject:model];
                         break;
                     case 7:
-                         [_xingNameAry addObject:model];
+                        [_xingNameAry addObject:model];
                         break;
                     default:
                         break;
                 }
-            
+                
             }
             _InterNameAry=[NSMutableArray arrayWithObjects:_shiNameAry,_neiNameAry,_wuNameAry,_yeNameAry,_pinNameAry,_xingNameAry,nil];
-          _array=@[@"市场人员",@"内勤人员",@"物流人员",@"业务人员",@"品牌经理",@"行政管理"];
-//            for (int i = 0; i<_InterNameAry.count; i++) {
-//                NSMutableDictionary *mDic = [[NSMutableDictionary alloc]init];
-//                [mDic setObject:[NSString stringWithFormat:@"%@(%lu)",_array[i],(unsigned long)[_InterNameAry[i]count]] forKey:@"name"];
-//                [mDic setObject:_InterNameAry[i] forKey:@"mArr"];
-//                [self.mArray addObject:mDic];
-//                [self.tempMArray addObject:@"0"];
-//            }
-        
-            [self.foldingTableView reloadData];
+            _array=@[@"市场人员",@"内勤人员",@"物流人员",@"业务人员",@"品牌经理",@"行政管理"];
+            //            for (int i = 0; i<_InterNameAry.count; i++) {
+            //                NSMutableDictionary *mDic = [[NSMutableDictionary alloc]init];
+            //                [mDic setObject:[NSString stringWithFormat:@"%@(%lu)",_array[i],(unsigned long)[_InterNameAry[i]count]] forKey:@"name"];
+            //                [mDic setObject:_InterNameAry[i] forKey:@"mArr"];
+            //                [self.mArray addObject:mDic];
+            //                [self.tempMArray addObject:@"0"];
+            //            }
+            
+            [self.tableView reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
@@ -121,60 +133,132 @@
 }
 #pragma mark - YUFoldingTableViewDelegate / required（必须实现的代理）
 // 返回箭头的位置
-- (YUFoldingSectionHeaderArrowPosition)perferedArrowPositionForYUFoldingTableView:(YUFoldingTableView *)yuTableView
+-(YUFoldingSectionHeaderArrowPosition )perferedArrowPosition
+
 {
     // 没有赋值，默认箭头在左
     NSUInteger intger=1;
     self.arrowPosition=intger;
     return self.arrowPosition ? :YUFoldingSectionHeaderArrowPositionLeft;
 }
-- (NSInteger )numberOfSectionForYUFoldingTableView:(YUFoldingTableView *)yuTableView
+
+
+-(NSMutableArray *)statusArray
+{
+    if (!_statusArray) {
+        _statusArray = [NSMutableArray array];
+    }
+    if (_statusArray.count) {
+        if (_statusArray.count > _InterNameAry.count) {
+            [_statusArray removeObjectsInRange:NSMakeRange(_InterNameAry.count - 1, _statusArray.count - _InterNameAry.count)];
+        }else if (_statusArray.count < _InterNameAry.count) {
+            for (NSInteger i = _InterNameAry.count - _statusArray.count; i < _InterNameAry.count; i++) {
+                [_statusArray addObject:[NSNumber numberWithInteger:YUFoldingSectionStateFlod]];
+            }
+        }
+    }else{
+        for (NSInteger i = 0; i <_InterNameAry.count; i++) {
+            [_statusArray addObject:[NSNumber numberWithInteger:YUFoldingSectionStateFlod]];
+        }
+    }
+    return _statusArray;
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return _InterNameAry.count;
 }
-- (NSInteger )yuFoldingTableView:(YUFoldingTableView *)yuTableView numberOfRowsInSection:(NSInteger )section
-{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{ if (((NSNumber *)self.statusArray[section]).integerValue == YUFoldingSectionStateShow) {
     return [_InterNameAry[section]count];
 }
-- (CGFloat )yuFoldingTableView:(YUFoldingTableView *)yuTableView heightForHeaderInSection:(NSInteger )section
+    return 0;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 50;
 }
-- (CGFloat )yuFoldingTableView:(YUFoldingTableView *)yuTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
 }
-- (NSString *)yuFoldingTableView:(YUFoldingTableView *)yuTableView titleForHeaderInSection:(NSInteger)section
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%@(%ld)",_array[section],[_InterNameAry[section]count]];
+    if (tableView.style == UITableViewStylePlain) {
+        return 0;
+    }else{
+        return 0.001;
+    }
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    YUFoldingSectionHeader *sectionHeaderView = [[YUFoldingSectionHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,50)  withTag:section];
+    [sectionHeaderView setupWithBackgroundColor:[UIColor whiteColor]
+     
+                                    titleString:[NSString stringWithFormat:@"%@(%ld)",_array[section],[_InterNameAry[section]count]]
+                                     titleColor:[UIColor blackColor]
+                                      titleFont:[UIFont boldSystemFontOfSize:16]
+                              descriptionString:[NSString string]
+                               descriptionColor:[UIColor whiteColor]
+                                descriptionFont:[UIFont boldSystemFontOfSize:13]
+                                     arrowImage:[UIImage imageNamed:@"jiantou_03"]
+                                  arrowPosition:[self perferedArrowPosition]
+                                   sectionState:((NSNumber *)self.statusArray[section]).integerValue];
+    
+    sectionHeaderView.tapDelegate = self;
+    
+    return sectionHeaderView;
 }
 
-- (UITableViewCell *)yuFoldingTableView:(YUFoldingTableView *)yuTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    PersonneTableViewCell *cell = [yuTableView dequeueReusableCellWithIdentifier:@"CARRY" forIndexPath:indexPath];
+    PersonneTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"CARRY" forIndexPath:indexPath];
     PersonModel *model= _InterNameAry[indexPath.section][indexPath.row];
-     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
-     [cell loadDataFromModel:model];
+    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
+    [cell loadDataFromModel:model];
     return cell;
 }
-- (void )yuFoldingTableView:(YUFoldingTableView *)yuTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [yuTableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     PersonModel *model= _InterNameAry[indexPath.section][indexPath.row];
     PerLomapController *perLomaVC=[[PerLomapController alloc]init];
     perLomaVC.uesrId=model.nameid;
     perLomaVC.name=model.name;
     perLomaVC.account=[NSString stringWithFormat:@"%ld",(long)model.account];
-   [self.navigationController pushViewController:perLomaVC animated:YES];
+    [self.navigationController pushViewController:perLomaVC animated:YES];
 }
 
+#pragma mark - YUFoldingSectionHeaderDelegate
 
+-(void)yuFoldingSectionHeaderTappedAtIndex:(NSInteger)index
+{
+    BOOL currentIsOpen = ((NSNumber *)self.statusArray[index]).boolValue;
+    
+    [self.statusArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:!currentIsOpen]];
+    
+    NSInteger numberOfRow = [_InterNameAry[index]count];
+    NSMutableArray *rowArray = [NSMutableArray array];
+    if (numberOfRow) {
+        for (NSInteger i = 0; i < numberOfRow; i++) {
+            [rowArray addObject:[NSIndexPath indexPathForRow:i inSection:index]];
+        }
+    }
+    if (rowArray.count) {
+        if (currentIsOpen) {
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithArray:rowArray] withRowAnimation:UITableViewRowAnimationTop];
+        }else{
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithArray:rowArray] withRowAnimation:UITableViewRowAnimationTop];
+        }
+    }
+}
 
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-  
+    
 }
 
 
