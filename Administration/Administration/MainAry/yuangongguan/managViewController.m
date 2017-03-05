@@ -165,20 +165,11 @@
     GuanglixqVController *guangliVC=[[GuanglixqVController alloc]init];
     guangliVC.uresID=model.nameid;
     guangliVC.Cellblock=^(){
-        
- 
-        
         //先移除数组_showInfoList中的cell数据
-        
-        [ _array[indexPath.section] removeObjectAtIndex:indexPath.row];
-        
-        
+        [ _InterNameAry[indexPath.section] removeObjectAtIndex:indexPath.row];
         [self.tableView beginUpdates];
-        
-        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.row]withRowAnimation:UITableViewRowAnimationLeft];
-        
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-        
+        NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
+        [self.tableView deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationLeft];
         [self.tableView endUpdates];
         // 刷新第0个section
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
