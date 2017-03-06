@@ -10,6 +10,7 @@
 #import "GonggaoxqController.h"
 #import "EditDataViewController.h"
 #import "PermissionsViewController.h"
+#import "brandViewController.h"
 #import "managViewController.h"
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
@@ -284,9 +285,10 @@
                         managViewController *managVc=[[managViewController alloc]init];
                         [self.navigationController pushViewController:managVc animated:YES];
                     }
-                        
+                        break;
                     case 15:{
-                        
+                        brandViewController *brandVC=[[brandViewController alloc]init];
+                        [self.navigationController pushViewController:brandVC animated:YES];
                     }
                         
                         break;
