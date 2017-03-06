@@ -7,14 +7,17 @@
 //
 
 #import "dongjieViewController.h"
-
 @interface dongjieViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
-    
+
+
+    NSIndexPath* indPath;
 }
 @property (nonatomic,retain)NSArray *arr;
-
+@property (nonatomic,retain)UISwitch *gestureUnLockSwitch;
+@property (nonatomic,retain)UISwitch *UnLockSwitch;
+@property (nonatomic,retain)UILabel *label;
 @end
 
 @implementation dongjieViewController
@@ -29,11 +32,22 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width/2-80, 74,160, 30)];
-    label.text=[NSString stringWithFormat:@"使用状态:%@",_state];
-    label.textAlignment=NSTextAlignmentCenter;
-    [self.view addSubview:label];
-   _arr = [[NSArray alloc]initWithObjects:@"解冻账号",@"冰冻账户",nil];
+    _label=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width/2-80, 74,160, 30)];
+    _label.text=[NSString stringWithFormat:@"账号状态:%@",_state];
+    _label.textAlignment=NSTextAlignmentCenter;
+    [self.view addSubview:_label];
+   _arr = [[NSArray alloc]initWithObjects:@"解冻账号",@"冻结账户",nil];
+   infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
+    //分割线无
+    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
+    //
+    infonTableview.showsVerticalScrollIndicator = NO;
+    infonTableview.delegate = self;
+    infonTableview.dataSource = self;
+    [self.view addSubview: infonTableview];
+}
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -58,13 +72,122 @@
     UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell ==nil)
     {
-        
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
+    if (indexPath.row==0) {
+        _gestureUnLockSwitch = [[UISwitch alloc] init];
+        [_gestureUnLockSwitch addTarget:self action:@selector(gestureUnLockSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        _gestureUnLockSwitch.tag=indexPath.row;
+        cell.accessoryView  = _gestureUnLockSwitch;
+    }else{
+        _UnLockSwitch = [[UISwitch alloc] init];
+        [_UnLockSwitch addTarget:self action:@selector(gestureUnLockSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        _UnLockSwitch.tag=indexPath.row;
+        cell.accessoryView  = _UnLockSwitch;
+    }
+    if ([_state isEqualToString:@"使用中"]) {
+        if (indexPath.row==0) {
+            _gestureUnLockSwitch.on = YES;
+        }else{
+            _UnLockSwitch.on=NO;
+        }
+    }else{
+        if (indexPath.row==0) {
+            _gestureUnLockSwitch.on = NO;
+        }else{
+            _UnLockSwitch.on = YES;
+        }
+    }
+
+  
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = _arr[indexPath.row];
     return cell;
 }
+- (void)gestureUnLockSwitchChanged:(UISwitch *)sender{
+    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"确定要删除该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
+    alertView.resultIndex = ^(NSInteger index){
+        UITableViewCell *cell =(UITableViewCell*)[[sender superview] superview];
+         indPath=[infonTableview indexPathForCell:cell];
+        if (sender.tag==0) {
+            if ([_state isEqualToString:@"使用中"]) {
+                [self xiugaishiyonzhuangtaicodeStr:@"0"];
+                __weak __typeof__(self) weakSelf = self;
+                self.Block=^(){
+                    weakSelf.UnLockSwitch.on=YES;
+                     _state=@"被冻结";
+                       weakSelf.stateBlock(weakSelf.state);
+                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                };
+      
+            }else{
+               
+                [self xiugaishiyonzhuangtaicodeStr:@"1"];
+                __weak __typeof__(self) weakSelf = self;
+                self.Block=^(){
+                        weakSelf.UnLockSwitch.on=NO;
+                        _state=@"使用中";
+                        weakSelf.stateBlock(weakSelf.state);
+                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                };
+            }
+        }else{
+            if ([_state isEqualToString:@"被冻结"]) {
+              
+                [self xiugaishiyonzhuangtaicodeStr:@"1"];
+                __weak __typeof__(self) weakSelf = self;
+                self.Block=^(){
+                        weakSelf.gestureUnLockSwitch.on=YES;
+                        _state=@"使用中";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                };
+            }else{
+                
+                [self xiugaishiyonzhuangtaicodeStr:@"0"];
+                __weak __typeof__(self) weakSelf = self;
+                self.Block=^(){
+                        weakSelf.gestureUnLockSwitch.on=NO;
+                        _state=@"被冻结";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                };
+            }
+        }
+    };
+    [alertView showMKPAlertView];
+  
+}
+-(void)xiugaishiyonzhuangtaicodeStr:(NSString*)codeStr{
+    NSString *uStr =[NSString stringWithFormat:@"%@user/upstate.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID,@"code":codeStr};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改状态成功" andInterval:1.0];
+            self.Block();
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改状态失败" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+
+}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -76,14 +199,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

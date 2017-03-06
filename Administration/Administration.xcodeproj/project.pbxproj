@@ -10,6 +10,11 @@
 		1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0102081E5FC09600802571 /* LVFmdbTool.m */; };
 		1F01020C1E5FC0C300802571 /* LVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F01020B1E5FC0C300802571 /* LVModel.m */; };
 		1F0102121E6036AB00802571 /* ZJLXRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */; };
+		1F1D1F911E6D323F0021B1AD /* brandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F901E6D323F0021B1AD /* brandViewController.m */; };
+		1F1D1F951E6D382A0021B1AD /* fj_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1D1F941E6D38290021B1AD /* fj_ico.png */; };
+		1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F971E6D492E0021B1AD /* LGUIView.m */; };
+		1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */; };
+		1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */; };
 		1F33F1191E611528000733F8 /* inftionxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1181E611528000733F8 /* inftionxqController.m */; };
 		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
 		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
@@ -274,6 +279,15 @@
 		1F01020A1E5FC0C300802571 /* LVModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LVModel.h; sourceTree = "<group>"; };
 		1F01020B1E5FC0C300802571 /* LVModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LVModel.m; sourceTree = "<group>"; };
 		1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLXRTableViewCell.xib; sourceTree = "<group>"; };
+		1F1D1F8F1E6D323F0021B1AD /* brandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brandViewController.h; sourceTree = "<group>"; };
+		1F1D1F901E6D323F0021B1AD /* brandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = brandViewController.m; sourceTree = "<group>"; };
+		1F1D1F941E6D38290021B1AD /* fj_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fj_ico.png; sourceTree = "<group>"; };
+		1F1D1F961E6D492E0021B1AD /* LGUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGUIView.h; sourceTree = "<group>"; };
+		1F1D1F971E6D492E0021B1AD /* LGUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGUIView.m; sourceTree = "<group>"; };
+		1F1D1F991E6D4B810021B1AD /* brandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brandTableViewCell.h; sourceTree = "<group>"; };
+		1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = brandTableViewCell.m; sourceTree = "<group>"; };
+		1F1D1F9C1E6D528B0021B1AD /* Brandmodle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Brandmodle.h; sourceTree = "<group>"; };
+		1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Brandmodle.m; sourceTree = "<group>"; };
 		1F33F1171E611528000733F8 /* inftionxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionxqController.h; sourceTree = "<group>"; };
 		1F33F1181E611528000733F8 /* inftionxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionxqController.m; sourceTree = "<group>"; };
 		1F33F11A1E61179F000733F8 /* inftionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionTableViewCell.h; sourceTree = "<group>"; };
@@ -731,6 +745,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F1D1F8E1E6D31C10021B1AD /* pingpaijingying */ = {
+			isa = PBXGroup;
+			children = (
+				1F1D1F8F1E6D323F0021B1AD /* brandViewController.h */,
+				1F1D1F901E6D323F0021B1AD /* brandViewController.m */,
+				1F1D1F991E6D4B810021B1AD /* brandTableViewCell.h */,
+				1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */,
+				1F1D1F961E6D492E0021B1AD /* LGUIView.h */,
+				1F1D1F971E6D492E0021B1AD /* LGUIView.m */,
+			);
+			name = pingpaijingying;
+			path = Permissions/pingpaijingying;
+			sourceTree = "<group>";
+		};
 		1F3786191E5AE31400CAD616 /* modle */ = {
 			isa = PBXGroup;
 			children = (
@@ -738,6 +766,8 @@
 				1F37861B1E5AE34400CAD616 /* mesgeModel.m */,
 				1F3E7BC21E5BD6B1005E5A45 /* GongModel.h */,
 				1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */,
+				1F1D1F9C1E6D528B0021B1AD /* Brandmodle.h */,
+				1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */,
 			);
 			name = modle;
 			sourceTree = "<group>";
@@ -1059,6 +1089,7 @@
 				1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */,
 				F73320AA1E5DB9AE00ABA6EF /* MessageView.h */,
 				F73320AB1E5DB9AE00ABA6EF /* MessageView.m */,
+				1F1D1F8E1E6D31C10021B1AD /* pingpaijingying */,
 				1F76A6F21E6965040063B3D7 /* yuangongguan */,
 				F736D1621E5891EE003A1A39 /* TableViewCell */,
 				1F6E31431E5448A1006069ED /* NoticeView */,
@@ -1478,6 +1509,7 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1F1D1F941E6D38290021B1AD /* fj_ico.png */,
 				1F45719F1E6571FA008E4E34 /* xx_ico1.png */,
 				1F59AF1F1E5E76750000722A /* tjpco01.png */,
 				1F59AF201E5E76750000722A /* tjpco02.png */,
@@ -1874,6 +1906,7 @@
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
+				1F1D1F951E6D382A0021B1AD /* fj_ico.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
 				1F0102121E6036AB00802571 /* ZJLXRTableViewCell.xib in Resources */,
 				1F59AF221E5E76750000722A /* tjpco02.png in Resources */,
@@ -1937,6 +1970,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F767DBEF1E5B1B08000D4FB7 /* MJRefreshLegendHeader.m in Sources */,
+				1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */,
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
 				62656CE31E52A6600085A2BD /* UIView+WebCacheOperation.m in Sources */,
 				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
@@ -1970,6 +2004,7 @@
 				62656C4F1E529BC10085A2BD /* IQNSArray+Sort.m in Sources */,
 				62656CD61E52A6600085A2BD /* SDWebImageCompat.m in Sources */,
 				1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */,
+				1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
 				62674CFF1E6ABCA30070AE6D /* LrdDateModel.m in Sources */,
 				1F4DBB551E58426700733CF7 /* MessageController.m in Sources */,
@@ -2034,6 +2069,7 @@
 				1F59AF331E5EE16C0000722A /* FMDatabaseAdditions.m in Sources */,
 				62EBA2531E56CB6E00F657DB /* PositioningViewController.m in Sources */,
 				1F6E31461E5448FB006069ED /* NoticeView.m in Sources */,
+				1F1D1F911E6D323F0021B1AD /* brandViewController.m in Sources */,
 				1F803FE41E52F7CA005F53CE /* AFURLRequestSerialization.m in Sources */,
 				1F5B13351E6ABEA800B6D8DC /* dongjieViewController.m in Sources */,
 				1F803FEB1E52F7CA005F53CE /* UIButton+AFNetworking.m in Sources */,
@@ -2046,10 +2082,7 @@
 				62656CDD1E52A6600085A2BD /* UIImage+GIF.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
-
 				62674CFE1E6ABCA30070AE6D /* LrdAlertTableView.m in Sources */,
-				1F6119F51E66BF2D0044641E /* YUFoldingTableView.m in Sources */,
-
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
@@ -2070,6 +2103,7 @@
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
 				62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */,
+				1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,
 				1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */,
 				62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */,

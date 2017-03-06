@@ -259,7 +259,7 @@
             
             [self.tableView reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有查询到员工" andInterval:1.0];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             
