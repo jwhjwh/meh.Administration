@@ -8,7 +8,7 @@
 
 #import "PermissionsViewController.h"
 #import "CreateViewController.h"
-
+#import "CodeViewController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -95,6 +95,8 @@
         CreateViewController *CreateVC= [[CreateViewController alloc]init];
         [self.navigationController showViewController:CreateVC sender:nil];
     }else{
+        CodeViewController *codeVC = [[CodeViewController alloc]init];
+        [self.navigationController showViewController:codeVC sender:nil];
         
     }
 
