@@ -8,12 +8,15 @@
 
 #import "CreateViewController.h"
 #import "SelectAlert.h"
-#import "LrdDateModel.h"
-#import "LrdAlertTableView.h"
 @interface CreateViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
     NSArray *titles;
+    NSMutableArray *finskAry;
+    NSMutableArray *brandLogoAry;
+    NSString *jsid;
+    NSString *NameorID;
+    NSString *YZM;//验证码
     
 }
 
@@ -22,7 +25,6 @@
 @property (nonatomic,strong)UILabel *promptLabel;
 @property (nonatomic,strong) UIButton *hideButton;
 @property (nonatomic,assign) BOOL hide;
-@property (nonatomic,assign) BOOL Open;
 @property (nonatomic,retain)NSArray *HSarr;
 @property (nonatomic,strong)UILabel *JSLabel;
 @property (nonatomic,strong)UITextField *codeField;
@@ -41,7 +43,6 @@
     self.title=@"创建角色";
     
     _hide = YES;
-    _Open = NO;
    // [self setExtraCellLineHidden:infonTableview];
     self.view.backgroundColor =GetColor(231, 230, 230, 1);
     
@@ -113,6 +114,41 @@
     }
 }
 -(void)action_button{
+    if (YZM ==nil) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入验证码" andInterval:1.0];
+        
+    }else if ([_codeStr isEqualToString:YZM]) {
+        NSString *urlStr = [NSString stringWithFormat:@"%@user/adduser.action", KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dic = [[NSDictionary alloc]init];
+        if ([jsid isEqualToString:@"2"]||[jsid isEqualToString:@"6"]) {
+            dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"password":_PassField.text,@"roleId":jsid,@"mobile":_MobileStr,@"realName":NameorID,@"brandID":_PINPLabel.text};
+        }else{
+            
+            dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"password":_PassField.text,@"roleId":jsid,@"mobile":_MobileStr,@"realName":NameorID};
+        }
+        [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+            {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建成功" andInterval:1.0];
+            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"2000"]){
+                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"用户已存在" andInterval:1.0];
+            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+            }else{
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建失败" andInterval:1.0];
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+
+    }else{
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"验证码无效" andInterval:1.0];
+    }
+    
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -242,14 +278,14 @@
 }
 - (void)PassFieldWithText:(UITextField *)textField
 {
-    if (_PassField.text.length > 0 && _QRPassField.text.length > 0) {
+    if (_PassField.text.length > 0 && _QRPassField.text.length > 0 && jsid.length>0 &&NameorID.length>0 && _MobileStr.length>0 && YZM.length >0 && _PassField.text == _QRPassField.text) {
         _WCBtn.backgroundColor = GetColor(144, 75, 174, 1);
         _WCBtn.enabled = YES;
-        _Open = NO;
+        
     }else{
         _WCBtn.backgroundColor = [UIColor lightGrayColor];
-        _WCBtn.enabled = YES;
-        _Open = NO;
+        _WCBtn.enabled = NO;
+        
     }
     NSLog(@"密码是:%@",textField.text);
 }
@@ -259,7 +295,7 @@
     NSLog(@"tag:%ld",(long)textField.tag);
     switch (textField.tag) {
         case 1:
-            
+            NameorID = textField.text;
             NSLog(@"姓名:%@",textField.text);
             break;
         case 2:
@@ -278,6 +314,7 @@
                 textField.text = [lengthstr substringToIndex:6];
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"最多输入6位" andInterval:1.0];
             }
+            YZM = textField.text;
              NSLog(@"验证码:%@",textField.text);
             break;
         default:
@@ -303,12 +340,29 @@
       
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
         {
-            NSArray *resultAry = responseObject[@"brandlist"];
-            
-            for (NSDictionary *newDict in resultAry) {
-                LrdDateModel *lrdModel = [[LrdDateModel alloc]init];
-                [lrdModel setValuesForKeysWithDictionary:newDict];
+             NSArray *resultAry = responseObject[@"brandlist"];
+            finskAry = [[NSMutableArray alloc]init];
+            brandLogoAry = [[NSMutableArray alloc]init];
+                for (NSDictionary *bin in resultAry) {
+                    NSString *finskStr =[[NSString alloc]init];
+                    finskStr  =bin[@"finsk"];
+                    NSString *logo = [[NSString alloc]init];
+                    logo = bin[@"brandLogo"];
+                    
+                    [finskAry addObject:finskStr];
+                    [brandLogoAry addObject:logo];
                 }
+            
+            [SelectAlert showWithTitle:@"选择品牌" titles:finskAry imageViews:brandLogoAry selectIndex:^(NSInteger selectIndex) {
+              
+                 NSLog(@"选择了第%ld个",(long)selectIndex);
+            } selectValue:^(NSString *selectValue) {
+                _PINPLabel.text = selectValue;
+                NSLog(@"选择的值为%@",selectValue);
+                _PINPLabel.textColor= [UIColor blackColor];
+            } showCloseButton:NO];
+            
+
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"查询品牌失败,请重试" andInterval:1.0];
         }
@@ -320,13 +374,11 @@
     [SelectAlert showWithTitle:@"选择职业" titles:titles selectIndex:^(NSInteger selectIndex) {
         if (selectIndex == 0 ||selectIndex == 1) {
             if (_arr.count == 7) {
-                
             }else{
                 _arr = @[@"角色",@"姓名",@"品牌",@"手机号",@"验证码",@"密码",@"确认密码"];
                 NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
                 [indexPaths addObject: indexPath];
-                //这个位置应该在修改tableView之前将数据源先进行修改,否则会崩溃........必须向tableView的数据源数组中相应的添加一条数据
                 [infonTableview beginUpdates];
                 [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
                 [infonTableview endUpdates];
@@ -340,15 +392,38 @@
                 [infonTableview endUpdates];
             }
             else{
-                
             }
-            
         }
         //[infonTableview reloadData];
         NSLog(@"选择了第%ld个",(long)selectIndex);
+        switch (selectIndex) {
+            case 0:
+                jsid = @"6";
+                break;
+            case 1:
+                jsid = @"2";
+                break;
+            case 2:
+                jsid = @"5";
+                break;
+            case 3:
+                jsid = @"3";
+                break;
+            case 4:
+                jsid = @"4";
+                break;
+            case 5:
+                jsid = @"7";
+                break;
+            case 6:
+                jsid = @"8";
+                break;
+                
+            default:
+                break;
+        }
     } selectValue:^(NSString *selectValue) {
         NSLog(@"选择的值为%@",selectValue);
-        
         _JSLabel.text = selectValue;
         _JSLabel.textColor= [UIColor blackColor];
         //self.titleLabel.text = selectValue;
