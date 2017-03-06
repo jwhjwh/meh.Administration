@@ -16,8 +16,9 @@ typedef void (^SelectValue)(NSString *selectValue);//数值
 
 @property (nonatomic, strong) NSArray *titles;//string数组
 
+@property (nonatomic,strong) NSArray *imageAry;//图片地址
 @property (nonatomic, strong) UILabel *titleLabel;//标题label
-@property (nonatomic, strong) UIImageView *titleImage;//图片
+
 @property (nonatomic, strong) UIButton *closeButton;//关闭按钮
 
 @property (nonatomic, copy) SelectIndex selectIndex;
@@ -39,6 +40,12 @@ typedef void (^SelectValue)(NSString *selectValue);//数值
                    selectValue:(SelectValue)selectValue
                showCloseButton:(BOOL)showCloseButton;
 
++ (SelectAlert *)showWithTitle:(NSString *)title
+                        titles:(NSArray *)titles
+                    imageViews:(NSArray *)imageee
+                   selectIndex:(SelectIndex)selectIndex
+                   selectValue:(SelectValue)selectValue
+               showCloseButton:(BOOL)showCloseButton;
 
 
 @end

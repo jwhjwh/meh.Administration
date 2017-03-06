@@ -11,6 +11,8 @@
 @interface SelectAlertCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic,strong) UIImageView *imagerView;
+
 
 @end
 
@@ -19,6 +21,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self addSubview:self.titleLabel];
+        [self addSubview:self.imagerView];
     }
     return self;
 }
@@ -28,14 +31,24 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:1 alpha:1];
         _titleLabel.font = [UIFont systemFontOfSize:16];
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _titleLabel;
+}
+- (UIImageView *)imagerView {
+    if (!_imagerView) {
+        _imagerView = [[UIImageView alloc] init];
+        _imagerView.backgroundColor = [UIColor whiteColor];
+       
+        
+    }
+    return _imagerView;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _titleLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _titleLabel.frame = CGRectMake(self.frame.size.height, 0, self.frame.size.width-self.frame.size.height, self.frame.size.height);
+    _imagerView.frame = CGRectMake(0, 0, self.frame.size.height, self.frame.size.height);
 }
 
 @end
@@ -61,6 +74,15 @@
                    selectValue:(SelectValue)selectValue
                showCloseButton:(BOOL)showCloseButton {
     SelectAlert *alert = [[SelectAlert alloc] initWithTitle:title titles:titles selectIndex:selectIndex selectValue:selectValue showCloseButton:showCloseButton];
+    return alert;
+}
++ (SelectAlert *)showWithTitle:(NSString *)title
+                        titles:(NSArray *)titles
+                    imageViews:(NSArray *)imageee
+                   selectIndex:(SelectIndex)selectIndex
+                   selectValue:(SelectValue)selectValue
+               showCloseButton:(BOOL)showCloseButton{
+    SelectAlert *alert = [[SelectAlert alloc]initWithTitle:title titles:titles imageViews:imageee selectIndex:selectIndex selectValue:selectValue showCloseButton:showCloseButton];
     return alert;
 }
 
@@ -130,7 +152,31 @@
     }
     return self;
 }
+-(instancetype)initWithTitle:(NSString *)title titles:(NSArray *)titles imageViews:(NSArray *)imageee  selectIndex:(SelectIndex)selectIndex selectValue:(SelectValue)selectValue showCloseButton:(BOOL)showCloseButton{
+    if (self = [super init]) {
+        self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.4];
+        alertHeight = 360;
+        buttonHeight = 40;
+        
+        self.titleLabel.text = title;
+        _titles = titles;
+        _imageAry = imageee;
+        _selectIndex = [selectIndex copy];
+        _selectValue = [selectValue copy];
+        _showCloseButton = showCloseButton;
+        [self addSubview:self.alertView];
+        [self.alertView addSubview:self.titleLabel];
+        [self.alertView addSubview:self.selectTableView];
+        if (_showCloseButton) {
+            [self.alertView addSubview:self.closeButton];
+        }
+        [self initUI];
+        
+        [self show];
+    }
+    return self;
 
+}
 - (void)show {
     self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     [[UIApplication sharedApplication].keyWindow addSubview:self];
@@ -184,7 +230,12 @@
         cell = [[SelectAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"selectcell"];
     }
     cell.titleLabel.text = _titles[indexPath.row];
+    NSString *imageurlstr = [NSString stringWithFormat:@"%@%@", KURLHeader,_imageAry[indexPath.row]];
+
+    // UIImage *urlImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageurlstr]]];
     
+    //[cell.imagerView setImage:urlImage];
+    [cell.imagerView sd_setImageWithURL:[NSURL URLWithString:imageurlstr]];
     return cell;
 }
 
