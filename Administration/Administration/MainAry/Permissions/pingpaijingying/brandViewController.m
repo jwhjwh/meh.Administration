@@ -7,20 +7,25 @@
 //
 
 #import "brandViewController.h"
+#import "BrandSeachController.h"
+#import "EditbrandController.h"
 #import "brandTableViewCell.h"
 #import "LGUIView.h"
 #import "Brandmodle.h"
+#import "ZXDChineseString.h"
 @interface brandViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     LGUIView * lgView;
     UITableView * _tableView;
     int page;
     int totalPage;//总页数
+    NSArray *keys;
+    NSMutableDictionary *dict;
 }
+@property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic,strong)NSMutableArray *array;
 @property (strong,nonatomic) UIButton *sousuoBtn;
 @end
-
 @implementation brandViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -54,7 +59,7 @@
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_sousuoBtn];
     [self creatTableView];
-    [self creatLGView];
+   
 }
 
 -(void)creatTableView
@@ -90,14 +95,14 @@
         [arr addObject:str];
     }
     
-    lgView = [[LGUIView alloc]initWithFrame:CGRectMake(Scree_width - 40, 100, 40, Scree_height - 140) indexArray:arr];
+    lgView = [[LGUIView alloc]initWithFrame:CGRectMake(Scree_width - 40, 100, 40, Scree_height - 140) indexArray:_indexArray];
     [self.view addSubview:lgView];
     
     [lgView selectIndexBlock:^(NSInteger section)
      {
-         [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]
-                                 animated:NO
-                           scrollPosition:UITableViewScrollPositionTop];
+        
+        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] animated:NO  scrollPosition:UITableViewScrollPositionTop];
+        
      }];
 }
 /**
@@ -118,19 +123,19 @@
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    unichar ch = 65 + section;
-    NSString * str = [NSString stringWithUTF8String:(char *)&ch];
+    
+    NSString * str = [NSString stringWithFormat:@"%@",_indexArray[section]];
     return str;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 26;
+    return _indexArray.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.array.count;
+    return [self.array[section]count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -140,7 +145,7 @@
         cell = [[brandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.modle=_array[indexPath.row];
+    cell.modle=[dict objectForKey: _array[indexPath.section][indexPath.row]];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -150,7 +155,14 @@
     [super didReceiveMemoryWarning];
    
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+   Brandmodle *model=[dict objectForKey: _array[indexPath.section][indexPath.row]];
+    EditbrandController *editbVC=[[EditbrandController alloc]init];
+    editbVC.strId=model.ID;
+    editbVC.imageStr=model.brandLogo;
+    editbVC.tittle=model.finsk;
+    [self.navigationController pushViewController:editbVC animated:YES];
+}
 -(void)getNetworkData:(BOOL)isRefresh{
     if (isRefresh) {
         page = 1;
@@ -169,18 +181,25 @@
             [_tableView.footer  setTitle:@"" forState:MJRefreshFooterStateIdle];
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSMutableArray *arr=[NSMutableArray array];
+             dict=[NSMutableDictionary dictionary];
             for (NSDictionary *dic in array) {
                 Brandmodle *model=[[Brandmodle alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-                [self.array addObject:model];
+                [dict setObject:model forKey:model.finsk];
+                [arr addObject:dict];
             }
+            for (NSMutableDictionary  *d in arr) {
+                keys = [d allKeys];
+            }
+            self.indexArray = [ZXDChineseString IndexArray:keys];
+            self.array = [ZXDChineseString LetterSortArray:keys];
             [_tableView reloadData];
-            if (array.count==0) {
-         _tableView.footer.state = MJRefreshFooterStateNoMoreData;
-                return;
-            }
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到品牌信息" andInterval:1.0];
+            [self creatLGView];
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            _tableView.footer.state = MJRefreshFooterStateNoMoreData;
+            return;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
@@ -196,5 +215,8 @@
     }view:self.view MBPro:YES];
     
 }
-
+-(void)Touchsearch{
+    BrandSeachController *brandVC =[[BrandSeachController alloc]init];
+    [self.navigationController pushViewController:brandVC animated:YES];
+}
 @end

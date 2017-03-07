@@ -15,6 +15,10 @@
 		1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F971E6D492E0021B1AD /* LGUIView.m */; };
 		1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */; };
 		1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */; };
+		1F2973961E6E3CD1003F2FD0 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973921E6E3CD1003F2FD0 /* pinyin.c */; };
+		1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973951E6E3CD1003F2FD0 /* ZXDChineseString.m */; };
+		1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973991E6E82F3003F2FD0 /* BrandSeachController.m */; };
+		1F29739D1E6E8C38003F2FD0 /* EditbrandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F29739C1E6E8C38003F2FD0 /* EditbrandController.m */; };
 		1F33F1191E611528000733F8 /* inftionxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1181E611528000733F8 /* inftionxqController.m */; };
 		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
 		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
@@ -285,6 +289,14 @@
 		1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = brandTableViewCell.m; sourceTree = "<group>"; };
 		1F1D1F9C1E6D528B0021B1AD /* Brandmodle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Brandmodle.h; sourceTree = "<group>"; };
 		1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Brandmodle.m; sourceTree = "<group>"; };
+		1F2973921E6E3CD1003F2FD0 /* pinyin.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = pinyin.c; sourceTree = "<group>"; };
+		1F2973931E6E3CD1003F2FD0 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
+		1F2973941E6E3CD1003F2FD0 /* ZXDChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDChineseString.h; sourceTree = "<group>"; };
+		1F2973951E6E3CD1003F2FD0 /* ZXDChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDChineseString.m; sourceTree = "<group>"; };
+		1F2973981E6E82F3003F2FD0 /* BrandSeachController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandSeachController.h; sourceTree = "<group>"; };
+		1F2973991E6E82F3003F2FD0 /* BrandSeachController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandSeachController.m; sourceTree = "<group>"; };
+		1F29739B1E6E8C38003F2FD0 /* EditbrandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditbrandController.h; sourceTree = "<group>"; };
+		1F29739C1E6E8C38003F2FD0 /* EditbrandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditbrandController.m; sourceTree = "<group>"; };
 		1F33F1171E611528000733F8 /* inftionxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionxqController.h; sourceTree = "<group>"; };
 		1F33F1181E611528000733F8 /* inftionxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionxqController.m; sourceTree = "<group>"; };
 		1F33F11A1E61179F000733F8 /* inftionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionTableViewCell.h; sourceTree = "<group>"; };
@@ -741,6 +753,10 @@
 			children = (
 				1F1D1F8F1E6D323F0021B1AD /* brandViewController.h */,
 				1F1D1F901E6D323F0021B1AD /* brandViewController.m */,
+				1F2973981E6E82F3003F2FD0 /* BrandSeachController.h */,
+				1F2973991E6E82F3003F2FD0 /* BrandSeachController.m */,
+				1F29739B1E6E8C38003F2FD0 /* EditbrandController.h */,
+				1F29739C1E6E8C38003F2FD0 /* EditbrandController.m */,
 				1F1D1F991E6D4B810021B1AD /* brandTableViewCell.h */,
 				1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */,
 				1F1D1F961E6D492E0021B1AD /* LGUIView.h */,
@@ -748,6 +764,17 @@
 			);
 			name = pingpaijingying;
 			path = Permissions/pingpaijingying;
+			sourceTree = "<group>";
+		};
+		1F2973911E6E3CD1003F2FD0 /* pinyin */ = {
+			isa = PBXGroup;
+			children = (
+				1F2973921E6E3CD1003F2FD0 /* pinyin.c */,
+				1F2973931E6E3CD1003F2FD0 /* pinyin.h */,
+				1F2973941E6E3CD1003F2FD0 /* ZXDChineseString.h */,
+				1F2973951E6E3CD1003F2FD0 /* ZXDChineseString.m */,
+			);
+			path = pinyin;
 			sourceTree = "<group>";
 		};
 		1F3786191E5AE31400CAD616 /* modle */ = {
@@ -1129,6 +1156,7 @@
 		6218D0931E4EB9B900299989 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				1F2973911E6E3CD1003F2FD0 /* pinyin */,
 				1F4571991E654BDE008E4E34 /* DongImage */,
 				1F4A98EF1E6405A8003492DF /* SJABHelper */,
 				1F59AF261E5EE16C0000722A /* fmdb */,
@@ -1951,10 +1979,12 @@
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
 				62656CE31E52A6600085A2BD /* UIView+WebCacheOperation.m in Sources */,
 				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
+				1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */,
 				F767DBEB1E5B1B08000D4FB7 /* MJRefreshGifFooter.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
 				62656CDA1E52A6600085A2BD /* SDWebImageManager.m in Sources */,
+				1F2973961E6E3CD1003F2FD0 /* pinyin.c in Sources */,
 				62656CDB1E52A6600085A2BD /* SDWebImagePrefetcher.m in Sources */,
 				1F803FEA1E52F7CA005F53CE /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				F767DBEC1E5B1B08000D4FB7 /* MJRefreshGifHeader.m in Sources */,
@@ -2057,9 +2087,6 @@
 				62656CDD1E52A6600085A2BD /* UIImage+GIF.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
-
-				62674CFE1E6ABCA30070AE6D /* LrdAlertTableView.m in Sources */,
-
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
@@ -2076,6 +2103,7 @@
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
+				1F29739D1E6E8C38003F2FD0 /* EditbrandController.m in Sources */,
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
@@ -2100,6 +2128,7 @@
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
 				1F33F1191E611528000733F8 /* inftionxqController.m in Sources */,
 				1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */,
+				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
 				62656B931E5295D70085A2BD /* MASViewAttribute.m in Sources */,

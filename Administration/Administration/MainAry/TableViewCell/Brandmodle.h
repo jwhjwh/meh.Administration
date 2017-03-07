@@ -12,4 +12,5 @@
 @property (nonatomic,strong)NSString *brandLogo;
 @property (nonatomic,strong)NSString *companyInfoId;
 @property (nonatomic,strong)NSString *finsk;
+@property (nonatomic,strong)NSString *ID;
 @end

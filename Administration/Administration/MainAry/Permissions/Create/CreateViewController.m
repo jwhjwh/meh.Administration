@@ -287,12 +287,12 @@
         _WCBtn.enabled = NO;
         
     }
-    NSLog(@"密码是:%@",textField.text);
+  
 }
 
 - (void)textFieldWithText:(UITextField *)textField
 {
-    NSLog(@"tag:%ld",(long)textField.tag);
+   
     switch (textField.tag) {
         case 1:
             NameorID = textField.text;

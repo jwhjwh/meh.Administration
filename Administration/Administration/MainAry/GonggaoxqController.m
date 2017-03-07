@@ -87,7 +87,7 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSString *str =[[responseObject valueForKey:@"data" ] valueForKey:@"count"];
             NSArray *array=[responseObject valueForKey:@"nlist"];
-            // NSLog(@"%@",str);
+
             totalPage = [str intValue];
             if (page <= totalPage||totalPage==0) {
                 [self endRefresh];
@@ -103,15 +103,12 @@
                 [self.dataArray addObject:model];
             }
             [self.tableView reloadData];
-            if (array.count==0) {
-                self.tableView.footer.state = MJRefreshFooterStateNoMoreData;
-                return;
-                
-            }
-            
             //        if (page>=totalPage) {
             //            [self.tableView.footer endRefreshing];
             //        }
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            self.tableView.footer.state = MJRefreshFooterStateNoMoreData;
+            return;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             

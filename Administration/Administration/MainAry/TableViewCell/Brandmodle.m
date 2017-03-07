@@ -11,7 +11,9 @@
 @implementation Brandmodle
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-    
+    if ([key isEqualToString:@"id"]) {
+        self.ID= value;
+    }
 }
 
 -(id)valueForUndefinedKey:(NSString *)key{
