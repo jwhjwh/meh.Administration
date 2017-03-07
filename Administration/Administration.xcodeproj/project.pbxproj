@@ -217,6 +217,15 @@
 		62656D6D1E52D29D0085A2BD /* 02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D691E52D29D0085A2BD /* 02.png */; };
 		62656D6E1E52D29D0085A2BD /* 03.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D6A1E52D29D0085A2BD /* 03.png */; };
 		62656D6F1E52D29D0085A2BD /* 04.png in Resources */ = {isa = PBXBuildFile; fileRef = 62656D6B1E52D29D0085A2BD /* 04.png */; };
+		6269A55D1E6E511D0083160E /* SubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A55C1E6E511D0083160E /* SubmittedViewController.m */; };
+		6269A5611E6E51E90083160E /* SubmittedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A55F1E6E51E90083160E /* SubmittedTableViewCell.m */; };
+		6269A5621E6E51E90083160E /* SubmittedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6269A5601E6E51E90083160E /* SubmittedTableViewCell.xib */; };
+		6269A5651E6E51FF0083160E /* SubmittedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5641E6E51FF0083160E /* SubmittedModel.m */; };
+		6269A5691E6E7F460083160E /* MySubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5681E6E7F460083160E /* MySubmittedViewController.m */; };
+		6269A56D1E6E9A810083160E /* ph_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 6269A56B1E6E9A810083160E /* ph_mt.png */; };
+		6269A56E1E6E9A810083160E /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6269A56C1E6E9A810083160E /* head_icon.png */; };
+		6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5711E6EA0150083160E /* DateSubmittedViewController.m */; };
+		6269A5741E6EA0150083160E /* DateSubmittedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6269A5721E6EA0150083160E /* DateSubmittedViewController.xib */; };
 		626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626D96D41E5FCEA2002208D6 /* ModifyViewController.m */; };
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
@@ -631,6 +640,20 @@
 		62656D691E52D29D0085A2BD /* 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 02.png; sourceTree = "<group>"; };
 		62656D6A1E52D29D0085A2BD /* 03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03.png; sourceTree = "<group>"; };
 		62656D6B1E52D29D0085A2BD /* 04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 04.png; sourceTree = "<group>"; };
+		6269A55B1E6E511D0083160E /* SubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmittedViewController.h; sourceTree = "<group>"; };
+		6269A55C1E6E511D0083160E /* SubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmittedViewController.m; sourceTree = "<group>"; };
+		6269A55E1E6E51E90083160E /* SubmittedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmittedTableViewCell.h; sourceTree = "<group>"; };
+		6269A55F1E6E51E90083160E /* SubmittedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmittedTableViewCell.m; sourceTree = "<group>"; };
+		6269A5601E6E51E90083160E /* SubmittedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubmittedTableViewCell.xib; sourceTree = "<group>"; };
+		6269A5631E6E51FF0083160E /* SubmittedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmittedModel.h; sourceTree = "<group>"; };
+		6269A5641E6E51FF0083160E /* SubmittedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmittedModel.m; sourceTree = "<group>"; };
+		6269A5671E6E7F460083160E /* MySubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubmittedViewController.h; sourceTree = "<group>"; };
+		6269A5681E6E7F460083160E /* MySubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubmittedViewController.m; sourceTree = "<group>"; };
+		6269A56B1E6E9A810083160E /* ph_mt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ph_mt.png; sourceTree = "<group>"; };
+		6269A56C1E6E9A810083160E /* head_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head_icon.png; sourceTree = "<group>"; };
+		6269A5701E6EA0150083160E /* DateSubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateSubmittedViewController.h; sourceTree = "<group>"; };
+		6269A5711E6EA0150083160E /* DateSubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateSubmittedViewController.m; sourceTree = "<group>"; };
+		6269A5721E6EA0150083160E /* DateSubmittedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateSubmittedViewController.xib; sourceTree = "<group>"; };
 		626D96D31E5FCEA2002208D6 /* ModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyViewController.h; sourceTree = "<group>"; };
 		626D96D41E5FCEA2002208D6 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 		626D96D81E600A7C002208D6 /* 对-未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-未选.png"; sourceTree = "<group>"; };
@@ -1070,6 +1093,7 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				6269A55A1E6E4CFD0083160E /* Submitted */,
 				625355781E6817780041F123 /* Permissions */,
 				62656CF71E52AFDE0085A2BD /* MainViewController.h */,
 				62656CF81E52AFDE0085A2BD /* MainViewController.m */,
@@ -1513,6 +1537,8 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6269A56B1E6E9A810083160E /* ph_mt.png */,
+				6269A56C1E6E9A810083160E /* head_icon.png */,
 				1F1D1F941E6D38290021B1AD /* fj_ico.png */,
 				1F45719F1E6571FA008E4E34 /* xx_ico1.png */,
 				1F59AF1F1E5E76750000722A /* tjpco01.png */,
@@ -1557,6 +1583,41 @@
 				62656D6B1E52D29D0085A2BD /* 04.png */,
 			);
 			path = guide;
+			sourceTree = "<group>";
+		};
+		6269A55A1E6E4CFD0083160E /* Submitted */ = {
+			isa = PBXGroup;
+			children = (
+				6269A56F1E6E9FFE0083160E /* DateSubmitted */,
+				6269A5661E6E7F000083160E /* MySubmitted */,
+				6269A55B1E6E511D0083160E /* SubmittedViewController.h */,
+				6269A55C1E6E511D0083160E /* SubmittedViewController.m */,
+				6269A5631E6E51FF0083160E /* SubmittedModel.h */,
+				6269A5641E6E51FF0083160E /* SubmittedModel.m */,
+				6269A55E1E6E51E90083160E /* SubmittedTableViewCell.h */,
+				6269A55F1E6E51E90083160E /* SubmittedTableViewCell.m */,
+				6269A5601E6E51E90083160E /* SubmittedTableViewCell.xib */,
+			);
+			path = Submitted;
+			sourceTree = "<group>";
+		};
+		6269A5661E6E7F000083160E /* MySubmitted */ = {
+			isa = PBXGroup;
+			children = (
+				6269A5671E6E7F460083160E /* MySubmittedViewController.h */,
+				6269A5681E6E7F460083160E /* MySubmittedViewController.m */,
+			);
+			path = MySubmitted;
+			sourceTree = "<group>";
+		};
+		6269A56F1E6E9FFE0083160E /* DateSubmitted */ = {
+			isa = PBXGroup;
+			children = (
+				6269A5701E6EA0150083160E /* DateSubmittedViewController.h */,
+				6269A5711E6EA0150083160E /* DateSubmittedViewController.m */,
+				6269A5721E6EA0150083160E /* DateSubmittedViewController.xib */,
+			);
+			path = DateSubmitted;
 			sourceTree = "<group>";
 		};
 		626D96D11E5FCDEA002208D6 /* ModifyPass */ = {
@@ -1915,6 +1976,7 @@
 				1F5745671E56F45400E4A47C /* tx100.png in Resources */,
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
+				6269A5741E6EA0150083160E /* DateSubmittedViewController.xib in Resources */,
 				1F59AF211E5E76750000722A /* tjpco01.png in Resources */,
 				62656D4E1E52B5700085A2BD /* Inder1.png in Resources */,
 				62656D4D1E52B5700085A2BD /* yuanhuan_03.png in Resources */,
@@ -1929,9 +1991,12 @@
 				62656D481E52B5700085A2BD /* weixuanzhong.png in Resources */,
 				62EBA2331E56939300F657DB /* Contact3.png in Resources */,
 				62656D611E52B5700085A2BD /* huihome.png in Resources */,
+				6269A5621E6E51E90083160E /* SubmittedTableViewCell.xib in Resources */,
 				6218D05B1E4E95FB00299989 /* Main.storyboard in Resources */,
 				1F4DBB4D1E582D7000733CF7 /* mobaijilu.png in Resources */,
 				62656D601E52B5700085A2BD /* yuangongguanli.png in Resources */,
+				6269A56D1E6E9A810083160E /* ph_mt.png in Resources */,
+				6269A56E1E6E9A810083160E /* head_icon.png in Resources */,
 				1F5208221E557A4E001DE4C2 /* ss_ico01.png in Resources */,
 				1F6119F31E66BF2D0044641E /* Arrow.png in Resources */,
 				1F6E31341E5425F6006069ED /* XLsn0wLoop.png in Resources */,
@@ -1997,6 +2062,7 @@
 				1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */,
 				1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
+				6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */,
 				1F4DBB551E58426700733CF7 /* MessageController.m in Sources */,
 				62656CD71E52A6600085A2BD /* SDWebImageDecoder.m in Sources */,
 				62656C501E529BC10085A2BD /* IQUIScrollView+Additions.m in Sources */,
@@ -2014,6 +2080,7 @@
 				62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */,
 				1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */,
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
+				6269A5611E6E51E90083160E /* SubmittedTableViewCell.m in Sources */,
 				62656CD21E52A6600085A2BD /* NSData+ImageContentType.m in Sources */,
 				62656C551E529BC10085A2BD /* IQKeyboardManager.m in Sources */,
 				1F6119EC1E665C620044641E /* PWAlertView.m in Sources */,
@@ -2035,6 +2102,7 @@
 				62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */,
 				62656CDF1E52A6600085A2BD /* UIImage+WebP.m in Sources */,
 				F767DBF11E5B1B08000D4FB7 /* UIScrollView+MJRefresh.m in Sources */,
+				6269A55D1E6E511D0083160E /* SubmittedViewController.m in Sources */,
 				1F803FED1E52F7CA005F53CE /* UIProgressView+AFNetworking.m in Sources */,
 				6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */,
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
@@ -2066,17 +2134,16 @@
 				1F803FE71E52F7CA005F53CE /* AFAutoPurgingImageCache.m in Sources */,
 				62656B981E5295D70085A2BD /* ViewController+MASAdditions.m in Sources */,
 				62656B921E5295D70085A2BD /* MASLayoutConstraint.m in Sources */,
+				6269A5651E6E51FF0083160E /* SubmittedModel.m in Sources */,
 				62656CDC1E52A6600085A2BD /* UIButton+WebCache.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				62656CDD1E52A6600085A2BD /* UIImage+GIF.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
-
-				62674CFE1E6ABCA30070AE6D /* LrdAlertTableView.m in Sources */,
-
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
+				6269A5691E6E7F460083160E /* MySubmittedViewController.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,

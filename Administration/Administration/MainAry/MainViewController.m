@@ -10,6 +10,7 @@
 #import "GonggaoxqController.h"
 #import "EditDataViewController.h"
 #import "PermissionsViewController.h"
+#import "SubmittedViewController.h"//图片报岗
 #import "brandViewController.h"
 #import "managViewController.h"
 #import "MessageController.h"
@@ -299,9 +300,9 @@
                         
                         break;
                     case 17:{
-                        
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
                     }
-                        
                         break;
                         
                     default:
@@ -370,7 +371,8 @@
                     }
                         
                     case 15:{
-                        
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
                     }
                         break;
                     case 16:{
