@@ -8,7 +8,7 @@
 
 #import "PermissionsViewController.h"
 #import "CreateViewController.h"
-
+#import "CodeViewController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -18,7 +18,11 @@
 @end
 
 @implementation PermissionsViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"权限管理";
@@ -95,6 +99,8 @@
         CreateViewController *CreateVC= [[CreateViewController alloc]init];
         [self.navigationController showViewController:CreateVC sender:nil];
     }else{
+        CodeViewController *codeVC = [[CodeViewController alloc]init];
+        [self.navigationController showViewController:codeVC sender:nil];
         
     }
 

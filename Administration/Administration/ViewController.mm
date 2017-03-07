@@ -249,10 +249,12 @@
                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                     NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
                     NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
-                    
+                   
                     [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:0];
+                    
                     [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
                     [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
+                    
                 }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
                     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入用户名不存在" andInterval:1.0];
                 }
@@ -313,6 +315,8 @@
             [USER_DEFAULTS setObject:ApLtokenStr forKey:@"token"];
             [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
             [USER_DEFAULTS setObject:name forKey:@"name"];
+            [USER_DEFAULTS  setObject:_shibieStr forKey:@"udid"];
+           
             
             [ZxdObject rootController];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
