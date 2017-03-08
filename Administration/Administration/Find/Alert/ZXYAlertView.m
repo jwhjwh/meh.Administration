@@ -168,7 +168,19 @@
     }
     [self removeFromSuperview];
 }
-
-
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint pt = [touch locationInView:self];
+    if (!CGRectContainsPoint([self.bgView frame], pt)) {
+        [self closeAction];
+    }
+}
+- (void)closeAction {
+    [UIView animateWithDuration:0.1 animations:^{
+        self.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
 
 @end

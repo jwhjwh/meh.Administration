@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>  
 @interface DongImage : NSObject
+
+@property(nonatomic,strong)UIScrollView *backgroundView;
+
 +(void)showImage:(UIImageView *)avatarImageView;
 +(void)hideImage:(UITapGestureRecognizer*)tap;
 @end

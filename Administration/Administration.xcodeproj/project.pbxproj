@@ -97,6 +97,7 @@
 		1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FDE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m */; };
 		1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FE01E52F7CA005F53CE /* UIWebView+AFNetworking.m */; };
 		1F803FF31E52F848005F53CE /* ZXDNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FF21E52F848005F53CE /* ZXDNetworking.m */; };
+		1FB0BF771E6FD7E0001CCFAA /* AddBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0BF761E6FD7E0001CCFAA /* AddBrandViewController.m */; };
 		6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */; };
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
@@ -441,6 +442,8 @@
 		1F803FE01E52F7CA005F53CE /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		1F803FF11E52F848005F53CE /* ZXDNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDNetworking.h; sourceTree = "<group>"; };
 		1F803FF21E52F848005F53CE /* ZXDNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDNetworking.m; sourceTree = "<group>"; };
+		1FB0BF751E6FD7E0001CCFAA /* AddBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBrandViewController.h; sourceTree = "<group>"; };
+		1FB0BF761E6FD7E0001CCFAA /* AddBrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBrandViewController.m; sourceTree = "<group>"; };
 		6200D68E1E5BDA760014F9F3 /* PersonneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonneTableViewCell.h; sourceTree = "<group>"; };
 		6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonneTableViewCell.m; sourceTree = "<group>"; };
 		6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonneTableViewCell.xib; sourceTree = "<group>"; };
@@ -786,6 +789,8 @@
 				1F2973991E6E82F3003F2FD0 /* BrandSeachController.m */,
 				1F29739B1E6E8C38003F2FD0 /* EditbrandController.h */,
 				1F29739C1E6E8C38003F2FD0 /* EditbrandController.m */,
+				1FB0BF751E6FD7E0001CCFAA /* AddBrandViewController.h */,
+				1FB0BF761E6FD7E0001CCFAA /* AddBrandViewController.m */,
 				1F1D1F991E6D4B810021B1AD /* brandTableViewCell.h */,
 				1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */,
 				1F1D1F961E6D492E0021B1AD /* LGUIView.h */,
@@ -2067,6 +2072,7 @@
 				F767DBEB1E5B1B08000D4FB7 /* MJRefreshGifFooter.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
+				1FB0BF771E6FD7E0001CCFAA /* AddBrandViewController.m in Sources */,
 				62656CDA1E52A6600085A2BD /* SDWebImageManager.m in Sources */,
 				1F2973961E6E3CD1003F2FD0 /* pinyin.c in Sources */,
 				62656CDB1E52A6600085A2BD /* SDWebImagePrefetcher.m in Sources */,
