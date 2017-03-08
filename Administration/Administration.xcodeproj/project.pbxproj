@@ -254,6 +254,7 @@
 		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
 		F736D1651E589245003A1A39 /* GongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F736D1641E589245003A1A39 /* GongTableViewCell.m */; };
 		F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F736D1671E589288003A1A39 /* MesgeTableViewCell.m */; };
+		F74A7BCD1E6EF22B004A7942 /* ZXYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */; };
 		F767DBE81E5B1B08000D4FB7 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F767DBD31E5B1B08000D4FB7 /* MJRefreshComponent.m */; };
 		F767DBE91E5B1B08000D4FB7 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F767DBD51E5B1B08000D4FB7 /* MJRefreshConst.m */; };
 		F767DBEA1E5B1B08000D4FB7 /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F767DBD71E5B1B08000D4FB7 /* MJRefreshFooter.m */; };
@@ -707,6 +708,8 @@
 		F736D1641E589245003A1A39 /* GongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GongTableViewCell.m; sourceTree = "<group>"; };
 		F736D1661E589288003A1A39 /* MesgeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MesgeTableViewCell.h; sourceTree = "<group>"; };
 		F736D1671E589288003A1A39 /* MesgeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MesgeTableViewCell.m; sourceTree = "<group>"; };
+		F74A7BCB1E6EF22B004A7942 /* ZXYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXYAlertView.h; sourceTree = "<group>"; };
+		F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXYAlertView.m; sourceTree = "<group>"; };
 		F767DBD11E5B1B08000D4FB7 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		F767DBD21E5B1B08000D4FB7 /* MJRefreshComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshComponent.h; sourceTree = "<group>"; };
 		F767DBD31E5B1B08000D4FB7 /* MJRefreshComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshComponent.m; sourceTree = "<group>"; };
@@ -1327,6 +1330,8 @@
 		62656BE41E5296390085A2BD /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				F74A7BCB1E6EF22B004A7942 /* ZXYAlertView.h */,
+				F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */,
 				1F33F11D1E613875000733F8 /* AlertViewExtension.h */,
 				1F33F11E1E613875000733F8 /* AlertViewExtension.m */,
 				62656BE51E5296390085A2BD /* ELNAlerTool.h */,
@@ -2057,11 +2062,8 @@
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
 				62656CE31E52A6600085A2BD /* UIView+WebCacheOperation.m in Sources */,
 				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
-
 				1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */,
-
 				62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */,
-
 				F767DBEB1E5B1B08000D4FB7 /* MJRefreshGifFooter.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
@@ -2166,6 +2168,7 @@
 				F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */,
 				1F803FE71E52F7CA005F53CE /* AFAutoPurgingImageCache.m in Sources */,
 				62656B981E5295D70085A2BD /* ViewController+MASAdditions.m in Sources */,
+				F74A7BCD1E6EF22B004A7942 /* ZXYAlertView.m in Sources */,
 				62656B921E5295D70085A2BD /* MASLayoutConstraint.m in Sources */,
 				6269A5651E6E51FF0083160E /* SubmittedModel.m in Sources */,
 				62656CDC1E52A6600085A2BD /* UIButton+WebCache.m in Sources */,

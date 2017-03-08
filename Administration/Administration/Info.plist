@@ -30,7 +30,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>相册权限访问</string>
+	<string>需要您的同意相机权限访问</string>
 	<key>NSContactsUsageDescription</key>
 	<string>contactsDesciption</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -38,7 +38,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>是否允许定位</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>相机权限访问</string>
+	<string>需要您的同意相册权限访问</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

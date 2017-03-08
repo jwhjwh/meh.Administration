@@ -8,8 +8,8 @@
 
 #import "EditbrandController.h"
 #import "DongImage.h"
-#import "SelectAlert.h"
-@interface EditbrandController ()<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import "ZXYAlertView.h"
+@interface EditbrandController ()<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,ZXYAlertViewDelegate>
 {
     BOOL _isEditing;
 }
@@ -116,30 +116,30 @@
     if (_isEditing==YES) {
        [DongImage showImage:_imageV];
     }else{
-        [SelectAlert showWithTitle:@"请选择照片" titles:@[@"拍照",@"相册"] selectIndex:^(NSInteger selectIndex) {
-            if (selectIndex==0) {
-                UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-                UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                picker.delegate = self;
-                picker.allowsEditing = YES;
-                picker.sourceType = sourceType;
-                [self presentViewController:picker animated:YES completion:nil];
-
-            }else{
-                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-                    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                    picker.delegate = self;
-                    picker.allowsEditing = YES;
-                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    [self presentViewController:picker animated:YES completion:nil];
-                }
-
-            }
-        } selectValue:^(NSString *selectValue) {
-            
-        } showCloseButton:NO];
+        ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
+        alert.title = @"请选择照片";
+        alert.buttonArray = @[@"相机",@"相册"];
+        alert.delegate = self;
+        [alert show];
     }
 }
+- (void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex==0) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }else{
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
