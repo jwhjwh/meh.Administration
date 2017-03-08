@@ -42,10 +42,8 @@
     _imageV.userInteractionEnabled = YES;
     [_imageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_imageStr]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     [self.view addSubview: _imageV];
-   
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(noticeimageTap:)];
     [_imageV addGestureRecognizer:tap];
-
     _textField=[[UITextField alloc]init];
     _textField.placeholder=@"请输入品牌名称";
     _textField.borderStyle=UITextBorderStyleLine;
@@ -66,13 +64,13 @@
         make.height.offset(Scree_width-60);
     }];
 
-        [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.view.mas_left).offset(-1);
             make.right.mas_equalTo(self.view.mas_right).offset(+1);
             make.top.mas_equalTo(_imageV.mas_bottom).offset(20);
             make.height.offset(30);
         }];
- _isEditing=YES;
+      _isEditing=YES;
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     if (_isEditing==YES) {

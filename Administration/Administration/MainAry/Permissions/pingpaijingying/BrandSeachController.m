@@ -4,8 +4,6 @@
 //
 //  Created by zhang on 2017/3/7.
 //  Copyright © 2017年 九尾狐. All rights reserved.
-//
-
 #import "BrandSeachController.h"
 #import "brandTableViewCell.h"
 #import "Brandmodle.h"
@@ -40,8 +38,6 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
     self.navigationItem.titleView = self.searchBar;
     self.searchBar.keyboardType = UIKeyboardTypeDefault;
-
-
 }
 -(void)buttLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -86,8 +82,6 @@
 {
      return 74;
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     brandTableViewCell *cell = [[brandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
@@ -104,9 +98,7 @@
     NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-   
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"key":self.searchBar.text};
-    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _searchDataArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
