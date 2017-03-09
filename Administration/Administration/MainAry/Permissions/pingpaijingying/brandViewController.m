@@ -22,6 +22,7 @@
     int totalPage;//总页数
     NSArray *keys;
     NSMutableDictionary *dict;
+    NSMutableArray *arr;
 }
 @property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic,strong)NSMutableArray *array;
@@ -73,13 +74,14 @@
     _tableView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:_tableView];
      [ZXDNetworking setExtraCellLineHidden:_tableView];
-    self.array = [NSMutableArray array];
+    
+    arr=[NSMutableArray array];
     [self getNetworkData:NO];
     page = 1;
     __weak typeof(self) weakSelf = self;
     //默认【下拉刷新】
     [_tableView addLegendHeaderWithRefreshingBlock:^{
-        _array = [NSMutableArray array];
+        arr=[NSMutableArray array];
         [weakSelf getNetworkData:YES];
     }];
     //默认【上拉加载】
@@ -200,7 +202,7 @@
             [_tableView.footer  setTitle:@"" forState:MJRefreshFooterStateIdle];
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSMutableArray *arr=[NSMutableArray array];
+            
              dict=[NSMutableDictionary dictionary];
             for (NSDictionary *dic in array) {
                 Brandmodle *model=[[Brandmodle alloc]init];
@@ -208,11 +210,16 @@
                 [dict setObject:model forKey:model.finsk];
                 [arr addObject:dict];
             }
+            NSLog(@"===___===%lu",(unsigned long)arr.count
+                  );
             for (NSMutableDictionary  *d in arr) {
                 keys = [d allKeys];
             }
+            NSLog(@"%@",keys);
             self.indexArray = [ZXDChineseString IndexArray:keys];
+            self.array = [NSMutableArray array];
             self.array = [ZXDChineseString LetterSortArray:keys];
+            
             [_tableView reloadData];
             [self creatLGView];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
