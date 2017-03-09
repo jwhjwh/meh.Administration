@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void  (^BAELOCK)(UIImage *goodPicture,NSString*String);
 @interface EditbrandController : UIViewController
 @property (nonatomic,strong) NSString *tittle;
 @property (nonatomic,strong) NSString *imageStr;
-@property (nonatomic,retain)NSString *strId;
+@property (nonatomic,retain) NSString *strId;
+@property (nonatomic,copy)BAELOCK blcokStr;
 @end

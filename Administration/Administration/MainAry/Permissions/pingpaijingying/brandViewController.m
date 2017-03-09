@@ -7,6 +7,7 @@
 //
 
 #import "brandViewController.h"
+#import "AddBrandViewController.h"
 #import "BrandSeachController.h"
 #import "EditbrandController.h"
 #import "brandTableViewCell.h"
@@ -30,6 +31,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden=YES;
+  
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -116,7 +118,8 @@
     [_tableView.footer endRefreshing];
 }
 -(void)buttonrightItem{
-    
+    AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
+    [self.navigationController pushViewController:addBrandVC animated:YES];
 }
 -(void)butLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -161,6 +164,22 @@
     editbVC.strId=model.ID;
     editbVC.imageStr=model.brandLogo;
     editbVC.tittle=model.finsk;
+    editbVC.blcokStr=^(UIImage *goodPicture,NSString*String){
+     
+        if (!(String==nil)) {
+            model.finsk=String;
+        }
+        if (!(goodPicture==nil)) {
+            NSData *data = UIImageJPEGRepresentation(goodPicture, 1.0f);
+           model.brandLogo = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        }
+        [dict setValue:model forKey:_array[indexPath.section][indexPath.row]];
+         [_tableView beginUpdates];
+        NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
+        [_tableView reloadRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationNone];
+        [_tableView endUpdates];
+    };
+  
     [self.navigationController pushViewController:editbVC animated:YES];
 }
 -(void)getNetworkData:(BOOL)isRefresh{

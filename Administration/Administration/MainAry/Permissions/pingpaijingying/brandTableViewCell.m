@@ -40,7 +40,14 @@
 }
 -(void)setModle:(Brandmodle *)modle{
   _titleLabel.text=modle.finsk;
-  [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,modle.brandLogo]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    if ([modle.brandLogo hasPrefix:@"images"]) {
+        [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,modle.brandLogo]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    }else{
+    NSData *_decodedImageData = [[NSData alloc]initWithBase64Encoding:modle.brandLogo];
+      _image.image = [UIImage imageWithData:_decodedImageData];
+        
+    }
+  
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

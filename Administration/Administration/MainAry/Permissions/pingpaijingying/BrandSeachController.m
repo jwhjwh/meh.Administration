@@ -5,6 +5,7 @@
 //  Created by zhang on 2017/3/7.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 #import "BrandSeachController.h"
+#import "EditbrandController.h"
 #import "brandTableViewCell.h"
 #import "Brandmodle.h"
 @interface BrandSeachController ()<UITextViewDelegate, UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -27,6 +28,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.view.backgroundColor = [UIColor whiteColor];
     [self addSubViewS];
@@ -48,8 +50,8 @@
     self.searchBar.searchBarStyle=UISearchBarStyleMinimal;
     self.searchBar.delegate = self;
     [self.view addSubview:self.searchBar];
-    self.searchTableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-    self.searchTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64,kScreenWidth,kScreenHeight-64) style:UITableViewStylePlain];
+    self.searchTableView .showsVerticalScrollIndicator = NO;
+    self.searchTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight-64) style:UITableViewStylePlain];
     //分割线无
     // self.searchTableView.separatorStyle= UITableViewCellSeparatorStyleNone;
     self.searchTableView.delegate = self;
@@ -93,7 +95,26 @@
     
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    Brandmodle *model=self.searchDataArray[indexPath.row];
+    EditbrandController *editbVC=[[EditbrandController alloc]init];
+    editbVC.strId=model.ID;
+    editbVC.imageStr=model.brandLogo;
+    editbVC.tittle=model.finsk;
+    editbVC.blcokStr=^(UIImage *goodPicture,NSString*String){
+        
+        if (!(String==nil)) {
+            model.finsk=String;
+        }
+        [self.searchDataArray replaceObjectAtIndex:indexPath.row withObject:model];
+        [_searchTableView beginUpdates];
+        NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
+        [_searchTableView reloadRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationNone];
+        [_searchTableView endUpdates];
+    };
 
+    [self.navigationController pushViewController:editbVC animated:YES];
+}
 -(void)upDataSearchSpecialOffe{
     NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
