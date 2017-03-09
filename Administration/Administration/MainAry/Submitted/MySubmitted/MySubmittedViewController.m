@@ -1,15 +1,14 @@
 //
 //  MySubmittedViewController.m
 //  Administration
-//  报岗详情
-//  Created by 九尾狐 on 2017/3/7.
+//
+//  Created by 九尾狐 on 2017/3/8.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
 #import "MySubmittedViewController.h"
 
 @interface MySubmittedViewController ()
-
 
 @end
 
@@ -19,12 +18,9 @@
     [super viewDidLoad];
     self.title = @"我的报岗";
     self.view.backgroundColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view from its nib.
 }
--(void)mySubmittedUI{
 
-
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -225,17 +225,17 @@
 		6269A5611E6E51E90083160E /* SubmittedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A55F1E6E51E90083160E /* SubmittedTableViewCell.m */; };
 		6269A5621E6E51E90083160E /* SubmittedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6269A5601E6E51E90083160E /* SubmittedTableViewCell.xib */; };
 		6269A5651E6E51FF0083160E /* SubmittedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5641E6E51FF0083160E /* SubmittedModel.m */; };
-		6269A5691E6E7F460083160E /* MySubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5681E6E7F460083160E /* MySubmittedViewController.m */; };
 		6269A56D1E6E9A810083160E /* ph_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 6269A56B1E6E9A810083160E /* ph_mt.png */; };
 		6269A56E1E6E9A810083160E /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6269A56C1E6E9A810083160E /* head_icon.png */; };
 		6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5711E6EA0150083160E /* DateSubmittedViewController.m */; };
-		6269A5741E6EA0150083160E /* DateSubmittedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6269A5721E6EA0150083160E /* DateSubmittedViewController.xib */; };
 		626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626D96D41E5FCEA2002208D6 /* ModifyViewController.m */; };
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
 		62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF61E68FD36003F3A84 /* CreateViewController.m */; };
 		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
+		62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */; };
+		62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A0D7361E6FD921003370FA /* ph_mt02.png */; };
 		62EBA2331E56939300F657DB /* Contact3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA22F1E56939300F657DB /* Contact3.png */; };
 		62EBA2341E56939300F657DB /* Contact2.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA2301E56939300F657DB /* Contact2.png */; };
 		62EBA2351E56939300F657DB /* Contact0.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA2311E56939300F657DB /* Contact0.png */; };
@@ -660,13 +660,10 @@
 		6269A5601E6E51E90083160E /* SubmittedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubmittedTableViewCell.xib; sourceTree = "<group>"; };
 		6269A5631E6E51FF0083160E /* SubmittedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmittedModel.h; sourceTree = "<group>"; };
 		6269A5641E6E51FF0083160E /* SubmittedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmittedModel.m; sourceTree = "<group>"; };
-		6269A5671E6E7F460083160E /* MySubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubmittedViewController.h; sourceTree = "<group>"; };
-		6269A5681E6E7F460083160E /* MySubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubmittedViewController.m; sourceTree = "<group>"; };
 		6269A56B1E6E9A810083160E /* ph_mt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ph_mt.png; sourceTree = "<group>"; };
 		6269A56C1E6E9A810083160E /* head_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head_icon.png; sourceTree = "<group>"; };
 		6269A5701E6EA0150083160E /* DateSubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateSubmittedViewController.h; sourceTree = "<group>"; };
 		6269A5711E6EA0150083160E /* DateSubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateSubmittedViewController.m; sourceTree = "<group>"; };
-		6269A5721E6EA0150083160E /* DateSubmittedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateSubmittedViewController.xib; sourceTree = "<group>"; };
 		626D96D31E5FCEA2002208D6 /* ModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyViewController.h; sourceTree = "<group>"; };
 		626D96D41E5FCEA2002208D6 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 		626D96D81E600A7C002208D6 /* 对-未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-未选.png"; sourceTree = "<group>"; };
@@ -676,6 +673,9 @@
 		62942BF61E68FD36003F3A84 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		62942BF81E6948F3003F3A84 /* SelectAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectAlert.h; sourceTree = "<group>"; };
 		62942BF91E6948F3003F3A84 /* SelectAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectAlert.m; sourceTree = "<group>"; };
+		62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubmittedViewController.h; sourceTree = "<group>"; };
+		62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubmittedViewController.m; sourceTree = "<group>"; };
+		62A0D7361E6FD921003370FA /* ph_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ph_mt02.png; sourceTree = "<group>"; };
 		62EBA22F1E56939300F657DB /* Contact3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact3.png; sourceTree = "<group>"; };
 		62EBA2301E56939300F657DB /* Contact2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact2.png; sourceTree = "<group>"; };
 		62EBA2311E56939300F657DB /* Contact0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact0.png; sourceTree = "<group>"; };
@@ -1570,6 +1570,7 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				62A0D7361E6FD921003370FA /* ph_mt02.png */,
 				6269A56B1E6E9A810083160E /* ph_mt.png */,
 				6269A56C1E6E9A810083160E /* head_icon.png */,
 				1F1D1F941E6D38290021B1AD /* fj_ico.png */,
@@ -1637,8 +1638,8 @@
 		6269A5661E6E7F000083160E /* MySubmitted */ = {
 			isa = PBXGroup;
 			children = (
-				6269A5671E6E7F460083160E /* MySubmittedViewController.h */,
-				6269A5681E6E7F460083160E /* MySubmittedViewController.m */,
+				62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */,
+				62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */,
 			);
 			path = MySubmitted;
 			sourceTree = "<group>";
@@ -1648,7 +1649,6 @@
 			children = (
 				6269A5701E6EA0150083160E /* DateSubmittedViewController.h */,
 				6269A5711E6EA0150083160E /* DateSubmittedViewController.m */,
-				6269A5721E6EA0150083160E /* DateSubmittedViewController.xib */,
 			);
 			path = DateSubmitted;
 			sourceTree = "<group>";
@@ -1981,6 +1981,7 @@
 				1F4DBB521E58420800733CF7 /* fanhui.png in Resources */,
 				62656D501E52B5700085A2BD /* ztgb.png in Resources */,
 				621A5C211E5843B50051C6CC /* banben100.png in Resources */,
+				62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */,
 				626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */,
 				62656D4B1E52B5700085A2BD /* xuanzhong.png in Resources */,
 				62656D581E52B5700085A2BD /* dianjiaxinxi.png in Resources */,
@@ -2009,7 +2010,6 @@
 				1F5745671E56F45400E4A47C /* tx100.png in Resources */,
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
-				6269A5741E6EA0150083160E /* DateSubmittedViewController.xib in Resources */,
 				1F59AF211E5E76750000722A /* tjpco01.png in Resources */,
 				62656D4E1E52B5700085A2BD /* Inder1.png in Resources */,
 				62656D4D1E52B5700085A2BD /* yuanhuan_03.png in Resources */,
@@ -2179,7 +2179,6 @@
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
-				6269A5691E6E7F460083160E /* MySubmittedViewController.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
@@ -2189,6 +2188,7 @@
 				62656CE01E52A6600085A2BD /* UIImageView+HighlightedWebCache.m in Sources */,
 				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
+				62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
