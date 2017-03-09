@@ -96,7 +96,7 @@
         make.height.offset(_Heigh+20);
     }];
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 60, 0));;
+        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));;
     }];
     _titleLabel.text=_gonModel.title;
     NSString *timeStr = [_gonModel.time substringWithRange:NSMakeRange(5,11)];

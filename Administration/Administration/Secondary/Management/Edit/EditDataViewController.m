@@ -27,7 +27,11 @@
 @end
 
 @implementation EditDataViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"个人信息";

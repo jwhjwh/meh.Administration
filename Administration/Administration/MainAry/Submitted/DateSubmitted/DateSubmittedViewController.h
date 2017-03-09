@@ -11,9 +11,5 @@
 @interface DateSubmittedViewController : UIViewController
 
 @property (nonatomic,copy)NSString *contentid;
-@property (weak, nonatomic) IBOutlet UIImageView *dateImage;//图片
-@property (weak, nonatomic) IBOutlet UILabel *dayLabel;//时间
-@property (weak, nonatomic) IBOutlet UILabel *placeLabel;//地点
-@property (weak, nonatomic) IBOutlet UILabel *thingsLabel;//做的事情
-@property (weak, nonatomic) IBOutlet UILabel *progressLabel;//进展程度
+
 @end
