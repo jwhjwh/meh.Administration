@@ -23,6 +23,7 @@
 
 @property (nonatomic, strong)UIImage *goodPicture;
 @property (nonatomic,strong)NSString *string;
+@property (nonatomic, strong)UIImage *oldPicture;
 @end
 
 @implementation EditbrandController
@@ -85,7 +86,6 @@
         _textField.enabled=YES;
     }else{
         //改变item的title
-        NSLog(@"%@",_string);
         if (_string==nil && self.goodPicture==nil) {
               [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有修改内容" andInterval:1.0];
         }else if(_string==nil && !(self.goodPicture==nil)){
@@ -125,19 +125,55 @@
     }
 }
 -(void)butLiftItem{
-    if ((!(_string==nil)||!(self.goodPicture==nil))&&![_string isEqualToString:_tittle]) {
-        if ( _isfanhui==YES) {
-            [self.navigationController popViewControllerAnimated:YES];
+    if (_string==nil&&_goodPicture==nil) {
+         [self.navigationController popViewControllerAnimated:YES];
+    }else if (_string==nil&&!(_goodPicture==nil)){
+        if (![[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]) {
+            if ( _isfanhui==YES) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [self alertView];
+            }
+
         }else{
-            aler =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
-            aler.delegate=self;
-            [aler setbackviewframeWidth:300 Andheight:150];
-            [aler settipeTitleStr:@"退出后，已编辑的内容将会消失确定退出吗？" Andfont:14];
-            [self.view addSubview:aler];
+            [self.navigationController popViewControllerAnimated:YES];
         }
-       
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
+    }else if (!(_string==nil)&&_goodPicture==nil){
+        if (![_string isEqualToString:_tittle]) {
+            if ( _isfanhui==YES) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                  [self alertView];
+            }
+            
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+
+    }else if (!(_string==nil)&&!(_goodPicture==nil)){
+        if (![[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]&&![_string isEqualToString:_tittle]) {
+            if ( _isfanhui==YES) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [self alertView];
+            }
+            
+        }else if ([[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]&&![_string isEqualToString:_tittle]) {
+            if ( _isfanhui==YES) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [self alertView];
+            }
+            
+        }else if (![[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]&&[_string isEqualToString:_tittle]) {
+            if ( _isfanhui==YES) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [self alertView];
+            }
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 
 }
@@ -152,6 +188,7 @@
 }
 -(void)textFieldChange :(UITextField *)textField{
      _string=textField.text;
+    _isfanhui=NO;
 }
 
 -(void)noticeimageTap:(UITapGestureRecognizer*)sender{
@@ -187,6 +224,7 @@
     self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
       _imageV.image=self.goodPicture;
+     _isfanhui=NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -201,6 +239,7 @@
        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"finskid":_strId};
     }else{
        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"finskid":_strId,@"str":_string};
+         _tittle=_string;
     }
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -224,7 +263,8 @@
             if ([status isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存图片成功" andInterval:1.0];
                 _isfanhui=YES;
-               
+                _tittle=_string;
+                _oldPicture=_goodPicture;
              self.blcokStr(self.goodPicture,_string);
             } else {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
@@ -243,6 +283,7 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
          [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
                _isfanhui=YES;
+               _tittle=_string;
             self.blcokStr(self.goodPicture,_string);
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改信息失败" andInterval:1.0];
@@ -264,5 +305,12 @@
     }view:self.view MBPro:YES];
     
 
+}
+-(void)alertView{
+    aler =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
+    aler.delegate=self;
+    [aler setbackviewframeWidth:300 Andheight:150];
+    [aler settipeTitleStr:@"退出后，已编辑的内容将会消失确定退出吗?" Andfont:14];
+    [self.view addSubview:aler];
 }
 @end

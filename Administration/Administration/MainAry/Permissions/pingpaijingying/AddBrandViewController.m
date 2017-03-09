@@ -12,9 +12,9 @@
 #import "ZXYAlertView.h"
 @interface AddBrandViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,ZXYAlertViewDelegate,alertviewExtensionDelegate>
 {
-    BOOL _isEditing;
+   
     AlertViewExtension *aler;
-    BOOL _iswenjian;
+ 
     NSDictionary *dic;
     BOOL _isfanhui;
 }
@@ -22,10 +22,6 @@
 @property (nonatomic,retain)UIImageView *imageV;
 @property (nonatomic, strong)UIImage *goodPicture;
 @property (nonatomic,strong)NSString *string;
-@property (nonatomic,strong) NSString *tittle;
-@property (nonatomic,retain) NSString *strId;
-@property (nonatomic, strong)UIImage *oldPicture;
-
 @end
 
 @implementation AddBrandViewController
@@ -81,51 +77,19 @@
   
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-    if (_string==nil) {
+    if (_string==nil||[_string isEqualToString:@""]) {
     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有输入内容" andInterval:1.0];
         return;
     }
-    if (self.goodPicture==nil) {
+    if (self.goodPicture==nil||[[NSString stringWithFormat:@"%@",self.goodPicture]isEqualToString:@""]) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有选择图片" andInterval:1.0];
         return;
     }
-    if(!(_string==nil)&&!(self.goodPicture==nil)){
-        _textField.enabled=NO;
-        _imageV.userInteractionEnabled = NO;
-        _isEditing=YES;
-        _iswenjian=NO;
+    if((!(_string==nil)&&!(self.goodPicture==nil))||(![_string isEqualToString:@""]&&![[NSString stringWithFormat:@"%@",self.goodPicture]isEqualToString:@""])){
         [self lodataimage];
             return;
         }
-    
-    if (_isEditing==YES) {
-        sender.title=@"编辑";
-        _textField.enabled=YES;
-        _imageV.userInteractionEnabled = YES;
-        _isEditing=NO;
-    }else{
-        if ([_string isEqualToString:_tittle]&&[[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有做修改" andInterval:1.0];
-        }else if(![_string isEqualToString:_tittle]&&[[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]){
-               sender.title=@"提交";
-             _textField.enabled=NO;
-             _imageV.userInteractionEnabled = NO;
-            _isEditing=YES;
-            [self neirongxiugai];
-        }else if([_string isEqualToString:_tittle]&&![[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]){
-            sender.title=@"提交";
-            _textField.enabled=NO;
-            _imageV.userInteractionEnabled = NO;
-            _isEditing=YES;
-            [self lodataimage];
-        }else if(![_string isEqualToString:_tittle]&&![[NSString stringWithFormat:@"%@",_oldPicture]isEqualToString:[NSString stringWithFormat:@"%@",_goodPicture]]){
-            sender.title=@"提交";
-            _textField.enabled=NO;
-            _imageV.userInteractionEnabled = NO;
-            _isEditing=YES;
-            [self lodataimage];
-        }
-    }
+ 
 
 }
 
@@ -134,17 +98,13 @@
     
 }
 -(void)butLiftItem{
-    if ((!(_string==nil)||!(self.goodPicture==nil))&&![_string isEqualToString:_tittle]) {
-        if ( _isfanhui==YES) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
+    if (!(_string==nil)||!(self.goodPicture==nil)||![_string isEqualToString:@""]) {
+    
             aler =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
             aler.delegate=self;
             [aler setbackviewframeWidth:300 Andheight:150];
             [aler settipeTitleStr:@"退出后，已编辑的内容将会消失确定退出吗？" Andfont:14];
             [self.view addSubview:aler];
-        }
-        
     }else{
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -191,11 +151,8 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    if (_iswenjian==YES) {
-        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"finskid":_strId};
-    }else{
-        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"str":_string};
-    }
+  
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2"};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
@@ -216,12 +173,12 @@
         NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
         NSLog(@"%@",dict);
         if ([status isEqualToString:@"0000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存图片成功" andInterval:1.0];
-            _isfanhui=YES;
-            _tittle=_string;
-            _oldPicture=_goodPicture;
-            _strId=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"brandId"]];
-//            self.blcokStr(self.goodPicture,_string);
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
+            self.goodPicture=nil;
+            _string=@"";
+            _textField.text=@"";
+            _isfanhui=NO;
+            _imageV.image=[UIImage  imageNamed:@"ph_mt02"];
         } else {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
         }
@@ -229,38 +186,13 @@
         
     }];
 }
--(void)neirongxiugai{
-    NSString *uStr =[NSString stringWithFormat:@"%@brand/addbrand.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dict=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"finsk":_string,@"finskid":_strId};
-    [ZXDNetworking GET:uStr parameters:dict success:^(id responseObject) {
+-(void)clickBtnSelector:(UIButton *)btn
+{
+    if (btn.tag == 2000) {
+        [aler removeFromSuperview];
         
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
-            _isfanhui=YES;
-            self.blcokStr(self.goodPicture,_string);
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改信息失败" andInterval:1.0];
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"1000"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"空数据" andInterval:1.0];
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"改品牌名已存在" andInterval:1.0];
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-        
-    }failure:^(NSError *error) {
-    }view:self.view MBPro:YES];
-    
-    
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
-
-
 @end
