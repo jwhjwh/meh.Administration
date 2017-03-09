@@ -178,7 +178,7 @@
         
     }
      cell.textLabel.text = _arr[indexPath.row];
-    CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-240, 48);
+    CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 48);
     if ([cell.textLabel.text isEqualToString:@"角色"] ) {
         _JSLabel = [[UILabel alloc]initWithFrame:labelRect2];
         _JSLabel.text = _HSarr[indexPath.row];
@@ -187,7 +187,8 @@
         [cell addSubview:_JSLabel];
         
     }else if([cell.textLabel.text isEqualToString:@"姓名"]||[cell.textLabel.text isEqualToString:@"手机号"]||[cell.textLabel.text isEqualToString:@"验证码"]){
-        _codeField =[[UITextField alloc]initWithFrame:labelRect2];
+        CGRect labelRect3 = CGRectMake(100, 1, self.view.bounds.size.width-200, 48);
+        _codeField =[[UITextField alloc]initWithFrame:labelRect3];
         _codeField.backgroundColor=[UIColor whiteColor];
         _codeField.font = [UIFont boldSystemFontOfSize:13.0f];
         _codeField.clearButtonMode = UITextFieldViewModeWhileEditing;

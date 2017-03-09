@@ -132,7 +132,12 @@
 - (instancetype)initWithTitle:(NSString *)title titles:(NSArray *)titles selectIndex:(SelectIndex)selectIndex selectValue:(SelectValue)selectValue showCloseButton:(BOOL)showCloseButton {
     if (self = [super init]) {
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.4];
-        alertHeight = 360;
+        if (titles.count<6) {
+            alertHeight = 40*(titles.count+1);
+        }else{
+            alertHeight = 320;
+        }
+        
         buttonHeight = 40;
         
         self.titleLabel.text = title;
@@ -155,7 +160,12 @@
 -(instancetype)initWithTitle:(NSString *)title titles:(NSArray *)titles imageViews:(NSArray *)imageee  selectIndex:(SelectIndex)selectIndex selectValue:(SelectValue)selectValue showCloseButton:(BOOL)showCloseButton{
     if (self = [super init]) {
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.4];
-        alertHeight = 360;
+        if (titles.count<7) {
+            alertHeight = 40*(titles.count+1);
+        }else{
+            alertHeight = 320;
+        }
+        
         buttonHeight = 40;
         
         self.titleLabel.text = title;
@@ -209,11 +219,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    float real = (alertHeight - buttonHeight)/(float)_titles.count;
-    if (_showCloseButton) {
-        real = (alertHeight - buttonHeight*2)/(float)_titles.count;
-    }
-    return real<=40?40:real;
+//    float real = (alertHeight - buttonHeight)/(float)_titles.count;
+//    if (_showCloseButton) {
+//        real = (alertHeight - buttonHeight*2)/(float)_titles.count;
+//    }
+//    return real<=40?40:real;
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -26,17 +26,15 @@
     [super viewDidLoad];
     self.title=@"报岗详情";
     [self datenetworking];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
    
 }
 
 -(void)dateViewUi{
     _dateScroll = [[UIScrollView alloc]init];
-   
-    
     _dateScroll.delegate = self;
     _dateScroll.backgroundColor = [UIColor whiteColor];
-    [_dateScroll setShowsVerticalScrollIndicator:YES];
+    
     _dateScroll.contentSize = CGSizeMake(self.view.frame.size.width,self.view.bounds.size.height*2);
     [self.view addSubview:_dateScroll];
     [_dateScroll mas_makeConstraints:^(MASConstraintMaker *make) {

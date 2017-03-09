@@ -127,6 +127,9 @@
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
 		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
+		62570E891E712C2A0051C83A /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62570E871E712C2A0051C83A /* TableViewCell.m */; };
+		62570E8A1E712C2A0051C83A /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62570E881E712C2A0051C83A /* TableViewCell.xib */; };
+		62570E901E7136B90051C83A /* wdbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 62570E8F1E7136B90051C83A /* wdbg.png */; };
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
@@ -499,6 +502,10 @@
 		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
 		6253557C1E681E740041F123 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionsViewController.h; sourceTree = "<group>"; };
 		6253557D1E681E740041F123 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionsViewController.m; sourceTree = "<group>"; };
+		62570E861E712C2A0051C83A /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		62570E871E712C2A0051C83A /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		62570E881E712C2A0051C83A /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		62570E8F1E7136B90051C83A /* wdbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wdbg.png; sourceTree = "<group>"; };
 		62578E781E6D5F5300D42603 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		62578E791E6D5F5300D42603 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
@@ -1645,6 +1652,10 @@
 			children = (
 				62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */,
 				62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */,
+				62570E8F1E7136B90051C83A /* wdbg.png */,
+				62570E861E712C2A0051C83A /* TableViewCell.h */,
+				62570E871E712C2A0051C83A /* TableViewCell.m */,
+				62570E881E712C2A0051C83A /* TableViewCell.xib */,
 			);
 			path = MySubmitted;
 			sourceTree = "<group>";
@@ -1995,6 +2006,7 @@
 				1F4571A01E6571FA008E4E34 /* xx_ico1.png in Resources */,
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
+				62570E901E7136B90051C83A /* wdbg.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
 				1F1D1F951E6D382A0021B1AD /* fj_ico.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
@@ -2025,6 +2037,7 @@
 				1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */,
 				62656D6C1E52D29D0085A2BD /* 01.png in Resources */,
 				1F4A98EB1E63AEFC003492DF /* phone.png in Resources */,
+				62570E8A1E712C2A0051C83A /* TableViewCell.xib in Resources */,
 				62656D651E52B5700085A2BD /* zilianxiren.png in Resources */,
 				62656D481E52B5700085A2BD /* weixuanzhong.png in Resources */,
 				62EBA2331E56939300F657DB /* Contact3.png in Resources */,
@@ -2224,6 +2237,7 @@
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
 				1F33F1191E611528000733F8 /* inftionxqController.m in Sources */,
 				1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */,
+				62570E891E712C2A0051C83A /* TableViewCell.m in Sources */,
 				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
