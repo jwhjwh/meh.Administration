@@ -74,7 +74,10 @@
     _sousuoBtn.layer.cornerRadius = 8.0;
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_sousuoBtn];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 134,self.view.bounds.size.width,self.view.bounds.size.height-134) style:UITableViewStylePlain];
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 134,self.view.bounds.size.width,1)];
+    view.backgroundColor=GetColor(216, 216, 216, 1);
+    [self.view addSubview:view];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 135,self.view.bounds.size.width,self.view.bounds.size.height-135) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -173,9 +176,7 @@
     LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.nameid];
         BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {
-        
      NSLog(@"插入数据成功");
-        
     } else {
         NSLog(@"插入数据失败");
     }
@@ -189,6 +190,7 @@
     SearchVC.roleId=_roleld;
     [self.navigationController showViewController:SearchVC sender:nil];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 

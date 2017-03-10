@@ -11,6 +11,7 @@
 #import "EditDataViewController.h"
 #import "PermissionsViewController.h"
 #import "SubmittedViewController.h"//图片报岗
+#import "businessViewController.h"//业务陌拜
 #import "brandViewController.h"
 #import "managViewController.h"
 #import "MessageController.h"
@@ -80,6 +81,8 @@
    
     _masgeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _masgeButton.frame = CGRectMake(Scree_width - 12-36,4,36,36);
+    //防止图片变灰
+    _masgeButton.adjustsImageWhenHighlighted = NO;
     [_masgeButton addTarget:self action:@selector(masgeClick:) forControlEvents:UIControlEventTouchUpInside];
     [_masgeButton setImage:[UIImage imageNamed:@"xx_ico1"] forState:UIControlStateNormal];
     [self.navigationController.navigationBar addSubview:_masgeButton];
@@ -314,32 +317,219 @@
                 //            //市场美导
                 //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 14:{
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
+                    }
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case 3:
                 
                 //            //内勤人员
                 //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
                 //            _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 14:{
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
+                    }
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case 4:
                 //            // 物流
                 //            _arr=@[@"店家跟踪",@"店家信息",@"公司公告",@"图片报岗"];
                 //            _arr1=@[@"dianpugenzong",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 13:{
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
+                    }
+                        
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case 5:
                 //业务
                 //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息",@"公司公告", @"业务陌拜", @"图片报岗"];
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi",@"gongsigonggao", @"mobaijilu", @"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 14:{
+                        businessViewController *busineVC=[[businessViewController alloc]init];
+                        [self.navigationController pushViewController:busineVC animated:YES];
+                    }
+                       break;
+                    case 15:{
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+                
+
                 break;
             case 6:
                 //            // 品牌经理
                 //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 14:{
+                        
+                    }
+                        break;
+                    case 15:{
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
             case 7:
                 //            //行政管理员
                 //            _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"报表管理", @"图片报岗"];
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
+                switch (index) {
+                    case 10:{
+                        
+                    }
+                        break;
+                    case 11:{
+                        
+                    }
+                        
+                        break;
+                    case 12:{
+                        
+                    }
+                        
+                        break;
+                    case 13:{
+                        GonggaoxqController *gongVC=[[GonggaoxqController alloc]init];
+                        [self.navigationController pushViewController:gongVC animated:YES];
+                    }
+                        
+                        break;
+                    case 14:{
+                        
+                    }
+                        break;
+                    case 15:{
+                        SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
+                        [self.navigationController pushViewController:submittedVC animated:YES];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+
                 break;
             case 8:
                 //            //业务经理
@@ -369,7 +559,7 @@
                     case 14:{
                         
                     }
-                        
+                        break;
                     case 15:{
                         SubmittedViewController *submittedVC  =[[SubmittedViewController alloc]init];
                         [self.navigationController pushViewController:submittedVC animated:YES];

@@ -21,6 +21,7 @@
     int page;
     int totalPage;//总页数
     NSArray *keys;
+    NSArray *key;
     NSMutableDictionary *dict;
     NSMutableArray *arr;
 }
@@ -72,22 +73,12 @@
     _tableView.dataSource = self;
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.showsHorizontalScrollIndicator = NO;
+   
     [self.view addSubview:_tableView];
      [ZXDNetworking setExtraCellLineHidden:_tableView];
-    
-    arr=[NSMutableArray array];
-    [self getNetworkData:NO];
-    page = 1;
-    __weak typeof(self) weakSelf = self;
-    //默认【下拉刷新】
-    [_tableView addLegendHeaderWithRefreshingBlock:^{
-        arr=[NSMutableArray array];
-        [weakSelf getNetworkData:YES];
-    }];
-    //默认【上拉加载】
-    [_tableView addLegendFooterWithRefreshingBlock:^{
-        [weakSelf getNetworkData:NO];
-    }];
+  
+    [self getNetworkData];
+   
 }
 -(void)creatLGView
 {
@@ -109,18 +100,27 @@
         
      }];
 }
-/**
- *  停止刷新
- */
--(void)endRefresh{
-    
-    if (page == 1) {
-        [_tableView.header endRefreshing];
-    }
-    [_tableView.footer endRefreshing];
-}
+
 -(void)buttonrightItem{
     AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
+    addBrandVC.blcokStr=^(UIImage *goodPicture,NSString*String,NSString*strid){
+         Brandmodle *model=[[Brandmodle alloc]init];
+        NSData *data = UIImageJPEGRepresentation(goodPicture, 1.0f);
+        model.brandLogo = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        model.finsk=String;
+        model.ID=strid;
+        [dict setObject:model forKey:model.finsk];
+        [arr addObject:dict];
+        
+        for (NSMutableDictionary  *d in arr) {
+            key = [d allKeys];
+        }
+     
+        self.array = [NSMutableArray array];
+        self.indexArray = [ZXDChineseString IndexArray:key];
+        self.array = [ZXDChineseString LetterSortArray:key];
+        [_tableView reloadData];
+    };
     [self.navigationController pushViewController:addBrandVC animated:YES];
 }
 -(void)butLiftItem{
@@ -161,7 +161,7 @@
    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   Brandmodle *model=[dict objectForKey: _array[indexPath.section][indexPath.row]];
+    Brandmodle *model=[dict objectForKey: _array[indexPath.section][indexPath.row]];
     EditbrandController *editbVC=[[EditbrandController alloc]init];
     editbVC.strId=model.ID;
     editbVC.imageStr=model.brandLogo;
@@ -173,7 +173,7 @@
         }
         if (!(goodPicture==nil)) {
             NSData *data = UIImageJPEGRepresentation(goodPicture, 1.0f);
-           model.brandLogo = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            model.brandLogo = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         }
         [dict setValue:model forKey:_array[indexPath.section][indexPath.row]];
          [_tableView beginUpdates];
@@ -184,42 +184,36 @@
   
     [self.navigationController pushViewController:editbVC animated:YES];
 }
--(void)getNetworkData:(BOOL)isRefresh{
-    if (isRefresh) {
-        page = 1;
-    }else{
-        page++;
-    }
+-(void)getNetworkData{
+   
     NSString *pageStr=[NSString stringWithFormat:@"%d",page];
     NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"nu":pageStr};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        NSArray *array=[responseObject valueForKey:@"brandlist"];
-        [self endRefresh];
-        if (page==1) {
-            [_tableView.footer  setTitle:@"" forState:MJRefreshFooterStateIdle];
-        }
+        
+    
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            
+            NSArray *array=[responseObject valueForKey:@"brandlist"];
+             arr=[NSMutableArray array];
              dict=[NSMutableDictionary dictionary];
+             self.array = [NSMutableArray array];
             for (NSDictionary *dic in array) {
                 Brandmodle *model=[[Brandmodle alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
                 [dict setObject:model forKey:model.finsk];
                 [arr addObject:dict];
             }
-            NSLog(@"===___===%lu",(unsigned long)arr.count
-                  );
             for (NSMutableDictionary  *d in arr) {
                 keys = [d allKeys];
             }
-            NSLog(@"%@",keys);
             self.indexArray = [ZXDChineseString IndexArray:keys];
-            self.array = [NSMutableArray array];
             self.array = [ZXDChineseString LetterSortArray:keys];
-            
+            if (self.array.count==0) {
+                [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+                _tableView.emptyView.hidden = NO;
+            }
             [_tableView reloadData];
             [self creatLGView];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
