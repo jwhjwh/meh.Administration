@@ -85,10 +85,10 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有选择图片" andInterval:1.0];
         return;
     }
-    if((!(_string==nil)&&!(self.goodPicture==nil))||(![_string isEqualToString:@""]&&![[NSString stringWithFormat:@"%@",self.goodPicture]isEqualToString:@""])){
+    if(!(_string==nil)&&!(self.goodPicture==nil)&&![_string isEqualToString:@""]){
         [self lodataimage];
             return;
-        }
+    }
  
 
 }
@@ -98,8 +98,7 @@
     
 }
 -(void)butLiftItem{
-    if (!(_string==nil)||!(self.goodPicture==nil)||![_string isEqualToString:@""]) {
-    
+    if ((!(_string==nil)&&![_string isEqualToString:@""])||!(self.goodPicture==nil)) {
             aler =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
             aler.delegate=self;
             [aler setbackviewframeWidth:300 Andheight:150];
@@ -152,7 +151,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
   
-        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2"};
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"str":_string};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
@@ -171,14 +170,17 @@
         NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
         NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
+          NSString *brandId =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"brandId"]];
         NSLog(@"%@",dict);
         if ([status isEqualToString:@"0000"]) {
+        self.blcokStr(self.goodPicture,_string,brandId);
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
             self.goodPicture=nil;
             _string=@"";
             _textField.text=@"";
             _isfanhui=NO;
             _imageV.image=[UIImage  imageNamed:@"ph_mt02"];
+           
         } else {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
         }

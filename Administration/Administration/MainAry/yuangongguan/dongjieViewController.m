@@ -39,8 +39,9 @@
    _arr = [[NSArray alloc]initWithObjects:@"解冻账号",@"冻结账户",nil];
    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
     //分割线无
-    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
-    //
+//    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
+    //不让滚动
+    infonTableview.scrollEnabled = NO;
     infonTableview.showsVerticalScrollIndicator = NO;
     infonTableview.delegate = self;
     infonTableview.dataSource = self;

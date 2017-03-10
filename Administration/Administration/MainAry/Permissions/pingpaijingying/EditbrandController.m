@@ -261,7 +261,7 @@
             NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
            
             if ([status isEqualToString:@"0000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存图片成功" andInterval:1.0];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片修改成功" andInterval:1.0];
                 _isfanhui=YES;
                 _tittle=_string;
                 _oldPicture=_goodPicture;

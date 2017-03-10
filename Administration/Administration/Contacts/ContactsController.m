@@ -47,6 +47,8 @@
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    //防止图片变灰
+    _sousuoBtn.adjustsImageWhenHighlighted = NO;
     _sousuoBtn.layer.masksToBounds = YES;
     _sousuoBtn.layer.cornerRadius = 8.0;
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
@@ -62,6 +64,7 @@
         NSInteger index = i % 4;
         NSInteger page = i / 4;
         UIButton *aBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        aBt.adjustsImageWhenHighlighted = NO;
         aBt.backgroundColor = [UIColor clearColor];
         aBt.frame = CGRectMake(index * (Scree_width/4)+Height_Space, page  * (Button_Height + Height_Space)+Start_Y+70, Button_Width, Button_Height);
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void  (^BAELOCK)(UIImage *goodPicture,NSString*String);
+typedef void  (^BAELOCKStr)(UIImage *goodPicture,NSString*String,NSString*Strid);
 @interface AddBrandViewController : UIViewController
-@property (nonatomic,copy)BAELOCK blcokStr;
+@property (nonatomic,copy)BAELOCKStr blcokStr;
 @end
