@@ -127,10 +127,12 @@
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
 		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
-		62570E891E712C2A0051C83A /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62570E871E712C2A0051C83A /* TableViewCell.m */; };
-		62570E8A1E712C2A0051C83A /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62570E881E712C2A0051C83A /* TableViewCell.xib */; };
 		62570E901E7136B90051C83A /* wdbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 62570E8F1E7136B90051C83A /* wdbg.png */; };
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
+		626254061E728D99000B8F0F /* RectordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254051E728D99000B8F0F /* RectordViewController.m */; };
+		6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254081E7293B7000B8F0F /* RectordTableViewCell.m */; };
+		6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 626254091E7293B7000B8F0F /* RectordTableViewCell.xib */; };
+		6262540E1E7293D5000B8F0F /* RectordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6262540D1E7293D5000B8F0F /* RectordModel.m */; };
 		62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B771E5295D70085A2BD /* MASCompositeConstraint.m */; };
 		62656B901E5295D70085A2BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7A1E5295D70085A2BD /* MASConstraint.m */; };
 		62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656B7C1E5295D70085A2BD /* MASConstraintMaker.m */; };
@@ -502,12 +504,16 @@
 		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
 		6253557C1E681E740041F123 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionsViewController.h; sourceTree = "<group>"; };
 		6253557D1E681E740041F123 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionsViewController.m; sourceTree = "<group>"; };
-		62570E861E712C2A0051C83A /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
-		62570E871E712C2A0051C83A /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
-		62570E881E712C2A0051C83A /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		62570E8F1E7136B90051C83A /* wdbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wdbg.png; sourceTree = "<group>"; };
 		62578E781E6D5F5300D42603 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		62578E791E6D5F5300D42603 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
+		626254041E728D99000B8F0F /* RectordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordViewController.h; sourceTree = "<group>"; };
+		626254051E728D99000B8F0F /* RectordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordViewController.m; sourceTree = "<group>"; };
+		626254071E7293B7000B8F0F /* RectordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordTableViewCell.h; sourceTree = "<group>"; };
+		626254081E7293B7000B8F0F /* RectordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordTableViewCell.m; sourceTree = "<group>"; };
+		626254091E7293B7000B8F0F /* RectordTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RectordTableViewCell.xib; sourceTree = "<group>"; };
+		6262540C1E7293D5000B8F0F /* RectordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordModel.h; sourceTree = "<group>"; };
+		6262540D1E7293D5000B8F0F /* RectordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordModel.m; sourceTree = "<group>"; };
 		62656B761E5295D70085A2BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		62656B771E5295D70085A2BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		62656B781E5295D70085A2BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -1296,6 +1302,20 @@
 			path = Identification;
 			sourceTree = "<group>";
 		};
+		626254031E728D80000B8F0F /* SubmittedRecord */ = {
+			isa = PBXGroup;
+			children = (
+				626254041E728D99000B8F0F /* RectordViewController.h */,
+				626254051E728D99000B8F0F /* RectordViewController.m */,
+				626254071E7293B7000B8F0F /* RectordTableViewCell.h */,
+				626254081E7293B7000B8F0F /* RectordTableViewCell.m */,
+				626254091E7293B7000B8F0F /* RectordTableViewCell.xib */,
+				6262540C1E7293D5000B8F0F /* RectordModel.h */,
+				6262540D1E7293D5000B8F0F /* RectordModel.m */,
+			);
+			path = SubmittedRecord;
+			sourceTree = "<group>";
+		};
 		62656B751E5295D70085A2BD /* Masonry */ = {
 			isa = PBXGroup;
 			children = (
@@ -1634,6 +1654,7 @@
 		6269A55A1E6E4CFD0083160E /* Submitted */ = {
 			isa = PBXGroup;
 			children = (
+				626254031E728D80000B8F0F /* SubmittedRecord */,
 				6269A56F1E6E9FFE0083160E /* DateSubmitted */,
 				6269A5661E6E7F000083160E /* MySubmitted */,
 				6269A55B1E6E511D0083160E /* SubmittedViewController.h */,
@@ -1653,9 +1674,6 @@
 				62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */,
 				62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */,
 				62570E8F1E7136B90051C83A /* wdbg.png */,
-				62570E861E712C2A0051C83A /* TableViewCell.h */,
-				62570E871E712C2A0051C83A /* TableViewCell.m */,
-				62570E881E712C2A0051C83A /* TableViewCell.xib */,
 			);
 			path = MySubmitted;
 			sourceTree = "<group>";
@@ -2002,6 +2020,7 @@
 				62656D4B1E52B5700085A2BD /* xuanzhong.png in Resources */,
 				62656D581E52B5700085A2BD /* dianjiaxinxi.png in Resources */,
 				6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */,
+				6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */,
 				62656D4C1E52B5700085A2BD /* Inder4.png in Resources */,
 				1F4571A01E6571FA008E4E34 /* xx_ico1.png in Resources */,
 				62656D661E52B5700085A2BD /* zishezhi.png in Resources */,
@@ -2037,7 +2056,6 @@
 				1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */,
 				62656D6C1E52D29D0085A2BD /* 01.png in Resources */,
 				1F4A98EB1E63AEFC003492DF /* phone.png in Resources */,
-				62570E8A1E712C2A0051C83A /* TableViewCell.xib in Resources */,
 				62656D651E52B5700085A2BD /* zilianxiren.png in Resources */,
 				62656D481E52B5700085A2BD /* weixuanzhong.png in Resources */,
 				62EBA2331E56939300F657DB /* Contact3.png in Resources */,
@@ -2177,6 +2195,7 @@
 				1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */,
 				62EBA2501E56CB4900F657DB /* SecurityViewController.m in Sources */,
 				1F803FE81E52F7CA005F53CE /* AFImageDownloader.m in Sources */,
+				626254061E728D99000B8F0F /* RectordViewController.m in Sources */,
 				1F59AF331E5EE16C0000722A /* FMDatabaseAdditions.m in Sources */,
 				62EBA2531E56CB6E00F657DB /* PositioningViewController.m in Sources */,
 				1F6E31461E5448FB006069ED /* NoticeView.m in Sources */,
@@ -2191,6 +2210,7 @@
 				62656B921E5295D70085A2BD /* MASLayoutConstraint.m in Sources */,
 				6269A5651E6E51FF0083160E /* SubmittedModel.m in Sources */,
 				62656CDC1E52A6600085A2BD /* UIButton+WebCache.m in Sources */,
+				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				62656CDD1E52A6600085A2BD /* UIImage+GIF.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
@@ -2199,6 +2219,7 @@
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
+				6262540E1E7293D5000B8F0F /* RectordModel.m in Sources */,
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
@@ -2237,7 +2258,6 @@
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
 				1F33F1191E611528000733F8 /* inftionxqController.m in Sources */,
 				1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */,
-				62570E891E712C2A0051C83A /* TableViewCell.m in Sources */,
 				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,

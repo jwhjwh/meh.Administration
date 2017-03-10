@@ -255,7 +255,8 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            
-            [MBProgressHUD hideHUDForView: self.view animated:NO];        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+            [MBProgressHUD hideHUDForView: self.view animated:NO];
+            NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
             NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
             NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];

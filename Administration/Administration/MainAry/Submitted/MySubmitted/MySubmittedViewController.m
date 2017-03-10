@@ -7,8 +7,10 @@
 //
 
 #import "MySubmittedViewController.h"
-#import "TableViewCell.h"
-@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,TextViewCellDelegate>
+#import "PW_DatePickerView.h"
+#import "SubmittedViewController.h"
+#import "RectordViewController.h"
+@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,PW_DatePickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 
 //列表
@@ -16,6 +18,17 @@
 @property (nonatomic,strong) NSMutableArray *dataLabel;
 @property (strong, nonatomic)  UIImageView *dateImage;//图片
 @property (strong,nonatomic) UIButton *submittedBtn;//报岗记录按钮
+@property (strong,nonatomic) UILabel *subDayLabel; // 时间
+@property (strong,nonatomic) UITextView *DiDTextView;//地点
+
+@property (nonatomic,strong) PW_DatePickerView *PWpickerView;
+@property (nonatomic, strong)UIImage *goodPicture;
+
+@property (nonatomic,strong) NSString *Age;
+
+
+@property (nonatomic,strong) NSString *Wcode;
+@property (nonatomic,strong) NSString *Qcode;
 @end
 
 @implementation MySubmittedViewController
@@ -24,29 +37,85 @@
     [super viewDidLoad];
     self.title = @"图片报岗";
     self.view.backgroundColor = [UIColor whiteColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+   // self.automaticallyAdjustsScrollViewInsets = NO;
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"提交"
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(masgegeClick)];
+    self.navigationItem.rightBarButtonItem = rightButton;
     
     self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"想做的事",@"进展程度", nil];
     [self mySubmittedUI];
+}
+-(void)masgegeClick
+{
+    //picreport/queryPic.action  pageNo
+    if (self.goodPicture == nil || _Wcode == nil||[_Wcode isEqualToString:@""]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写内容" andInterval:1.0];
+    }else{
+    NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
+    NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+   NSDictionary* dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"4",@"str":_Wcode};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+    [manager POST:urlStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyMMddHHmm";
+        NSString *fileName = [formatter stringFromDate:[NSDate date]];
+        NSString *nameStr = @"file";
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [MBProgressHUD hideHUDForView: self.view animated:NO];
+        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+        NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
+        
+        if ([status isEqualToString:@"0000"]) {
+           // [self dismissViewControllerAnimated:YES completion:nil];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"上传成功" andInterval:1.0];
+            dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+            dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+               
+            });
+        } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+    }
     
 }
 -(void)mySubmittedUI{
-
     _submittedBtn = [[UIButton alloc]init];
     [_submittedBtn setBackgroundImage:[UIImage imageNamed:@"wdbg.png"] forState:UIControlStateNormal];
     [self.view addSubview:_submittedBtn];
+    [_submittedBtn addTarget:self action:@selector(mySubMittedBtn) forControlEvents:UIControlEventTouchUpInside];
+    self.submittedBtn.adjustsImageWhenHighlighted = NO;
     [_submittedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo (self.view.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.right.equalTo(self.view.mas_right).offset(0);
         make.height.mas_equalTo(@80);
     }];
+    
     self.tableView = [[UITableView alloc]init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    [self.tableView registerNib:[UINib nibWithNibName:@"TableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"TableViewCell"];
+    
     [self setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -57,41 +126,113 @@
     }];
 
 }
+-(void)mySubMittedBtn
+{
+    
+    RectordViewController *rectVC = [[RectordViewController alloc]init];
+    [self.navigationController showViewController:rectVC sender:nil];
+
+    
+
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataLabel.count;
+    return 4;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell" forIndexPath:indexPath];
-    cell.textViewCellDelegate = self;
-    if (indexPath.row == 0) {
+    NSInteger row = [indexPath row];
+    static NSString *CellIdentifier =@"Cell";
+    //定义cell的复用性当处理大量数据时减少内存开销
+    UITableViewCell *cell = [self.tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell ==nil)
+    {
         
-        cell.backgroundColor = [UIColor redColor];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
     }
+    cell.textLabel.text = _dataLabel[indexPath.row];
+    CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 48);
+    if ([cell.textLabel.text isEqualToString:@"时间"]) {
+        _subDayLabel = [[UILabel alloc]initWithFrame:labelRect2];
+        [cell addSubview:_subDayLabel];
+    }else {
+        _DiDTextView =[[UITextView alloc]initWithFrame:labelRect2];
+        _DiDTextView.backgroundColor=[UIColor whiteColor];
+        _DiDTextView.font = [UIFont boldSystemFontOfSize:13.0f];
+        _DiDTextView.tag = row;
+        _DiDTextView.delegate = self;
+        
+        
+        [cell addSubview:_DiDTextView];
     
-    cell.cellLabel.text = self.dataLabel[indexPath.row];
+    }
     return cell;
+}
+- (void)textViewDidChange:(UITextView *)textView
+
+{
+    switch (textView.tag) {
+        case 1:
+            NSLog(@"dd:%@",textView.text);
+            break;
+        case 2:
+            _Wcode = textView.text;
+            NSLog(@"Age%@",textView.text);
+            break;
+        case 3:
+            
+            NSLog(@"IdNo:%@,",textView.text);
+            break;
+        default:
+            break;
+    }
+
+    
+    
+    
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 240)];
-    view.backgroundColor = [UIColor redColor];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-(50*4)-64-80)];
+    
         _dateImage = [[UIImageView alloc]init];
         _dateImage.image = [UIImage imageNamed:@"ph_mt02"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTap:)];
+    // 允许用户交互
+    _dateImage.userInteractionEnabled = YES;
+    
+    [_dateImage addGestureRecognizer:tap];
         [view addSubview:_dateImage];
         [_dateImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo (view.mas_top).offset(5);
+            make.top.equalTo (view.mas_top).offset(0);
             make.left.equalTo(view.mas_left).offset(15);
             make.right.equalTo(view.mas_right).offset(-15);
-            make.height.mas_equalTo(@240);
+            make.height.mas_equalTo(self.view.bounds.size.height-(50*4)-64-80);
         }];
     
     [tableView addSubview:view];
     return view;
 }
+- (void)doTap:(UITapGestureRecognizer*)sender{
+
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+   
+    
+    self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _dateImage.image=self.goodPicture;
+
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 240;
+    return self.view.bounds.size.height-(50*4)-64-80;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -103,19 +244,29 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
-- (void)textViewCell:(TableViewCell *)cell didChangeText:(UITextView *)textView
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   //监听输入框
-    
-    
-    
+    return 50.0;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
+        self.PWpickerView.delegate = self;
+        [self.PWpickerView show];
+    }
+}
+- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString
+{
+    _subDayLabel.text  = dateString;
+}
+
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

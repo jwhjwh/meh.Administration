@@ -93,6 +93,10 @@
     
 }
 -(void)masgeClick{
+    if (_textView.text == nil ||[_textView.text isEqualToString:@""]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入反馈意见" andInterval:1.0];
+    }else{
+    
     NSString *uStr =[NSString stringWithFormat:@"%@user/feedback.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -114,7 +118,8 @@
         
     } view:self.view MBPro:YES];
 
-    
+    }
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
