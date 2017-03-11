@@ -1,0 +1,229 @@
+//
+//  FillinfoViewController.m
+//  Administration
+//
+//  Created by zhang on 2017/3/10.
+//  Copyright © 2017年 九尾狐. All rights reserved.
+//
+
+#import "FillinfoViewController.h"
+#import "FillTableViewCell.h"
+#import "inftionTableViewCell.h"
+#import "XFDaterView.h"
+#import "CityChoose.h"
+#import<BaiduMapAPI_Map/BMKMapView.h>
+
+#import<BaiduMapAPI_Location/BMKLocationService.h>
+
+#import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
+
+#import<BaiduMapAPI_Map/BMKMapComponent.h>
+
+#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+@interface FillinfoViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XFDaterViewDelegate>
+{
+      XFDaterView*dater;
+    BMKLocationService *_locService;  //定位
+    
+    BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
+}
+@property (nonatomic, strong) CityChoose *cityChoose;/** 城市选择 */
+@property (nonatomic,retain)UITableView *infonTableview;
+@property (nonatomic,retain)NSArray *arr;
+@property (nonatomic,retain)UILabel *rxLbale;
+@property (nonatomic,strong) UITextField *textField;
+@property (nonatomic,retain) NSString *address;
+@property (nonatomic,retain)NSIndexPath *Index;
+@end
+
+@implementation FillinfoViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self startLocation];
+    self.title=@"陌拜记录";
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    btn.autoresizesSubviews=NO;
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
+    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机／微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
+    [self vSubviews];
+}
+-(void)startLocation
+
+{
+    
+    //初始化BMKLocationService
+    
+    _locService = [[BMKLocationService alloc]init];
+    
+    _locService.delegate = self;
+    
+    _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
+    //启动LocationService
+    
+    [_locService startUserLocationService];
+    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
+    
+    _geocodesearch.delegate = self;
+}
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+
+{
+    
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    //地理反编码
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    
+    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
+    
+    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    
+    if(flag){
+        
+        NSLog(@"反geo检索发送成功");
+        
+        [_locService stopUserLocationService];
+        
+    }else{
+        
+        NSLog(@"反geo检索发送失败");
+        
+    }
+    
+}
+-(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+
+{
+    
+    NSLog(@"address:%@----%@",result.addressDetail,result.address);
+    _address=result.address;
+    [_infonTableview reloadData];
+    //addressDetail:     层次化地址信息
+    
+    //address:    地址名称
+    
+    //businessCircle:  商圈名称
+    
+    // location:  地址坐标
+    
+    //  poiList:   地址周边POI信息，成员类型为BMKPoiInfo
+    
+}
+-(void)vSubviews{
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+49) style:UITableViewStylePlain];
+    _infonTableview.dataSource=self;
+    _infonTableview.delegate =self;
+    [self.view addSubview:_infonTableview];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 50;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return _arr.count;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{     CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-170, 48);
+    if(indexPath.row<7){
+    inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    if (cell ==nil)
+    {
+       cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    }
+        if (indexPath.row>2) {
+             _textField=[[UITextField alloc]initWithFrame:labelRect2];
+             _textField.font = [UIFont boldSystemFontOfSize:14.0f];
+            [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            [cell addSubview:_textField];
+            if (indexPath.row==4) {
+            _textField.text=_address;
+            }
+            if(!(indexPath.row==6)){
+            _textField.placeholder=@"必填";
+            }
+        }else{
+            if(indexPath.row==1){
+            cell.xingLabel.text=[USER_DEFAULTS objectForKey:@"name"];
+            }else{
+            cell.xingLabel.textColor=[UIColor lightGrayColor];
+            cell.xingLabel.text=@"必填";
+            }
+        }
+    cell.mingLabel.text=_arr[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}else{
+    FillTableViewCell *cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    if (cell == nil) {
+        cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    }
+    if (!(indexPath.row==8)) {
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+    }
+    cell.mingLabel.text=_arr[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   _Index=indexPath;
+    inftionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    switch (indexPath.row) {
+        case 0:
+            dater=[[XFDaterView alloc]initWithFrame:CGRectZero];
+            dater.delegate=self;
+            [dater showInView:self.view animated:YES];
+            break;
+        case 2:{
+            self.cityChoose = [[CityChoose alloc] init];
+            self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
+                cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                cell.xingLabel.textColor=[UIColor blackColor];
+            };
+            [self.view addSubview:self.cityChoose];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
+}
+- (void)daterViewDidClicked:(XFDaterView *)daterView{
+//    NSLog(@"dateString=%@ timeString=%@",dater.dateString,dater.timeString);
+    inftionTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
+    cell.xingLabel.text=dater.dateString;
+    cell.xingLabel.textColor=[UIColor blackColor];
+}
+-(void)FieldText:(UITextField*)sender{
+    
+}
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)rightItemAction:(UIBarButtonItem*)sender{
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+
+}
+
+@end

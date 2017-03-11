@@ -62,9 +62,9 @@
 //#define KURLHeader @"http://192.168.1.129:8080/ReportManagement/"
 
 //服务器接口
-#define KURLHeader @"http://192.168.1.254:8080/ReportManagement/"
+//#define KURLHeader @"http://192.168.1.254:8080/ReportManagement/"
 //外网接口
-//#define KURLHeader @"http://211.149.155.171:8080/ReportManagement/"
+#define KURLHeader @"http://211.149.155.171:8080/ReportManagement/"
 #define logokey @"JWHKJ"
 
 //------------------修改密码界面---------------------------

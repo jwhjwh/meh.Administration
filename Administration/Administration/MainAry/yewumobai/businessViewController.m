@@ -35,10 +35,10 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
    
     _InterNameAry = @[@"陌拜记录",@"目标客户",@"确定合作客户"];
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 103,self.view.bounds.size.width,1)];
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 83,self.view.bounds.size.width,1)];
     view.backgroundColor=GetColor(216, 216, 216, 1);
     [self.view addSubview:view];
-    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
+    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,84, kScreenWidth, kScreenHeight-64)];
     //分割线无
     //    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
     //不让滚动

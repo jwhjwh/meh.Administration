@@ -218,8 +218,8 @@
             [self creatLGView];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
-            _tableView.footer.state = MJRefreshFooterStateNoMoreData;
-            return;
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+            _tableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

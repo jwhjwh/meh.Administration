@@ -7,11 +7,19 @@
 //
 
 #import "ViewController.h"
-#import <BaiduMapAPI_Map/BMKMapComponent.h>
-#import <BaiduMapAPI_Location/BMKLocationComponent.h>
-#import <BaiduMapAPI_Search/BMKSearchComponent.h>
-@interface ViewController ()<UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+#import<BaiduMapAPI_Location/BMKLocationService.h>
 
+#import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
+
+#import<BaiduMapAPI_Map/BMKMapComponent.h>
+
+#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+@interface ViewController ()<UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+{
+    BMKLocationService *_locService;  //定位
+    
+    BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
+}
 @property (strong,nonatomic) UITextField *NameText; // 用户名
 @property (strong,nonatomic) UITextField *PassText;//密码
 @property (strong,nonatomic) UITextField *valiText;//识别码
@@ -27,8 +35,6 @@
 @property (strong,nonatomic) NSString *passStr;//第三条线
 @property (strong,nonatomic) NSString *shibieStr;//登陆按钮
 @property (strong,nonatomic) MainViewController *Main;
-@property (nonatomic, strong) BMKLocationService *locService;
-@property (nonatomic, strong) BMKGeoCodeSearch *geoCode;
 @property (nonatomic, assign) CGFloat longitude;  // 经度
 
 @property (nonatomic, assign) CGFloat latitude; // 纬度
@@ -70,38 +76,64 @@
 }
 - (void)startLocation
 {
-    // 初始化BMKLocationService
+    //初始化BMKLocationService
+    
     _locService = [[BMKLocationService alloc]init];
+    
     _locService.delegate = self;
+    
+    _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
     //启动LocationService
+    
     [_locService startUserLocationService];
+    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
+    
+    _geocodesearch.delegate = self;
 }
 //处理位置坐标更新
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     NSLog(@"当前位置信息：didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    //地理反编码
     
-    self.longitude = userLocation.location.coordinate.longitude;
-    self.latitude = userLocation.location.coordinate.latitude;
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-        for (CLPlacemark *placeMark in placemarks)
-        {
-         
-            NSDictionary *addressDic=placeMark.addressDictionary;
-            
-            NSString *state=[addressDic objectForKey:@"State"];
-            NSString *city=[addressDic objectForKey:@"City"];
-            NSString *subLocality=[addressDic objectForKey:@"SubLocality"];
-            NSString *street=[addressDic objectForKey:@"Street"];
-            _ctiy=[NSString stringWithFormat:@"%@%@%@%@",state,city,subLocality,street];
-            NSLog(@"+++%@+__%@__%@===%@",state,city,subLocality,street);
-                      //找到了当前位置城市后就关闭服务
-            [_locService stopUserLocationService];
-        }
-    }];
-   
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    
+    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
+    
+    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    
+    if(flag){
+        
+        NSLog(@"反geo检索发送成功");
+        
+        [_locService stopUserLocationService];
+        
+    }else{
+        
+        NSLog(@"反geo检索发送失败");
+    }
 }
+-(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+
+{
+    
+    NSLog(@"address:%@----%@",result.addressDetail,result.address);
+    _ctiy=[NSString stringWithFormat:@"%@",result.address];
+    //找到了当前位置城市后就关闭服务
+    [_locService stopUserLocationService];
+    //addressDetail:     层次化地址信息
+    
+    //address:    地址名称
+    
+    //businessCircle:  商圈名称
+    
+    // location:  地址坐标
+    
+    //  poiList:   地址周边POI信息，成员类型为BMKPoiInfo
+    
+}
+
 
 -(void)logIng{
     //头像

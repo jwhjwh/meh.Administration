@@ -29,16 +29,17 @@
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
+     btn.autoresizesSubviews=NO;
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
   
     _InterNameAry = @[@"填写新的",@"已填纪录"];
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 103,self.view.bounds.size.width,1)];
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0,83,self.view.bounds.size.width,1)];
     view.backgroundColor=GetColor(216, 216, 216, 1);
     [self.view addSubview:view];
-    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
+    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,84, kScreenWidth, kScreenHeight-64)];
     //分割线无
     //    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
     //不让滚动
