@@ -130,13 +130,26 @@
     _thingsLabel.font = [UIFont boldSystemFontOfSize:12.0f];
     _thingsLabel.numberOfLines = 0;
     _thingsLabel.text  = _lableStr;
+    
     [_dateScroll addSubview:_thingsLabel];
-    [_thingsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(zdLabel.mas_top).offset(0);
-        make.left.mas_equalTo(zdLabel.mas_right).offset(10);
-        make.width.mas_equalTo(self.view.mas_width).offset(-110);
-    }];
-    [_thingsLabel sizeToFit];
+    if (_lableStr == nil||[_lableStr isEqualToString:@""]) {
+        [_thingsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(zdLabel.mas_top).offset(0);
+            make.left.mas_equalTo(zdLabel.mas_right).offset(10);
+            make.width.mas_equalTo(self.view.mas_width).offset(-110);
+            make.height.mas_equalTo(@21);
+        }];
+        
+    }else{
+        [_thingsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(zdLabel.mas_top).offset(0);
+            make.left.mas_equalTo(zdLabel.mas_right).offset(10);
+            make.width.mas_equalTo(self.view.mas_width).offset(-110);
+            
+        }];
+
+    }
+        [_thingsLabel sizeToFit];
     
     UIView *xView2 = [[UIView alloc]init];
     xView2.backgroundColor = GetColor(188, 176, 195, 1);

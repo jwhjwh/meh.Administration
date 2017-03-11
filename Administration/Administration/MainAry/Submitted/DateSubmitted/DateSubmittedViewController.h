@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SubmittedModel.h"
+
 @interface DateSubmittedViewController : UIViewController
 
 @property (nonatomic,copy)NSString *contentid;
