@@ -10,4 +10,5 @@
 
 @interface FillTableViewCell : UITableViewCell
 @property(nonatomic,retain)UILabel *mingLabel;
+@property (nonatomic,retain)UILabel *xingLabel;
 @end

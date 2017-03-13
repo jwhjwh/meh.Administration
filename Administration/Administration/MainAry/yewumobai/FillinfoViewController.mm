@@ -7,10 +7,13 @@
 //
 
 #import "FillinfoViewController.h"
+#import "StoreprofileController.h"
+#import "InputboxController.h"
 #import "FillTableViewCell.h"
 #import "inftionTableViewCell.h"
 #import "XFDaterView.h"
 #import "CityChoose.h"
+#import "SelectAlert.h"
 #import<BaiduMapAPI_Map/BMKMapView.h>
 
 #import<BaiduMapAPI_Location/BMKLocationService.h>
@@ -34,6 +37,20 @@
 @property (nonatomic,strong) UITextField *textField;
 @property (nonatomic,retain) NSString *address;
 @property (nonatomic,retain)NSIndexPath *Index;
+
+@property (nonatomic,retain)NSString *storedate;//日期
+@property (nonatomic,retain)NSString *storepersonnel;//人员
+@property (nonatomic,retain)NSString *storeregion;//地区
+@property (nonatomic,retain)NSString *storename;//店名
+@property (nonatomic,retain)NSString *storeaddree;//地址
+@property (nonatomic,retain)NSString *storehead;//负责人
+@property (nonatomic,retain)NSString *storephone;//微信/手机
+@property (nonatomic,retain)NSString *storebrand;//品牌
+@property (nonatomic,retain)NSString *clascation;//分类
+@property (nonatomic,retain)NSString *Introduction;//简介
+@property (nonatomic,retain)NSString *Abrief;//简要
+@property (nonatomic,retain)NSString *instructions;//说明
+@property (nonatomic,retain)NSString *note;//备注
 @end
 
 @implementation FillinfoViewController
@@ -149,9 +166,11 @@
              _textField=[[UITextField alloc]initWithFrame:labelRect2];
              _textField.font = [UIFont boldSystemFontOfSize:14.0f];
             [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            _textField.tag = indexPath.row;
             [cell addSubview:_textField];
             if (indexPath.row==4) {
             _textField.text=_address;
+                
             }
             if(!(indexPath.row==6)){
             _textField.placeholder=@"必填";
@@ -196,8 +215,75 @@
             self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
                 cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
                 cell.xingLabel.textColor=[UIColor blackColor];
+                _storeregion=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
             };
             [self.view addSubview:self.cityChoose];
+        }
+            break;
+        case 7:{
+            InputboxController *inputVC=[[InputboxController alloc]init];
+            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            inputVC.blcokStr=^(NSString *content){
+                _storebrand=content;
+            };
+            [self.navigationController pushViewController:inputVC animated:YES];
+        }
+            break;
+        case 8:{
+         
+            [SelectAlert showWithTitle:@"类型" titles:@[@"A类",@"B类",@"C类"] selectIndex:^(NSInteger selectIndex) {
+                switch (selectIndex) {
+                    case 0:
+                        _clascation=@"A类";
+                        break;
+                    case 2:
+                        _clascation=@"B类";
+                        break;
+                    case 3:
+                        _clascation=@"C类";
+                        break;
+                    default:
+                        break;
+                }
+                
+            } selectValue:^(NSString *selectValue) {
+                FillTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
+                cell.xingLabel.text=selectValue;
+            } showCloseButton:NO];
+        }
+            break;
+        case 9:{
+            StoreprofileController *stireVC=[[StoreprofileController alloc]init];
+          
+            [self.navigationController pushViewController:stireVC animated:YES];
+        }
+            break;
+        case 10:{
+            InputboxController *inputVC=[[InputboxController alloc]init];
+            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            inputVC.blcokStr=^(NSString *content){
+                _Abrief=content;
+            };
+            [self.navigationController pushViewController:inputVC animated:YES];
+        }
+            break;
+        case 11:{
+            InputboxController *inputVC=[[InputboxController alloc]init];
+            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            inputVC.blcokStr=^(NSString *content){
+                _instructions=content;
+            };
+            [self.navigationController pushViewController:inputVC animated:YES];
+        }
+            break;
+        case 12 :{
+            InputboxController *inputVC=[[InputboxController alloc]init];
+            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            inputVC.blcokStr=^(NSString *content){
+                _note=content;
+                
+            };
+            [self.navigationController pushViewController:inputVC animated:YES];
         }
             break;
         default:
@@ -206,14 +292,37 @@
     
     
 }
+
 - (void)daterViewDidClicked:(XFDaterView *)daterView{
 //    NSLog(@"dateString=%@ timeString=%@",dater.dateString,dater.timeString);
     inftionTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
     cell.xingLabel.text=dater.dateString;
+    _storedate=dater.dateString;
     cell.xingLabel.textColor=[UIColor blackColor];
 }
 -(void)FieldText:(UITextField*)sender{
-    
+   
+    switch (sender.tag) {
+        case 3:{
+            _storename=sender.text;
+        }
+            break;
+        case 4:{
+            _storeaddree=sender.text;
+        }
+            break;
+        case 5:{
+            _storehead=sender.text;
+        }
+            break;
+        case 6:{
+            _storephone=sender.text;
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 -(void)buiftItem{
     [self.navigationController popViewControllerAnimated:YES];

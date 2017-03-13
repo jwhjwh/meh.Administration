@@ -73,7 +73,7 @@
     [super layoutSubviews];
     CGSize maxSize = CGSizeMake(self.placehoderLabel.frame.size.width-10, MAXFLOAT);
     CGRect LabelFrame = [self.placehoder boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.placehoderLabel.font,NSFontAttributeName, nil] context:nil];
-    self.placehoderLabel.frame = CGRectMake(5, 8, self.frame.size.width - 10, LabelFrame.size.height);
+    self.placehoderLabel.frame = CGRectMake(5, 0, self.frame.size.width - 10, LabelFrame.size.height);
     
     CGRect textFrame = [self.text boundingRectWithSize:CGSizeMake(self.frame.size.width-10,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.font,NSFontAttributeName, nil] context:nil];
 

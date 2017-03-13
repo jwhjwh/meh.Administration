@@ -77,11 +77,11 @@
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     [window addSubview:self];
     
-    [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionAutoreverse animations:^{
-        self.transform = CGAffineTransformMakeScale(1.1, 1.1);
-    } completion:^(BOOL finished) {
-        self.transform = CGAffineTransformMakeScale(1, 1);
-    }];
+//    [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionAutoreverse animations:^{
+//        self.transform = CGAffineTransformMakeScale(1.1, 1.1);
+//    } completion:^(BOOL finished) {
+//        self.transform = CGAffineTransformMakeScale(1, 1);
+//    }];
     
     if (self.title) {
         self.titleLabel.text= self.title;
@@ -89,7 +89,6 @@
     CGRect rect = [self.content boundingRectWithSize:CGSizeMake(kAlertWidth-80, 0) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
     self.contentLabel.frame = CGRectMake(40, 55, kAlertWidth-80, rect.size.height+20);
     self.contentLabel.attributedText = self.content;
-    
     self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, rect.size.height+95+44);
     self.grayHLine.center = CGPointMake(kAlertWidth/2, rect.size.height+95);
     
