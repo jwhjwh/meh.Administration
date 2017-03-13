@@ -60,6 +60,8 @@
 		1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5745641E56C6A400E4A47C /* ZxdObject.m */; };
 		1F5745671E56F45400E4A47C /* tx100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745661E56F45400E4A47C /* tx100.png */; };
 		1F5745691E56F45A00E4A47C /* tx23.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745681E56F45A00E4A47C /* tx23.png */; };
+		1F581BB01E763BC4009C6B08 /* StoreprofileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F581BAF1E763BC4009C6B08 /* StoreprofileController.m */; };
+		1F581BBE1E767F1B009C6B08 /* InputboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F581BBD1E767F1B009C6B08 /* InputboxController.m */; };
 		1F59AF211E5E76750000722A /* tjpco01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F59AF1F1E5E76750000722A /* tjpco01.png */; };
 		1F59AF221E5E76750000722A /* tjpco02.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F59AF201E5E76750000722A /* tjpco02.png */; };
 		1F59AF251E5EDA6A0000722A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59AF241E5EDA6A0000722A /* libsqlite3.tbd */; };
@@ -382,6 +384,10 @@
 		1F5745641E56C6A400E4A47C /* ZxdObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZxdObject.m; sourceTree = "<group>"; };
 		1F5745661E56F45400E4A47C /* tx100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tx100.png; sourceTree = "<group>"; };
 		1F5745681E56F45A00E4A47C /* tx23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tx23.png; sourceTree = "<group>"; };
+		1F581BAE1E763BC4009C6B08 /* StoreprofileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreprofileController.h; sourceTree = "<group>"; };
+		1F581BAF1E763BC4009C6B08 /* StoreprofileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreprofileController.m; sourceTree = "<group>"; };
+		1F581BBC1E767F1B009C6B08 /* InputboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputboxController.h; sourceTree = "<group>"; };
+		1F581BBD1E767F1B009C6B08 /* InputboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputboxController.m; sourceTree = "<group>"; };
 		1F59AF1F1E5E76750000722A /* tjpco01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tjpco01.png; sourceTree = "<group>"; };
 		1F59AF201E5E76750000722A /* tjpco02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tjpco02.png; sourceTree = "<group>"; };
 		1F59AF241E5EDA6A0000722A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -964,6 +970,10 @@
 				1F6833BE1E72A08700F74D50 /* busableController.m */,
 				1F6833C11E72A49700F74D50 /* FillinfoViewController.h */,
 				1F6833C21E72A49700F74D50 /* FillinfoViewController.mm */,
+				1F581BAE1E763BC4009C6B08 /* StoreprofileController.h */,
+				1F581BAF1E763BC4009C6B08 /* StoreprofileController.m */,
+				1F581BBC1E767F1B009C6B08 /* InputboxController.h */,
+				1F581BBD1E767F1B009C6B08 /* InputboxController.m */,
 				1FDD3C711E7398CE00743779 /* FillTableViewCell.h */,
 				1FDD3C721E7398CE00743779 /* FillTableViewCell.m */,
 			);
@@ -2224,6 +2234,7 @@
 				62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */,
 				1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */,
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
+				1F581BB01E763BC4009C6B08 /* StoreprofileController.m in Sources */,
 				6269A5611E6E51E90083160E /* SubmittedTableViewCell.m in Sources */,
 				62656CD21E52A6600085A2BD /* NSData+ImageContentType.m in Sources */,
 				62656C551E529BC10085A2BD /* IQKeyboardManager.m in Sources */,
@@ -2337,6 +2348,7 @@
 				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
+				1F581BBE1E767F1B009C6B08 /* InputboxController.m in Sources */,
 				62656B931E5295D70085A2BD /* MASViewAttribute.m in Sources */,
 				1F59AF321E5EE16C0000722A /* FMDatabase.m in Sources */,
 				F767DBEA1E5B1B08000D4FB7 /* MJRefreshFooter.m in Sources */,
