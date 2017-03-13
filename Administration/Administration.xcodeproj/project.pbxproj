@@ -278,6 +278,8 @@
 		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
 		F736D1651E589245003A1A39 /* GongTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F736D1641E589245003A1A39 /* GongTableViewCell.m */; };
 		F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F736D1671E589288003A1A39 /* MesgeTableViewCell.m */; };
+		F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F741B3041E76DBB9002A1D55 /* CLZoomPickerView.m */; };
+		F741B3081E76DDAA002A1D55 /* CLStaticTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F741B3071E76DDAA002A1D55 /* CLStaticTextCell.m */; };
 		F74A7BCD1E6EF22B004A7942 /* ZXYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */; };
 		F767DBE81E5B1B08000D4FB7 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F767DBD31E5B1B08000D4FB7 /* MJRefreshComponent.m */; };
 		F767DBE91E5B1B08000D4FB7 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F767DBD51E5B1B08000D4FB7 /* MJRefreshConst.m */; };
@@ -771,6 +773,10 @@
 		F736D1641E589245003A1A39 /* GongTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GongTableViewCell.m; sourceTree = "<group>"; };
 		F736D1661E589288003A1A39 /* MesgeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MesgeTableViewCell.h; sourceTree = "<group>"; };
 		F736D1671E589288003A1A39 /* MesgeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MesgeTableViewCell.m; sourceTree = "<group>"; };
+		F741B3031E76DBB9002A1D55 /* CLZoomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLZoomPickerView.h; sourceTree = "<group>"; };
+		F741B3041E76DBB9002A1D55 /* CLZoomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLZoomPickerView.m; sourceTree = "<group>"; };
+		F741B3061E76DDAA002A1D55 /* CLStaticTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLStaticTextCell.h; sourceTree = "<group>"; };
+		F741B3071E76DDAA002A1D55 /* CLStaticTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLStaticTextCell.m; sourceTree = "<group>"; };
 		F74A7BCB1E6EF22B004A7942 /* ZXYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXYAlertView.h; sourceTree = "<group>"; };
 		F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXYAlertView.m; sourceTree = "<group>"; };
 		F767DBD11E5B1B08000D4FB7 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
@@ -1110,6 +1116,7 @@
 			children = (
 				1FDD3C751E73F52500743779 /* XFDaterView.h */,
 				1FDD3C761E73F52500743779 /* XFDaterView.m */,
+				F741B3091E76DDB4002A1D55 /* CLStatic */,
 			);
 			path = IPickerView;
 			sourceTree = "<group>";
@@ -1967,6 +1974,17 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
+		F741B3091E76DDB4002A1D55 /* CLStatic */ = {
+			isa = PBXGroup;
+			children = (
+				F741B3031E76DBB9002A1D55 /* CLZoomPickerView.h */,
+				F741B3041E76DBB9002A1D55 /* CLZoomPickerView.m */,
+				F741B3061E76DDAA002A1D55 /* CLStaticTextCell.h */,
+				F741B3071E76DDAA002A1D55 /* CLStaticTextCell.m */,
+			);
+			name = CLStatic;
+			sourceTree = "<group>";
+		};
 		F767DBD01E5B1B08000D4FB7 /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -2347,6 +2365,7 @@
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
 				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
+				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
@@ -2395,6 +2414,7 @@
 				62656CD11E52A6600085A2BD /* MKAnnotationView+WebCache.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
 				1F581BBE1E767F1B009C6B08 /* InputboxController.m in Sources */,
+				F741B3081E76DDAA002A1D55 /* CLStaticTextCell.m in Sources */,
 				62656B931E5295D70085A2BD /* MASViewAttribute.m in Sources */,
 				1F59AF321E5EE16C0000722A /* FMDatabase.m in Sources */,
 				F767DBEA1E5B1B08000D4FB7 /* MJRefreshFooter.m in Sources */,

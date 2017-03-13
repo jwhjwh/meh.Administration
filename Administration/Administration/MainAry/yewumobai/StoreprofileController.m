@@ -9,12 +9,16 @@
 #import "StoreprofileController.h"
 #import "inftionTableViewCell.h"
 #import "SelectAlert.h"
-@interface StoreprofileController ()<UITableViewDataSource,UITableViewDelegate>
+#import "CLZoomPickerView.h"
+@interface StoreprofileController ()<UITableViewDataSource,UITableViewDelegate,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
 {
     UITableView *infonTableview;
 }
+
+@property (nonatomic,strong)CLZoomPickerView *pickerView;
 @property (strong,nonatomic) NSArray *InterNameAry;
-@property (strong,nonatomic) NSArray *numAry;
+@property (strong,nonatomic) NSArray *timeArray;
+@property (strong,nonatomic) NSIndexPath *index;
 @end
 
 @implementation StoreprofileController
@@ -49,7 +53,8 @@
     for (int i=1; i<101; i++) {
         [array addObject:[NSString stringWithFormat:@"%d",i]];
     }
-     _numAry=[NSArray arrayWithArray:array];
+     _timeArray=[NSArray arrayWithArray:array];
+   
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -81,7 +86,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{    _index=indexPath;
     switch (indexPath.row) {
         case 0:{
             [SelectAlert showWithTitle:@"类型" titles:@[@"美容院",@"综合店",@"前店后院",@"其他"] selectIndex:^(NSInteger selectIndex) {
@@ -93,22 +98,56 @@
         }
             
             break;
-        case 2:{
-     
+        case 1:{
+            [self lodapickerView];
         }
             
             break;
-        case 3:
-            
+        case 2:
+              [self lodapickerView];
             break;
-        case 4:
-            
+        case 3:
+              [self lodapickerView];
             break;
         default:
             break;
     }
 }
+-(void)lodapickerView{
+    self.pickerView=[[CLZoomPickerView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    self.pickerView.dataSource = self;
+    self.pickerView.delegate = self;
+    self.pickerView.labelStr=@"提示";
+    self.pickerView.topRowCount = 1;
+    self.pickerView.bottomRowCount = 1;
+    self.pickerView.selectedRow = 1;
+    self.pickerView.rowHeight = 40;
+    self.pickerView.selectedRowFont = [UIFont fontWithName:@"DIN Condensed" size:35];
+    self.pickerView.textColor = [UIColor blueColor];
+    self.pickerView.unselectedRowScale = 0.5;
+    [self.view addSubview:self.pickerView];
+}
+#pragma mark - CLZoomPickerView 代理
 
+// CLZoomPickerView 代理，当前项改变后调用此方法
+- (void)pickerView:(CLZoomPickerView *)pickerView changedIndex:(NSUInteger)indexPath
+{
+    inftionTableViewCell *cell = [infonTableview cellForRowAtIndexPath:_index];
+    cell.xingLabel.text=_timeArray[indexPath];
+}
+
+
+// CLZoomPickerView 代理，返回数据行数
+- (NSInteger)pickerView:(CLZoomPickerView *)pickerView
+{
+    return _timeArray.count;
+}
+
+// CLZoomPickerView 代理，返回指定行显示的字符串
+- (NSString *)pickerView:(CLZoomPickerView *)pickerView titleForRow:(NSUInteger)indexPath
+{
+    return _timeArray[indexPath];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

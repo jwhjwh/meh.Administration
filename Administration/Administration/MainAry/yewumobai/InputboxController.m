@@ -8,7 +8,10 @@
 
 #import "InputboxController.h"
 #import "WJTextView.h"
+
 @interface InputboxController ()
+
+
 @property (nonatomic,strong) WJTextView *textView;
 @property (nonatomic,strong)UIScrollView *scrollView;
 
