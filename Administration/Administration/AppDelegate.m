@@ -55,7 +55,7 @@
     //创建并初始化一个引擎对象
     BMKMapManager *manager = [[BMKMapManager alloc] init];
     //启动地图引擎
-BOOL success=[manager start:@"KKLHXDn0aDkN9PHzbAKB7cCcArMX1U7h" generalDelegate:nil];
+    BOOL success=[manager start:@"KKLHXDn0aDkN9PHzbAKB7cCcArMX1U7h" generalDelegate:nil];
     
     if (!success) {
         NSLog(@"失败");

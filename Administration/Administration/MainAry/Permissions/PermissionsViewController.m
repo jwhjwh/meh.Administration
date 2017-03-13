@@ -9,12 +9,14 @@
 #import "PermissionsViewController.h"
 #import "CreateViewController.h"
 #import "CodeViewController.h"
+#import "StructureViewController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
     
 }
 @property (nonatomic,retain)NSArray *arr;
+
 @end
 
 @implementation PermissionsViewController
@@ -27,9 +29,11 @@
     [super viewDidLoad];
     self.title=@"权限管理";
     [self InterTableUI];
-    _arr = [[NSArray alloc]initWithObjects:@"创建员工账号",@"识别码",nil];
+_arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"创建员工账号",@"识别码",nil];
+    
     // Do any additional setup after loading the view.
 }
+
 -(void)InterTableUI
 {
     infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,50,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
@@ -54,7 +58,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return 2;
+    return 3;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     
@@ -91,18 +95,29 @@
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.textLabel.text = _arr[indexPath.row];
+    if ([cell.textLabel.text isEqualToString:@"职业结构介绍(必看)"]) {
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+         NSRange range1 = {7,2};
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range1];
+        [cell.textLabel setAttributedText:attributedString];
+    }
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
+        StructureViewController *StructVC= [[StructureViewController alloc]init];
+        [self.navigationController showViewController:StructVC sender:nil];
+    }else if (indexPath.row == 1) {
         CreateViewController *CreateVC= [[CreateViewController alloc]init];
         [self.navigationController showViewController:CreateVC sender:nil];
-    }else{
+    }else if(indexPath.row == 2){
         CodeViewController *codeVC = [[CodeViewController alloc]init];
         [self.navigationController showViewController:codeVC sender:nil];
         
     }
+    
 
 }
 /*

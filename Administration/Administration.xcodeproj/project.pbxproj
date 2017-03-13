@@ -244,6 +244,15 @@
 		626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626D96D41E5FCEA2002208D6 /* ModifyViewController.m */; };
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
+		627B27191E764B4100392170 /* StructureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 627B27181E764B4100392170 /* StructureViewController.m */; };
+		627B27221E7680C900392170 /* 创建账号02_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271A1E7680C900392170 /* 创建账号02_1.jpg */; };
+		627B27231E7680C900392170 /* 创建账号02_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271B1E7680C900392170 /* 创建账号02_2.jpg */; };
+		627B27241E7680C900392170 /* 创建账号02_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271C1E7680C900392170 /* 创建账号02_3.jpg */; };
+		627B27251E7680C900392170 /* 创建账号02_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271D1E7680C900392170 /* 创建账号02_4.jpg */; };
+		627B27261E7680C900392170 /* 创建账号02_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271E1E7680C900392170 /* 创建账号02_5.jpg */; };
+		627B27271E7680C900392170 /* 创建账号02_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271F1E7680C900392170 /* 创建账号02_6.jpg */; };
+		627B27281E7680C900392170 /* 创建账号02_7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B27201E7680C900392170 /* 创建账号02_7.jpg */; };
+		627B27291E7680C900392170 /* 创建账号02_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B27211E7680C900392170 /* 创建账号02_8.jpg */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
 		62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF61E68FD36003F3A84 /* CreateViewController.m */; };
 		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
@@ -706,6 +715,16 @@
 		626D96D41E5FCEA2002208D6 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 		626D96D81E600A7C002208D6 /* 对-未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-未选.png"; sourceTree = "<group>"; };
 		626D96D91E600A7C002208D6 /* 对-选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-选中.png"; sourceTree = "<group>"; };
+		627B27171E764B4100392170 /* StructureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StructureViewController.h; sourceTree = "<group>"; };
+		627B27181E764B4100392170 /* StructureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StructureViewController.m; sourceTree = "<group>"; };
+		627B271A1E7680C900392170 /* 创建账号02_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_1.jpg"; sourceTree = "<group>"; };
+		627B271B1E7680C900392170 /* 创建账号02_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_2.jpg"; sourceTree = "<group>"; };
+		627B271C1E7680C900392170 /* 创建账号02_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_3.jpg"; sourceTree = "<group>"; };
+		627B271D1E7680C900392170 /* 创建账号02_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_4.jpg"; sourceTree = "<group>"; };
+		627B271E1E7680C900392170 /* 创建账号02_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_5.jpg"; sourceTree = "<group>"; };
+		627B271F1E7680C900392170 /* 创建账号02_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_6.jpg"; sourceTree = "<group>"; };
+		627B27201E7680C900392170 /* 创建账号02_7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_7.jpg"; sourceTree = "<group>"; };
+		627B27211E7680C900392170 /* 创建账号02_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_8.jpg"; sourceTree = "<group>"; };
 		6287AA1F1E543802004F6387 /* shibiema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibiema.png; sourceTree = "<group>"; };
 		62942BF51E68FD36003F3A84 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
 		62942BF61E68FD36003F3A84 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
@@ -1354,6 +1373,7 @@
 		625355781E6817780041F123 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				627B27161E764B2700392170 /* Structure */,
 				62578E741E6D5ED900D42603 /* Identification */,
 				62942BF41E68FD22003F3A84 /* Create */,
 				6253557C1E681E740041F123 /* PermissionsViewController.h */,
@@ -1671,6 +1691,14 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				627B271A1E7680C900392170 /* 创建账号02_1.jpg */,
+				627B271B1E7680C900392170 /* 创建账号02_2.jpg */,
+				627B271C1E7680C900392170 /* 创建账号02_3.jpg */,
+				627B271D1E7680C900392170 /* 创建账号02_4.jpg */,
+				627B271E1E7680C900392170 /* 创建账号02_5.jpg */,
+				627B271F1E7680C900392170 /* 创建账号02_6.jpg */,
+				627B27201E7680C900392170 /* 创建账号02_7.jpg */,
+				627B27211E7680C900392170 /* 创建账号02_8.jpg */,
 				62A0D7361E6FD921003370FA /* ph_mt02.png */,
 				6269A56B1E6E9A810083160E /* ph_mt.png */,
 				6269A56C1E6E9A810083160E /* head_icon.png */,
@@ -1763,6 +1791,15 @@
 				626D96D41E5FCEA2002208D6 /* ModifyViewController.m */,
 			);
 			path = ModifyPass;
+			sourceTree = "<group>";
+		};
+		627B27161E764B2700392170 /* Structure */ = {
+			isa = PBXGroup;
+			children = (
+				627B27171E764B4100392170 /* StructureViewController.h */,
+				627B27181E764B4100392170 /* StructureViewController.m */,
+			);
+			path = Structure;
 			sourceTree = "<group>";
 		};
 		62942BF41E68FD22003F3A84 /* Create */ = {
@@ -2066,12 +2103,14 @@
 				62656D631E52B5700085A2BD /* huishezhi.png in Resources */,
 				62656D461E52B5700085A2BD /* jiantou_03.png in Resources */,
 				62656D591E52B5700085A2BD /* dianpugenzong.png in Resources */,
+				627B27271E7680C900392170 /* 创建账号02_6.jpg in Resources */,
 				62656D511E52B5700085A2BD /* ztkq.png in Resources */,
 				62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */,
 				1F5745691E56F45A00E4A47C /* tx23.png in Resources */,
 				62656D561E52B5700085A2BD /* yonghuming.png in Resources */,
 				6218D0601E4E95FB00299989 /* LaunchScreen.storyboard in Resources */,
 				62656D521E52B5700085A2BD /* denglutioao.png in Resources */,
+				627B27281E7680C900392170 /* 创建账号02_7.jpg in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
 				1F6E31411E543CE1006069ED /* menuData.plist in Resources */,
@@ -2096,9 +2135,12 @@
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62570E901E7136B90051C83A /* wdbg.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
+				627B27251E7680C900392170 /* 创建账号02_4.jpg in Resources */,
+				627B27241E7680C900392170 /* 创建账号02_3.jpg in Resources */,
 				1F1D1F951E6D382A0021B1AD /* fj_ico.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
 				1F0102121E6036AB00802571 /* ZJLXRTableViewCell.xib in Resources */,
+				627B27261E7680C900392170 /* 创建账号02_5.jpg in Resources */,
 				1F59AF221E5E76750000722A /* tjpco02.png in Resources */,
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62EBA2341E56939300F657DB /* Contact2.png in Resources */,
@@ -2110,6 +2152,8 @@
 				62EBA2351E56939300F657DB /* Contact0.png in Resources */,
 				62656D4F1E52B5700085A2BD /* Inder0.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
+				627B27231E7680C900392170 /* 创建账号02_2.jpg in Resources */,
+				627B27291E7680C900392170 /* 创建账号02_8.jpg in Resources */,
 				62EBA2361E56939300F657DB /* Contact1.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxian.png in Resources */,
 				1F5745671E56F45400E4A47C /* tx100.png in Resources */,
@@ -2123,6 +2167,7 @@
 				62656D6E1E52D29D0085A2BD /* 03.png in Resources */,
 				62656D471E52B5700085A2BD /* tianjia.png in Resources */,
 				1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */,
+				627B27221E7680C900392170 /* 创建账号02_1.jpg in Resources */,
 				62656D6C1E52D29D0085A2BD /* 01.png in Resources */,
 				1F4A98EB1E63AEFC003492DF /* phone.png in Resources */,
 				62656D651E52B5700085A2BD /* zilianxiren.png in Resources */,
@@ -2298,6 +2343,7 @@
 				62656CE21E52A6600085A2BD /* UIView+WebCache.m in Sources */,
 				62656BDE1E5295E50085A2BD /* MBProgressHUD+Add.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
+				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
