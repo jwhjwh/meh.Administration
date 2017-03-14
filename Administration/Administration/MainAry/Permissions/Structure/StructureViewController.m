@@ -135,7 +135,13 @@
     }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
         cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0f];
     }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
+
         cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
+
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    }else{
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+
     }
 
 
