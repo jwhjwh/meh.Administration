@@ -132,6 +132,7 @@
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
+		6226E6641E778CB600767EBD /* SetPositionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E6631E778CB600767EBD /* SetPositionViewController.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
@@ -538,6 +539,8 @@
 		6220B6E51E641806007017BA /* PW_DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PW_DatePickerView.m; sourceTree = "<group>"; };
 		6226E65E1E77773C00767EBD /* UIDevice+FEPlatForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+FEPlatForm.h"; sourceTree = "<group>"; };
 		6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+FEPlatForm.m"; sourceTree = "<group>"; };
+		6226E6621E778CB600767EBD /* SetPositionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPositionViewController.h; sourceTree = "<group>"; };
+		6226E6631E778CB600767EBD /* SetPositionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPositionViewController.m; sourceTree = "<group>"; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
 		624F11F81E66BBD80089C252 /* CityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseViewController.h; sourceTree = "<group>"; };
 		624F11F91E66BBD80089C252 /* CityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseViewController.m; sourceTree = "<group>"; };
@@ -1372,6 +1375,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		6226E6611E778CA000767EBD /* SetPosition */ = {
+			isa = PBXGroup;
+			children = (
+				6226E6621E778CB600767EBD /* SetPositionViewController.h */,
+				6226E6631E778CB600767EBD /* SetPositionViewController.m */,
+			);
+			path = SetPosition;
+			sourceTree = "<group>";
+		};
 		62345B411E53F4FA001760F8 /* background */ = {
 			isa = PBXGroup;
 			children = (
@@ -1403,6 +1415,7 @@
 		625355781E6817780041F123 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				6226E6611E778CA000767EBD /* SetPosition */,
 				627B27161E764B2700392170 /* Structure */,
 				62578E741E6D5ED900D42603 /* Identification */,
 				62942BF41E68FD22003F3A84 /* Create */,
@@ -2403,6 +2416,7 @@
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
+				6226E6641E778CB600767EBD /* SetPositionViewController.m in Sources */,
 				62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */,
 				1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,
