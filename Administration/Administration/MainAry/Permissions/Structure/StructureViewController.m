@@ -140,6 +140,7 @@
         cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
     }else{
         cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+
     }
 
 

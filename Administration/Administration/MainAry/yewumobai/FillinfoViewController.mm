@@ -37,7 +37,6 @@
 @property (nonatomic,strong) UITextField *textField;
 @property (nonatomic,retain) NSString *address;
 @property (nonatomic,retain)NSIndexPath *Index;
-
 @property (nonatomic,retain)NSString *storedate;//日期
 @property (nonatomic,retain)NSString *storepersonnel;//人员
 @property (nonatomic,retain)NSString *storeregion;//地区
@@ -170,7 +169,6 @@
             [cell addSubview:_textField];
             if (indexPath.row==4) {
             _textField.text=_address;
-                
             }
             if(!(indexPath.row==6)){
             _textField.placeholder=@"必填";
