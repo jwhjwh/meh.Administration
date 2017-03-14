@@ -76,8 +76,14 @@
     _label=[[UILabel alloc]initWithFrame:CGRectMake(_tipebackView.bounds.origin.x, 0, _tipebackView.bounds.size.width, 40)];
     _label.textAlignment=NSTextAlignmentCenter;
     [_tipebackView addSubview:_label];
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 39,_tipebackView.frame.size.width,1)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    [_tipebackView addSubview:view];
+    UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(0,240,_tipebackView.frame.size.width,1)];
+    view1.backgroundColor=[UIColor lightGrayColor];
+    [_tipebackView addSubview:view1];
     _button=[UIButton buttonWithType: UIButtonTypeCustom];
-    _button.frame=CGRectMake(_tipebackView.bounds.origin.x,240,  _tipebackView.bounds.size.width, 50);
+    _button.frame=CGRectMake(_tipebackView.bounds.origin.x,241,  _tipebackView.bounds.size.width, 49);
     [_button setTitleColor:[UIColor blueColor]forState:UIControlStateNormal];
     [_button setTitle: @"确定" forState: UIControlStateNormal];
     [_button addTarget:self action:@selector(buttonindex) forControlEvents: UIControlEventTouchUpInside];
@@ -123,7 +129,6 @@
     
     // 刷新tableView
     [self refreshPickerView:0];
-    
     // 防止多次更新子视图位置
     if (CGRectEqualToRect(frame, self.tableView.frame))
         return;

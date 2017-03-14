@@ -133,9 +133,9 @@
     }else if ([platform isEqualToString:@"iPhone 5"]||[platform isEqualToString:@"iPhone 5S"]||[platform isEqualToString:@"iPhone SE"]||[platform isEqualToString:@"iPhone 5c"]){
         cell.textLabel.font = [UIFont boldSystemFontOfSize:11.0f];
     }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:12.0f];
     }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
     }
 
 

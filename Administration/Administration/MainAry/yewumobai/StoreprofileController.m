@@ -123,7 +123,7 @@
     self.pickerView.selectedRow = 1;
     self.pickerView.rowHeight = 40;
     self.pickerView.selectedRowFont = [UIFont fontWithName:@"DIN Condensed" size:35];
-    self.pickerView.textColor = [UIColor blueColor];
+    self.pickerView.textColor = [UIColor lightGrayColor];
     self.pickerView.unselectedRowScale = 0.5;
     [self.view addSubview:self.pickerView];
 }
