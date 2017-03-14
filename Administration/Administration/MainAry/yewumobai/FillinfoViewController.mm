@@ -46,10 +46,14 @@
 @property (nonatomic,retain)NSString *storephone;//微信/手机
 @property (nonatomic,retain)NSString *storebrand;//品牌
 @property (nonatomic,retain)NSString *clascation;//分类
-@property (nonatomic,retain)NSString *Introduction;//简介
+@property (nonatomic,retain)NSString *stotrType;//门店类型
 @property (nonatomic,retain)NSString *Abrief;//简要
 @property (nonatomic,retain)NSString *instructions;//说明
 @property (nonatomic,retain)NSString *note;//备注
+@property (nonatomic,retain)NSString *brandBusin;//美容师人数
+@property (nonatomic,retain)NSString *planDur;//经营年限
+@property (nonatomic,retain)NSString *Berths;//床位
+
 @end
 
 @implementation FillinfoViewController
@@ -96,7 +100,7 @@
 
 {
     
-    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+   // NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     //地理反编码
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     
@@ -123,6 +127,7 @@
     
     NSLog(@"address:%@----%@",result.addressDetail,result.address);
     _address=result.address;
+    _storeaddree=result.address;
     [_infonTableview reloadData];
     //addressDetail:     层次化地址信息
     
@@ -176,24 +181,31 @@
         }else{
             if(indexPath.row==1){
             cell.xingLabel.text=[USER_DEFAULTS objectForKey:@"name"];
+                _storepersonnel=[USER_DEFAULTS objectForKey:@"name"];
+
             }else{
             cell.xingLabel.textColor=[UIColor lightGrayColor];
             cell.xingLabel.text=@"必填";
+            }
+            if (indexPath.row==0&&!(_storedate==nil)) {
+                cell.xingLabel.text= _storedate;
+                cell.xingLabel.textColor=[UIColor blackColor];
             }
         }
     cell.mingLabel.text=_arr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }else{
-    FillTableViewCell *cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    FillTableViewCell *cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
     if (cell == nil) {
-        cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
     }
     if (!(indexPath.row==8)) {
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.mingLabel.text=_arr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+ 
     return cell;
 }
     
@@ -221,8 +233,11 @@
         case 7:{
             InputboxController *inputVC=[[InputboxController alloc]init];
             inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content){
+            inputVC.blcokStr=^(NSString *content,int num){
+                if (num==7) {
                 _storebrand=content;
+                  
+                }
             };
             [self.navigationController pushViewController:inputVC animated:YES];
         }
@@ -230,37 +245,32 @@
         case 8:{
          
             [SelectAlert showWithTitle:@"类型" titles:@[@"A类",@"B类",@"C类"] selectIndex:^(NSInteger selectIndex) {
-                switch (selectIndex) {
-                    case 0:
-                        _clascation=@"A类";
-                        break;
-                    case 2:
-                        _clascation=@"B类";
-                        break;
-                    case 3:
-                        _clascation=@"C类";
-                        break;
-                    default:
-                        break;
-                }
                 
             } selectValue:^(NSString *selectValue) {
                 FillTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
                 cell.xingLabel.text=selectValue;
+                _clascation=selectValue;
             } showCloseButton:NO];
         }
             break;
         case 9:{
             StoreprofileController *stireVC=[[StoreprofileController alloc]init];
-          
+            stireVC.blcokString=^(NSString *type,NSString *year,NSString *perpon,NSString *beds){
+                _stotrType=type;
+                _planDur=year;
+                _brandBusin=perpon;
+                _Berths=beds;
+                NSLog(@"%@ %@ %@ %@",_stotrType,_planDur,_brandBusin,_Berths);
+            };
             [self.navigationController pushViewController:stireVC animated:YES];
         }
             break;
         case 10:{
             InputboxController *inputVC=[[InputboxController alloc]init];
             inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content){
+            inputVC.blcokStr=^(NSString *content,int num){
                 _Abrief=content;
+               
             };
             [self.navigationController pushViewController:inputVC animated:YES];
         }
@@ -268,8 +278,9 @@
         case 11:{
             InputboxController *inputVC=[[InputboxController alloc]init];
             inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content){
+            inputVC.blcokStr=^(NSString *content,int num){
                 _instructions=content;
+                
             };
             [self.navigationController pushViewController:inputVC animated:YES];
         }
@@ -277,7 +288,7 @@
         case 12 :{
             InputboxController *inputVC=[[InputboxController alloc]init];
             inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content){
+            inputVC.blcokStr=^(NSString *content,int num){
                 _note=content;
                 
             };
@@ -292,7 +303,7 @@
 }
 
 - (void)daterViewDidClicked:(XFDaterView *)daterView{
-//    NSLog(@"dateString=%@ timeString=%@",dater.dateString,dater.timeString);
+    //NSLog(@"dateString=%@ timeString=%@",dater.dateString,dater.timeString);
     inftionTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
     cell.xingLabel.text=dater.dateString;
     _storedate=dater.dateString;
@@ -303,18 +314,22 @@
     switch (sender.tag) {
         case 3:{
             _storename=sender.text;
+            NSLog(@"--==%@",_storename);
         }
             break;
         case 4:{
             _storeaddree=sender.text;
+                        NSLog(@"===%@",_storeaddree);
         }
             break;
         case 5:{
             _storehead=sender.text;
+             NSLog(@"---%@",_storehead);
         }
             break;
         case 6:{
             _storephone=sender.text;
+             NSLog(@"==%@",_storephone);
         }
             break;
             
@@ -326,11 +341,42 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-    
+    [self UploadInformation];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
-
+-(void)UploadInformation{
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSArray *array = [_storeregion componentsSeparatedByString:@"-"];
+NSLog(@"--%@,==%@,0-%@,099-%@,787=%@,887=%@,876=%@,86876=%@,76878=%@,87676=%@,543554=%@,53443=%@,54342=%@,===%@,---%@,==---%@,====%@=%@",_storedate,_storepersonnel,array[0],array[1],array[2],_storename,_storeaddree,_storehead,_storephone,_storebrand,_clascation,_stotrType,_planDur,_brandBusin,_Berths,_Abrief,_instructions,_note);
+    NSLog(@"%@,%@",_storedate,_storepersonnel);
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storepersonnel,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Principal":_storehead,@"Iphone":_storephone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        
+        
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+           
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+    
+}
 @end

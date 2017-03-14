@@ -11,5 +11,8 @@
 @interface ZxdObject : NSObject
 
 +(void)rootController;
+//将文字添加到图片上
+
++ (UIImage*)text:(NSString*)text addToView:(UIImage*)image;
 
 @end

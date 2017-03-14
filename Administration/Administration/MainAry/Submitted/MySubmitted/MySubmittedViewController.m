@@ -10,8 +10,22 @@
 #import "PW_DatePickerView.h"
 #import "SubmittedViewController.h"
 #import "RectordViewController.h"
-@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,PW_DatePickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import<BaiduMapAPI_Map/BMKMapView.h>
 
+#import<BaiduMapAPI_Location/BMKLocationService.h>
+
+#import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
+
+#import<BaiduMapAPI_Map/BMKMapComponent.h>
+
+#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,PW_DatePickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+{
+   
+    BMKLocationService *_locService;  //定位
+    
+    BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
+}
 
 //列表
 @property (nonatomic,strong)UITableView *tableView;
@@ -29,14 +43,24 @@
 
 @property (nonatomic,strong) NSString *Wcode;
 @property (nonatomic,strong) NSString *Qcode;
+@property (nonatomic,strong) NSString *address;
 @end
 
 @implementation MySubmittedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self startLocation];
     self.title = @"图片报岗";
     self.view.backgroundColor = [UIColor whiteColor];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    btn.autoresizesSubviews=NO;
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+   
    // self.automaticallyAdjustsScrollViewInsets = NO;
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
                                     initWithTitle:@"提交"
@@ -47,6 +71,9 @@
     
     self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"想做的事",@"进展程度", nil];
     [self mySubmittedUI];
+}
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)masgegeClick
 {
@@ -215,18 +242,28 @@
 }
 - (void)doTap:(UITapGestureRecognizer*)sender{
 
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.sourceType = sourceType;
     [self presentViewController:picker animated:YES completion:nil];
     
 }
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
    
-    
-    self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    if (!(_address==nil)) {
+        
+        self.goodPicture = [ZxdObject  text:[NSString stringWithFormat:@"%@  %@",_address,dateString] addToView: [info objectForKey:UIImagePickerControllerEditedImage]];
+    }else{
+        self.goodPicture = [ZxdObject  text:dateString addToView: [info objectForKey:UIImagePickerControllerEditedImage]];
+    }
+   
     [self dismissViewControllerAnimated:YES completion:nil];
     _dateImage.image=self.goodPicture;
 
@@ -273,14 +310,65 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+-(void)startLocation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+{
+    
+    //初始化BMKLocationService
+    _locService = [[BMKLocationService alloc]init];
+    
+    _locService.delegate = self;
+    
+    _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
+    //启动LocationService
+    
+    [_locService startUserLocationService];
+    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
+    
+    _geocodesearch.delegate = self;
 }
-*/
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 
+{
+    
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    //地理反编码
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    
+    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
+    
+    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    
+    if(flag){
+        
+        NSLog(@"反geo检索发送成功");
+        
+        [_locService stopUserLocationService];
+        
+    }else{
+        
+        NSLog(@"反geo检索发送失败");
+        
+    }
+    
+}
+-(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+
+{
+    
+    NSLog(@"address:%@----%@",result.addressDetail,result.address);
+    _address=result.address;
+
+    //addressDetail:     层次化地址信息
+    
+    //address:    地址名称
+    
+    //businessCircle:  商圈名称
+    
+    // location:  地址坐标
+    
+    //  poiList:   地址周边POI信息，成员类型为BMKPoiInfo
+    
+}
 @end

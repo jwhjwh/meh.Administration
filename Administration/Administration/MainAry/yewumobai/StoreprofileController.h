@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void  (^BAELOCK)(NSString *type,NSString *year,NSString *perpon,NSString *beds);
 @interface StoreprofileController : UIViewController
-
+@property (nonatomic,copy)BAELOCK blcokString;
 @end

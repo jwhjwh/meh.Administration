@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void  (^BAELOCK)(NSString *content);
+typedef void  (^BAELOCKck)(NSString *content,int num);
 @interface InputboxController : UIViewController
 @property(nonatomic,strong)NSString *number;
-@property (nonatomic,copy)BAELOCK blcokStr;
+@property (nonatomic,copy)BAELOCKck blcokStr;
 @end
