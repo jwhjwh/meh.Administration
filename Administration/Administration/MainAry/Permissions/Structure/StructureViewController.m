@@ -7,7 +7,7 @@
 //
 
 #import "StructureViewController.h"
-
+#import "UIDevice+FEPlatForm.h"
 @interface StructureViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSTimer *_timerrrrrrrr;
     int     count;
@@ -127,8 +127,19 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = self.dataArr[indexPath.row];
-   
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:11.0f];
+   NSString *platform = [UIDevice devicePlatForm];
+    if ([platform isEqualToString:@"iPhone 4"]||[platform isEqualToString:@"iPhone 4S"]) {
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:11.0f];
+    }else if ([platform isEqualToString:@"iPhone 5"]||[platform isEqualToString:@"iPhone 5S"]||[platform isEqualToString:@"iPhone SE"]||[platform isEqualToString:@"iPhone 5c"]){
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:11.0f];
+    }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    }
+
+
+    
     if (indexPath.row == 5 || indexPath.row ==7 ||indexPath.row == 9 || indexPath.row ==12 || indexPath.row ==14 ||indexPath.row == 17)
     {
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];

@@ -131,6 +131,7 @@
 		621A5C211E5843B50051C6CC /* banben100.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A5C201E5843B50051C6CC /* banben100.png */; };
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
+		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
@@ -535,6 +536,8 @@
 		6220B6E11E63C2A7007017BA /* EmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailViewController.m; sourceTree = "<group>"; };
 		6220B6E41E641806007017BA /* PW_DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PW_DatePickerView.h; sourceTree = "<group>"; };
 		6220B6E51E641806007017BA /* PW_DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PW_DatePickerView.m; sourceTree = "<group>"; };
+		6226E65E1E77773C00767EBD /* UIDevice+FEPlatForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+FEPlatForm.h"; sourceTree = "<group>"; };
+		6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+FEPlatForm.m"; sourceTree = "<group>"; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
 		624F11F81E66BBD80089C252 /* CityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseViewController.h; sourceTree = "<group>"; };
 		624F11F91E66BBD80089C252 /* CityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseViewController.m; sourceTree = "<group>"; };
@@ -1307,6 +1310,7 @@
 		6218D0931E4EB9B900299989 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				6226E65D1E77773400767EBD /* Utils */,
 				1FDD3C741E73F4F500743779 /* IPickerView */,
 				1F6833B11E724FF000F74D50 /* WFEmpty */,
 				1F2973911E6E3CD1003F2FD0 /* pinyin */,
@@ -1357,6 +1361,15 @@
 				6220B6E51E641806007017BA /* PW_DatePickerView.m */,
 			);
 			path = DatePicker;
+			sourceTree = "<group>";
+		};
+		6226E65D1E77773400767EBD /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				6226E65E1E77773C00767EBD /* UIDevice+FEPlatForm.h */,
+				6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		62345B411E53F4FA001760F8 /* background */ = {
@@ -2332,6 +2345,7 @@
 				62656C511E529BC10085A2BD /* IQUITextFieldView+Additions.m in Sources */,
 				1F45719C1E654C1A008E4E34 /* DongImage.m in Sources */,
 				62656CF51E52AF720085A2BD /* XCQ_tabbar.m in Sources */,
+				6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */,
 				1F4A98EE1E640103003492DF /* GBAlertView.m in Sources */,
 				62656C531E529BC10085A2BD /* IQUIViewController+Additions.m in Sources */,
 				62656C5C1E529BC10085A2BD /* IQUIView+IQKeyboardToolbar.m in Sources */,
