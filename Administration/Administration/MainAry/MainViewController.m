@@ -75,7 +75,7 @@
     maskLayer.path = maskPath.CGPath;
     _logoImage.layer.mask = maskLayer;
      NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
-   [_logoImage sd_setBackgroundImageWithURL:[NSURL URLWithString:logoStr] forState:UIControlStateNormal placeholderImage:[UIImage  imageNamed:@"tx23"]];
+   [_logoImage sd_setBackgroundImageWithURL:[NSURL URLWithString:logoStr] forState:UIControlStateNormal placeholderImage:[UIImage  imageNamed:@"tx23"]options:SDWebImageRefreshCached];
     [_logoImage addTarget:self action:@selector(xinxiTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:_logoImage];
    

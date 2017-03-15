@@ -227,6 +227,7 @@
         NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
         if ([status isEqualToString:@"0000"]) {
             NSString *msgStr = [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"] ];
+            NSLog(@"%@",msgStr);
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存头像成功" andInterval:1.0];
          [USER_DEFAULTS  setObject:msgStr forKey:@"logoImage"];
             _TXImage.image=self.goodPicture;

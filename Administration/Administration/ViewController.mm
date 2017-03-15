@@ -66,37 +66,32 @@
         make.right.equalTo(self.view.mas_right).offset(0);
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
     }];
-   [NSTimer scheduledTimerWithTimeInterval:900 target:self selector:@selector(getResults)
-                                                  userInfo:nil repeats:YES];
+   [NSTimer scheduledTimerWithTimeInterval:900 target:self selector:@selector(getResults)userInfo:nil repeats:YES];
     [self logIng];
-    [self startLocation];
+  
 }
 -(void)getResults{
- [self huoqudiliweizhi];
+ [self startLocation];
+ 
 }
 - (void)startLocation
 {
     //初始化BMKLocationService
-    
     _locService = [[BMKLocationService alloc]init];
-    
     _locService.delegate = self;
-    
     _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    
     //启动LocationService
-    
     [_locService startUserLocationService];
     _geocodesearch = [[BMKGeoCodeSearch alloc] init];
-    
     _geocodesearch.delegate = self;
 }
 //处理位置坐标更新
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    NSLog(@"当前位置信息：didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+   // NSLog(@"当前位置信息：didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     //地理反编码
-    
+    _latitude=userLocation.location.coordinate.latitude;
+    _longitude=userLocation.location.coordinate.longitude;
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     
     reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
@@ -117,8 +112,7 @@
 -(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 
 {
-    
-    NSLog(@"address:%@----%@",result.addressDetail,result.address);
+    //NSLog(@"address:%@----%@",result.addressDetail,result.address);
     _ctiy=[NSString stringWithFormat:@"%@",result.address];
     //找到了当前位置城市后就关闭服务
     [_locService stopUserLocationService];
@@ -131,7 +125,7 @@
     // location:  地址坐标
     
     //  poiList:   地址周边POI信息，成员类型为BMKPoiInfo
-    
+    [self huoqudiliweizhi];
 }
 
 
@@ -275,14 +269,14 @@
         _nameStr= textField.text;
         if (_nameStr.length==11) {
             NSString *urlStr =[NSString stringWithFormat:@"%@user/queryicon.action",KURLHeader];
-            NSLog(@"%@",_nameStr);
+     
             NSDictionary *info=@{@"mobile":_nameStr};
             [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                     NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
                     NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
-                   
-                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:0];
+                 
+                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:SDWebImageRefreshCached];
                     
                     [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
                     [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
@@ -352,10 +346,10 @@
             
             [ZxdObject rootController];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self huoqudiliweizhi];
+                  [self startLocation];
             });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新输入手机号机" andInterval:1.0];
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登陆" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
@@ -375,7 +369,6 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *companyid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     if ([NSString stringWithFormat:@"%f",_latitude].length>0&&[NSString stringWithFormat:@"%f",_latitude].length>0&&_ctiy.length>0&&[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"token"]].length>0) {
- 
         NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
         NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"log":[NSString stringWithFormat:@"%f",_longitude],@"lat":[NSString stringWithFormat:@"%f",_latitude],@"comid":companyid,@"address":_ctiy};
         [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {

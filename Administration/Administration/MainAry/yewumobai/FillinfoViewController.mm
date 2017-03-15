@@ -27,7 +27,7 @@
 {
       XFDaterView*dater;
     BMKLocationService *_locService;  //定位
-    
+    BOOL _islode;
     BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
 }
 @property (nonatomic, strong) CityChoose *cityChoose;/** 城市选择 */
@@ -76,24 +76,16 @@
     self.navigationItem.rightBarButtonItem = rightitem;
     _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机／微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
     [self vSubviews];
+    _islode=YES;
 }
 -(void)startLocation
-
-{
-    
-    //初始化BMKLocationService
-    
+{   //初始化BMKLocationService
     _locService = [[BMKLocationService alloc]init];
-    
     _locService.delegate = self;
-    
     _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    
     //启动LocationService
-    
     [_locService startUserLocationService];
     _geocodesearch = [[BMKGeoCodeSearch alloc] init];
-    
     _geocodesearch.delegate = self;
 }
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
@@ -125,7 +117,7 @@
 
 {
     
-    NSLog(@"address:%@----%@",result.addressDetail,result.address);
+   // NSLog(@"address:%@----%@",result.addressDetail,result.address);
     _address=result.address;
     _storeaddree=result.address;
     [_infonTableview reloadData];
@@ -210,7 +202,6 @@
 }
     
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   _Index=indexPath;
     inftionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -260,7 +251,7 @@
                 _planDur=year;
                 _brandBusin=perpon;
                 _Berths=beds;
-                NSLog(@"%@ %@ %@ %@",_stotrType,_planDur,_brandBusin,_Berths);
+          
             };
             [self.navigationController pushViewController:stireVC animated:YES];
         }
@@ -314,22 +305,22 @@
     switch (sender.tag) {
         case 3:{
             _storename=sender.text;
-            NSLog(@"--==%@",_storename);
+     
         }
             break;
         case 4:{
             _storeaddree=sender.text;
-                        NSLog(@"===%@",_storeaddree);
+            
         }
             break;
         case 5:{
             _storehead=sender.text;
-             NSLog(@"---%@",_storehead);
+           
         }
             break;
         case 6:{
             _storephone=sender.text;
-             NSLog(@"==%@",_storephone);
+           
         }
             break;
             
@@ -349,34 +340,35 @@
 
 }
 -(void)UploadInformation{
-    
-    NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSArray *array = [_storeregion componentsSeparatedByString:@"-"];
-NSLog(@"--%@,==%@,0-%@,099-%@,787=%@,887=%@,876=%@,86876=%@,76878=%@,87676=%@,543554=%@,53443=%@,54342=%@,===%@,---%@,==---%@,====%@=%@",_storedate,_storepersonnel,array[0],array[1],array[2],_storename,_storeaddree,_storehead,_storephone,_storebrand,_clascation,_stotrType,_planDur,_brandBusin,_Berths,_Abrief,_instructions,_note);
-    NSLog(@"%@,%@",_storedate,_storepersonnel);
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storepersonnel,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Principal":_storehead,@"Iphone":_storephone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        
-        
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-           
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-        
-    }failure:^(NSError *error) {
-        
-    }view:self.view MBPro:YES];
+    if (_islode==YES) {
+        NSString *uStr =[NSString stringWithFormat:@"%@shop/addrecord.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSArray *array = [_storeregion componentsSeparatedByString:@" "];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storepersonnel,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Principal":_storehead,@"Iphone":_storephone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note};
+        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+            
+            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
+                _islode=NO;
+            } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }
+            
+        }failure:^(NSError *error) {
+            
+        }view:self.view MBPro:YES];
+    }else{
+         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"已提交成功，请勿重复提交" andInterval:1.0];
+    }
     
 }
 @end
