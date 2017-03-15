@@ -127,10 +127,13 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = self.dataArr[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.tintColor = GetColor(76, 76, 76, 1);
    NSString *platform = [UIDevice devicePlatForm];
     if ([platform isEqualToString:@"iPhone 4"]||[platform isEqualToString:@"iPhone 4S"]) {
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:11.0f];
+        cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
     }else if ([platform isEqualToString:@"iPhone 5"]||[platform isEqualToString:@"iPhone 5S"]||[platform isEqualToString:@"iPhone SE"]||[platform isEqualToString:@"iPhone 5c"]){
+
         cell.textLabel.font = [UIFont boldSystemFontOfSize:11.6f];
     }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
         cell.textLabel.font = [UIFont boldSystemFontOfSize:13.3f];
@@ -138,8 +141,15 @@
 
         cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
 
+
+        cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
+    }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
+        cell.textLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+    }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
+        cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+
     }else{
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+        cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
 
     }
 
@@ -153,6 +163,27 @@
         [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [cell.textLabel.text length])];
         [cell.textLabel  setAttributedText:attributedString];
     }
+    
+    if (indexPath.row == 0) {
+        cell.textLabel.tintColor = GetColor(51, 51, 51, 1);//职位 102 102 102。内容 76 76 76 
+    }else if (indexPath.row == 3|| indexPath.row == 10 || indexPath.row == 15 || indexPath.row == 16) {
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+        NSRange range1 = {2,2};
+        [attributedString addAttribute:NSForegroundColorAttributeName value:GetColor(102, 102, 102, 1) range:range1];
+        [cell.textLabel setAttributedText:attributedString];
+    }else if(indexPath.row == 18){
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+        NSRange range1 = {3,2};
+        [attributedString addAttribute:NSForegroundColorAttributeName value:GetColor(102, 102, 102, 1) range:range1];
+        [cell.textLabel setAttributedText:attributedString];
+    }else if(indexPath.row == 4||indexPath.row == 6 ||indexPath.row == 8||indexPath.row ==11 ||indexPath.row == 13){
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+        NSRange range1 = {2,4};
+        [attributedString addAttribute:NSForegroundColorAttributeName value:GetColor(102, 102, 102, 1) range:range1];
+        [cell.textLabel setAttributedText:attributedString];
+    }
+
+    
     
     
     return cell;

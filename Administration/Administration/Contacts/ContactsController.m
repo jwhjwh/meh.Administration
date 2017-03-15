@@ -155,6 +155,7 @@
     cell.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model=self.dataArray[indexPath.row];
+   
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
