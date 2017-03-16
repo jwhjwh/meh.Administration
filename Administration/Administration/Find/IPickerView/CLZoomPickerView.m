@@ -226,6 +226,8 @@
             CGFloat delta = (rowOffset >= 0 ? rowOffset : -rowOffset) / _rowHeight;
             CGFloat deltaScale = 1 - (1 - _unselectedRowScale) * delta;
             cell.transform = CGAffineTransformMakeScale(deltaScale, deltaScale);
+            CLStaticTextCell *cellid = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0]];
+            cellid.textColor=[UIColor blackColor];
         }
         else if (rowIndex == currentRow - 1)
         {

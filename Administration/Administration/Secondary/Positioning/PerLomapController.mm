@@ -35,6 +35,12 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     self.title=@"员工位置";
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     NSString *urlStr =[NSString stringWithFormat:@"%@location/getLatestLoc.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -99,7 +105,7 @@
     _label=[[UILabel alloc]initWithFrame:CGRectMake(13, 0, 100, 50)];
     _label.text=[NSString stringWithFormat:@"姓名 %@",_name];
     [view addSubview:_label];
-    _iageV=[[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-40,12.5, 20, 25)];
+    _iageV=[[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-40,12.5,25, 25)];
     _iageV.image=[UIImage imageNamed:@"jiantou_03"];
     [view addSubview:_iageV];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapGesture)];
@@ -143,7 +149,9 @@
     }
     return _darkView;
 }
-
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

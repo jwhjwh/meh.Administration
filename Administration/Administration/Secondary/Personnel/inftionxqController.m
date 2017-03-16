@@ -97,8 +97,13 @@
         UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
         [TXImage setImage:[UIImage imageNamed:@"phone"] forState: UIControlStateNormal];
         [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
-        TXImage.frame=CGRectMake(self.view.bounds.size.width-80,5, 40, 40);
+        TXImage.frame=CGRectMake(self.view.bounds.size.width-50,5, 40, 40);
         [cell addSubview:TXImage];
+        UIButton *Image = [UIButton buttonWithType:UIButtonTypeCustom];
+        [Image setImage:[UIImage imageNamed:@"message"] forState: UIControlStateNormal];
+        [Image addTarget:self action:@selector(messagephone:) forControlEvents:UIControlEventTouchUpInside];
+        Image.frame=CGRectMake(self.view.bounds.size.width-100,5, 40, 37);
+        [cell addSubview:Image];
     }
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     

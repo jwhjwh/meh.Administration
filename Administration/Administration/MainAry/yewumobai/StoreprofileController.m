@@ -19,6 +19,11 @@
 @property (strong,nonatomic) NSArray *InterNameAry;
 @property (strong,nonatomic) NSArray *timeArray;
 @property (strong,nonatomic) NSIndexPath *index;
+
+@property (strong,nonatomic)NSString *type;
+@property (strong,nonatomic)NSString *year;
+@property (strong,nonatomic)NSString *prepen;
+@property (strong,nonatomic)NSString *beds;
 @end
 
 @implementation StoreprofileController
@@ -34,7 +39,10 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
     _InterNameAry = @[@"类型",@"经营年限",@"美容师人数",@"床位"];
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0,83,self.view.bounds.size.width,1)];
     view.backgroundColor=GetColor(216, 216, 216, 1);
@@ -94,6 +102,7 @@
               } selectValue:^(NSString *selectValue) {
                   inftionTableViewCell *cell = [infonTableview cellForRowAtIndexPath:indexPath];
                   cell.xingLabel.text=selectValue;
+                  _type=selectValue;
               } showCloseButton:NO];
         }
             
@@ -134,6 +143,21 @@
 {
     inftionTableViewCell *cell = [infonTableview cellForRowAtIndexPath:_index];
     cell.xingLabel.text=_timeArray[indexPath];
+    switch (_index.row) {
+        case 1:
+            _year=_timeArray[indexPath];
+            break;
+        case 2:
+            _prepen=_timeArray[indexPath];
+
+            break;
+        case 3:
+            _beds=_timeArray[indexPath];
+
+            break;
+        default:
+            break;
+    }
 }
 
 
@@ -152,7 +176,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)rightItemAction{
+    self.blcokString(_type,_year,_prepen,_beds);
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 @end

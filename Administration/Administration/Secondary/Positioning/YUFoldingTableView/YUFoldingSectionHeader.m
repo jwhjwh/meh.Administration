@@ -150,7 +150,7 @@
     CGRect titleRect = CGRectMake(YUFoldingMargin + YUFoldingIconSize, 0, labelWidth, labelHeight);
     CGRect descriptionRect = CGRectMake(YUFoldingMargin + YUFoldingIconSize + labelWidth,  0, labelWidth, labelHeight);
     if (arrowPosition == YUFoldingSectionHeaderArrowPositionRight) {
-        arrowRect.origin.x = YUFoldingMargin*2 + labelWidth*2;
+        arrowRect.origin.x = YUFoldingMargin*2 + labelWidth*2-10;
         titleRect.origin.x = YUFoldingMargin;
         descriptionRect.origin.x = YUFoldingMargin + labelWidth;
     }

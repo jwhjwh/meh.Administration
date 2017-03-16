@@ -14,15 +14,15 @@
 
 @property (nonatomic,strong) WJTextView *textView;
 @property (nonatomic,strong)UIScrollView *scrollView;
-
+@property (nonatomic,assign) int a;
 @end
 
 @implementation InputboxController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    int a=_number.intValue;
-    switch (a) {
+    _a=_number.intValue;
+    switch (_a) {
         case 7:{
             self.title=@"主要经营品牌";
         }
@@ -96,7 +96,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)rightItemAction{
-    self.blcokStr(_textView.text);
+    self.blcokStr(_textView.text,_a);
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {

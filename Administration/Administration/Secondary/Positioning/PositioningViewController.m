@@ -37,8 +37,17 @@
     [super viewDidLoad];
     self.title=@"员工位置";
     self.view.backgroundColor = [UIColor whiteColor];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(bLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     [self suabView];
     [self loadData];
+}
+-(void)bLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)suabView{
     self.automaticallyAdjustsScrollViewInsets = NO;
