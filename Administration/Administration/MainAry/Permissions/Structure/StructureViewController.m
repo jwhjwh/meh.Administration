@@ -123,13 +123,12 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.DatNum+1;
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = self.dataArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.tintColor = GetColor(76, 76, 76, 1);
-   NSString *platform = [UIDevice devicePlatForm];
+    NSString *platform = [UIDevice devicePlatForm];
     if ([platform isEqualToString:@"iPhone 4"]||[platform isEqualToString:@"iPhone 4S"]) {
         cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
     }else if ([platform isEqualToString:@"iPhone 5"]||[platform isEqualToString:@"iPhone 5S"]||[platform isEqualToString:@"iPhone SE"]||[platform isEqualToString:@"iPhone 5c"]){
