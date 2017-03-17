@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"报岗记录";
-    _pagenum = 1;
+  
      self.dataArray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight	)];
@@ -39,16 +39,29 @@
     
     [self getNetworkData:NO];
     __weak typeof(self) weakSelf = self;
+      _pagenum = 1;
     //默认【下拉刷新】
-    [self.tableView addLegendHeaderWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _dataArray = [NSMutableArray array];
         [weakSelf getNetworkData:YES];
     }];
+    
     //默认【上拉加载】
-    [self.tableView addLegendFooterWithRefreshingBlock:^{
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        //Call this Block When enter the refresh status automatically
         [weakSelf getNetworkData:NO];
     }];
-    // Do any additional setup after loading the view.
+   
+}
+/**
+ *  停止刷新
+ */
+-(void)endRefresh{
+    
+    if (_pagenum == 1) {
+        [self.tableView.mj_header endRefreshing];
+    }
+    [self.tableView.mj_footer endRefreshing];
 }
 -(void)getNetworkData:(BOOL)isRefresh{
     if (isRefresh) {
@@ -65,11 +78,7 @@
         //plist
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"plist"];
-            if (array.count==0) {
-                self.tableView.footer.state = MJRefreshFooterStateNoMoreData;
-                return;
-                
-            }else{
+                [self endRefresh];
                 for (NSDictionary *dic in array) {
                     RectordModel *model=[[RectordModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
@@ -77,9 +86,11 @@
                     [self.dataArray addObject:model];
                 }
  
-            }
                         [self.tableView reloadData];
             
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+             return;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             

@@ -28,12 +28,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"权限管理";
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterTableUI];
-_arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"创建员工账号",@"识别码",nil];
+    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"创建员工账号",@"识别码",nil];
     
     // Do any additional setup after loading the view.
 }
-
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void)InterTableUI
 {
     infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,50,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];

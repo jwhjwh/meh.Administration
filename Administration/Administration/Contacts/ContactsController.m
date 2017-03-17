@@ -8,16 +8,12 @@
 
 #import "ContactsController.h"
 #import "inftionxqController.h"
+#import "CrowdViewController.h"
 #import "BuildViewController.h"
 #import "LVModel.h"
 #import "LVFmdbTool.h"
-#define Start_X 10.0f           // 第一个按钮的X坐标
-#define Start_Y 50.0f           // 第一个按钮的Y坐标
-#define Width_Space 20.0f        // 2个按钮之间的横间距
-#define Height_Space 20.0f      // 竖间距
-#define Button_Height 65.0f    // 高
-#define Button_Width 50.0f      // 宽
-@interface ContactsController ()<UITabBarDelegate,UITableViewDelegate,UITableViewDataSource>
+
+@interface ContactsController ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (strong,nonatomic) UIView *view1;//第一条线
 @property (strong,nonatomic) UILabel * lxLabel;//最近联系人Label
@@ -138,7 +134,7 @@
     [self.view addSubview:line1];
     [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
-        make.top.equalTo(_lxLabel.mas_bottom);
+        make.top.equalTo(_lxLabel.mas_bottom).offset(5);
         make.right.equalTo(self.view.mas_right);
         make.height.mas_equalTo(1);
     }];
@@ -148,11 +144,7 @@
    // _ZJLXTable.separatorStyle = UITableViewCellSelectionStyleNone;
     _ZJLXTable.delegate = self;
     _ZJLXTable.dataSource = self;
-    [self.view addSubview:_ZJLXTable];
-    UILongPressGestureRecognizer * longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-    [_ZJLXTable addGestureRecognizer:longPressGr];
-     /*=========================至关重要============================*/
-    _ZJLXTable.allowsMultipleSelectionDuringEditing = YES;
+    [self.view addSubview:_ZJLXTable];    
     //去除多余的cell线
     [ZXDNetworking setExtraCellLineHidden:_ZJLXTable];
     [_ZJLXTable registerNib:[UINib nibWithNibName:@"ZJLXRTableViewCell" bundle:nil] forCellReuseIdentifier:@"BASE"];
@@ -230,29 +222,8 @@
     BuildViewController *creatVC=[[BuildViewController alloc]init];
     [self.navigationController pushViewController:creatVC animated:YES];
 }
--(void)longPressToDo:(UILongPressGestureRecognizer *)gesture {
-   
-    if(gesture.state == UIGestureRecognizerStateBegan)
-    {
-        _ZJLXTable.editing = !_ZJLXTable.editing;
-   
-    }
-}
-//所点选的按钮
--(void)deleteArr
-{
-    
-    NSMutableArray *deleteArrarys = [NSMutableArray array];
-    for (NSIndexPath *indexPath in _ZJLXTable.indexPathsForSelectedRows) {
-        [deleteArrarys addObject:self.dataArray[indexPath.row]];
-    }
-
-    
-}
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return UITableViewCellEditingStyleDelete;
-    
+-(void)liftItemAction{
+    CrowdViewController *CrowdVC=[[CrowdViewController alloc]init];
+    [self.navigationController pushViewController:CrowdVC animated:YES];
 }
 @end

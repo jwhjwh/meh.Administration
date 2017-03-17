@@ -276,7 +276,7 @@
                     NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
                     NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
                  
-                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:SDWebImageRefreshCached];
+                    [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:EMSDWebImageRefreshCached];
                     
                     [USER_DEFAULTS  setObject:logoImage forKey:@"logoImage"];
                     [USER_DEFAULTS  setObject:LtokenStr forKey:@"Ltoken"];
@@ -342,11 +342,23 @@
             [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
             [USER_DEFAULTS setObject:name forKey:@"name"];
             [USER_DEFAULTS  setObject:_shibieStr forKey:@"udid"];
-           
-            
+            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
+            if (error==nil) {
+                NSLog(@"注册成功");
+            }
             [ZxdObject rootController];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                   [self startLocation];
+                [[EMClient sharedClient] loginWithUsername:@"8001"
+                                                  password:@"111111"
+                                                completion:^(NSString *aUsername, EMError *aError) {
+                                                    if (!aError) {
+                                                        NSLog(@"登陆成功");
+                                                        [[EMClient sharedClient].options setIsAutoLogin:YES];
+                                                    } else {
+                                                        NSLog(@"登陆失败");
+                                                    }
+                                                }];
             });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登陆" andInterval:1.0];
