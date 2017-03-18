@@ -11,6 +11,8 @@
 
 #import "ViewController.h"
 
+#import <UIKit/UIKit.h>
+
 #import "MainViewController.h" //首页
 
 #import "IntercalateController.h"//设置
