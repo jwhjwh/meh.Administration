@@ -25,20 +25,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-   
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     [self timerMethodB];
-    
-    _imageView = [[UIImageView alloc]init];
-    [self.view addSubview:_imageView];
-    [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
+    _tableView = [[UITableView alloc]init];
+    _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.view addSubview:self.tableView];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view.top).offset(0);
+        make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.right).offset(0);
-        make.height.mas_offset(180);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-    
-    
-    // Do any additional setup after loading the view.
+    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 180)];
+    self.tableView.tableHeaderView=_imageView;
+}
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)timerMethodB
 {
@@ -58,28 +66,20 @@
     if (count >= 8) {
        
         [self tableviewpUi];
-         [_timerrrrrrrr invalidate];
+        [_timerrrrrrrr invalidate];
         self.DatNum = -1;
         NSMutableArray *indexPaths = @[].mutableCopy;
         self.indesPaths = indexPaths;
         self.timer =  [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(charusell) userInfo:nil repeats:YES];
-        NSLog(@"-- end");
+    
     }
 }
 -(void)tableviewpUi
 {
-        _tableView = [[UITableView alloc]init];
+
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-        [self.view addSubview:self.tableView];
-        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(_imageView.mas_bottom).offset(0);
-            make.right.mas_equalTo(self.view.mas_right).offset(0);
-            make.left.mas_equalTo(self.view.mas_left).offset(0);
-            make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
-        }];
+    
 
 }
 -(NSArray *)dataArr{
@@ -195,14 +195,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

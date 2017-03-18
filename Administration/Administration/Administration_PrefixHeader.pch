@@ -6,9 +6,15 @@
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
+
+
+
 #ifndef Administration_PrefixHeader_pch
 #define Administration_PrefixHeader_pch
-
+//环信引用报错原因
+#import <HyphenateLite/HyphenateLite.h>
+#import "EaseUI-Prefix.pch"
+#define DDLog(xx, ...)  NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #import "ViewController.h"
 
 #import <UIKit/UIKit.h>
@@ -44,12 +50,13 @@
 #import "ZXDNetworking.h"
 #import "Masonry.h"
 #import "UIView+WLFrame.h"
-#import "UIImageView+WebCache.h"
+#import "UIImageView+EMWebCache.h"
+#import "UIButton+EMWebCache.h"
 #import "ZxdObject.h"
 #import "ELNAlerTool.h"
 #import "PWAlertView.h"
 #import "ZYJHeadLineModel.h"
-#import "UIButton+WebCache.h"
+
 #import "NSDictionary+DeleteNull.h"
 #define USER_DEFAULTS [NSUserDefaults standardUserDefaults]
 #define FILE_MANAGER  [NSFileManager defaultManager]

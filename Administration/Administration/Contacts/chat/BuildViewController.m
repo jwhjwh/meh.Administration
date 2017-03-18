@@ -35,11 +35,13 @@
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
     _HeadView = [[UIImageView alloc]init];
-    [_HeadView setImage:[UIImage imageNamed:@"tx100.png"]];
+    [_HeadView setImage:[UIImage imageNamed:@"tjtx_mt.png"]];
     _HeadView.backgroundColor = [UIColor whiteColor];
     _HeadView.layer.masksToBounds = YES;
     _HeadView.layer.cornerRadius =80;//设置圆角
     [self.view addSubview:_HeadView];
+    UITapGestureRecognizer *taposition = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(SpositionTap:)];
+    [_HeadView addGestureRecognizer:taposition];
     [_HeadView  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top).offset(100);
         make.left.equalTo(self.view.mas_centerX).offset(-80);

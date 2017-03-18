@@ -36,7 +36,6 @@
     [super viewDidLoad];
     self.title=@"员工管理";
     self.view.backgroundColor = [UIColor whiteColor];
-   
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];

@@ -7,6 +7,8 @@
 //
 
 #import "inftionxqController.h"
+#import "EaseMessageViewController.h"
+#import "ChatViewController.h"
 #import "inftionTableViewCell.h"
 #import "AlertViewExtension.h"
 #import "EditModel.h"
@@ -39,6 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"信息";
+   
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -224,5 +227,16 @@
 
 -(void)imageViewGestureAction:(UIGestureRecognizer *)tap{
    [DongImage showImage:_TXImage];
+}
+-(void)messagephone:(UIButton *)sender{
+    EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
+    DDLog(@"gaoxing");
+    //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
+    //    messageVC.title = @"8001";
+    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:@"gaoxing01" conversationType:EMConversationTypeChat];
+    messageVC.title =  _callName;
+    [messageVC.faceView setEmotionManagers:@[manager]];
+    // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 @end
