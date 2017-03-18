@@ -230,7 +230,6 @@
 }
 -(void)messagephone:(UIButton *)sender{
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
-    DDLog(@"gaoxing");
     //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     //    messageVC.title = @"8001";
     ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:@"gaoxing01" conversationType:EMConversationTypeChat];

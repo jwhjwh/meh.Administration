@@ -72,6 +72,8 @@
 		1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF311E5EE16C0000722A /* FMResultSet.m */; };
 		1F5B13321E6AB77D00B6D8DC /* xiugaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5B13311E6AB77D00B6D8DC /* xiugaiViewController.m */; };
 		1F5B13351E6ABEA800B6D8DC /* dongjieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */; };
+		1F6005851E7D158900B39497 /* YunChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6005831E7D158900B39497 /* YunChatListCell.m */; };
+		1F6005861E7D158900B39497 /* YunChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F6005841E7D158900B39497 /* YunChatListCell.xib */; };
 		1F6119EC1E665C620044641E /* PWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119EB1E665C620044641E /* PWAlertView.m */; };
 		1F6119F31E66BF2D0044641E /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6119EE1E66BF2D0044641E /* Arrow.png */; };
 		1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119F01E66BF2D0044641E /* YUFoldingSectionHeader.m */; };
@@ -628,6 +630,9 @@
 		1F5B13311E6AB77D00B6D8DC /* xiugaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xiugaiViewController.m; sourceTree = "<group>"; };
 		1F5B13331E6ABEA800B6D8DC /* dongjieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dongjieViewController.h; sourceTree = "<group>"; };
 		1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dongjieViewController.m; sourceTree = "<group>"; };
+		1F6005821E7D158900B39497 /* YunChatListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChatListCell.h; sourceTree = "<group>"; };
+		1F6005831E7D158900B39497 /* YunChatListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChatListCell.m; sourceTree = "<group>"; };
+		1F6005841E7D158900B39497 /* YunChatListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YunChatListCell.xib; sourceTree = "<group>"; };
 		1F6119EA1E665C620044641E /* PWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWAlertView.h; sourceTree = "<group>"; };
 		1F6119EB1E665C620044641E /* PWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWAlertView.m; sourceTree = "<group>"; };
 		1F6119EE1E66BF2D0044641E /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
@@ -1493,6 +1498,16 @@
 				1F01020B1E5FC0C300802571 /* LVModel.m */,
 			);
 			path = fmdb;
+			sourceTree = "<group>";
+		};
+		1F60057C1E7D151600B39497 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				1F6005821E7D158900B39497 /* YunChatListCell.h */,
+				1F6005831E7D158900B39497 /* YunChatListCell.m */,
+				1F6005841E7D158900B39497 /* YunChatListCell.xib */,
+			);
+			path = cell;
 			sourceTree = "<group>";
 		};
 		1F6119ED1E66BF2D0044641E /* YUFoldingTableView */ = {
@@ -2575,6 +2590,7 @@
 				1F52081C1E5579E7001DE4C2 /* ZJLXRTableViewCell.h */,
 				1F52081D1E5579E7001DE4C2 /* ZJLXRTableViewCell.m */,
 				1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */,
+				1F60057C1E7D151600B39497 /* cell */,
 				1F767DCC1E79203500305401 /* chat */,
 			);
 			path = Contacts;
@@ -3385,6 +3401,7 @@
 				1F625C1C1E7BB41100AFBAD1 /* messageVideo@2x.png in Resources */,
 				1F625BDE1E7BB41100AFBAD1 /* chat_receiver_bg@2x.png in Resources */,
 				1F625BF61E7BB41100AFBAD1 /* faceDelete@2x.png in Resources */,
+				1F6005861E7D158900B39497 /* YunChatListCell.xib in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
 				1FDCC3491E7A93DA002C80FB /* MJRefresh.bundle in Resources */,
@@ -3719,6 +3736,7 @@
 				1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */,
 				625355771E67AF8F0041F123 /* CityChoose.m in Sources */,
 				1FDCC29B1E7A8F2F002C80FB /* MWTapDetectingView.m in Sources */,
+				1F6005851E7D158900B39497 /* YunChatListCell.m in Sources */,
 				1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */,
 				1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */,
 				62EBA2501E56CB4900F657DB /* SecurityViewController.m in Sources */,

@@ -36,7 +36,7 @@
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
-     self.edgesForExtendedLayout = UIRectEdgeBottom;
+    self.edgesForExtendedLayout = UIRectEdgeBottom;
     [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[[UIImage imageNamed:@"chat_sender_bg"] stretchableImageWithLeftCapWidth:5 topCapHeight:35]];
     [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@"chat_receiver_bg"] stretchableImageWithLeftCapWidth:35 topCapHeight:35]];
     
@@ -173,12 +173,30 @@
 {
     id<IMessageModel> model = nil;
     model = [[EaseMessageModel alloc] initWithMessage:message];
-    model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
-//    UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:model.nickname];
-//    if (profileEntity) {
-//        model.avatarURLPath = profileEntity.imageUrl;
-//        model.nickname = profileEntity.nickname;
-//    }
+    model.avatarImage = [UIImage imageNamed:@"tx100"];
+    if (model.isSender) {
+        DDLog(@"自己发送");
+        model.message.ext = @{@"avatar":@"http://7xrpiy.com1.z0.glb.clouddn.com/babyShow/1462945613-0",@"nick":@"自己本人的昵称"};
+        //头像
+        //NSLog(@"***++++**%@",model.message);
+        model.avatarURLPath = @"http://7xrpiy.com1.z0.glb.clouddn.com/babyShow/1462945613-0";
+        //NSLog(@"******%@",model.avatarURLPath);
+        //昵称
+        model.nickname = @"自己的名字";
+        //头像占位图
+        model.failImageName = @"sunlei.jpg";
+        
+    }else{
+        DDLog(@"对方发送");
+        //头像
+        model.avatarURLPath = model.message.ext[@"avatar"];
+        //NSLog(@"+++++++______+++%@",model.avatarURLPath);
+        //昵称
+        model.nickname = model.message.ext[@"nick"];
+        //头像占位图
+        model.failImageName = @"sunlei.jpg";
+        
+    }
     model.failImageName = @"imageDownloadFail";
     return model;
 }
@@ -431,5 +449,5 @@
     [self.menuController setTargetRect:showInView.frame inView:showInView.superview];
     [self.menuController setMenuVisible:YES animated:YES];
 }
-
+ 
 @end

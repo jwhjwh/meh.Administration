@@ -92,6 +92,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:248 / 255.0 green:248 / 255.0 blue:248 / 255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -102,6 +104,7 @@
     CGFloat chatbarHeight = [EaseChatToolbar defaultHeight];
     EMChatToolbarType barType = self.conversation.type == EMConversationTypeChat ? EMChatToolbarTypeChat : EMChatToolbarTypeGroup;
     self.chatToolbar = [[EaseChatToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - chatbarHeight, self.view.frame.size.width, chatbarHeight) type:barType];
+
     self.chatToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;    
     
     //Initializa the gesture recognizer
@@ -342,7 +345,7 @@
     }
     
     CGRect tableFrame = self.tableView.frame;
-    tableFrame.size.height = self.view.frame.size.height - _chatToolbar.frame.size.height;
+    tableFrame.size.height = self.view.frame.size.height+49 - _chatToolbar.frame.size.height;
     self.tableView.frame = tableFrame;
     if ([chatToolbar isKindOfClass:[EaseChatToolbar class]]) {
         [(EaseChatToolbar *)self.chatToolbar setDelegate:self];
@@ -1071,7 +1074,6 @@
             sendCell.selectionStyle = UITableViewCellSelectionStyleNone;
             sendCell.delegate = self;
         }
-        
         sendCell.model = model;
         return sendCell;
     }
