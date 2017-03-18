@@ -54,7 +54,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)InterTableUI{
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,50,self.view.bounds.size.width,52*(_arr.count+2)) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,10,self.view.bounds.size.width,52*(_arr.count+2)) style:UITableViewStylePlain];
     infonTableview.scrollEnabled =NO;
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
@@ -71,7 +71,7 @@
     [_WCBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(80);
         make.right.mas_equalTo(self.view.mas_right).offset(-80);
-        make.top.mas_equalTo(infonTableview.mas_bottom).offset(20);
+        make.top.mas_equalTo(infonTableview.mas_bottom).offset(5);
         make.height.mas_equalTo(40);
     }];
     _hideButton = [[UIButton alloc]init];

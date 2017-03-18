@@ -140,15 +140,13 @@
 
         cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
 
-
-        cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
     }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
         cell.textLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
     }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
         cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
 
     }else{
-        cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+        cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
 
     }
 

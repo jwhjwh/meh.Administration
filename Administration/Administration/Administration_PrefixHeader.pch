@@ -17,6 +17,8 @@
 #define DDLog(xx, ...)  NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #import "ViewController.h"
 
+#import <UIKit/UIKit.h>
+
 #import "MainViewController.h" //首页
 
 #import "IntercalateController.h"//设置
