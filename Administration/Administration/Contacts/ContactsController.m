@@ -405,26 +405,26 @@
     return ret;
 }
 //获取群和好友列表
-//- (void)reloadDataNews{
-//    [self.friendsArry removeAllObjects];
-//    [self.groupArry removeAllObjects];
-//    
-//    //好友列表
-//    EMError *error = nil;
-//    NSArray *buddyListB = [[EMClient sharedClient].chatManager fetchBuddyListWithError:&error];
-//    NSLog(@"%@",error);
-//    NSMutableArray *buddyList = [[NSMutableArray alloc] initWithArray:buddyListB];
-//    
-//    if(buddyList.count > 0){
-//        [self.friendsArry addObjectsFromArray:buddyList];
-//    }
-//    
-//    //群组列表
-//   NSArray *roomsList = [[EMClient sharedClient].chatManager groupManager];
-//    if(roomsList.count > 0){
-//        [self.groupArry addObjectsFromArray:roomsList];
-//    }
-//}
+- (void)reloadDataNews{
+    [self.friendsArry removeAllObjects];
+    [self.groupArry removeAllObjects];
+    
+    //好友列表
+    EMError *error = nil;
+    NSArray *buddyListB =[[EMClient sharedClient].contactManager getContactsFromServerWithError:&error];
+    NSLog(@"%@",error);
+    NSMutableArray *buddyList = [[NSMutableArray alloc] initWithArray:buddyListB];
+    
+    if(buddyList.count > 0){
+        [self.friendsArry addObjectsFromArray:buddyList];
+    }
+    
+    //群组列表
+   NSArray *roomsList = [[EMClient sharedClient].groupManager getJoinedGroups];
+    if(roomsList.count > 0){
+        [self.groupArry addObjectsFromArray:roomsList];
+    }
+}
 //未读消息改变时
 -(void)didUnreadMessagesCountChanged{
 //    [self reloadDataNews];
@@ -434,7 +434,7 @@
 
 //群组列表变化后的回调
 - (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error{
-//    [self reloadDataNews];
+ //   [self reloadDataNews];
     _dataLoadDataSource = [self loadDataSource];
     [_ZJLXTable reloadData];
 }
