@@ -29,7 +29,17 @@
 @end
 
 @implementation ChatViewController
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=YES;
+    if (self.conversation.type == EMConversationTypeGroupChat) {
+        if ([[self.conversation.ext objectForKey:@"subject"] length])
+        {
+            self.title = [self.conversation.ext objectForKey:@"subject"];
+        }
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -87,16 +97,7 @@
     [[EMClient sharedClient] removeDelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (self.conversation.type == EMConversationTypeGroupChat) {
-        if ([[self.conversation.ext objectForKey:@"subject"] length])
-        {
-            self.title = [self.conversation.ext objectForKey:@"subject"];
-        }
-    }
-}
+
 
 #pragma mark - setup subviews
 
@@ -192,7 +193,7 @@
         model.avatarURLPath = model.message.ext[@"avatar"];
         //NSLog(@"+++++++______+++%@",model.avatarURLPath);
         //昵称
-        model.nickname = model.message.ext[@"nick"];
+        model.nickname = self.title;
         //头像占位图
         model.failImageName = @"sunlei.jpg";
         

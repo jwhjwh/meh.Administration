@@ -93,7 +93,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:248 / 255.0 green:248 / 255.0 blue:248 / 255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -1269,7 +1269,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         CGRect rect = self.tableView.frame;
         rect.origin.y = 0;
-        rect.size.height = self.view.frame.size.height - toHeight;
+        rect.size.height = self.view.frame.size.height+49 - toHeight;
         self.tableView.frame = rect;
     }];
     
