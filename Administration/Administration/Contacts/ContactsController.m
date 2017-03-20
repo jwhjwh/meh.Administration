@@ -44,6 +44,7 @@
 {
     [super viewWillDisappear:animated];
     [self unregisterNotifications];
+  
 }
 
 #pragma mark - registerNotifications
@@ -641,8 +642,11 @@
     }
 }
 #pragma mark - EMChatManagerDelegate
-- (void)conversationListDidUpdate:(NSArray *)aConversationList
+//监听消息
+- (void)didReceiveMessages:(NSArray *)aMessages
 {
+   
     [self tableViewDidTriggerHeaderRefresh];
+    
 }
 @end

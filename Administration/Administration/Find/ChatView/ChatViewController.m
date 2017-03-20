@@ -40,6 +40,13 @@
         }
     }
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //移除消息回调
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+   
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -67,8 +74,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
     
-    //通过会话管理者获取已收发消息
-    [self tableViewDidTriggerHeaderRefresh];
+    //通过会话管理者获取已收发消息只有单聊打开注释
+//    [self tableViewDidTriggerHeaderRefresh];
 }
 
 - (void)didReceiveMemoryWarning {

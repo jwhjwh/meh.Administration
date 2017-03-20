@@ -178,8 +178,8 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [[EMCDDeviceManager sharedInstance] stopPlaying];
+    //移除消息回调
+    [[EMClient sharedClient].chatManager removeDelegate:self];    [[EMCDDeviceManager sharedInstance] stopPlaying];
     [EMCDDeviceManager sharedInstance].delegate = nil;
     
     if (_imagePicker){
@@ -204,7 +204,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
+    //移除消息回调
+    [[EMClient sharedClient].chatManager removeDelegate:self];
     self.isViewDidAppear = NO;
     [[EMCDDeviceManager sharedInstance] disableProximitySensor];
 }
