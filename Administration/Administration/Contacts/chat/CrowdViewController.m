@@ -70,7 +70,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     EMGroup *group = self.groupArr[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", group.subject];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", group.groupId];
     
     return cell;
 }
