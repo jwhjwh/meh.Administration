@@ -353,11 +353,19 @@
                                                   password:@"111111"
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
-                                                        NSLog(@"登陆成功");
-                                                        [[EMClient sharedClient].options setIsAutoLogin:YES];
+                                                 NSLog(@"登陆成功");
+                            NSString *userOpenId = @"8001";
+                            NSString *nickName =[USER_DEFAULTS objectForKey:@"name"];// 用户昵称
+//                            NSString *avatarUrl =[USER_DEFAULTS objectForKey:@"logoImage"];// 用户头像（绝对路径）
+                            NSString *avatarUrl = @"http://avatar.csdn.net/E/8/5/2_duruiqi_fx.jpg";// 用户头像（绝对路径）
+                                // 登录成功后，如果后端云没有缓存用户信息，则新增一个用户
+                                [UserWebManager createUser:userOpenId nickName:nickName avatarUrl:avatarUrl];
+                                //设置是否自动登录
+                                [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                     } else {
                                                         NSLog(@"登陆失败");
                                                     }
+                                                
                                                 }];
             });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){

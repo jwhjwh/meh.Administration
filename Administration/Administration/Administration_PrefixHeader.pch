@@ -76,6 +76,15 @@
 #define KURLHeader @"http://211.149.155.171:8080/ReportManagement/"
 #define logokey @"JWHKJ"
 
+/*--------环信储存-----------*/
+//接状态改变
+#define kRefreshChatList @"RefreshChatList"// 更新会话列表
+#import "UserCacheManager.h"
+#import "AVOSCloud/AVOSCloud.h"
+#import "UserWebManager.h"
+
+// 发送通知
+#define NOTIFY_POST(_notifyName)   [[NSNotificationCenter defaultCenter] postNotificationName:_notifyName object:nil];
 //------------------修改密码界面---------------------------
 
 //字体

@@ -184,26 +184,19 @@
     model.avatarImage = [UIImage imageNamed:@"tx100"];
     if (model.isSender) {
         DDLog(@"自己发送");
-        model.message.ext = @{@"avatar":@"http://7xrpiy.com1.z0.glb.clouddn.com/babyShow/1462945613-0",@"nick":@"自己本人的昵称"};
-        //头像
-        //NSLog(@"***++++**%@",model.message);
-        model.avatarURLPath = @"http://7xrpiy.com1.z0.glb.clouddn.com/babyShow/1462945613-0";
-        //NSLog(@"******%@",model.avatarURLPath);
-        //昵称
-        model.nickname = @"自己的名字";
-        //头像占位图
-        model.failImageName = @"sunlei.jpg";
-        
+        UserCacheInfo * userInfo = [UserCacheManager getById:model.nickname];
+        if (userInfo) {
+            model.avatarURLPath = userInfo.AvatarUrl;
+            model.nickname = userInfo.NickName;
+        }
+
     }else{
         DDLog(@"对方发送");
-        //头像
-        model.avatarURLPath = model.message.ext[@"avatar"];
-        //NSLog(@"+++++++______+++%@",model.avatarURLPath);
-        //昵称
-        model.nickname = self.title;
-        //头像占位图
-        model.failImageName = @"sunlei.jpg";
-        
+        UserCacheInfo * userInfo = [UserCacheManager getById:model.nickname];
+        if (userInfo) {
+            model.avatarURLPath = userInfo.AvatarUrl;
+            model.nickname = userInfo.NickName;
+        }
     }
     model.failImageName = @"imageDownloadFail";
     return model;
@@ -440,7 +433,7 @@
     }
     
     if (_copyMenuItem == nil) {
-        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"copy", @"Copy") action:@selector(copyMenuAction:)];
+        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"copy", @"Copy") action:@selector(copyMenuAction:)]; 
     }
     
     if (_transpondMenuItem == nil) {
