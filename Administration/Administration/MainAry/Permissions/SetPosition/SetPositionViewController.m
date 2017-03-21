@@ -16,6 +16,7 @@ BOOL MDBOOL;
 BOOL XZGLBOOL;
 BOOL WLBOOL;
 BOOL NQBOOL;
+BOOL QDBOOL;
 NSUInteger rooow;
 NSUInteger roosw;
 @interface SetPositionViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -24,7 +25,7 @@ NSUInteger roosw;
     
 }
 
-
+@property (strong,nonatomic) UITableViewCell *cell;
 //标签
 @property (strong,nonatomic) UILabel *XZZWLabel;//顶部标签
 //按钮
@@ -38,6 +39,11 @@ NSUInteger roosw;
 @property (strong,nonatomic) UIButton *XZGLBtn;//行政管理
 @property (strong,nonatomic) UIButton *WLBtn;//物流
 @property (strong,nonatomic) UIButton *NQBtn;//内勤
+
+@property (strong,nonatomic) UIButton *footerButton;
+@property (strong,nonatomic) UIView *topView;
+@property (strong,nonatomic) UIView *footerView;
+@property (strong,nonatomic) UIView *popFootCellView;
 
 //线
 @property (strong,nonatomic)UIView *view1;//总经理下面的竖线
@@ -73,6 +79,23 @@ NSUInteger roosw;
 
 @property (strong,nonatomic) UILabel  *asklLabel;
 @property (strong,nonatomic) UITextField *xgtextFie;
+
+@property (strong,nonatomic) UIView *asdjklView;
+
+
+//修改的职位名称
+@property (strong,nonatomic) NSString *XGZJLStr;//总经理
+@property (strong,nonatomic) NSString *YWZJStr;//业务总监
+@property (strong,nonatomic) NSString *YWJLStr;//业务经理
+@property (strong,nonatomic) NSString *YWStr;//业务
+@property (strong,nonatomic) NSString *SCZJStr;//市场总监
+@property (strong,nonatomic) NSString *SCJLStr;//市场经理
+@property (strong,nonatomic) NSString *MDStr;//美导
+@property (strong,nonatomic) NSString *XZGLLStr;//行政管理
+@property (strong,nonatomic) NSString *WLStr;//物流
+@property (strong,nonatomic) NSString *NQStr;//内勤
+
+
 @end
 
 @implementation SetPositionViewController
@@ -88,18 +111,27 @@ NSUInteger roosw;
     XZGLBOOL = YES;
     WLBOOL = YES;
     NQBOOL = YES;
-    
+    QDBOOL = YES;
     self.view.backgroundColor = GetColor(255, 255, 255, 1);
     _XZZWArry = [[NSMutableArray alloc]init];
     [_XZZWArry addObject:@"总经理"];
     [self complexUI];
+    _XGZJLStr = @"总经理";
+    _YWJLStr = @"业务经理";
+    _YWZJStr = @"业务总监";
+    _YWStr = @"业务";
+    _SCZJStr = @"市场总监";
+    _SCJLStr = @"市场管理";
+    _MDStr = @"美导";
+    _XZGLLStr = @"行政管理";
+    _WLStr = @"物流";
+    _NQStr = @"内勤";
     // Do any additional setup after loading the view.
 }
 
 -(void)complexUI{
-    
-    
     infonTableview= [[UITableView alloc]init];
+    infonTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
@@ -110,19 +142,43 @@ NSUInteger roosw;
         make.bottom.mas_equalTo(self.view.bottom).offset(0);
     }];
    
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 210)];
-    topView.backgroundColor = [UIColor whiteColor];
-    infonTableview.tableHeaderView=topView;
+    _topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 210)];
+    _topView.backgroundColor = [UIColor whiteColor];
+    infonTableview.tableHeaderView=_topView;
+    
+    _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 280)];
+    _footerView.backgroundColor = [UIColor whiteColor];
+    infonTableview.tableFooterView=_footerView;
+    
+    _footerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    // 为button设置frame
+    _footerButton.layer.cornerRadius = 5;
+    [_footerButton setTitle:@"确定" forState:UIControlStateNormal];
+     [_footerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _footerButton.titleLabel.font =[UIFont systemFontOfSize: 14.0];
+    [_footerButton.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    [_footerButton.layer setCornerRadius:3];
+    [_footerButton.layer setBorderWidth:1];//设置边界的宽度
+    [_footerButton.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+    //在controller中设置按钮的目标-动作，其中目标是self，也就是控制器自身，动作是用目标提供的BtnClick:方法，
+    [_footerButton addTarget:self action:@selector(footerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_footerView addSubview:_footerButton];
+    [_footerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_footerView.mas_top).offset(40);
+        make.centerX.mas_equalTo(_footerView.mas_centerX).offset(0);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(kWidth*200);
+    }];
     
     _XZZWLabel = [[UILabel alloc]init];
     _XZZWLabel.text = @"请勾选您公司的职位";
     _XZZWLabel.textColor = GetColor(102, 102, 102, 1);
     _XZZWLabel.font = [UIFont systemFontOfSize: 14.0];
-    [topView addSubview:_XZZWLabel];
+    [_topView addSubview:_XZZWLabel];
     [_XZZWLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo (self.view.mas_top).offset(70);
-        make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.right.mas_equalTo (self.view.mas_right).offset(-10);
+        make.top.mas_equalTo (_topView.mas_top).offset(6);
+        make.left.mas_equalTo(_topView.mas_left).offset(10);
+        make.right.mas_equalTo (_topView.mas_right).offset(-10);
         make.height.mas_offset(@21);
     }];
     _ZJLBtn = [[UIButton alloc]init];
@@ -133,16 +189,16 @@ NSUInteger roosw;
     [_ZJLBtn.layer setCornerRadius:3];
     [_ZJLBtn.layer setBorderWidth:1];//设置边界的宽度
     [_ZJLBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
-    [topView addSubview:_ZJLBtn];
+    [_topView addSubview:_ZJLBtn];
     [_ZJLBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_XZZWLabel.mas_bottom).offset(10);
-        make.centerX.mas_equalTo(self.view.mas_centerX).offset(0);
+        make.centerX.mas_equalTo(_topView.mas_centerX).offset(0);
         make.width.mas_offset (70);
         make.height.mas_offset(21);
     }];
     UIImageView *gouimage = [[UIImageView alloc]init];
     gouimage.image = [UIImage imageNamed:@"xz_ico1"];
-    [topView addSubview:gouimage];
+    [_topView addSubview:gouimage];
     [gouimage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(_ZJLBtn.mas_right).offset(3);
         make.bottom.mas_equalTo(_ZJLBtn.mas_bottom).offset(0);
@@ -152,25 +208,25 @@ NSUInteger roosw;
     
     _view1 = [[UIView alloc]init];
     _view1.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view1];
+    [_topView addSubview:_view1];
     [_view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_ZJLBtn.mas_bottom).offset(0);
-        make.centerX.mas_equalTo(self.view.mas_centerX).offset(0);
+        make.centerX.mas_equalTo(_topView.mas_centerX).offset(0);
         make.width.mas_offset(2);
         make.height.mas_offset(20);
     }];
     _view2 = [[UIView alloc]init];
     _view2.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view2];
+    [_topView addSubview:_view2];
     [_view2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view1.mas_bottom).offset(0);
-        make.left.mas_equalTo(self.view.mas_left).offset(kWidth*200);
-        make.right.mas_equalTo(self.view.mas_right).offset(-kWidth*160);
+        make.left.mas_equalTo(_topView.mas_left).offset(kWidth*200);
+        make.right.mas_equalTo(_topView.mas_right).offset(-kWidth*160);
         make.height.mas_offset(2);
     }];
     _view3 = [[UIView alloc]init];
     _view3.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view3];
+    [_topView addSubview:_view3];
     [_view3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view2.mas_bottom).offset(0);
         make.left.mas_equalTo(_view2.mas_left).offset(0);
@@ -179,7 +235,7 @@ NSUInteger roosw;
     }];
     _view4 = [[UIView alloc]init];
     _view4.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view4];
+    [_topView addSubview:_view4];
     [_view4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view3.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view3.mas_centerX).offset(0);
@@ -188,7 +244,7 @@ NSUInteger roosw;
     }];
     _view5 = [[UIView alloc]init];
     _view5.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view5];
+    [_topView addSubview:_view5];
     [_view5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view4.mas_bottom).offset(0);
         make.left.mas_equalTo(_view4.mas_left).offset(0);
@@ -205,8 +261,7 @@ NSUInteger roosw;
     [_YWZJBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     //在controller中设置按钮的目标-动作，其中目标是self，也就是控制器自身，动作是用目标提供的BtnClick:方法，
     [_YWZJBtn addTarget:self action:@selector(YWZJBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    _YWZJBtn.tag = 110;
-    [topView addSubview:_YWZJBtn];
+    [_topView addSubview:_YWZJBtn];
     [_YWZJBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view5.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view5.mas_centerX).offset(0);
@@ -215,7 +270,7 @@ NSUInteger roosw;
     }];
     _view6 = [[UIView alloc]init];
     _view6.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view6];
+    [_topView addSubview:_view6];
     [_view6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_YWZJBtn.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_YWZJBtn.mas_centerX).offset(0);
@@ -231,7 +286,7 @@ NSUInteger roosw;
     [_YWJLbTN.layer setBorderWidth:1];//设置边界的宽度
     [_YWJLbTN.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_YWJLbTN addTarget:self action:@selector(YWJLbTNClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_YWJLbTN];
+    [_topView addSubview:_YWJLbTN];
     [_YWJLbTN mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view6.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view6.mas_centerX).offset(0);
@@ -240,7 +295,7 @@ NSUInteger roosw;
     }];
     _view7 = [[UIView alloc]init];
     _view7.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view7];
+    [_topView addSubview:_view7];
     [_view7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_YWJLbTN.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_YWJLbTN.mas_centerX).offset(0);
@@ -253,11 +308,12 @@ NSUInteger roosw;
     _YWBtn.titleLabel.font = [UIFont systemFontOfSize: 12.0];
     [_YWBtn.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
     [_YWBtn.layer setCornerRadius:3];
+    
     [_YWBtn.layer setBorderWidth:1];//设置边界的宽度
     [_YWBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_YWBtn addTarget:self action:@selector(YWBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [topView addSubview:_YWBtn];
+    [_topView addSubview:_YWBtn];
     [_YWBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view7.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view7.mas_centerX).offset(0);
@@ -266,7 +322,7 @@ NSUInteger roosw;
     }];
     _view8 = [[UIView alloc]init];
     _view8.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view8];
+    [_topView addSubview:_view8];
     [_view8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view4.mas_bottom).offset(0);
         make.right.mas_equalTo(_view4.mas_right).offset(0);
@@ -283,7 +339,7 @@ NSUInteger roosw;
     [_SCZJBtn.layer setBorderWidth:1];//设置边界的宽度
     [_SCZJBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_SCZJBtn addTarget:self action:@selector(SCZJBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_SCZJBtn];
+    [_topView addSubview:_SCZJBtn];
     [_SCZJBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view8.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view8.mas_centerX).offset(0);
@@ -292,7 +348,7 @@ NSUInteger roosw;
     }];
     _view9 = [[UIView alloc]init];
     _view9.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view9];
+    [_topView addSubview:_view9];
     [_view9 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_SCZJBtn.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_SCZJBtn.mas_centerX).offset(0);
@@ -308,7 +364,7 @@ NSUInteger roosw;
     [_SCJLBtn.layer setBorderWidth:1];//设置边界的宽度
     [_SCJLBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_SCJLBtn addTarget:self action:@selector(SCJLBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_SCJLBtn];
+    [_topView addSubview:_SCJLBtn];
     [_SCJLBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view9.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view9.mas_centerX).offset(0);
@@ -317,7 +373,7 @@ NSUInteger roosw;
     }];
     _view10 = [[UIView alloc]init];
     _view10.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view10];
+    [_topView addSubview:_view10];
     [_view10 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_SCJLBtn.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_SCJLBtn.mas_centerX).offset(0);
@@ -328,12 +384,13 @@ NSUInteger roosw;
     [_MDBtn setTitle:@"美导" forState:UIControlStateNormal];
     [_MDBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _MDBtn.titleLabel.font = [UIFont systemFontOfSize: 12.0];
+    
     [_MDBtn.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
     [_MDBtn.layer setCornerRadius:3];
     [_MDBtn.layer setBorderWidth:1];//设置边界的宽度
     [_MDBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_MDBtn addTarget:self action:@selector(MDBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_MDBtn];
+    [_topView addSubview:_MDBtn];
     [_MDBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view10.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view10.mas_centerX).offset(0);
@@ -342,7 +399,7 @@ NSUInteger roosw;
     }];
     _view11 = [[UIView alloc]init];
     _view11.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view11];
+    [_topView addSubview:_view11];
     [_view11 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view2.mas_bottom).offset(0);
         make.right.mas_equalTo(_view2.mas_right).offset(0);
@@ -358,7 +415,7 @@ NSUInteger roosw;
     [_XZGLBtn.layer setBorderWidth:1];//设置边界的宽度
     [_XZGLBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_XZGLBtn addTarget:self action:@selector(XZGLBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_XZGLBtn];
+    [_topView addSubview:_XZGLBtn];
     [_XZGLBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view11.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view11.mas_centerX).offset(0);
@@ -367,7 +424,7 @@ NSUInteger roosw;
     }];
     _view12 = [[UIView alloc]init];
     _view12.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view12];
+    [_topView addSubview:_view12];
     [_view12 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_XZGLBtn.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view11.mas_centerX).offset(0);
@@ -376,7 +433,7 @@ NSUInteger roosw;
     }];
     _view13 = [[UIView alloc]init];
     _view13.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view13];
+    [_topView addSubview:_view13];
     [_view13 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view12.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view12.mas_centerX).offset(0);
@@ -385,7 +442,7 @@ NSUInteger roosw;
     }];
     _view14 = [[UIView alloc]init];
     _view14.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view14];
+    [_topView addSubview:_view14];
     [_view14 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view13.mas_bottom).offset(0);
         make.left.mas_equalTo(_view13.mas_left).offset(0);
@@ -401,7 +458,7 @@ NSUInteger roosw;
     [_WLBtn.layer setBorderWidth:1];//设置边界的宽度
     [_WLBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_WLBtn addTarget:self action:@selector(WLBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_WLBtn];
+    [_topView addSubview:_WLBtn];
     [_WLBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view14.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view14.mas_centerX).offset(0);
@@ -410,7 +467,7 @@ NSUInteger roosw;
     }];
     _view15 = [[UIView alloc]init];
     _view15.backgroundColor = [UIColor lightGrayColor];
-    [topView addSubview:_view15];
+    [_topView addSubview:_view15];
     [_view15 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_view13.mas_bottom).offset(0);
         make.right.mas_equalTo(_view13.mas_right).offset(0);
@@ -426,7 +483,7 @@ NSUInteger roosw;
     [_NQBtn.layer setBorderWidth:1];//设置边界的宽度
     [_NQBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
     [_NQBtn addTarget:self action:@selector(NQBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:_NQBtn];
+    [_topView addSubview:_NQBtn];
     [_NQBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (_view15.mas_bottom).offset(0);
         make.centerX.mas_equalTo(_view15.mas_centerX).offset(0);
@@ -466,22 +523,23 @@ NSUInteger roosw;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSInteger row = [indexPath row];
     static NSString *CellIdentifier =@"Cell";
     //定义cell的复用性当处理大量数据时减少内存开销
-    UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
+    _cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
     UILabel *asdklLabel = nil;
-    if (cell ==nil)
+    _cell.tag = [indexPath row];
+    if (_cell ==nil)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        _cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         
-        cell.textLabel.text = @"您选择的职位";
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-        cell.textLabel.textColor = GetColor(117, 117, 117, 1);
+        _cell.textLabel.text = @"您选择的职位";
+        _cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+        _cell.textLabel.textColor = GetColor(117, 117, 117, 1);
 
        
     }
-    for(_asklLabel in cell.subviews){
+    for(_asklLabel in _cell.subviews){
         
         if([_asklLabel isMemberOfClass:[UILabel class]])
         {
@@ -497,16 +555,16 @@ NSUInteger roosw;
     [_asklLabel.layer setCornerRadius:3];
     [_asklLabel.layer setBorderWidth:1];//设置边界的宽度
     [_asklLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-    [cell addSubview:_asklLabel];
+    [_cell addSubview:_asklLabel];
     
     asdklLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 1, 40, 28)];
     asdklLabel.text = @"修改为";
     asdklLabel.font = [UIFont boldSystemFontOfSize:13.0f];
     asdklLabel.textColor = GetColor(117, 117, 117, 1);
-    [cell addSubview:asdklLabel];
+    [_cell addSubview:asdklLabel];
     
 
-    for(_xgtextFie in cell.subviews){
+    for(_xgtextFie in _cell.subviews){
         
         if([_xgtextFie isKindOfClass:[UITextField class]])
             
@@ -525,10 +583,576 @@ NSUInteger roosw;
     [_xgtextFie.layer setCornerRadius:3];
     [_xgtextFie.layer setBorderWidth:1];//设置边界的宽度
     [_xgtextFie.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-    [cell addSubview:_xgtextFie];
+    _xgtextFie.tag = row;
+    [_xgtextFie addTarget:self action:@selector(idNoFieldText:) forControlEvents:UIControlEventEditingChanged];
+    [_cell addSubview:_xgtextFie];
 
     
-    return cell;
+    return _cell;
+}
+- (void)idNoFieldText:(UITextField *)textField{
+    switch (textField.tag) {
+        case 0:
+            if (textField.text.length==0) {
+                _XGZJLStr = @"总经理";
+            }else{
+                _XGZJLStr = textField.text;
+            }
+            break;
+        case 1:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 2:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 3:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 4:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 5:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 6:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 7:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 8:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+        case 9:
+             NSLog(@"%@%uld",textField.text,textField.text.length);
+            if ([textField.placeholder isEqualToString:@"业务经理"]) {
+                if (textField.text.length>0) {
+                    _YWJLStr = textField.text;
+                }else{
+                    _YWJLStr = @"业务经理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务总监"]){
+                if (textField.text.length>0) {
+                    _YWZJStr = textField.text;
+                }else{
+                    _YWZJStr = @"业务总监";
+                }
+            }else if ([textField.placeholder isEqualToString:@"业务"]){
+                if (textField.text.length>0) {
+                    _YWStr = textField.text;
+                }else{
+                    _YWStr = @"业务";
+                }
+            }else if ([textField.placeholder isEqualToString:@"市场总监"]){
+                if (textField.text.length>0) {
+                    _SCZJStr = textField.text;
+                }else{
+                    _SCZJStr = @"市场总监";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+                if (textField.text.length>0) {
+                    _SCJLStr = textField.text;
+                }else{
+                    _SCJLStr = @"市场管理";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"美导"]){
+                if (textField.text.length>0) {
+                    _MDStr = textField.text;
+                }else{
+                    _MDStr = @"美导";
+                }
+            }else if ([textField.placeholder isEqualToString:@"行政管理"]){
+                if (textField.text.length>0) {
+                    _XZGLLStr = textField.text;
+                }else{
+                    _XZGLLStr = @"行政管理";
+                }
+            }else if ([textField.placeholder isEqualToString:@"物流"]){
+                if (textField.text.length>0) {
+                    _WLStr = textField.text;
+                }else{
+                    _WLStr = @"物流";
+                }
+            }
+            else if ([textField.placeholder isEqualToString:@"内勤"]){
+                if (textField.text.length>0) {
+                    _NQStr = textField.text;
+                }else{
+                    _NQStr = @"内勤";
+                }
+            }
+            break;
+            
+        default:
+            break;
+    }
+
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
@@ -545,6 +1169,12 @@ NSUInteger roosw;
     
     return 30;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return 20;
+    
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -555,14 +1185,14 @@ NSUInteger roosw;
     NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rooow inSection:0];
     [indexPaths addObject: indexPath];
-    
     [infonTableview beginUpdates];
-    
     [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
     
     [infonTableview endUpdates];
+    NSLog(@"%ld",(long)_xgtextFie.tag);
 
 }
+
 -(void)dimissTabelCellZWUI{
     NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:roosw inSection:0]];
     [infonTableview beginUpdates];
@@ -621,6 +1251,20 @@ NSUInteger roosw;
         }
         [self addtableViewCellZWUI];
         YWJLBOOL = NO;
+        
+        [_YWBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+        _gouimage3.image = [UIImage imageNamed:@"xz_ico1"];
+        [_XZZWArry addObject:@"业务"];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"业务"]){
+                rooow = i;
+                break;//一定要有break，否则会出错的。
+            }
+        }
+        [self addtableViewCellZWUI];
+        YWBOOL = NO;
+
     }else{
         [btn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
         _gouimage2.image = [UIImage imageNamed:@""];
@@ -636,14 +1280,44 @@ NSUInteger roosw;
         }
         [self dimissTabelCellZWUI];
         YWJLBOOL = YES;
+        
+        [_YWBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+        _gouimage3.image = [UIImage imageNamed:@""];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"业务"]){
+                [_XZZWArry removeObject: _XZZWArry[i]];
+                roosw = i;
+                break;//一定要有break，否则会出错的。
+                
+            }
+            
+        }
+        [self dimissTabelCellZWUI];
+        YWBOOL = YES;
+
     }
-    NSLog(@"%hhd",YWJLBOOL);
+    
     
 }
 -(void)YWBtnClick:(UIButton *)btn{
     //业务
     
     if (YWBOOL == YES) {
+        [_YWJLbTN.layer setBorderColor:([UIColor orangeColor].CGColor)];
+        _gouimage2.image = [UIImage imageNamed:@"xz_ico1"];
+        [_XZZWArry addObject:@"业务经理"];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"业务经理"]){
+                rooow = i;
+                break;//一定要有break，否则会出错的。
+            }
+        }
+        [self addtableViewCellZWUI];
+        YWJLBOOL = NO;
+        
+        
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage3.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"业务"];
@@ -657,6 +1331,22 @@ NSUInteger roosw;
         [self addtableViewCellZWUI];
         YWBOOL = NO;
     }else{
+        [_YWJLbTN.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+        _gouimage2.image = [UIImage imageNamed:@""];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"业务经理"]){
+                [_XZZWArry removeObject: _XZZWArry[i]];
+                roosw = i;
+                break;//一定要有break，否则会出错的。
+                
+            }
+            
+        }
+        [self dimissTabelCellZWUI];
+        YWJLBOOL = YES;
+        
+        
         [btn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
         _gouimage3.image = [UIImage imageNamed:@""];
         for (int i = 0;i<_XZZWArry.count;i++)
@@ -708,6 +1398,7 @@ NSUInteger roosw;
 -(void)SCJLBtnClick:(UIButton *)btn{
     //市场经理
     if (SCJLBOOL == YES) {
+        
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage5.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"市场经理"];
@@ -720,7 +1411,22 @@ NSUInteger roosw;
         }
         [self addtableViewCellZWUI];
         SCJLBOOL = NO;
+        
+        [_MDBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+        _gouimage6.image = [UIImage imageNamed:@"xz_ico1"];
+        [_XZZWArry addObject:@"美导"];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"美导"]){
+                rooow = i;
+                break;//一定要有break，否则会出错的。
+            }
+        }
+        [self addtableViewCellZWUI];
+        MDBOOL = NO;
+
     }else{
+        
         [btn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
         _gouimage5.image = [UIImage imageNamed:@""];
         for (int i = 0;i<_XZZWArry.count;i++)
@@ -733,11 +1439,39 @@ NSUInteger roosw;
         }
         [self dimissTabelCellZWUI];
         SCJLBOOL = YES;
+        
+        [_MDBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+        _gouimage6.image = [UIImage imageNamed:@""];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"美导"]){
+                [_XZZWArry removeObject: _XZZWArry[i]];
+                roosw = i;
+                break;//一定要有break，否则会出错的。
+            }
+        }
+        [self dimissTabelCellZWUI];
+        MDBOOL = YES;
     }
 }
 -(void)MDBtnClick:(UIButton *)btn{
     //美导
     if (MDBOOL == YES) {
+        [_SCJLBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+        _gouimage5.image = [UIImage imageNamed:@"xz_ico1"];
+        [_XZZWArry addObject:@"市场经理"];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
+                rooow = i;
+                break;//一定要有break，否则会出错的。
+            }
+        }
+        [self addtableViewCellZWUI];
+        SCJLBOOL = NO;
+        
+        
+        
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage6.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"美导"];
@@ -751,6 +1485,20 @@ NSUInteger roosw;
         [self addtableViewCellZWUI];
         MDBOOL = NO;
     }else{
+        [_SCJLBtn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+        _gouimage5.image = [UIImage imageNamed:@""];
+        for (int i = 0;i<_XZZWArry.count;i++)
+        {
+            if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
+                [_XZZWArry removeObject: _XZZWArry[i]];
+                roosw = i;
+                break;//一定要有break，否则会出错的。
+            }
+        }
+        [self dimissTabelCellZWUI];
+        SCJLBOOL = YES;
+        
+        
         [btn.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
         _gouimage6.image = [UIImage imageNamed:@""];
         for (int i = 0;i<_XZZWArry.count;i++)
@@ -863,7 +1611,318 @@ NSUInteger roosw;
         NQBOOL = YES;
     }
 }
+-(void)footerButtonClick:(UIButton *)btn{
+    
+    if (QDBOOL == YES) {
+        _asdjklView = [[UIView alloc]init];
+        _asdjklView.backgroundColor  = [UIColor clearColor];
+         [btn setTitle:@"修改" forState:UIControlStateNormal];
+        _YWZJBtn.enabled = NO;
+        _YWJLbTN.enabled = NO;
+        _YWBtn.enabled = NO;
+        _SCZJBtn.enabled = NO;
+        _SCJLBtn.enabled = NO;
+        _MDBtn.enabled = NO;
+        _XZGLBtn.enabled = NO;
+        _WLBtn.enabled = NO;
+        _NQBtn.enabled = NO;
+        QDBOOL =NO;
+        [infonTableview addSubview:_asdjklView];
+        [_asdjklView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view.mas_left).offset(0);
+            make.top.mas_equalTo(infonTableview.tableHeaderView.mas_bottom).offset(20);
+            make.right.mas_equalTo(self.view.mas_right).offset(0);
+            make.height.mas_offset(30*_XZZWArry.count);
+        }];
+        }else{
+        [btn setTitle:@"确定" forState:UIControlStateNormal];
+        _YWZJBtn.enabled = YES;
+        _YWJLbTN.enabled = YES;
+        _YWBtn.enabled = YES;
+        _SCZJBtn.enabled = YES;
+        _SCJLBtn.enabled = YES;
+        _MDBtn.enabled = YES;
+        _XZGLBtn.enabled = YES;
+        _WLBtn.enabled = YES;
+        _NQBtn.enabled = YES;
+        QDBOOL = YES;//sendSubviewToBack
+        [_asdjklView removeFromSuperview];
+    }
+    [self addTabcellViewUI];
+}
+-(void)addTabcellViewUI{
+    
+    if ([_footerButton.titleLabel.text isEqualToString:@"修改"]) {
+        _popFootCellView = [[UIView alloc]init];
+        _popFootCellView.backgroundColor = [UIColor redColor];
+        [_footerView addSubview:_popFootCellView];
+        [_popFootCellView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_footerButton.mas_bottom).offset(10);
+            make.left.mas_equalTo(self.view.mas_left).offset(0);
+            make.right.mas_equalTo(self.view.mas_right).offset(0);
+            make.height.mas_offset(210);
+        }];
+        UILabel *zjlLabel = [[UILabel alloc]init];
+        zjlLabel.text = _XGZJLStr;
+        zjlLabel.font = [UIFont systemFontOfSize: 12.0];
+        zjlLabel.textColor = [UIColor blackColor];
+        zjlLabel.textAlignment = NSTextAlignmentCenter;
+        [zjlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [zjlLabel.layer setCornerRadius:3];
+        [zjlLabel.layer setBorderWidth:1];//设置边界的宽度
+        [zjlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+        [_popFootCellView addSubview:zjlLabel];
+        [zjlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo (_popFootCellView.mas_top).offset(10);
+            make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
+            make.width.mas_offset (70);
+            make.height.mas_offset(21);
+        }];
+        UIView *view1 = [[UIView alloc]init];
+        view1.backgroundColor = [UIColor lightGrayColor];
+        [_popFootCellView addSubview:view1];
+        [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+            make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
+            make.width.mas_offset(2);
+            make.height.mas_offset(20);
+        }];
+        if (XZGLBOOL == NO) {
+            if (YWZJBOOL == NO ||SCZJBOOL == NO ||YWJLBOOL == NO ||SCJLBOOL == NO) {
+                UIView * view2 = [[UIView alloc]init];
+                view2.backgroundColor = [UIColor lightGrayColor];
+                [_popFootCellView addSubview:view2];
+                [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(view1.mas_bottom).offset(0);
+                    make.left.mas_equalTo(_popFootCellView.mas_left).offset(kWidth*200);
+                    make.right.mas_equalTo(_popFootCellView.mas_right).offset(-kWidth*160);
+                    make.height.mas_offset(2);
+                }];
+            }else{
+                UILabel *xzglLabel = [[UILabel alloc]init];
+                xzglLabel.text = _XZGLLStr;
+                xzglLabel.font = [UIFont systemFontOfSize: 12.0];
+                xzglLabel.textColor = [UIColor blackColor];
+                xzglLabel.textAlignment = NSTextAlignmentCenter;
+                [xzglLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                [xzglLabel.layer setCornerRadius:3];
+                [xzglLabel.layer setBorderWidth:1];//设置边界的宽度
+                [xzglLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                [_popFootCellView addSubview:xzglLabel];
+                [xzglLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo (view1.mas_bottom).offset(0);
+                    make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
+                    make.width.mas_offset (70);
+                    make.height.mas_offset(21);
+                }];
+                if (WLBOOL == NO || NQBOOL == NO) {
+                    UIView *view3 = [[UIView alloc]init];
+                    view3.backgroundColor = [UIColor lightGrayColor];
+                    [_popFootCellView addSubview:view3];
+                    [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.mas_equalTo(xzglLabel.mas_bottom).offset(0);
+                        make.centerX.mas_equalTo(xzglLabel.mas_centerX).offset(0);
+                        make.width.mas_offset(2);
+                        make.height.mas_offset(20);
+                    }];
+                    if (WLBOOL == NO && NQBOOL == NO) {
+                        UIView *view4 = [[UIView alloc]init];
+                        view4.backgroundColor = [UIColor lightGrayColor];
+                        [_popFootCellView addSubview:view4];
+                        [view4 mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo(view3.mas_bottom).offset(0);
+                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
+                            make.width.mas_offset(70);
+                            make.height.mas_offset(2);
+                        }];
+                        UIView *view5 = [[UIView alloc]init];
+                        view5.backgroundColor = [UIColor lightGrayColor];
+                        [_popFootCellView addSubview:view5];
+                        [view5 mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo(view4.mas_bottom).offset(0);
+                            make.left.mas_equalTo(view4.mas_left).offset(0);
+                            make.width.mas_offset(2);
+                            make.height.mas_offset(10);
+                        }];
+                        UILabel *wlLabel = [[UILabel alloc]init];
+                        wlLabel.text = _WLStr;
+                        wlLabel.font = [UIFont systemFontOfSize: 12.0];
+                        wlLabel.textAlignment = NSTextAlignmentCenter;
+                        [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                        [wlLabel.layer setCornerRadius:3];
+                        [wlLabel.layer setBorderWidth:1];//设置边界的宽度
+                        [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                        [_popFootCellView addSubview:wlLabel];
+                        [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo (view5.mas_bottom).offset(0);
+                            make.centerX.mas_equalTo(view5.mas_centerX).offset(0);
+                            make.width.mas_offset (@60);
+                            make.height.mas_offset(@21);
+                        }];
+                        UIView *view6 = [[UIView alloc]init];
+                        view6.backgroundColor = [UIColor lightGrayColor];
+                        [_popFootCellView addSubview:view6];
+                        [view6 mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo(view4.mas_bottom).offset(0);
+                            make.right.mas_equalTo(view4.mas_right).offset(0);
+                            make.width.mas_offset(2);
+                            make.height.mas_offset(10);
+                        }];
+                        UILabel *nqLabel = [[UILabel alloc]init];
+                        nqLabel.text = _NQStr;
+                        nqLabel.font = [UIFont systemFontOfSize: 12.0];
+                        nqLabel.textAlignment = NSTextAlignmentCenter;
+                        [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                        [nqLabel.layer setCornerRadius:3];
+                        [nqLabel.layer setBorderWidth:1];//设置边界的宽度
+                        [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                        [_popFootCellView addSubview:nqLabel];
+                        [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo (view6.mas_bottom).offset(0);
+                            make.centerX.mas_equalTo(view6.mas_centerX).offset(0);
+                            make.width.mas_offset (@60);
+                            make.height.mas_offset(@21);
+                        }];
 
+                    }else if (WLBOOL == NO && NQBOOL == YES){
+                        UILabel *wlLabel = [[UILabel alloc]init];
+                        wlLabel.text = _WLStr;
+                        wlLabel.font = [UIFont systemFontOfSize: 12.0];
+                        wlLabel.textAlignment = NSTextAlignmentCenter;
+                        [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                        [wlLabel.layer setCornerRadius:3];
+                        [wlLabel.layer setBorderWidth:1];//设置边界的宽度
+                        [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                        [_popFootCellView addSubview:wlLabel];
+                        [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo (view3.mas_bottom).offset(0);
+                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
+                            make.width.mas_offset (@60);
+                            make.height.mas_offset(@21);
+                        }];
+
+
+                    }else if (WLBOOL == YES && NQBOOL == NO){
+                        UILabel *nqLabel = [[UILabel alloc]init];
+                        nqLabel.text = _NQStr;
+                        nqLabel.font = [UIFont systemFontOfSize: 12.0];
+                        nqLabel.textAlignment = NSTextAlignmentCenter;
+                        [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                        [nqLabel.layer setCornerRadius:3];
+                        [nqLabel.layer setBorderWidth:1];//设置边界的宽度
+                        [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                        [_popFootCellView addSubview:nqLabel];
+                        [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo (view3.mas_bottom).offset(0);
+                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
+                            make.width.mas_offset (@60);
+                            make.height.mas_offset(@21);
+                        }];
+                    }
+                }
+                
+            }
+         
+        }else if (WLBOOL == NO && NQBOOL == NO) {
+                UIView *view4 = [[UIView alloc]init];
+                view4.backgroundColor = [UIColor lightGrayColor];
+                [_popFootCellView addSubview:view4];
+                [view4 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(view1.mas_bottom).offset(0);
+                    make.centerX.mas_equalTo(view1.mas_centerX).offset(0);
+                    make.width.mas_offset(70);
+                    make.height.mas_offset(2);
+                }];
+                UIView *view5 = [[UIView alloc]init];
+                view5.backgroundColor = [UIColor lightGrayColor];
+                [_popFootCellView addSubview:view5];
+                [view5 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(view4.mas_bottom).offset(0);
+                    make.left.mas_equalTo(view4.mas_left).offset(0);
+                    make.width.mas_offset(2);
+                    make.height.mas_offset(10);
+                }];
+                UILabel *wlLabel = [[UILabel alloc]init];
+                wlLabel.text = _WLStr;
+                wlLabel.font = [UIFont systemFontOfSize: 12.0];
+                wlLabel.textAlignment = NSTextAlignmentCenter;
+                [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                [wlLabel.layer setCornerRadius:3];
+                [wlLabel.layer setBorderWidth:1];//设置边界的宽度
+                [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                [_popFootCellView addSubview:wlLabel];
+                [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo (view5.mas_bottom).offset(0);
+                    make.centerX.mas_equalTo(view5.mas_centerX).offset(0);
+                    make.width.mas_offset (@60);
+                    make.height.mas_offset(@21);
+                }];
+                UIView *view6 = [[UIView alloc]init];
+                view6.backgroundColor = [UIColor lightGrayColor];
+                [_popFootCellView addSubview:view6];
+                [view6 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(view4.mas_bottom).offset(0);
+                    make.right.mas_equalTo(view4.mas_right).offset(0);
+                    make.width.mas_offset(2);
+                    make.height.mas_offset(10);
+                }];
+                UILabel *nqLabel = [[UILabel alloc]init];
+                nqLabel.text = _NQStr;
+                nqLabel.font = [UIFont systemFontOfSize: 12.0];
+                nqLabel.textAlignment = NSTextAlignmentCenter;
+                [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                [nqLabel.layer setCornerRadius:3];
+                [nqLabel.layer setBorderWidth:1];//设置边界的宽度
+                [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                [_popFootCellView addSubview:nqLabel];
+                [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo (view6.mas_bottom).offset(0);
+                    make.centerX.mas_equalTo(view6.mas_centerX).offset(0);
+                    make.width.mas_offset (@60);
+                    make.height.mas_offset(@21);
+                }];
+                
+            }else if (WLBOOL == NO && NQBOOL == YES){
+                UILabel *wlLabel = [[UILabel alloc]init];
+                wlLabel.text = _WLStr;
+                wlLabel.font = [UIFont systemFontOfSize: 12.0];
+                wlLabel.textAlignment = NSTextAlignmentCenter;
+                [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                [wlLabel.layer setCornerRadius:3];
+                [wlLabel.layer setBorderWidth:1];//设置边界的宽度
+                [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                [_popFootCellView addSubview:wlLabel];
+                [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo (view1.mas_bottom).offset(0);
+                    make.centerX.mas_equalTo(view1.mas_centerX).offset(0);
+                    make.width.mas_offset (@60);
+                    make.height.mas_offset(@21);
+                }];
+                
+                
+            }else if (WLBOOL == YES && NQBOOL == NO){
+                UILabel *nqLabel = [[UILabel alloc]init];
+                nqLabel.text = _NQStr;
+                nqLabel.font = [UIFont systemFontOfSize: 12.0];
+                nqLabel.textAlignment = NSTextAlignmentCenter;
+                [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+                [nqLabel.layer setCornerRadius:3];
+                [nqLabel.layer setBorderWidth:1];//设置边界的宽度
+                [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+                [_popFootCellView addSubview:nqLabel];
+                [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo (view1.mas_bottom).offset(0);
+                    make.centerX.mas_equalTo(view1.mas_centerX).offset(0);
+                    make.width.mas_offset (@60);
+                    make.height.mas_offset(@21);
+                }];
+            }
+    }else{
+        [_popFootCellView removeFromSuperview];
+    }
+
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
