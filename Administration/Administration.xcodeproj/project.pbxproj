@@ -23,6 +23,7 @@
 		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
 		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
 		1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1241E617820000733F8 /* NSDictionary+DeleteNull.m */; };
+		1F35C1D71E7FC3D00041EF5A /* ContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F35C1D51E7FC3D00041EF5A /* ContactsController.m */; };
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
@@ -72,8 +73,6 @@
 		1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF311E5EE16C0000722A /* FMResultSet.m */; };
 		1F5B13321E6AB77D00B6D8DC /* xiugaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5B13311E6AB77D00B6D8DC /* xiugaiViewController.m */; };
 		1F5B13351E6ABEA800B6D8DC /* dongjieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */; };
-		1F6005851E7D158900B39497 /* YunChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6005831E7D158900B39497 /* YunChatListCell.m */; };
-		1F6005861E7D158900B39497 /* YunChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F6005841E7D158900B39497 /* YunChatListCell.xib */; };
 		1F6119EC1E665C620044641E /* PWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119EB1E665C620044641E /* PWAlertView.m */; };
 		1F6119F31E66BF2D0044641E /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6119EE1E66BF2D0044641E /* Arrow.png */; };
 		1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119F01E66BF2D0044641E /* YUFoldingSectionHeader.m */; };
@@ -201,6 +200,7 @@
 		1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FDE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m */; };
 		1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FE01E52F7CA005F53CE /* UIWebView+AFNetworking.m */; };
 		1F803FF31E52F848005F53CE /* ZXDNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FF21E52F848005F53CE /* ZXDNetworking.m */; };
+		1F806EA61E7F82CF00BF57EE /* RobotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F806EA51E7F82CF00BF57EE /* RobotManager.m */; };
 		1FB0BF771E6FD7E0001CCFAA /* AddBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0BF761E6FD7E0001CCFAA /* AddBrandViewController.m */; };
 		1FDCBAA41E7A1E2A002C80FB /* seach.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA31E7A1E2A002C80FB /* seach.png */; };
 		1FDCBAA61E7A3247002C80FB /* tjtx_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA51E7A3247002C80FB /* tjtx_mt.png */; };
@@ -407,7 +407,6 @@
 		62656C671E52A0990085A2BD /* BaiduMapAPI_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62656C611E52A0980085A2BD /* BaiduMapAPI_Map.framework */; };
 		62656C681E52A0990085A2BD /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62656C631E52A0980085A2BD /* libcrypto.a */; };
 		62656C691E52A0990085A2BD /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62656C641E52A0980085A2BD /* libssl.a */; };
-		62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656CE51E52AB2E0085A2BD /* ContactsController.m */; };
 		62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656CE81E52AB490085A2BD /* IntercalateController.m */; };
 		62656CF51E52AF720085A2BD /* XCQ_tabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656CF21E52AF720085A2BD /* XCQ_tabbar.m */; };
 		62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62656CF41E52AF720085A2BD /* XCQ_tabbarViewController.m */; };
@@ -555,6 +554,8 @@
 		1F33F11E1E613875000733F8 /* AlertViewExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewExtension.m; sourceTree = "<group>"; };
 		1F33F1231E617820000733F8 /* NSDictionary+DeleteNull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DeleteNull.h"; sourceTree = "<group>"; };
 		1F33F1241E617820000733F8 /* NSDictionary+DeleteNull.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DeleteNull.m"; sourceTree = "<group>"; };
+		1F35C1D51E7FC3D00041EF5A /* ContactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsController.m; sourceTree = "<group>"; };
+		1F35C1D61E7FC3D00041EF5A /* ContactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsController.h; sourceTree = "<group>"; };
 		1F37861A1E5AE34400CAD616 /* mesgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesgeModel.h; sourceTree = "<group>"; };
 		1F37861B1E5AE34400CAD616 /* mesgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesgeModel.m; sourceTree = "<group>"; };
 		1F3E7BC21E5BD6B1005E5A45 /* GongModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GongModel.h; sourceTree = "<group>"; };
@@ -630,9 +631,6 @@
 		1F5B13311E6AB77D00B6D8DC /* xiugaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xiugaiViewController.m; sourceTree = "<group>"; };
 		1F5B13331E6ABEA800B6D8DC /* dongjieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dongjieViewController.h; sourceTree = "<group>"; };
 		1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dongjieViewController.m; sourceTree = "<group>"; };
-		1F6005821E7D158900B39497 /* YunChatListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChatListCell.h; sourceTree = "<group>"; };
-		1F6005831E7D158900B39497 /* YunChatListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChatListCell.m; sourceTree = "<group>"; };
-		1F6005841E7D158900B39497 /* YunChatListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YunChatListCell.xib; sourceTree = "<group>"; };
 		1F6119EA1E665C620044641E /* PWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWAlertView.h; sourceTree = "<group>"; };
 		1F6119EB1E665C620044641E /* PWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWAlertView.m; sourceTree = "<group>"; };
 		1F6119EE1E66BF2D0044641E /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
@@ -799,6 +797,8 @@
 		1F803FE01E52F7CA005F53CE /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		1F803FF11E52F848005F53CE /* ZXDNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDNetworking.h; sourceTree = "<group>"; };
 		1F803FF21E52F848005F53CE /* ZXDNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDNetworking.m; sourceTree = "<group>"; };
+		1F806EA41E7F82CF00BF57EE /* RobotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotManager.h; sourceTree = "<group>"; };
+		1F806EA51E7F82CF00BF57EE /* RobotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobotManager.m; sourceTree = "<group>"; };
 		1FB0BF751E6FD7E0001CCFAA /* AddBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBrandViewController.h; sourceTree = "<group>"; };
 		1FB0BF761E6FD7E0001CCFAA /* AddBrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBrandViewController.m; sourceTree = "<group>"; };
 		1FDCBAA31E7A1E2A002C80FB /* seach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seach.png; sourceTree = "<group>"; };
@@ -1210,8 +1210,6 @@
 		62656C631E52A0980085A2BD /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		62656C641E52A0980085A2BD /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		62656C6A1E52A4480085A2BD /* Administration_PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Administration_PrefixHeader.pch; sourceTree = "<group>"; };
-		62656CE41E52AB2E0085A2BD /* ContactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsController.h; sourceTree = "<group>"; };
-		62656CE51E52AB2E0085A2BD /* ContactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsController.m; sourceTree = "<group>"; };
 		62656CE71E52AB490085A2BD /* IntercalateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntercalateController.h; sourceTree = "<group>"; };
 		62656CE81E52AB490085A2BD /* IntercalateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntercalateController.m; sourceTree = "<group>"; };
 		62656CF11E52AF720085A2BD /* XCQ_tabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCQ_tabbar.h; sourceTree = "<group>"; };
@@ -1503,9 +1501,6 @@
 		1F60057C1E7D151600B39497 /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				1F6005821E7D158900B39497 /* YunChatListCell.h */,
-				1F6005831E7D158900B39497 /* YunChatListCell.m */,
-				1F6005841E7D158900B39497 /* YunChatListCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1817,6 +1812,15 @@
 				1F803FF21E52F848005F53CE /* ZXDNetworking.m */,
 			);
 			path = ZXDNetworking;
+			sourceTree = "<group>";
+		};
+		1F806E9D1E7F822800BF57EE /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				1F806EA41E7F82CF00BF57EE /* RobotManager.h */,
+				1F806EA51E7F82CF00BF57EE /* RobotManager.m */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		1FDCBC691E7A7D57002C80FB /* IM_sdk */ = {
@@ -2585,8 +2589,8 @@
 		6218D0901E4E9AE200299989 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				62656CE41E52AB2E0085A2BD /* ContactsController.h */,
-				62656CE51E52AB2E0085A2BD /* ContactsController.m */,
+				1F35C1D61E7FC3D00041EF5A /* ContactsController.h */,
+				1F35C1D51E7FC3D00041EF5A /* ContactsController.m */,
 				1F52081C1E5579E7001DE4C2 /* ZJLXRTableViewCell.h */,
 				1F52081D1E5579E7001DE4C2 /* ZJLXRTableViewCell.m */,
 				1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */,
@@ -2615,6 +2619,7 @@
 		6218D0931E4EB9B900299989 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				1F806E9D1E7F822800BF57EE /* Core Data */,
 				1F625B741E7BB41100AFBAD1 /* ChatView */,
 				1F625B771E7BB41100AFBAD1 /* Resource */,
 				1FDCBC691E7A7D57002C80FB /* IM_sdk */,
@@ -3401,7 +3406,6 @@
 				1F625C1C1E7BB41100AFBAD1 /* messageVideo@2x.png in Resources */,
 				1F625BDE1E7BB41100AFBAD1 /* chat_receiver_bg@2x.png in Resources */,
 				1F625BF61E7BB41100AFBAD1 /* faceDelete@2x.png in Resources */,
-				1F6005861E7D158900B39497 /* YunChatListCell.xib in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
 				1FDCC3491E7A93DA002C80FB /* MJRefresh.bundle in Resources */,
@@ -3736,7 +3740,6 @@
 				1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */,
 				625355771E67AF8F0041F123 /* CityChoose.m in Sources */,
 				1FDCC29B1E7A8F2F002C80FB /* MWTapDetectingView.m in Sources */,
-				1F6005851E7D158900B39497 /* YunChatListCell.m in Sources */,
 				1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */,
 				1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */,
 				62EBA2501E56CB4900F657DB /* SecurityViewController.m in Sources */,
@@ -3775,10 +3778,10 @@
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				1FDCC2AF1E7A8F2F002C80FB /* PSTCollectionView.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
+				1F806EA61E7F82CF00BF57EE /* RobotManager.m in Sources */,
 				1FDCC2B81E7A8F2F002C80FB /* PSTGridLayoutItem.m in Sources */,
 				1FDCC3431E7A93DA002C80FB /* MJRefreshBackGifFooter.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
-				62656CE61E52AB2E0085A2BD /* ContactsController.m in Sources */,
 				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
@@ -3817,6 +3820,7 @@
 				1FDCC34A1E7A93DA002C80FB /* MJRefreshConst.m in Sources */,
 				6226E6641E778CB600767EBD /* SetPositionViewController.m in Sources */,
 				62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */,
+				1F35C1D71E7FC3D00041EF5A /* ContactsController.m in Sources */,
 				1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */,
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,
 				1FDCC2A81E7A8F2F002C80FB /* UIImage+EMGIF.m in Sources */,
@@ -4014,12 +4018,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Administration/Find/BaiduMap_IOSSDK_v3.2.1_Lib",
-
 					"$(PROJECT_DIR)/Administration/Find/IM/HyphenateSDK",
-
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/HyphenateSDK",
-
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
@@ -4030,13 +4031,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Administration/Find/BaiduMap_IOSSDK_v3.2.1_Lib/thirdlibs",
-
 					"$(PROJECT_DIR)/Administration/Find/IM/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
-
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
-
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.Administration;
@@ -4054,12 +4052,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Administration/Find/BaiduMap_IOSSDK_v3.2.1_Lib",
-
 					"$(PROJECT_DIR)/Administration/Find/IM/HyphenateSDK",
-
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/HyphenateSDK",
-
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
@@ -4070,13 +4065,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Administration/Find/BaiduMap_IOSSDK_v3.2.1_Lib/thirdlibs",
-
 					"$(PROJECT_DIR)/Administration/Find/IM/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
-
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
-
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.Administration;

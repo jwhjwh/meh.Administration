@@ -29,7 +29,24 @@
 @end
 
 @implementation ChatViewController
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=YES;
+    if (self.conversation.type == EMConversationTypeGroupChat) {
+        if ([[self.conversation.ext objectForKey:@"subject"] length])
+        {
+            self.title = [self.conversation.ext objectForKey:@"subject"];
+        }
+    }
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //移除消息回调
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+   
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -57,8 +74,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
     
-    //通过会话管理者获取已收发消息
-    [self tableViewDidTriggerHeaderRefresh];
+    //通过会话管理者获取已收发消息只有单聊打开注释
+//    [self tableViewDidTriggerHeaderRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,16 +104,7 @@
     [[EMClient sharedClient] removeDelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (self.conversation.type == EMConversationTypeGroupChat) {
-        if ([[self.conversation.ext objectForKey:@"subject"] length])
-        {
-            self.title = [self.conversation.ext objectForKey:@"subject"];
-        }
-    }
-}
+
 
 #pragma mark - setup subviews
 
@@ -192,7 +200,7 @@
         model.avatarURLPath = model.message.ext[@"avatar"];
         //NSLog(@"+++++++______+++%@",model.avatarURLPath);
         //昵称
-        model.nickname = model.message.ext[@"nick"];
+        model.nickname = self.title;
         //头像占位图
         model.failImageName = @"sunlei.jpg";
         
