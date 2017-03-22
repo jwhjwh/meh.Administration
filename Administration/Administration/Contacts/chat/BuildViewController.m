@@ -8,10 +8,11 @@
 
 #import "BuildViewController.h"
 #import "AddmemberController.h"
-@interface BuildViewController ()<UITextFieldDelegate>
+#import "ZXYAlertView.h"
+@interface BuildViewController ()<UITextFieldDelegate,ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong,nonatomic) UIImageView *HeadView;//头像
-
+@property (nonatomic, strong)UIImage *goodPicture;
 @end
 
 @implementation BuildViewController
@@ -31,7 +32,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItem)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];  
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
     _HeadView = [[UIImageView alloc]init];
@@ -81,7 +82,33 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
+-(void)SpositionTap:(UITapGestureRecognizer*)sender{
+    ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
+    alert.title = @"请选择照片";
+    alert.buttonArray = @[@"相机",@"相册"];
+    alert.delegate = self;
+    [alert show];
+}
+- (void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex==0) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }else{
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _HeadView.image=self.goodPicture;
+}
 @end

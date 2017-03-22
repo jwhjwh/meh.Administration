@@ -380,7 +380,7 @@
 {
     if (self.tableView.contentSize.height > self.tableView.frame.size.height)
     {
-        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height+49 - self.tableView.frame.size.height);
         [self.tableView setContentOffset:offset animated:animated];
     }
 }

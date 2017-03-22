@@ -32,7 +32,7 @@
     imageView.badgeBackgroudColor = [UIColor redColor];
     imageView.badgeTextColor = [UIColor whiteColor];
     imageView.badgeFont = [UIFont boldSystemFontOfSize:11];
-    imageView.imageCornerRadius = 0;
+    imageView.imageCornerRadius = 20;
     imageView.badgeSize = 20;
 }
 

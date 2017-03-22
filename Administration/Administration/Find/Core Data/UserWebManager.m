@@ -81,7 +81,7 @@
  *保存用户信息（如果已存在，则更新）
  *userId: 用户环信id
  *imgUrl：用户头像链接（完整路径）
- *nickName: 用户昵称
+ *nickName: 用户昵称  
  */
 +(void)saveInfo:(NSString*)userId
          imgUrl:(NSString*)imgUrl
@@ -97,7 +97,7 @@
         }
         user.nickName = nickName;
         user.avatarUrl = imgUrl;
-        [user saveEventually];// 如果用户目前尚未接入网络，saveEventually会缓存设备中的数据，并在网络连接恢复后上传
+        [user saveEventually];//如果用户目前尚未接入网络，saveEventually会缓存设备中的数据，并在网络连接恢复后上传
     }];
     
 #if DEBUG

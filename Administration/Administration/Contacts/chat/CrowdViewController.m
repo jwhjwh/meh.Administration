@@ -8,6 +8,7 @@
 
 #import "CrowdViewController.h"
 
+#import "ChatViewController.h"
 @interface CrowdViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 /** tableView */
@@ -38,10 +39,18 @@
     tableView.dataSource = self;
     [self.view addSubview:tableView];
     self.tableView = tableView;
-    // 获取群列表
+    
+    //去除多余的cell线
+    [ZXDNetworking setExtraCellLineHidden:self.tableView];
+    [[EMClient sharedClient].groupManager removeDelegate:self];
+    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
+    
+    [self reloadDataSource];
+    // 获取群列表·
     NSArray *array = [[EMClient sharedClient].groupManager getJoinedGroups];
     self.groupArr = [NSMutableArray arrayWithArray:array];
     if (self.groupArr.count == 0) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         // 从服务器获取群列表
         __weak typeof(self) weakself = self;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -49,6 +58,7 @@
             NSArray *groups = [[EMClient sharedClient].groupManager getMyGroupsFromServerWithError:&error];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (!error) {
+                    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
                     [weakself.groupArr removeAllObjects];
                     [weakself.groupArr addObjectsFromArray:groups];
                     [weakself.tableView reloadData];
@@ -57,6 +67,24 @@
         });
     }
 
+    
+}
+- (void)reloadDataSource
+{
+    [self.groupArr removeAllObjects];
+    
+    NSArray *rooms = [[EMClient sharedClient].groupManager getJoinedGroups];
+    [self.groupArr addObjectsFromArray:rooms];
+    
+    [self.tableView reloadData];
+}
+#pragma mark - EMGroupManagerDelegate
+
+- (void)didUpdateGroupList:(NSArray *)groupList
+{
+    [self.groupArr removeAllObjects];
+    [self.groupArr addObjectsFromArray:groupList];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -69,15 +97,34 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     EMGroup *group = self.groupArr[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", group.groupId];
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", group.subject];
+    cell.imageView.image=[UIImage imageNamed:@"banben100"];
+    //2、调整大小
+    CGSize itemSize = CGSizeMake(40, 40);
+    UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
+    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+    [cell.imageView.image drawInRect:imageRect];
+    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    cell.imageView.layer.masksToBounds = YES;
+    // 设置圆角半径
+    cell.imageView.layer.cornerRadius =20.0f;
     return cell;
 }
-
+//设置分区的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //设置cell选中的效果
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    EMGroup *group = [self.groupArr objectAtIndex:indexPath.row];
+    ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:group.groupId conversationType:EMConversationTypeGroupChat];
     
-    
+    chatController.title = group.subject;
+    [self.navigationController pushViewController:chatController animated:YES];
 }
 
 - (void)dealloc {

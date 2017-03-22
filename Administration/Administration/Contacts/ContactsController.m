@@ -58,7 +58,9 @@
     [[EMClient sharedClient].chatManager removeDelegate:self];
     [[EMClient sharedClient].groupManager removeDelegate:self];
 }
-
+- (void)dealloc{
+    [self unregisterNotifications];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
@@ -91,21 +93,6 @@
         make.top.mas_equalTo(self.view.mas_top).offset(70);
         make.height.mas_equalTo(40);
     }];
-//    //各部门按钮
-//    for (int i = 0 ; i < 4; i++) {
-//        NSInteger index = i % 4;
-//        NSInteger page = i / 4;
-//        UIButton *aBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//        aBt.adjustsImageWhenHighlighted = NO;
-//        aBt.backgroundColor = [UIColor clearColor];
-//        aBt.frame = CGRectMake(index * (Scree_width/4)+Height_Space, page  * (Button_Height + Height_Space)+Start_Y+70, Button_Width, Button_Height);
-//
-//        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Contact%d",i]];
-//        [aBt setBackgroundImage:image forState:UIControlStateNormal];
-//        aBt.tag= i;
-//        [aBt addTarget:self action:@selector(TouchAbt:) forControlEvents:UIControlEventTouchUpInside];
-//        [self.view addSubview:aBt];
-//    }
     //分割线
     _view1 = [[UIView alloc]init];
     _view1.backgroundColor = [UIColor RGBview];
@@ -187,12 +174,7 @@
 
 }
 
-#pragma mark - EMGroupManagerDelegate
 
-- (void)didUpdateGroupList:(NSArray *)groupList
-{
-    [self tableViewDidTriggerHeaderRefresh];
-}
 -(void)Touchsearch{
     //SearchViewController
     SearchViewController *SearchVC = [[SearchViewController alloc]init];
@@ -257,7 +239,7 @@
     }
     
     id<IConversationModel> model = [self.dataArray objectAtIndex:indexPath.row];
-    cell.model = model;
+       cell.model = model;
     
   
         NSMutableAttributedString *attributedText = [[self latestMessageTitleForConversationModel:model] mutableCopy];
@@ -490,9 +472,7 @@
     
     return _dataArray;
 }
-- (void)dealloc{
-    [self unregisterNotifications];
-}
+
 -(NSAttributedString *)latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel{
     NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:@""];
     EMMessage *lastMessage = [conversationModel.conversation latestMessage];
@@ -574,21 +554,37 @@
 
 - (id<IConversationModel>)modelForConversation:(EMConversation *)conversation
 {
+    
     EaseConversationModel *model = [[EaseConversationModel alloc] initWithConversation:conversation];
-     UserCacheInfo * userInfo = [UserCacheManager getById:conversation.conversationId];
     if (model.conversation.type == EMConversationTypeChat) {
-        
-       
-        if (userInfo) {
-            model.avatarURLPath = userInfo.AvatarUrl;
-            model.title = userInfo.NickName;
+        if ([[RobotManager sharedInstance] isRobotWithUsername:conversation.conversationId]) {
+            model.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
+        } else {
+            UserCacheInfo *user = [UserCacheManager getById:conversation.conversationId];
+            if (user) {
+                model.title= user.NickName;
+                model.avatarURLPath = user.AvatarUrl;
+            }
         }
-        
     } else if (model.conversation.type == EMConversationTypeGroupChat) {
-        if (userInfo) {
-            model.avatarURLPath = userInfo.AvatarUrl;
-            model.title = userInfo.NickName;
+        NSString *imageName = @"tx23";
+        if (![conversation.ext objectForKey:@"subject"])
+        {
+            NSArray *groupArray = [[EMClient sharedClient].groupManager getJoinedGroups];
+            for (EMGroup *group in groupArray) {
+                if ([group.groupId isEqualToString:conversation.conversationId]) {
+                    NSMutableDictionary *ext = [NSMutableDictionary dictionaryWithDictionary:conversation.ext];
+                    [ext setObject:group.subject forKey:@"subject"];
+                    [ext setObject:[NSNumber numberWithBool:group.isPublic] forKey:@"isPublic"];
+                    conversation.ext = ext;
+                    break;
+                }
+            }
         }
+        NSDictionary *ext = conversation.ext;
+        model.title = [ext objectForKey:@"subject"];
+        imageName = [[ext objectForKey:@"isPublic"] boolValue] ? @"tx23" : @"tx23";
+        model.avatarImage = [UIImage imageNamed:imageName];
     }
     return model;
 }
@@ -602,12 +598,9 @@
                 chatController.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
                 [self.navigationController pushViewController:chatController animated:YES];
             } else {
-                UIViewController *chatController = nil;
-#ifdef REDPACKET_AVALABLE
-                chatController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
-#else
-                chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
-#endif
+            
+              ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
+
                 chatController.title = conversationModel.title;
                 [self.navigationController pushViewController:chatController animated:YES];
             }
@@ -623,5 +616,11 @@
    
     [self tableViewDidTriggerHeaderRefresh];
     
+}
+#pragma mark - EMGroupManagerDelegate
+
+- (void)didUpdateGroupList:(NSArray *)groupList
+{
+    [self tableViewDidTriggerHeaderRefresh];
 }
 @end

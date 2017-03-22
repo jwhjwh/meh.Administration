@@ -110,19 +110,18 @@
 
 - (void)_setupBarButtonItem
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [self.navigationItem setLeftBarButtonItem:backItem];
-    
+ 
+      UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      backButton.frame =CGRectMake(0, 0, 28,28);
+      [backButton setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+      [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+      UIBarButtonItem *backItem=[[UIBarButtonItem alloc]initWithCustomView:backButton];
+      self.navigationItem.leftBarButtonItem=backItem;
     //单聊
     if (self.conversation.type == EMConversationTypeChat) {
         UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
-        //删除按钮
-//        [clearButton addTarget:self action:@selector(deleteAllMessages:) forControlEvents:UIControlEventTouchUpInside];
-//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
+
     }
     else{//群聊
         UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
@@ -138,7 +137,7 @@
 {
     if (alertView.cancelButtonIndex != buttonIndex) {
         self.messageTimeIntervalTag = -1;
-        [self.conversation deleteAllMessages];
+        [self.conversation deleteAllMessages:nil];
         [self.dataArray removeAllObjects];
         [self.messsagesSource removeAllObjects];
         
@@ -287,7 +286,6 @@
             [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
         }
     }
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -295,8 +293,8 @@
 {
     [self.view endEditing:YES];
     if (self.conversation.type == EMConversationTypeGroupChat) {
-      //  ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroupId:self.conversation.conversationId];
-      //  [self.navigationController pushViewController:detailController animated:YES];
+//        ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroupId:self.conversation.conversationId];
+//        [self.navigationController pushViewController:detailController animated:YES];
     }
     else if (self.conversation.type == EMConversationTypeChatRoom)
     {
@@ -304,32 +302,7 @@
       //  [self.navigationController pushViewController:detailController animated:YES];
     }
 }
-//单聊删除按钮
-//- (void)deleteAllMessages:(id)sender
-//{
-//    if (self.dataArray.count == 0) {
-//        [self showHint:NSLocalizedString(@"message.noMessage", @"no messages")];
-//        return;
-//    }
-//    
-//    if ([sender isKindOfClass:[NSNotification class]]) {
-//        NSString *groupId = (NSString *)[(NSNotification *)sender object];
-//        BOOL isDelete = [groupId isEqualToString:self.conversation.conversationId];
-//        if (self.conversation.type != EMConversationTypeChat && isDelete) {
-//            self.messageTimeIntervalTag = -1;
-//            [self.conversation deleteAllMessages];
-//            [self.messsagesSource removeAllObjects];
-//            [self.dataArray removeAllObjects];
-//            
-//            [self.tableView reloadData];
-//            [self showHint:NSLocalizedString(@"message.noMessage", @"no messages")];
-//        }
-//    }
-//    else if ([sender isKindOfClass:[UIButton class]]){
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"sureToDelete", @"please make sure to delete") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
-//        [alertView show];
-//    }
-//}
+
 
 - (void)transpondMenuAction:(id)sender
 {
@@ -361,7 +334,7 @@
         NSMutableIndexSet *indexs = [NSMutableIndexSet indexSetWithIndex:self.menuIndexPath.row];
         NSMutableArray *indexPaths = [NSMutableArray arrayWithObjects:self.menuIndexPath, nil];
         
-        [self.conversation deleteMessageWithId:model.message.messageId];
+        [self.conversation deleteMessageWithId:model.message.messageId error:nil];
         [self.messsagesSource removeObject:model.message];
         
         if (self.menuIndexPath.row - 1 >= 0) {
@@ -450,5 +423,5 @@
     [self.menuController setTargetRect:showInView.frame inView:showInView.superview];
     [self.menuController setMenuVisible:YES animated:YES];
 }
- 
+
 @end

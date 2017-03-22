@@ -170,6 +170,7 @@
 		1F625C2F1E7BB41100AFBAD1 /* VoiceSearchFeedback019@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F625BD31E7BB41100AFBAD1 /* VoiceSearchFeedback019@2x.png */; };
 		1F625C301E7BB41100AFBAD1 /* VoiceSearchFeedback020@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F625BD41E7BB41100AFBAD1 /* VoiceSearchFeedback020@2x.png */; };
 		1F625C311E7BB41100AFBAD1 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F625BD51E7BB41100AFBAD1 /* user@2x.png */; };
+		1F672ED11E82384300856A9C /* CrowdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F672ED01E82384300856A9C /* CrowdViewController.m */; };
 		1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6833B41E724FF000F74D50 /* UITableView+WFEmpty.m */; };
 		1F6833B81E724FF000F74D50 /* WFEmptyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6833B61E724FF000F74D50 /* WFEmptyTableView.m */; };
 		1F6833BC1E72966700F74D50 /* businessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6833BB1E72966700F74D50 /* businessViewController.m */; };
@@ -210,7 +211,6 @@
 		1FDCBAA61E7A3247002C80FB /* tjtx_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA51E7A3247002C80FB /* tjtx_mt.png */; };
 		1FDCBAA91E7A3A9A002C80FB /* ChatgrouController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA81E7A3A9A002C80FB /* ChatgrouController.m */; };
 		1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDCBAAB1E7A3E16002C80FB /* GroupdetailController.m */; };
-		1FDCBAAF1E7A438B002C80FB /* CrowdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDCBAAE1E7A438B002C80FB /* CrowdViewController.m */; };
 		1FDCBAB51E7A6167002C80FB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCBAB41E7A6167002C80FB /* CoreMedia.framework */; };
 		1FDCBAB71E7A6177002C80FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCBAB61E7A6177002C80FB /* AudioToolbox.framework */; };
 		1FDCBAB91E7A6184002C80FB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCBAB81E7A6184002C80FB /* AVFoundation.framework */; };
@@ -740,6 +740,8 @@
 		1F625BD61E7BB41100AFBAD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1F625BD71E7BB41100AFBAD1 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1F625C331E7BB4E800AFBAD1 /* EaseUI-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseUI-Prefix.pch"; sourceTree = "<group>"; };
+		1F672ECE1E82372F00856A9C /* CrowdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrowdViewController.h; sourceTree = "<group>"; };
+		1F672ED01E82384300856A9C /* CrowdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrowdViewController.m; sourceTree = "<group>"; };
 		1F6833B21E724FF000F74D50 /* Const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
 		1F6833B31E724FF000F74D50 /* UITableView+WFEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+WFEmpty.h"; sourceTree = "<group>"; };
 		1F6833B41E724FF000F74D50 /* UITableView+WFEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+WFEmpty.m"; sourceTree = "<group>"; };
@@ -817,8 +819,6 @@
 		1FDCBAA81E7A3A9A002C80FB /* ChatgrouController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatgrouController.m; sourceTree = "<group>"; };
 		1FDCBAAA1E7A3E16002C80FB /* GroupdetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupdetailController.h; sourceTree = "<group>"; };
 		1FDCBAAB1E7A3E16002C80FB /* GroupdetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupdetailController.m; sourceTree = "<group>"; };
-		1FDCBAAD1E7A438B002C80FB /* CrowdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrowdViewController.h; sourceTree = "<group>"; };
-		1FDCBAAE1E7A438B002C80FB /* CrowdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrowdViewController.m; sourceTree = "<group>"; };
 		1FDCBAB41E7A6167002C80FB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		1FDCBAB61E7A6177002C80FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1FDCBAB81E7A6184002C80FB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1746,8 +1746,8 @@
 			children = (
 				1F767DD01E7924DA00305401 /* BuildViewController.h */,
 				1F767DD11E7924DA00305401 /* BuildViewController.m */,
-				1FDCBAAD1E7A438B002C80FB /* CrowdViewController.h */,
-				1FDCBAAE1E7A438B002C80FB /* CrowdViewController.m */,
+				1F672ECE1E82372F00856A9C /* CrowdViewController.h */,
+				1F672ED01E82384300856A9C /* CrowdViewController.m */,
 				1F767DD31E79299600305401 /* AddmemberController.h */,
 				1F767DD41E79299600305401 /* AddmemberController.m */,
 				1FDCBAA71E7A3A9A002C80FB /* ChatgrouController.h */,
@@ -3663,6 +3663,7 @@
 				1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */,
 				1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */,
 				1FDCC2BC1E7A8F2F002C80FB /* EaseSDKHelper.m in Sources */,
+				1F672ED11E82384300856A9C /* CrowdViewController.m in Sources */,
 				1FDCC2C81E7A8F2F002C80FB /* EaseEmoji.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
 				1FDCC2DA1E7A8F2F002C80FB /* EaseBubbleView+Image.m in Sources */,
@@ -3814,7 +3815,6 @@
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
-				1FDCBAAF1E7A438B002C80FB /* CrowdViewController.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				1FDCC2DB1E7A8F2F002C80FB /* EaseBubbleView+Location.m in Sources */,
 				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
