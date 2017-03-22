@@ -58,6 +58,10 @@
 		1F52C38D1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C38C1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework */; };
 		1F52C3971E67F19900AF6180 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */; };
 		1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.mm */; };
+		1F5363D01E81020000538B68 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5363CF1E81020000538B68 /* libicucore.tbd */; };
+		1F5363D61E81031B00538B68 /* UserWebManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5363D51E81031B00538B68 /* UserWebManager.m */; };
+		1F5363DA1E810B9700538B68 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5363D91E810B9700538B68 /* AVOSCloud.framework */; };
+		1F5363DD1E810D5E00538B68 /* UserCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5363DC1E810D5E00538B68 /* UserCacheManager.m */; };
 		1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5745641E56C6A400E4A47C /* ZxdObject.m */; };
 		1F5745671E56F45400E4A47C /* tx100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745661E56F45400E4A47C /* tx100.png */; };
 		1F5745691E56F45A00E4A47C /* tx23.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745681E56F45A00E4A47C /* tx23.png */; };
@@ -605,6 +609,12 @@
 		1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
 		1F52C3981E6810F800AF6180 /* PerLomapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerLomapController.h; sourceTree = "<group>"; };
 		1F52C3991E6810F800AF6180 /* PerLomapController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PerLomapController.mm; sourceTree = "<group>"; };
+		1F5363CF1E81020000538B68 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		1F5363D41E81031B00538B68 /* UserWebManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserWebManager.h; sourceTree = "<group>"; };
+		1F5363D51E81031B00538B68 /* UserWebManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserWebManager.m; sourceTree = "<group>"; };
+		1F5363D91E810B9700538B68 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
+		1F5363DB1E810D5E00538B68 /* UserCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCacheManager.h; sourceTree = "<group>"; };
+		1F5363DC1E810D5E00538B68 /* UserCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCacheManager.m; sourceTree = "<group>"; };
 		1F5745631E56C6A400E4A47C /* ZxdObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZxdObject.h; sourceTree = "<group>"; };
 		1F5745641E56C6A400E4A47C /* ZxdObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZxdObject.m; sourceTree = "<group>"; };
 		1F5745661E56F45400E4A47C /* tx100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tx100.png; sourceTree = "<group>"; };
@@ -1330,8 +1340,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5363D01E81020000538B68 /* libicucore.tbd in Frameworks */,
 				1FDCBFAA1E7A8104002C80FB /* UIKit.framework in Frameworks */,
 				1FDCBAC31E7A6A22002C80FB /* libiconv.tbd in Frameworks */,
+				1F5363DA1E810B9700538B68 /* AVOSCloud.framework in Frameworks */,
 				1FDCBAC11E7A685E002C80FB /* libz.tbd in Frameworks */,
 				1FDCBABF1E7A684D002C80FB /* libc++.tbd in Frameworks */,
 				1FDCBABD1E7A61A4002C80FB /* ImageIO.framework in Frameworks */,
@@ -1453,10 +1465,12 @@
 		1F59AF231E5EDA6A0000722A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F5363CF1E81020000538B68 /* libicucore.tbd */,
 				1FDCBFA91E7A8104002C80FB /* UIKit.framework */,
 				1FDCBAC21E7A6A22002C80FB /* libiconv.tbd */,
 				1FDCBAC01E7A685E002C80FB /* libz.tbd */,
 				1FDCBABE1E7A684D002C80FB /* libc++.tbd */,
+				1F5363D91E810B9700538B68 /* AVOSCloud.framework */,
 				1FDCBABC1E7A61A4002C80FB /* ImageIO.framework */,
 				1FDCBABA1E7A6193002C80FB /* MobileCoreServices.framework */,
 				1FDCBAB81E7A6184002C80FB /* AVFoundation.framework */,
@@ -1544,7 +1558,8 @@
 				1F625BC01E7BB41100AFBAD1 /* recordView */,
 				1F625BD51E7BB41100AFBAD1 /* user@2x.png */,
 			);
-			path = Resource;
+			name = Resource;
+			path = ../Resource;
 			sourceTree = "<group>";
 		};
 		1F625B791E7BB41100AFBAD1 /* audio */ = {
@@ -1817,6 +1832,10 @@
 		1F806E9D1E7F822800BF57EE /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				1F5363DB1E810D5E00538B68 /* UserCacheManager.h */,
+				1F5363DC1E810D5E00538B68 /* UserCacheManager.m */,
+				1F5363D41E81031B00538B68 /* UserWebManager.h */,
+				1F5363D51E81031B00538B68 /* UserWebManager.m */,
 				1F806EA41E7F82CF00BF57EE /* RobotManager.h */,
 				1F806EA51E7F82CF00BF57EE /* RobotManager.m */,
 			);
@@ -1826,6 +1845,7 @@
 		1FDCBC691E7A7D57002C80FB /* IM_sdk */ = {
 			isa = PBXGroup;
 			children = (
+				1F625B771E7BB41100AFBAD1 /* Resource */,
 				1FDCC14C1E7A8F2F002C80FB /* EaseUI */,
 				1FDCC0D21E7A8596002C80FB /* HyphenateSDK */,
 			);
@@ -2621,7 +2641,6 @@
 			children = (
 				1F806E9D1E7F822800BF57EE /* Core Data */,
 				1F625B741E7BB41100AFBAD1 /* ChatView */,
-				1F625B771E7BB41100AFBAD1 /* Resource */,
 				1FDCBC691E7A7D57002C80FB /* IM_sdk */,
 				6226E65D1E77773400767EBD /* Utils */,
 				1FDD3C741E73F4F500743779 /* IPickerView */,
@@ -3659,6 +3678,7 @@
 				1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */,
 				1FDCC27D1E7A8F2F002C80FB /* EMVoiceConverter.mm in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
+				1F5363DD1E810D5E00538B68 /* UserCacheManager.m in Sources */,
 				1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				1FDCC33E1E7A93DA002C80FB /* MJRefreshFooter.m in Sources */,
@@ -3776,6 +3796,7 @@
 				1FDCC27B1E7A8F2F002C80FB /* amrFileCodec.mm in Sources */,
 				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
+				1F5363D61E81031B00538B68 /* UserWebManager.m in Sources */,
 				1FDCC2AF1E7A8F2F002C80FB /* PSTCollectionView.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				1F806EA61E7F82CF00BF57EE /* RobotManager.m in Sources */,
@@ -4021,6 +4042,9 @@
 					"$(PROJECT_DIR)/Administration/Find/IM/HyphenateSDK",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/HyphenateSDK",
+					"$(PROJECT_DIR)/Administration/Find/AVCloud",
+					"$(PROJECT_DIR)/Administration/Find",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
@@ -4055,6 +4079,9 @@
 					"$(PROJECT_DIR)/Administration/Find/IM/HyphenateSDK",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/HyphenateSDK",
+					"$(PROJECT_DIR)/Administration/Find/AVCloud",
+					"$(PROJECT_DIR)/Administration/Find",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";

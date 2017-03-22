@@ -383,22 +383,6 @@
     }
 }
 
-- (void)setShowRefreshFooter:(BOOL)showRefreshFooter
-{
-    if (_showRefreshFooter != showRefreshFooter) {
-        _showRefreshFooter = showRefreshFooter;
-        if (_showRefreshFooter) {
-            __weak EaseRefreshTableViewController *weakSelf = self;
-            self.ZJLXTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-                [weakSelf tableViewDidTriggerFooterRefresh];
-            }];
-            self.ZJLXTable.mj_footer.accessibilityIdentifier = @"refresh_footer";
-        }
-        else{
-            [self.ZJLXTable setMj_footer:nil];
-        }
-    }
-}
 
 - (void)setShowTableBlankView:(BOOL)showTableBlankView
 {
@@ -591,29 +575,20 @@
 - (id<IConversationModel>)modelForConversation:(EMConversation *)conversation
 {
     EaseConversationModel *model = [[EaseConversationModel alloc] initWithConversation:conversation];
+     UserCacheInfo * userInfo = [UserCacheManager getById:conversation.conversationId];
     if (model.conversation.type == EMConversationTypeChat) {
-      
-    model.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
+        
        
-    } else if (model.conversation.type == EMConversationTypeGroupChat) {
-        NSString *imageName = @"groupPublicHeader";
-        if (![conversation.ext objectForKey:@"subject"])
-        {
-            NSArray *groupArray = [[EMClient sharedClient].groupManager getJoinedGroups];
-            for (EMGroup *group in groupArray) {
-                if ([group.groupId isEqualToString:conversation.conversationId]) {
-                    NSMutableDictionary *ext = [NSMutableDictionary dictionaryWithDictionary:conversation.ext];
-                    [ext setObject:group.subject forKey:@"subject"];
-                    [ext setObject:[NSNumber numberWithBool:group.isPublic] forKey:@"isPublic"];
-                    conversation.ext = ext;
-                    break;
-                }
-            }
+        if (userInfo) {
+            model.avatarURLPath = userInfo.AvatarUrl;
+            model.title = userInfo.NickName;
         }
-        NSDictionary *ext = conversation.ext;
-        model.title = [ext objectForKey:@"subject"];
-        imageName = [[ext objectForKey:@"isPublic"] boolValue] ? @"groupPublicHeader" : @"groupPrivateHeader";
-        model.avatarImage = [UIImage imageNamed:imageName];
+        
+    } else if (model.conversation.type == EMConversationTypeGroupChat) {
+        if (userInfo) {
+            model.avatarURLPath = userInfo.AvatarUrl;
+            model.title = userInfo.NickName;
+        }
     }
     return model;
 }

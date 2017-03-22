@@ -66,6 +66,11 @@
     if (!success) {
         NSLog(@"失败");
     }
+    // 3.初始化web缓存配置, appkey需要自己去LeanCloud官网注册存储服务
+  
+    [UserWebManager config:launchOptions
+                     appId:@"TG0ANDydo2dDbs2mqxSlKCAc-gzGzoHsz"
+                    appKey:@"rxuzVo2hSvaidwukDjvxCQpj"];
     return YES;
 }
 
