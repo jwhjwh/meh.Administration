@@ -121,7 +121,7 @@ NSUInteger roosw;
     _YWZJStr = @"业务总监";
     _YWStr = @"业务";
     _SCZJStr = @"市场总监";
-    _SCJLStr = @"市场管理";
+    _SCJLStr = @"市场经理";
     _MDStr = @"美导";
     _XZGLLStr = @"行政管理";
     _WLStr = @"物流";
@@ -144,7 +144,7 @@ NSUInteger roosw;
    
     _topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 210)];
     _topView.backgroundColor = [UIColor whiteColor];
-    infonTableview.tableHeaderView=_topView;
+    infonTableview.tableHeaderView=[self X:0 Y:0];
     
     _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 280)];
     _footerView.backgroundColor = [UIColor whiteColor];
@@ -626,11 +626,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -687,11 +687,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -748,11 +748,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -809,11 +809,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -870,11 +870,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -931,11 +931,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -992,11 +992,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -1053,11 +1053,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -1114,11 +1114,11 @@ NSUInteger roosw;
                     _SCZJStr = @"市场总监";
                 }
             }
-            else if ([textField.placeholder isEqualToString:@"市场管理"]){
+            else if ([textField.placeholder isEqualToString:@"市场经理"]){
                 if (textField.text.length>0) {
                     _SCJLStr = textField.text;
                 }else{
-                    _SCJLStr = @"市场管理";
+                    _SCJLStr = @"市场经理";
                 }
             }
             else if ([textField.placeholder isEqualToString:@"美导"]){
@@ -1678,451 +1678,8 @@ NSUInteger roosw;
             make.width.mas_offset (70);
             make.height.mas_offset(21);
         }];
-        UIView *view1 = [[UIView alloc]init];
-        view1.backgroundColor = [UIColor lightGrayColor];
-        [_popFootCellView addSubview:view1];
-        [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
-            make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
-            make.width.mas_offset(2);
-            make.height.mas_offset(20);
-        }];
-        if (XZGLBOOL == NO) {
-            if (YWZJBOOL == NO ||SCZJBOOL == NO ||YWJLBOOL == NO ||SCJLBOOL == NO) {
-                UIView * view2 = [[UIView alloc]init];
-                view2.backgroundColor = [UIColor lightGrayColor];
-                [_popFootCellView addSubview:view2];
-                [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(view1.mas_bottom).offset(0);
-                    make.left.mas_equalTo(_popFootCellView.mas_left).offset(kWidth*200);
-                    make.right.mas_equalTo(_popFootCellView.mas_right).offset(-kWidth*160);
-                    make.height.mas_offset(2);
-                }];
-                //左边
-                UIView *view4 = [[UIView alloc]init];
-                view4.backgroundColor = [UIColor lightGrayColor];
-                [_popFootCellView addSubview:view4];
-                [view4 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(view2.mas_bottom).offset(0);
-                    make.left.mas_equalTo(view2.mas_left).offset(0);
-                    make.width.mas_offset(2);
-                    make.height.mas_offset(32);
-                }];
-                if (YWZJBOOL == NO && SCZJBOOL == NO) {
-                    UIView *view5 = [[UIView alloc]init];
-                    view5.backgroundColor = [UIColor lightGrayColor];
-                    [_popFootCellView addSubview:view5];
-                    [view5 mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                        make.centerX.mas_equalTo(view4.mas_centerX).offset(0);
-                        make.width.mas_offset(90);
-                        make.height.mas_offset(2);
-                    }];
-                    UIView *view6 = [[UIView alloc]init];
-                    view6.backgroundColor = [UIColor lightGrayColor];
-                    [_popFootCellView addSubview:view6];
-                    [view6 mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo(view5.mas_bottom).offset(0);
-                        make.left.mas_equalTo(view5.mas_left).offset(0);
-                        make.width.mas_equalTo(2);
-                        make.height.mas_equalTo(20);
-                    }];
-                    UIView *view7 = [[UIView alloc]init];
-                    view7.backgroundColor = [UIColor lightGrayColor];
-                    [_popFootCellView addSubview:view7];
-                    [view7 mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo(view5.mas_bottom).offset(0);
-                        make.right.mas_equalTo(view5.mas_right).offset(0);
-                        make.width.mas_equalTo(2);
-                        make.height.mas_equalTo(20);
-                    }];
-                    UILabel *ywzjLabel = [[UILabel alloc]init];
-                    ywzjLabel.text = _YWZJStr;
-                    ywzjLabel.font = [UIFont systemFontOfSize: 12.0];
-                    ywzjLabel.textColor = [UIColor blackColor];
-                    ywzjLabel.textAlignment = NSTextAlignmentCenter;
-                    [ywzjLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                    [ywzjLabel.layer setCornerRadius:3];
-                    [ywzjLabel.layer setBorderWidth:1];//设置边界的宽度
-                    [ywzjLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                    [_popFootCellView addSubview:ywzjLabel];
-                    [ywzjLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo (view6.mas_bottom).offset(0);
-                        make.centerX.mas_equalTo(view6.mas_centerX).offset(0);
-                        make.width.mas_offset (70);
-                        make.height.mas_offset(21);
-                    }];
-                    UILabel *sczjLabel = [[UILabel alloc]init];
-                    sczjLabel.text = _YWZJStr;
-                    sczjLabel.font = [UIFont systemFontOfSize: 12.0];
-                    sczjLabel.textColor = [UIColor blackColor];
-                    sczjLabel.textAlignment = NSTextAlignmentCenter;
-                    [sczjLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                    [sczjLabel.layer setCornerRadius:3];
-                    [sczjLabel.layer setBorderWidth:1];//设置边界的宽度
-                    [sczjLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                    [_popFootCellView addSubview:sczjLabel];
-                    [sczjLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo (view7.mas_bottom).offset(0);
-                        make.centerX.mas_equalTo(view7.mas_centerX).offset(0);
-                        make.width.mas_offset (70);
-                        make.height.mas_offset(21);
-                    }];
-
-
-                }
-                //右边
-                UIView *view3 = [[UIView alloc]init];
-                view3.backgroundColor = [UIColor lightGrayColor];
-                [_popFootCellView addSubview:view3];
-                [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(view2.mas_bottom).offset(0);
-                    make.right.mas_equalTo(view2.mas_right).offset(0);
-                    make.width.mas_offset(2);
-                    make.height.mas_offset(32);
-                }];
-                UILabel *xzglLabel = [[UILabel alloc]init];
-                xzglLabel.text = _XZGLLStr;
-                xzglLabel.font = [UIFont systemFontOfSize: 12.0];
-                xzglLabel.textColor = [UIColor blackColor];
-                xzglLabel.textAlignment = NSTextAlignmentCenter;
-                [xzglLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [xzglLabel.layer setCornerRadius:3];
-                [xzglLabel.layer setBorderWidth:1];//设置边界的宽度
-                [xzglLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                [_popFootCellView addSubview:xzglLabel];
-                [xzglLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo (view3.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                    make.width.mas_offset (70);
-                    make.height.mas_offset(21);
-                }];
-                if (WLBOOL == NO || NQBOOL == NO) {
-                    UIView *view3 = [[UIView alloc]init];
-                    view3.backgroundColor = [UIColor lightGrayColor];
-                    [_popFootCellView addSubview:view3];
-                    [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo(xzglLabel.mas_bottom).offset(0);
-                        make.centerX.mas_equalTo(xzglLabel.mas_centerX).offset(0);
-                        make.width.mas_offset(2);
-                        make.height.mas_offset(20);
-                    }];
-                    if (WLBOOL == NO && NQBOOL == NO) {
-                        UIView *view4 = [[UIView alloc]init];
-                        view4.backgroundColor = [UIColor lightGrayColor];
-                        [_popFootCellView addSubview:view4];
-                        [view4 mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo(view3.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                            make.width.mas_offset(70);
-                            make.height.mas_offset(2);
-                        }];
-                        UIView *view5 = [[UIView alloc]init];
-                        view5.backgroundColor = [UIColor lightGrayColor];
-                        [_popFootCellView addSubview:view5];
-                        [view5 mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                            make.left.mas_equalTo(view4.mas_left).offset(0);
-                            make.width.mas_offset(2);
-                            make.height.mas_offset(10);
-                        }];
-                        UILabel *wlLabel = [[UILabel alloc]init];
-                        wlLabel.text = _WLStr;
-                        wlLabel.font = [UIFont systemFontOfSize: 12.0];
-                        wlLabel.textAlignment = NSTextAlignmentCenter;
-                        [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [wlLabel.layer setCornerRadius:3];
-                        [wlLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:wlLabel];
-                        [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view5.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view5.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-                        UIView *view6 = [[UIView alloc]init];
-                        view6.backgroundColor = [UIColor lightGrayColor];
-                        [_popFootCellView addSubview:view6];
-                        [view6 mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                            make.right.mas_equalTo(view4.mas_right).offset(0);
-                            make.width.mas_offset(2);
-                            make.height.mas_offset(10);
-                        }];
-                        UILabel *nqLabel = [[UILabel alloc]init];
-                        nqLabel.text = _NQStr;
-                        nqLabel.font = [UIFont systemFontOfSize: 12.0];
-                        nqLabel.textAlignment = NSTextAlignmentCenter;
-                        [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [nqLabel.layer setCornerRadius:3];
-                        [nqLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:nqLabel];
-                        [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view6.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view6.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-                        
-                    }else if (WLBOOL == NO && NQBOOL == YES){
-                        UILabel *wlLabel = [[UILabel alloc]init];
-                        wlLabel.text = _WLStr;
-                        wlLabel.font = [UIFont systemFontOfSize: 12.0];
-                        wlLabel.textAlignment = NSTextAlignmentCenter;
-                        [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [wlLabel.layer setCornerRadius:3];
-                        [wlLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:wlLabel];
-                        [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view3.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-                        
-                        
-                    }else if (WLBOOL == YES && NQBOOL == NO){
-                        UILabel *nqLabel = [[UILabel alloc]init];
-                        nqLabel.text = _NQStr;
-                        nqLabel.font = [UIFont systemFontOfSize: 12.0];
-                        nqLabel.textAlignment = NSTextAlignmentCenter;
-                        [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [nqLabel.layer setCornerRadius:3];
-                        [nqLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:nqLabel];
-                        [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view3.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-                    }
-                }
-                
-            }else{
-                UILabel *xzglLabel = [[UILabel alloc]init];
-                xzglLabel.text = _XZGLLStr;
-                xzglLabel.font = [UIFont systemFontOfSize: 12.0];
-                xzglLabel.textColor = [UIColor blackColor];
-                xzglLabel.textAlignment = NSTextAlignmentCenter;
-                [xzglLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [xzglLabel.layer setCornerRadius:3];
-                [xzglLabel.layer setBorderWidth:1];//设置边界的宽度
-                [xzglLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                [_popFootCellView addSubview:xzglLabel];
-                [xzglLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo (view1.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
-                    make.width.mas_offset (70);
-                    make.height.mas_offset(21);
-                }];
-                if (WLBOOL == NO || NQBOOL == NO) {
-                    UIView *view3 = [[UIView alloc]init];
-                    view3.backgroundColor = [UIColor lightGrayColor];
-                    [_popFootCellView addSubview:view3];
-                    [view3 mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.top.mas_equalTo(xzglLabel.mas_bottom).offset(0);
-                        make.centerX.mas_equalTo(xzglLabel.mas_centerX).offset(0);
-                        make.width.mas_offset(2);
-                        make.height.mas_offset(20);
-                    }];
-                    if (WLBOOL == NO && NQBOOL == NO) {
-                        UIView *view4 = [[UIView alloc]init];
-                        view4.backgroundColor = [UIColor lightGrayColor];
-                        [_popFootCellView addSubview:view4];
-                        [view4 mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo(view3.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                            make.width.mas_offset(70);
-                            make.height.mas_offset(2);
-                        }];
-                        UIView *view5 = [[UIView alloc]init];
-                        view5.backgroundColor = [UIColor lightGrayColor];
-                        [_popFootCellView addSubview:view5];
-                        [view5 mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                            make.left.mas_equalTo(view4.mas_left).offset(0);
-                            make.width.mas_offset(2);
-                            make.height.mas_offset(10);
-                        }];
-                        UILabel *wlLabel = [[UILabel alloc]init];
-                        wlLabel.text = _WLStr;
-                        wlLabel.font = [UIFont systemFontOfSize: 12.0];
-                        wlLabel.textAlignment = NSTextAlignmentCenter;
-                        [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [wlLabel.layer setCornerRadius:3];
-                        [wlLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:wlLabel];
-                        [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view5.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view5.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-                        UIView *view6 = [[UIView alloc]init];
-                        view6.backgroundColor = [UIColor lightGrayColor];
-                        [_popFootCellView addSubview:view6];
-                        [view6 mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                            make.right.mas_equalTo(view4.mas_right).offset(0);
-                            make.width.mas_offset(2);
-                            make.height.mas_offset(10);
-                        }];
-                        UILabel *nqLabel = [[UILabel alloc]init];
-                        nqLabel.text = _NQStr;
-                        nqLabel.font = [UIFont systemFontOfSize: 12.0];
-                        nqLabel.textAlignment = NSTextAlignmentCenter;
-                        [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [nqLabel.layer setCornerRadius:3];
-                        [nqLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:nqLabel];
-                        [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view6.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view6.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-
-                    }else if (WLBOOL == NO && NQBOOL == YES){
-                        UILabel *wlLabel = [[UILabel alloc]init];
-                        wlLabel.text = _WLStr;
-                        wlLabel.font = [UIFont systemFontOfSize: 12.0];
-                        wlLabel.textAlignment = NSTextAlignmentCenter;
-                        [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [wlLabel.layer setCornerRadius:3];
-                        [wlLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:wlLabel];
-                        [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view3.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-
-
-                    }else if (WLBOOL == YES && NQBOOL == NO){
-                        UILabel *nqLabel = [[UILabel alloc]init];
-                        nqLabel.text = _NQStr;
-                        nqLabel.font = [UIFont systemFontOfSize: 12.0];
-                        nqLabel.textAlignment = NSTextAlignmentCenter;
-                        [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                        [nqLabel.layer setCornerRadius:3];
-                        [nqLabel.layer setBorderWidth:1];//设置边界的宽度
-                        [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                        [_popFootCellView addSubview:nqLabel];
-                        [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.mas_equalTo (view3.mas_bottom).offset(0);
-                            make.centerX.mas_equalTo(view3.mas_centerX).offset(0);
-                            make.width.mas_offset (@60);
-                            make.height.mas_offset(@21);
-                        }];
-                    }
-                }
-                
-            }
-         
-        }else if (WLBOOL == NO && NQBOOL == NO) {
-                UIView *view4 = [[UIView alloc]init];
-                view4.backgroundColor = [UIColor lightGrayColor];
-                [_popFootCellView addSubview:view4];
-                [view4 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(view1.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(view1.mas_centerX).offset(0);
-                    make.width.mas_offset(70);
-                    make.height.mas_offset(2);
-                }];
-                UIView *view5 = [[UIView alloc]init];
-                view5.backgroundColor = [UIColor lightGrayColor];
-                [_popFootCellView addSubview:view5];
-                [view5 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                    make.left.mas_equalTo(view4.mas_left).offset(0);
-                    make.width.mas_offset(2);
-                    make.height.mas_offset(10);
-                }];
-                UILabel *wlLabel = [[UILabel alloc]init];
-                wlLabel.text = _WLStr;
-                wlLabel.font = [UIFont systemFontOfSize: 12.0];
-                wlLabel.textAlignment = NSTextAlignmentCenter;
-                [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [wlLabel.layer setCornerRadius:3];
-                [wlLabel.layer setBorderWidth:1];//设置边界的宽度
-                [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                [_popFootCellView addSubview:wlLabel];
-                [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo (view5.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(view5.mas_centerX).offset(0);
-                    make.width.mas_offset (@60);
-                    make.height.mas_offset(@21);
-                }];
-                UIView *view6 = [[UIView alloc]init];
-                view6.backgroundColor = [UIColor lightGrayColor];
-                [_popFootCellView addSubview:view6];
-                [view6 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(view4.mas_bottom).offset(0);
-                    make.right.mas_equalTo(view4.mas_right).offset(0);
-                    make.width.mas_offset(2);
-                    make.height.mas_offset(10);
-                }];
-                UILabel *nqLabel = [[UILabel alloc]init];
-                nqLabel.text = _NQStr;
-                nqLabel.font = [UIFont systemFontOfSize: 12.0];
-                nqLabel.textAlignment = NSTextAlignmentCenter;
-                [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [nqLabel.layer setCornerRadius:3];
-                [nqLabel.layer setBorderWidth:1];//设置边界的宽度
-                [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                [_popFootCellView addSubview:nqLabel];
-                [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo (view6.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(view6.mas_centerX).offset(0);
-                    make.width.mas_offset (@60);
-                    make.height.mas_offset(@21);
-                }];
-                
-            }else if (WLBOOL == NO && NQBOOL == YES){
-                UILabel *wlLabel = [[UILabel alloc]init];
-                wlLabel.text = _WLStr;
-                wlLabel.font = [UIFont systemFontOfSize: 12.0];
-                wlLabel.textAlignment = NSTextAlignmentCenter;
-                [wlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [wlLabel.layer setCornerRadius:3];
-                [wlLabel.layer setBorderWidth:1];//设置边界的宽度
-                [wlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                [_popFootCellView addSubview:wlLabel];
-                [wlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo (view1.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(view1.mas_centerX).offset(0);
-                    make.width.mas_offset (@60);
-                    make.height.mas_offset(@21);
-                }];
-                
-                
-            }else if (WLBOOL == YES && NQBOOL == NO){
-                UILabel *nqLabel = [[UILabel alloc]init];
-                nqLabel.text = _NQStr;
-                nqLabel.font = [UIFont systemFontOfSize: 12.0];
-                nqLabel.textAlignment = NSTextAlignmentCenter;
-                [nqLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [nqLabel.layer setCornerRadius:3];
-                [nqLabel.layer setBorderWidth:1];//设置边界的宽度
-                [nqLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
-                [_popFootCellView addSubview:nqLabel];
-                [nqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo (view1.mas_bottom).offset(0);
-                    make.centerX.mas_equalTo(view1.mas_centerX).offset(0);
-                    make.width.mas_offset (@60);
-                    make.height.mas_offset(@21);
-                }];
-            }
-    }else{
+        
+        }else{
         [_popFootCellView removeFromSuperview];
     }
 
@@ -2142,5 +1699,11 @@ NSUInteger roosw;
     // Pass the selected object to the new view controller.
 }
 */
-
+-(UIView*)X:(CGFloat)X Y:(CGFloat)Y                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {
+    _topView = [[UIView alloc]initWithFrame:CGRectMake(X, Y, Scree_width, 210)];
+    _topView.backgroundColor = [UIColor whiteColor];
+    infonTableview.tableHeaderView=_topView;
+    
+    return _topView;
+}
 @end
