@@ -77,6 +77,9 @@
 #define logokey @"JWHKJ"
 
 /*--------环信储存-----------*/
+#define kHaveUnreadAtMessage    @"kHaveAtMessage"
+#define kAtYouMessage           1
+#define kAtAllMessage           2
 //接状态改变
 #define kRefreshChatList @"RefreshChatList"// 更新会话列表
 #import "UserCacheManager.h"

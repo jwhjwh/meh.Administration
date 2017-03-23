@@ -14,10 +14,8 @@
 
 #import "ChatViewController.h"
 #import "RobotManager.h"
+#import "InvitationManager.h"
 
-#define kHaveUnreadAtMessage    @"kHaveAtMessage"
-#define kAtYouMessage           1
-#define kAtAllMessage           2
 @interface ContactsController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (strong,nonatomic) UIView *view1;//第一条线
@@ -26,7 +24,7 @@
 @property (nonatomic,strong)NSMutableArray *dataArray;//数据源
 @property (nonatomic,strong)NSMutableArray *ImageAry;//各部门图片
 
-
+@property (nonatomic,strong)NSMutableArray *dataSource;
 @end
 
 @implementation ContactsController
@@ -37,7 +35,7 @@
 
     [self registerNotifications];
     [self refreshAndSortView];
-
+    [self reloadApplyView];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -181,35 +179,6 @@
     [self.navigationController showViewController:SearchVC sender:nil];
 
 }
-//-(void)TouchAbt:(UIButton *)aBt{
-//    PersonnelViewController *PersonVC = [[PersonnelViewController alloc]init];
-//    switch (aBt.tag) {
-//        case 0:
-//            PersonVC.roleld= @"2";
-//            [self.navigationController showViewController:PersonVC sender:nil];
-//            break;
-//        case 1:
-//            PersonVC.roleld= @"5";
-//            [self.navigationController showViewController:PersonVC sender:nil];
-//            break;
-//        case 2:
-//            PersonVC.roleld= @"3";
-//            [self.navigationController showViewController:PersonVC sender:nil];
-//            break;
-//        case 3:
-//            PersonVC.roleld= @"4";
-//            [self.navigationController showViewController:PersonVC sender:nil];
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    
-//    
-//    
-//    
-//}
 
 #pragma -mark UITableViewDelegate,UITableViewDataSource
 //设置每个分区的单元格数
@@ -229,8 +198,7 @@
     NSString *CellIdentifier = [EaseConversationCell cellIdentifierWithModel:nil];
     EaseConversationCell *cell = (EaseConversationCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
-    if (cell == nil) {
+       if (cell == nil) {
         cell = [[EaseConversationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
@@ -622,5 +590,29 @@
 - (void)didUpdateGroupList:(NSArray *)groupList
 {
     [self tableViewDidTriggerHeaderRefresh];
+}
+//同意添加好友或者群组
+- (void)reloadApplyView
+{
+    NSString *loginName =  [[EMClient sharedClient] currentUsername];
+    if(loginName && [loginName length] > 0)
+    {
+        NSArray * applyArray = [[InvitationManager sharedInstance] applyEmtitiesWithloginUser:loginName];
+        [self.dataSource addObjectsFromArray:applyArray];
+    }
+    if (self.dataSource.count>0) {
+        ApplyEntity *entity = [self.dataSource objectAtIndex:0];
+        EMError *error;
+        error = [[EMClient sharedClient].groupManager declineInvitationFromGroup:entity.groupId inviter:entity.applicantUsername reason:nil];
+        [[InvitationManager sharedInstance] removeInvitation:entity loginUser:loginName];
+    }
+}
+- (NSMutableArray *)dataSource
+{
+    if (_dataSource == nil) {
+        _dataSource = [NSMutableArray array];
+    }
+    
+    return _dataSource;
 }
 @end

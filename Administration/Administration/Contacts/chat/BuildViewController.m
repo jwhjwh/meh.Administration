@@ -10,7 +10,7 @@
 #import "AddmemberController.h"
 #import "ZXYAlertView.h"
 @interface BuildViewController ()<UITextFieldDelegate,ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
+@property (strong,nonatomic) UITextField *textFleid;
 @property (strong,nonatomic) UIImageView *HeadView;//头像
 @property (nonatomic, strong)UIImage *goodPicture;
 @end
@@ -36,6 +36,7 @@
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
     _HeadView = [[UIImageView alloc]init];
+    _HeadView.userInteractionEnabled = YES;
     [_HeadView setImage:[UIImage imageNamed:@"tjtx_mt.png"]];
     _HeadView.backgroundColor = [UIColor whiteColor];
     _HeadView.layer.masksToBounds = YES;
@@ -49,12 +50,12 @@
         make.right.equalTo(self.view.mas_centerX).offset(80);
         make.size.mas_equalTo(CGSizeMake(160,160));
     }];
-    UITextField *textFleid=[[UITextField alloc]init];
-    textFleid.delegate = self;
-    textFleid.textAlignment = NSTextAlignmentCenter;
-    textFleid.placeholder=@"填写群名称";
-    [self.view addSubview:textFleid];
-    [textFleid  mas_makeConstraints:^(MASConstraintMaker *make) {
+   _textFleid=[[UITextField alloc]init];
+    _textFleid.delegate = self;
+    _textFleid.textAlignment = NSTextAlignmentCenter;
+    _textFleid.placeholder=@"填写群名称";
+    [self.view addSubview:_textFleid];
+    [_textFleid  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_HeadView.mas_bottom).offset(60);
         make.left.equalTo(self.view.mas_centerX).offset(-80);
         make.right.equalTo(self.view.mas_centerX).offset(80);
@@ -64,7 +65,7 @@
     view.backgroundColor=GetColor(216, 216, 216, 1);
     [self.view addSubview:view];
     [view  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(textFleid.mas_bottom);
+        make.top.equalTo(_textFleid.mas_bottom);
         make.left.equalTo(self.view.mas_centerX).offset(-80);
         make.right.equalTo(self.view.mas_centerX).offset(80);
         make.size.mas_equalTo(CGSizeMake(160,1));
@@ -75,14 +76,16 @@
 }
 -(void)rightItem{
     AddmemberController *addmenVC=[[AddmemberController alloc]init];
+    addmenVC.goursIamge=self.goodPicture;
+    addmenVC.textStr = self.textFleid.text;
     [self.navigationController pushViewController:addmenVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+   
 }
--(void)SpositionTap:(UITapGestureRecognizer*)sender{
+-(void)SpositionTap:(UIGestureRecognizer*)sender{
     ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
     alert.title = @"请选择照片";
     alert.buttonArray = @[@"相机",@"相册"];
@@ -112,3 +115,4 @@
     _HeadView.image=self.goodPicture;
 }
 @end
+ 
