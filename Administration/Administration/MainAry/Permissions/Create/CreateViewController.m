@@ -44,7 +44,7 @@
     self.title=@"创建角色";
     
     _hide = YES;
-   // [self setExtraCellLineHidden:infonTableview];
+    
     self.view.backgroundColor =GetColor(231, 230, 230, 1);
     
     _arr = @[@"职位设定",@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
@@ -54,11 +54,12 @@
     // Do any additional setup after loading the view.
 }
 -(void)InterTableUI{
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,10,self.view.bounds.size.width,52*(_arr.count+2)) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,10,self.view.bounds.size.width,380) style:UITableViewStylePlain];
     infonTableview.scrollEnabled =NO;
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     infonTableview.backgroundColor = [UIColor clearColor];
+    [self setExtraCellLineHidden:infonTableview];
     [self.view addSubview:infonTableview];
     
     _WCBtn = [[UIButton alloc]init];
@@ -71,8 +72,8 @@
     [_WCBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(80);
         make.right.mas_equalTo(self.view.mas_right).offset(-80);
-        make.top.mas_equalTo(infonTableview.mas_bottom).offset(5);
-        make.height.mas_equalTo(40);
+        make.top.mas_equalTo(infonTableview.mas_bottom).offset(15);
+        make.height.mas_equalTo(30);
     }];
     _hideButton = [[UIButton alloc]init];
     _hideButton.layer.cornerRadius =10;
@@ -165,7 +166,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0;
+    return 40.0;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -180,7 +181,8 @@
         
     }
      cell.textLabel.text = _arr[indexPath.row];
-    CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 48);
+    cell.textLabel.font =[UIFont boldSystemFontOfSize:13.0f];
+    CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 38);
     if ([cell.textLabel.text isEqualToString:@"职位设定"]) {
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
 
@@ -193,7 +195,7 @@
         [cell addSubview:_JSLabel];
         
     }else if([cell.textLabel.text isEqualToString:@"姓名"]||[cell.textLabel.text isEqualToString:@"手机号"]||[cell.textLabel.text isEqualToString:@"验证码"]){
-        CGRect labelRect3 = CGRectMake(100, 1, self.view.bounds.size.width-200, 48);
+        CGRect labelRect3 = CGRectMake(100, 1, self.view.bounds.size.width-200, 38);
         _codeField =[[UITextField alloc]initWithFrame:labelRect3];
         _codeField.backgroundColor=[UIColor whiteColor];
         _codeField.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -209,7 +211,7 @@
             [TXImage setTitle:@"获取验证码" forState:UIControlStateNormal];
             [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
             TXImage.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-            TXImage.frame=CGRectMake(self.view.bounds.size.width-100,0, 99, 49);
+            TXImage.frame=CGRectMake(self.view.bounds.size.width-100,0, 99, 39);
             TXImage.backgroundColor = GetColor(144, 75, 174, 1);
             [cell addSubview:TXImage];
         }

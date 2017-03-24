@@ -12,6 +12,7 @@
 #import "PermissionsViewController.h"
 #import "SubmittedViewController.h"//图片报岗
 #import "businessViewController.h"//业务陌拜
+#import "TrackingViewController.h"
 #import "brandViewController.h"
 #import "managViewController.h"
 #import "MessageController.h"
@@ -271,7 +272,8 @@
                     }
                         break;
                     case 11:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         
                         break;
@@ -319,7 +321,8 @@
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
@@ -354,7 +357,8 @@
                 //            _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
@@ -388,7 +392,8 @@
                 //            _arr1=@[@"dianpugenzong",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
@@ -418,7 +423,8 @@
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi",@"gongsigonggao", @"mobaijilu", @"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
@@ -459,7 +465,8 @@
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
@@ -498,7 +505,8 @@
                 //            _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baobiaoguanli", @"baogang"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
@@ -537,7 +545,8 @@
                 //            _arr1=@[@"dianpugenzong",@"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"mobaijilu",@"baogang",@"baobiaoguanli"];
                 switch (index) {
                     case 10:{
-                        
+                        TrackingViewController *TrackingVC =[[TrackingViewController alloc]init];
+                        [self.navigationController pushViewController:TrackingVC animated:YES];
                     }
                         break;
                     case 11:{
