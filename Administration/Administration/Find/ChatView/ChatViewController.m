@@ -7,7 +7,7 @@
 //
 
 #import "ChatViewController.h"
-
+#import "inftionxqController.h"
 //#import "ChatGroupDetailViewController.h"
 //#import "ChatroomDetailViewController.h"
 //#import "UserProfileViewController.h"
@@ -171,6 +171,8 @@
 {
 //    UserProfileViewController *userprofile = [[UserProfileViewController alloc] initWithUsername:messageModel.message.from];
 //    [self.navigationController pushViewController:userprofile animated:YES];
+//    inftionxqController *inftionVC =[[inftionxqController alloc]init];
+//    messageModel.message.messageId
 }
 
 #pragma mark - EaseMessageViewControllerDataSource
