@@ -377,6 +377,7 @@
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
 		62570E901E7136B90051C83A /* wdbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 62570E8F1E7136B90051C83A /* wdbg.png */; };
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
+		625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 625C91FE1E85150800D9011B /* TrackingViewController.m */; };
 		626254061E728D99000B8F0F /* RectordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254051E728D99000B8F0F /* RectordViewController.m */; };
 		6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254081E7293B7000B8F0F /* RectordTableViewCell.m */; };
 		6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 626254091E7293B7000B8F0F /* RectordTableViewCell.xib */; };
@@ -474,7 +475,6 @@
 		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
 		62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */; };
 		62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A0D7361E6FD921003370FA /* ph_mt02.png */; };
-		62B8E7951E83BBD6009DD625 /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B8E7941E83BBD6009DD625 /* TrackingViewController.m */; };
 		62EBA2331E56939300F657DB /* Contact3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA22F1E56939300F657DB /* Contact3.png */; };
 		62EBA2341E56939300F657DB /* Contact2.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA2301E56939300F657DB /* Contact2.png */; };
 		62EBA2351E56939300F657DB /* Contact0.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EBA2311E56939300F657DB /* Contact0.png */; };
@@ -1152,6 +1152,8 @@
 		62570E8F1E7136B90051C83A /* wdbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wdbg.png; sourceTree = "<group>"; };
 		62578E781E6D5F5300D42603 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		62578E791E6D5F5300D42603 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
+		625C91FD1E85150800D9011B /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
+		625C91FE1E85150800D9011B /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		626254041E728D99000B8F0F /* RectordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordViewController.h; sourceTree = "<group>"; };
 		626254051E728D99000B8F0F /* RectordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordViewController.m; sourceTree = "<group>"; };
 		626254071E7293B7000B8F0F /* RectordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordTableViewCell.h; sourceTree = "<group>"; };
@@ -1299,8 +1301,6 @@
 		62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubmittedViewController.h; sourceTree = "<group>"; };
 		62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubmittedViewController.m; sourceTree = "<group>"; };
 		62A0D7361E6FD921003370FA /* ph_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ph_mt02.png; sourceTree = "<group>"; };
-		62B8E7931E83BBD6009DD625 /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
-		62B8E7941E83BBD6009DD625 /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		62EBA22F1E56939300F657DB /* Contact3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact3.png; sourceTree = "<group>"; };
 		62EBA2301E56939300F657DB /* Contact2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact2.png; sourceTree = "<group>"; };
 		62EBA2311E56939300F657DB /* Contact0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact0.png; sourceTree = "<group>"; };
@@ -2581,6 +2581,7 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				625C91FC1E85150800D9011B /* Tracking */,
 				1F6833B91E72961C00F74D50 /* yewumobai */,
 				6269A55A1E6E4CFD0083160E /* Submitted */,
 				625355781E6817780041F123 /* Permissions */,
@@ -2749,7 +2750,6 @@
 		625355781E6817780041F123 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
-				62B8E7921E83BBC0009DD625 /* Tracking */,
 				6226E6611E778CA000767EBD /* SetPosition */,
 				627B27161E764B2700392170 /* Structure */,
 				62578E741E6D5ED900D42603 /* Identification */,
@@ -2767,6 +2767,15 @@
 				62578E791E6D5F5300D42603 /* CodeViewController.m */,
 			);
 			path = Identification;
+			sourceTree = "<group>";
+		};
+		625C91FC1E85150800D9011B /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				625C91FD1E85150800D9011B /* TrackingViewController.h */,
+				625C91FE1E85150800D9011B /* TrackingViewController.m */,
+			);
+			path = Tracking;
 			sourceTree = "<group>";
 		};
 		626254031E728D80000B8F0F /* SubmittedRecord */ = {
@@ -3134,15 +3143,6 @@
 				62942BF61E68FD36003F3A84 /* CreateViewController.m */,
 			);
 			path = Create;
-			sourceTree = "<group>";
-		};
-		62B8E7921E83BBC0009DD625 /* Tracking */ = {
-			isa = PBXGroup;
-			children = (
-				62B8E7931E83BBD6009DD625 /* TrackingViewController.h */,
-				62B8E7941E83BBD6009DD625 /* TrackingViewController.m */,
-			);
-			path = Tracking;
 			sourceTree = "<group>";
 		};
 		62EBA2431E56CA0300F657DB /* Secondary */ = {
@@ -3748,6 +3748,7 @@
 				1FDCC27C1E7A8F2F002C80FB /* wav.mm in Sources */,
 				1FDCC2731E7A8F2F002C80FB /* EaseUI.m in Sources */,
 				1F803FED1E52F7CA005F53CE /* UIProgressView+AFNetworking.m in Sources */,
+				625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */,
 				6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */,
 				1FDCC2981E7A8F2F002C80FB /* MWPhoto.m in Sources */,
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
@@ -3804,7 +3805,6 @@
 				1F5B13351E6ABEA800B6D8DC /* dongjieViewController.m in Sources */,
 				1F803FEB1E52F7CA005F53CE /* UIButton+AFNetworking.m in Sources */,
 				F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */,
-				62B8E7951E83BBD6009DD625 /* TrackingViewController.m in Sources */,
 				1FDCC2781E7A8F2F002C80FB /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				1FDCC2791E7A8F2F002C80FB /* EMCDDeviceManager+Remind.m in Sources */,
 				1F803FE71E52F7CA005F53CE /* AFAutoPurgingImageCache.m in Sources */,

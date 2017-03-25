@@ -7,12 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef enum {
+    
+    // 开始日期
+    DateTypeOfStart = 0,
+    
+    // 结束日期
+    DateTypeOfEnd,
+    
+}DateType;
 @class PW_DatePickerView;
 
 @protocol PW_DatePickerViewDelegate <NSObject>
-
--(void) pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString;
+-(void) pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString type:(DateType)type;
 @end
 
 
@@ -21,7 +28,7 @@
 @property (nonatomic,weak) id<PW_DatePickerViewDelegate>delegate;
 
 @property (nonatomic,strong) UIView *screenView;
-
+@property (nonatomic, assign) DateType type;
 - (instancetype)initDatePickerWithDefaultDate:(NSDate *)date
                             andDatePickerMode:(UIDatePickerMode )mode;
 

@@ -294,7 +294,7 @@
         [self.PWpickerView show];
     }
 }
-- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString
+- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString type:(DateType)type;
 {
     _subDayLabel.text  = dateString;
 }
