@@ -76,9 +76,22 @@ static float ToolbarH = 44;
     [dateFormmater setDateFormat:@"yyyy-MM-dd"];
     NSString *resultString = [dateFormmater stringFromDate:select];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pickerView:didSelectDateString:)])
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(pickerView:didSelectDateString:type:)])
     {
-        [self.delegate pickerView:self didSelectDateString:resultString];
+        switch (_type) {
+            case DateTypeOfStart:
+                [self.delegate pickerView:self didSelectDateString:resultString type:_type];
+                break;
+            case DateTypeOfEnd:
+                [self.delegate pickerView:self didSelectDateString:resultString type:_type];
+                break;
+            default:
+                break;
+        }
+
+
+        
+        
     }
     
     [self remove];

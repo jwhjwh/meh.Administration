@@ -380,6 +380,7 @@
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
 		62570E901E7136B90051C83A /* wdbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 62570E8F1E7136B90051C83A /* wdbg.png */; };
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
+		625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 625C91FE1E85150800D9011B /* TrackingViewController.m */; };
 		626254061E728D99000B8F0F /* RectordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254051E728D99000B8F0F /* RectordViewController.m */; };
 		6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254081E7293B7000B8F0F /* RectordTableViewCell.m */; };
 		6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 626254091E7293B7000B8F0F /* RectordTableViewCell.xib */; };
@@ -1160,6 +1161,8 @@
 		62570E8F1E7136B90051C83A /* wdbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wdbg.png; sourceTree = "<group>"; };
 		62578E781E6D5F5300D42603 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		62578E791E6D5F5300D42603 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
+		625C91FD1E85150800D9011B /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
+		625C91FE1E85150800D9011B /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		626254041E728D99000B8F0F /* RectordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordViewController.h; sourceTree = "<group>"; };
 		626254051E728D99000B8F0F /* RectordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordViewController.m; sourceTree = "<group>"; };
 		626254071E7293B7000B8F0F /* RectordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordTableViewCell.h; sourceTree = "<group>"; };
@@ -2593,6 +2596,7 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				625C91FC1E85150800D9011B /* Tracking */,
 				1F6833B91E72961C00F74D50 /* yewumobai */,
 				6269A55A1E6E4CFD0083160E /* Submitted */,
 				625355781E6817780041F123 /* Permissions */,
@@ -2778,6 +2782,15 @@
 				62578E791E6D5F5300D42603 /* CodeViewController.m */,
 			);
 			path = Identification;
+			sourceTree = "<group>";
+		};
+		625C91FC1E85150800D9011B /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				625C91FD1E85150800D9011B /* TrackingViewController.h */,
+				625C91FE1E85150800D9011B /* TrackingViewController.m */,
+			);
+			path = Tracking;
 			sourceTree = "<group>";
 		};
 		626254031E728D80000B8F0F /* SubmittedRecord */ = {
@@ -3752,6 +3765,7 @@
 				1FDCC27C1E7A8F2F002C80FB /* wav.mm in Sources */,
 				1FDCC2731E7A8F2F002C80FB /* EaseUI.m in Sources */,
 				1F803FED1E52F7CA005F53CE /* UIProgressView+AFNetworking.m in Sources */,
+				625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */,
 				6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */,
 				1FDCC2981E7A8F2F002C80FB /* MWPhoto.m in Sources */,
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
