@@ -9,7 +9,7 @@
 #import "CrowdViewController.h"
 
 #import "ChatViewController.h"
-@interface CrowdViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface CrowdViewController ()<UITableViewDelegate, UITableViewDataSource,EMGroupManagerDelegate>
 
 /** tableView */
 @property (nonatomic, weak) UITableView *tableView;
@@ -48,6 +48,7 @@
     [self reloadDataSource];
     // 获取群列表·
     NSArray *array = [[EMClient sharedClient].groupManager getJoinedGroups];
+  
     self.groupArr = [NSMutableArray arrayWithArray:array];
     if (self.groupArr.count == 0) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -58,7 +59,7 @@
             NSArray *groups = [[EMClient sharedClient].groupManager getMyGroupsFromServerWithError:&error];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (!error) {
-                    [MBProgressHUD showHUDAddedTo:self.view animated:NO];
+                    [MBProgressHUD hideHUDForView: self.view animated:NO];
                     [weakself.groupArr removeAllObjects];
                     [weakself.groupArr addObjectsFromArray:groups];
                     [weakself.tableView reloadData];
@@ -66,7 +67,11 @@
             });
         });
     }
-
+    if (self.groupArr.count==0) {
+    [_tableView addEmptyViewWithImageName:@"" title:@"暂无经群组，创建一个吧～～"];
+        _tableView.emptyView.hidden = NO;
+    }
+    [_tableView reloadData];
     
 }
 - (void)reloadDataSource
@@ -99,8 +104,9 @@
     }
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     EMGroup *group = self.groupArr[indexPath.row];
+    UserCacheInfo * userInfo = [UserCacheManager getById:group.groupId];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", group.subject];
-    cell.imageView.image=[UIImage imageNamed:@"banben100"];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
     //2、调整大小
     CGSize itemSize = CGSizeMake(40, 40);
     UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);

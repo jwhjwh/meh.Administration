@@ -10,13 +10,26 @@
 #import "MainViewController.h" //首页
 
 #import "IntercalateController.h"//设置
+#import "ChatViewController.h"
 
+#import "ContactsController.h"
 #import "ContactsController.h" //联系人
 #import "XCQ_tabbar.h"
-@interface XCQ_tabbarViewController ()
+#import <UserNotifications/UserNotifications.h>
+#import "ChatUIHelper.h"
+//两次提示的默认间隔
+static NSString *kMessageType = @"MessageType";
+static NSString *kConversationChatter = @"ConversationChatter";
+static NSString *kGroupName = @"GroupName";
+@interface XCQ_tabbarViewController () <UIAlertViewDelegate>
+
+{
+    ContactsController *_chatListVC;
+}
 @property(nonatomic,assign) BOOL FirstLoad ;
 @property(nonatomic,retain) UIView *CustomTabBar;
 @property (nonatomic, strong) XCQ_tabbar *currentButton; // 当前选中的Btn
+@property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
 @implementation XCQ_tabbarViewController
@@ -101,7 +114,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _FirstLoad = YES ;
-
+//    NOTIFY_ADD(setupUntreatedApplyCount, kSetupUntreatedApplyCount);
+    NOTIFY_ADD(setupUnreadMessageCount, kSetupUnreadMessageCount);
+    NOTIFY_ADD(networkChanged, kConnectionStateChanged);
+    [self setupUnreadMessageCount];
+    [ChatUIHelper shareHelper].contactViewVC = _chatListVC;
+    
 }
 
 -(instancetype)initWithNomarImageArr:(NSArray *)nomarImageArr andSelectImageArr:(NSArray *)selectImageArr andtitleArr:(NSArray *)titleArr
@@ -151,14 +169,187 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+// 统计未读消息数
+-(void)setupUnreadMessageCount
+{
+    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    if (_chatListVC) {
+        if (unreadCount > 0) {
+            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
+        }else{
+            _chatListVC.tabBarItem.badgeValue = nil;
+        }
+    }
+    
+    UIApplication *application = [UIApplication sharedApplication];
+    [application setApplicationIconBadgeNumber:unreadCount];
 }
-*/
+
+//- (void)setupUntreatedApplyCount
+//{
+//    NSInteger unreadCount = [[[ApplyViewController shareController] dataSource] count];
+//    if (_contactsVC) {
+//        if (unreadCount > 0) {
+//            _contactsVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
+//        }else{
+//            _contactsVC.tabBarItem.badgeValue = nil;
+//        }
+//    }
+//}
+
+- (void)networkChanged
+{
+    _connectionState = [ChatUIHelper shareHelper].connectionState;
+}
+
+#pragma mark - public
+
+- (void)jumpToChatList
+{
+    if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
+        //        ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+        //        [chatController hideImagePicker];
+    }
+    else if(_chatListVC)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        [self setSelectedViewController:_chatListVC];
+    }
+}
+-(void)didReceiveUserNotification:(UNNotification *)notification
+{
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    if (userInfo)
+    {
+        if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
+            //            ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+            //            [chatController hideImagePicker];
+        }
+        
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        [viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            if (obj != self)
+            {
+                if (![obj isKindOfClass:[ChatViewController class]])
+                {
+                    [self.navigationController popViewControllerAnimated:NO];
+                }
+                else
+                {
+                    NSString *conversationChatter = userInfo[kConversationChatter];
+                    ChatViewController *chatViewController = (ChatViewController *)obj;
+                    if (![chatViewController.conversation.conversationId isEqualToString:conversationChatter])
+                    {
+                        [self.navigationController popViewControllerAnimated:NO];
+                        EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                        chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                        chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                        [self.navigationController pushViewController:chatViewController animated:NO];
+                    }
+                    *stop= YES;
+                }
+            }
+            else
+            {
+                ChatViewController *chatViewController = nil;
+                NSString *conversationChatter = userInfo[kConversationChatter];
+                EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                [self.navigationController pushViewController:chatViewController animated:NO];
+            }
+        }];
+    }
+    else if (_chatListVC)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        [self setSelectedViewController:_chatListVC];
+    }
+}
+- (EMConversationType)conversationTypeFromMessageType:(EMChatType)type
+{
+    EMConversationType conversatinType = EMConversationTypeChat;
+    switch (type) {
+        case EMChatTypeChat:
+            conversatinType = EMConversationTypeChat;
+            break;
+        case EMChatTypeGroupChat:
+            conversatinType = EMConversationTypeGroupChat;
+            break;
+        case EMChatTypeChatRoom:
+            conversatinType = EMConversationTypeChatRoom;
+            break;
+        default:
+            break;
+    }
+    return conversatinType;
+}
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    if (userInfo)
+    {
+        if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
+            //            ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+            //            [chatController hideImagePicker];
+        }
+        
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        [viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            if (obj != self)
+            {
+                if (![obj isKindOfClass:[ChatViewController class]])
+                {
+                    [self.navigationController popViewControllerAnimated:NO];
+                }
+                else
+                {
+                    NSString *conversationChatter = userInfo[kConversationChatter];
+                    ChatViewController *chatViewController = (ChatViewController *)obj;
+                    if (![chatViewController.conversation.conversationId isEqualToString:conversationChatter])
+                    {
+                        [self.navigationController popViewControllerAnimated:NO];
+                        EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                        chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                        chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                        [self.navigationController pushViewController:chatViewController animated:NO];
+                    }
+                    *stop= YES;
+                }
+            }
+            else
+            {
+                ChatViewController *chatViewController = nil;
+                NSString *conversationChatter = userInfo[kConversationChatter];
+                EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                chatViewController = [[ChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                [self.navigationController pushViewController:chatViewController animated:NO];
+            }
+        }];
+    }
+    else if (_chatListVC)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        [self setSelectedViewController:_chatListVC];
+    }
+}
 
 @end

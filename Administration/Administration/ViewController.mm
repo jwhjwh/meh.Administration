@@ -342,19 +342,19 @@
             [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
             [USER_DEFAULTS setObject:name forKey:@"name"];
             [USER_DEFAULTS  setObject:_shibieStr forKey:@"udid"];
-            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
-            if (error==nil) {
-                NSLog(@"注册成功");
-            }
+//            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
+//            if (error==nil) {
+//                NSLog(@"注册成功");
+//            }
             [ZxdObject rootController];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                   [self startLocation];
-                [[EMClient sharedClient] loginWithUsername:@"8001"
-                                                  password:@"111111"
+                [[EMClient sharedClient] loginWithUsername:@"gaoxing01"
+                                                  password:@"gaoxing"
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
                                                  NSLog(@"登陆成功");
-                            NSString *userOpenId = @"8001";
+                            NSString *userOpenId = @"gaoxing01";
                             NSString *nickName =[USER_DEFAULTS objectForKey:@"name"];// 用户昵称
 //                            NSString *avatarUrl =[USER_DEFAULTS objectForKey:@"logoImage"];// 用户头像（绝对路径）
                             NSString *avatarUrl = @"http://avatar.csdn.net/E/8/5/2_duruiqi_fx.jpg";// 用户头像（绝对路径）

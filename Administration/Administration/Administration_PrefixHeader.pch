@@ -77,15 +77,22 @@
 #define logokey @"JWHKJ"
 
 /*--------环信储存-----------*/
-#define kHaveUnreadAtMessage    @"kHaveAtMessage"
-#define kAtYouMessage           1
-#define kAtAllMessage           2
 //接状态改变
 #define kRefreshChatList @"RefreshChatList"// 更新会话列表
 #import "UserCacheManager.h"
 #import "AVOSCloud/AVOSCloud.h"
 #import "UserWebManager.h"
-
+// 注册通知
+#define NOTIFY_ADD(_noParamsFunc, _notifyName)  [[NSNotificationCenter defaultCenter] \
+addObserver:self \
+selector:@selector(_noParamsFunc) \
+name:_notifyName \
+object:nil];
+// 消息通知
+#define kSetupUntreatedApplyCount @"setupUntreatedApplyCount"// 未处理的好友申请
+#define kSetupUnreadMessageCount @"setupUnreadMessageCount"// 未读聊天消息数
+#define kConnectionStateChanged @"ChatConnectionStateChanged"// 环信服务器连接状态改变
+#define kRefreshChatList @"RefreshChatList"// 更新会话列表
 // 发送通知
 #define NOTIFY_POST(_notifyName)   [[NSNotificationCenter defaultCenter] postNotificationName:_notifyName object:nil];
 //------------------修改密码界面---------------------------

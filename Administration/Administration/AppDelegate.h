@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,EMChatManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-
+@property (strong, nonatomic) XCQ_tabbarViewController *tabbarController;
 @end
 

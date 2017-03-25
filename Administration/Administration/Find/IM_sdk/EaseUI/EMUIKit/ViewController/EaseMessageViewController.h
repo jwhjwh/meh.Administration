@@ -30,6 +30,7 @@
 @property (nonatomic, copy) NSString    *userId;
 @property (nonatomic, copy) NSString    *nickname;
 
+
 - (instancetype)initWithUserId:(NSString*)userId andNickname:(NSString*)nickname;
 @end
 
@@ -289,7 +290,7 @@ shouldSendHasReadAckForMessage:(EMMessage *)message
 @end
 
 @interface EaseMessageViewController : EaseRefreshTableViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, EMChatManagerDelegate, EMCDDeviceManagerDelegate, EMChatToolbarDelegate, EaseChatBarMoreViewDelegate, EMLocationViewDelegate,EMChatroomManagerDelegate, EaseMessageCellDelegate>
-
+@property (strong, nonatomic) NSDate *lastPlaySoundDate;
 
 @property (weak, nonatomic) id<EaseMessageViewControllerDelegate> delegate;
 

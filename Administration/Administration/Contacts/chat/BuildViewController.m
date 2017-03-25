@@ -9,7 +9,9 @@
 #import "BuildViewController.h"
 #import "AddmemberController.h"
 #import "ZXYAlertView.h"
+
 @interface BuildViewController ()<UITextFieldDelegate,ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
 @property (strong,nonatomic) UITextField *textFleid;
 @property (strong,nonatomic) UIImageView *HeadView;//头像
 @property (nonatomic, strong)UIImage *goodPicture;
@@ -18,7 +20,6 @@
 @implementation BuildViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     self.tabBarController.tabBar.hidden=YES;
 }
 - (void)viewDidLoad {
@@ -75,10 +76,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)rightItem{
-    AddmemberController *addmenVC=[[AddmemberController alloc]init];
-    addmenVC.goursIamge=self.goodPicture;
-    addmenVC.textStr = self.textFleid.text;
-    [self.navigationController pushViewController:addmenVC animated:YES];
+    if (self.textFleid.text.length==0) {
+      [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入群名" andInterval:1.0];
+    }else if (self.goodPicture==nil) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请添加群名图片" andInterval:1.0];
+    }else{
+        AddmemberController *addmenVC=[[AddmemberController alloc]init];
+        addmenVC.goursIamge=self.goodPicture;
+        addmenVC.textStr = self.textFleid.text;
+        [self.navigationController pushViewController:addmenVC animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
