@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "JinnLockViewController.h"
 #import <BaiduMapAPI_Base/BMKMapManager.h>
+
+#import "AppDelegate+EaseMob.h"
 @interface AppDelegate ()
 
 @end
@@ -45,6 +47,7 @@
                                                                                                appearMode:JinnLockAppearModePresent];
             self.window.rootViewController =lockViewController;
         }else{
+          
         [ZxdObject rootController];
         }
    }
@@ -54,10 +57,7 @@
     EMOptions *options = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
     options.apnsCertName = @"chatdemoui_dev";
     [[EMClient sharedClient] initializeSDKWithOptions:options];
-    EMError *error1 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
-    if (!error1) {
-        DDLog(@"登陆成功");
-    }
+
     //创建并初始化一个引擎对象
     BMKMapManager *manager = [[BMKMapManager alloc] init];
     //启动地图引擎
@@ -78,7 +78,31 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
    
 }
-
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if (_tabbarController) {
+    [_tabbarController jumpToChatList];
+   }
+    [self easemobApplication:application didReceiveRemoteNotification:userInfo];
+}
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    if (_tabbarController) {
+        [_tabbarController didReceiveLocalNotification:notification];
+    }
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    [self easemobApplication:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    if (_tabbarController) {
+        [_tabbarController didReceiveUserNotification:response.notification];
+    }
+    completionHandler();
+}
 // App进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
   [[EMClient sharedClient] applicationDidEnterBackground:application];

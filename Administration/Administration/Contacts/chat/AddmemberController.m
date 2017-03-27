@@ -12,6 +12,7 @@
 #import "LVModel.h"
 #import "LVFmdbTool.h"
 
+#import "ChatUIHelper.h"
 #import "RobotManager.h"
 @interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
 
@@ -318,18 +319,22 @@
     NSString *username = [[EMClient sharedClient] currentUsername];
     NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textStr];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        EMError *error = nil;
-        EMGroup *group = [[EMClient sharedClient].groupManager createGroupWithSubject:self.textStr description:nil invitees:source message:messageStr setting:nil error:&error];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf hideHud];
-            if (group && !error) {
-                [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-            }
-            else{
-                [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
-            }
-        });
+        
+     [[EMClient sharedClient].groupManager createGroupWithSubject:self.textStr description:nil invitees:source message:messageStr setting:nil completion:^(EMGroup *aGroup, EMError *aError) {
+         EMGroup *group =aGroup;
+         EMError *error =aError;
+         [self dateimageGrouts:group];
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [weakSelf hideHud];
+             if (group && !error) {
+                 [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
+                 [weakSelf.navigationController popViewControllerAnimated:YES];
+             }
+             else{
+                 [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
+             }
+         });
+        }];
     });
 
     ChatgrouController *chatGrVC=[[ChatgrouController alloc]init];
@@ -651,4 +656,42 @@
 //{
 //    [self tableViewDidTriggerHeaderRefresh];
 //}
+//上传群头像
+-(void)dateimageGrouts:(EMGroup*)group{
+    
+    NSData *pictureData = UIImagePNGRepresentation(self.goursIamge);
+    NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"1"};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+    [manager POST:urlStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyMMddHHmm";
+        NSString *fileName = [formatter stringFromDate:[NSDate date]];
+        NSString *nameStr = @"file";
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD hideHUDForView: self.view animated:NO];        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+        NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
+        if ([status isEqualToString:@"0000"]) {
+            NSString *msgStr = [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"] ];
+          
+         [UserWebManager createUser:group.groupId nickName:self.textStr avatarUrl:msgStr];
+           
+        } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"头像上传失败" andInterval:1.0];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+}
 @end

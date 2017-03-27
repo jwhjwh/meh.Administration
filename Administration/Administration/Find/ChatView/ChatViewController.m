@@ -13,7 +13,7 @@
 //#import "UserProfileViewController.h"
 //#import "UserProfileManager.h"
 //#import "ContactListSelectViewController.h"//
-//#import "ChatDemoHelper.h"
+#import "ChatUIHelper.h"
 
 @interface ChatViewController ()<UIAlertViewDelegate, EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource,EMClientDelegate>
 {
@@ -34,9 +34,16 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden=YES;
     if (self.conversation.type == EMConversationTypeGroupChat) {
+          NSDictionary *ext = self.conversation.ext;
         if ([[self.conversation.ext objectForKey:@"subject"] length])
         {
-            self.title = [self.conversation.ext objectForKey:@"subject"];
+            self.title = [ext  objectForKey:@"subject"];
+        }
+        if (ext && ext[kHaveUnreadAtMessage] != nil)
+        {
+            NSMutableDictionary *newExt = [ext mutableCopy];
+            [newExt removeObjectForKey:kHaveUnreadAtMessage];
+            self.conversation.ext = newExt;
         }
     }
 }
@@ -124,10 +131,11 @@
 
     }
     else{//群聊
-        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
-        [detailButton addTarget:self action:@selector(showGroupDetailAction) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:detailButton];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(showGroupDetailAction)];
+        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+       
     }
 }
 
@@ -254,7 +262,10 @@
 {
     return @{MESSAGE_ATTR_EXPRESSION_ID:easeEmotion.emotionId,MESSAGE_ATTR_IS_BIG_EXPRESSION:@(YES)};
 }
-
+- (void)messageViewControllerMarkAllMessagesAsRead:(EaseMessageViewController *)viewController
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnreadMessageCount" object:nil];
+}
 #pragma mark - EaseMob
 
 #pragma mark - EMClientDelegate

@@ -45,7 +45,7 @@ static char UITableViewEmptyView;
         [carImageView setImage:image];
         [noMessageView addSubview:carImageView];
         
-        UILabel *noInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, frame.size.width, 20)];
+        UILabel *noInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 160, frame.size.width, 20)];
         noInfoLabel.textAlignment = NSTextAlignmentCenter;
         noInfoLabel.textColor = [UIColor lightGrayColor];
         noInfoLabel.text = text;
