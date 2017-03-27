@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"创建角色";
-    
+    self.automaticallyAdjustsScrollViewInsets=NO;
     _hide = YES;
     
     self.view.backgroundColor =GetColor(231, 230, 230, 1);
@@ -54,8 +54,9 @@
     // Do any additional setup after loading the view.
 }
 -(void)InterTableUI{
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,10,self.view.bounds.size.width,380) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,74,self.view.bounds.size.width,380) style:UITableViewStylePlain];
     infonTableview.scrollEnabled =NO;
+  
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     infonTableview.backgroundColor = [UIColor clearColor];

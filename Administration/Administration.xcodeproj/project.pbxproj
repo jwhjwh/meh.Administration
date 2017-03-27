@@ -458,6 +458,7 @@
 		6269A56D1E6E9A810083160E /* ph_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 6269A56B1E6E9A810083160E /* ph_mt.png */; };
 		6269A56E1E6E9A810083160E /* head_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6269A56C1E6E9A810083160E /* head_icon.png */; };
 		6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6269A5711E6EA0150083160E /* DateSubmittedViewController.m */; };
+		626A548D1E862148009ACC00 /* CItyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626A548C1E862148009ACC00 /* CItyViewController.m */; };
 		626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626D96D41E5FCEA2002208D6 /* ModifyViewController.m */; };
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
@@ -1279,6 +1280,8 @@
 		6269A56C1E6E9A810083160E /* head_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = head_icon.png; sourceTree = "<group>"; };
 		6269A5701E6EA0150083160E /* DateSubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateSubmittedViewController.h; sourceTree = "<group>"; };
 		6269A5711E6EA0150083160E /* DateSubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateSubmittedViewController.m; sourceTree = "<group>"; };
+		626A548B1E862148009ACC00 /* CItyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CItyViewController.h; sourceTree = "<group>"; };
+		626A548C1E862148009ACC00 /* CItyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CItyViewController.m; sourceTree = "<group>"; };
 		626D96D31E5FCEA2002208D6 /* ModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyViewController.h; sourceTree = "<group>"; };
 		626D96D41E5FCEA2002208D6 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 		626D96D81E600A7C002208D6 /* 对-未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-未选.png"; sourceTree = "<group>"; };
@@ -2774,6 +2777,8 @@
 			children = (
 				625C91FD1E85150800D9011B /* TrackingViewController.h */,
 				625C91FE1E85150800D9011B /* TrackingViewController.m */,
+				626A548B1E862148009ACC00 /* CItyViewController.h */,
+				626A548C1E862148009ACC00 /* CItyViewController.m */,
 			);
 			path = Tracking;
 			sourceTree = "<group>";
@@ -3716,6 +3721,7 @@
 				1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */,
 				1FDCC34D1E7A93DA002C80FB /* UIView+MJExtension.m in Sources */,
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
+				626A548D1E862148009ACC00 /* CItyViewController.m in Sources */,
 				1F581BB01E763BC4009C6B08 /* StoreprofileController.m in Sources */,
 				6269A5611E6E51E90083160E /* SubmittedTableViewCell.m in Sources */,
 				1FDCC2A91E7A8F2F002C80FB /* UIImage+EMMultiFormat.m in Sources */,
