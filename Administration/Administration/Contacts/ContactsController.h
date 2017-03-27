@@ -21,4 +21,6 @@
 @property (nonatomic) BOOL showTableBlankView;
 - (void)refresh;
 - (void)refreshDataSource;
+- (void)reloadApplyView;
+
 @end

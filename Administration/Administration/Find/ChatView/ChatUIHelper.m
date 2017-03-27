@@ -12,7 +12,7 @@
 
 #import "ChatUIHelper.h"
 
-
+#import "ApplyViewController.h"
 #import "MBProgressHUD.h"
 #import <UserNotifications/UserNotifications.h>
 #import "EaseSDKHelper.h"
@@ -335,10 +335,10 @@ static ChatUIHelper *helper = nil;
         aReason = [NSString stringWithFormat:NSLocalizedString(@"group.applyJoinWithName", @"%@ apply to join groups\'%@\'：%@"), aApplicant, aGroup.subject, aReason];
     }
     
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":aGroup.subject, @"groupId":aGroup.groupId, @"username":aApplicant, @"groupname":aGroup.subject, @"applyMessage":aReason, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleJoinGroup]}];
-//    [[ApplyViewController shareController] addNewApply:dic];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":aGroup.subject, @"groupId":aGroup.groupId, @"username":aApplicant, @"groupname":aGroup.subject, @"applyMessage":aReason, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleJoinGroup]}];
+    [[ApplyViewController shareController] addNewApply:dic];
     
-//    NOTIFY_POST(kSetupUntreatedApplyCount);
+   NOTIFY_POST(kSetupUntreatedApplyCount);
     
 #if !TARGET_IPHONE_SIMULATOR
     [self playSoundAndVibration];
@@ -382,17 +382,17 @@ static ChatUIHelper *helper = nil;
         return;
     }
     
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":@"", @"groupId":aGroupId, @"username":aInviter, @"groupname":@"", @"applyMessage":aMessage, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleGroupInvitation]}];
-//    [[ApplyViewController shareController] addNewApply:dic];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":@"", @"groupId":aGroupId, @"username":aInviter, @"groupname":@"", @"applyMessage":aMessage, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleGroupInvitation]}];
+    [[ApplyViewController shareController] addNewApply:dic];
     
     NOTIFY_POST(kSetupUntreatedApplyCount);
 #if !TARGET_IPHONE_SIMULATOR
     [self playSoundAndVibration];
 #endif
     
-//    if (self.contactViewVC) {
-//        [self.contactViewVC reloadApplyView];
-//    }
+    if (self.contactViewVC) {
+        [self.contactViewVC reloadApplyView];
+    }
 }
 
 #pragma mark - EMContactManagerDelegate
@@ -575,8 +575,7 @@ static ChatUIHelper *helper = nil;
 
 
 - (void)playSoundAndVibration{
-    NSTimeInterval timeInterval = [[NSDate date]
-                                   timeIntervalSinceDate:self.lastPlaySoundDate];
+    NSTimeInterval timeInterval = [[NSDate date]timeIntervalSinceDate:self.lastPlaySoundDate];
     if (timeInterval < kDefaultPlaySoundInterval) {
         //如果距离上次响铃和震动时间太短, 则跳过响铃
         NSLog(@"skip ringing & vibration %@, %@", [NSDate date], self.lastPlaySoundDate);

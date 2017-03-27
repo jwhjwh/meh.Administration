@@ -62,16 +62,17 @@
                     [MBProgressHUD hideHUDForView: self.view animated:NO];
                     [weakself.groupArr removeAllObjects];
                     [weakself.groupArr addObjectsFromArray:groups];
+                    if (self.groupArr.count==0) {
+                        [_tableView addEmptyViewWithImageName:@"" title:@"暂无经群组，创建一个吧～～"];
+                        _tableView.emptyView.hidden = NO;
+                    }
                     [weakself.tableView reloadData];
                 }
             });
         });
     }
-    if (self.groupArr.count==0) {
-    [_tableView addEmptyViewWithImageName:@"" title:@"暂无经群组，创建一个吧～～"];
-        _tableView.emptyView.hidden = NO;
-    }
-    [_tableView reloadData];
+  
+ 
     
 }
 - (void)reloadDataSource

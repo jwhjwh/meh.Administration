@@ -36,5 +36,6 @@
 - (void)asyncGroupFromServer;
 
 - (void)asyncConversationFromDB;
-
+- (void)playSoundAndVibration;
+- (void)showNotificationWithMessage:(EMMessage *)message;
 @end

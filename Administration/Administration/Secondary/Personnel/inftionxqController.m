@@ -232,7 +232,7 @@
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
     //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     //    messageVC.title = @"8001";
-    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:@"zhangchenchong" conversationType:EMConversationTypeChat];
+    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     messageVC.title =  _callName;
     [messageVC.faceView setEmotionManagers:@[manager]];
     // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];

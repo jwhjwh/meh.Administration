@@ -17,11 +17,10 @@
 #import "XCQ_tabbar.h"
 #import <UserNotifications/UserNotifications.h>
 #import "ChatUIHelper.h"
-//两次提示的默认间隔
 static NSString *kMessageType = @"MessageType";
 static NSString *kConversationChatter = @"ConversationChatter";
 static NSString *kGroupName = @"GroupName";
-@interface XCQ_tabbarViewController () <UIAlertViewDelegate>
+@interface XCQ_tabbarViewController () <UIAlertViewDelegate,EMChatManagerDelegate>
 
 {
     ContactsController *_chatListVC;
@@ -119,7 +118,7 @@ static NSString *kGroupName = @"GroupName";
     NOTIFY_ADD(networkChanged, kConnectionStateChanged);
     [self setupUnreadMessageCount];
     [ChatUIHelper shareHelper].contactViewVC = _chatListVC;
-    
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
 }
 
 -(instancetype)initWithNomarImageArr:(NSArray *)nomarImageArr andSelectImageArr:(NSArray *)selectImageArr andtitleArr:(NSArray *)titleArr
@@ -351,5 +350,6 @@ static NSString *kGroupName = @"GroupName";
         [self setSelectedViewController:_chatListVC];
     }
 }
+
 
 @end

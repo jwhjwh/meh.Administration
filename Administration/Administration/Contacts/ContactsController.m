@@ -11,6 +11,8 @@
 #import "CrowdViewController.h"
 #import "BuildViewController.h"
 
+#import "ApplyViewController.h"
+
 #import <UserNotifications/UserNotifications.h>
 #import "ChatUIHelper.h"
 #import "ChatViewController.h"
@@ -625,15 +627,27 @@
     NSString *loginName =  [[EMClient sharedClient] currentUsername];
     if(loginName && [loginName length] > 0)
     {
+        NSLog(@"%@",loginName);
         NSArray * applyArray = [[InvitationManager sharedInstance] applyEmtitiesWithloginUser:loginName];
         [self.dataSource addObjectsFromArray:applyArray];
-        
-    }
-    if (self.dataSource.count>0) {
-        ApplyEntity *entity = [self.dataSource objectAtIndex:0];
-        EMError *error;
-        error = [[EMClient sharedClient].groupManager declineInvitationFromGroup:entity.groupId inviter:entity.applicantUsername reason:nil];
-        [[InvitationManager sharedInstance] removeInvitation:entity loginUser:loginName];
+        NSLog(@"%lu",(unsigned long)applyArray.count);
+        if (self.dataSource.count>0) {
+            for ( ApplyEntity *entity  in self.dataSource) {
+                ApplyStyle applyStyle = [entity.style intValue];
+                EMError *error;
+                if (applyStyle == ApplyStyleJoinGroup){
+                    error = [[EMClient sharedClient].groupManager declineInvitationFromGroup:entity.groupId inviter:entity.applicantUsername reason:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!error) {
+//                        [self.dataSource removeObject:entity];
+                        [[InvitationManager sharedInstance] removeInvitation:entity loginUser:loginName];
+                    }
+                      });
+                }
+            }
+           
+        }
+
     }
 }
 - (NSMutableArray *)dataSource

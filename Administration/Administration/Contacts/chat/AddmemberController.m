@@ -8,10 +8,10 @@
 
 #import "AddmemberController.h"
 #import "inftionxqController.h"
-#import "ChatgrouController.h"
 #import "LVModel.h"
 #import "LVFmdbTool.h"
 
+#import "ChatViewController.h"
 #import "ChatUIHelper.h"
 #import "RobotManager.h"
 @interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
@@ -306,15 +306,15 @@
     }
 }
 -(void)deltButn{
-    _ZJLXTable.editing = !_ZJLXTable.editing;
-    [_loni removeFromSuperview];
-    [_allDelButton removeFromSuperview];
-    [_delButton removeFromSuperview];
+    NSMutableArray *deleteArrarys = [NSMutableArray array];
     NSMutableArray *source = [NSMutableArray array];
      for (NSIndexPath *indexPath in _ZJLXTable.indexPathsForSelectedRows) {
-        [source addObject:self.dataArray[indexPath.row]];
+        [deleteArrarys addObject:self.dataArray[indexPath.row]];
     }
-  
+    for ( id<IConversationModel> model in deleteArrarys) {
+        [source addObject:model.conversation.conversationId];
+    }
+
     __weak AddmemberController *weakSelf = self;
     NSString *username = [[EMClient sharedClient] currentUsername];
     NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textStr];
@@ -328,7 +328,13 @@
              [weakSelf hideHud];
              if (group && !error) {
                  [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
-                 [weakSelf.navigationController popViewControllerAnimated:YES];
+                 _ZJLXTable.editing = !_ZJLXTable.editing;
+                 [_loni removeFromSuperview];
+                 [_allDelButton removeFromSuperview];
+                 [_delButton removeFromSuperview];
+                 ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:group.groupId conversationType:EMConversationTypeGroupChat];
+                 chatController.title = group.subject;
+                 [self.navigationController pushViewController:chatController animated:YES];
              }
              else{
                  [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
@@ -336,9 +342,8 @@
          });
         }];
     });
+  
 
-    ChatgrouController *chatGrVC=[[ChatgrouController alloc]init];
-    [self.navigationController pushViewController:chatGrVC animated:YES];
 }
 -(void)SpotionTap:(UITapGestureRecognizer*)sender{
     
@@ -683,9 +688,7 @@
         NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
         if ([status isEqualToString:@"0000"]) {
             NSString *msgStr = [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"] ];
-          
          [UserWebManager createUser:group.groupId nickName:self.textStr avatarUrl:msgStr];
-           
         } else {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"头像上传失败" andInterval:1.0];
         }
