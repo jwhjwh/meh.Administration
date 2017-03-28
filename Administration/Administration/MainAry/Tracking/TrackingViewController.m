@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"店家跟踪";
-      self.automaticallyAdjustsScrollViewInsets=NO;
+    
     self.view.backgroundColor = [UIColor whiteColor];
     _dateAry = [[NSArray alloc]initWithObjects:@"日期",@"执行人",@"执行品牌",@"执行区域",@"具体的时间规划",@"预期达成的时间",@"可能遇到的问题与困难",@"销售业绩",@"特殊情况",@"总结结论",nil];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,6 +80,7 @@
     infonTableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
     infonTableview.scrollEnabled =NO;
+    self.automaticallyAdjustsScrollViewInsets=NO;
     
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
@@ -101,6 +102,13 @@
     _zhiLabel.text = @"至";
     _zhiLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
     _zhiLabel.textColor = GetColor(96, 96, 96, 1);
+    
+    _cityLaebl = [[UILabel alloc]init];
+    _cityLaebl.font=[UIFont systemFontOfSize:14];
+    _cityLaebl.text = @"请输入内容";
+    _cityLaebl.textColor= GetColor(200, 200, 205, 1);
+    
+    
     [self setExtraCellLineHidden:infonTableview];
 }
 -(void)qishiBtnClick:(UIButton *)btn
@@ -210,10 +218,7 @@
             make.top.mas_equalTo(cell.mas_top).offset(0);
         }];
         if (indexPath.row == 3) {
-            _cityLaebl = [[UILabel alloc]init];
-            _cityLaebl.font=[UIFont systemFontOfSize:14];
-            _cityLaebl.text = @"请输入内容";
-            _cityLaebl.textColor= GetColor(200, 200, 205, 1);
+            
             [cell addSubview:_cityLaebl];
             [_cityLaebl mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);
