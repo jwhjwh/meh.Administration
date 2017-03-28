@@ -349,12 +349,12 @@
             [ZxdObject rootController];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                   [self startLocation];
-                [[EMClient sharedClient] loginWithUsername:@"gaoxing01"
-                                                  password:@"gaoxing"
+                [[EMClient sharedClient] loginWithUsername:@"zhangchenchong"
+                                                  password:@"zxd9010"
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
                                                  NSLog(@"登陆成功");
-                            NSString *userOpenId = @"gaoxing01";
+                            NSString *userOpenId = @"zhangchenchong";
                             NSString *nickName =[USER_DEFAULTS objectForKey:@"name"];// 用户昵称
 //                            NSString *avatarUrl =[USER_DEFAULTS objectForKey:@"logoImage"];// 用户头像（绝对路径）
                             NSString *avatarUrl = @"http://avatar.csdn.net/E/8/5/2_duruiqi_fx.jpg";// 用户头像（绝对路径）

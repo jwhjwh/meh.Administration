@@ -173,6 +173,7 @@
     if (btn.tag == 2000) {
         [alert removeFromSuperview];
     }else{
+        [[EMClient sharedClient] logout:YES];
         [USER_DEFAULTS  setObject:@"" forKey:@"token"];
         ViewController *VC= [[ViewController alloc]init];
         [self presentViewController:VC animated:YES completion:nil];

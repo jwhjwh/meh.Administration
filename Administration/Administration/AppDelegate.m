@@ -9,10 +9,14 @@
 #import "AppDelegate.h"
 #import "JinnLockViewController.h"
 #import <BaiduMapAPI_Base/BMKMapManager.h>
-
+#import <UserNotifications/UserNotifications.h>
 #import "AppDelegate+EaseMob.h"
-@interface AppDelegate ()
+#import "ChatUIHelper.h"
+//两次提示的默认间隔//两次提示的默认间隔
+static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
+@interface AppDelegate ()
+@property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
 @implementation AppDelegate
@@ -56,8 +60,11 @@
     [self.window makeKeyAndVisible];
     EMOptions *options = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
     options.apnsCertName = @"chatdemoui_dev";
+    options.isAutoAcceptGroupInvitation = NO;
     [[EMClient sharedClient] initializeSDKWithOptions:options];
-
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
     //创建并初始化一个引擎对象
     BMKMapManager *manager = [[BMKMapManager alloc] init];
     //启动地图引擎
@@ -67,13 +74,42 @@
         NSLog(@"失败");
     }
     // 3.初始化web缓存配置, appkey需要自己去LeanCloud官网注册存储服务
-  
     [UserWebManager config:launchOptions
                      appId:@"TG0ANDydo2dDbs2mqxSlKCAc-gzGzoHsz"
                     appKey:@"rxuzVo2hSvaidwukDjvxCQpj"];
     return YES;
 }
 
+-(void)didReceiveMessages:(NSArray *)aMessages{
+    
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+
+        switch (state) {
+            case UIApplicationStateActive:
+                 [[ChatUIHelper shareHelper] playSoundAndVibration];
+                break;
+            case UIApplicationStateInactive:
+                 [[ChatUIHelper shareHelper] playSoundAndVibration];                break;
+            case UIApplicationStateBackground:
+                for(EMMessage *message in aMessages){
+
+                [[ChatUIHelper shareHelper] showNotificationWithMessage:message];
+                }   
+                break;
+            default:
+                break;
+        }
+
+
+  
+}
+
+- (void)didReceiveGroupInvitation:(NSString *)aGroupId
+                          inviter:(NSString *)aInviter
+                          message:(NSString *)aMessage
+{
+    NSLog(@"11111");
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
    
