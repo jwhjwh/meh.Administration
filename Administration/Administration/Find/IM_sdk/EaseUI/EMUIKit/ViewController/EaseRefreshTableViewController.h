@@ -28,7 +28,7 @@
 @property (strong, nonatomic) UIView *defaultFooterView;
 
 @property (strong, nonatomic) UITableView *tableView;
-
+@property (strong, nonatomic) UIImageView *blockimage;
 /** @brief tableView的数据源，用户UI显示 */
 @property (strong, nonatomic) NSMutableArray *dataArray;
 

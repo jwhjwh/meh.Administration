@@ -13,6 +13,7 @@
 //#import "UserProfileViewController.h"
 //#import "UserProfileManager.h"
 //#import "ContactListSelectViewController.h"//
+#import "GroupdetailController.h"
 #import "ChatUIHelper.h"
 
 @interface ChatViewController ()<UIAlertViewDelegate, EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource,EMClientDelegate>
@@ -306,8 +307,9 @@
 {
     [self.view endEditing:YES];
     if (self.conversation.type == EMConversationTypeGroupChat) {
-//        ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroupId:self.conversation.conversationId];
-//        [self.navigationController pushViewController:detailController animated:YES];
+        GroupdetailController *  GroupVC = [[GroupdetailController alloc]initWithGroupId:self.conversation.conversationId];
+     
+        [self.navigationController pushViewController:GroupVC animated:YES];
     }
     else if (self.conversation.type == EMConversationTypeChatRoom)
     {

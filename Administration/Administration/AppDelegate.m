@@ -60,20 +60,18 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
     [self.window makeKeyAndVisible];
     EMOptions *options = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
     options.apnsCertName = @"chatdemoui_dev";
-    options.isAutoAcceptGroupInvitation = NO;
+   
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
-    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
-    [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
-    //创建并初始化一个引擎对象
+//创建并初始化一个引擎对象
     BMKMapManager *manager = [[BMKMapManager alloc] init];
     //启动地图引擎
     BOOL success=[manager start:@"KKLHXDn0aDkN9PHzbAKB7cCcArMX1U7h" generalDelegate:nil];
     
     if (!success) {
-        NSLog(@"失败");
+        DDLog(@"失败");
     }
-    // 3.初始化web缓存配置, appkey需要自己去LeanCloud官网注册存储服务
+// 3.初始化web缓存配置, appkey需要自己去LeanCloud官网注册存储服务
     [UserWebManager config:launchOptions
                      appId:@"TG0ANDydo2dDbs2mqxSlKCAc-gzGzoHsz"
                     appKey:@"rxuzVo2hSvaidwukDjvxCQpj"];
@@ -104,12 +102,7 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
   
 }
 
-- (void)didReceiveGroupInvitation:(NSString *)aGroupId
-                          inviter:(NSString *)aInviter
-                          message:(NSString *)aMessage
-{
-    NSLog(@"11111");
-}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
    
