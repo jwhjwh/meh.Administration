@@ -482,6 +482,7 @@
 		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
 		62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */; };
 		62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A0D7361E6FD921003370FA /* ph_mt02.png */; };
+		62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 62DEF9C01E8B492B00BC7D0C /* zx_ico.png */; };
 		62EBA2501E56CB4900F657DB /* SecurityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA24F1E56CB4900F657DB /* SecurityViewController.m */; };
 		62EBA2531E56CB6E00F657DB /* PositioningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2521E56CB6E00F657DB /* PositioningViewController.m */; };
 		62EBA2561E56CB8600F657DB /* VersionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2551E56CB8600F657DB /* VersionViewController.m */; };
@@ -1316,6 +1317,7 @@
 		62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubmittedViewController.h; sourceTree = "<group>"; };
 		62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubmittedViewController.m; sourceTree = "<group>"; };
 		62A0D7361E6FD921003370FA /* ph_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ph_mt02.png; sourceTree = "<group>"; };
+		62DEF9C01E8B492B00BC7D0C /* zx_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zx_ico.png; sourceTree = "<group>"; };
 		62EBA24E1E56CB4900F657DB /* SecurityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityViewController.h; sourceTree = "<group>"; };
 		62EBA24F1E56CB4900F657DB /* SecurityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityViewController.m; sourceTree = "<group>"; };
 		62EBA2511E56CB6E00F657DB /* PositioningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositioningViewController.h; sourceTree = "<group>"; };
@@ -3058,6 +3060,7 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				62DEF9C01E8B492B00BC7D0C /* zx_ico.png */,
 				627B271A1E7680C900392170 /* 创建账号02_1.jpg */,
 				627B271B1E7680C900392170 /* 创建账号02_2.jpg */,
 				627B271C1E7680C900392170 /* 创建账号02_3.jpg */,
@@ -3546,6 +3549,7 @@
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,
 				62656D5B1E52B5700085A2BD /* jingyingpinpai.png in Resources */,
 				1F6CC7CC1E8A338C004FFE96 /* ass_ico.png in Resources */,
+				62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */,
 				1F625C301E7BB41100AFBAD1 /* VoiceSearchFeedback020@2x.png in Resources */,
 				62656D5A1E52B5700085A2BD /* gongsigonggao.png in Resources */,
 				62656D4F1E52B5700085A2BD /* Inder0.png in Resources */,

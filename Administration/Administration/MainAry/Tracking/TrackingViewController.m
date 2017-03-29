@@ -358,7 +358,7 @@ int str;
                 
                 NSLog(@"执行店家");
             }
-            break;
+            break; 
     }
     
 
