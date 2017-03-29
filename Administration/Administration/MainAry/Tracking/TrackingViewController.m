@@ -9,13 +9,16 @@
 #import "TrackingViewController.h"
 #import "PW_DatePickerView.h"
 #import "CItyViewController.h"
-@interface TrackingViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate>
+
+int str;
+@interface TrackingViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate,UITextFieldDelegate>
 {
     UITableView *infonTableview;
     
 }
 
 @property (strong,nonatomic) NSArray *dateAry;
+
 @property (strong,nonatomic) UIButton *qishiBtn;
 @property (strong,nonatomic) UIButton *jieshuBtn;
 @property (strong,nonatomic) UILabel* zhiLabel;
@@ -24,7 +27,6 @@
 @property (nonatomic,strong) NSString *jieshuStr;
 @property (strong,nonatomic) UILabel* dateLabel;
 @property (nonatomic,strong) UITextField *codeField;
-@property (nonatomic,strong) UILabel *cityLaebl;
 
 
 
@@ -50,9 +52,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"店家跟踪";
-    
+    str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
+    switch (str) {
+            case 1:
+            //总监
+            _dateAry = [[NSArray alloc]initWithObjects:@"日期",@"执行人",@"执行品牌",@"执行区域",@"具体的时间规划",@"预期达成的时间",@"可能遇到的问题与困难",@"销售业绩",@"特殊情况",@"总结结论",nil];
+            break;
+        default:
+             _dateAry = [[NSArray alloc]initWithObjects:@"日期",@"执行人",@"执行区域",@"执行店家",@"具体的时间规划",@"预期达成的时间",@"可能遇到的问题与困难",@"销售业绩",@"特殊情况",@"总结结论",nil];
+            break;
+    }
     self.view.backgroundColor = [UIColor whiteColor];
-    _dateAry = [[NSArray alloc]initWithObjects:@"日期",@"执行人",@"执行品牌",@"执行区域",@"具体的时间规划",@"预期达成的时间",@"可能遇到的问题与困难",@"销售业绩",@"特殊情况",@"总结结论",nil];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -103,10 +113,7 @@
     _zhiLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
     _zhiLabel.textColor = GetColor(96, 96, 96, 1);
     
-    _cityLaebl = [[UILabel alloc]init];
-    _cityLaebl.font=[UIFont systemFontOfSize:14];
-    _cityLaebl.text = @"请输入内容";
-    _cityLaebl.textColor= GetColor(200, 200, 205, 1);
+    
     
     
     [self setExtraCellLineHidden:infonTableview];
@@ -136,7 +143,6 @@
             break;
         case DateTypeOfEnd:
             if ([_qishiStr compare:dateString options:NSNumericSearch] == NSOrderedDescending){
-                
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择正确的时间" andInterval:1.0];
             }else
             {
@@ -146,8 +152,6 @@
         default:
             break;
     }
-
-    
 }
 
 
@@ -162,6 +166,21 @@
     if (indexPath.row == 0) {
         return 30;
     }
+    switch (str) {
+        case 1:
+            if (indexPath.row == 3) {
+                return 30;
+            }
+            break;
+        default:
+            if (indexPath.row == 2 ) {
+                return 30;
+            }else if (indexPath.row == 3){
+                return 30;
+            }
+            break;
+    }
+
     return 50;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -177,7 +196,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }
-        
     }
     if (indexPath.row == 0) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -211,76 +229,146 @@
         _dateLabel.textColor = GetColor(96, 96, 96, 1);
         _dateLabel.text = _dateAry[indexPath.row];
         [cell addSubview:_dateLabel];
-        [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(cell.mas_width).offset(-15);
-            make.height.mas_offset(cell.frame.size.height/2);
-            make.left.mas_equalTo(cell.mas_left).offset(15);
-            make.top.mas_equalTo(cell.mas_top).offset(0);
-        }];
-        if (indexPath.row == 3) {
-            
-            [cell addSubview:_cityLaebl];
-            [_cityLaebl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);
-                make.left.mas_equalTo(cell.mas_left).offset(15);
-                make.bottom.mas_equalTo(cell.mas_bottom).offset(-5);
-                make.width.mas_equalTo(cell.mas_width).offset(-15);
-            }];
-        }else{
-            _codeField =[[UITextField alloc]init];
-            _codeField.backgroundColor=[UIColor whiteColor];
-            _codeField.font = [UIFont boldSystemFontOfSize:13.0f];
-            _codeField.clearButtonMode = UITextFieldViewModeWhileEditing;
-            _codeField.adjustsFontSizeToFitWidth = YES;
-            [_codeField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
-            _codeField.tag = row;
-            _codeField.placeholder =@"请输入内容";
-            
-            if (indexPath.row == 3) {
-                _codeField.enabled = NO;
-            }
-            [cell addSubview:_codeField];
-            [_codeField mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);
-                make.left.mas_equalTo(cell.mas_left).offset(15);
-                make.bottom.mas_equalTo(cell.mas_bottom).offset(-5);
-                make.width.mas_equalTo(cell.mas_width).offset(-15);
-            }];
+        _codeField = [[UITextField alloc]init];
+        _codeField.font = [UIFont systemFontOfSize:14.0f];
+        _codeField.placeholder = @"请输入内容";
+        _codeField.tag = row;
+         _codeField.delegate = self;
+        [_codeField addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
+        [cell addSubview:_codeField];
+            switch (str) {
+            case 1:
+                    if (indexPath.row == 1) {
+                        [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.width.mas_equalTo(cell.mas_width).offset(-15);
+                            make.height.mas_offset(cell.frame.size.height/2);
+                            make.left.mas_equalTo(cell.mas_left).offset(15);
+                            make.top.mas_equalTo(cell.mas_top).offset(0);
+                        }];
+                        [_codeField mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);
+                            make.bottom.mas_equalTo(cell.mas_bottom).offset(0);
+                            make.left.mas_equalTo(cell.mas_left).offset(15);
+                            make.right.mas_equalTo(cell.right).offset(0);
+                        }];
 
-            }
+                    }else if (indexPath.row == 3) {
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.width.mas_equalTo(cell.mas_width).offset(-15);
+                        make.height.mas_offset(cell.frame.size.height/2);
+                        make.left.mas_equalTo(cell.mas_left).offset(15);
+                        make.centerY.mas_equalTo(cell.mas_centerY).offset(0);
+                    }];
+                }
+                else{
+                    [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.width.mas_equalTo(cell.mas_width).offset(-15);
+                        make.height.mas_offset(cell.frame.size.height/2);
+                        make.left.mas_equalTo(cell.mas_left).offset(15);
+                        make.top.mas_equalTo(cell.mas_top).offset(0);
+                    }];
+                    
+                    [_codeField mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);
+                        make.bottom.mas_equalTo(cell.mas_bottom).offset(0);
+                        make.left.mas_equalTo(cell.mas_left).offset(15);
+                        make.right.mas_equalTo(cell.right).offset(0);
+                    }];
+
+
+                }
+                break;
+            default:
+                    if (indexPath.row == 1) {
+                        [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.width.mas_equalTo(cell.mas_width).offset(-15);
+                            make.height.mas_offset(cell.frame.size.height/2);
+                            make.left.mas_equalTo(cell.mas_left).offset(15);
+                            make.top.mas_equalTo(cell.mas_top).offset(0);
+                        }];
+                        _codeField = [[UITextField alloc]init];
+                        _codeField.font = [UIFont systemFontOfSize:14.0f];
+                        _codeField.placeholder = @"请输入内容";
+                        [cell addSubview:_codeField];
+                        [_codeField mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);
+                            make.bottom.mas_equalTo(cell.mas_bottom).offset(0);
+                            make.left.mas_equalTo(cell.mas_left).offset(15);
+                            make.right.mas_equalTo(cell.right).offset(0);
+                        }];
+                        
+                    }else if (indexPath.row == 3 ) {
+                           cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                           [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                               make.width.mas_equalTo(cell.mas_width).offset(-15);
+                               make.height.mas_offset(cell.frame.size.height/2);
+                               make.left.mas_equalTo(cell.mas_left).offset(15);
+                               make.centerY.mas_equalTo(cell.mas_centerY).offset(0);
+                           }];
+                       }
+                       else if (indexPath.row ==2){
+                           cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                           [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                               make.width.mas_equalTo(cell.mas_width).offset(-15);
+                               make.height.mas_offset(cell.frame.size.height/2);
+                               make.left.mas_equalTo(cell.mas_left).offset(15);
+                               make.centerY.mas_equalTo(cell.mas_centerY).offset(0);
+                           }];
+                       }
+                       else{
+                           [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                               make.width.mas_equalTo(cell.mas_width).offset(-15);
+                               make.height.mas_offset(cell.frame.size.height/2);
+                               make.left.mas_equalTo(cell.mas_left).offset(15);
+                               make.top.mas_equalTo(cell.mas_top).offset(0);
+                           }];
+                           
+                       }
+                break;
+               }
         }
 
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 3) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        CItyViewController *cityVC = [[CItyViewController alloc]init];
-        [cityVC returnText:^(NSString *showText) {
-            NSLog(@"showtext:%@",showText);
-            if (showText.length>0) {
-                _cityLaebl.text = showText;
-                _cityLaebl.textColor = [UIColor blackColor];
-            }else{
-                _cityLaebl.text = @"请输入内容";
-                _cityLaebl.textColor= GetColor(200, 200, 205, 1);
+    switch (str) {
+        case 1:
+            if (indexPath.row == 3) {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                CItyViewController *cityVC = [[CItyViewController alloc]init];
+                [cityVC returnText:^(NSString *showText) {
+                    NSLog(@"showtext:%@",showText);
+                                        //代码块中没有第二个视图控制器，所以不会造成循环引用
+                }];
+                [self.navigationController showViewController:cityVC sender:nil];
             }
-            
-            
-         
-                        //代码块中没有第二个视图控制器，所以不会造成循环引用
-        }];
-         [self.navigationController showViewController:cityVC sender:nil];
+            break;
+        default:
+            if (indexPath.row == 2) {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                CItyViewController *cityVC = [[CItyViewController alloc]init];
+                [cityVC returnText:^(NSString *showText) {
+                    NSLog(@"showtext:%@",showText);
+                                        //代码块中没有第二个视图控制器，所以不会造成循环引用
+                }];
+                [self.navigationController showViewController:cityVC sender:nil];
+            }else if (indexPath.row == 3) {
+                
+                NSLog(@"执行店家");
+            }
+            break;
     }
+    
 
 }
-- (void)textFieldWithText:(UITextField *)textField
-{
+- (void)PersonFieldText:(UITextField *)textField{
     NSLog(@"%ld",(long)textField.tag);
     switch (textField.tag) {
         case 1:
             if (textField.text.length>0) {
+                NSLog(@"%@",textField.text);
                 _zxrStr = textField.text;
             }
             break;
@@ -323,6 +411,7 @@
         default:
             break;
     }
+    
 
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
