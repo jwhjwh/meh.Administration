@@ -180,6 +180,16 @@
 		1F6833BC1E72966700F74D50 /* businessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6833BB1E72966700F74D50 /* businessViewController.m */; };
 		1F6833BF1E72A08700F74D50 /* busableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6833BE1E72A08700F74D50 /* busableController.m */; };
 		1F6833C31E72A49700F74D50 /* FillinfoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F6833C21E72A49700F74D50 /* FillinfoViewController.mm */; };
+		1F6AB7E31E8B978C006CB015 /* UIButton+BBTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E01E8B978C006CB015 /* UIButton+BBTButton.m */; };
+		1F6AB7E41E8B978C006CB015 /* UIView+EXTENSION.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E21E8B978C006CB015 /* UIView+EXTENSION.m */; };
+		1F6AB7EF1E8B979F006CB015 /* WFPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E61E8B979F006CB015 /* WFPhotosViewController.m */; };
+		1F6AB7F01E8B979F006CB015 /* WFTailoringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E81E8B979F006CB015 /* WFTailoringViewController.m */; };
+		1F6AB7F11E8B979F006CB015 /* WFPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7EA1E8B979F006CB015 /* WFPhotoAlbum.m */; };
+		1F6AB7F21E8B979F006CB015 /* WFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7EC1E8B979F006CB015 /* WFCollectionViewCell.m */; };
+		1F6AB7F31E8B979F006CB015 /* WFCacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7EE1E8B979F006CB015 /* WFCacheModel.m */; };
+		1F6AB7FB1E8B9C8A006CB015 /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7F61E8B9C8A006CB015 /* DrawView.m */; };
+		1F6AB7FC1E8B9C8A006CB015 /* PopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7F81E8B9C8A006CB015 /* PopView.m */; };
+		1F6AB7FD1E8B9C8A006CB015 /* WBSPopShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7FA1E8B9C8A006CB015 /* WBSPopShareView.m */; };
 		1F6CC7CA1E8A1585004FFE96 /* yq_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CC7C91E8A1585004FFE96 /* yq_ico.png */; };
 		1F6CC7CC1E8A338C004FFE96 /* ass_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CC7CB1E8A338C004FFE96 /* ass_ico.png */; };
 		1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E31311E5425F6006069ED /* XLsn0wLoop.m */; };
@@ -766,6 +776,26 @@
 		1F6833BE1E72A08700F74D50 /* busableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = busableController.m; sourceTree = "<group>"; };
 		1F6833C11E72A49700F74D50 /* FillinfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillinfoViewController.h; sourceTree = "<group>"; };
 		1F6833C21E72A49700F74D50 /* FillinfoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FillinfoViewController.mm; sourceTree = "<group>"; };
+		1F6AB7DF1E8B978C006CB015 /* UIButton+BBTButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+BBTButton.h"; sourceTree = "<group>"; };
+		1F6AB7E01E8B978C006CB015 /* UIButton+BBTButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+BBTButton.m"; sourceTree = "<group>"; };
+		1F6AB7E11E8B978C006CB015 /* UIView+EXTENSION.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EXTENSION.h"; sourceTree = "<group>"; };
+		1F6AB7E21E8B978C006CB015 /* UIView+EXTENSION.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EXTENSION.m"; sourceTree = "<group>"; };
+		1F6AB7E51E8B979F006CB015 /* WFPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFPhotosViewController.h; sourceTree = "<group>"; };
+		1F6AB7E61E8B979F006CB015 /* WFPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFPhotosViewController.m; sourceTree = "<group>"; };
+		1F6AB7E71E8B979F006CB015 /* WFTailoringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFTailoringViewController.h; sourceTree = "<group>"; };
+		1F6AB7E81E8B979F006CB015 /* WFTailoringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFTailoringViewController.m; sourceTree = "<group>"; };
+		1F6AB7E91E8B979F006CB015 /* WFPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFPhotoAlbum.h; sourceTree = "<group>"; };
+		1F6AB7EA1E8B979F006CB015 /* WFPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFPhotoAlbum.m; sourceTree = "<group>"; };
+		1F6AB7EB1E8B979F006CB015 /* WFCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFCollectionViewCell.h; sourceTree = "<group>"; };
+		1F6AB7EC1E8B979F006CB015 /* WFCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFCollectionViewCell.m; sourceTree = "<group>"; };
+		1F6AB7ED1E8B979F006CB015 /* WFCacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFCacheModel.h; sourceTree = "<group>"; };
+		1F6AB7EE1E8B979F006CB015 /* WFCacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFCacheModel.m; sourceTree = "<group>"; };
+		1F6AB7F51E8B9C8A006CB015 /* DrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawView.h; sourceTree = "<group>"; };
+		1F6AB7F61E8B9C8A006CB015 /* DrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawView.m; sourceTree = "<group>"; };
+		1F6AB7F71E8B9C8A006CB015 /* PopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopView.h; sourceTree = "<group>"; };
+		1F6AB7F81E8B9C8A006CB015 /* PopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopView.m; sourceTree = "<group>"; };
+		1F6AB7F91E8B9C8A006CB015 /* WBSPopShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSPopShareView.h; sourceTree = "<group>"; };
+		1F6AB7FA1E8B9C8A006CB015 /* WBSPopShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBSPopShareView.m; sourceTree = "<group>"; };
 		1F6CC7C91E8A1585004FFE96 /* yq_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yq_ico.png; sourceTree = "<group>"; };
 		1F6CC7CB1E8A338C004FFE96 /* ass_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ass_ico.png; sourceTree = "<group>"; };
 		1F6E31301E5425F6006069ED /* XLsn0wLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLsn0wLoop.h; sourceTree = "<group>"; };
@@ -1746,6 +1776,49 @@
 			name = mobao;
 			sourceTree = "<group>";
 		};
+		1F6AB7DD1E8B975C006CB015 /* PhotoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				1F6AB7E51E8B979F006CB015 /* WFPhotosViewController.h */,
+				1F6AB7E61E8B979F006CB015 /* WFPhotosViewController.m */,
+				1F6AB7E71E8B979F006CB015 /* WFTailoringViewController.h */,
+				1F6AB7E81E8B979F006CB015 /* WFTailoringViewController.m */,
+				1F6AB7E91E8B979F006CB015 /* WFPhotoAlbum.h */,
+				1F6AB7EA1E8B979F006CB015 /* WFPhotoAlbum.m */,
+				1F6AB7EB1E8B979F006CB015 /* WFCollectionViewCell.h */,
+				1F6AB7EC1E8B979F006CB015 /* WFCollectionViewCell.m */,
+				1F6AB7ED1E8B979F006CB015 /* WFCacheModel.h */,
+				1F6AB7EE1E8B979F006CB015 /* WFCacheModel.m */,
+				1F6AB7F41E8B9C8A006CB015 /* CustomView */,
+				1F6AB7DE1E8B978C006CB015 /* Categoies */,
+			);
+			path = PhotoPicker;
+			sourceTree = "<group>";
+		};
+		1F6AB7DE1E8B978C006CB015 /* Categoies */ = {
+			isa = PBXGroup;
+			children = (
+				1F6AB7DF1E8B978C006CB015 /* UIButton+BBTButton.h */,
+				1F6AB7E01E8B978C006CB015 /* UIButton+BBTButton.m */,
+				1F6AB7E11E8B978C006CB015 /* UIView+EXTENSION.h */,
+				1F6AB7E21E8B978C006CB015 /* UIView+EXTENSION.m */,
+			);
+			path = Categoies;
+			sourceTree = "<group>";
+		};
+		1F6AB7F41E8B9C8A006CB015 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				1F6AB7F51E8B9C8A006CB015 /* DrawView.h */,
+				1F6AB7F61E8B9C8A006CB015 /* DrawView.m */,
+				1F6AB7F71E8B9C8A006CB015 /* PopView.h */,
+				1F6AB7F81E8B9C8A006CB015 /* PopView.m */,
+				1F6AB7F91E8B9C8A006CB015 /* WBSPopShareView.h */,
+				1F6AB7FA1E8B9C8A006CB015 /* WBSPopShareView.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		1F6E312F1E5425F6006069ED /* XLsn0wLoop */ = {
 			isa = PBXGroup;
 			children = (
@@ -2703,6 +2776,7 @@
 				62656C291E529BC10085A2BD /* IQKeyboardManager */,
 				62656BE41E5296390085A2BD /* Alert */,
 				62656B751E5295D70085A2BD /* Masonry */,
+				1F6AB7DD1E8B975C006CB015 /* PhotoPicker */,
 				1F33F1231E617820000733F8 /* NSDictionary+DeleteNull.h */,
 				1F33F1241E617820000733F8 /* NSDictionary+DeleteNull.m */,
 			);
@@ -3683,6 +3757,7 @@
 				1FDCC2BD1E7A8F2F002C80FB /* EaseConversationModel.m in Sources */,
 				1FDCC2AA1E7A8F2F002C80FB /* UIImage+EMWebP.m in Sources */,
 				62EBA2601E56CC1500F657DB /* SearchViewController.m in Sources */,
+				1F6AB7F11E8B979F006CB015 /* WFPhotoAlbum.m in Sources */,
 				1FDCC2751E7A8F2F002C80FB /* EMAudioRecorderUtil.m in Sources */,
 				1FDCC2801E7A8F2F002C80FB /* MBProgressHUD+Add.m in Sources */,
 				1FDCC2C01E7A8F2F002C80FB /* NSDate+Category.m in Sources */,
@@ -3696,8 +3771,10 @@
 				1FDCC2B91E7A8F2F002C80FB /* PSTGridLayoutRow.m in Sources */,
 				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,
 				1FDCC2B31E7A8F2F002C80FB /* PSTCollectionViewFlowLayout.m in Sources */,
+				1F6AB7FD1E8B9C8A006CB015 /* WBSPopShareView.m in Sources */,
 				620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */,
 				1F820FEF1E86028F00E11F17 /* AppDelegate+EaseMobDebug.m in Sources */,
+				1F6AB7E31E8B978C006CB015 /* UIButton+BBTButton.m in Sources */,
 				1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */,
 				1FDCC2A61E7A8F2F002C80FB /* NSData+EMImageContentType.m in Sources */,
 				F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */,
@@ -3721,6 +3798,7 @@
 				1FDCC2DA1E7A8F2F002C80FB /* EaseBubbleView+Image.m in Sources */,
 				6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */,
 				1FDCC2D11E7A8F2F002C80FB /* EaseUsersListViewController.m in Sources */,
+				1F6AB7E41E8B978C006CB015 /* UIView+EXTENSION.m in Sources */,
 				1FDCC2E71E7A8F2F002C80FB /* EaseRecordView.m in Sources */,
 				1F4DBB551E58426700733CF7 /* MessageController.m in Sources */,
 				1FDCC2B71E7A8F2F002C80FB /* PSTGridLayoutInfo.m in Sources */,
@@ -3769,6 +3847,7 @@
 				1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */,
 				1FDCC2B11E7A8F2F002C80FB /* PSTCollectionViewController.m in Sources */,
 				1F6833B81E724FF000F74D50 /* WFEmptyTableView.m in Sources */,
+				1F6AB7FC1E8B9C8A006CB015 /* PopView.m in Sources */,
 				1FDCC2C91E7A8F2F002C80FB /* EaseEmojiEmoticons.m in Sources */,
 				62656B901E5295D70085A2BD /* MASConstraint.m in Sources */,
 				1FDCC2741E7A8F2F002C80FB /* EMAudioPlayerUtil.m in Sources */,
@@ -3792,6 +3871,7 @@
 				1FDCC2D31E7A8F2F002C80FB /* EaseUserCell.m in Sources */,
 				1F4DCE7B1E88F59F00C80395 /* ApplyFriendCell.m in Sources */,
 				1FDCC2971E7A8F2F002C80FB /* MWGridViewController.m in Sources */,
+				1F6AB7F21E8B979F006CB015 /* WFCollectionViewCell.m in Sources */,
 				62EBA2671E56CCCE00F657DB /* PersonListViewController.m in Sources */,
 				1FDCC2CE1E7A8F2F002C80FB /* EaseLocationViewController.m in Sources */,
 				1F803FF31E52F848005F53CE /* ZXDNetworking.m in Sources */,
@@ -3817,6 +3897,7 @@
 				1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */,
 				625355771E67AF8F0041F123 /* CityChoose.m in Sources */,
 				1FDCC29B1E7A8F2F002C80FB /* MWTapDetectingView.m in Sources */,
+				1F6AB7F31E8B979F006CB015 /* WFCacheModel.m in Sources */,
 				1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */,
 				1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */,
 				62EBA2501E56CB4900F657DB /* SecurityViewController.m in Sources */,
@@ -3855,6 +3936,7 @@
 				1FDCC27B1E7A8F2F002C80FB /* amrFileCodec.mm in Sources */,
 				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
 				1F4DCE781E88F55C00C80395 /* ApplyViewController.m in Sources */,
+				1F6AB7F01E8B979F006CB015 /* WFTailoringViewController.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				1F5363D61E81031B00538B68 /* UserWebManager.m in Sources */,
 				1FDCC2AF1E7A8F2F002C80FB /* PSTCollectionView.m in Sources */,
@@ -3878,6 +3960,7 @@
 				1FDCC2DB1E7A8F2F002C80FB /* EaseBubbleView+Location.m in Sources */,
 				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
+				1F6AB7EF1E8B979F006CB015 /* WFPhotosViewController.m in Sources */,
 				62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */,
 				1FDCC2C21E7A8F2F002C80FB /* NSString+Valid.m in Sources */,
 				1FDCC2A21E7A8F2F002C80FB /* EMSDWebImageDownloaderOperation.m in Sources */,
@@ -3912,6 +3995,7 @@
 				1F4DBB501E583BB200733CF7 /* GonggaoxqController.m in Sources */,
 				1FDCC3461E7A93DA002C80FB /* MJRefreshGifHeader.m in Sources */,
 				F736D1681E589288003A1A39 /* MesgeTableViewCell.m in Sources */,
+				1F6AB7FB1E8B9C8A006CB015 /* DrawView.m in Sources */,
 				1FDCC2E41E7A8F2F002C80FB /* EaseFaceView.m in Sources */,
 				1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */,
 				6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */,

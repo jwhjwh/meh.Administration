@@ -10,4 +10,5 @@
 
 @interface GroupdetailController : UIViewController
 - (instancetype)initWithGroupId:(NSString *)chatGroupId;
+
 @end

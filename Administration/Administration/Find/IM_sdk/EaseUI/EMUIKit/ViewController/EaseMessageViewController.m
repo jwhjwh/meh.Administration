@@ -346,7 +346,7 @@
     }
     
     CGRect tableFrame = self.tableView.frame;
-    tableFrame.size.height = self.view.frame.size.height+49 - _chatToolbar.frame.size.height;
+    tableFrame.size.height = self.view.frame.size.height - _chatToolbar.frame.size.height;
     self.tableView.frame = tableFrame;
     if ([chatToolbar isKindOfClass:[EaseChatToolbar class]]) {
         [(EaseChatToolbar *)self.chatToolbar setDelegate:self];
@@ -380,7 +380,7 @@
 {
     if (self.tableView.contentSize.height > self.tableView.frame.size.height)
     {
-        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height+49 - self.tableView.frame.size.height);
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
         [self.tableView setContentOffset:offset animated:animated];
     }
 }
@@ -1270,7 +1270,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         CGRect rect = self.tableView.frame;
         rect.origin.y = 0;
-        rect.size.height = self.view.frame.size.height+49 - toHeight;
+        rect.size.height = self.view.frame.size.height - toHeight;
         self.tableView.frame = rect;
     }];
     

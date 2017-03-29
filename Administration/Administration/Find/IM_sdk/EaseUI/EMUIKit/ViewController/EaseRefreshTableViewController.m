@@ -36,7 +36,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificiation:) name:@"changeimage" object:nil];
     // Uncomment the following line to preserve selection between presentations.
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
@@ -60,12 +62,19 @@
     _showRefreshFooter = NO;
     _showTableBlankView = NO;
 }
+- (void)receiveNotificiation:(NSNotification*)sender{
+    self.blockimage.image =  [UIImage imageWithData:[[NSData alloc]initWithBase64Encoding:sender.userInfo[@"blockimage"]]];
 
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeimage" object:nil];
+    
+}
 #pragma mark - setter
 
 - (void)setShowRefreshHeader:(BOOL)showRefreshHeader
