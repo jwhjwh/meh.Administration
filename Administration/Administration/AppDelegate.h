@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,EMChatManagerDelegate,EMGroupManagerDelegate,EMContactManagerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,EMChatManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

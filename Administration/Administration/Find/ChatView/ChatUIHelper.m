@@ -389,10 +389,6 @@ static ChatUIHelper *helper = nil;
 #if !TARGET_IPHONE_SIMULATOR
     [self playSoundAndVibration];
 #endif
-    
-    if (self.contactViewVC) {
-        [self.contactViewVC reloadApplyView];
-    }
 }
 
 #pragma mark - EMContactManagerDelegate

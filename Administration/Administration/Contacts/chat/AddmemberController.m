@@ -319,8 +319,15 @@
     NSString *username = [[EMClient sharedClient] currentUsername];
     NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textStr];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-     [[EMClient sharedClient].groupManager createGroupWithSubject:self.textStr description:nil invitees:source message:messageStr setting:nil completion:^(EMGroup *aGroup, EMError *aError) {
+     EMGroupOptions *setting = [[EMGroupOptions alloc] init];
+     setting.IsInviteNeedConfirm=NO;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+        [formatter setDateFormat:@"YYYY年MM月dd日"];
+        //----------将nsdate按formatter格式转成nsstring
+        NSString *nowtimeStr = [formatter stringFromDate:[NSDate date]];
+        NSString *description=[NSString stringWithFormat:@"本群创建于%@",nowtimeStr];
+     [[EMClient sharedClient].groupManager createGroupWithSubject:self.textStr description:description invitees:source message:messageStr setting:setting completion:^(EMGroup *aGroup, EMError *aError) {
          EMGroup *group =aGroup;
          EMError *error =aError;
          [self dateimageGrouts:group];
@@ -337,7 +344,7 @@
                  [self.navigationController pushViewController:chatController animated:YES];
              }
              else{
-                 [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
+            [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
              }
          });
         }];

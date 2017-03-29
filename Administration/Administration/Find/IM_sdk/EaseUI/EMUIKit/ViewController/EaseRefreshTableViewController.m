@@ -41,8 +41,13 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
-    
+    self.blockimage=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    if (!([USER_DEFAULTS  objectForKey:@"blockImage"]==nil)){
+    self.blockimage.image =  [UIImage imageWithData:[[NSData alloc]initWithBase64Encoding:[USER_DEFAULTS  objectForKey:@"blockImage"]]];
+    }
+    [self.view addSubview:self.blockimage];
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:self.style];
+    _tableView.backgroundColor =[UIColor clearColor];
     _tableView.accessibilityIdentifier = @"table_view";
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.delegate = self;
