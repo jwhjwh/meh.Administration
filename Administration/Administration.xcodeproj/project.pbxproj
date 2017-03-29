@@ -183,7 +183,6 @@
 		1F6AB7E31E8B978C006CB015 /* UIButton+BBTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E01E8B978C006CB015 /* UIButton+BBTButton.m */; };
 		1F6AB7E41E8B978C006CB015 /* UIView+EXTENSION.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E21E8B978C006CB015 /* UIView+EXTENSION.m */; };
 		1F6AB7EF1E8B979F006CB015 /* WFPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E61E8B979F006CB015 /* WFPhotosViewController.m */; };
-		1F6AB7F01E8B979F006CB015 /* WFTailoringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7E81E8B979F006CB015 /* WFTailoringViewController.m */; };
 		1F6AB7F11E8B979F006CB015 /* WFPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7EA1E8B979F006CB015 /* WFPhotoAlbum.m */; };
 		1F6AB7F21E8B979F006CB015 /* WFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7EC1E8B979F006CB015 /* WFCollectionViewCell.m */; };
 		1F6AB7F31E8B979F006CB015 /* WFCacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB7EE1E8B979F006CB015 /* WFCacheModel.m */; };
@@ -510,6 +509,7 @@
 		F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F741B3041E76DBB9002A1D55 /* CLZoomPickerView.m */; };
 		F741B3081E76DDAA002A1D55 /* CLStaticTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F741B3071E76DDAA002A1D55 /* CLStaticTextCell.m */; };
 		F74A7BCD1E6EF22B004A7942 /* ZXYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */; };
+		F79C2ACD1E8BEE450027E10C /* WFTailoringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79C2ACC1E8BEE450027E10C /* WFTailoringViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -783,8 +783,6 @@
 		1F6AB7E21E8B978C006CB015 /* UIView+EXTENSION.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EXTENSION.m"; sourceTree = "<group>"; };
 		1F6AB7E51E8B979F006CB015 /* WFPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFPhotosViewController.h; sourceTree = "<group>"; };
 		1F6AB7E61E8B979F006CB015 /* WFPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFPhotosViewController.m; sourceTree = "<group>"; };
-		1F6AB7E71E8B979F006CB015 /* WFTailoringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFTailoringViewController.h; sourceTree = "<group>"; };
-		1F6AB7E81E8B979F006CB015 /* WFTailoringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFTailoringViewController.m; sourceTree = "<group>"; };
 		1F6AB7E91E8B979F006CB015 /* WFPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFPhotoAlbum.h; sourceTree = "<group>"; };
 		1F6AB7EA1E8B979F006CB015 /* WFPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFPhotoAlbum.m; sourceTree = "<group>"; };
 		1F6AB7EB1E8B979F006CB015 /* WFCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1382,6 +1380,8 @@
 		F741B3071E76DDAA002A1D55 /* CLStaticTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLStaticTextCell.m; sourceTree = "<group>"; };
 		F74A7BCB1E6EF22B004A7942 /* ZXYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXYAlertView.h; sourceTree = "<group>"; };
 		F74A7BCC1E6EF22B004A7942 /* ZXYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXYAlertView.m; sourceTree = "<group>"; };
+		F79C2ACB1E8BEE450027E10C /* WFTailoringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFTailoringViewController.h; sourceTree = "<group>"; };
+		F79C2ACC1E8BEE450027E10C /* WFTailoringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFTailoringViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1783,8 +1783,8 @@
 			children = (
 				1F6AB7E51E8B979F006CB015 /* WFPhotosViewController.h */,
 				1F6AB7E61E8B979F006CB015 /* WFPhotosViewController.m */,
-				1F6AB7E71E8B979F006CB015 /* WFTailoringViewController.h */,
-				1F6AB7E81E8B979F006CB015 /* WFTailoringViewController.m */,
+				F79C2ACB1E8BEE450027E10C /* WFTailoringViewController.h */,
+				F79C2ACC1E8BEE450027E10C /* WFTailoringViewController.m */,
 				1F6AB7E91E8B979F006CB015 /* WFPhotoAlbum.h */,
 				1F6AB7EA1E8B979F006CB015 /* WFPhotoAlbum.m */,
 				1F6AB7EB1E8B979F006CB015 /* WFCollectionViewCell.h */,
@@ -3940,7 +3940,6 @@
 				1FDCC27B1E7A8F2F002C80FB /* amrFileCodec.mm in Sources */,
 				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
 				1F4DCE781E88F55C00C80395 /* ApplyViewController.m in Sources */,
-				1F6AB7F01E8B979F006CB015 /* WFTailoringViewController.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				1F5363D61E81031B00538B68 /* UserWebManager.m in Sources */,
 				1FDCC2AF1E7A8F2F002C80FB /* PSTCollectionView.m in Sources */,
@@ -4002,6 +4001,7 @@
 				1F6AB7FB1E8B9C8A006CB015 /* DrawView.m in Sources */,
 				1FDCC2E41E7A8F2F002C80FB /* EaseFaceView.m in Sources */,
 				1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */,
+				F79C2ACD1E8BEE450027E10C /* WFTailoringViewController.m in Sources */,
 				6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */,
 				1F59AF341E5EE16C0000722A /* FMDatabasePool.m in Sources */,
 				620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */,

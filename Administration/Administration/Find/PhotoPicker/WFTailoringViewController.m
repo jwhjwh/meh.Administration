@@ -14,6 +14,10 @@
 //static CGFloat rectHeight = 300;
 
 @interface WFTailoringViewController ()
+{
+    CGFloat rectWidth;
+    CGFloat rectHeight;
+}
 //原图imageView
 @property (nonatomic, strong) UIImageView *tailorImageView;
 //image
@@ -27,7 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    rectWidth=(self.view.frame.size.height-50-64)*9/16;
+    rectHeight=self.view.frame.size.height-116;
     [self private_setupViews];
     [self private_showImage];
 }
@@ -43,7 +48,7 @@
     [panGesture setTranslation:CGPointZero inView:panGesture.view.superview];
     //不能上出选择框
     if (panGesture.view.frame.origin.x >= (width - rectWidth ) / 2){
-        panGesture.view.frame = CGRectMake((width - rectWidth ) / 2, panGesture.view.frame.origin.y, panGesture.view.frame.size.width, panGesture.view.frame.size.height);
+        panGesture.view.frame = CGRectMake((width - rectWidth ) / 2, panGesture.view.frame.origin.y-7, panGesture.view.frame.size.width, panGesture.view.frame.size.height);
     };
     //不能右出选择框
     if (panGesture.view.frame.origin.y >= (height - rectHeight) / 2) {
@@ -52,7 +57,7 @@
     CGFloat scaleH = panGesture.view.frame.size.height;
     //不能下出选择框
     if (panGesture.view.frame.origin.y <= -(scaleH - (height - rectHeight) / 2 - rectHeight)) {
-        panGesture.view.frame = CGRectMake(panGesture.view.frame.origin.x, -(scaleH - (height - rectHeight) / 2 - rectHeight) ,panGesture.view.frame.size.width, panGesture.view.frame.size.height);
+        panGesture.view.frame = CGRectMake(panGesture.view.frame.origin.x, -(scaleH - (height - rectHeight) / 2 - rectHeight)+7 ,panGesture.view.frame.size.width, panGesture.view.frame.size.height);
     }
     CGFloat scaleW = panGesture.view.frame.size.width;
     //不能右出选择框
@@ -93,7 +98,7 @@
 - (void)private_setupViews{
     self.view.backgroundColor = [UIColor blackColor];
     //选择图片
-    _tailorImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0,self.view.frame.size.height-50-64)];
+    _tailorImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,65, 0,self.view.frame.size.height-50-66)];
     _tailorImageView.userInteractionEnabled = YES;
     [self.view addSubview:_tailorImageView];
     //选择框
@@ -125,19 +130,19 @@
     CGFloat width = self.view.frame.size.width;
     CGFloat height = self.view.frame.size.height;
     
-    [self private_addShapeLayerWithFrame:CGRectMake(0, 0, width, (height - rectHeight) / 2)
+    [self private_addShapeLayerWithFrame:CGRectMake(0, 7, width, (height - rectHeight) / 2)
                      strokeColor:[UIColor clearColor]
                        fillColor:[UIColor colorWithWhite:0.2 alpha:0.2]];
-    [self private_addShapeLayerWithFrame:CGRectMake(0, (height - rectHeight) / 2, (width - rectWidth) / 2, rectHeight)
+    [self private_addShapeLayerWithFrame:CGRectMake(0, (height - rectHeight) / 2+7, (width - rectWidth) / 2, rectHeight)
                      strokeColor:[UIColor clearColor]
                        fillColor:[UIColor colorWithWhite:0.2 alpha:0.2]];
-    [self private_addShapeLayerWithFrame:CGRectMake(0, height /  2 + rectHeight / 2, width, height / 2 - rectHeight /  2)
+    [self private_addShapeLayerWithFrame:CGRectMake(0, height /  2 + rectHeight / 2+7, width, height / 2 - rectHeight /  2)
                      strokeColor:[UIColor clearColor]
                        fillColor:[UIColor colorWithWhite:0.2 alpha:0.2]];
-    [self private_addShapeLayerWithFrame:CGRectMake((width - rectWidth) / 2 + rectWidth, height / 2 - rectHeight / 2 , width - rectWidth - (width - rectWidth) /  2, rectHeight)
+    [self private_addShapeLayerWithFrame:CGRectMake((width - rectWidth) / 2 + rectWidth, height / 2 - rectHeight / 2+7 , width - rectWidth - (width - rectWidth) /  2, rectHeight)
                      strokeColor:[UIColor clearColor]
                        fillColor:[UIColor colorWithWhite:0.2 alpha:0.2]];
-    [self private_addShapeLayerWithFrame:CGRectMake((width - rectWidth) / 2, height / 2 - rectHeight / 2, rectWidth, rectHeight)
+    [self private_addShapeLayerWithFrame:CGRectMake((width - rectWidth) / 2, height / 2 - rectHeight / 2+7, rectWidth, rectHeight)
                      strokeColor:[UIColor lightGrayColor]
                        fillColor:[UIColor clearColor]];
 }
@@ -161,14 +166,18 @@
                                                  completion:^(UIImage *image) {
         CGFloat width = _tailorImageView.frame.size.height * image.size.width / image.size.height;
         _tailorImageView.frame = CGRectMake(0, 0,width, _tailorImageView.frame.size.height);
-        _tailorImageView.center = self.view.center;
+            CGPoint  cener;
+            cener.y= self.view.center.y+7;
+            cener.x=self.view.center.x;
+        _tailorImageView.center = cener;
+      
         _tailorImageView.image = image;
     }];
 }
 
 - (UIImage *)private_captureImageFromView:(UIView *)view{
     CGRect screenRect = CGRectMake((self.view.frame.size.width - rectWidth) / 2,
-                                   (self.view.frame.size.height - rectHeight) / 2,
+                                 7+ (self.view.frame.size.height - rectHeight) / 2,
                                    rectWidth,
                                    rectHeight);
     UIGraphicsBeginImageContextWithOptions(screenRect.size, NO, [UIScreen mainScreen].scale);
@@ -197,7 +206,7 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 @end

@@ -174,7 +174,10 @@
             WFPhotosViewController *photosVC = [[WFPhotosViewController alloc] init];
             UINavigationController *naviVC = [[UINavigationController alloc] initWithRootViewController:photosVC];
             photosVC.tailoredImage = ^ (UIImage *image){
-                
+                NSData *data = UIImageJPEGRepresentation(image,1.0f);
+                NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                [USER_DEFAULTS  setObject:encodedImageStr forKey:@"blockImage"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"changeimage" object:nil userInfo:@{@"blockimage":encodedImageStr}];
             };
             [self presentViewController:naviVC animated:YES completion:nil];
         }else{
@@ -198,36 +201,11 @@
      
       
         [self dismissViewControllerAnimated:YES completion:nil];
-        NSData *data = UIImageJPEGRepresentation([self wf_thumbnailsCutfullPhoto:image], 1.0f);
-        NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-        [USER_DEFAULTS  setObject:encodedImageStr forKey:@"blockImage"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeimage" object:nil userInfo:@{@"blockimage":encodedImageStr}];
+  
 
     }
    
 }
-//裁剪图片,此处裁剪为125*125大的图,即为我们的缩略图
-- (UIImage *)wf_thumbnailsCutfullPhoto:(UIImage*)image
-{
-    CGSize newSize;
-    CGImageRef imageRef = nil;
-    
-    if ((image.size.width / image.size.height) < (rectWidth / rectHeight)) {
-        newSize.width = image.size.width;
-        newSize.height = image.size.width * rectHeight / rectWidth;
-        
-        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, fabs(image.size.height - newSize.height) / 2, newSize.width, newSize.height));
-    } else {
-        newSize.height = image.size.height;
-        newSize.width = image.size.height * rectWidth / rectHeight;
-        
-        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(fabs(image.size.width - newSize.width) / 2, 0, newSize.width, newSize.height));
-    }
-    UIImage *img = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    return img;
-}
-
 
 -(void)notimageTap:(UITapGestureRecognizer*)sender{
     _integer=1;
