@@ -53,7 +53,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
+    
     return 1;
 }
 
@@ -115,6 +115,7 @@
         EaseConversationModel *model = [self.dataArray objectAtIndex:indexPath.row];
         EaseMessageViewController *viewController = [[EaseMessageViewController alloc] initWithConversationChatter:model.conversation.conversationId conversationType:model.conversation.type];
         viewController.title = model.title;
+      
         [self.navigationController pushViewController:viewController animated:YES];
     }
 }

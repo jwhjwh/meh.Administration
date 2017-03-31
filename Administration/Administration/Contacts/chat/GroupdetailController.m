@@ -9,15 +9,18 @@
 #import "GroupdetailController.h"
 #import "ZXYAlertView.h"
 #import "WFPhotosViewController.h"
-
+#import "CrowdViewController.h"
 @interface GroupdetailController ()<ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
+@property (nonatomic) GroupOccupantType occupantType;
 @property (nonatomic, strong)UIImage *goodPicture;
 
 @property (strong, nonatomic) EMGroup *chatGroup;
 
 @property (strong,nonatomic) UIImageView  *background;
 @property (assign,nonatomic) NSInteger integer;
+
+@property (strong,nonatomic) NSString * dissOfExit;
+@property (strong,nonatomic) UIButton *butn;
 @end
 
 @implementation GroupdetailController
@@ -58,7 +61,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"群资料";
-    NSLog(@"====----%@",_chatGroup.owner);
     self.view.backgroundColor=GetColor(216, 216, 216, 1);
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(10, 0, 28,28);
@@ -72,11 +74,9 @@
     [_background sd_setImageWithURL:[NSURL URLWithString: userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@""]];
     [self.view addSubview:_background];
     
-    UIButton *butn = [UIButton buttonWithType:UIButtonTypeCustom];
-    butn.frame = CGRectMake(_background.center.x-60, 115, 120, 20);
-    [butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
-    [butn addTarget: self action: @selector(photoItem) forControlEvents: UIControlEventTouchUpInside];
-    [_background addSubview:butn];
+    _butn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _butn.frame = CGRectMake(_background.center.x-60, 115, 120, 20);
+    [_background addSubview:_butn];
     UILabel *labeltitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 165,160, 20)];
     labeltitle.textColor=[UIColor whiteColor];
     labeltitle.text =_chatGroup.subject;
@@ -142,6 +142,31 @@
     Introduction.font = [UIFont systemFontOfSize:15];
     Introduction.textColor =[UIColor lightGrayColor];
     [view2 addSubview:Introduction];
+    UIButton *button= [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(Scree_width/2-50,100,100, 34);
+    [button.layer setCornerRadius:9];
+    button.layer.borderWidth = 1.0;
+    button.layer.borderColor =[UIColor RGBNav].CGColor;
+    NSString *loginUsername = [[EMClient sharedClient] currentUsername];
+    if ([self.chatGroup.owner isEqualToString:loginUsername]) {
+        self.occupantType = GroupOccupantTypeOwner;
+        _dissOfExit=@"解散群组";
+        [_butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
+        [_butn addTarget: self action: @selector(photoItem) forControlEvents: UIControlEventTouchUpInside];
+    }
+    if (self.occupantType != GroupOccupantTypeOwner) {
+        for (NSString *str in self.chatGroup.memberList) {
+            if ([str isEqualToString:loginUsername]) {
+                self.occupantType = GroupOccupantTypeMember;
+                _dissOfExit=@"退出群组";
+                break;
+            }
+        }
+    }
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"%@",_dissOfExit] forState:UIControlStateNormal];
+    [button addTarget: self action: @selector(dissolutionOfExit) forControlEvents: UIControlEventTouchUpInside];
+    [view2 addSubview:button];
 }
 -(void)LiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -170,7 +195,6 @@
     }else{
         if (_integer==1) {
             UIImageWriteToSavedPhotosAlbum([[UIImage alloc] init], nil, nil, nil);
-            
             WFPhotosViewController *photosVC = [[WFPhotosViewController alloc] init];
             UINavigationController *naviVC = [[UINavigationController alloc] initWithRootViewController:photosVC];
             photosVC.tailoredImage = ^ (UIImage *image){
@@ -197,14 +221,57 @@
           _background.image=self.goodPicture;
     }else{
         //裁剪后的图片
-        UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-     
-      
         [self dismissViewControllerAnimated:YES completion:nil];
-  
-
     }
    
+}
+//退出群组或者解散群组
+-(void)dissolutionOfExit{
+    if ([_dissOfExit isEqualToString:@"退出群组"]) {
+        __weak typeof(self) weakSelf = self;
+        [self showHudInView:self.view hint:NSLocalizedString(@"group.leave", @"quit the group")];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+            EMError *error = nil;
+            [[EMClient sharedClient].groupManager leaveGroup:weakSelf.chatGroup.groupId error:&error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf hideHud];
+                if (error) {
+                    [weakSelf showHint:NSLocalizedString(@"group.leaveFail", @"exit the group failure")];
+                }
+                else{
+                    if ([self.popl isEqualToString:@"1"]) {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    }else{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
+                    }
+           
+                }
+            });
+        });
+
+    }else{
+        __weak typeof(self) weakSelf = self;
+        [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+            EMError *error = nil;
+            [[EMClient sharedClient].groupManager destroyGroup:weakSelf.chatGroup.groupId error:&error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf hideHud];
+                if (error) {
+                    [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
+                }
+                else{
+                    if ([self.popl isEqualToString:@"1"]) {
+                 [self.navigationController popToRootViewControllerAnimated:YES];
+                    }else{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
+                    }
+
+                }
+            });
+        });
+
+    }
 }
 
 -(void)notimageTap:(UITapGestureRecognizer*)sender{

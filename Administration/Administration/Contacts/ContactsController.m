@@ -574,7 +574,7 @@
             } else {
             
               ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
-
+                chatController.hidesBottomBarWhenPushed = YES;
                 chatController.title = conversationModel.title;
                 [self.navigationController pushViewController:chatController animated:YES];
             }

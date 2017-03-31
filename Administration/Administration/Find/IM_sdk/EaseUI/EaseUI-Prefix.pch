@@ -15,9 +15,4 @@
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
-
-#import "EaseUI.h"
-//    #import "EMClient+Call.h"
-
-#define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
 #endif
