@@ -35,7 +35,7 @@
 @implementation inftionxqController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     self.tabBarController.tabBar.hidden=YES;
 }
 - (void)viewDidLoad {
@@ -234,6 +234,7 @@
     //    messageVC.title = @"8001";
     ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:@"fuccc" conversationType:EMConversationTypeChat];
     messageVC.title =  _callName;
+    messageVC.hidesBottomBarWhenPushed = YES;
     [messageVC.faceView setEmotionManagers:@[manager]];
     // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
     [self.navigationController pushViewController:messageVC animated:YES];
