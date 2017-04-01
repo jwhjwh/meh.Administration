@@ -12,7 +12,7 @@
 
 #import "EaseConversationModel.h"
 
-#import <HyphenateLite/HyphenateLite.h> 
+
 
 @implementation EaseConversationModel
 

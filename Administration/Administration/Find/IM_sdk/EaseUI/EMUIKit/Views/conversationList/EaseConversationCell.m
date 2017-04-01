@@ -281,14 +281,24 @@ CGFloat const EaseConversationCellPadding = 10;
     return EaseConversationCellMinHeight;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if (_avatarView.badge) {
         _avatarView.badgeBackgroudColor = [UIColor redColor];
     }
+    if (self.editing) {
+        if (selected) {
+            // 编辑状态去掉渲染
+            self.contentView.backgroundColor = [UIColor whiteColor];
+            self.backgroundView.backgroundColor = [UIColor whiteColor];
+            // 左边选择按钮去掉渲染背景
+            UIView *view = [[UIView alloc] initWithFrame:self.multipleSelectionBackgroundView.bounds];
+            view.backgroundColor = [UIColor whiteColor];
+            self.selectedBackgroundView = view;
+            
+        }
+    }
 }
-
 -(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
     [super setHighlighted:highlighted animated:animated];
     if (_avatarView.badge) {

@@ -172,11 +172,17 @@ static ChatUIHelper *helper = nil;
 - (void)userAccountDidLoginFromOtherDevice
 {
 //    [self _clearHelper];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"提示", @"Prompt") message:NSLocalizedString(@"聊天异地登录", @"your login account has been in other places") delegate:self cancelButtonTitle:NSLocalizedString(@"确定",@"OK") otherButtonTitles:nil, nil];
     [alertView show];
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
 }
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex==0) {
+        [[EMClient sharedClient] logout:YES];
+   
+    }
+   
+}
 - (void)userAccountDidRemoveFromServer
 {
 //    [self _clearHelper];

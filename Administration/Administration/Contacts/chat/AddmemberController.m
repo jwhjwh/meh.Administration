@@ -83,7 +83,7 @@
     self.isAllSelected = NO;
 }
 -(void)buttonLiftItem{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -340,6 +340,8 @@
                  [_allDelButton removeFromSuperview];
                  [_delButton removeFromSuperview];
                  ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:group.groupId conversationType:EMConversationTypeGroupChat];
+                 chatController.number =@"1";
+                 chatController.hidesBottomBarWhenPushed = YES;
                  chatController.title = group.subject;
                  [self.navigationController pushViewController:chatController animated:YES];
              }

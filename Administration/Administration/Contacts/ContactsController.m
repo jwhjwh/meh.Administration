@@ -569,12 +569,13 @@
         if (conversation) {
             if ([[RobotManager sharedInstance] isRobotWithUsername:conversation.conversationId]) {
                 ChatViewController *chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
+                chatController.hidesBottomBarWhenPushed = YES;
                 chatController.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
                 [self.navigationController pushViewController:chatController animated:YES];
             } else {
             
               ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
-
+                chatController.hidesBottomBarWhenPushed = YES;
                 chatController.title = conversationModel.title;
                 [self.navigationController pushViewController:chatController animated:YES];
             }
