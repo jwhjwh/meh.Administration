@@ -441,6 +441,7 @@
 		627B27271E7680C900392170 /* 创建账号02_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271F1E7680C900392170 /* 创建账号02_6.jpg */; };
 		627B27281E7680C900392170 /* 创建账号02_7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B27201E7680C900392170 /* 创建账号02_7.jpg */; };
 		627B27291E7680C900392170 /* 创建账号02_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B27211E7680C900392170 /* 创建账号02_8.jpg */; };
+		627FE7A71E98BCA00068976C /* SetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 627FE7A61E98BCA00068976C /* SetModel.m */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
 		62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF61E68FD36003F3A84 /* CreateViewController.m */; };
 		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
@@ -1254,6 +1255,8 @@
 		627B271F1E7680C900392170 /* 创建账号02_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_6.jpg"; sourceTree = "<group>"; };
 		627B27201E7680C900392170 /* 创建账号02_7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_7.jpg"; sourceTree = "<group>"; };
 		627B27211E7680C900392170 /* 创建账号02_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_8.jpg"; sourceTree = "<group>"; };
+		627FE7A51E98BCA00068976C /* SetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetModel.h; sourceTree = "<group>"; };
+		627FE7A61E98BCA00068976C /* SetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetModel.m; sourceTree = "<group>"; };
 		6287AA1F1E543802004F6387 /* shibiema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibiema.png; sourceTree = "<group>"; };
 		62942BF51E68FD36003F3A84 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
 		62942BF61E68FD36003F3A84 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
@@ -2653,6 +2656,8 @@
 			children = (
 				6226E6621E778CB600767EBD /* SetPositionViewController.h */,
 				6226E6631E778CB600767EBD /* SetPositionViewController.m */,
+				627FE7A51E98BCA00068976C /* SetModel.h */,
+				627FE7A61E98BCA00068976C /* SetModel.m */,
 			);
 			path = SetPosition;
 			sourceTree = "<group>";
@@ -3578,6 +3583,7 @@
 				62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */,
 				1F6211EB1E8CFFB000F50851 /* EaseEmotionManager.m in Sources */,
 				1F6211D91E8CFFB000F50851 /* PSTGridLayoutRow.m in Sources */,
+				627FE7A71E98BCA00068976C /* SetModel.m in Sources */,
 				1F6211BC1E8CFFAF00F50851 /* MWZoomingScrollView.m in Sources */,
 				1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */,
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,

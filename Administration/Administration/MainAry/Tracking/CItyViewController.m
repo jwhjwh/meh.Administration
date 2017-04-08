@@ -117,8 +117,6 @@ NSUInteger roossw;
         }
     }
 }
-    
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier =@"Cell";
@@ -142,7 +140,7 @@ NSUInteger roossw;
         cityImage.image = [UIImage imageNamed:@"zx_ico"];
         [cell addSubview:cityImage];
         [cityImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(cell.mas_top).offset(0);
+            make.centerY.mas_equalTo(cell.mas_centerY).offset(0);
             make.left.mas_equalTo(cell.mas_left).offset(15);
             make.width.mas_offset(20);
             make.height.mas_offset(30);

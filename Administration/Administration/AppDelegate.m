@@ -43,7 +43,7 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
         self.window.rootViewController = VC;
        
     }else{
-        
+
         if ([JinnLockTool isGestureUnlockEnabled])
         {
             JinnLockViewController *lockViewController = [[JinnLockViewController alloc] initWithDelegate:nil
