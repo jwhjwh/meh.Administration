@@ -137,7 +137,7 @@ static FMDatabaseQueue *_queue;
          imgUrl:(NSString*)imgUrl
        nickName:(NSString*)nickName{
     NSString *sql = @"";
-    
+  
     // 过期时间
     NSDate *currDate = [NSDate date];
     static int timeOut = 24 * 60 * 60;// 缓存一天

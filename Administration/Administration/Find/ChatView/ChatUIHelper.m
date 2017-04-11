@@ -630,7 +630,7 @@ static ChatUIHelper *helper = nil;
         }
         
         do {
-            NSString *title = [UserCacheManager getNickById:message.from];
+            NSString *title = [UserCacheManager getNickById: message.from];
             if (message.chatType == EMChatTypeGroupChat) {
                 NSDictionary *ext = message.ext;
                 if (ext && ext[kGroupMessageAtList]) {

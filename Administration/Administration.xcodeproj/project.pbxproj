@@ -93,9 +93,7 @@
 		1F52C3971E67F19900AF6180 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */; };
 		1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.mm */; };
 		1F5363D01E81020000538B68 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5363CF1E81020000538B68 /* libicucore.tbd */; };
-		1F5363D61E81031B00538B68 /* UserWebManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5363D51E81031B00538B68 /* UserWebManager.m */; };
 		1F5363DA1E810B9700538B68 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5363D91E810B9700538B68 /* AVOSCloud.framework */; };
-		1F5363DD1E810D5E00538B68 /* UserCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5363DC1E810D5E00538B68 /* UserCacheManager.m */; };
 		1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5745641E56C6A400E4A47C /* ZxdObject.m */; };
 		1F5745671E56F45400E4A47C /* tx100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745661E56F45400E4A47C /* tx100.png */; };
 		1F5745691E56F45A00E4A47C /* tx23.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5745681E56F45A00E4A47C /* tx23.png */; };
@@ -302,6 +300,9 @@
 		1FDCC2EA1E7A8FDA002C80FB /* HyphenateLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCC0D31E7A8596002C80FB /* HyphenateLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FDD3C731E7398CE00743779 /* FillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C721E7398CE00743779 /* FillTableViewCell.m */; };
 		1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C761E73F52500743779 /* XFDaterView.m */; };
+		1FF7453F1E9CC07900BE2F08 /* UserCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7453E1E9CC07900BE2F08 /* UserCacheManager.m */; };
+		1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF745411E9CC08C00BE2F08 /* UserWebManager.m */; };
+		1FF745461E9CCBAB00BE2F08 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF745451E9CCBAB00BE2F08 /* AVOSCloud.framework */; };
 		6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */; };
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
@@ -618,11 +619,7 @@
 		1F52C3981E6810F800AF6180 /* PerLomapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerLomapController.h; sourceTree = "<group>"; };
 		1F52C3991E6810F800AF6180 /* PerLomapController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PerLomapController.mm; sourceTree = "<group>"; };
 		1F5363CF1E81020000538B68 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		1F5363D41E81031B00538B68 /* UserWebManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserWebManager.h; sourceTree = "<group>"; };
-		1F5363D51E81031B00538B68 /* UserWebManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserWebManager.m; sourceTree = "<group>"; };
 		1F5363D91E810B9700538B68 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
-		1F5363DB1E810D5E00538B68 /* UserCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCacheManager.h; sourceTree = "<group>"; };
-		1F5363DC1E810D5E00538B68 /* UserCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCacheManager.m; sourceTree = "<group>"; };
 		1F5745631E56C6A400E4A47C /* ZxdObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZxdObject.h; sourceTree = "<group>"; };
 		1F5745641E56C6A400E4A47C /* ZxdObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZxdObject.m; sourceTree = "<group>"; };
 		1F5745661E56F45400E4A47C /* tx100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tx100.png; sourceTree = "<group>"; };
@@ -1029,6 +1026,11 @@
 		1FDD3C721E7398CE00743779 /* FillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillTableViewCell.m; sourceTree = "<group>"; };
 		1FDD3C751E73F52500743779 /* XFDaterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFDaterView.h; sourceTree = "<group>"; };
 		1FDD3C761E73F52500743779 /* XFDaterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFDaterView.m; sourceTree = "<group>"; };
+		1FF7453D1E9CC07900BE2F08 /* UserWebManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserWebManager.h; sourceTree = "<group>"; };
+		1FF7453E1E9CC07900BE2F08 /* UserCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCacheManager.m; sourceTree = "<group>"; };
+		1FF745401E9CC08C00BE2F08 /* UserCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCacheManager.h; sourceTree = "<group>"; };
+		1FF745411E9CC08C00BE2F08 /* UserWebManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserWebManager.m; sourceTree = "<group>"; };
+		1FF745451E9CCBAB00BE2F08 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		6200D68E1E5BDA760014F9F3 /* PersonneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonneTableViewCell.h; sourceTree = "<group>"; };
 		6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonneTableViewCell.m; sourceTree = "<group>"; };
 		6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonneTableViewCell.xib; sourceTree = "<group>"; };
@@ -1340,6 +1342,7 @@
 				62656C661E52A0990085A2BD /* BaiduMapAPI_Location.framework in Frameworks */,
 				62656C681E52A0990085A2BD /* libcrypto.a in Frameworks */,
 				62656C671E52A0990085A2BD /* BaiduMapAPI_Map.framework in Frameworks */,
+				1FF745461E9CCBAB00BE2F08 /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1494,6 +1497,7 @@
 		1F59AF231E5EDA6A0000722A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FF745451E9CCBAB00BE2F08 /* AVOSCloud.framework */,
 				1F5363CF1E81020000538B68 /* libicucore.tbd */,
 				1FDCBFA91E7A8104002C80FB /* UIKit.framework */,
 				1FDCBAC21E7A6A22002C80FB /* libiconv.tbd */,
@@ -2357,12 +2361,12 @@
 		1F806E9D1E7F822800BF57EE /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				1FF745401E9CC08C00BE2F08 /* UserCacheManager.h */,
+				1FF7453E1E9CC07900BE2F08 /* UserCacheManager.m */,
+				1FF7453D1E9CC07900BE2F08 /* UserWebManager.h */,
+				1FF745411E9CC08C00BE2F08 /* UserWebManager.m */,
 				1F64A2B51E83B46E0098B818 /* InvitationManager.h */,
 				1F64A2B61E83B46E0098B818 /* InvitationManager.m */,
-				1F5363DB1E810D5E00538B68 /* UserCacheManager.h */,
-				1F5363DC1E810D5E00538B68 /* UserCacheManager.m */,
-				1F5363D41E81031B00538B68 /* UserWebManager.h */,
-				1F5363D51E81031B00538B68 /* UserWebManager.m */,
 				1F806EA41E7F82CF00BF57EE /* RobotManager.h */,
 				1F806EA51E7F82CF00BF57EE /* RobotManager.m */,
 			);
@@ -3633,7 +3637,6 @@
 				1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
 				1F6211A01E8CFFAF00F50851 /* MBProgressHUD+Add.m in Sources */,
-				1F5363DD1E810D5E00538B68 /* UserCacheManager.m in Sources */,
 				1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */,
 				1F6211D61E8CFFB000F50851 /* PSTCollectionViewUpdateItem.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
@@ -3713,6 +3716,7 @@
 				62656C5C1E529BC10085A2BD /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				62656C5A1E529BC10085A2BD /* IQTitleBarButtonItem.m in Sources */,
 				1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */,
+				1FF7453F1E9CC07900BE2F08 /* UserCacheManager.m in Sources */,
 				625355771E67AF8F0041F123 /* CityChoose.m in Sources */,
 				1F6AB7F31E8B979F006CB015 /* WFCacheModel.m in Sources */,
 				1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */,
@@ -3755,7 +3759,6 @@
 				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
 				1F4DCE781E88F55C00C80395 /* ApplyViewController.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
-				1F5363D61E81031B00538B68 /* UserWebManager.m in Sources */,
 				1F6211FE1E8CFFB000F50851 /* EaseBubbleView+Voice.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				1F6212021E8CFFB000F50851 /* EaseImageView.m in Sources */,
@@ -3774,6 +3777,7 @@
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
+				1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
@@ -4014,6 +4018,9 @@
 					"$(PROJECT_DIR)/Administration/Find/AVCloud",
 					"$(PROJECT_DIR)/Administration/Find",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Administration/Find/Core\\ Data/Parse",
+					"$(PROJECT_DIR)/Administration/Find/Core\\ Data/Parse",
+					"$(PROJECT_DIR)/Administration/Find/Core\\ Data",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
@@ -4051,6 +4058,9 @@
 					"$(PROJECT_DIR)/Administration/Find/AVCloud",
 					"$(PROJECT_DIR)/Administration/Find",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Administration/Find/Core\\ Data/Parse",
+					"$(PROJECT_DIR)/Administration/Find/Core\\ Data/Parse",
+					"$(PROJECT_DIR)/Administration/Find/Core\\ Data",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";

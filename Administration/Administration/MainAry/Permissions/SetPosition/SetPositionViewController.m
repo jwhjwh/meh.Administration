@@ -116,7 +116,7 @@ NSUInteger roosw;
     NQBOOL = YES;
     QDBOOL = YES;
     self.view.backgroundColor = GetColor(255, 255, 255, 1);
-    _XZZWArry = [[NSMutableArray alloc]init];
+    _XZZWArry = [NSMutableArray array];
     [_XZZWArry addObject:@"总经理"];
     [self complexUI];
     _XGZJLStr = @"总经理";
@@ -170,7 +170,6 @@ NSUInteger roosw;
         NSMutableDictionary *dic =[NSMutableDictionary dictionary];
         [dic setValue:_ZWNumAry[i] forKey:@"Num"];
         [dic setValue:_XGXZZWArry[i] forKey:@"NewName"];
-   
         [arr addObject:dic];
         
     }

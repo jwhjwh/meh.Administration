@@ -68,7 +68,6 @@
             
             // 将大头针放在地图中心点，
             [ _mapView setCenterCoordinate:coordinate animated:YES];
-            
             //取消mapView的任何响应事件,地图不能拖动
             //_mapView.gesturesEnabled = NO;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
