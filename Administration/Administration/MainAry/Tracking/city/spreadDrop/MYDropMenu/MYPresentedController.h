@@ -8,16 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "MYPresentAnimationManager.h"
-
 typedef void(^handleBack)(id callback);
 typedef void(^SHENGleBack)(NSString * shengback);
 typedef void(^SHIleBack)(NSString * shiback);
-
 @interface MYPresentedController : UIViewController
 
 //创建菜单
+- (instancetype)initWithShowFrame:(CGRect)showFrame ShowStyle:(MYPresentedViewShowStyle)showStyle callback:(handleBack)callback;
+
 - (instancetype)initWithShowFrame:(CGRect)showFrame ShowStyle:(MYPresentedViewShowStyle)showStyle callback:(handleBack)callback shengback:(SHENGleBack)shengback SHIleBack:(SHIleBack)shiback;
 //是否展开
+//是否展开
+
 @property (nonatomic, assign,getter=isPresented) BOOL presented;
 //是否需要显示透明蒙板
 @property (nonatomic, assign,getter=isNeedClearBack) BOOL clearBack;

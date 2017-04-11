@@ -78,7 +78,8 @@ NSUInteger roosw;
 @property (strong,nonatomic) NSMutableArray *XGXZZWArry;
 @property (strong,nonatomic) NSMutableArray *ZWNumAry;
 
-
+@property (strong,nonatomic) NSMutableArray *lqzwnameAry;
+@property (strong,nonatomic) NSMutableArray *lqzwnumAry;
 
 @property (strong,nonatomic) UILabel  *asklLabel;
 @property (strong,nonatomic) UITextField *xgtextFie;
@@ -137,8 +138,11 @@ NSUInteger roosw;
     self.navigationItem.rightBarButtonItem = rightButton;
     _XGXZZWArry = [[NSMutableArray alloc]init];
     _ZWNumAry = [[NSMutableArray alloc]init];
+    _lqzwnameAry = [[NSMutableArray alloc]init];
+    _lqzwnumAry = [[NSMutableArray alloc]init];
     [_ZWNumAry addObject:@"1"];
     [self asklfjlw];
+    
 }
 -(void)asklfjlw
 {
@@ -150,20 +154,161 @@ NSUInteger roosw;
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
         NSArray *array=[responseObject valueForKey:@"roleSetList"];
-        
         for (NSDictionary *dic in array) {
             SetModel *model=[[SetModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
-            NSLog(@"newname:%@,num:%@",model.NewName,model.num);
+            [_lqzwnameAry addObject:model.NewName];
+            [_lqzwnumAry addObject:model.num];
+            int a = [model.num intValue];
+            switch (a) {
+                case 2:
+                    [_MDBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage6.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"美导"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"美导"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _MDBtn.enabled = NO;
+                    MDBOOL = NO;
+                    break;
+                case 3:
+                    [_NQBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage9.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"内勤"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"内勤"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _NQBtn.enabled = NO;
+                    NQBOOL = NO;
+                    break;
+                case 4:
+                    [_WLBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage8.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"物流"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"物流"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _WLBtn.enabled = NO;
+                    WLBOOL = NO;
+                    break;
+                case 5:
+                     [_YWBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage3.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"业务"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"业务"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _YWBtn.enabled = NO;
+                    YWBOOL = NO;
+                    break;
+                case 6:
+                     [_SCJLBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage5.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"市场经理"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _SCJLBtn.enabled = NO;
+                    SCJLBOOL = NO;
+                    break;
+                case 7:
+                     [_XZGLBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage7.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"行政管理"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"行政管理"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _XZGLBtn.enabled = NO;
+                    XZGLBOOL = NO;
+                    break;
+                case 8:
+                     [_YWJLbTN.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage2.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"业务经理"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"业务经理"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _YWJLbTN.enabled = NO;
+                    YWJLBOOL = NO;
+                    break;
+                case 9:
+                     [_YWZJBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"业务总监"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"业务总监"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _YWZJBtn.enabled = NO;
+                    YWZJBOOL = NO;
+                    break;
+                case 10:
+                     [_SCZJBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
+                    _gouimage4.image = [UIImage imageNamed:@"xz_ico1"];
+                    [_XZZWArry addObject:@"市场总监"];
+                    for (int i = 0;i<_XZZWArry.count;i++)
+                    {
+                        if ([_XZZWArry[i]isEqualToString:@"市场总监"]){
+                            rooow = i;
+                            break;//一定要有break，否则会出错的。
+                        }
+                    }
+                    [self addtableViewCellZWUI];
+                    _SCZJBtn.enabled = NO;
+                    SCZJBOOL = NO;
+                    break;
+                    
+                default:
+                    break;
+            }
         }
+        [infonTableview reloadData];
 
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
 }
+
 -(void)masgegeClick{
-    NSLog(@"66666%@",_XGXZZWArry);
-    NSLog(@"7777%@",_ZWNumAry);
     [self xgzwmcAryadd];
     NSMutableArray *arr=[NSMutableArray array];
     for (int i =0; _ZWNumAry.count>i; i++) {
@@ -171,7 +316,6 @@ NSUInteger roosw;
         [dic setValue:_ZWNumAry[i] forKey:@"Num"];
         [dic setValue:_XGXZZWArry[i] forKey:@"NewName"];
         [arr addObject:dic];
-        
     }
     NSLog(@"-=-=-=-=-=%@",arr);
     NSError *error = nil;
@@ -206,32 +350,44 @@ NSUInteger roosw;
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
+
+
 }
 
 -(void)xgzwmcAryadd{
     
     [_XGXZZWArry removeAllObjects];
+    [_ZWNumAry removeAllObjects];
     [_XGXZZWArry addObject:_XGZJLStr];
+     [_ZWNumAry addObject:@"1"];
     if (YWZJBOOL == NO) {
         [_XGXZZWArry addObject:_YWZJStr];
+        [_ZWNumAry addObject:@"9"];
     }
     if (SCZJBOOL == NO) {
         [_XGXZZWArry addObject:_SCZJStr];
+         [_ZWNumAry addObject:@"10"];
     }
     if (YWJLBOOL == NO ) {
         [_XGXZZWArry addObject:_YWJLStr];
+         [_ZWNumAry addObject:@"8"];
         [_XGXZZWArry addObject:_YWStr];
+         [_ZWNumAry addObject:@"5"];
     }
     if (SCJLBOOL == NO ) {
         [_XGXZZWArry addObject:_SCJLStr];
+         [_ZWNumAry addObject:@"6"];
         [_XGXZZWArry addObject:_MDStr];
+         [_ZWNumAry addObject:@"2"];
     }if (XZGLBOOL == NO) {
         [_XGXZZWArry addObject:_XZGLLStr];
+         [_ZWNumAry addObject:@"7"];
     }if (WLBOOL == NO) {
         [_XGXZZWArry addObject:_WLStr];
+         [_ZWNumAry addObject:@"4"];
     }if (NQBOOL == NO) {
         [_XGXZZWArry addObject:_NQStr];
+         [_ZWNumAry addObject:@"3"];
     }
 
 }
@@ -638,12 +794,9 @@ NSUInteger roosw;
     if (_cell ==nil)
     {
         _cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
-        
         _cell.textLabel.text = @"您选择的职位";
         _cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
         _cell.textLabel.textColor = GetColor(117, 117, 117, 1);
-
-       
     }
     for(_asklLabel in _cell.subviews){
         
@@ -668,21 +821,24 @@ NSUInteger roosw;
     asdklLabel.font = [UIFont boldSystemFontOfSize:13.0f];
     asdklLabel.textColor = GetColor(117, 117, 117, 1);
     [_cell addSubview:asdklLabel];
-    
 
     for(_xgtextFie in _cell.subviews){
         
         if([_xgtextFie isKindOfClass:[UITextField class]])
             
         {
-            
             [_xgtextFie removeFromSuperview];
-            
         }
         
     }
     _xgtextFie = [[UITextField alloc]initWithFrame:CGRectMake(240, 1, self.view.bounds.size.width-242, 28)];
     _xgtextFie.textColor = [UIColor orangeColor];
+    
+    if (_lqzwnameAry.count>0) {
+        if (_lqzwnumAry.count == _XZZWArry.count) {
+            _xgtextFie.text = _lqzwnameAry[indexPath.row];
+        }
+    }
     _xgtextFie.placeholder =_XZZWArry[indexPath.row];
     _xgtextFie.font = [UIFont boldSystemFontOfSize:13.0f];
     [_xgtextFie.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
@@ -696,7 +852,6 @@ NSUInteger roosw;
     
     return _cell;
 }
-
 - (void)idNoFieldText:(UITextField *)textField{
     switch (textField.tag) {
         case 0:
@@ -710,10 +865,8 @@ NSUInteger roosw;
             if ([textField.placeholder isEqualToString:@"业务经理"]) {
                 if (textField.text.length>0) {
                     _YWJLStr = textField.text;
-                    
                 }else{
                     _YWJLStr = @"业务经理";
-                    
                 }
             }else if ([textField.placeholder isEqualToString:@"业务总监"]){
                 if (textField.text.length>0) {
@@ -1310,7 +1463,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"业务总监"];
-        [_ZWNumAry addObject:@"9"];
+       
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"业务总监"]){
@@ -1331,7 +1484,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"业务总监"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1348,7 +1501,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage2.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"业务经理"];
-        [_ZWNumAry addObject:@"8"];
+        
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"业务经理"]){
@@ -1362,7 +1515,7 @@ NSUInteger roosw;
         [_YWBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage3.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"业务"];
-        [_ZWNumAry addObject:@"5"];
+       
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"业务"]){
@@ -1381,7 +1534,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"业务经理"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
                 
@@ -1397,7 +1550,6 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"业务"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
                 roosw = i;
                 break;//一定要有break，否则会出错的。
                 
@@ -1418,7 +1570,7 @@ NSUInteger roosw;
         [_YWJLbTN.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage2.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"业务经理"];
-        [_ZWNumAry addObject:@"8"];
+
         
         for (int i = 0;i<_XZZWArry.count;i++)
         {
@@ -1434,7 +1586,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage3.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"业务"];
-        [_ZWNumAry addObject:@"5"];
+
         
         for (int i = 0;i<_XZZWArry.count;i++)
         {
@@ -1452,7 +1604,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"业务经理"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+               
                 roosw = i;
                 break;//一定要有break，否则会出错的。
                 
@@ -1469,7 +1621,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"业务"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
                 
@@ -1486,7 +1638,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage4.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"市场总监"];
-        [_ZWNumAry addObject:@"10"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"市场总监"]){
@@ -1504,7 +1656,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"市场总监"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1521,7 +1673,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage5.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"市场经理"];
-        [_ZWNumAry addObject:@"6"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
@@ -1535,7 +1687,7 @@ NSUInteger roosw;
         [_MDBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage6.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"美导"];
-        [_ZWNumAry addObject:@"2"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"美导"]){
@@ -1554,7 +1706,6 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1568,7 +1719,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"美导"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1583,7 +1734,7 @@ NSUInteger roosw;
         [_SCJLBtn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage5.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"市场经理"];
-        [_ZWNumAry addObject:@"6"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
@@ -1599,7 +1750,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage6.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"美导"];
-        [_ZWNumAry addObject:@"2"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"美导"]){
@@ -1616,7 +1767,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"市场经理"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1631,7 +1782,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"美导"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1646,7 +1797,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage7.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"行政管理"];
-        [_ZWNumAry addObject:@"7"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"行政管理"]){
@@ -1665,7 +1816,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"行政管理"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
                 
@@ -1681,7 +1832,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage8.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"物流"];
-        [_ZWNumAry addObject:@"4"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"物流"]){
@@ -1700,7 +1851,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"物流"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
             }
@@ -1715,7 +1866,7 @@ NSUInteger roosw;
         [btn.layer setBorderColor:([UIColor orangeColor].CGColor)];
         _gouimage9.image = [UIImage imageNamed:@"xz_ico1"];
         [_XZZWArry addObject:@"内勤"];
-        [_ZWNumAry addObject:@"3"];
+
         for (int i = 0;i<_XZZWArry.count;i++)
         {
             if ([_XZZWArry[i]isEqualToString:@"内勤"]){
@@ -1734,7 +1885,7 @@ NSUInteger roosw;
         {
             if ([_XZZWArry[i]isEqualToString:@"内勤"]){
                 [_XZZWArry removeObject: _XZZWArry[i]];
-                [_ZWNumAry removeObjectAtIndex:i];
+                
                 roosw = i;
                 break;//一定要有break，否则会出错的。
                 
@@ -1769,15 +1920,39 @@ NSUInteger roosw;
         }];
         }else{
         [btn setTitle:@"预览" forState:UIControlStateNormal];
-        _YWZJBtn.enabled = YES;
-        _YWJLbTN.enabled = YES;
-        _YWBtn.enabled = YES;
-        _SCZJBtn.enabled = YES;
-        _SCJLBtn.enabled = YES;
-        _MDBtn.enabled = YES;
-        _XZGLBtn.enabled = YES;
-        _WLBtn.enabled = YES;
-        _NQBtn.enabled = YES;
+            for (NSString * strr in _lqzwnumAry) {
+                int a = [strr intValue];
+                if (a == 2) {
+                    _MDBtn.enabled = NO;
+                }else if (a == 3){
+                _NQBtn.enabled = NO;
+                }else if (a == 4){
+                    _WLBtn.enabled = NO;
+                }else if (a == 5){
+                     _YWBtn.enabled = NO;
+                }else if (a == 6){
+                    _SCJLBtn.enabled = NO;
+                }else if (a == 7){
+                    _XZGLBtn.enabled = NO;
+                }else if (a == 8){
+                    _YWJLbTN.enabled = NO;
+                }else if (a == 9){
+                    _YWZJBtn.enabled = NO;
+                }else if (a == 10){
+                    _SCZJBtn.enabled = NO;
+                }else{
+                    _YWZJBtn.enabled = YES;
+                    _YWJLbTN.enabled = YES;
+                    _YWBtn.enabled = YES;
+                    _SCZJBtn.enabled = YES;
+                    _SCJLBtn.enabled = YES;
+                    _MDBtn.enabled = YES;
+                    _XZGLBtn.enabled = YES;
+                    _WLBtn.enabled = YES;
+                    _NQBtn.enabled = YES;
+                }
+            }
+        
         QDBOOL = YES;//sendSubviewToBack
         [_asdjklView removeFromSuperview];
     }

@@ -330,10 +330,6 @@
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
 		6226E6641E778CB600767EBD /* SetPositionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E6631E778CB600767EBD /* SetPositionViewController.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
-		624B74031E8F3DE4000D94BD /* MYColorBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B73FC1E8F3DE4000D94BD /* MYColorBackView.m */; };
-		624B74041E8F3DE4000D94BD /* MYPresentAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B73FE1E8F3DE4000D94BD /* MYPresentAnimationManager.m */; };
-		624B74051E8F3DE4000D94BD /* MYPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74001E8F3DE4000D94BD /* MYPresentationController.m */; };
-		624B74061E8F3DE4000D94BD /* MYPresentedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74021E8F3DE4000D94BD /* MYPresentedController.m */; };
 		624B74181E8F3E6F000D94BD /* city_province.plist in Resources */ = {isa = PBXBuildFile; fileRef = 624B74081E8F3E6F000D94BD /* city_province.plist */; };
 		624B74191E8F3E6F000D94BD /* cityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B740A1E8F3E6F000D94BD /* cityModel.m */; };
 		624B741A1E8F3E6F000D94BD /* ProvinceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B740C1E8F3E6F000D94BD /* ProvinceModel.m */; };
@@ -343,6 +339,10 @@
 		624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74151E8F3E6F000D94BD /* SpreadTableViewCell.m */; };
 		624B74201E8F3E6F000D94BD /* ZoneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74171E8F3E6F000D94BD /* ZoneModel.m */; };
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
+		6252AA261E9CB13E00871377 /* MYColorBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252AA1F1E9CB13E00871377 /* MYColorBackView.m */; };
+		6252AA271E9CB13E00871377 /* MYPresentAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252AA211E9CB13E00871377 /* MYPresentAnimationManager.m */; };
+		6252AA281E9CB13E00871377 /* MYPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252AA231E9CB13E00871377 /* MYPresentationController.m */; };
+		6252AA291E9CB13E00871377 /* MYPresentedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252AA251E9CB13E00871377 /* MYPresentedController.m */; };
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
 		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
@@ -1083,14 +1083,6 @@
 		6226E6621E778CB600767EBD /* SetPositionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPositionViewController.h; sourceTree = "<group>"; };
 		6226E6631E778CB600767EBD /* SetPositionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPositionViewController.m; sourceTree = "<group>"; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
-		624B73FB1E8F3DE4000D94BD /* MYColorBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYColorBackView.h; sourceTree = "<group>"; };
-		624B73FC1E8F3DE4000D94BD /* MYColorBackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYColorBackView.m; sourceTree = "<group>"; };
-		624B73FD1E8F3DE4000D94BD /* MYPresentAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYPresentAnimationManager.h; sourceTree = "<group>"; };
-		624B73FE1E8F3DE4000D94BD /* MYPresentAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYPresentAnimationManager.m; sourceTree = "<group>"; };
-		624B73FF1E8F3DE4000D94BD /* MYPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYPresentationController.h; sourceTree = "<group>"; };
-		624B74001E8F3DE4000D94BD /* MYPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYPresentationController.m; sourceTree = "<group>"; };
-		624B74011E8F3DE4000D94BD /* MYPresentedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYPresentedController.h; sourceTree = "<group>"; };
-		624B74021E8F3DE4000D94BD /* MYPresentedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYPresentedController.m; sourceTree = "<group>"; };
 		624B74081E8F3E6F000D94BD /* city_province.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city_province.plist; sourceTree = "<group>"; };
 		624B74091E8F3E6F000D94BD /* cityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cityModel.h; sourceTree = "<group>"; };
 		624B740A1E8F3E6F000D94BD /* cityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cityModel.m; sourceTree = "<group>"; };
@@ -1106,6 +1098,14 @@
 		624B74171E8F3E6F000D94BD /* ZoneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoneModel.m; sourceTree = "<group>"; };
 		624F11F81E66BBD80089C252 /* CityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseViewController.h; sourceTree = "<group>"; };
 		624F11F91E66BBD80089C252 /* CityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseViewController.m; sourceTree = "<group>"; };
+		6252AA1E1E9CB13E00871377 /* MYColorBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYColorBackView.h; sourceTree = "<group>"; };
+		6252AA1F1E9CB13E00871377 /* MYColorBackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYColorBackView.m; sourceTree = "<group>"; };
+		6252AA201E9CB13E00871377 /* MYPresentAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYPresentAnimationManager.h; sourceTree = "<group>"; };
+		6252AA211E9CB13E00871377 /* MYPresentAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYPresentAnimationManager.m; sourceTree = "<group>"; };
+		6252AA221E9CB13E00871377 /* MYPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYPresentationController.h; sourceTree = "<group>"; };
+		6252AA231E9CB13E00871377 /* MYPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYPresentationController.m; sourceTree = "<group>"; };
+		6252AA241E9CB13E00871377 /* MYPresentedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYPresentedController.h; sourceTree = "<group>"; };
+		6252AA251E9CB13E00871377 /* MYPresentedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYPresentedController.m; sourceTree = "<group>"; };
 		625355731E67AF8F0041F123 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
 		625355741E67AF8F0041F123 /* CityChoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChoose.h; sourceTree = "<group>"; };
 		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
@@ -2674,21 +2674,6 @@
 			path = background;
 			sourceTree = "<group>";
 		};
-		624B73FA1E8F3DE4000D94BD /* MYDropMenu */ = {
-			isa = PBXGroup;
-			children = (
-				624B73FB1E8F3DE4000D94BD /* MYColorBackView.h */,
-				624B73FC1E8F3DE4000D94BD /* MYColorBackView.m */,
-				624B73FD1E8F3DE4000D94BD /* MYPresentAnimationManager.h */,
-				624B73FE1E8F3DE4000D94BD /* MYPresentAnimationManager.m */,
-				624B73FF1E8F3DE4000D94BD /* MYPresentationController.h */,
-				624B74001E8F3DE4000D94BD /* MYPresentationController.m */,
-				624B74011E8F3DE4000D94BD /* MYPresentedController.h */,
-				624B74021E8F3DE4000D94BD /* MYPresentedController.m */,
-			);
-			path = MYDropMenu;
-			sourceTree = "<group>";
-		};
 		624B74071E8F3E6F000D94BD /* city */ = {
 			isa = PBXGroup;
 			children = (
@@ -2699,22 +2684,25 @@
 				624B740C1E8F3E6F000D94BD /* ProvinceModel.m */,
 				624B74161E8F3E6F000D94BD /* ZoneModel.h */,
 				624B74171E8F3E6F000D94BD /* ZoneModel.m */,
-				624B740D1E8F3E6F000D94BD /* spreadDrop */,
 			);
-			path = city;
+			name = city;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		624B740D1E8F3E6F000D94BD /* spreadDrop */ = {
 			isa = PBXGroup;
 			children = (
+				624B74071E8F3E6F000D94BD /* city */,
 				624B740E1E8F3E6F000D94BD /* djh_ico.png */,
 				624B740F1E8F3E6F000D94BD /* djq_ico.png */,
 				624B74101E8F3E6F000D94BD /* SpreadDropMenu.h */,
 				624B74111E8F3E6F000D94BD /* SpreadDropMenu.m */,
 				624B74141E8F3E6F000D94BD /* SpreadTableViewCell.h */,
 				624B74151E8F3E6F000D94BD /* SpreadTableViewCell.m */,
+				6252AA1D1E9CB13E00871377 /* MYDropMenu */,
 			);
-			path = spreadDrop;
+			name = spreadDrop;
+			path = city/spreadDrop;
 			sourceTree = "<group>";
 		};
 		624F11F71E66BBC20089C252 /* CityChoose */ = {
@@ -2725,6 +2713,21 @@
 				624F11F91E66BBD80089C252 /* CityChooseViewController.m */,
 			);
 			path = CityChoose;
+			sourceTree = "<group>";
+		};
+		6252AA1D1E9CB13E00871377 /* MYDropMenu */ = {
+			isa = PBXGroup;
+			children = (
+				6252AA1E1E9CB13E00871377 /* MYColorBackView.h */,
+				6252AA1F1E9CB13E00871377 /* MYColorBackView.m */,
+				6252AA201E9CB13E00871377 /* MYPresentAnimationManager.h */,
+				6252AA211E9CB13E00871377 /* MYPresentAnimationManager.m */,
+				6252AA221E9CB13E00871377 /* MYPresentationController.h */,
+				6252AA231E9CB13E00871377 /* MYPresentationController.m */,
+				6252AA241E9CB13E00871377 /* MYPresentedController.h */,
+				6252AA251E9CB13E00871377 /* MYPresentedController.m */,
+			);
+			path = MYDropMenu;
 			sourceTree = "<group>";
 		};
 		625355721E67AF8F0041F123 /* CityChooseVeiw */ = {
@@ -2762,8 +2765,7 @@
 		625C91FC1E85150800D9011B /* Tracking */ = {
 			isa = PBXGroup;
 			children = (
-				624B74071E8F3E6F000D94BD /* city */,
-				624B73FA1E8F3DE4000D94BD /* MYDropMenu */,
+				624B740D1E8F3E6F000D94BD /* spreadDrop */,
 				625C91FD1E85150800D9011B /* TrackingViewController.h */,
 				625C91FE1E85150800D9011B /* TrackingViewController.m */,
 				626A548B1E862148009ACC00 /* CItyViewController.h */,
@@ -3560,7 +3562,6 @@
 				1F6211AD1E8CFFAF00F50851 /* MJRefreshGifHeader.m in Sources */,
 				1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */,
 				1F6211C91E8CFFB000F50851 /* UIImage+EMMultiFormat.m in Sources */,
-				624B74031E8F3DE4000D94BD /* MYColorBackView.m in Sources */,
 				1F6211A71E8CFFAF00F50851 /* MJRefreshAutoGifFooter.m in Sources */,
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
 				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
@@ -3607,7 +3608,6 @@
 				62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */,
 				1F6211951E8CFFAF00F50851 /* EMAudioRecorderUtil.m in Sources */,
 				1F6211EC1E8CFFB000F50851 /* FixFopen.c in Sources */,
-				624B74051E8F3DE4000D94BD /* MYPresentationController.m in Sources */,
 				1F6212011E8CFFB000F50851 /* EaseChatToolbarItem.m in Sources */,
 				1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */,
 				1F6211F71E8CFFB000F50851 /* EaseMessageTimeCell.m in Sources */,
@@ -3647,6 +3647,7 @@
 				1F6211E51E8CFFB000F50851 /* EaseChineseToPinyin.m in Sources */,
 				1F803FEC1E52F7CA005F53CE /* UIImageView+AFNetworking.m in Sources */,
 				1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */,
+				6252AA281E9CB13E00871377 /* MYPresentationController.m in Sources */,
 				620731241E5D1DA200BCF51C /* JinnLockTool.m in Sources */,
 				1F6211AC1E8CFFAF00F50851 /* MJRefreshBackStateFooter.m in Sources */,
 				1F6211E21E8CFFB000F50851 /* NSString+Valid.m in Sources */,
@@ -3692,6 +3693,7 @@
 				1F6211F61E8CFFB000F50851 /* EaseMessageCell.m in Sources */,
 				1F6211A21E8CFFAF00F50851 /* MJRefreshAutoFooter.m in Sources */,
 				625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */,
+				6252AA271E9CB13E00871377 /* MYPresentAnimationManager.m in Sources */,
 				6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */,
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
 				1F62119D1E8CFFAF00F50851 /* EMVoiceConverter.mm in Sources */,
@@ -3754,6 +3756,7 @@
 				F74A7BCD1E6EF22B004A7942 /* ZXYAlertView.m in Sources */,
 				1F767DD51E79299600305401 /* AddmemberController.m in Sources */,
 				62656B921E5295D70085A2BD /* MASLayoutConstraint.m in Sources */,
+				6252AA261E9CB13E00871377 /* MYColorBackView.m in Sources */,
 				6269A5651E6E51FF0083160E /* SubmittedModel.m in Sources */,
 				1F6211BF1E8CFFAF00F50851 /* EMSDWebImageCompat.m in Sources */,
 				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
@@ -3763,7 +3766,6 @@
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				1F6212021E8CFFB000F50851 /* EaseImageView.m in Sources */,
 				1F806EA61E7F82CF00BF57EE /* RobotManager.m in Sources */,
-				624B74061E8F3DE4000D94BD /* MYPresentedController.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
 				1F6211AB1E8CFFAF00F50851 /* MJRefreshBackNormalFooter.m in Sources */,
 				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,
@@ -3791,6 +3793,7 @@
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
 				1F29739D1E6E8C38003F2FD0 /* EditbrandController.m in Sources */,
+				6252AA291E9CB13E00871377 /* MYPresentedController.m in Sources */,
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				1F6211FA1E8CFFB000F50851 /* EaseBubbleView+Image.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
@@ -3848,7 +3851,6 @@
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
 				1F6211D11E8CFFB000F50851 /* PSTCollectionViewController.m in Sources */,
 				1F6212051E8CFFB000F50851 /* EaseFacialView.m in Sources */,
-				624B74041E8F3DE4000D94BD /* MYPresentAnimationManager.m in Sources */,
 				1F581BBE1E767F1B009C6B08 /* InputboxController.m in Sources */,
 				F741B3081E76DDAA002A1D55 /* CLStaticTextCell.m in Sources */,
 				1F6211CB1E8CFFB000F50851 /* UIImageView+EMHighlightedWebCache.m in Sources */,
