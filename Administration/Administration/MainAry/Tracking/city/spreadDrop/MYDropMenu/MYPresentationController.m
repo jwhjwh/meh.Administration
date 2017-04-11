@@ -24,7 +24,7 @@
     if (!_colorBackView) {
         _colorBackView = [[MYColorBackView alloc]initWithFrame:my_Screen_Bounds];
         if (self.isNeedClearBack) {
-
+            
             _colorBackView.backColorView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.000001];
         }else{
             
@@ -67,7 +67,7 @@
     
     
     
-//    CGFloat duraration = [self animationDuration];
+    //    CGFloat duraration = [self animationDuration];
     
     
     

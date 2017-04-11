@@ -206,7 +206,6 @@ NSUInteger roossw;
             [_SArry addObject:shiback];
             NSLog(@"-----------------市:%@",_SArry);
         }];
-        
         //菜单展示
         [self presentViewController:menu animated:YES completion:nil];
     }

@@ -31,8 +31,6 @@
   
     
 }
-
-
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated{
     [super setEditing:editing animated:animated];
     if (editing) {

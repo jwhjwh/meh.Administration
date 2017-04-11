@@ -36,10 +36,25 @@
 
 
 
+- (instancetype)initWithShowFrame:(CGRect)showFrame ShowStyle:(MYPresentedViewShowStyle)showStyle callback:(handleBack)callback
+{
+    //断言
+    //    NSParameterAssert(![@(showStyle)isKindOfClass:[NSNumber class]]||![@(isBottomMenu)isKindOfClass:[NSNumber class]]);
+    if (self = [super init]) {
+        
+        //设置管理
+        self.transitioningDelegate          = self.animationManager;
+        self.modalPresentationStyle         = UIModalPresentationCustom;
+        self.callback                       = callback;
+        self.animationManager.showStyle     = showStyle;
+        self.animationManager.showViewFrame = showFrame;
+    }
+    return self;
+}
 - (instancetype)initWithShowFrame:(CGRect)showFrame ShowStyle:(MYPresentedViewShowStyle)showStyle callback:(handleBack)callback shengback:(SHENGleBack)shengback SHIleBack:(SHIleBack)shiback
 {
     //断言
-//    NSParameterAssert(![@(showStyle)isKindOfClass:[NSNumber class]]||![@(isBottomMenu)isKindOfClass:[NSNumber class]]);
+    //    NSParameterAssert(![@(showStyle)isKindOfClass:[NSNumber class]]||![@(isBottomMenu)isKindOfClass:[NSNumber class]]);
     if (self = [super init]) {
         
         //设置管理
@@ -53,7 +68,6 @@
     }
     return self;
 }
-
 
 
 - (void)setClearBack:(BOOL)clearBack
