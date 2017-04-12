@@ -10,6 +10,7 @@
 #import "CreateViewController.h"
 #import "CodeViewController.h"
 #import "StructureViewController.h"
+#import "SetPositionViewController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -36,7 +37,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterTableUI];
-    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"创建员工账号",@"识别码",nil];
+    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"品牌部设置",@"业务部设置",@"报表权限设置",@"识别码",nil];
     
     // Do any additional setup after loading the view.
 }
@@ -116,12 +117,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
+        //职位介绍
         StructureViewController *StructVC= [[StructureViewController alloc]init];
         [self.navigationController showViewController:StructVC sender:nil];
     }else if (indexPath.row == 1) {
-        CreateViewController *CreateVC= [[CreateViewController alloc]init];
-        [self.navigationController showViewController:CreateVC sender:nil];
-    }else if(indexPath.row == 2){
+        //公司职位设置
+        SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init];
+        [self.navigationController pushViewController:setPostionVC animated:YES];
+    }else if(indexPath.row == 6){
+        //识别码
         CodeViewController *codeVC = [[CodeViewController alloc]init];
         [self.navigationController showViewController:codeVC sender:nil];
         

@@ -8,7 +8,6 @@
 
 #import "CreateViewController.h"
 #import "SelectAlert.h"
-#import "SetPositionViewController.h"
 @interface CreateViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -47,8 +46,8 @@
     
     self.view.backgroundColor =GetColor(231, 230, 230, 1);
     
-    _arr = @[@"职位设定",@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
-    _HSarr = @[@"职位设定",@"职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
+    _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
+    _HSarr = @[@"职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
     titles = @[@"品牌经理",@"市场美导",@"业务人员",@"内勤人员",@"物流人员",@"行政管理人员",@"业务经理"];
     [self InterTableUI];
     // Do any additional setup after loading the view.
@@ -184,10 +183,6 @@
      cell.textLabel.text = _arr[indexPath.row];
     cell.textLabel.font =[UIFont boldSystemFontOfSize:13.0f];
     CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 38);
-    if ([cell.textLabel.text isEqualToString:@"职位设定"]) {
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-
-    }
     if ([cell.textLabel.text isEqualToString:@"职位"] ) {
         _JSLabel = [[UILabel alloc]initWithFrame:labelRect2];
         _JSLabel.text = _HSarr[indexPath.row];
@@ -332,14 +327,9 @@
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init];
-        [self.navigationController pushViewController:setPostionVC animated:YES];
-        //[self.navigationController showViewController:StructVC sender:nil];
-    }
-    else if (indexPath.row == 1 ) {
+    if (indexPath.row == 0 ) {
         [self showAlert];
-    }else if (indexPath.row ==3){
+    }else if (indexPath.row ==2){
         NSLog(@"点是什么什么品牌");
         [self pinpaiAlerStr];
         
@@ -388,20 +378,19 @@
 -(void)showAlert{
     [SelectAlert showWithTitle:@"选择职业" titles:titles selectIndex:^(NSInteger selectIndex) {
         if (selectIndex == 0 ||selectIndex == 1) {
-            if (_arr.count == 8) {
-            }else{
-                _arr = @[@"职位设定",@"职位",@"姓名",@"品牌",@"手机号",@"验证码",@"密码",@"确认密码"];
+            if (_arr.count == 6) {
+                _arr = @[@"职位",@"姓名",@"品牌",@"手机号",@"验证码",@"密码",@"确认密码"];
                 NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
                 [indexPaths addObject: indexPath];
                 [infonTableview beginUpdates];
                 [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
                 [infonTableview endUpdates];
             }
         }else{
-            if (_arr.count == 8) {
+            if (_arr.count == 7) {
                 [infonTableview beginUpdates];
-                _arr = @[@"职位设定",@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
+                _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
                 NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]];
                 [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
                 [infonTableview endUpdates];
