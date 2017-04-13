@@ -29,7 +29,7 @@
   
      self.dataArray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight	)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
    [ZXDNetworking setExtraCellLineHidden:self.tableView];

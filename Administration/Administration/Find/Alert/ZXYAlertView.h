@@ -28,7 +28,7 @@
 @property (nonatomic, strong)NSArray    *buttonArray;
 
 @property (weak, nonatomic) id <ZXYAlertViewDelegate> delegate;
-
+@property (nonatomic, strong) UIButton  *button;
 + (instancetype)alertViewDefault;
 - (void)show;
 
