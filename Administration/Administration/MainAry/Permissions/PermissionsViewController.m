@@ -12,7 +12,6 @@
 #import "StructureViewController.h"
 #import "SetPositionViewController.h"
 #import "AddBrandViewController.h"
-
 #import "ReportPermissionsVC.h"
 #import "BrandsetController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -143,9 +142,10 @@
             
             
             break;
-        case 5:
-            
-            
+        case 5:{
+            ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
+             [self.navigationController showViewController:perortVC sender:nil];
+        }
             break;
         case 6:{
             //识别码
