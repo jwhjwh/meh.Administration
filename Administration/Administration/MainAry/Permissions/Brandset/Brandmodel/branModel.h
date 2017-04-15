@@ -11,6 +11,6 @@
 @interface branModel : NSObject
 
 @property (nonatomic,strong)NSString *brandLogo;
-@property (nonatomic,strong)NSString *departmentName;
+@property (nonatomic,strong)NSString * finsk;
 @property (nonatomic,strong)NSString *ID;
 @end

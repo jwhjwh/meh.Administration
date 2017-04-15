@@ -15,6 +15,8 @@
 		1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F971E6D492E0021B1AD /* LGUIView.m */; };
 		1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */; };
 		1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */; };
+		1F22AAE21EA0710A00CC56BB /* ChooseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F22AAE11EA0710A00CC56BB /* ChooseTableViewCell.m */; };
+		1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F22AAE41EA0BDBF00CC56BB /* multiController.m */; };
 		1F2973961E6E3CD1003F2FD0 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973921E6E3CD1003F2FD0 /* pinyin.c */; };
 		1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973951E6E3CD1003F2FD0 /* ZXDChineseString.m */; };
 		1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973991E6E82F3003F2FD0 /* BrandSeachController.m */; };
@@ -521,6 +523,10 @@
 		1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = brandTableViewCell.m; sourceTree = "<group>"; };
 		1F1D1F9C1E6D528B0021B1AD /* Brandmodle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Brandmodle.h; sourceTree = "<group>"; };
 		1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Brandmodle.m; sourceTree = "<group>"; };
+		1F22AAE01EA0710A00CC56BB /* ChooseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseTableViewCell.h; sourceTree = "<group>"; };
+		1F22AAE11EA0710A00CC56BB /* ChooseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseTableViewCell.m; sourceTree = "<group>"; };
+		1F22AAE31EA0BDBF00CC56BB /* multiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multiController.h; sourceTree = "<group>"; };
+		1F22AAE41EA0BDBF00CC56BB /* multiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = multiController.m; sourceTree = "<group>"; };
 		1F2973921E6E3CD1003F2FD0 /* pinyin.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = pinyin.c; sourceTree = "<group>"; };
 		1F2973931E6E3CD1003F2FD0 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		1F2973941E6E3CD1003F2FD0 /* ZXDChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDChineseString.h; sourceTree = "<group>"; };
@@ -2221,6 +2227,10 @@
 				1F6A05161E9E1BF900F505D5 /* AddbranController.m */,
 				1FF3BAE31E9F4EDB00E62149 /* ChosebradController.h */,
 				1FF3BAE41E9F4EDB00E62149 /* ChosebradController.m */,
+				1F22AAE31EA0BDBF00CC56BB /* multiController.h */,
+				1F22AAE41EA0BDBF00CC56BB /* multiController.m */,
+				1F22AAE01EA0710A00CC56BB /* ChooseTableViewCell.h */,
+				1F22AAE11EA0710A00CC56BB /* ChooseTableViewCell.m */,
 				1FF3BAE01E9F0D6400E62149 /* AddbranTableViewCell.h */,
 				1FF3BAE11E9F0D6400E62149 /* AddbranTableViewCell.m */,
 				1F6A05121E9E160100F505D5 /* BranTableViewCell.h */,
@@ -3615,6 +3625,7 @@
 				1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */,
 				62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
+				1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */,
 				1F6211B91E8CFFAF00F50851 /* MWPhotoBrowser.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
 				1FB0BF771E6FD7E0001CCFAA /* AddBrandViewController.m in Sources */,
@@ -3902,6 +3913,7 @@
 				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
 				624B741A1E8F3E6F000D94BD /* ProvinceModel.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
+				1F22AAE21EA0710A00CC56BB /* ChooseTableViewCell.m in Sources */,
 				1F6211D11E8CFFB000F50851 /* PSTCollectionViewController.m in Sources */,
 				1F6212051E8CFFB000F50851 /* EaseFacialView.m in Sources */,
 				1F581BBE1E767F1B009C6B08 /* InputboxController.m in Sources */,

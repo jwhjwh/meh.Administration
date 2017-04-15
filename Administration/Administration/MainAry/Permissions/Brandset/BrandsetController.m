@@ -12,6 +12,7 @@
 #import "branModel.h"
 @interface BrandsetController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,retain)UITableView *tableView;
+@property(nonatomic,strong)NSMutableArray *daArr;
 @property(nonatomic,strong)NSMutableArray *dataArray;
 @property (nonatomic,strong)NSMutableArray *indexArray;
 @end
@@ -39,7 +40,7 @@
     self.tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
-    _indexArray=[NSMutableArray arrayWithObjects:@"主力品牌部",@"非主力品牌综合部", nil];
+  
     [self datalade];
     
 }
@@ -51,24 +52,53 @@
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.dataArray = [NSMutableArray array];
+            _indexArray = [NSMutableArray array];
+            _daArr = [NSMutableArray array];
+            
+             NSMutableArray *BrArr=[NSMutableArray array];
+             NSMutableArray *BrA=[NSMutableArray array];
             NSArray *array=[responseObject valueForKey:@"mList"];
             NSArray *arr=[responseObject valueForKey:@"nList"];
             NSMutableArray *marr=[NSMutableArray array];
             NSMutableArray *narr=[NSMutableArray array];
             for (NSDictionary *dic in array) {
-                
+            NSArray *barndArr = [dic valueForKey:@"brandList"];
                branModel *model=[[branModel alloc]init];
-               [model setValuesForKeysWithDictionary:dic];
-               [marr addObject:model];
+              NSMutableArray *logoArr=[NSMutableArray array];
+                for (NSDictionary *dict in barndArr) {
+                    [model setValuesForKeysWithDictionary:dict];
+                    [logoArr addObject:model];
+                }
+               [BrA addObject:[dic valueForKey:@"departmentName"]];
+                [marr addObject: logoArr];
+          
             }
-            [self.dataArray addObject:marr];
+           
+            if (marr.count>0) {
+                [self.dataArray addObject:marr];
+                [_indexArray addObject:@"主力品牌部"];
+                [_daArr addObject:BrA];
+            }
             for (NSDictionary *dic in arr) {
-                
+            NSArray *barndArr = [dic valueForKey:@"brandList"];
                 branModel *model=[[branModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [narr addObject:model];
+                NSMutableArray *logoArr=[NSMutableArray array];
+               
+                for (NSDictionary *dict in barndArr) {
+                [model setValuesForKeysWithDictionary:dict];
+                [logoArr addObject:model];
+                }
+                [BrArr  addObject:[dic valueForKey:@"departmentName"]];
+                [narr addObject: logoArr];
+              
+              
             }
-             [self.dataArray addObject:narr];
+            if (narr.count>0) {
+                [self.dataArray addObject:narr];
+                [_indexArray addObject:@"非主力品牌综合部"];
+                [_daArr addObject:BrArr];
+            }
+            NSLog(@"+++=============______%@",self.dataArray);
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             
@@ -120,7 +150,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    view.tintColor = [UIColor lightGrayColor];
+    view.tintColor =  GetColor(217,217,217,1);
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -142,10 +172,16 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = _dataArray[indexPath.section][indexPath.row];
+    cell.titleLabel.text = _daArr[indexPath.section][indexPath.row];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     cell.backgroundColor = [UIColor whiteColor];
+    NSLog(@"%@",_dataArray[indexPath.section][indexPath.row]);
+    for (branModel *str in _dataArray[indexPath.section][indexPath.row]) {
     
+        if ([_dataArray[indexPath.section][indexPath.row] count]==1 ) {
+            cell.model=str;
+        }
+    }
     return cell;
 }
 
@@ -156,6 +192,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
 }
 
 
