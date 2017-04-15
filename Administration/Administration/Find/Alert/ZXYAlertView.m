@@ -19,7 +19,7 @@
 @property (nonatomic, strong) UILabel   *contentLabel;
 @property (nonatomic, strong) UIView    *grayHLine;
 @property (nonatomic, strong) UIView    *grayVLine;
-@property (nonatomic, strong) UIButton  *button;
+
 
 @end
 
@@ -36,14 +36,14 @@
         //背景视图(300,150)
         self.bgView = [[UIView alloc]init];
         self.bgView.center = self.center;
-        self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, 150);
+        self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, 100);
         self.bgView.backgroundColor = [UIColor whiteColor];
         self.bgView.layer.cornerRadius = 10;
         self.bgView.layer.masksToBounds = YES;
         [self addSubview:self.bgView];
         
         //标题
-        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, kAlertWidth-20, 20)];
+        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, kAlertWidth-20, 20)];
         self.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:17];
         self.titleLabel.textColor = [UIColor colorWithRed:3/255.0 green:3/255.0 blue:3/255.0 alpha:1];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -87,10 +87,10 @@
         self.titleLabel.text= self.title;
     }
     CGRect rect = [self.content boundingRectWithSize:CGSizeMake(kAlertWidth-80, 0) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
-    self.contentLabel.frame = CGRectMake(40, 55, kAlertWidth-80, rect.size.height+20);
+    self.contentLabel.frame = CGRectMake(40, 55, kAlertWidth-80,0);
     self.contentLabel.attributedText = self.content;
-    self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, rect.size.height+95+44);
-    self.grayHLine.center = CGPointMake(kAlertWidth/2, rect.size.height+95);
+    self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, rect.size.height+50+44);
+    self.grayHLine.center = CGPointMake(kAlertWidth/2, rect.size.height+50);
     
     
     //处理按钮
@@ -103,8 +103,7 @@
         [self.button setTitle:self.buttonArray[0] forState:UIControlStateNormal];
         self.button.tag =0;
         [self.button setTitleColor:[UIColor colorWithRed:254/255.0     green:51/255.0 blue:51/255.0 alpha:1] forState:UIControlStateNormal];
-        self.button.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
-        self.button.titleLabel.font =[UIFont systemFontOfSize:18];
+//        self.button.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:18];
         [self.bgView addSubview:self.button];
         [self.button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -136,7 +135,7 @@
         for (int i=0; i<self.buttonArray.count; i++) {
             
             self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.button.frame = CGRectMake(0, rect.size.height+95+45*i, kAlertWidth, 44);
+            self.button.frame = CGRectMake(0, rect.size.height+50+45*i, kAlertWidth, 50);
             [self.bgView addSubview:self.button];
             [self.button setTitle:self.buttonArray[i] forState:UIControlStateNormal];
             self.button.tag = i;
@@ -147,7 +146,7 @@
 //                [self.button setTitleColor:[UIColor colorWithRed:254/255.0 green:51/255.0 blue:51/255.0 alpha:1] forState:UIControlStateNormal];
 //                
 //            }
-            self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, rect.size.height+95+45*self.buttonArray.count);
+            self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, rect.size.height+50+45*self.buttonArray.count);
             
             self.grayHLine = [[UIView alloc]init];
             self.grayHLine.frame = CGRectMake(0, self.button.frame.origin.y+44, kAlertWidth, 0.5);

@@ -12,7 +12,9 @@
 #import "StructureViewController.h"
 #import "SetPositionViewController.h"
 #import "AddBrandViewController.h"
+
 #import "ReportPermissionsVC.h"
+#import "BrandsetController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -48,7 +50,7 @@
 }
 -(void)InterTableUI
 {
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,50,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,self.view.bounds.size.width,self.view.bounds.size.height+29) style:UITableViewStylePlain];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     
@@ -60,13 +62,10 @@
         make.left.equalTo(self.view.mas_left).offset(0);
         make.bottom.equalTo(infonTableview.mas_top).offset(0);
         make.right.equalTo(self.view.mas_right).offset(0);
-        make.height.mas_equalTo(2);
+        make.height.mas_equalTo(1);
     }];
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
-{
-    return 1;
-}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
@@ -74,7 +73,7 @@
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     
-    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 2)];
+    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     
     view.backgroundColor =GetColor(201, 201, 201, 1);
     
@@ -119,6 +118,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
+
         case 0:{ //职位介绍
         StructureViewController *StructVC= [[StructureViewController alloc]init];
         [self.navigationController showViewController:StructVC sender:nil];
@@ -133,20 +133,26 @@
             [self.navigationController pushViewController:addBrandVC animated:YES];
         }
             break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 5:{
-            ReportPermissionsVC *RePeVc = [[ReportPermissionsVC alloc]init];
-            [self.navigationController showViewController:RePeVc sender:nil];
+
+        case 3:{
+            BrandsetController *brandVC=[[BrandsetController alloc]init];
+            [self.navigationController pushViewController:brandVC animated:YES];
         }
             break;
-        case 6:{ //识别码
+        case 4:
+            
+            
+            break;
+        case 5:
+            
+            
+            break;
+        case 6:{
+            //识别码
             CodeViewController *codeVC = [[CodeViewController alloc]init];
             [self.navigationController showViewController:codeVC sender:nil];
-        } break;
-            
+        }
+            break;
         default:
             break;
     }

@@ -80,10 +80,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArray.count;
-
-
-    
+    return self.dataArray.count;    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
