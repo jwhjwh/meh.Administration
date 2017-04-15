@@ -12,6 +12,7 @@
 #import "StructureViewController.h"
 #import "SetPositionViewController.h"
 #import "AddBrandViewController.h"
+#import "ReportPermissionsVC.h"
 #import "BrandsetController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -117,26 +118,22 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
-        case 0:{
-            //职位介绍
-            StructureViewController *StructVC= [[StructureViewController alloc]init];
-            [self.navigationController showViewController:StructVC sender:nil];
+
+        case 0:{ //职位介绍
+        StructureViewController *StructVC= [[StructureViewController alloc]init];
+        [self.navigationController showViewController:StructVC sender:nil];
         }
-            
             break;
-        case 1:{
-            //公司职位设置
-            SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init];
-            [self.navigationController pushViewController:setPostionVC animated:YES];
+        case 1:{ //公司职位设置
+            SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init]; [self.navigationController pushViewController:setPostionVC animated:YES];
         }
-            
             break;
         case 2:{
-            
             AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
             [self.navigationController pushViewController:addBrandVC animated:YES];
         }
             break;
+
         case 3:{
             BrandsetController *brandVC=[[BrandsetController alloc]init];
             [self.navigationController pushViewController:brandVC animated:YES];
@@ -146,9 +143,10 @@
             
             
             break;
-        case 5:
-            
-            
+        case 5:{
+            ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
+             [self.navigationController showViewController:perortVC sender:nil];
+        }
             break;
         case 6:{
             //识别码
@@ -159,9 +157,8 @@
         default:
             break;
     }
-
 }
-/*
+        /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
