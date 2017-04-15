@@ -11,6 +11,8 @@
 #import "CodeViewController.h"
 #import "StructureViewController.h"
 #import "SetPositionViewController.h"
+#import "AddBrandViewController.h"
+#import "ReportPermissionsVC.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -68,7 +70,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return 3;
+    return _arr.count;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     
@@ -116,24 +118,40 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        //职位介绍
+    switch (indexPath.row) {
+        case 0:{ //职位介绍
         StructureViewController *StructVC= [[StructureViewController alloc]init];
         [self.navigationController showViewController:StructVC sender:nil];
-    }else if (indexPath.row == 1) {
-        //公司职位设置
-        SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init];
-        [self.navigationController pushViewController:setPostionVC animated:YES];
-    }else if(indexPath.row == 6){
-        //识别码
-        CodeViewController *codeVC = [[CodeViewController alloc]init];
-        [self.navigationController showViewController:codeVC sender:nil];
-        
+        }
+            break;
+        case 1:{ //公司职位设置
+            SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init]; [self.navigationController pushViewController:setPostionVC animated:YES];
+        }
+            break;
+        case 2:{
+            AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
+            [self.navigationController pushViewController:addBrandVC animated:YES];
+        }
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:{
+            ReportPermissionsVC *RePeVc = [[ReportPermissionsVC alloc]init];
+            [self.navigationController showViewController:RePeVc sender:nil];
+        }
+            break;
+        case 6:{ //识别码
+            CodeViewController *codeVC = [[CodeViewController alloc]init];
+            [self.navigationController showViewController:codeVC sender:nil];
+        } break;
+            
+        default:
+            break;
     }
-    
-
 }
-/*
+        /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
