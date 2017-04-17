@@ -26,9 +26,9 @@
 @property (nonatomic, copy) NSAttributedString    *content;
 /** 按钮名字数组 */
 @property (nonatomic, strong)NSArray    *buttonArray;
-
-@property (weak, nonatomic) id <ZXYAlertViewDelegate> delegate;
 @property (nonatomic, strong) UIButton  *button;
+@property (nonatomic,assign)CGFloat  sizie;
+@property (weak, nonatomic) id <ZXYAlertViewDelegate> delegate;
 + (instancetype)alertViewDefault;
 - (void)show;
 

@@ -288,7 +288,7 @@
                 
             } view:self.view MBPro:NO];
         }
-        
+      
     }else if (textField ==_PassText){
         _passStr= textField.text;
 

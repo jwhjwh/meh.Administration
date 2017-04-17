@@ -186,11 +186,10 @@
 }
 -(void)getNetworkData{
    
-    NSString *pageStr=[NSString stringWithFormat:@"%d",page];
     NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"nu":pageStr};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         
     

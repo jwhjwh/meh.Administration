@@ -106,6 +106,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = _arr[indexPath.row];
     if ([cell.textLabel.text isEqualToString:@"职业结构介绍(必看)"]) {
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];

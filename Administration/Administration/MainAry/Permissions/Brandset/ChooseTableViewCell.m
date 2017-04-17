@@ -1,14 +1,14 @@
 //
-//  BranTableViewCell.m
+//  ChooseTableViewCell.m
 //  Administration
 //
-//  Created by zhang on 2017/4/12.
+//  Created by zhang on 2017/4/14.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "BranTableViewCell.h"
+#import "ChooseTableViewCell.h"
 
-@implementation BranTableViewCell
+@implementation ChooseTableViewCell
 - (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -26,7 +26,7 @@
     [self addSubview:_titleLabel];
     
     [_image mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.mas_left).offset(10);
+        make.left.mas_equalTo(self.mas_left).offset(40);
         make.top.mas_equalTo(self.mas_top).offset(10);
         make.width.offset(54);
         make.height.offset(54);
@@ -37,21 +37,29 @@
         make.centerY.mas_equalTo(self.mas_centerY);
         make.height.offset(20);
     }];
-
+    
     
 }
--(void)setModel:(branModel *)model{
-    NSLog(@"-------%@",model.brandLogo);
-       [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    
+    if (self.editing) {
+        if (selected) {
+            // 编辑状态去掉渲染
+            self.contentView.backgroundColor = [UIColor whiteColor];
+            self.backgroundView.backgroundColor = [UIColor whiteColor];
+            // 左边选择按钮去掉渲染背景
+            UIView *view = [[UIView alloc] initWithFrame:self.multipleSelectionBackgroundView.bounds];
+            view.backgroundColor = [UIColor whiteColor];
+            self.selectedBackgroundView = view;
+            
+        }
+    }
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-}
 
 @end

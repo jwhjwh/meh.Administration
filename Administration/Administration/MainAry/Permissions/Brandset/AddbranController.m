@@ -7,12 +7,15 @@
 //
 
 #import "AddbranController.h"
+
+#import "ChosebradController.h"
+#import "multiController.h"
 #import "AddbranTableViewCell.h"
 #import "ZXYAlertView.h"
-@interface AddbranController ()<UITableViewDelegate,UITableViewDataSource,ZXYAlertViewDelegate>
+@interface AddbranController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZXYAlertViewDelegate>
 {
     UITableView *infonTableview;
-    
+    NSIndexPath *index;
 }
 @property (strong,nonatomic) NSArray *tileAry;
 @property (strong,nonatomic) NSArray *paleAry;
@@ -20,6 +23,7 @@
 @property (nonatomic,retain) NSString *nameBarn;
 @property (nonatomic,retain) NSString *nature;
 @property (nonatomic,retain) NSString *Choobrand;
+@property (nonatomic,retain) NSString *mainon;
 @end
 
 @implementation AddbranController
@@ -81,15 +85,36 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text=_tileAry[indexPath.row];
     cell.BarnLabel.placeholder=_paleAry[indexPath.row];
-    [cell.BarnLabel addTarget:self action:@selector(didediting) forControlEvents:UIControlEventEditingDidBegin];
     [cell.BarnLabel addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
     cell.BarnLabel.tag = indexPath.row;
+    if (!(indexPath.row==0)) {
+        cell.BarnLabel.enabled=NO;
+    }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-     AddbranTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-   
+    index=indexPath;
+    if (indexPath.row==1) {
+        [self.view endEditing:YES];
+        ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
+        alert.title = @"性质";
+        alert.sizie=13.0f;
+        alert.buttonArray = @[@"主力品牌部(单一品牌)",@"非主力品牌综合部(单个或者多个品牌)"];
+        alert.delegate = self;
+        [alert show];
+    }else  if (indexPath.row==2){
+        if (self.mainon==nil) {
+              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择品牌性质" andInterval:1.0];
+        }else    if ([self.mainon isEqualToString:@"0"]){
+            ChosebradController *choseVC=[[ChosebradController alloc]init];
+            [self.navigationController pushViewController:choseVC animated:YES];
+        }else{
+            multiController *multiVC=[[multiController alloc]init];
+            [self.navigationController pushViewController:multiVC animated:YES];
+        }
+     
+    }
 }
 
 #pragma mark - 补全分隔线左侧缺失
@@ -132,21 +157,18 @@
             break;
     }
 }
--(void)didediting
 
-{
-    [self.view endEditing:YES];
-    ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
-    alert.title = @"性质";
-    
-    alert.button.titleLabel.font =[UIFont systemFontOfSize:12];
-    alert.buttonArray = @[@"主力品牌部(单一品牌)",@"非主力品牌综合部(单个或者多个品牌)"];
-    alert.delegate = self;
-    [alert show];
-    
-}
 - (void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex {
-
+    
+    if (buttonIndex==0) {
+         AddbranTableViewCell *cell = [infonTableview cellForRowAtIndexPath:index];
+        cell.BarnLabel.text=@"主力品牌部(单一品牌)";
+        self.mainon=@"0";
+    }else{
+        AddbranTableViewCell *cell = [infonTableview cellForRowAtIndexPath:index];
+        cell.BarnLabel.text=@"非主力品牌综合部(单个或者多个品牌)";
+        self.mainon=@"1";
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

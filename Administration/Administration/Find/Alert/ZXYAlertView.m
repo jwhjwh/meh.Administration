@@ -72,6 +72,7 @@
     return self;
 }
 
+
 - (void)show {
     
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
@@ -136,6 +137,10 @@
             
             self.button = [UIButton buttonWithType:UIButtonTypeCustom];
             self.button.frame = CGRectMake(0, rect.size.height+50+45*i, kAlertWidth, 50);
+            if (!(self.sizie==0)) {
+                self.button.titleLabel.font=[UIFont fontWithName:@"PingFangSC-Regular" size:self.sizie];
+
+            }
             [self.bgView addSubview:self.button];
             [self.button setTitle:self.buttonArray[i] forState:UIControlStateNormal];
             self.button.tag = i;
@@ -147,7 +152,6 @@
 //                
 //            }
             self.bgView.bounds = CGRectMake(0, 0, kAlertWidth, rect.size.height+50+45*self.buttonArray.count);
-            
             self.grayHLine = [[UIView alloc]init];
             self.grayHLine.frame = CGRectMake(0, self.button.frame.origin.y+44, kAlertWidth, 0.5);
             self.grayHLine.backgroundColor = [UIColor colorWithRed:226/255.0 green:226/255.0 blue:226/255.0 alpha:1];
