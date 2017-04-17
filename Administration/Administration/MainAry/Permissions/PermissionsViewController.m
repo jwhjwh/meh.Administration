@@ -14,6 +14,7 @@
 #import "AddBrandViewController.h"
 #import "ReportPermissionsVC.h"
 #import "BrandsetController.h"
+#import "BusinessGroupViewController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -52,6 +53,7 @@
     infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,self.view.bounds.size.width,self.view.bounds.size.height+29) style:UITableViewStylePlain];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
+    infonTableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
     [self.view addSubview:infonTableview];
     UIView *view1 = [[UIView alloc]init];
@@ -128,21 +130,26 @@
         }
             break;
         case 2:{
+            //品牌设置
             AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
             [self.navigationController pushViewController:addBrandVC animated:YES];
         }
             break;
 
         case 3:{
+           //品牌部设置
             BrandsetController *brandVC=[[BrandsetController alloc]init];
             [self.navigationController pushViewController:brandVC animated:YES];
         }
             break;
-        case 4:
-            
-            
+        case 4:{
+            //业务部设置
+            BusinessGroupViewController *BusinessVC =[[BusinessGroupViewController alloc]init];
+            [self.navigationController pushViewController:BusinessVC animated:YES];
+        }
             break;
         case 5:{
+            //报表权限设置
             ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
              [self.navigationController showViewController:perortVC sender:nil];
         }
