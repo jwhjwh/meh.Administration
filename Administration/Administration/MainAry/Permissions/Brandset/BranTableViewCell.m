@@ -17,22 +17,22 @@
     return self;
 }
 - (void) addSubviews {
-    _image =[[UIImageView alloc]init];
+    _imageVie =[[UIImageView alloc]init];
     // 设置圆角半径
-    [self addSubview:_image];
+    [self addSubview:_imageVie];
     _titleLabel=[[UILabel alloc]init];
     _titleLabel.font=[UIFont systemFontOfSize:20];
     
     [self addSubview:_titleLabel];
     
-    [_image mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_imageVie mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.mas_left).offset(10);
         make.top.mas_equalTo(self.mas_top).offset(10);
         make.width.offset(54);
         make.height.offset(54);
     }];
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_image.mas_right).offset(10);
+        make.left.mas_equalTo(_imageVie.mas_right).offset(10);
         make.right.mas_equalTo(self.mas_right).offset(-10);
         make.centerY.mas_equalTo(self.mas_centerY);
         make.height.offset(20);
@@ -41,8 +41,8 @@
     
 }
 -(void)setModel:(branModel *)model{
-    NSLog(@"-------%@",model.brandLogo);
-       [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+       
+       [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

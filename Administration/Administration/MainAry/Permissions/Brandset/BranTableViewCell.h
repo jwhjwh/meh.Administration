@@ -10,6 +10,6 @@
 #import "branModel.h"
 @interface BranTableViewCell : UITableViewCell
 @property (nonatomic,strong)UILabel *titleLabel;
-@property (nonatomic,strong)UIImageView *image;
+@property (nonatomic,strong)UIImageView *imageVie;
 @property (nonatomic,strong)branModel *model;
 @end

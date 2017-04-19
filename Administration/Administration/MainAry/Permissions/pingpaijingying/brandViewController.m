@@ -52,8 +52,7 @@
     [bton addTarget: self action: @selector(buttonrightItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *btonItem=[[UIBarButtonItem alloc]initWithCustomView:bton];
     self.navigationItem.rightBarButtonItem=btonItem;
-  
-  
+
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];

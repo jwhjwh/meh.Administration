@@ -10,6 +10,10 @@
 		1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0102081E5FC09600802571 /* LVFmdbTool.m */; };
 		1F01020C1E5FC0C300802571 /* LVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F01020B1E5FC0C300802571 /* LVModel.m */; };
 		1F0102121E6036AB00802571 /* ZJLXRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */; };
+		1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F063AB11EA4A1E00004F4CE /* DetailsbrandController.m */; };
+		1F063AB61EA4BECC0004F4CE /* bj_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F063AB41EA4BECC0004F4CE /* bj_ico.png */; };
+		1F063AB71EA4BECC0004F4CE /* sc_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F063AB51EA4BECC0004F4CE /* sc_ico.png */; };
+		1F09E88A1EA6121100597075 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F09E8891EA6121100597075 /* bg.png */; };
 		1F1D1F911E6D323F0021B1AD /* brandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F901E6D323F0021B1AD /* brandViewController.m */; };
 		1F1D1F951E6D382A0021B1AD /* fj_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1D1F941E6D38290021B1AD /* fj_ico.png */; };
 		1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F971E6D492E0021B1AD /* LGUIView.m */; };
@@ -519,6 +523,11 @@
 		1F01020A1E5FC0C300802571 /* LVModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LVModel.h; sourceTree = "<group>"; };
 		1F01020B1E5FC0C300802571 /* LVModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LVModel.m; sourceTree = "<group>"; };
 		1F0102111E6036AB00802571 /* ZJLXRTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLXRTableViewCell.xib; sourceTree = "<group>"; };
+		1F063AB01EA4A1E00004F4CE /* DetailsbrandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsbrandController.h; sourceTree = "<group>"; };
+		1F063AB11EA4A1E00004F4CE /* DetailsbrandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsbrandController.m; sourceTree = "<group>"; };
+		1F063AB41EA4BECC0004F4CE /* bj_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bj_ico.png; sourceTree = "<group>"; };
+		1F063AB51EA4BECC0004F4CE /* sc_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sc_ico.png; sourceTree = "<group>"; };
+		1F09E8891EA6121100597075 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		1F1D1F8F1E6D323F0021B1AD /* brandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brandViewController.h; sourceTree = "<group>"; };
 		1F1D1F901E6D323F0021B1AD /* brandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = brandViewController.m; sourceTree = "<group>"; };
 		1F1D1F941E6D38290021B1AD /* fj_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fj_ico.png; sourceTree = "<group>"; };
@@ -1400,6 +1409,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F063AB31EA4BECC0004F4CE /* bs_ico */ = {
+			isa = PBXGroup;
+			children = (
+				1F09E8891EA6121100597075 /* bg.png */,
+				1F063AB41EA4BECC0004F4CE /* bj_ico.png */,
+				1F063AB51EA4BECC0004F4CE /* sc_ico.png */,
+			);
+			path = bs_ico;
+			sourceTree = "<group>";
+		};
 		1F1D1F8E1E6D31C10021B1AD /* pingpaijingying可能被删除内容 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2236,6 +2255,8 @@
 			children = (
 				1F6A050F1E9DC71600F505D5 /* BrandsetController.h */,
 				1F6A05101E9DC71600F505D5 /* BrandsetController.m */,
+				1F063AB01EA4A1E00004F4CE /* DetailsbrandController.h */,
+				1F063AB11EA4A1E00004F4CE /* DetailsbrandController.m */,
 				1F6A05151E9E1BF900F505D5 /* AddbranController.h */,
 				1F6A05161E9E1BF900F505D5 /* AddbranController.m */,
 				1FF3BAE31E9F4EDB00E62149 /* ChosebradController.h */,
@@ -3102,6 +3123,7 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1F063AB31EA4BECC0004F4CE /* bs_ico */,
 				62DEF9C01E8B492B00BC7D0C /* zx_ico.png */,
 				627B271A1E7680C900392170 /* 创建账号02_1.jpg */,
 				627B271B1E7680C900392170 /* 创建账号02_2.jpg */,
@@ -3498,6 +3520,7 @@
 			files = (
 				62656D621E52B5700085A2BD /* huilianxiren.png in Resources */,
 				62656D631E52B5700085A2BD /* huishezhi.png in Resources */,
+				1F063AB71EA4BECC0004F4CE /* sc_ico.png in Resources */,
 				62656D591E52B5700085A2BD /* dianpugenzong.png in Resources */,
 				627B27271E7680C900392170 /* 创建账号02_6.jpg in Resources */,
 				1F3B3DD91E8DF93C00E75027 /* icon_020.gif in Resources */,
@@ -3557,9 +3580,11 @@
 				1F3B3DDD1E8DF93C00E75027 /* icon_022.gif in Resources */,
 				1F0102121E6036AB00802571 /* ZJLXRTableViewCell.xib in Resources */,
 				627B27261E7680C900392170 /* 创建账号02_5.jpg in Resources */,
+				1F063AB61EA4BECC0004F4CE /* bj_ico.png in Resources */,
 				624B741C1E8F3E6F000D94BD /* djq_ico.png in Resources */,
 				1F3B3DD41E8DF93C00E75027 /* icon_013_cover.png in Resources */,
 				1F59AF221E5E76750000722A /* tjpco02.png in Resources */,
+				1F09E88A1EA6121100597075 /* bg.png in Resources */,
 				62656D641E52B5700085A2BD /* zihome.png in Resources */,
 				62656C5D1E529BC10085A2BD /* IQKeyboardManager.bundle in Resources */,
 				626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */,
@@ -3867,6 +3892,7 @@
 				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
+				1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */,
 				624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
 				6262540E1E7293D5000B8F0F /* RectordModel.m in Sources */,

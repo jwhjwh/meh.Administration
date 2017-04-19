@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Brandmodle.h"
 @interface ChooseTableViewCell : UITableViewCell
 @property (nonatomic,strong)UILabel *titleLabel;
 @property (nonatomic,strong)UIImageView *image;
+@property (nonatomic,strong)Brandmodle *model;
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void  (^BLOCK)(NSMutableArray *array);
 @interface ChosebradController : UIViewController
-
+@property (nonatomic,strong)BLOCK blockArr;
 @end

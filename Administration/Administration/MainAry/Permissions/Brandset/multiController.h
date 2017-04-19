@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void  (^BLOCK)(NSMutableArray *array);
 @interface multiController : UIViewController
-
+@property (nonatomic,strong)BLOCK blockArr;
 @end

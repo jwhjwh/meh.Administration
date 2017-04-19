@@ -8,23 +8,23 @@
 
 #import "ChosebradController.h"
 #import "ChooseTableViewCell.h"
+#import "Brandmodle.h"
 @interface ChosebradController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    NSArray *keys;
+    NSArray *key;
+    NSMutableDictionary *dict;
+    NSMutableArray *arr;
+}
+@property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic,strong)UITableView *branTableView;
 /** 数据源 */
-@property (nonatomic ,copy)NSMutableArray *gameArrs;
+@property (nonatomic ,strong)NSMutableArray *gameArrs;
 @property (nonatomic,strong)NSIndexPath *index;
 @end
 
 @implementation ChosebradController
 
--(NSMutableArray *)gameArrs
-{
-    
-    if (!_gameArrs) {
-        _gameArrs = [NSMutableArray arrayWithArray:@[@"列表1",@"列表2",@"列表3",@"列表4",@"列表5",@"列表6",@"列表7",@"列表8",@"列表9",@"列表10",@"列表11",@"列表12",@"列表13",@"列表14",@"列表15",@"列表16",@"列表17",@"列表18",@"列表19",@"列表20",@"列表21",@"列表22",@"列表23",@"列表24"]];
-    }
-    return _gameArrs;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title= @"所选品牌";
@@ -56,14 +56,25 @@
     [button setTitleColor:GetColor(7, 138, 249, 1) forState:UIControlStateNormal];
     [button addTarget:self action:@selector(allDelBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
+    [self getNetworkData];
    
+}
+-(void)allDelBtn{
+    NSMutableArray *deleteArrarys = [NSMutableArray array];
+   
+    for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
+        [deleteArrarys addObject:self.gameArrs[indexPath.row]];
+    }
+ 
+    self.blockArr(deleteArrarys);
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -90,8 +101,7 @@
      */
     
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-    cell.titleLabel.text = self.gameArrs[indexPath.row];
-    [ cell.image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.gameArrs[indexPath.row]]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+    cell.model = self.gameArrs[indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
     
@@ -136,6 +146,48 @@
     }
 }
 
+-(void)getNetworkData{
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        
+        
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSArray *array=[responseObject valueForKey:@"brandlist"];
+          
+            self.gameArrs = [NSMutableArray array];
+            for (NSDictionary *dic in array) {
+                Brandmodle *model=[[Brandmodle alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [self.gameArrs addObject:model];
+            }
+            if (self.gameArrs.count==0) {
+                [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+                _branTableView.emptyView.hidden = NO;
+            }
+            [_branTableView reloadData];
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+            _branTableView.emptyView.hidden = NO;
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+    
+}
 
 
 @end
