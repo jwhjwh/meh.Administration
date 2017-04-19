@@ -43,7 +43,6 @@
     [self InterTableUI];
     _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"品牌部设置",@"业务部设置",@"报表权限设置",@"识别码",nil];
     
-    // Do any additional setup after loading the view.
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -114,7 +113,6 @@
         [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range1];
         [cell.textLabel setAttributedText:attributedString];
     }
-
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
