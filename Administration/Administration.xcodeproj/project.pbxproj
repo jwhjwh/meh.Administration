@@ -359,6 +359,8 @@
 		625355761E67AF8F0041F123 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625355731E67AF8F0041F123 /* city.plist */; };
 		625355771E67AF8F0041F123 /* CityChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = 625355751E67AF8F0041F123 /* CityChoose.m */; };
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
+		6253DE6D1EA44BFA007C3680 /* BaseBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253DE6C1EA44BFA007C3680 /* BaseBusinessViewController.m */; };
+		6253DE701EA44C63007C3680 /* BusinessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253DE6F1EA44C63007C3680 /* BusinessModel.m */; };
 		62570E901E7136B90051C83A /* wdbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 62570E8F1E7136B90051C83A /* wdbg.png */; };
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
 		625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 625C91FE1E85150800D9011B /* TrackingViewController.m */; };
@@ -474,6 +476,8 @@
 		62EBA2671E56CCCE00F657DB /* PersonListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2661E56CCCE00F657DB /* PersonListViewController.m */; };
 		62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */; };
 		62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2711E56D1C300F657DB /* ManagementViewController.m */; };
+		62F55C2C1EA6EEA30020BD9D /* ReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F55C2B1EA6EEA30020BD9D /* ReportModel.m */; };
+		62F55C2F1EA6F2C10020BD9D /* someModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F55C2E1EA6F2C10020BD9D /* someModel.m */; };
 		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
 		F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AB1E5DB9AE00ABA6EF /* MessageView.m */; };
 		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
@@ -1151,6 +1155,10 @@
 		625355751E67AF8F0041F123 /* CityChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChoose.m; sourceTree = "<group>"; };
 		6253557C1E681E740041F123 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionsViewController.h; sourceTree = "<group>"; };
 		6253557D1E681E740041F123 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionsViewController.m; sourceTree = "<group>"; };
+		6253DE6B1EA44BFA007C3680 /* BaseBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseBusinessViewController.h; sourceTree = "<group>"; };
+		6253DE6C1EA44BFA007C3680 /* BaseBusinessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseBusinessViewController.m; sourceTree = "<group>"; };
+		6253DE6E1EA44C63007C3680 /* BusinessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessModel.h; sourceTree = "<group>"; };
+		6253DE6F1EA44C63007C3680 /* BusinessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessModel.m; sourceTree = "<group>"; };
 		62570E8F1E7136B90051C83A /* wdbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wdbg.png; sourceTree = "<group>"; };
 		62578E781E6D5F5300D42603 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		62578E791E6D5F5300D42603 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
@@ -1331,6 +1339,10 @@
 		62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDataViewController.m; sourceTree = "<group>"; };
 		62EBA2701E56D1C300F657DB /* ManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagementViewController.h; sourceTree = "<group>"; };
 		62EBA2711E56D1C300F657DB /* ManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagementViewController.m; sourceTree = "<group>"; };
+		62F55C2A1EA6EEA30020BD9D /* ReportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportModel.h; sourceTree = "<group>"; };
+		62F55C2B1EA6EEA30020BD9D /* ReportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportModel.m; sourceTree = "<group>"; };
+		62F55C2D1EA6F2C10020BD9D /* someModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = someModel.h; sourceTree = "<group>"; };
+		62F55C2E1EA6F2C10020BD9D /* someModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = someModel.m; sourceTree = "<group>"; };
 		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
 		F711583D1E548ED400E0B763 /* UIView+WLFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WLFrame.m"; sourceTree = "<group>"; };
 		F73320AA1E5DB9AE00ABA6EF /* MessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
@@ -2711,6 +2723,10 @@
 				621D40441EA1F73100D043D0 /* BusinessGroupViewController.m */,
 				621D404A1EA2021500D043D0 /* AddBusinessViewController.h */,
 				621D404B1EA2021500D043D0 /* AddBusinessViewController.m */,
+				6253DE6B1EA44BFA007C3680 /* BaseBusinessViewController.h */,
+				6253DE6C1EA44BFA007C3680 /* BaseBusinessViewController.m */,
+				6253DE6E1EA44C63007C3680 /* BusinessModel.h */,
+				6253DE6F1EA44C63007C3680 /* BusinessModel.m */,
 			);
 			path = BusinessViewController;
 			sourceTree = "<group>";
@@ -2885,6 +2901,10 @@
 				6264808B1E9E23B70090EECB /* bg_mt01.png */,
 				626480821E9DD73C0090EECB /* ReportPermissionsVC.h */,
 				626480831E9DD73C0090EECB /* ReportPermissionsVC.m */,
+				62F55C2D1EA6F2C10020BD9D /* someModel.h */,
+				62F55C2E1EA6F2C10020BD9D /* someModel.m */,
+				62F55C2A1EA6EEA30020BD9D /* ReportModel.h */,
+				62F55C2B1EA6EEA30020BD9D /* ReportModel.m */,
 				62035F4F1E9F244700666399 /* GuiiiiiDView.h */,
 				62035F501E9F244700666399 /* GuiiiiiDView.m */,
 				62640EFA1EA0A9FC00085375 /* ZHTBtnView.h */,
@@ -3676,7 +3696,9 @@
 				1F6211A71E8CFFAF00F50851 /* MJRefreshAutoGifFooter.m in Sources */,
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
 				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
+				6253DE701EA44C63007C3680 /* BusinessModel.m in Sources */,
 				1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */,
+				62F55C2F1EA6F2C10020BD9D /* someModel.m in Sources */,
 				62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */,
@@ -3845,6 +3867,7 @@
 				1F6211FB1E8CFFB000F50851 /* EaseBubbleView+Location.m in Sources */,
 				1F6212001E8CFFB000F50851 /* EaseChatToolbar.m in Sources */,
 				62EBA2501E56CB4900F657DB /* SecurityViewController.m in Sources */,
+				6253DE6D1EA44BFA007C3680 /* BaseBusinessViewController.m in Sources */,
 				1F803FE81E52F7CA005F53CE /* AFImageDownloader.m in Sources */,
 				1F6211981E8CFFAF00F50851 /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				1F6211BE1E8CFFAF00F50851 /* EMSDImageCache.m in Sources */,
@@ -3853,6 +3876,7 @@
 				1F6211F91E8CFFB000F50851 /* EaseBubbleView+Gif.m in Sources */,
 				1F6211AE1E8CFFAF00F50851 /* MJRefreshNormalHeader.m in Sources */,
 				1F6211B11E8CFFAF00F50851 /* MJRefreshConst.m in Sources */,
+				62F55C2C1EA6EEA30020BD9D /* ReportModel.m in Sources */,
 				1F59AF331E5EE16C0000722A /* FMDatabaseAdditions.m in Sources */,
 				1F6833C31E72A49700F74D50 /* FillinfoViewController.mm in Sources */,
 				62EBA2531E56CB6E00F657DB /* PositioningViewController.m in Sources */,

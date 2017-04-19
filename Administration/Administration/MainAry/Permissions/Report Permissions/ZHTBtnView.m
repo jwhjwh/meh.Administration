@@ -7,6 +7,10 @@
 //
 
 #import "ZHTBtnView.h"
+BOOL YWZJBOOL2;
+BOOL YWJLBOOL2;
+BOOL ZJLBOLL2;
+BOOL XZGLBOOL2;
 
 #define WIDTHh [UIScreen mainScreen].bounds.size.width
 
@@ -28,8 +32,16 @@
         //布局子视图
         _ywAry =arr;
         _copde = coode;
+        YWZJBOOL2 = YES;
+        YWJLBOOL2= YES;
+        ZJLBOLL2= YES;
+        XZGLBOOL2= YES;
         [self subViewUI];
         self.backgroundColor = [UIColor whiteColor];
+        _NSywAry = [[NSMutableArray alloc]init];
+        _NSmdAry = [[NSMutableArray alloc]init];
+        _NSwlAry = [[NSMutableArray alloc]init];
+        _NSnqAry = [[NSMutableArray alloc]init];
     }
     return self;
 }
@@ -157,6 +169,7 @@
         make.right.mas_equalTo(self.mas_right).offset(0);
         make.height.mas_equalTo(30);
     }];
+    _imageAry = [[NSMutableArray alloc]init];
     for (int i = 0; i<_ywAry.count; i ++) {
         _buttonname= [[UIButton alloc]init];
         [_buttonname setTitle:_ywAry[i] forState:UIControlStateNormal];
@@ -168,10 +181,18 @@
         _buttonname.layer.masksToBounds = YES;
         [_buttonname setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
-        [_buttonname addTarget:self action:@selector(BtnClick:)forControlEvents:UIControlEventTouchUpInside];
+        [_buttonname addTarget:self action:@selector(BtnClick: imageee:)forControlEvents:UIControlEventTouchUpInside];
+       _gouimage1 = [[UIImageView alloc]init];
+        _gouimage1.frame = CGRectMake(((Scree_width-80)/4)-10, 15, 10, 10);
+        _gouimage1.tag= i;
+        _gouimage1.image = [UIImage imageNamed:@""];
+        [_imageAry addObject:_gouimage1];
+        [_buttonname addSubview:_gouimage1];
         [_viewbuton addSubview:_buttonname];
     }
-    [self xianViewUI];
+    
+    
+        [self xianViewUI];
     return _viewbuton;
 }
 -(void)xianViewUI{
@@ -222,21 +243,59 @@
             break;
     }
 }
--(void)BtnClick:(UIButton *)btn{
+-(void)BtnClick:(UIButton *)btn imageee:(UIImageView *)ima{
     switch (_viewbuton.tag) {
         case 1:
             switch (btn.tag) {
                 case 0:
-                    NSLog(@"点的是行政管理");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSywAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSywAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 1:
-                    NSLog(@"点的是总经理");
+                    _gouimage1 = _imageAry[btn.tag];
+                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                         _gouimage1.image = [UIImage imageNamed:@""];
+                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                         [_NSywAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSywAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 2:
-                    NSLog(@"点的是业务经理");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSywAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSywAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 3:
-                    NSLog(@"点的是业务总监");
+                    _gouimage1 = _imageAry[btn.tag];
+                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+
+                         _gouimage1.image = [UIImage imageNamed:@""];
+                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                         [_NSywAry removeObject:_ywAry[btn.tag]];
+                    }else{
+
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSywAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 default:
                     break;
@@ -245,16 +304,52 @@
         case 2:
             switch (btn.tag) {
                 case 0:
-                    NSLog(@"点的是行政管理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 1:
-                    NSLog(@"点的是总经理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 2:
-                    NSLog(@"点的是业务经理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 3:
-                    NSLog(@"点的是业务总监2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 default:
                     break;
@@ -263,44 +358,115 @@
         case 3:
             switch (btn.tag) {
                 case 0:
-                    NSLog(@"点的是行政管理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                         _gouimage1.image = [UIImage imageNamed:@""];
+                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                         [_NSwlAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSwlAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 1:
-                    NSLog(@"点的是总经理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSwlAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSwlAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 2:
-                    NSLog(@"点的是业务经理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSwlAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSwlAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 3:
-                    NSLog(@"点的是业务总监2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSwlAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSwlAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 default:
                     break;
             }
-
             break;
         case 4:
             switch (btn.tag) {
                 case 0:
-                    NSLog(@"点的是行政管理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 1:
-                    NSLog(@"点的是总经理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 2:
-                    NSLog(@"点的是业务经理2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 case 3:
-                    NSLog(@"点的是业务总监2");
+                    _gouimage1 = _imageAry[btn.tag];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                    }
                     break;
                 default:
                     break;
             }
-
             break;
         default:
             break;
     }
+
 }
 
 

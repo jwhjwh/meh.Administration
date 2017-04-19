@@ -9,6 +9,8 @@
 #import "ReportPermissionsVC.h"
 #import "GuiiiiiDView.h"
 #import "ZHTBtnView.h"
+#import "ReportModel.h"
+#import "someModel.h"
 @interface ReportPermissionsVC ()<UIScrollViewDelegate>
 @property (strong,nonatomic)  GuiiiiiDView *guiiiiidView;
 
@@ -26,8 +28,9 @@
     [super viewDidLoad];
     self.title=@"报表权限设置";
     [self subLabelUI];
+    [self reoirtNetWork];
     _guiiiiidView = [[GuiiiiiDView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:_guiiiiidView];
+    //[self.view addSubview:_guiiiiidView];
    
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -113,7 +116,36 @@
     }];
     
 }
-
+-(void)reoirtNetWork{
+    //manager/queryPosition.action
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryReportPosition", KURLHeader];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+       //if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSArray *ywray=[NSDictionary changeType:[ responseObject valueForKey:@"yw"]];
+        NSArray *mdary = [responseObject valueForKey:@"md"];
+        NSArray *wlary = [responseObject valueForKey:@"wl"];
+        NSArray *nqary = [responseObject valueForKey:@"nq"];
+        for (NSDictionary *dic in ywray) {
+            //NSString *num = dic[@"num"];
+            NSString *newname = dic[@"newName"];
+        }
+        
+            //
+       // NSLog(@"ywray：%@\nmdary：%@\nwlary：%@\nnqary：%@",ywray,mdary,wlary,nqary);
+            
+        //}
+        
+    } failure:^(NSError *error) {
+        
+        
+    } view:self.view MBPro:YES];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

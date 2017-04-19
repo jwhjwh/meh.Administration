@@ -8,6 +8,8 @@
 
 #import "BusinessGroupViewController.h"
 #import "AddBusinessViewController.h"//添加业务组
+#import "BaseBusinessViewController.h"
+#import "BusinessModel.h"
 @interface BusinessGroupViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *businessTableview;
@@ -105,7 +107,12 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    BaseBusinessViewController *baseVC = [[BaseBusinessViewController alloc]init];
+//    BusinessModel *model = _arr[indexPath.row];
+//    baseVC.contentid = model.ID;
+//    baseVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:baseVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
