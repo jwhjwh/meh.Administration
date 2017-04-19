@@ -57,7 +57,15 @@
     [self.twoPassword addSubview:self.twoField];
     
     [self initWithLable];
-    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+}
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (UIView *)oldPassword{
     if (!_oldPassword) {

@@ -35,10 +35,22 @@
 }
 -(void)subViewUI{
     UILabel *xiaoBT = [[UILabel alloc]init];
-    if (_copde == 1) {
-        xiaoBT.text = @"业务报表:";
-    }else{
-        xiaoBT.text = @"美导报表:";
+    switch (_copde) {
+        case 1:
+            xiaoBT.text = @"业务报表:";
+            break;
+        case 2:
+            xiaoBT.text = @"美导报表:";
+            break;
+        case 3:
+            xiaoBT.text = @"物流报表:";
+            break;
+        case 4:
+            xiaoBT.text = @"内勤报表:";
+            break;
+            
+        default:
+            break;
     }
     xiaoBT.font = [UIFont systemFontOfSize:kWidth*22];
     [self addSubview:xiaoBT];
@@ -48,14 +60,23 @@
         make.width.mas_equalTo(60);
         make.height.mas_equalTo(20);
     }];
-    
-    
-    
     UILabel *ywLabel = [[UILabel alloc]init];
-    if (_copde == 1) {
-        ywLabel.text = @"业务";
-    }else{
-        ywLabel.text = @"美导";
+    switch (_copde) {
+        case 1:
+            ywLabel.text = @"业务";
+            break;
+        case 2:
+            ywLabel.text = @"美导";
+            break;
+        case 3:
+            ywLabel.text = @"物流";
+            break;
+        case 4:
+            ywLabel.text = @"内勤";
+            break;
+            
+        default:
+            break;
     }
     ywLabel.textColor = GetColor(101, 101, 101, 1);
     ywLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -171,8 +192,9 @@
     _qdbutton.layer.masksToBounds = YES;
     [_qdbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     _qdbutton.font = [UIFont systemFontOfSize:kWidth*30];
+    _qdbutton.backgroundColor = [UIColor whiteColor];
     [_qdbutton addTarget:self action:@selector(qdbtnClick:)forControlEvents:UIControlEventTouchUpInside];
-    [_viewbuton addSubview:_qdbutton];
+    [self addSubview:_qdbutton];
     [_qdbutton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(xxview.mas_bottom).offset(10);
         make.centerX.mas_equalTo(self.mas_centerX).offset(0);
@@ -184,12 +206,18 @@
 -(void)qdbtnClick:(UIButton *)btn{
     switch (_viewbuton.tag) {
         case 1:
-            
+            NSLog(@"点的是业务的确定");
             break;
         case 2:
-            
+            NSLog(@"点的是美导的确定");
             break;
             
+        case 3:
+            NSLog(@"点的是物流的确定");
+            break;
+        case 4:
+            NSLog(@"点的是内勤的确定");
+            break;
         default:
             break;
     }
@@ -231,6 +259,44 @@
                 default:
                     break;
             }
+            break;
+        case 3:
+            switch (btn.tag) {
+                case 0:
+                    NSLog(@"点的是行政管理2");
+                    break;
+                case 1:
+                    NSLog(@"点的是总经理2");
+                    break;
+                case 2:
+                    NSLog(@"点的是业务经理2");
+                    break;
+                case 3:
+                    NSLog(@"点的是业务总监2");
+                    break;
+                default:
+                    break;
+            }
+
+            break;
+        case 4:
+            switch (btn.tag) {
+                case 0:
+                    NSLog(@"点的是行政管理2");
+                    break;
+                case 1:
+                    NSLog(@"点的是总经理2");
+                    break;
+                case 2:
+                    NSLog(@"点的是业务经理2");
+                    break;
+                case 3:
+                    NSLog(@"点的是业务总监2");
+                    break;
+                default:
+                    break;
+            }
+
             break;
         default:
             break;

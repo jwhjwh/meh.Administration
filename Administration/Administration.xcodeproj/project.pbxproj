@@ -339,6 +339,9 @@
 		6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0841E4E97EA00299989 /* UserGuideViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5C1E1E5843190051C6CC /* WJTextView.m */; };
 		621A5C211E5843B50051C6CC /* banben100.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A5C201E5843B50051C6CC /* banben100.png */; };
+		621D40451EA1F73100D043D0 /* BusinessGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621D40441EA1F73100D043D0 /* BusinessGroupViewController.m */; };
+		621D40491EA1FBFC00D043D0 /* tj_ico02.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D40481EA1FBFC00D043D0 /* tj_ico02.png */; };
+		621D404C1EA2021500D043D0 /* AddBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621D404B1EA2021500D043D0 /* AddBusinessViewController.m */; };
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
@@ -1115,6 +1118,11 @@
 		621A5C1D1E5843190051C6CC /* WJTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJTextView.h; sourceTree = "<group>"; };
 		621A5C1E1E5843190051C6CC /* WJTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJTextView.m; sourceTree = "<group>"; };
 		621A5C201E5843B50051C6CC /* banben100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banben100.png; sourceTree = "<group>"; };
+		621D40431EA1F73100D043D0 /* BusinessGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessGroupViewController.h; sourceTree = "<group>"; };
+		621D40441EA1F73100D043D0 /* BusinessGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessGroupViewController.m; sourceTree = "<group>"; };
+		621D40481EA1FBFC00D043D0 /* tj_ico02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tj_ico02.png; sourceTree = "<group>"; };
+		621D404A1EA2021500D043D0 /* AddBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBusinessViewController.h; sourceTree = "<group>"; };
+		621D404B1EA2021500D043D0 /* AddBusinessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBusinessViewController.m; sourceTree = "<group>"; };
 		6220B6E01E63C2A7007017BA /* EmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailViewController.h; sourceTree = "<group>"; };
 		6220B6E11E63C2A7007017BA /* EmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailViewController.m; sourceTree = "<group>"; };
 		6220B6E41E641806007017BA /* PW_DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PW_DatePickerView.h; sourceTree = "<group>"; };
@@ -2717,6 +2725,17 @@
 			path = WJTextView;
 			sourceTree = "<group>";
 		};
+		621D403F1EA1F6A000D043D0 /* BusinessViewController */ = {
+			isa = PBXGroup;
+			children = (
+				621D40431EA1F73100D043D0 /* BusinessGroupViewController.h */,
+				621D40441EA1F73100D043D0 /* BusinessGroupViewController.m */,
+				621D404A1EA2021500D043D0 /* AddBusinessViewController.h */,
+				621D404B1EA2021500D043D0 /* AddBusinessViewController.m */,
+			);
+			path = BusinessViewController;
+			sourceTree = "<group>";
+		};
 		6220B6DF1E63C294007017BA /* Email */ = {
 			isa = PBXGroup;
 			children = (
@@ -2832,6 +2851,7 @@
 		625355781E6817780041F123 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				621D403F1EA1F6A000D043D0 /* BusinessViewController */,
 				626480811E9DD7120090EECB /* Report Permissions */,
 				6226E6611E778CA000767EBD /* SetPosition */,
 				627B27161E764B2700392170 /* Structure */,
@@ -3123,7 +3143,11 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+
 				1F063AB31EA4BECC0004F4CE /* bs_ico */,
+
+				621D40481EA1FBFC00D043D0 /* tj_ico02.png */,
+
 				62DEF9C01E8B492B00BC7D0C /* zx_ico.png */,
 				627B271A1E7680C900392170 /* 创建账号02_1.jpg */,
 				627B271B1E7680C900392170 /* 创建账号02_2.jpg */,
@@ -3534,6 +3558,7 @@
 				1F3B3DE71E8DF93C00E75027 /* icon_035.gif in Resources */,
 				1F3B3DE41E8DF93C00E75027 /* icon_029_cover.png in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
+				621D40491EA1FBFC00D043D0 /* tj_ico02.png in Resources */,
 				1F3B3DEA1E8DF93C00E75027 /* icon_040_cover.png in Resources */,
 				1F6E31411E543CE1006069ED /* menuData.plist in Resources */,
 				62656D491E52B5700085A2BD /* xinbanben.png in Resources */,
@@ -3674,6 +3699,7 @@
 				1F6211EE1E8CFFB000F50851 /* EaseLocationViewController.m in Sources */,
 				1F6211AD1E8CFFAF00F50851 /* MJRefreshGifHeader.m in Sources */,
 				1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */,
+				621D40451EA1F73100D043D0 /* BusinessGroupViewController.m in Sources */,
 				1F6211C91E8CFFB000F50851 /* UIImage+EMMultiFormat.m in Sources */,
 				1F6211A71E8CFFAF00F50851 /* MJRefreshAutoGifFooter.m in Sources */,
 				1F5208281E5590A8001DE4C2 /* ZYJHeadLineModel.m in Sources */,
@@ -3800,6 +3826,7 @@
 				1F6211C11E8CFFAF00F50851 /* EMSDWebImageDownloader.m in Sources */,
 				F736D1651E589245003A1A39 /* GongTableViewCell.m in Sources */,
 				1F6211EA1E8CFFB000F50851 /* EaseEmotionEscape.m in Sources */,
+				621D404C1EA2021500D043D0 /* AddBusinessViewController.m in Sources */,
 				62656C571E529BC10085A2BD /* IQTextView.m in Sources */,
 				62656C5B1E529BC10085A2BD /* IQToolbar.m in Sources */,
 				62656B941E5295D70085A2BD /* MASViewConstraint.m in Sources */,

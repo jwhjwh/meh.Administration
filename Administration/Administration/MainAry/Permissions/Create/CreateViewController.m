@@ -45,12 +45,20 @@
     _hide = YES;
     
     self.view.backgroundColor =GetColor(231, 230, 230, 1);
-    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
     _HSarr = @[@"职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
     titles = @[@"品牌经理",@"市场美导",@"业务人员",@"内勤人员",@"物流人员",@"行政管理人员",@"业务经理"];
     [self InterTableUI];
     // Do any additional setup after loading the view.
+}
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)InterTableUI{
     infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,74,self.view.bounds.size.width,380) style:UITableViewStylePlain];
