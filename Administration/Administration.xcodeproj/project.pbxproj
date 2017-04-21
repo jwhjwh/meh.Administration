@@ -481,7 +481,6 @@
 		62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */; };
 		62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2711E56D1C300F657DB /* ManagementViewController.m */; };
 		62F55C2C1EA6EEA30020BD9D /* ReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F55C2B1EA6EEA30020BD9D /* ReportModel.m */; };
-		62F55C2F1EA6F2C10020BD9D /* someModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F55C2E1EA6F2C10020BD9D /* someModel.m */; };
 		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
 		F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AB1E5DB9AE00ABA6EF /* MessageView.m */; };
 		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
@@ -1350,8 +1349,6 @@
 		62EBA2711E56D1C300F657DB /* ManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagementViewController.m; sourceTree = "<group>"; };
 		62F55C2A1EA6EEA30020BD9D /* ReportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportModel.h; sourceTree = "<group>"; };
 		62F55C2B1EA6EEA30020BD9D /* ReportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportModel.m; sourceTree = "<group>"; };
-		62F55C2D1EA6F2C10020BD9D /* someModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = someModel.h; sourceTree = "<group>"; };
-		62F55C2E1EA6F2C10020BD9D /* someModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = someModel.m; sourceTree = "<group>"; };
 		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
 		F711583D1E548ED400E0B763 /* UIView+WLFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WLFrame.m"; sourceTree = "<group>"; };
 		F73320AA1E5DB9AE00ABA6EF /* MessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
@@ -2922,8 +2919,6 @@
 				6264808B1E9E23B70090EECB /* bg_mt01.png */,
 				626480821E9DD73C0090EECB /* ReportPermissionsVC.h */,
 				626480831E9DD73C0090EECB /* ReportPermissionsVC.m */,
-				62F55C2D1EA6F2C10020BD9D /* someModel.h */,
-				62F55C2E1EA6F2C10020BD9D /* someModel.m */,
 				62F55C2A1EA6EEA30020BD9D /* ReportModel.h */,
 				62F55C2B1EA6EEA30020BD9D /* ReportModel.m */,
 				62035F4F1E9F244700666399 /* GuiiiiiDView.h */,
@@ -3163,11 +3158,8 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
-
 				1F063AB31EA4BECC0004F4CE /* bs_ico */,
-
 				621D40481EA1FBFC00D043D0 /* tj_ico02.png */,
-
 				62DEF9C01E8B492B00BC7D0C /* zx_ico.png */,
 				627B271A1E7680C900392170 /* 创建账号02_1.jpg */,
 				627B271B1E7680C900392170 /* 创建账号02_2.jpg */,
@@ -3514,7 +3506,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = PL68LJ4R77;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3726,7 +3718,6 @@
 				620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */,
 				6253DE701EA44C63007C3680 /* BusinessModel.m in Sources */,
 				1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */,
-				62F55C2F1EA6F2C10020BD9D /* someModel.m in Sources */,
 				62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */,
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */,
@@ -4186,7 +4177,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = PL68LJ4R77;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4205,7 +4196,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4216,10 +4207,11 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.Administration;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.text;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4229,7 +4221,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = PL68LJ4R77;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4248,7 +4240,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4259,9 +4251,10 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.Administration;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.text;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

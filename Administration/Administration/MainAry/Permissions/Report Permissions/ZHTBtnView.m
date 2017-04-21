@@ -7,10 +7,7 @@
 //
 
 #import "ZHTBtnView.h"
-BOOL YWZJBOOL2;
-BOOL YWJLBOOL2;
-BOOL ZJLBOLL2;
-BOOL XZGLBOOL2;
+
 
 #define WIDTHh [UIScreen mainScreen].bounds.size.width
 
@@ -25,17 +22,14 @@ BOOL XZGLBOOL2;
     // Drawing code
 }
 */
-- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode
+- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode numarr:(NSArray *)numarr
 {
     self = [super initWithFrame:frame];
     if (self) {
         //布局子视图
         _ywAry =arr;
+        _numAry = numarr;
         _copde = coode;
-        YWZJBOOL2 = YES;
-        YWJLBOOL2= YES;
-        ZJLBOLL2= YES;
-        XZGLBOOL2= YES;
         [self subViewUI];
         self.backgroundColor = [UIColor whiteColor];
         _NSywAry = [[NSMutableArray alloc]init];
@@ -48,16 +42,16 @@ BOOL XZGLBOOL2;
 -(void)subViewUI{
     UILabel *xiaoBT = [[UILabel alloc]init];
     switch (_copde) {
-        case 1:
+        case 5:
             xiaoBT.text = @"业务报表:";
             break;
         case 2:
             xiaoBT.text = @"美导报表:";
             break;
-        case 3:
+        case 4:
             xiaoBT.text = @"物流报表:";
             break;
-        case 4:
+        case 3:
             xiaoBT.text = @"内勤报表:";
             break;
             
@@ -74,16 +68,16 @@ BOOL XZGLBOOL2;
     }];
     UILabel *ywLabel = [[UILabel alloc]init];
     switch (_copde) {
-        case 1:
+        case 5:
             ywLabel.text = @"业务";
             break;
         case 2:
             ywLabel.text = @"美导";
             break;
-        case 3:
+        case 4:
             ywLabel.text = @"物流";
             break;
-        case 4:
+        case 3:
             ywLabel.text = @"内勤";
             break;
             
@@ -174,7 +168,10 @@ BOOL XZGLBOOL2;
         _buttonname= [[UIButton alloc]init];
         [_buttonname setTitle:_ywAry[i] forState:UIControlStateNormal];
         _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-(Scree_width-80)/4/2, 0, (Scree_width-80)/4, 25);
+        
         _buttonname.tag = i;
+        
+        
         _buttonname.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         _buttonname.layer.borderWidth = 1.0f;
         _buttonname.layer.cornerRadius = 2.0f;
@@ -222,79 +219,172 @@ BOOL XZGLBOOL2;
         make.width.mas_equalTo(kWidth*150);
         make.height.mas_equalTo(25);
     }];
-    
+}
+-(void)updatenetworkingNumarr:(int )power numarr:(NSArray*)numarr{
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/updateReportPermission.action", KURLHeader];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *poower = [NSString stringWithFormat:@"%d", power];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"Num":poower,@"Power":[NSString stringWithFormat:@"%@",numarr]};
+    NSLog(@"%@",dic);
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSLog(@"上传成功");
+        }else{
+            NSLog(@"上传失败");
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self MBPro:YES];
+
 }
 -(void)qdbtnClick:(UIButton *)btn{
     switch (_viewbuton.tag) {
-        case 1:
-            NSLog(@"点的是业务的确定");
+        case 5:
+            [self updatenetworkingNumarr:5 numarr:_NSywAry];
             break;
         case 2:
             NSLog(@"点的是美导的确定");
+            [self updatenetworkingNumarr:2 numarr:_NSmdAry];
             break;
             
-        case 3:
-            NSLog(@"点的是物流的确定");
-            break;
         case 4:
+            NSLog(@"点的是物流的确定");
+            [self updatenetworkingNumarr:4 numarr:_NSwlAry];
+            break;
+        case 3:
             NSLog(@"点的是内勤的确定");
+            [self updatenetworkingNumarr:3 numarr:_NSnqAry];
             break;
         default:
             break;
     }
 }
+-(void)buttonblueColorbackcolor{
+    switch (_viewbuton.tag) {
+        case 5:
+            [_qdbutton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor blueColor] CGColor];
+            _qdbutton.enabled = YES;
+            break;
+        case 2:
+            [_qdbutton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor blueColor] CGColor];
+            _qdbutton.enabled = YES;
+            break;
+        case 4:
+            [_qdbutton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor blueColor] CGColor];
+            _qdbutton.enabled = YES;
+            break;
+        case 3:
+            [_qdbutton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor blueColor] CGColor];
+            _qdbutton.enabled = YES;
+            break;
+            
+        default:
+            break;
+    }
+}
+-(void)buttonligbackcolor{
+    switch (_viewbuton.tag) {
+        case 5:
+            [_qdbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            _qdbutton.enabled = NO;
+            break;
+        case 2:
+            [_qdbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            _qdbutton.enabled = NO;
+            break;
+        case 4:
+            [_qdbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            _qdbutton.enabled = NO;
+            break;
+        case 3:
+            [_qdbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            _qdbutton.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            _qdbutton.enabled = NO;
+            break;
+            
+        default:
+            break;
+    }
+
+}
 -(void)BtnClick:(UIButton *)btn imageee:(UIImageView *)ima{
     switch (_viewbuton.tag) {
-        case 1:
+        case 5:
             switch (btn.tag) {
                 case 0:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[0];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSywAry removeObject:_ywAry[btn.tag]];
+                        [_NSywAry removeObject:_numAry[btn.tag]];
+                        if (_NSmdAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
+                        
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSywAry addObject:_ywAry[btn.tag]];
+                        [_NSywAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 1:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[1];
                      if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                          _gouimage1.image = [UIImage imageNamed:@""];
                          btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                         [_NSywAry removeObject:_ywAry[btn.tag]];
+                         [_NSywAry removeObject:_numAry[btn.tag]];
+                         if (_NSmdAry.count == 0) {
+                             [self buttonligbackcolor];
+                         }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSywAry addObject:_ywAry[btn.tag]];
+                        [_NSywAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 2:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[2];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSywAry removeObject:_ywAry[btn.tag]];
+                        [_NSywAry removeObject:_numAry[btn.tag]];
+                        if (_NSmdAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSywAry addObject:_ywAry[btn.tag]];
+                        [_NSywAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 3:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[3];
                      if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
-
                          _gouimage1.image = [UIImage imageNamed:@""];
                          btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                         [_NSywAry removeObject:_ywAry[btn.tag]];
+                         [_NSywAry removeObject:_numAry[btn.tag]];
+                         if (_NSmdAry.count == 0) {
+                             [self buttonligbackcolor];
+                         }
                     }else{
 
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSywAry addObject:_ywAry[btn.tag]];
+                        [_NSywAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 default:
@@ -304,105 +394,69 @@ BOOL XZGLBOOL2;
         case 2:
             switch (btn.tag) {
                 case 0:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[0];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                        [_NSmdAry removeObject:_numAry[btn.tag]];
+                        if (_NSmdAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
+                        
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                        [_NSmdAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
+                        
                     }
                     break;
                 case 1:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[1];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                        [_NSmdAry removeObject:_numAry[btn.tag]];
+                        if (_NSmdAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                        [_NSmdAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 2:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[2];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                        [_NSmdAry removeObject:_numAry[btn.tag]];
+                        if (_NSmdAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSmdAry addObject:_ywAry[btn.tag]];
+                        [_NSmdAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 3:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[3];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSmdAry removeObject:_ywAry[btn.tag]];
+                        [_NSmdAry removeObject:_numAry[btn.tag]];
+                        if (_NSmdAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSmdAry addObject:_ywAry[btn.tag]];
-                    }
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 3:
-            switch (btn.tag) {
-                case 0:
-                    _gouimage1 = _imageAry[btn.tag];
-                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
-                         _gouimage1.image = [UIImage imageNamed:@""];
-                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                         [_NSwlAry removeObject:_ywAry[btn.tag]];
-                    }else{
-                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
-                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSwlAry addObject:_ywAry[btn.tag]];
-                    }
-                    break;
-                case 1:
-                    _gouimage1 = _imageAry[btn.tag];
-                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
-                        _gouimage1.image = [UIImage imageNamed:@""];
-                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSwlAry removeObject:_ywAry[btn.tag]];
-                    }else{
-                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
-                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSwlAry addObject:_ywAry[btn.tag]];
-                    }
-                    break;
-                case 2:
-                    _gouimage1 = _imageAry[btn.tag];
-                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
-                        _gouimage1.image = [UIImage imageNamed:@""];
-                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSwlAry removeObject:_ywAry[btn.tag]];
-                    }else{
-                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
-                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSwlAry addObject:_ywAry[btn.tag]];
-                    }
-                    break;
-                case 3:
-                    _gouimage1 = _imageAry[btn.tag];
-                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
-                        _gouimage1.image = [UIImage imageNamed:@""];
-                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSwlAry removeObject:_ywAry[btn.tag]];
-                    }else{
-                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
-                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSwlAry addObject:_ywAry[btn.tag]];
+                        [_NSmdAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 default:
@@ -412,51 +466,137 @@ BOOL XZGLBOOL2;
         case 4:
             switch (btn.tag) {
                 case 0:
-                    _gouimage1 = _imageAry[btn.tag];
-                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
-                        _gouimage1.image = [UIImage imageNamed:@""];
-                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                    _gouimage1 = _imageAry[0];
+                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                         _gouimage1.image = [UIImage imageNamed:@""];
+                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                         [_NSwlAry removeObject:_numAry[btn.tag]];
+                         if (_NSwlAry.count == 0) {
+                             [self buttonligbackcolor];
+                         }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                        [_NSwlAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 1:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[1];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                        [_NSwlAry removeObject:_numAry[btn.tag]];
+                        if (_NSwlAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                        [_NSwlAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 2:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[2];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                        [_NSwlAry removeObject:_numAry[btn.tag]];
+                        if (_NSwlAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                        [_NSwlAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 case 3:
-                    _gouimage1 = _imageAry[btn.tag];
+                    _gouimage1 = _imageAry[3];
                     if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
                         _gouimage1.image = [UIImage imageNamed:@""];
                         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                        [_NSnqAry removeObject:_ywAry[btn.tag]];
+                        [_NSwlAry removeObject:_numAry[btn.tag]];
+                        if (_NSwlAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
                     }else{
                         _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
                         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-                        [_NSnqAry addObject:_ywAry[btn.tag]];
+                        [_NSwlAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
+                    }
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 3:
+            switch (btn.tag) {
+                case 0:
+                    _gouimage1 = _imageAry[0];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_numAry[btn.tag]];
+                        if (_NSnqAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
+                    }
+                    break;
+                case 1:
+                    _gouimage1 = _imageAry[1];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_numAry[btn.tag]];
+                        if (_NSnqAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
+                    }
+                    break;
+                case 2:
+                    _gouimage1 = _imageAry[2];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_numAry[btn.tag]];
+                        if (_NSnqAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
+                    }
+                    break;
+                case 3:
+                    _gouimage1 = _imageAry[3];
+                    if ([_gouimage1.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
+                        _gouimage1.image = [UIImage imageNamed:@""];
+                        btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                        [_NSnqAry removeObject:_numAry[btn.tag]];
+                        if (_NSnqAry.count == 0) {
+                            [self buttonligbackcolor];
+                        }
+                    }else{
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                        btn.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        [_NSnqAry addObject:_numAry[btn.tag]];
+                        [self buttonblueColorbackcolor];
                     }
                     break;
                 default:

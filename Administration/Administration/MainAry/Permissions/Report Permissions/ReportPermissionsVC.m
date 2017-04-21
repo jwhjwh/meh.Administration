@@ -10,15 +10,14 @@
 #import "GuiiiiiDView.h"
 #import "ZHTBtnView.h"
 #import "ReportModel.h"
-#import "someModel.h"
 @interface ReportPermissionsVC ()<UIScrollViewDelegate>
 @property (strong,nonatomic)  GuiiiiiDView *guiiiiidView;
 
 
 @property (strong,nonatomic)  NSMutableArray *ywAry;
-@property (strong,nonatomic)  NSMutableArray *mdAry;
-@property (strong,nonatomic)  NSMutableArray *wlAry;
-@property (strong,nonatomic)  NSMutableArray *nqAry;
+@property (strong,nonatomic) NSMutableArray *topAry;
+@property (strong,nonatomic) NSMutableArray *topNameAry;
+@property (strong,nonatomic) NSMutableArray *numAry;
 
 @end
 
@@ -27,11 +26,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"报表权限设置";
-    [self subLabelUI];
+    self.view.backgroundColor = [UIColor whiteColor];
+    _ywAry = [[NSMutableArray alloc]init];
+    _topAry = [[NSMutableArray alloc]init];
+     _topNameAry = [[NSMutableArray alloc]init];
+    _numAry = [[NSMutableArray alloc]init];
+    
+    //self.view.backgroundColor = [UIColor whiteColor];
+    //[self subLabelUI];
     [self reoirtNetWork];
     _guiiiiidView = [[GuiiiiiDView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     //[self.view addSubview:_guiiiiidView];
-   
+    
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -45,10 +51,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)subLabelUI{
-    _ywAry = [NSMutableArray arrayWithObjects:@"行政管理",@"总经理",@"业务经理",@"业务总监", nil];
-    _mdAry = [NSMutableArray arrayWithObjects:@"行政管理",@"总经理",@"业务经理",@"业务总监", nil];
-    _wlAry = [NSMutableArray arrayWithObjects:@"总经理",@"行政管理", nil];
-    _nqAry = [NSMutableArray arrayWithObjects:@"总经理",@"市场经理", nil];
     
     UILabel *gouxuanLabel = [[UILabel alloc]init];
     gouxuanLabel.text = @"   请勾选报表批注权限职位";
@@ -68,7 +70,7 @@
     backScroll.backgroundColor = GetColor(235, 235, 235, 1);
     backScroll.delegate = self;
     backScroll.bounces = NO;
-    backScroll.contentSize = CGSizeMake(self.view.frame.size.width, (180*4)+(20*4)+30);
+    backScroll.contentSize = CGSizeMake(self.view.frame.size.width, (180*_topAry.count)+(20*_topAry.count)+30);
     [self.view addSubview:backScroll];
     [backScroll mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(gouxuanLabel.mas_bottom).offset(0);
@@ -77,46 +79,18 @@
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
     
-    //业务
-    ZHTBtnView *zhtbtnview = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_ywAry coode:1];
-    NSLog(@"%@",zhtbtnview.ywAry);
-    [backScroll addSubview:zhtbtnview];
-    [zhtbtnview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(backScroll.mas_top).offset(0);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.height.mas_offset(180);
-    }];
-    //美导
-    ZHTBtnView *zhtbtnview1 = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_mdAry coode:2];
-    [backScroll addSubview:zhtbtnview1];
-    [zhtbtnview1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(zhtbtnview.mas_bottom).offset(20);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.height.mas_offset(180);
-    }];
-    //物流
-    ZHTBtnView *zhtbtnview2 = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_wlAry coode:3];
-    [backScroll addSubview:zhtbtnview2];
-    [zhtbtnview2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(zhtbtnview1.mas_bottom).offset(20);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.height.mas_offset(180);
-    }];
-    //内勤
-    ZHTBtnView *zhtbtnview3 = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_nqAry coode:4];
-    [backScroll addSubview:zhtbtnview3];
-    [zhtbtnview3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(zhtbtnview2.mas_bottom).offset(20);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.height.mas_offset(180);
-    }];
+
+    for (int i = 0; i<_topAry.count; i++) {
+        ZHTBtnView *zhtbtnview = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_ywAry[i] coode:[_topAry[i] intValue] numarr:_numAry[i]];
+        
+        zhtbtnview.frame = CGRectMake(0,(180+20)*i, self.view.frame.size.width, 180);
+        [backScroll addSubview:zhtbtnview];
+    }
     
 }
 -(void)reoirtNetWork{
+  
+
     //manager/queryPosition.action
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryReportPosition", KURLHeader];
     NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -125,17 +99,36 @@
     NSDictionary *dic = [[NSDictionary alloc]init];
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
-       //if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *ywray=[NSDictionary changeType:[ responseObject valueForKey:@"yw"]];
-        NSArray *mdary = [responseObject valueForKey:@"md"];
-        NSArray *wlary = [responseObject valueForKey:@"wl"];
-        NSArray *nqary = [responseObject valueForKey:@"nq"];
-        for (NSDictionary *dic in ywray) {
-            //NSString *num = dic[@"num"];
-            NSString *newname = dic[@"newName"];
-        }
+       if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+           for (NSDictionary *dic in responseObject[@"reportList"]) {
+                ReportModel *model=[[ReportModel alloc]init];
+               [model setValuesForKeysWithDictionary:dic];
+                [ _topAry addObject:model.num];
+               [_topNameAry addObject:model.Name];
+               
+               NSMutableArray *zwArr=[NSMutableArray array];
+               NSMutableArray *numArr=  [NSMutableArray array];
+               
+               for (NSDictionary *dict in dic[@"roleSetList"]) {
+                   ReportModel *model=[[ReportModel alloc]init];
+                   [model setValuesForKeysWithDictionary:dict];
+                   [ zwArr addObject:model.Name];
+                   [numArr addObject:model.num];
+               }
+               [_ywAry addObject:zwArr];
+               [_numAry addObject:numArr];
+               NSLog(@"_numAry:%@",_numAry);
+               NSLog(@"_ywAry:%@",_ywAry);
+           }
+           [self subLabelUI];
+       }
         
-            //
+        
+       
+
+        
+        
+                    //
        // NSLog(@"ywray：%@\nmdary：%@\nwlary：%@\nnqary：%@",ywray,mdary,wlary,nqary);
             
         //}
