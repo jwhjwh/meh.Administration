@@ -16,6 +16,6 @@
 
 @property (strong,nonatomic) NSString *power;
 
-//@property (strong,nonatomic) NSArray *roleSetList;
+
 
 @end

@@ -12,6 +12,7 @@
 
 
 @property (strong,nonatomic) NSArray *ywAry;
+@property (strong,nonatomic) NSArray *numAry;
 @property (strong,nonatomic) UIView* viewbuton;
 @property (strong,nonatomic) UIButton* buttonname;
 @property (strong,nonatomic) UIButton* qdbutton;
@@ -24,7 +25,7 @@
 @property (strong,nonatomic) NSMutableArray *NSnqAry;//内勤。。。。
 
 @property (assign,nonatomic) int copde;
-- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode;
+- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode numarr:(NSArray *)numarr;
 -(UIView *)viewww:(CGFloat)xx yy:(CGFloat)yy v:(UIView*)v;
 -(UIView *)viewbuton:(CGFloat)xx yy:(CGFloat)yy names:(NSArray*)names v:(UIView*)v tagg:(int)tagg;
 @end
