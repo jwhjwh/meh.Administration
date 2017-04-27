@@ -85,7 +85,7 @@
             [self.cancleBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.2]] forState:UIControlStateNormal];
             [self.cancleBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.2]] forState:UIControlStateSelected];
             [self.cancleBtn setTitle:cancleTitle forState:UIControlStateNormal];
-            [self.cancleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.cancleBtn setTitleColor:GetColor(7, 138, 249, 1) forState:UIControlStateNormal];
             
             self.cancleBtn.tag = 1;
             [self.cancleBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -113,7 +113,8 @@
 
             // 改颜色
             [self.sureBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.2]] forState:UIControlStateSelected];
+            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor RGBNav]] forState:UIControlStateNormal];
+            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor RGBNav]] forState:UIControlStateSelected];
             [self.sureBtn setTitle:sureTitle forState:UIControlStateNormal];
             self.sureBtn.tag = 2;
             [self.sureBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];

@@ -22,6 +22,14 @@
 @end
 
 @implementation StructureViewController
+- (void)dealloc {
+    if ([self.timer isValid]) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+    [_timerrrrrrrr invalidate];
+    _timerrrrrrrr = nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];

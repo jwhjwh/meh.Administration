@@ -1,17 +1,16 @@
 //
-//  multiController.m
+//  ModifyController.m
 //  Administration
 //
-//  Created by zhang on 2017/4/14.
+//  Created by zhang on 2017/4/21.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "multiController.h"
+#import "ModifyController.h"
 #import "ChooseTableViewCell.h"
 #import "BranTableViewCell.h"
 #import "Brandmodle.h"
-@interface multiController ()
-<UITableViewDataSource,UITableViewDelegate>
+@interface ModifyController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong)UITableView *branTableView;
 @property (nonatomic,strong)UIView *view1;
 @property (nonatomic,strong)NSMutableArray *indexArray;
@@ -24,9 +23,10 @@
 /** 标记是否全选 */
 @property (nonatomic ,assign)BOOL isAllSelected;
 @property (nonatomic,strong)NSArray *array;
+
 @end
 
-@implementation multiController
+@implementation ModifyController
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title= @"所选品牌";
@@ -36,7 +36,7 @@
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem=buttonItem;  
+    self.navigationItem.leftBarButtonItem=buttonItem;
     self.branTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     self.branTableView.delegate = self;
@@ -95,14 +95,14 @@
 
 {
     if(self.gameArrs.count==2){
-    if (indexPath.section==0) {
-        return NO;
+        if (indexPath.section==0) {
+            return NO;
+        }
+        return YES;
+    }else{
+        return YES;
+        
     }
-    return YES;
-}else{
-    return YES;
-
-}
 }
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -121,36 +121,17 @@
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.gameArrs.count==2) {
-        if (indexPath.section==0) {
-            static NSString *identifi = @"Cell";
-            BranTableViewCell *cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
-            if (!cell) {
-                cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
-                cell.backgroundColor =[UIColor whiteColor];
-            }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.branmodel = self.gameArrs[indexPath.section][indexPath.row];
-            return cell;
-        }else{
-            static NSString *identifi = @"gameCell";
-            ChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifi];
-            
-            if (!cell) {
-                cell = [[ChooseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
-            }
-            cell.tintColor = [UIColor RGBNav];
-            
-            /**
-             *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
-             */
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-            cell.model = self.gameArrs[indexPath.section][indexPath.row];
-            cell.backgroundColor = [UIColor clearColor];
-            return cell;
+{  if (self.gameArrs.count==2) {
+    if (indexPath.section==0) {
+        static NSString *identifi = @"Cell";
+        BranTableViewCell *cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+        if (!cell) {
+            cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+            cell.backgroundColor =[UIColor whiteColor];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.branmodel = self.gameArrs[indexPath.section][indexPath.row];
+        return cell;
     }else{
         static NSString *identifi = @"gameCell";
         ChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifi];
@@ -167,11 +148,32 @@
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         cell.model = self.gameArrs[indexPath.section][indexPath.row];
         cell.backgroundColor = [UIColor clearColor];
+        
         return cell;
-
     }
+
+   }else{
+    static NSString *identifi = @"gameCell";
+    ChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifi];
+    
+    if (!cell) {
+        cell = [[ChooseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+    }
+    cell.tintColor = [UIColor RGBNav];
+    
+    /**
+     *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
+     */
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    cell.model = self.gameArrs[indexPath.section][indexPath.row];
+    cell.backgroundColor = [UIColor clearColor];
+    return cell;
     
 }
+
+    
+   }
 
 #pragma mark - UITableViewDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -202,6 +204,7 @@
         _delButton.backgroundColor=GetColor(206, 175,219 ,1);
         [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
     }
+
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
     
@@ -209,11 +212,9 @@
     if (_deleteArrarys.count==0) {
         _delButton.backgroundColor=[UIColor whiteColor];
     }
-    
     [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
 }
 -(void)allDelBtn{
-    
     self.isAllSelected = !self.isAllSelected;
     if (self.gameArrs.count==1) {
         _array=self.gameArrs[0];
@@ -231,7 +232,7 @@
                 
             }
         }
-
+        
     }else{
         _array=self.gameArrs[1];
         for (int i = 0; i<_array.count; i++) {
@@ -248,7 +249,7 @@
                 
             }
         }
-
+        
     }
 }
 #pragma mark - 补全分隔线左侧缺失
@@ -276,7 +277,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Num":@"1",@"CompanyInfoId":compid};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Num":@"1",@"CompanyInfoId":compid,@"id":_departmentID};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         
         
@@ -304,9 +305,28 @@
                 [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
                 _branTableView.emptyView.hidden = NO;
             }
-            [_branTableView reloadData];
+         
+              [_branTableView reloadData];
+            if (self.gameArrs.count>0) {
+                if (self.gameArrs.count==1) {
+                    _array=self.gameArrs[0];
+                }else{
+                    _array=self.gameArrs[1];
+                }
+                int a=1;
+                for (int i = 0; i<_array.count; i++) {
+                    Brandmodle *modelNUm= _array[i];
+                    if ([[NSString stringWithFormat:@"%@",modelNUm.departmentID]isEqualToString:_departmentID]) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:self.gameArrs.count-1];
+                        [self.branTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                        [_delButton setTitle:[NSString stringWithFormat:@"确定(%d)",a++] forState:UIControlStateNormal];
+                        _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+                    }
+                }
+            }
+           
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有品牌信息" andInterval:1.0];
             [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
             _branTableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {

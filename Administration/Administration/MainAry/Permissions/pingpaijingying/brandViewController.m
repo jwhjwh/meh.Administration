@@ -81,7 +81,7 @@
 }
 -(void)creatLGView
 {
-    NSMutableArray * arr = [NSMutableArray new];
+    NSMutableArray * arr = [NSMutableArray array];
     for (int i = 0; i < 26; i ++)
     {
         unichar ch = 65 + i;

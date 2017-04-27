@@ -18,13 +18,16 @@
 @property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic,strong)NSArray *natureArr;
 @property (nonatomic,strong)NSString *str;
+@property(nonatomic,strong)NSMutableArray *ArrID;
 @end
 
 @implementation BrandsetController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([self.str isEqualToString:@"1"]) {
+         _tableView.emptyView.hidden = YES;
         [self datalade];
+        self.str=@"0";
     }
 }
 - (void)viewDidLoad {
@@ -49,10 +52,10 @@
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     [self datalade];
-    _natureArr =@[@"主力品牌部(单一品牌)",@"非主力品牌综合部(单个或者多个品牌)"];
+   
 }
 -(void)datalade{
-    NSString *urlStr =[NSString stringWithFormat:@"%@user/queryDepartment",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@user/queryBrandDepartment",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
      NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -60,60 +63,27 @@
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.dataArray = [NSMutableArray array];
-            _indexArray = [NSMutableArray array];
             _daArr = [NSMutableArray array];
-            
-             NSMutableArray *BrArr=[NSMutableArray array];
-             NSMutableArray *BrA=[NSMutableArray array];
+            _ArrID = [NSMutableArray array];
             NSArray *array=[responseObject valueForKey:@"mList"];
-            NSArray *arr=[responseObject valueForKey:@"nList"];
-            NSMutableArray *marr=[NSMutableArray array];
-            NSMutableArray *narr=[NSMutableArray array];
             for (NSDictionary *dic in array) {
-            NSArray *barndArr = [dic valueForKey:@"brandList"];
-               branModel *model=[[branModel alloc]init];
-              NSMutableArray *logoArr=[NSMutableArray array];
-            
-                if(barndArr.count>0){
-                    for (NSDictionary *dict in barndArr) {
-                        [model setValuesForKeysWithDictionary:dict];
-                        [logoArr addObject:model];
-                    }
-                    [BrA addObject:[dic valueForKey:@"departmentName"]];
-                    [marr addObject: logoArr];
-                    
-                }
-                }
-           
-            if (marr.count>0) {
-                [self.dataArray addObject:marr];
-                [_indexArray addObject:@"主力品牌部"];
-                [_daArr addObject:BrA];
-            }
-            for (NSDictionary *dic in arr) {
+                
                 NSArray *barndArr = [dic valueForKey:@"brandList"];
-                branModel *model=[[branModel alloc]init];
-                NSMutableArray *logoArr=[NSMutableArray array];
+                [_daArr addObject:[dic valueForKey:@"departmentName"]];
+                [_ArrID addObject:[dic valueForKey:@"id"]];
+            NSMutableArray *logoArr=[NSMutableArray array];
                 if(barndArr.count>0){
                     for (NSDictionary *dict in barndArr) {
+                        branModel *model=[[branModel alloc]init];
                         [model setValuesForKeysWithDictionary:dict];
                         [logoArr addObject:model];
                     }
-                    [BrArr addObject:[dic valueForKey:@"departmentName"]];
-                    [narr addObject: logoArr];
-                    
+                    [self.dataArray addObject:logoArr];
                 }
-              
-            }
-            if (narr.count>0) {
-                [self.dataArray addObject:narr];
-                [_indexArray addObject:@"非主力品牌综合部"];
-                [_daArr addObject:BrArr];
-            }
-           
+                }
+    
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -145,38 +115,33 @@
 }
 
 
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 74;
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return _dataArray.count;
-}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_dataArray[section]count];
+    return _dataArray.count;
     
 }
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    view.tintColor =  GetColor(230,230,230,1);
-}
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    
-    NSString * str = [NSString stringWithFormat:@"%@(%lu)",_indexArray[section],(unsigned long)[_dataArray[section]count]];
-    return str;
-}
-
-
-
-
+//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return _dataArray.count;
+//}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 30;
+//}
+//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+//    view.tintColor =  GetColor(230,230,230,1);
+//}
+//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    
+//    NSString * str = [NSString stringWithFormat:@"  %@(%lu)",_indexArray[section],(unsigned long)[_dataArray[section]count]];
+//    return str;
+//}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BranTableViewCell *cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
@@ -185,30 +150,30 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.titleLabel.text = _daArr[indexPath.section][indexPath.row];
+    cell.titleLabel.text = _daArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     cell.backgroundColor = [UIColor whiteColor];
    
-    if ([_dataArray[indexPath.section][indexPath.row] count]==1) {
+    if ([_dataArray[indexPath.row] count]==1) {
      
-        for ( branModel *model in  _dataArray[indexPath.section][indexPath.row]) {
+        for ( branModel *model in  _dataArray[indexPath.row]) {
             [cell.imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
         }
-    }else if ([_dataArray[indexPath.section][indexPath.row] count]==3){
+    }else if ([_dataArray[indexPath.row] count]==2){
         NSMutableArray *LogoImage=[NSMutableArray array];
-        for ( branModel *model in  _dataArray[indexPath.section][indexPath.row]) {
+        for ( branModel *model in  _dataArray[indexPath.row]) {
             [LogoImage addObject:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]];
         }
         cell.imageVie.image =[self addTwoImageToOne:[UIImage imageNamed:@"bg"] twoImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[0]]]] ThreeImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[1]]]]];
-    }else if ([_dataArray[indexPath.section][indexPath.row] count]==3){
+    }else if ([_dataArray[indexPath.row] count]==3){
         NSMutableArray *LogoImage=[NSMutableArray array];
-        for ( branModel *model in  _dataArray[indexPath.section][indexPath.row]) {
+        for ( branModel *model in  _dataArray[indexPath.row]) {
             [LogoImage addObject:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]];
         }
         cell.imageVie.image =[self addTwoImageToOne:[UIImage imageNamed:@"bg"] twoImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[0]]]] ThreeImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[1]]]] fourImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[2]]]]];
     }else{
         NSMutableArray *LogoImage=[NSMutableArray array];
-        for ( branModel *model in  _dataArray[indexPath.section][indexPath.row]) {
+        for ( branModel *model in  _dataArray[indexPath.row]) {
             [LogoImage addObject:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]];
         }
           cell.imageVie.image =[self addTwoImageToOne:[UIImage imageNamed:@"bg"] twoImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[0]]]] ThreeImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[1]]]] fourImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[2]]]]fiveImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[3]]]]];
@@ -218,9 +183,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DetailsbrandController *detailVC=[[DetailsbrandController alloc]init];
-    detailVC.branarr = _dataArray[indexPath.section][indexPath.row];
-    detailVC.nameStr = _daArr[indexPath.section][indexPath.row];
-    detailVC.nature = _natureArr[indexPath.section];
+    detailVC.blockStr=^(){
+        self.str=@"1";
+    };
+    detailVC.branarr = _dataArray[indexPath.row];
+    detailVC.nameStr = _daArr[indexPath.row];
+    detailVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
@@ -248,50 +216,37 @@
 }
 - (UIImage *)addTwoImageToOne:(UIImage *)oneImg twoImage:(UIImage *)twoImg  ThreeImage:(UIImage *)ThreeImage
 {
-    
     UIGraphicsBeginImageContext(oneImg.size);
-    
     [oneImg drawInRect:CGRectMake(0, 0, oneImg.size.width, oneImg.size.height)];
-    
     [twoImg drawInRect:CGRectMake(oneImg.size.width/4, 0, oneImg.size.width/2, oneImg.size.height/2)];
     [ThreeImage drawInRect:CGRectMake(oneImg.size.width/4,oneImg.size.height/2, oneImg.size.width/2, oneImg.size.height/2)];
     UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return resultImg;
-    
 }
 - (UIImage *)addTwoImageToOne:(UIImage *)oneImg twoImage:(UIImage *)twoImg  ThreeImage:(UIImage *)ThreeImage fourImage:(UIImage *)fourImage
 
 {
-    
     UIGraphicsBeginImageContext(oneImg.size);
-    
     [oneImg drawInRect:CGRectMake(0, 0, oneImg.size.width, oneImg.size.height)];
-    
     [twoImg drawInRect:CGRectMake(oneImg.size.width/4, 0, oneImg.size.width/2, oneImg.size.height/2)];
     [ThreeImage drawInRect:CGRectMake(0,oneImg.size.height/2, oneImg.size.width/2, oneImg.size.height/2)];
     [fourImage drawInRect:CGRectMake(oneImg.size.width/2,oneImg.size.height/2, oneImg.size.width/2, oneImg.size.height/2)];
     UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return resultImg;
-    
 }
 - (UIImage *)addTwoImageToOne:(UIImage *)oneImg twoImage:(UIImage *)twoImg  ThreeImage:(UIImage *)ThreeImage fourImage:(UIImage *)fourImage fiveImage:(UIImage *)fiveImage
 {
-    
     UIGraphicsBeginImageContext(oneImg.size);
-    
     [oneImg drawInRect:CGRectMake(0, 0, oneImg.size.width, oneImg.size.height)];
-    
     [twoImg drawInRect:CGRectMake(0, 0, oneImg.size.width/2, oneImg.size.height/2)];
-    
     [ThreeImage drawInRect:CGRectMake(oneImg.size.width/2,0, oneImg.size.width/2, oneImg.size.height/2)];
     [fourImage drawInRect:CGRectMake(0,oneImg.size.height/2, oneImg.size.width/2, oneImg.size.height/2)];
     [fiveImage drawInRect:CGRectMake(oneImg.size.width/2,oneImg.size.height/2, oneImg.size.width/2, oneImg.size.height/2)];
     UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return resultImg;
-    
 }
 
 @end

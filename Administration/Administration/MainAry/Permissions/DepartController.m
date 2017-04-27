@@ -1,38 +1,26 @@
 //
-//  PermissionsViewController.m
+//  DepartController.m
 //  Administration
-//  权限管理
-//  Created by 九尾狐 on 2017/3/2.
+//
+//  Created by zhang on 2017/4/26.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "PermissionsViewController.h"
-#import "CreateViewController.h"
-#import "CodeViewController.h"
-#import "StructureViewController.h"
-#import "SetPositionViewController.h"
-#import "AddBrandViewController.h"
-#import "ReportPermissionsVC.h"
 #import "DepartController.h"
-#import "BusinessGroupViewController.h"
-@interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "BrandsetController.h"
+@interface DepartController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
     
 }
 @property (nonatomic,retain)NSArray *arr;
-
 @end
 
-@implementation PermissionsViewController
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.tabBarController.tabBar.hidden=YES;
-}
+@implementation DepartController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"权限管理";
+    self.title=@"部门设置";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -41,7 +29,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterTableUI];
-    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"部门设置",@"美导类别设置",@"业务类别设置",@"报表权限设置",@"识别码",nil];
+    _arr = [[NSArray alloc]initWithObjects:@"品牌部设置",@"业务部设置",@"财务部设置",@"客服部设置",@"物流部设置",nil];
     
 }
 -(void)buttonLiftItem{
@@ -107,56 +95,47 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = _arr[indexPath.row];
-    if ([cell.textLabel.text isEqualToString:@"职业结构介绍(必看)"]) {
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
-         NSRange range1 = {7,2};
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range1];
-        [cell.textLabel setAttributedText:attributedString];
-    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
-
-        case 0:{ //职位介绍
-        StructureViewController *StructVC= [[StructureViewController alloc]init];
-        [self.navigationController showViewController:StructVC sender:nil];
+            
+        case 0:{
+            //品牌部设置
+            BrandsetController *brandVC=[[BrandsetController alloc]init];
+            [self.navigationController pushViewController:brandVC animated:YES];
+        
         }
             break;
-        case 1:{ //公司职位设置
-            SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init]; [self.navigationController pushViewController:setPostionVC animated:YES];
+        case 1:{
+        
         }
             break;
         case 2:{
-            //品牌设置
-            AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
-            [self.navigationController pushViewController:addBrandVC animated:YES];
+          
+       
         }
             break;
-
+            
         case 3:{
-            //部门设置
-            DepartController *DepartVC=[[DepartController alloc]init];
-            [self.navigationController pushViewController:DepartVC animated:YES];
+        
+
         }
             break;
         case 4:{
-            //业务部设置
-            BusinessGroupViewController *BusinessVC =[[BusinessGroupViewController alloc]init];
-            [self.navigationController pushViewController:BusinessVC animated:YES];
+        
+         
         }
             break;
         case 5:{
-            //报表权限设置
-            ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
-             [self.navigationController showViewController:perortVC sender:nil];
+            
+     
         }
             break;
         case 6:{
-            //识别码
-            CodeViewController *codeVC = [[CodeViewController alloc]init];
-            [self.navigationController showViewController:codeVC sender:nil];
+           
+       
         }
             break;
         default:
