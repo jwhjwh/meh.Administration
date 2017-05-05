@@ -92,7 +92,7 @@
             [alertView showMKPAlertView];
         }
         if (self.dataArray.count==0) {
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息"];
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息" Size:20.0];
             _tableView.emptyView.hidden = NO;
         }
         [self.tableView reloadData];
@@ -125,30 +125,12 @@
     return _dataArray.count;
     
 }
-//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return _dataArray.count;
-//}
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 30;
-//}
-//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-//    view.tintColor =  GetColor(230,230,230,1);
-//}
-//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    
-//    NSString * str = [NSString stringWithFormat:@"  %@(%lu)",_indexArray[section],(unsigned long)[_dataArray[section]count]];
-//    return str;
-//}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BranTableViewCell *cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     if (cell == nil) {
         cell = [[BranTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = _daArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
@@ -179,6 +161,25 @@
           cell.imageVie.image =[self addTwoImageToOne:[UIImage imageNamed:@"bg"] twoImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[0]]]] ThreeImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[1]]]] fourImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[2]]]]fiveImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[3]]]]];
     }
     return cell;
+}
+//编辑
+- (BOOL)tableView: (UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewRowAction * action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        
+    
+    }];
+    
+    action1.backgroundColor = GetColor(206, 175,219 ,1);
+    UITableViewRowAction * action2 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"编辑" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        //Action 2
+  
+      }];
+    action2.backgroundColor = GetColor(220,220,220,1);
+    return @[action1,action2];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

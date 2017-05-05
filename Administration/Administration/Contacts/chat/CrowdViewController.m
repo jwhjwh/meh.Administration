@@ -63,7 +63,7 @@
                     [weakself.groupArr removeAllObjects];
                     [weakself.groupArr addObjectsFromArray:groups];
                     if (self.groupArr.count==0) {
-                        [_tableView addEmptyViewWithImageName:@"" title:@"暂无经群组，创建一个吧～～"];
+                        [_tableView addEmptyViewWithImageName:@"" title:@"暂无经群组，创建一个吧～～" Size:20.0];
                         _tableView.emptyView.hidden = NO;
                     }
                     [weakself.tableView reloadData];

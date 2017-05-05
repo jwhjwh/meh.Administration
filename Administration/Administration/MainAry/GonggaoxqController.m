@@ -13,9 +13,7 @@
 @interface GonggaoxqController ()<UITableViewDataSource,UITableViewDelegate>
 {
     int page;
-    
     int totalPage;//总页数
-    
 }
 @property(nonatomic,strong)UITableView *tableView;
 
@@ -54,11 +52,12 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _dataArray = [NSMutableArray array];
         [weakSelf getNetworkData:YES];
+       
     }];
     
     //默认【上拉加载】
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        //Call this Block When enter the refresh status automatically
+       
         [weakSelf getNetworkData:NO];
     }];
     
@@ -97,7 +96,7 @@
             [self.tableView reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
+        return;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             

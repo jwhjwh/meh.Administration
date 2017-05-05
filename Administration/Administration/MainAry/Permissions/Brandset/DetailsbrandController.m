@@ -11,6 +11,7 @@
 #import "AddbranTableViewCell.h"
 #import "branModel.h"
 #import "ModifyController.h"
+
 @interface DetailsbrandController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UIView *view;
@@ -44,7 +45,7 @@
   
     [self rightBar];
     [self InterTableUI];
-    _tileAry=@[@"名称",@"所选品牌"];
+    _tileAry=@[@"名称",@"负责品牌"];
     _paleAry=@[_nameStr,@""];
     barr=[NSMutableArray array];
     for (branModel *model in _branarr) {

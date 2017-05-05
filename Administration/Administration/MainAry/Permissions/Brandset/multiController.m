@@ -7,6 +7,7 @@
 //
 
 #import "multiController.h"
+#import "AddbranController.h"
 #import "ChooseTableViewCell.h"
 #import "BranTableViewCell.h"
 #import "Brandmodle.h"
@@ -38,7 +39,6 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;  
     self.branTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
     self.branTableView.delegate = self;
     self.branTableView.dataSource = self;
     self.branTableView.tableFooterView = [[UIView alloc] init];
@@ -72,12 +72,26 @@
     [self getNetworkData];
 }
 -(void)deltButn{
-    NSMutableArray *deleteArrarys = [NSMutableArray array];
-    for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
-        [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+    if(_barndarr.count>0){
+        NSMutableArray *deleteArrarys = [NSMutableArray array];
+        for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
+            [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"brand" object:nil userInfo:@{@"brandArr":deleteArrarys}];
+    //返回指定控制器
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[AddbranController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+    }else{
+        NSMutableArray *deleteArrarys = [NSMutableArray array];
+        for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
+            [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+        }
+        self.blockArr(deleteArrarys);
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    self.blockArr(deleteArrarys);
-    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -301,13 +315,38 @@
                 _indexArray=[NSMutableArray arrayWithObjects:@"待分配的品牌",nil];
             }
             if (self.gameArrs.count==0) {
-                [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+                [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"  Size:20.0];
                 _branTableView.emptyView.hidden = NO;
             }
             [_branTableView reloadData];
+            if (_barndarr.count>0) {
+                if (self.gameArrs.count>0) {
+                    if (self.gameArrs.count==1) {
+                        _array=self.gameArrs[0];
+                    }else{
+                        _array=self.gameArrs[1];
+                    }
+                    int a=1;
+                    for (int i = 0; i<_array.count; i++) {
+                        Brandmodle *modelNUm= _array[i];
+                        
+                        for (branModel *model in _barndarr) {
+                            if ([[NSString stringWithFormat:@"%@",modelNUm.finsk]isEqualToString:model.finsk]) {
+                                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:self.gameArrs.count-1];
+                                [self.branTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                                [_delButton setTitle:[NSString stringWithFormat:@"确定(%d)",a++] forState:UIControlStateNormal];
+                                _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+                            }
+                        }
+                      
+                    }
+                }
+                
+            }
+            
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
-            [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+            [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];
             _branTableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
