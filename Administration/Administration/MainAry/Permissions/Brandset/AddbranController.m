@@ -11,7 +11,7 @@
 #import "multiController.h"
 #import "ZXYAlertView.h"
 #import "branModel.h"
-
+#import "ItemCell.h"
 static NSString *reuseID = @"itemCell";
 static NSString *sectionHeaderID = @"sectionHeader";
 @interface AddbranController ()<UICollectionViewDelegate, UICollectionViewDataSource,ZXYAlertViewDelegate,UITextViewDelegate>
@@ -68,7 +68,7 @@ static NSString *sectionHeaderID = @"sectionHeader";
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     [self.view addSubview:_collectionView];
-//    [_collectionView registerClass:[ItemCell class] forCellWithReuseIdentifier:reuseID];
+       [_collectionView registerClass:[ItemCell class] forCellWithReuseIdentifier:reuseID];
  
     
     

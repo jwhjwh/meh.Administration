@@ -40,12 +40,10 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIButton *bton = [UIButton buttonWithType:UIButtonTypeCustom];
-    bton.frame =CGRectMake(0, 0, 28,28);
-    [bton setBackgroundImage:[UIImage imageNamed:@"fj_ico"] forState:UIControlStateNormal];
-    [bton addTarget: self action: @selector(buttonrightItem) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *btonItem=[[UIBarButtonItem alloc]initWithCustomView:bton];
-    self.navigationItem.rightBarButtonItem=btonItem;
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:(UIBarButtonItemStyleDone) target:self action:@selector(butItem)];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight+49)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -105,7 +103,7 @@
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)buttonrightItem{
+-(void)butItem{
     AddbranController *addbranVC=[[AddbranController alloc]init];
     addbranVC.blockStr=^(){
         self.str=@"1";

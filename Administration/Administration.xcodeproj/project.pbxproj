@@ -31,6 +31,7 @@
 		1F29739D1E6E8C38003F2FD0 /* EditbrandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F29739C1E6E8C38003F2FD0 /* EditbrandController.m */; };
 		1F2E01AC1EBC67DC00D36C3B /* ItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E01A91EBC67DC00D36C3B /* ItemCell.m */; };
 		1F2E01AD1EBC67DC00D36C3B /* ItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E01AB1EBC67DC00D36C3B /* ItemModel.m */; };
+		1F2E01B01EBC828200D36C3B /* AddbranTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E01AF1EBC828200D36C3B /* AddbranTableViewCell.m */; };
 		1F33F1191E611528000733F8 /* inftionxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1181E611528000733F8 /* inftionxqController.m */; };
 		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
 		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
@@ -577,6 +578,8 @@
 		1F2E01A91EBC67DC00D36C3B /* ItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCell.m; sourceTree = "<group>"; };
 		1F2E01AA1EBC67DC00D36C3B /* ItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemModel.h; sourceTree = "<group>"; };
 		1F2E01AB1EBC67DC00D36C3B /* ItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemModel.m; sourceTree = "<group>"; };
+		1F2E01AE1EBC828200D36C3B /* AddbranTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddbranTableViewCell.h; sourceTree = "<group>"; };
+		1F2E01AF1EBC828200D36C3B /* AddbranTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddbranTableViewCell.m; sourceTree = "<group>"; };
 		1F33F1171E611528000733F8 /* inftionxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionxqController.h; sourceTree = "<group>"; };
 		1F33F1181E611528000733F8 /* inftionxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionxqController.m; sourceTree = "<group>"; };
 		1F33F11A1E61179F000733F8 /* inftionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionTableViewCell.h; sourceTree = "<group>"; };
@@ -2327,6 +2330,8 @@
 				1F22AAE11EA0710A00CC56BB /* ChooseTableViewCell.m */,
 				1F6A05121E9E160100F505D5 /* BranTableViewCell.h */,
 				1F6A05131E9E160100F505D5 /* BranTableViewCell.m */,
+				1F2E01AE1EBC828200D36C3B /* AddbranTableViewCell.h */,
+				1F2E01AF1EBC828200D36C3B /* AddbranTableViewCell.m */,
 				1FF3BAE61E9F560A00E62149 /* Brandmodel */,
 			);
 			path = Brandset;
@@ -4004,6 +4009,7 @@
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
+				1F2E01B01EBC828200D36C3B /* AddbranTableViewCell.m in Sources */,
 				1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				1FF14A321EB2DC4000DE049A /* VTingPromotView.m in Sources */,

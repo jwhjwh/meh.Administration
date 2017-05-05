@@ -34,11 +34,11 @@
                                     initWithTitle:@"完成"
                                     style:UIBarButtonItemStylePlain
                                     target:self
-                                    action:@selector(buttonrightItem)];
+                                    action:@selector(buttonright)];
     self.navigationItem.rightBarButtonItem = rightButton;
     [self InterTableUI];
 }
--(void)buttonrightItem{
+-(void)buttonright{
 
 }
 -(void)buttonLiftItem{
