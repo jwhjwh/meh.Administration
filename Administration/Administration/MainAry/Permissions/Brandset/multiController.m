@@ -38,7 +38,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;  
-    self.branTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.branTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-48)];
     self.branTableView.delegate = self;
     self.branTableView.dataSource = self;
     self.branTableView.tableFooterView = [[UIView alloc] init];
@@ -72,26 +72,14 @@
     [self getNetworkData];
 }
 -(void)deltButn{
-    if(_barndarr.count>0){
-        NSMutableArray *deleteArrarys = [NSMutableArray array];
-        for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
-            [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"brand" object:nil userInfo:@{@"brandArr":deleteArrarys}];
-    //返回指定控制器
-        for (UIViewController *controller in self.navigationController.viewControllers) {
-            if ([controller isKindOfClass:[AddbranController class]]) {
-                [self.navigationController popToViewController:controller animated:YES];
-            }
-        }
-    }else{
+ 
         NSMutableArray *deleteArrarys = [NSMutableArray array];
         for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
             [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
         }
         self.blockArr(deleteArrarys);
         [self.navigationController popViewControllerAnimated:YES];
-    }
+    
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -201,30 +189,34 @@
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.gameArrs.count==2) {
-        _deleteArrarys = [NSMutableArray array];
-        for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
-            [_deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+    if (indexPath.section==1) {
+        if (self.gameArrs.count==2) {
+            _deleteArrarys = [NSMutableArray array];
+            for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
+                [_deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+            }
+            _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+            [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+        }else{
+            _deleteArrarys = [NSMutableArray array];
+            for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
+                [_deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+            }
+            _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+            [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
         }
-        _delButton.backgroundColor=GetColor(206, 175,219 ,1);
-        [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
-    }else{
-        _deleteArrarys = [NSMutableArray array];
-        for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
-            [_deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
-        }
-        _delButton.backgroundColor=GetColor(206, 175,219 ,1);
-        [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
     }
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
-    
-    [_deleteArrarys removeObject:[self.gameArrs[indexPath.section] objectAtIndex:indexPath.row]];
-    if (_deleteArrarys.count==0) {
-        _delButton.backgroundColor=[UIColor whiteColor];
+    if (indexPath.section==1) {
+        [_deleteArrarys removeObject:[self.gameArrs[indexPath.section] objectAtIndex:indexPath.row]];
+        if (_deleteArrarys.count==0) {
+            _delButton.backgroundColor=[UIColor whiteColor];
+        }
+        
+        [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
     }
-    
-    [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+  
 }
 -(void)allDelBtn{
     
@@ -319,31 +311,7 @@
                 _branTableView.emptyView.hidden = NO;
             }
             [_branTableView reloadData];
-            if (_barndarr.count>0) {
-                if (self.gameArrs.count>0) {
-                    if (self.gameArrs.count==1) {
-                        _array=self.gameArrs[0];
-                    }else{
-                        _array=self.gameArrs[1];
-                    }
-                    int a=1;
-                    for (int i = 0; i<_array.count; i++) {
-                        Brandmodle *modelNUm= _array[i];
-                        
-                        for (branModel *model in _barndarr) {
-                            if ([[NSString stringWithFormat:@"%@",modelNUm.finsk]isEqualToString:model.finsk]) {
-                                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:self.gameArrs.count-1];
-                                [self.branTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-                                [_delButton setTitle:[NSString stringWithFormat:@"确定(%d)",a++] forState:UIControlStateNormal];
-                                _delButton.backgroundColor=GetColor(206, 175,219 ,1);
-                            }
-                        }
-                      
-                    }
-                }
-                
-            }
-            
+    
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
             [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];

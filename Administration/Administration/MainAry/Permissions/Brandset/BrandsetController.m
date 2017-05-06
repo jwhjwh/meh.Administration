@@ -11,6 +11,7 @@
 #import "DetailsbrandController.h"
 #import "BranTableViewCell.h"
 #import "branModel.h"
+
 @interface BrandsetController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,retain)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *daArr;

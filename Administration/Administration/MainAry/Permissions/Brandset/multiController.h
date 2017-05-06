@@ -10,5 +10,4 @@
 typedef void  (^BLOCK)(NSMutableArray *array);
 @interface multiController : UIViewController
 @property (nonatomic,strong)BLOCK blockArr;
-@property (nonatomic,strong)NSArray *barndarr;
 @end

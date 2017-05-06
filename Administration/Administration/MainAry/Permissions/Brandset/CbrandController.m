@@ -44,7 +44,6 @@
 }
 -(void)buttonrightItem{
     multiController *detailVC=[[multiController alloc]init];
-    detailVC.barndarr=_daArr;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

@@ -16,6 +16,10 @@
 @end
 
 @interface ItemCell : UICollectionViewCell
+@property (nonatomic, strong) UIImageView *icon;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIButton *rightUpperButton;
+
 @property (nonatomic, strong) UIView *container;
 @property (nonatomic, strong) ItemModel *itemModel;
 @property (nonatomic, weak) id <ItemCellDelegate> delegate;
