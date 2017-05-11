@@ -173,7 +173,7 @@
           NSString *brandId =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"brandId"]];
         NSLog(@"%@",dict);
         if ([status isEqualToString:@"0000"]) {
-        self.blcokStr(self.goodPicture,_string,brandId);
+//        self.blcokStr(self.goodPicture,_string,brandId);
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
             self.goodPicture=nil;
             _string=@"";

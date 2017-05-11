@@ -35,12 +35,11 @@
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         //省略
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        _rightUpperButton = [[UIButton alloc] initWithFrame:CGRectMake(containerW - 40 / 2 - 11.5 / 2 - 2, -20 + 11.5 / 2 + 2, 40, 40)];
+        _rightUpperButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 22,0, 20, 20)];
         [_rightUpperButton addTarget:self action:@selector(rightUpperButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
         [_container addSubview:_icon];
         [_container addSubview:_titleLabel];
-        [_container addSubview:_rightUpperButton];
+      
         [self.contentView addSubview:_container];
         
     }

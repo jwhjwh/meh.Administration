@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BrandsetController : UIViewController
-
+@property (nonatomic,strong)NSString *strNum;
 @end

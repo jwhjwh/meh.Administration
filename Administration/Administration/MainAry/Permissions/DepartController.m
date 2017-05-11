@@ -8,7 +8,7 @@
 
 #import "DepartController.h"
 #import "BrandsetController.h"
-#import "BusinessGroupViewController.h"
+
 #import "branModel.h"
 @interface DepartController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -106,29 +106,35 @@
         case 1:{
             //品牌部设置
             BrandsetController *brandVC=[[BrandsetController alloc]init];
+            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
             [self.navigationController pushViewController:brandVC animated:YES];
         }
             break;
         case 2:{
-            //业务部设置
-            BusinessGroupViewController *BusinessVC =[[BusinessGroupViewController alloc]init];
-            [self.navigationController pushViewController:BusinessVC animated:YES];
+            BrandsetController *brandVC=[[BrandsetController alloc]init];
+            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
+            [self.navigationController pushViewController:brandVC animated:YES];
         }
             break;
         case 3:{
-          
+            BrandsetController *brandVC=[[BrandsetController alloc]init];
+            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
+            [self.navigationController pushViewController:brandVC animated:YES];
        
         }
             break;
             
         case 4:{
-        
+            BrandsetController *brandVC=[[BrandsetController alloc]init];
+            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
+            [self.navigationController pushViewController:brandVC animated:YES];
 
         }
             break;
         case 5:{
-        
-         
+            BrandsetController *brandVC=[[BrandsetController alloc]init];
+            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
+            [self.navigationController pushViewController:brandVC animated:YES];
         }
             break;
         default:

@@ -35,4 +35,16 @@
     
     return bounds.size.height;
 }
++(NSString *)JSONDataString:(NSMutableArray*)theData{
+    NSError *error = nil;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theData options:NSJSONWritingPrettyPrinted error:&error];
+ 
+    if ([jsonData length]&&error== nil){
+         NSString *jsonStr=[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        return jsonStr;
+    }else{
+        return nil;
+    }
+}
 @end
