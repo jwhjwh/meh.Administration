@@ -152,12 +152,20 @@
          
         case 5:{
 
+
             //报表权限设置 CreateViewController
+
+
+            //报表权限设置 CreateViewController
+            ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
+            // CreateViewController *perortVC = [[CreateViewController alloc]init];
+            [self.navigationController showViewController:perortVC sender:nil];
 
           
         }
             break;
         case 6:{
+
             //报表权限设置
 
             ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
@@ -166,9 +174,12 @@
         }
             break;
         case 7:{
+
             //识别码
             CodeViewController *codeVC = [[CodeViewController alloc]init];
             [self.navigationController showViewController:codeVC sender:nil];
+
+            
         }
             break;
         default:
