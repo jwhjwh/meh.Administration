@@ -26,7 +26,7 @@
 #import "MainViewController.h" //首页
 
 #import "IntercalateController.h"//设置
-
+#import "SearchViewController.h"//搜索
 #import "ContactsController.h" //联系人
 
 #import "UserGuideViewController.h"//引导页
@@ -38,7 +38,6 @@
 //------------------------二级界面
 #import "SecurityViewController.h" //账号安全
 #import "ManagementViewController.h"//账号管理
-#import "SearchViewController.h"//人员搜索页
 #import "VersionViewController.h"//版本信息
 #import "OpinionViewController.h"//意见反馈
 #import "PersonnelViewController.h"//联系人->>各部门人员
@@ -90,7 +89,7 @@
 #import "UserWebManager.h"
 
 // 注册通知
-#define NOTIFY_ADD(_noParamsFunc, _notifyName)  [[NSNotificationCenter defaultCenter] \
+#define NOTIFY_ADD(_noParamsFunc, _notifyName) [[NSNotificationCenter defaultCenter] \
 addObserver:self \
 selector:@selector(_noParamsFunc) \
 name:_notifyName \
@@ -117,7 +116,5 @@ object:nil];
 
 
 
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 #endif /* Administration_PrefixHeader_pch */

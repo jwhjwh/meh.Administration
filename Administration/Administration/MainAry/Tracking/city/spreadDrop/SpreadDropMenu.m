@@ -189,6 +189,7 @@ BOOL isAllSelected;
     
     return 30;
 }
+
 #pragma mark - TableView DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

@@ -13,4 +13,6 @@
 @property (nonatomic,strong)NSString *companyInfoId;
 @property (nonatomic,strong)NSString *finsk;
 @property (nonatomic,strong)NSString *ID;
+@property (nonatomic,strong)NSString *departmentName;
+@property (nonatomic,strong)NSString *departmentID;
 @end

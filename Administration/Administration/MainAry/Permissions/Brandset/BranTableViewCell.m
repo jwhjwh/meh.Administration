@@ -21,8 +21,6 @@
     // 设置圆角半径
     [self addSubview:_imageVie];
     _titleLabel=[[UILabel alloc]init];
-    _titleLabel.font=[UIFont systemFontOfSize:20];
-    
     [self addSubview:_titleLabel];
     
     [_imageVie mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -40,9 +38,20 @@
 
     
 }
+-(void)setBranmodel:(Brandmodle *)branmodel{
+       _str =[NSString stringWithFormat:@"(%@)",branmodel.departmentName];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",branmodel.finsk,_str]];
+    
+    [AttributedStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,branmodel.finsk.length)]; //设置字体颜色
+     [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20.0] range:NSMakeRange(0,branmodel.finsk.length)]; //设置字体字号和字体类别
+    [AttributedStr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(branmodel.finsk.length,_str.length)]; //设置字体颜色
+    [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0] range:NSMakeRange(branmodel.finsk.length,_str.length)]; //设置字体字号和字体类别
+     _titleLabel.attributedText =AttributedStr;
+      [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,branmodel.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+
+}
 -(void)setModel:(branModel *)model{
-       
-       [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+         [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

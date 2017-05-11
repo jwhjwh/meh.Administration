@@ -13,4 +13,11 @@
 @property (nonatomic,strong)NSString *brandLogo;
 @property (nonatomic,strong)NSString * finsk;
 @property (nonatomic,strong)NSString *ID;
+
+//部门设置
+@property (nonatomic,strong)NSString *Name;
+@property (nonatomic,strong)NSString *Num;
+//美导
+@property (nonatomic,strong)NSString  *levelName;
+@property (nonatomic,strong)NSString  *num;
 @end

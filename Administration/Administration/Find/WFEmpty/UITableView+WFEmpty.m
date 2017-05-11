@@ -30,7 +30,7 @@ static char UITableViewEmptyView;
 }
 
 
--(void)addEmptyViewWithImageName:(NSString*)imageName title:(NSString*)title
+-(void)addEmptyViewWithImageName:(NSString*)imageName title:(NSString*)title  Size:(CGFloat)size
 {
     if (!self.emptyView)
     {
@@ -45,12 +45,12 @@ static char UITableViewEmptyView;
         [carImageView setImage:image];
         [noMessageView addSubview:carImageView];
         
-        UILabel *noInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 160, frame.size.width, 20)];
+        UILabel *noInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, frame.size.width-40, 20)];
         noInfoLabel.textAlignment = NSTextAlignmentCenter;
         noInfoLabel.textColor = [UIColor lightGrayColor];
         noInfoLabel.text = text;
         noInfoLabel.backgroundColor = [UIColor clearColor];
-        noInfoLabel.font = [UIFont systemFontOfSize:20];
+        noInfoLabel.font = [UIFont systemFontOfSize:size];
         [noMessageView addSubview:noInfoLabel];
         
         [self addSubview:noMessageView];

@@ -81,7 +81,7 @@
 }
 -(void)creatLGView
 {
-    NSMutableArray * arr = [NSMutableArray new];
+    NSMutableArray * arr = [NSMutableArray array];
     for (int i = 0; i < 26; i ++)
     {
         unichar ch = 65 + i;
@@ -209,14 +209,14 @@
             self.indexArray = [ZXDChineseString IndexArray:keys];
             self.array = [ZXDChineseString LetterSortArray:keys];
             if (self.array.count==0) {
-                [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+                [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];
                 _tableView.emptyView.hidden = NO;
             }
             [_tableView reloadData];
             [self creatLGView];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～"];
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];
             _tableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];

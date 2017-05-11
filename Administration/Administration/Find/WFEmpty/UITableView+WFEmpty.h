@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong, readonly) UIView *emptyView;
 
--(void)addEmptyViewWithImageName:(NSString*)imageName title:(NSString*)title;
+-(void)addEmptyViewWithImageName:(NSString*)imageName title:(NSString*)title Size:(CGFloat)size;
 
 @end

@@ -61,8 +61,6 @@
     self.currentLabel.text = model.title;
 
 }
-
-
 -(void)dealLongPress:(UILongPressGestureRecognizer*)longPress{
     
     if(longPress.state==UIGestureRecognizerStateEnded){

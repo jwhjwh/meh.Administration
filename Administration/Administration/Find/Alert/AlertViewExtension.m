@@ -33,7 +33,7 @@
         _cancelBtn  =[UIButton buttonWithType:UIButtonTypeCustom];
         _cancelBtn.tag=2000;
         [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [_cancelBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
+        [_cancelBtn setTitleColor:GetColor(7, 138, 249, 1) forState:UIControlStateNormal];
         _cancelBtn.titleLabel.font =[UIFont systemFontOfSize:16 weight:0.5];
         [_cancelBtn addTarget:self action:@selector(btnClickSelector:) forControlEvents:UIControlEventTouchUpInside];
         _cancelBtn.backgroundColor =[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
@@ -46,7 +46,7 @@
         [_sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _sureBtn.titleLabel.font =[UIFont systemFontOfSize:16 weight:0.5];
         [_sureBtn addTarget:self action:@selector(btnClickSelector:) forControlEvents:UIControlEventTouchUpInside];
-        _sureBtn.backgroundColor=[UIColor colorWithRed:254/255.0 green:72/255.0 blue:68/255.0 alpha:1.0];
+        _sureBtn.backgroundColor=[UIColor RGBNav];
         [_tipebackView addSubview:_sureBtn];
     }
     return self;

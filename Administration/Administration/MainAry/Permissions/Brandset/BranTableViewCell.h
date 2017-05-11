@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "branModel.h"
+#import "Brandmodle.h"
 @interface BranTableViewCell : UITableViewCell
 @property (nonatomic,strong)UILabel *titleLabel;
 @property (nonatomic,strong)UIImageView *imageVie;
+@property (nonatomic,strong) NSString *str;
 @property (nonatomic,strong)branModel *model;
+@property (nonatomic,strong)Brandmodle *branmodel;
 @end

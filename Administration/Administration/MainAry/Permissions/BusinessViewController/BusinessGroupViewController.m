@@ -25,8 +25,7 @@
     [super viewDidLoad];
     self.title=@"业务部";
     self.view.backgroundColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view.
-    ///<<<<<<
+ 
     UIButton *letfbtn = [UIButton buttonWithType:UIButtonTypeCustom];
     letfbtn.frame =CGRectMake(0, 0, 28,28);
     [letfbtn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -36,7 +35,7 @@
     //+
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(self.view.frame.size.width-30, 0, 28, 28);
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"fj_ico"] forState:UIControlStateNormal];
     [rightBtn addTarget: self action: @selector(buttonrightItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem2=[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem=buttonItem2;
@@ -55,7 +54,7 @@
     businessTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,self.view.bounds.size.width,self.view.bounds.size.height+29) style:UITableViewStylePlain];
     businessTableview.dataSource=self;
     businessTableview.delegate =self;
-    businessTableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+
     [self.view addSubview:businessTableview];
     UIView *view1 = [[UIView alloc]init];
     view1.backgroundColor = GetColor(201, 201, 201, 1);
@@ -105,28 +104,36 @@
     return view;
     
 }
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([businessTableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [businessTableview setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([businessTableview respondsToSelector:@selector(setLayoutMargins:)])  {
+        [businessTableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BaseBusinessViewController *baseVC = [[BaseBusinessViewController alloc]init];
-//    BusinessModel *model = _arr[indexPath.row];
-//    baseVC.contentid = model.ID;
-//    baseVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:baseVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

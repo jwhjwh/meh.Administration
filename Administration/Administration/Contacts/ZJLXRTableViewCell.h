@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LVModel.h"
+#import "DirtmsnaModel.h"
 @interface ZJLXRTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *TXImage;//头像
-@property (weak, nonatomic) IBOutlet UILabel *NameLabel;//姓名
-@property (weak, nonatomic) IBOutlet UILabel *TelLabel;//电话
-@property (weak, nonatomic) IBOutlet UILabel *TimeLabel;//时间
-@property (nonatomic,retain)LVModel *model;
+@property (strong, nonatomic)  UIImageView *TXImage;//头像
+@property (strong, nonatomic)  UILabel *NameLabel;//姓名
+@property (strong, nonatomic)  UILabel *TelLabel;//电话
+@property (strong, nonatomic)  UILabel *zhiLabel;//职位
+@property (nonatomic,retain)DirtmsnaModel *model;
 @end

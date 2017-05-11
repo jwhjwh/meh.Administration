@@ -62,14 +62,13 @@
             [alertView showMKPAlertView];
         }
         if (self.dataArray.count==0) {
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息"];
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息" Size:20.0];
             _tableView.emptyView.hidden = NO;
         }
         [self.tableView reloadData];
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
     
 }
 -(void)buttonLiftItem{
@@ -137,6 +136,7 @@
         messageVC.sortStr=@"2";
     }
     [self.navigationController pushViewController:messageVC animated:YES];
+    
 }
 
 

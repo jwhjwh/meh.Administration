@@ -13,8 +13,9 @@
 #import "SetPosiViewController.h"
 #import "AddBrandViewController.h"
 #import "ReportPermissionsVC.h"
-#import "BrandsetController.h"
-#import "BusinessGroupViewController.h"
+#import "DepartController.h"
+
+#import "JobcatController.h"
 @interface PermissionsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -41,7 +42,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterTableUI];
-    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"品牌部设置",@"业务部设置",@"报表权限设置",@"识别码",nil];
+    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"部门设置",@"职位类别设置",@"报表权限设置",@"识别码",nil];
     
 }
 -(void)buttonLiftItem{
@@ -138,25 +139,33 @@
             break;
 
         case 3:{
-           //品牌部设置
-            BrandsetController *brandVC=[[BrandsetController alloc]init];
-            [self.navigationController pushViewController:brandVC animated:YES];
+            //部门设置
+            DepartController *DepartVC=[[DepartController alloc]init];
+            [self.navigationController pushViewController:DepartVC animated:YES];
         }
             break;
         case 4:{
-            //业务部设置
-            BusinessGroupViewController *BusinessVC =[[BusinessGroupViewController alloc]init];
-            [self.navigationController pushViewController:BusinessVC animated:YES];
+            JobcatController * guideVC=[[JobcatController alloc]init];
+            [self.navigationController pushViewController:guideVC animated:YES];
         }
             break;
+         
         case 5:{
+<<<<<<< HEAD
             //报表权限设置 CreateViewController
+=======
+          
+        }
+            break;
+        case 6:{
+            //报表权限设置
+>>>>>>> a93d322b4f26ba98b1ae653384d8813411005b3b
             ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
            // CreateViewController *perortVC = [[CreateViewController alloc]init];
              [self.navigationController showViewController:perortVC sender:nil];
         }
             break;
-        case 6:{
+        case 7:{
             //识别码
             CodeViewController *codeVC = [[CodeViewController alloc]init];
             [self.navigationController showViewController:codeVC sender:nil];
@@ -166,14 +175,6 @@
             break;
     }
 }
-        /*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
