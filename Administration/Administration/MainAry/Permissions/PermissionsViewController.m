@@ -10,7 +10,7 @@
 #import "CreateViewController.h"
 #import "CodeViewController.h"
 #import "StructureViewController.h"
-#import "SetPositionViewController.h"
+#import "SetPosiViewController.h"
 #import "AddBrandViewController.h"
 #import "ReportPermissionsVC.h"
 #import "BrandsetController.h"
@@ -125,7 +125,9 @@
         }
             break;
         case 1:{ //公司职位设置
-            SetPositionViewController *setPostionVC= [[ SetPositionViewController alloc]init]; [self.navigationController pushViewController:setPostionVC animated:YES];
+            SetPosiViewController *setPostionVC= [[ SetPosiViewController alloc]init];
+            //[self.navigationController pushViewController:setPostionVC animated:YES];
+            [self.navigationController showViewController:setPostionVC sender:nil];
         }
             break;
         case 2:{
@@ -148,8 +150,9 @@
         }
             break;
         case 5:{
-            //报表权限设置
+            //报表权限设置 CreateViewController
             ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
+           // CreateViewController *perortVC = [[CreateViewController alloc]init];
              [self.navigationController showViewController:perortVC sender:nil];
         }
             break;

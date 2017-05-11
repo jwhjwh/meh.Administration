@@ -345,8 +345,10 @@
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
-		6226E6641E778CB600767EBD /* SetPositionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E6631E778CB600767EBD /* SetPositionViewController.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
+		623ACAF61EAAEE5D00552D22 /* SetPosiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623ACAF51EAAEE5D00552D22 /* SetPosiViewController.m */; };
+		623ACAF91EAAF43600552D22 /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 623ACAF81EAAF43500552D22 /* Attachment.m */; };
+		623ACAFC1EAAF5A200552D22 /* ButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 623ACAFB1EAAF5A200552D22 /* ButtonView.m */; };
 		624B74181E8F3E6F000D94BD /* city_province.plist in Resources */ = {isa = PBXBuildFile; fileRef = 624B74081E8F3E6F000D94BD /* city_province.plist */; };
 		624B74191E8F3E6F000D94BD /* cityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B740A1E8F3E6F000D94BD /* cityModel.m */; };
 		624B741A1E8F3E6F000D94BD /* ProvinceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B740C1E8F3E6F000D94BD /* ProvinceModel.m */; };
@@ -1132,9 +1134,13 @@
 		6220B6E51E641806007017BA /* PW_DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PW_DatePickerView.m; sourceTree = "<group>"; };
 		6226E65E1E77773C00767EBD /* UIDevice+FEPlatForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+FEPlatForm.h"; sourceTree = "<group>"; };
 		6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+FEPlatForm.m"; sourceTree = "<group>"; };
-		6226E6621E778CB600767EBD /* SetPositionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPositionViewController.h; sourceTree = "<group>"; };
-		6226E6631E778CB600767EBD /* SetPositionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPositionViewController.m; sourceTree = "<group>"; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
+		623ACAF41EAAEE5D00552D22 /* SetPosiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPosiViewController.h; sourceTree = "<group>"; };
+		623ACAF51EAAEE5D00552D22 /* SetPosiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPosiViewController.m; sourceTree = "<group>"; };
+		623ACAF71EAAF43500552D22 /* Attachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attachment.h; sourceTree = "<group>"; };
+		623ACAF81EAAF43500552D22 /* Attachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attachment.m; sourceTree = "<group>"; };
+		623ACAFA1EAAF5A200552D22 /* ButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonView.h; sourceTree = "<group>"; };
+		623ACAFB1EAAF5A200552D22 /* ButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonView.m; sourceTree = "<group>"; };
 		624B74081E8F3E6F000D94BD /* city_province.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city_province.plist; sourceTree = "<group>"; };
 		624B74091E8F3E6F000D94BD /* cityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cityModel.h; sourceTree = "<group>"; };
 		624B740A1E8F3E6F000D94BD /* cityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cityModel.m; sourceTree = "<group>"; };
@@ -2779,8 +2785,12 @@
 		6226E6611E778CA000767EBD /* SetPosition */ = {
 			isa = PBXGroup;
 			children = (
-				6226E6621E778CB600767EBD /* SetPositionViewController.h */,
-				6226E6631E778CB600767EBD /* SetPositionViewController.m */,
+				623ACAF41EAAEE5D00552D22 /* SetPosiViewController.h */,
+				623ACAF51EAAEE5D00552D22 /* SetPosiViewController.m */,
+				623ACAFA1EAAF5A200552D22 /* ButtonView.h */,
+				623ACAFB1EAAF5A200552D22 /* ButtonView.m */,
+				623ACAF71EAAF43500552D22 /* Attachment.h */,
+				623ACAF81EAAF43500552D22 /* Attachment.m */,
 				627FE7A51E98BCA00068976C /* SetModel.h */,
 				627FE7A61E98BCA00068976C /* SetModel.m */,
 			);
@@ -3941,6 +3951,7 @@
 				1F6211F31E8CFFB000F50851 /* EaseUserCell.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
+				623ACAF91EAAF43600552D22 /* Attachment.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
 				1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */,
@@ -3970,7 +3981,6 @@
 				1F6211E41E8CFFB000F50851 /* UIViewController+HUD.m in Sources */,
 				1F6211D31E8CFFB000F50851 /* PSTCollectionViewFlowLayout.m in Sources */,
 				1F6211DC1E8CFFB000F50851 /* EaseSDKHelper.m in Sources */,
-				6226E6641E778CB600767EBD /* SetPositionViewController.m in Sources */,
 				1F6211F81E8CFFB000F50851 /* EaseBubbleView+File.m in Sources */,
 				1F6211E61E8CFFB000F50851 /* EaseConvertToCommonEmoticonsHelper.m in Sources */,
 				62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */,
@@ -4010,6 +4020,7 @@
 				1F6211CD1E8CFFB000F50851 /* UIView+EMWebCacheOperation.m in Sources */,
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
 				1F33F1191E611528000733F8 /* inftionxqController.m in Sources */,
+				623ACAF61EAAEE5D00552D22 /* SetPosiViewController.m in Sources */,
 				1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */,
 				1F6211C01E8CFFAF00F50851 /* EMSDWebImageDecoder.m in Sources */,
 				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
@@ -4027,6 +4038,7 @@
 				1F6212061E8CFFB000F50851 /* EaseChatBarMoreView.m in Sources */,
 				1F6211F51E8CFFB000F50851 /* EaseCustomMessageCell.m in Sources */,
 				1F59AF321E5EE16C0000722A /* FMDatabase.m in Sources */,
+				623ACAFC1EAAF5A200552D22 /* ButtonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

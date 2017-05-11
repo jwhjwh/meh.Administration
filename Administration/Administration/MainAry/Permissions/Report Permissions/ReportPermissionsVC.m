@@ -78,8 +78,6 @@
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-    
-
     for (int i = 0; i<_topAry.count; i++) {
         ZHTBtnView *zhtbtnview = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_ywAry[i] coode:[_topAry[i] intValue] numarr:_numAry[i]];
         
@@ -121,17 +119,22 @@
                NSLog(@"_ywAry:%@",_ywAry);
            }
            [self subLabelUI];
+       }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+           PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+           
+           alertView.resultIndex = ^(NSInteger index){
+               ViewController *loginVC = [[ViewController alloc] init];
+               UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+               [self presentViewController:loginNavC animated:YES completion:nil];
+           };
+           [alertView showMKPAlertView];
+
+       }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]){
+       [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求，未识别的设备" andInterval:1.0];
+       }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
        }
         
-        
-       
-
-        
-        
-                    //
-       // NSLog(@"ywray：%@\nmdary：%@\nwlary：%@\nnqary：%@",ywray,mdary,wlary,nqary);
-            
-        //}
         
     } failure:^(NSError *error) {
         
