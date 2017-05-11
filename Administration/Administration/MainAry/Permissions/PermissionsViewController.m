@@ -151,15 +151,15 @@
             break;
          
         case 5:{
-<<<<<<< HEAD
+
             //报表权限设置 CreateViewController
-=======
+
           
         }
             break;
         case 6:{
             //报表权限设置
->>>>>>> a93d322b4f26ba98b1ae653384d8813411005b3b
+
             ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
            // CreateViewController *perortVC = [[CreateViewController alloc]init];
              [self.navigationController showViewController:perortVC sender:nil];

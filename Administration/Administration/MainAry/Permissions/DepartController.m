@@ -30,8 +30,8 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-     self.edgesForExtendedLayout = UIRectEdgeNone;
-  
+    self.hidesBottomBarWhenPushed = YES;
+    [self InterTableUI];
     [self getNetworkData];
     
 }
@@ -44,6 +44,7 @@
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
+    [ZXDNetworking setExtraCellLineHidden:infonTableview];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -149,7 +150,7 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        [self InterTableUI];
+    
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *arr = [responseObject valueForKey:@"list"];
             _arr=[NSMutableArray array];

@@ -353,7 +353,6 @@
                                                   password:@"zxd9010"
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
-                                                 NSLog(@"登陆成功");
                             NSString *userOpenId = @"zhangchenchong";
                             NSString *nickName =[USER_DEFAULTS objectForKey:@"name"];// 用户昵称
 //                            NSString *avatarUrl =[USER_DEFAULTS objectForKey:@"logoImage"];// 用户头像（绝对路径）

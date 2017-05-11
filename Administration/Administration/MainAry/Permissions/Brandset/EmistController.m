@@ -118,7 +118,6 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Num":@"1",@"CompanyInfoId":compid};
-    NSLog(@"%@",dic);
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
      
         
@@ -349,6 +348,48 @@
     }
 }
 
-
+-(void)upDataSearchSpecialOffe{
+    NSString *uStr =[NSString stringWithFormat:@"%@manager/fuzzyQueryFreeEmployee.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+      NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"key":self.searchBar.text};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        _resultArr=[NSMutableArray array];
+        
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSArray *array=[responseObject valueForKey:@"list"];
+            
+            for (NSDictionary *dic in array) {
+                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_resultArr addObject:model];
+            }
+            if (self.dataSource.count==0) {
+                [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～"  Size:20.0];
+                _tableView.emptyView.hidden = NO;
+            }else{
+                _indexArray=[NSMutableArray arrayWithObjects:@"员工列表",nil];
+            }
+            [_tableView reloadData];
+            
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～～～" Size:20.0];
+            _tableView.emptyView.hidden = NO;
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+     
+    }failure:^(NSError *error) {
+    }view:self.view MBPro:YES];
+    
+}
 
 @end
