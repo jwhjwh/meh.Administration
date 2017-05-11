@@ -1,18 +1,18 @@
 //
-//  BaseBusinessViewController.m
+//  EmistController.m
 //  Administration
 //
-//  Created by 九尾狐 on 2017/4/17.
+//  Created by zhang on 2017/5/9.
 //  Copyright © 2017年 九尾狐. All rights reserved.
-//  业务组详情
+//
 
-#import "BaseBusinessViewController.h"
-#import "BusinessModel.h"
-@interface BaseBusinessViewController ()
+#import "EmistController.h"
+
+@interface EmistController ()
 
 @end
 
-@implementation BaseBusinessViewController
+@implementation EmistController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
