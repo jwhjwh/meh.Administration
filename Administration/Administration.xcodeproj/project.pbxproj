@@ -371,6 +371,16 @@
 		624B741D1E8F3E6F000D94BD /* SpreadDropMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74111E8F3E6F000D94BD /* SpreadDropMenu.m */; };
 		624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74151E8F3E6F000D94BD /* SpreadTableViewCell.m */; };
 		624B74201E8F3E6F000D94BD /* ZoneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B74171E8F3E6F000D94BD /* ZoneModel.m */; };
+		624E70FD1EC404980026C5E9 /* 职位结构1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F31EC404980026C5E9 /* 职位结构1.jpg */; };
+		624E70FE1EC404980026C5E9 /* 职位结构2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F41EC404980026C5E9 /* 职位结构2.jpg */; };
+		624E70FF1EC404980026C5E9 /* 职位结构3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F51EC404980026C5E9 /* 职位结构3.jpg */; };
+		624E71001EC404980026C5E9 /* 职位结构5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F61EC404980026C5E9 /* 职位结构5.jpg */; };
+		624E71011EC404980026C5E9 /* 职位结构4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F71EC404980026C5E9 /* 职位结构4.jpg */; };
+		624E71021EC404980026C5E9 /* 职位结构6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F81EC404980026C5E9 /* 职位结构6.jpg */; };
+		624E71031EC404980026C5E9 /* 职位结构8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70F91EC404980026C5E9 /* 职位结构8.jpg */; };
+		624E71041EC404980026C5E9 /* 职位结构7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70FA1EC404980026C5E9 /* 职位结构7.jpg */; };
+		624E71051EC404980026C5E9 /* 职位结构9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70FB1EC404980026C5E9 /* 职位结构9.jpg */; };
+		624E71061EC404980026C5E9 /* 职位结构10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624E70FC1EC404980026C5E9 /* 职位结构10.jpg */; };
 		624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F11F91E66BBD80089C252 /* CityChooseViewController.m */; };
 		6252AA261E9CB13E00871377 /* MYColorBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252AA1F1E9CB13E00871377 /* MYColorBackView.m */; };
 		6252AA271E9CB13E00871377 /* MYPresentAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252AA211E9CB13E00871377 /* MYPresentAnimationManager.m */; };
@@ -472,14 +482,6 @@
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
 		627B27191E764B4100392170 /* StructureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 627B27181E764B4100392170 /* StructureViewController.m */; };
-		627B27221E7680C900392170 /* 创建账号02_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271A1E7680C900392170 /* 创建账号02_1.jpg */; };
-		627B27231E7680C900392170 /* 创建账号02_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271B1E7680C900392170 /* 创建账号02_2.jpg */; };
-		627B27241E7680C900392170 /* 创建账号02_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271C1E7680C900392170 /* 创建账号02_3.jpg */; };
-		627B27251E7680C900392170 /* 创建账号02_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271D1E7680C900392170 /* 创建账号02_4.jpg */; };
-		627B27261E7680C900392170 /* 创建账号02_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271E1E7680C900392170 /* 创建账号02_5.jpg */; };
-		627B27271E7680C900392170 /* 创建账号02_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B271F1E7680C900392170 /* 创建账号02_6.jpg */; };
-		627B27281E7680C900392170 /* 创建账号02_7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B27201E7680C900392170 /* 创建账号02_7.jpg */; };
-		627B27291E7680C900392170 /* 创建账号02_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 627B27211E7680C900392170 /* 创建账号02_8.jpg */; };
 		627FE7A71E98BCA00068976C /* SetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 627FE7A61E98BCA00068976C /* SetModel.m */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
 		62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF61E68FD36003F3A84 /* CreateViewController.m */; };
@@ -1194,6 +1196,16 @@
 		624B74151E8F3E6F000D94BD /* SpreadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadTableViewCell.m; sourceTree = "<group>"; };
 		624B74161E8F3E6F000D94BD /* ZoneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoneModel.h; sourceTree = "<group>"; };
 		624B74171E8F3E6F000D94BD /* ZoneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoneModel.m; sourceTree = "<group>"; };
+		624E70F31EC404980026C5E9 /* 职位结构1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构1.jpg"; sourceTree = "<group>"; };
+		624E70F41EC404980026C5E9 /* 职位结构2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构2.jpg"; sourceTree = "<group>"; };
+		624E70F51EC404980026C5E9 /* 职位结构3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构3.jpg"; sourceTree = "<group>"; };
+		624E70F61EC404980026C5E9 /* 职位结构5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构5.jpg"; sourceTree = "<group>"; };
+		624E70F71EC404980026C5E9 /* 职位结构4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构4.jpg"; sourceTree = "<group>"; };
+		624E70F81EC404980026C5E9 /* 职位结构6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构6.jpg"; sourceTree = "<group>"; };
+		624E70F91EC404980026C5E9 /* 职位结构8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构8.jpg"; sourceTree = "<group>"; };
+		624E70FA1EC404980026C5E9 /* 职位结构7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构7.jpg"; sourceTree = "<group>"; };
+		624E70FB1EC404980026C5E9 /* 职位结构9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构9.jpg"; sourceTree = "<group>"; };
+		624E70FC1EC404980026C5E9 /* 职位结构10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "职位结构10.jpg"; sourceTree = "<group>"; };
 		624F11F81E66BBD80089C252 /* CityChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseViewController.h; sourceTree = "<group>"; };
 		624F11F91E66BBD80089C252 /* CityChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseViewController.m; sourceTree = "<group>"; };
 		6252AA1E1E9CB13E00871377 /* MYColorBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYColorBackView.h; sourceTree = "<group>"; };
@@ -1356,14 +1368,6 @@
 		626D96D91E600A7C002208D6 /* 对-选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-选中.png"; sourceTree = "<group>"; };
 		627B27171E764B4100392170 /* StructureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StructureViewController.h; sourceTree = "<group>"; };
 		627B27181E764B4100392170 /* StructureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StructureViewController.m; sourceTree = "<group>"; };
-		627B271A1E7680C900392170 /* 创建账号02_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_1.jpg"; sourceTree = "<group>"; };
-		627B271B1E7680C900392170 /* 创建账号02_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_2.jpg"; sourceTree = "<group>"; };
-		627B271C1E7680C900392170 /* 创建账号02_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_3.jpg"; sourceTree = "<group>"; };
-		627B271D1E7680C900392170 /* 创建账号02_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_4.jpg"; sourceTree = "<group>"; };
-		627B271E1E7680C900392170 /* 创建账号02_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_5.jpg"; sourceTree = "<group>"; };
-		627B271F1E7680C900392170 /* 创建账号02_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_6.jpg"; sourceTree = "<group>"; };
-		627B27201E7680C900392170 /* 创建账号02_7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_7.jpg"; sourceTree = "<group>"; };
-		627B27211E7680C900392170 /* 创建账号02_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "创建账号02_8.jpg"; sourceTree = "<group>"; };
 		627FE7A51E98BCA00068976C /* SetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetModel.h; sourceTree = "<group>"; };
 		627FE7A61E98BCA00068976C /* SetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetModel.m; sourceTree = "<group>"; };
 		6287AA1F1E543802004F6387 /* shibiema.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shibiema.png; sourceTree = "<group>"; };
@@ -3247,18 +3251,20 @@
 			children = (
 				1F063AB31EA4BECC0004F4CE /* bs_ico */,
 				62DEF9C01E8B492B00BC7D0C /* zx_ico.png */,
-				627B271A1E7680C900392170 /* 创建账号02_1.jpg */,
-				627B271B1E7680C900392170 /* 创建账号02_2.jpg */,
-				627B271C1E7680C900392170 /* 创建账号02_3.jpg */,
-				627B271D1E7680C900392170 /* 创建账号02_4.jpg */,
-				627B271E1E7680C900392170 /* 创建账号02_5.jpg */,
-				627B271F1E7680C900392170 /* 创建账号02_6.jpg */,
-				627B27201E7680C900392170 /* 创建账号02_7.jpg */,
-				627B27211E7680C900392170 /* 创建账号02_8.jpg */,
 				62A0D7361E6FD921003370FA /* ph_mt02.png */,
 				6269A56B1E6E9A810083160E /* ph_mt.png */,
 				6269A56C1E6E9A810083160E /* head_icon.png */,
 				1F1D1F941E6D38290021B1AD /* fj_ico.png */,
+				624E70F31EC404980026C5E9 /* 职位结构1.jpg */,
+				624E70F41EC404980026C5E9 /* 职位结构2.jpg */,
+				624E70F51EC404980026C5E9 /* 职位结构3.jpg */,
+				624E70F61EC404980026C5E9 /* 职位结构5.jpg */,
+				624E70F71EC404980026C5E9 /* 职位结构4.jpg */,
+				624E70F81EC404980026C5E9 /* 职位结构6.jpg */,
+				624E70F91EC404980026C5E9 /* 职位结构8.jpg */,
+				624E70FA1EC404980026C5E9 /* 职位结构7.jpg */,
+				624E70FB1EC404980026C5E9 /* 职位结构9.jpg */,
+				624E70FC1EC404980026C5E9 /* 职位结构10.jpg */,
 				1F45719F1E6571FA008E4E34 /* xx_ico1.png */,
 				1F59AF1F1E5E76750000722A /* tjpco01.png */,
 				1F59AF201E5E76750000722A /* tjpco02.png */,
@@ -3595,7 +3601,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = PL68LJ4R77;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3646,19 +3652,20 @@
 				62656D621E52B5700085A2BD /* huilianxiren.png in Resources */,
 				62656D631E52B5700085A2BD /* huishezhi.png in Resources */,
 				1F063AB71EA4BECC0004F4CE /* sc_ico.png in Resources */,
+				624E71041EC404980026C5E9 /* 职位结构7.jpg in Resources */,
 				62656D591E52B5700085A2BD /* dianpugenzong.png in Resources */,
-				627B27271E7680C900392170 /* 创建账号02_6.jpg in Resources */,
 				1F3B3DD91E8DF93C00E75027 /* icon_020.gif in Resources */,
 				62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */,
 				1F5745691E56F45A00E4A47C /* tx23.png in Resources */,
 				62656D561E52B5700085A2BD /* yonghuming.png in Resources */,
 				6218D0601E4E95FB00299989 /* LaunchScreen.storyboard in Resources */,
 				62656D521E52B5700085A2BD /* denglutioao.png in Resources */,
-				627B27281E7680C900392170 /* 创建账号02_7.jpg in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				1F3B3DE71E8DF93C00E75027 /* icon_035.gif in Resources */,
 				1F3B3DE41E8DF93C00E75027 /* icon_029_cover.png in Resources */,
+				624E71051EC404980026C5E9 /* 职位结构9.jpg in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
+				624E71031EC404980026C5E9 /* 职位结构8.jpg in Resources */,
 				1F3B3DEA1E8DF93C00E75027 /* icon_040_cover.png in Resources */,
 				1F6E31411E543CE1006069ED /* menuData.plist in Resources */,
 				62656D491E52B5700085A2BD /* xinbanben.png in Resources */,
@@ -3675,6 +3682,7 @@
 				621A5C211E5843B50051C6CC /* banben100.png in Resources */,
 				62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */,
 				626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */,
+				624E71021EC404980026C5E9 /* 职位结构6.jpg in Resources */,
 				1F3B3DCD1E8DF93C00E75027 /* icon_007.gif in Resources */,
 				1F3B3DE01E8DF93C00E75027 /* icon_024_cover.png in Resources */,
 				1F3B3DD01E8DF93C00E75027 /* icon_010_cover.png in Resources */,
@@ -3694,18 +3702,17 @@
 				62656D5C1E52B5700085A2BD /* kehuziliao.png in Resources */,
 				62570E901E7136B90051C83A /* wdbg.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
-				627B27251E7680C900392170 /* 创建账号02_4.jpg in Resources */,
-				627B27241E7680C900392170 /* 创建账号02_3.jpg in Resources */,
 				1F3B3DDB1E8DF93C00E75027 /* icon_021.gif in Resources */,
+				624E71061EC404980026C5E9 /* 职位结构10.jpg in Resources */,
 				1FDCBAA61E7A3247002C80FB /* tjtx_mt.png in Resources */,
 				1F3FAA051EB9C2A900162940 /* icow.png in Resources */,
 				1FDCBAA41E7A1E2A002C80FB /* seach.png in Resources */,
+				624E71001EC404980026C5E9 /* 职位结构5.jpg in Resources */,
 				1F3B3DD11E8DF93C00E75027 /* icon_012.gif in Resources */,
 				1F1D1F951E6D382A0021B1AD /* fj_ico.png in Resources */,
 				6264808C1E9E23B70090EECB /* bg_mt01.png in Resources */,
 				62656D451E52B5700085A2BD /* Inder3.png in Resources */,
 				1F3B3DDD1E8DF93C00E75027 /* icon_022.gif in Resources */,
-				627B27261E7680C900392170 /* 创建账号02_5.jpg in Resources */,
 				1F063AB61EA4BECC0004F4CE /* bj_ico.png in Resources */,
 				624B741C1E8F3E6F000D94BD /* djq_ico.png in Resources */,
 				1F3B3DD41E8DF93C00E75027 /* icon_013_cover.png in Resources */,
@@ -3724,17 +3731,18 @@
 				62656D4F1E52B5700085A2BD /* Inder0.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
 				1F3B3DE21E8DF93C00E75027 /* icon_027_cover.png in Resources */,
-				627B27231E7680C900392170 /* 创建账号02_2.jpg in Resources */,
-				627B27291E7680C900392170 /* 创建账号02_8.jpg in Resources */,
 				1F3B3DD21E8DF93C00E75027 /* icon_012_cover.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxian.png in Resources */,
+				624E70FE1EC404980026C5E9 /* 职位结构2.jpg in Resources */,
 				1F5745671E56F45400E4A47C /* tx100.png in Resources */,
 				1F3B3DD51E8DF93C00E75027 /* icon_018.gif in Resources */,
 				1F3B3DCC1E8DF93C00E75027 /* icon_002_cover.png in Resources */,
+				624E71011EC404980026C5E9 /* 职位结构4.jpg in Resources */,
 				624B74181E8F3E6F000D94BD /* city_province.plist in Resources */,
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
 				1F59AF211E5E76750000722A /* tjpco01.png in Resources */,
+				624E70FF1EC404980026C5E9 /* 职位结构3.jpg in Resources */,
 				1F767DC91E790C6E00305401 /* archite.png in Resources */,
 				1F3B3DD61E8DF93C00E75027 /* icon_018_cover.png in Resources */,
 				62656D4E1E52B5700085A2BD /* Inder1.png in Resources */,
@@ -3747,11 +3755,11 @@
 				62656D6E1E52D29D0085A2BD /* 03.png in Resources */,
 				62656D471E52B5700085A2BD /* tianjia.png in Resources */,
 				1F4DBB4A1E5828B400733CF7 /* baogang.png in Resources */,
-				627B27221E7680C900392170 /* 创建账号02_1.jpg in Resources */,
 				62656D6C1E52D29D0085A2BD /* 01.png in Resources */,
 				1F3B3DE61E8DF93C00E75027 /* icon_030_cover.png in Resources */,
 				1F4A98EB1E63AEFC003492DF /* phone.png in Resources */,
 				62656D651E52B5700085A2BD /* zilianxiren.png in Resources */,
+				624E70FD1EC404980026C5E9 /* 职位结构1.jpg in Resources */,
 				1F3B3DD81E8DF93C00E75027 /* icon_019_cover.png in Resources */,
 				1F3B3DCB1E8DF93C00E75027 /* icon_002.gif in Resources */,
 				62656D481E52B5700085A2BD /* weixuanzhong.png in Resources */,
@@ -4282,7 +4290,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = PL68LJ4R77;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4312,8 +4321,9 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.Administration;
+				PRODUCT_BUNDLE_IDENTIFIER = "jwh.-244543";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4327,7 +4337,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = PL68LJ4R77;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4357,8 +4368,9 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.Administration;
+				PRODUCT_BUNDLE_IDENTIFIER = "jwh.-244543";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

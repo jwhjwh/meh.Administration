@@ -151,24 +151,19 @@
             break;
          
         case 5:{
-<<<<<<< HEAD
             //报表权限设置 CreateViewController
-=======
+            ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
+            // CreateViewController *perortVC = [[CreateViewController alloc]init];
+            [self.navigationController showViewController:perortVC sender:nil];
           
         }
             break;
         case 6:{
-            //报表权限设置
->>>>>>> a93d322b4f26ba98b1ae653384d8813411005b3b
-            ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
-           // CreateViewController *perortVC = [[CreateViewController alloc]init];
-             [self.navigationController showViewController:perortVC sender:nil];
-        }
-            break;
-        case 7:{
             //识别码
             CodeViewController *codeVC = [[CodeViewController alloc]init];
             [self.navigationController showViewController:codeVC sender:nil];
+
+            
         }
             break;
         default:

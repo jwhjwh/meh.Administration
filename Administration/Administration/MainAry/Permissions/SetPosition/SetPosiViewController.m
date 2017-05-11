@@ -1093,8 +1093,7 @@ NSUInteger rsw;
              }else if(_kfwlcwAry.count == 2){
                  
              }else{
-                 ButtonView *__button = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*30];
-                 [self addBUtton:__button nameStr:_XZZWArry[1] uiview:attView button:nil hei:kHeight*185 wid:kWidth*45 biaoshi:0 ];
+
              }
                
          }else if(_XZZWArry.count == 2){

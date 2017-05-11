@@ -50,7 +50,7 @@
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 180)];
+    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, kHeight*550)];
     self.tableView.tableHeaderView=_imageView;
 }
 -(void)buttonLiftItem{
@@ -67,18 +67,18 @@
 - (void)methodBEvnet
 {
     count ++;
-    NSString *filename = [NSString stringWithFormat:@"创建账号02_%d", count];
+    NSString *filename = [NSString stringWithFormat:@"职位结构%d", count];
     NSString *file = [[NSBundle mainBundle] pathForResource:filename ofType:@"jpg"];
     UIImage *image = [UIImage imageWithContentsOfFile:file];
     [self.imageView setImage:image];
-    if (count >= 8) {
+    if (count >= 10) {
        
         [self tableviewpUi];
         [_timerrrrrrrr invalidate];
         self.DatNum = -1;
         NSMutableArray *indexPaths = @[].mutableCopy;
         self.indesPaths = indexPaths;
-        self.timer =  [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(charusell) userInfo:nil repeats:YES];
+        self.timer =  [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(charusell) userInfo:nil repeats:YES];
     
     }
 }
@@ -103,14 +103,24 @@
                      @"4.业务经理:1)负责完成业务总监的计划任务 2)管理下属业",
                      @"务员",
                      @"5.业务:负责开拓新的合作客户",
-                     @"6.美导总监:1)负责已合作客户的整体销售计划 2)任务管理",
+                     @"6.市场总监:1)负责已合作客户的整体销售计划 2)任务管理",
                      @"下属各品牌经理",
                      @"7.品牌经理:1)负责该品牌客户的销售、服务、管理 2)管理",
                      @"下属品牌美导.",
                      @"8.美导:服务店家的美容导师.",
-                     @"9.物流:1)负责公司向店家供货的物流服务 2)管理公司产品",
-                     @"储存.",
-                     @"10.内勤:包裹客服、会计、招聘人员等.",
+                     @"9.财务总监:1)负责公司的财务计算 2)物流的运转 3)客服",
+                     @"与客户之间的沟通及管理下属.",
+                     @"10.客服经理:负责内部人员及客户的问题沟通及管理下",
+                     @"属客服.",
+                     @"11.客服:负责公司的客户机公司内部人员的沟通.",
+                     @"12.物流经理:负责公司的物流服务管理及出入活管理.",
+                     @"13.物流:负责公司向店家供货的物流服务.",
+                     @"14.仓库:负责货物的出入库及管理.",
+                     @"15.财务经理:负责公司的财务管理及管理下属.",
+                     @"16.会计:负责公司所有明细分类账，直接将逐笔登记总账",
+                     @"等工作流程.",
+                     @"17.出纳:负责货物价款首付及往来款项收付等."
+                     
                      ];
     }
     return _dataArr;
@@ -136,61 +146,7 @@
     cell.textLabel.text = self.dataArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.tintColor = GetColor(76, 76, 76, 1);
-    NSString *platform = [UIDevice devicePlatForm];
-    if ([platform isEqualToString:@"iPhone 4"]||[platform isEqualToString:@"iPhone 4S"]) {
-        cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
-    }else if ([platform isEqualToString:@"iPhone 5"]||[platform isEqualToString:@"iPhone 5S"]||[platform isEqualToString:@"iPhone SE"]||[platform isEqualToString:@"iPhone 5c"]){
-
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:11.6f];
-    }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:13.3f];
-    }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
-
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
-
-    }else if ([platform isEqualToString:@"iPhone 6"]||[platform isEqualToString:@"iPhone 7"]){
-        cell.textLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
-    }else if ([platform isEqualToString:@"iPhone 6 Plus"]||[platform isEqualToString:@"iPhone 7 Plus"]){
-        cell.textLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
-
-    }else{
-        cell.textLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightRegular];
-
-    }
-
-
-    
-    if (indexPath.row == 5 || indexPath.row ==7 ||indexPath.row == 9 || indexPath.row ==12 || indexPath.row ==14 ||indexPath.row == 17)
-    {
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
-        NSMutableParagraphStyle   *paragraphStyle   = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setFirstLineHeadIndent:30.0];
-        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [cell.textLabel.text length])];
-        [cell.textLabel  setAttributedText:attributedString];
-    }
-    
-    if (indexPath.row == 0) {
-        cell.textLabel.tintColor = GetColor(51, 51, 51, 1);//职位 102 102 102。内容 76 76 76 
-    }else if (indexPath.row == 3|| indexPath.row == 10 || indexPath.row == 15 || indexPath.row == 16) {
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
-        NSRange range1 = {2,2};
-        [attributedString addAttribute:NSForegroundColorAttributeName value:GetColor(102, 102, 102, 1) range:range1];
-        [cell.textLabel setAttributedText:attributedString];
-    }else if(indexPath.row == 18){
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
-        NSRange range1 = {3,2};
-        [attributedString addAttribute:NSForegroundColorAttributeName value:GetColor(102, 102, 102, 1) range:range1];
-        [cell.textLabel setAttributedText:attributedString];
-    }else if(indexPath.row == 4||indexPath.row == 6 ||indexPath.row == 8||indexPath.row ==11 ||indexPath.row == 13){
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
-        NSRange range1 = {2,4};
-        [attributedString addAttribute:NSForegroundColorAttributeName value:GetColor(102, 102, 102, 1) range:range1];
-        [cell.textLabel setAttributedText:attributedString];
-    }
-
-    
-    
-    
+    cell.textLabel.font = [UIFont systemFontOfSize:kWidth*26];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
