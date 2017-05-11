@@ -30,10 +30,13 @@ address = "\U6cb3\U5317\U7701\U77f3\U5bb6\U5e84\U5e02\U8f9b\U96c6\U5e02\U738b\U5
  wcode = mateng;  微信
  */
 @property (strong,nonatomic) NSString *account;   //账号
-
-@property (strong,nonatomic) NSString *rname;     //职位
-
+@property (strong,nonatomic) NSString *NewName;     //职位
+//修改前
+@property (strong,nonatomic) NSString *rname;     //职位名字
+//修改前
 @property (strong,nonatomic) NSString *brandName; //所属品牌
+
+@property (strong,nonatomic) NSString *departmentName; //所属部门
 
 @property (strong,nonatomic) NSString *name;      //真实姓名
 
@@ -59,7 +62,7 @@ address = "\U6cb3\U5317\U7701\U77f3\U5bb6\U5e84\U5e02\U8f9b\U96c6\U5e02\U738b\U5
 
 @property (assign,nonatomic) NSInteger state; //判别使用状态
 
-
+@property (assign,nonatomic) NSString *LevelName; //类别
 
 
 

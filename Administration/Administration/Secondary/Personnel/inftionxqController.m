@@ -33,11 +33,6 @@
 @end
 
 @implementation inftionxqController
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    self.tabBarController.tabBar.hidden=YES;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"信息";
@@ -48,7 +43,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+49) style:UITableViewStylePlain];
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];
@@ -173,8 +168,8 @@
     NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":_IDStr};
-    NSLog(@"+==%@",dic);
+      NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":_IDStr,@"CompanyInfoId":compid};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -184,18 +179,18 @@
              _logImage=model.icon;
             _callNum=[NSString stringWithFormat:@"%@",model.account];
             _callName=model.name;
-         
-            if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
-                _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属品牌"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
+
+            if (![model.LevelName isEqualToString:@""]) {
+                _arr=@[@[@"头像"],@[@"账号",@"职位",@"类别",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
-                NSArray *arr=@[model.account,model.rname,model.brandName];
+                NSArray *arr=@[model.account,model.NewName,model.LevelName,model.departmentName];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
             }else{
-                _arr=@[@[@"头像"],@[@"账号",@"职位"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
-                NSArray *arr=@[model.account,model.rname];
+                _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
+                NSArray *arr=@[model.account,model.NewName,model.departmentName];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
@@ -213,6 +208,9 @@
             };
             [alertView showMKPAlertView];
             
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"无员工信息" andInterval:1.0];
+            _infonTableview.emptyView.hidden = NO;
         }
     }failure:^(NSError *error) {
                }

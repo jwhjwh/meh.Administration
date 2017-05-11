@@ -14,4 +14,6 @@
 +(CGFloat)heighOfString:(NSString*)string font:(UIFont*)font width:(CGFloat)width;
 +(void)leftItiemButtonImagePopWithController:(UIViewController *)ctr;
 +(void)buttonLiftItem:(UIButton*)sender cvt:(UIAlertController *)vc;
+
++(NSString *)toJSONData:(id)theData;
 @end

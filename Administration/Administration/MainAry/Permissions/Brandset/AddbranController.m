@@ -11,13 +11,18 @@
 #import "CbrandController.h"
 #import "multiController.h"
 #import "DirectorController.h"
+#import "inftionxqController.h"
 #import "ZXYAlertView.h"
 #import "branModel.h"
 #import "ItemCell.h"
 #import "DirtmsnaModel.h"
+#import "EmistController.h"
+#import "NSDictionary+DeleteNull.h"
 @interface AddbranController ()<UICollectionViewDelegate, UICollectionViewDataSource,ZXYAlertViewDelegate,UITextViewDelegate>
-{
-  
+{   BOOL isSele;
+    BOOL isSelede;
+    BOOL ismay;
+    BOOL isEay;
     NSIndexPath *index;
 }
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -37,6 +42,8 @@
 @property (strong,nonatomic) NSMutableArray *paleAry;
 //经理
 @property (strong,nonatomic) NSMutableArray *ManaAry;
+//员工
+@property (strong,nonatomic) NSMutableArray *EmisAry;
 //总监加减
 @property (strong,nonatomic) NSArray *DrieAry;
 @property (strong,nonatomic) NSArray *DrAry;
@@ -45,9 +52,12 @@
 
 
 @property (nonatomic,retain) UIView *fotView;
-
-@property (nonatomic,strong)NSString *branID;
-
+//品牌字符串
+@property (nonatomic,retain) NSString *BrandID;
+//人员字符串
+@property (nonatomic,retain) NSString *employees;
+//人员字符串
+@property (nonatomic,retain) NSString *mid;
 @end
 
 @implementation AddbranController
@@ -70,16 +80,16 @@
     self.navigationItem.rightBarButtonItem = rightitem;
     [self InterTableUI];
     _Bmodeld =[[branModel alloc]init];
-    _Bmodeld.brandLogo=@"";
+    _Bmodeld.brandLogo=@"images/tj_ico01.png";
     _Bmodeld.finsk=@"";
     _Bmold =[[branModel alloc]init];
-    _Bmold.brandLogo=@"";
+    _Bmold.brandLogo=@"images/sc_ico01.png";
     _Bmold.finsk=@"";
     _dirMoeld =[[DirtmsnaModel alloc]init];
-    _dirMoeld.icon=@"";
+    _dirMoeld.icon=@"images/tj_ico01.png";
     _dirMoeld.name=@"";
     _dirtMoeld =[[DirtmsnaModel alloc]init];
-    _dirtMoeld.icon=@"";
+    _dirtMoeld.icon=@"images/sc_ico01.png";
     _dirtMoeld.name=@"";
    
     
@@ -92,9 +102,12 @@
     _DrAry=@[_dirMoeld,_dirtMoeld];
     
     _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+    _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
 
-   
-
+    isSelede=YES;
+    isSele=YES;
+    ismay=YES;
+    isEay=YES;
 }
 -(void)InterTableUI
 {
@@ -104,9 +117,11 @@
     layout.minimumLineSpacing=0.5;
     //(2.2设置上下间距(图片左右间距大小
     layout.minimumInteritemSpacing=0;
-    layout.headerReferenceSize = CGSizeMake(kScreenWidth, 35);
+//    layout.sectionInset=UIEdgeInsetsMake(0.5, 0.25, 0.5,0.25);
+//    layout.headerReferenceSize = CGSizeMake(kScreenWidth, 35);
     _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.showsVerticalScrollIndicator = NO;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     [self.view addSubview:_collectionView];
@@ -143,24 +158,74 @@
 }
 -(void)masgegeClick{
    
-    if (_nameBarn==nil ||_branID.length==0) {
+    if (_nameBarn==nil) {
     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请完善信息" andInterval:1.0];
     }else{
         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此品牌部" sureBtn:@"确认" cancleBtn:@"取消"];
-        
+        NSMutableArray *Barr=[NSMutableArray array];
+        if (_branarr.count>=3) {
+            
+       for (branModel *model in [_branarr subarrayWithRange:NSMakeRange(0,_branarr.count-2)]) {
+                [Barr addObject:[NSString stringWithFormat:@"%@",model.ID]];
+            }
+            _BrandID=[NSString stringWithFormat:@"%@",Barr];
+        }else{
+            _BrandID=@"";
+        }
+        NSMutableArray *Emiarr=[NSMutableArray array];
+        if (_EmisAry.count>=3) {
+            for (DirtmsnaModel *model in [_EmisAry subarrayWithRange:NSMakeRange(0,_EmisAry.count-2)]) {
+                [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+            }
+            _employees = [NSString stringWithFormat:@"%@",Emiarr];
+        }else{
+            _employees =@"";
+        }
+        NSMutableArray *palarr=[NSMutableArray array];
+        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+        if ( _paleAry.count>=3) {
+            for (DirtmsnaModel *model in [_paleAry subarrayWithRange:NSMakeRange(0,_paleAry.count-2)]) {
+                [dic setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
+                [dic setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
+              
+               
+            }
+              [palarr addObject:dic];
+        }
+        NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
+        if ( _ManaAry.count>=3) {
+            for (DirtmsnaModel *model in [_ManaAry subarrayWithRange:NSMakeRange(0,_ManaAry.count-2)]) {
+                [dict setObject:[NSString stringWithFormat:@"%@", model.usersid] forKey:@"usersid"];
+                [dict setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
+               
+            }
+             [palarr addObject:dict];
+        }
+        if (palarr.count>0) {
+            NSError *error = nil;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:palarr options:NSJSONWritingPrettyPrinted error:&error];
+            _mid = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        }else{
+           _mid = @"";
+        }
+        NSLog(@"%@",_mid);
         alertView.resultIndex = ^(NSInteger index){
             
-                NSLog(@"%@",[NSString stringWithFormat:@"%@",_branID]);
-                NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment",KURLHeader];
+                NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
                 NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                 NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
                 NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"BrandID":[NSString stringWithFormat:@"%@",_branID],@"DepartmentName":_nameBarn};
+                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"BrandID":_BrandID,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid};
                 [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
-                        _nameBarn = nil;
-                        [_branarr removeAllObjects];
+                         _nameBarn = nil;
+                         _textField.text=@"";
+                         _textField.placeholder = @"请输入品牌名称";
+                         _branarr=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
+                         _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+                         _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+                         _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
                         [_collectionView reloadData];
                         self.blockStr();
                     }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
@@ -213,7 +278,7 @@
 }else if (section==3){
     return _ManaAry.count;
 }else{
-    return 10;
+    return _EmisAry.count;
 }
 }
 //section 高度
@@ -233,25 +298,25 @@
             branModel *model=_branarr[indexPath.row];
             cell.titleLabel.text =model.finsk;
             [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"tj_ico"]];
-
         }
             break;
         case 2:{
             DirtmsnaModel *model= _paleAry[indexPath.row];
             cell.titleLabel.text =model.name;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tj_ico"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         case 3:{
             DirtmsnaModel *model= _ManaAry[indexPath.row];
             cell.titleLabel.text =model.name;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tj_ico"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         case 4:{
-            
-            cell.titleLabel.text =@"121323";
-            cell.icon.image=[UIImage imageNamed:@"tj_ico"];
+           
+            DirtmsnaModel *model= _EmisAry[indexPath.row];
+            cell.titleLabel.text =model.name;
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         default:
@@ -263,58 +328,155 @@
 }
 //点击Item详情
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSLog(@"%ld,%ld",(long)indexPath.section,(long)indexPath.row);
+      ItemCell *cell = (ItemCell *) [collectionView cellForItemAtIndexPath:indexPath];
     switch (indexPath.section) {
         case 1:{
-            multiController *multiCV=[[multiController alloc]init];
-            multiCV.blockArr =^(NSMutableArray *array){
-                _branarr=[NSMutableArray array];
-                _branarr=array;
-                for (branModel *model in _daAry) {
-                    [_branarr addObject:model];
+         
+           if (_branarr.count==1&&indexPath.row ==0) {
+                [self addbaranded];
+            }else if (_branarr.count>=3&&indexPath.row == _branarr.count-2) {
+                    [self addcollectionView:collectionView foleg:NO arr:_branarr Num:1];
+                    [self addbaranded];
+                    isSelede=YES;
+                }else if (_branarr.count>=3&&indexPath.row == _branarr.count-1) {
+                    if (isSelede==NO) {
+                        [self addcollectionView:collectionView foleg:NO arr:_branarr Num:1];
+                        isSelede=YES;
+                    }else{
+                        [self addcollectionView:collectionView foleg:YES arr:_branarr Num:1];
+                        isSelede=NO;
+                    }
+                }else{
+                    if (isSelede==NO) {
+                        [_branarr removeObjectAtIndex:indexPath.row];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        if (_branarr.count==2) {
+                            [_branarr removeLastObject];
+                            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:1];
+                            [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                            isSelede=YES;
+                            [cell.rightUpperButton removeFromSuperview];
+                        }
+                    }else{
+                        //查看详情
+                        
+                    }
                 }
-                
-                [_collectionView reloadData];
-            };
-            [self.navigationController pushViewController:multiCV animated:YES];
-            
-        }
+    
+}
             break;
         case 2:{
-            DirectorController *multiCV=[[DirectorController alloc]init];
-            multiCV.str=@"添加负责总监";
-            multiCV.blockArray =^(NSMutableArray *arr){
-                _paleAry=[NSMutableArray array];
-                _paleAry=arr;
-                for (branModel *model in _DrieAry) {
-                    [_paleAry addObject:model];
-                }
-                
-                [_collectionView reloadData];
-            };
             
-            [self.navigationController pushViewController:multiCV animated:YES];
+            if (_paleAry.count==1&&indexPath.row ==0) {
+                [self addpaledNstring:@"添加负责总监"];
+            }else if (_paleAry.count>=3&&indexPath.row == _paleAry.count-2) {
+                [self addcollectionView:collectionView foleg:NO arr:_paleAry Num:2];
+                [self addpaledNstring:@"添加负责总监"];
+                isSele=YES;
+            }else if (_paleAry.count>=3&&indexPath.row == _paleAry.count-1) {
+                if (isSele==NO) {
+                    [self addcollectionView:collectionView foleg:NO arr:_paleAry  Num:2];
+                    isSele=YES;
+                }else{
+                    [self addcollectionView:collectionView foleg:YES arr:_paleAry  Num:2];
+                    isSele=NO;
+                }
+            }else{
+                if (isSele==NO) {
+                    [_paleAry removeObjectAtIndex:indexPath.row];
+                    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                    if (_paleAry.count==2) {
+                        [_paleAry removeLastObject];
+                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:2];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        isSele=YES;
+                        [cell.rightUpperButton removeFromSuperview];
+                    }
+                }else{
+                    //查看详情
+                    inftionxqController *inftionC=[[inftionxqController alloc]init];
+                    DirtmsnaModel *model = _paleAry[indexPath.row];
+                    inftionC.IDStr =model.usersid;
+                    [self.navigationController pushViewController:inftionC animated:YES];
+                }
+            }
+
+        
         }
             break;
         case 3:{
-            DirectorController *mulCV=[[DirectorController alloc]init];
-            mulCV.str=@"添加负责经理";
-            mulCV.blockArray =^(NSMutableArray *arr){
-                _ManaAry=[NSMutableArray array];
-                _ManaAry=arr;
-                for (branModel *model in _DrieAry) {
-                    [_ManaAry addObject:model];
+            if (_ManaAry.count==1&&indexPath.row ==0) {
+                [self addMaryNstring:@"添加负责经理"];
+            }else if (_ManaAry.count>=3&&indexPath.row == _ManaAry.count-2) {
+                [self addcollectionView:collectionView foleg:NO arr:_ManaAry Num:3];
+                [self addMaryNstring:@"添加负责经理"];
+                ismay=YES;
+            }else if (_ManaAry.count>=3&&indexPath.row == _ManaAry.count-1) {
+                if (ismay==NO) {
+                    [self addcollectionView:collectionView foleg:NO arr:_ManaAry Num:3];
+                    ismay=YES;
+                }else{
+                    [self addcollectionView:collectionView foleg:YES arr:_ManaAry Num:3];
+                    ismay=NO;
                 }
-                
-                [_collectionView reloadData];
-            };
+            }else{
+                if (ismay==NO) {
+                    [_ManaAry removeObjectAtIndex:indexPath.row];
+                    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                    if (_ManaAry.count==2) {
+                        [_ManaAry removeLastObject];
+                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:3];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        ismay=YES;
+                        [cell.rightUpperButton removeFromSuperview];
+                    }
+                }else{
+                    //查看详情
+                    //查看详情
+                    inftionxqController *inftionC=[[inftionxqController alloc]init];
+                    DirtmsnaModel *model = _ManaAry[indexPath.row];
+                    inftionC.IDStr =model.usersid;
+                    [self.navigationController pushViewController:inftionC animated:YES];
+                }
+            }
             
-            [self.navigationController pushViewController:mulCV animated:YES];
         }
             break;
         case 4:{
-          
+            if (_EmisAry.count==1&&indexPath.row ==0) {
+                [self addEmis];
+            }else if (_EmisAry.count>=3&&indexPath.row == _EmisAry.count-2) {
+                [self addcollectionView:collectionView foleg:NO arr:_EmisAry Num:4];
+                [self addEmis];
+                isEay=YES;
+            }else if (_EmisAry.count>=3&&indexPath.row == _EmisAry.count-1) {
+                if (isEay==NO) {
+                    [self addcollectionView:collectionView foleg:NO arr:_EmisAry Num:4];
+                    isEay=YES;
+                }else{
+                    [self addcollectionView:collectionView foleg:YES arr:_EmisAry Num:4];
+                    isEay=NO;
+                }
+            }else{
+                if (isEay==NO) {
+                    [_EmisAry removeObjectAtIndex:indexPath.row];
+                    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                    if (_EmisAry.count==2) {
+                        [_EmisAry removeLastObject];
+                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:4];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        isEay=YES;
+                        [cell.rightUpperButton removeFromSuperview];
+                    }
+                }else{
+                    //查看详情
+                    inftionxqController *inftionC=[[inftionxqController alloc]init];
+                    DirtmsnaModel *model = _EmisAry[indexPath.row];
+                    inftionC.IDStr =model.usersid;
+                    [self.navigationController pushViewController:inftionC animated:YES];
+                }
+            }
+
         }
             break;
         default:
@@ -360,6 +522,91 @@
     return nil;
     
 }
+-(void)addbaranded{
+    multiController *multiCV=[[multiController alloc]init];
+    multiCV.blockArr =^(NSMutableArray *array){
+        _branarr=[NSMutableArray array];
+        _branarr=array;
+        for (branModel *model in _dateAry) {
+            [_branarr addObject:model];
+        }
+        
+        [_collectionView reloadData];
+    };
+    [self.navigationController pushViewController:multiCV animated:YES];
+}
+-(void)addpaledNstring:(NSString*)str {
+    DirectorController *multiCV=[[DirectorController alloc]init];
+    multiCV.str=str;
+    multiCV.blockArray =^(NSMutableArray *arr){
+        _paleAry=[NSMutableArray array];
+        _paleAry=arr;
+        for (DirtmsnaModel *model in _DrAry) {
+            [_paleAry addObject:model];
+        }
+        
+        [_collectionView reloadData];
+    };
+    
+    [self.navigationController pushViewController:multiCV animated:YES];
+}
+-(void)addMaryNstring:(NSString*)str {
+    DirectorController *multiCV=[[DirectorController alloc]init];
+    multiCV.str=str;
+    multiCV.blockArray =^(NSMutableArray *arr){
+        _ManaAry=[NSMutableArray array];
+        _ManaAry=arr;
+        for (DirtmsnaModel *model in _DrAry) {
+            [_ManaAry addObject:model];
+        }
+        [_collectionView reloadData];
+    };
+    
+    [self.navigationController pushViewController:multiCV animated:YES];
+}
+-(void)addEmis{
+    EmistController *multiCV=[[EmistController alloc]init];
+    multiCV.str=@"添加员工";
+    multiCV.blockArr =^(NSMutableArray *arr){
+        _EmisAry=[NSMutableArray array];
+        _EmisAry=arr;
+        for (DirtmsnaModel *model in _DrAry) {
+            [_EmisAry addObject:model];
+        }
+        [_collectionView reloadData];
+    };
+    
+    [self.navigationController pushViewController:multiCV animated:YES];
+}
+
+-(void)addcollectionView:(UICollectionView*)collectionView foleg:(BOOL)foleg  arr:(NSMutableArray *)arry Num:(int)Num{
+    NSArray *arr= [arry subarrayWithRange:NSMakeRange(0,arry.count-2)];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    
+    for (int i = 0; i < arr.count; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:Num];
+        [indexPaths addObject:indexPath];
+    }
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView reloadItemsAtIndexPaths:indexPaths];
+    } completion:^(BOOL finished) {
+        for (NSIndexPath *indexPath in indexPaths) {
+            ItemCell *celled = (ItemCell *) [collectionView cellForItemAtIndexPath:indexPath];
+          
+          [ celled.rightUpperButton setImage:[UIImage imageNamed:@"scbut"] forState:UIControlStateNormal];
+            if (foleg==YES) {
+                [celled addSubview:celled.rightUpperButton];
+            }else{
+                [celled.rightUpperButton removeFromSuperview];
+            }
+         
+        }
+    }];
+}
+
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

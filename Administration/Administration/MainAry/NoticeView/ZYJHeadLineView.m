@@ -57,8 +57,10 @@
 {
     _dataArr = dataArr;
    
-    ZYJHeadLineModel *model = _dataArr[count];
-    self.currentLabel.text = model.title;
+    if (_dataArr.count>0) {
+        ZYJHeadLineModel *model = _dataArr[count];
+        self.currentLabel.text = model.title;
+    }
 
 }
 -(void)dealLongPress:(UILongPressGestureRecognizer*)longPress{
