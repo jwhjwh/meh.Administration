@@ -8,7 +8,6 @@
 
 #import "AddbranController.h"
 #import "HoderReusableView.h"
-#import "CbrandController.h"
 #import "multiController.h"
 #import "DirectorController.h"
 #import "inftionxqController.h"
@@ -160,6 +159,8 @@
    
     if (_nameBarn==nil) {
     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写名称" andInterval:1.0];
+    }else if (_branarr.count<3){
+    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择负责品牌" andInterval:1.0];
     }else{
         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此品牌部" sureBtn:@"确认" cancleBtn:@"取消"];
         NSMutableArray *Barr=[NSMutableArray array];

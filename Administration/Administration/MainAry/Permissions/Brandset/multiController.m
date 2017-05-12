@@ -74,10 +74,16 @@
 -(void)deltButn{
  
         NSMutableArray *deleteArrarys = [NSMutableArray array];
+    if (self.gameArrs.count==2) {
         for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
             if (indexPath.section==1) {
                 [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];            }
         }
+    }else{
+        for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
+            [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+        }
+    }
         self.blockArr(deleteArrarys);
         [self.navigationController popViewControllerAnimated:YES];
     
@@ -166,7 +172,6 @@
         /**
          *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
          */
-        
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         cell.model = self.gameArrs[indexPath.section][indexPath.row];
         cell.backgroundColor = [UIColor clearColor];

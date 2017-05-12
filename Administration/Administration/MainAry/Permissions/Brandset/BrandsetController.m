@@ -71,14 +71,13 @@
                 [_daArr addObject:[dic valueForKey:@"departmentName"]];
                 [_ArrID addObject:[dic valueForKey:@"id"]];
             NSMutableArray *logoArr=[NSMutableArray array];
-                if(barndArr.count>0){
+              
                     for (NSDictionary *dict in barndArr) {
                         branModel *model=[[branModel alloc]init];
                         [model setValuesForKeysWithDictionary:dict];
                         [logoArr addObject:model];
                     }
                     [self.dataArray addObject:logoArr];
-                }
                 }
     
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
@@ -121,7 +120,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return _daArr.count;
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,8 +167,8 @@
 }
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewRowAction * action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        
-    
+     
+        [self delDepartStr:_ArrID[indexPath.row] IndexPath:indexPath];
     }];
     
     action1.backgroundColor = GetColor(206, 175,219 ,1);
@@ -247,6 +246,42 @@
     UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return resultImg;
+}
+-(void)delDepartStr:(NSString*)string IndexPath:( NSIndexPath *)IndexPath{
+  
+    NSString *urlStr =[NSString stringWithFormat:@"%@user/delDepartment.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"id":string};
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];
+            [_dataArray removeObjectAtIndex:IndexPath.row];
+            [_daArr removeObjectAtIndex:IndexPath.row];
+            [_ArrID removeObjectAtIndex:IndexPath.row];
+            [self.tableView reloadData];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            
+        }
+        if (self.dataArray.count==0) {
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息" Size:20.0];
+            _tableView.emptyView.hidden = NO;
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
+    
 }
 
 @end

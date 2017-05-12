@@ -40,8 +40,7 @@
     
     self.layer.masksToBounds = YES;
     
-    //创建定时器
-    [self createTimer];
+  
     [self createCurrentView];
     [self createHidenView];
     
@@ -61,7 +60,8 @@
         ZYJHeadLineModel *model = _dataArr[count];
         self.currentLabel.text = model.title;
     }
-
+    //创建定时器
+    [self createTimer];
 }
 -(void)dealLongPress:(UILongPressGestureRecognizer*)longPress{
     
@@ -107,6 +107,7 @@
     }
     
     if (flag == 0) {
+    
         ZYJHeadLineModel *hienModel = _dataArr[count];
       
         self.hidenLabel.text = hienModel.title;

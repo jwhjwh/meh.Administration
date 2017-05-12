@@ -108,7 +108,7 @@
     _view1=[[UIView alloc]initWithFrame:CGRectMake(Scree_width/2-0.5,Scree_height-44,1,39)];
     _view1.backgroundColor = [UIColor RGBview];
     [self.view addSubview:_view1];
-    
+     _deleteArrarys = [NSMutableArray array];
 }
 
 - (void)addDataSource{
@@ -225,30 +225,51 @@
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   
-            _deleteArrarys = [NSMutableArray array];
-            for (NSIndexPath *indexPath in _tableView.indexPathsForSelectedRows) {
-              
-                    [_deleteArrarys addObject:_dataSource[indexPath.row]];
-                
-            }
-            _delButton.backgroundColor=GetColor(206, 175,219 ,1);
-            [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
-      
+    
+    if (self.isSearch) {
+        for (NSIndexPath *indexPath in _tableView.indexPathsForSelectedRows) {
+            DirtmsnaModel *model =  _resultArr[indexPath.row];
+            model.isdeles=@"1";
+            [_resultArr replaceObjectAtIndex:indexPath.row withObject:model];
+            [_deleteArrarys addObject:_resultArr[indexPath.row]];
+        }
+        _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+        [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+    }else{
+       
+        for (NSIndexPath *indexPath in _tableView.indexPathsForSelectedRows) {
+            DirtmsnaModel *model =  _dataSource[indexPath.row];
+            [_deleteArrarys addObject:_dataSource[indexPath.row]];
+            model.isdeles=@"1";
+            [_dataSource replaceObjectAtIndex:indexPath.row withObject:model];
+        }
+        _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+        [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+    }
     
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
-  
-        [_deleteArrarys removeObject:[_dataSource objectAtIndex:indexPath.row]];
+    if (self.isSearch) {
+        [_deleteArrarys removeObject:[_resultArr objectAtIndex:indexPath.row]];
+        DirtmsnaModel *model =  _dataSource[indexPath.row];
+        model.isdeles=@"";
+        [_resultArr replaceObjectAtIndex:indexPath.row withObject:model];
         if (_deleteArrarys.count==0) {
             _delButton.backgroundColor=[UIColor whiteColor];
         }
-        
         [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
- 
-    
+    }else{
+        [_deleteArrarys removeObject:[_dataSource objectAtIndex:indexPath.row]];
+        DirtmsnaModel *model =  _dataSource[indexPath.row];
+        model.isdeles=@"";
+        [_dataSource replaceObjectAtIndex:indexPath.row withObject:model];
+        if (_deleteArrarys.count==0) {
+            _delButton.backgroundColor=[UIColor whiteColor];
+        }
+        [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+    }
+   
 }
-
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (searchText.length == 0) {
@@ -262,16 +283,28 @@
     if (searchText.length == 1) {
         self.firstInputString = searchText;
     }
-    for (NSArray *searchArray in self.dataSource) {
-        for (NSString *searchStr in searchArray) {
-            if ([searchStr rangeOfString:searchText].location != NSNotFound) {
-                [self.resultArr addObject:searchStr];
-            }
+    for (DirtmsnaModel *model in self.dataSource) {
+    if ([model.name rangeOfString:searchText].location != NSNotFound) {
+    
+        [self.resultArr addObject:model];
         }
+        
     }
     if (_resultArr.count) {
         self.isSearch = YES;
         [self.tableView reloadData];
+           int a=1;
+        for (int i=0; _resultArr.count>i; i++) {
+          DirtmsnaModel *model = _resultArr[i];
+            if ([model.isdeles isEqualToString:@"1"]) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:1];
+                [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count] + a++] forState:UIControlStateNormal];
+                _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+            }
+        }
+      
+    
     }
 }
 
@@ -348,48 +381,48 @@
     }
 }
 
--(void)upDataSearchSpecialOffe{
-    NSString *uStr =[NSString stringWithFormat:@"%@manager/fuzzyQueryFreeEmployee.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-      NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"key":self.searchBar.text};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        _resultArr=[NSMutableArray array];
-        
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *array=[responseObject valueForKey:@"list"];
-            
-            for (NSDictionary *dic in array) {
-                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [_resultArr addObject:model];
-            }
-            if (self.dataSource.count==0) {
-                [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～"  Size:20.0];
-                _tableView.emptyView.hidden = NO;
-            }else{
-                _indexArray=[NSMutableArray arrayWithObjects:@"员工列表",nil];
-            }
-            [_tableView reloadData];
-            
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～～～" Size:20.0];
-            _tableView.emptyView.hidden = NO;
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-     
-    }failure:^(NSError *error) {
-    }view:self.view MBPro:YES];
-    
-}
+//-(void)upDataSearchSpecialOffe{
+//    NSString *uStr =[NSString stringWithFormat:@"%@manager/fuzzyQueryFreeEmployee.action",KURLHeader];
+//    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+//      NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+//    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+//    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"key":self.searchBar.text};
+//    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+//        _resultArr=[NSMutableArray array];
+//        
+//        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+//            NSArray *array=[responseObject valueForKey:@"list"];
+//            
+//            for (NSDictionary *dic in array) {
+//                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
+//                [model setValuesForKeysWithDictionary:dic];
+//                [_resultArr addObject:model];
+//            }
+//            if (self.dataSource.count==0) {
+//                [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～"  Size:20.0];
+//                _tableView.emptyView.hidden = NO;
+//            }else{
+//                _indexArray=[NSMutableArray arrayWithObjects:@"员工列表",nil];
+//            }
+//            [_tableView reloadData];
+//            
+//        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+//            [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～～～" Size:20.0];
+//            _tableView.emptyView.hidden = NO;
+//        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+//            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+//            alertView.resultIndex = ^(NSInteger index){
+//                ViewController *loginVC = [[ViewController alloc] init];
+//                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+//                [self presentViewController:loginNavC animated:YES completion:nil];
+//            };
+//            [alertView showMKPAlertView];
+//        }
+//     
+//    }failure:^(NSError *error) {
+//    }view:self.view MBPro:YES];
+//    
+//}
 
 @end
