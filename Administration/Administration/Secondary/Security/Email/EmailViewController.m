@@ -19,7 +19,18 @@
     [self EmailUI];
     self.view.backgroundColor  = GetColor(246, 246, 246, 1);
     // Do any additional setup after loading the view.
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+    
 }
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)EmailUI{
     
     UIView *view1 =[[UIView alloc]init];

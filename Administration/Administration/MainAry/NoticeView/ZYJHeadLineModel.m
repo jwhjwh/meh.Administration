@@ -9,5 +9,15 @@
 #import "ZYJHeadLineModel.h"
 
 @implementation ZYJHeadLineModel
-
+-(void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    
+  
+    
+}
+//kvc取值操作  取值误操作
+-(instancetype)valueForUndefinedKey:(NSString *)key
+{
+    return nil;
+}
 @end

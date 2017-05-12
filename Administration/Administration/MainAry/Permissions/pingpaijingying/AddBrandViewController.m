@@ -40,6 +40,7 @@
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    
     self.navigationItem.rightBarButtonItem = rightitem;
     
     _imageV=[[UIImageView alloc]init];

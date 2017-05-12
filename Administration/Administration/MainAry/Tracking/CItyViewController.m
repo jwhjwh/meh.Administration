@@ -42,6 +42,7 @@ NSUInteger roossw;
                                     style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(masgegeClick)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     _sQArry = [[NSMutableArray alloc]initWithObjects:@"所在区域", nil];
     _sSArry = [[NSMutableArray alloc]initWithObjects:@"", nil];

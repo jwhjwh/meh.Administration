@@ -154,7 +154,7 @@
     [ywLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(xiaoBT.mas_bottom).offset(0);
         make.centerX.mas_equalTo(self.mas_centerX).offset(0);
-        make.width.mas_equalTo(60);
+        make.width.mas_equalTo(kWidth*150);
         make.height.mas_equalTo(25);
     }];
     UIView *view1 = [[UIView alloc]init];

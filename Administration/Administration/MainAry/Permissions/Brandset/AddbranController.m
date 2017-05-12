@@ -77,6 +77,7 @@
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(masgegeClick)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    
     self.navigationItem.rightBarButtonItem = rightitem;
     [self InterTableUI];
     _Bmodeld =[[branModel alloc]init];
