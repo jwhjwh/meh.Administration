@@ -193,9 +193,15 @@
         _oldString = _oldField.text;
         _oneString = _oneField.text;
         _twoString = _twoField.text;
+        
         BOOL dog = [_oneString isEqual:_twoString];
         if (dog == YES) {
-            [self loadDataFromServer];
+            if (_oneString.length<6||_twoString.length<6) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"识别码不能小于6位" andInterval:1.0];
+            }else{
+                [self loadDataFromServer];
+            }
+            
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"两次识别码输入不相同" andInterval:1.0];
         }

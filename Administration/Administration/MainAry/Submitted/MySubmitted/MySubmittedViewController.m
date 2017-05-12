@@ -67,6 +67,7 @@
                                     style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(masgegeClick)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     
     self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"想做的事",@"进展程度", nil];

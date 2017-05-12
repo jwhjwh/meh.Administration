@@ -38,8 +38,18 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setExtraCellLineHidden:tableview];
     _InterNameAry = [[NSArray alloc]initWithObjects:@"个人信息",@"退出当前帐号",nil];
-   
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+    
 }
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 -(void)ManafementUI{
     

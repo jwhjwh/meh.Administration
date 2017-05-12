@@ -29,6 +29,7 @@
                                     style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(tijiaoClick)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width/2-50, 74,100, 30)];
     label.text=@"重置新密码";

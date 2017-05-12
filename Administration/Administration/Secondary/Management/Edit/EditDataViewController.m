@@ -47,16 +47,22 @@
                                    style:UIBarButtonItemStylePlain
                                    target:self
                                    action:@selector(masgegeClick)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];
-    
-    
-       
-    
+}
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)masgegeClick{
     

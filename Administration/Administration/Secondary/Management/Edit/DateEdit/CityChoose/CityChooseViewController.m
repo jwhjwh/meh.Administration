@@ -36,9 +36,21 @@
                                     style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(masgegeClick)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
-    // Do any additional setup after loading the view.
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+    
 }
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)returnText:(ReturnTextBlock)block {
     self.returnTextBlock = block;
 }

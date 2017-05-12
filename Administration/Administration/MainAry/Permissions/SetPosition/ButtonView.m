@@ -28,7 +28,9 @@
     [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.mas_top).offset(0);
         make.centerX.mas_equalTo(self.mas_centerX).offset(0);
-        make.height.mas_equalTo(height);
+       
+            make.height.mas_equalTo(height);
+        
         make.width.mas_equalTo(1);
     }];
     

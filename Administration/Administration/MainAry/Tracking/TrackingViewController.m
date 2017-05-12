@@ -74,6 +74,7 @@ int str;
                                     style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(masgegeClick)];
+    rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     // Do any additional setup after loading the view.
     [self TrackingVCUI];

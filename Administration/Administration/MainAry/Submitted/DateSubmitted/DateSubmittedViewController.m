@@ -192,15 +192,18 @@
         make.right.equalTo(self.view.mas_right).offset(0);
         make.height.mas_equalTo(@2);
     }];
-    /*
-     dateImage;//图片
-     dayLabel;//时间
-     placeLabel;//地点
-     thingsLabel;//做的事情
-     progressLabel;//进展程度
-     */
-     //
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+    
 }
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)datenetworking{
     
     NSString *urlStr =[NSString stringWithFormat:@"%@picreport/getPicById.action",KURLHeader];

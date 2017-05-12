@@ -111,7 +111,7 @@
 		1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3881E67AA3400AF6180 /* LomapViewController.mm */; };
 		1F52C38B1E67B74100AF6180 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F52C38A1E67B74100AF6180 /* mapapi.bundle */; };
 		1F52C38D1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C38C1E67C84C00AF6180 /* BaiduMapAPI_Utils.framework */; };
-		1F52C3971E67F19900AF6180 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */; };
+		1F52C3971E67F19900AF6180 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52C3961E67F19900AF6180 /* BaiduMapAPI_Search.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F52C3991E6810F800AF6180 /* PerLomapController.mm */; };
 		1F5363D01E81020000538B68 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5363CF1E81020000538B68 /* libicucore.tbd */; };
 		1F5363DA1E810B9700538B68 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5363D91E810B9700538B68 /* AVOSCloud.framework */; };
@@ -324,7 +324,7 @@
 		1FDCBAC11E7A685E002C80FB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCBAC01E7A685E002C80FB /* libz.tbd */; };
 		1FDCBAC31E7A6A22002C80FB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCBAC21E7A6A22002C80FB /* libiconv.tbd */; };
 		1FDCBFAA1E7A8104002C80FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCBFA91E7A8104002C80FB /* UIKit.framework */; };
-		1FDCC14B1E7A8596002C80FB /* HyphenateLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCC0D31E7A8596002C80FB /* HyphenateLite.framework */; };
+		1FDCC14B1E7A8596002C80FB /* HyphenateLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCC0D31E7A8596002C80FB /* HyphenateLite.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1FDCC2EA1E7A8FDA002C80FB /* HyphenateLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCC0D31E7A8596002C80FB /* HyphenateLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FDD3C731E7398CE00743779 /* FillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C721E7398CE00743779 /* FillTableViewCell.m */; };
 		1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C761E73F52500743779 /* XFDaterView.m */; };

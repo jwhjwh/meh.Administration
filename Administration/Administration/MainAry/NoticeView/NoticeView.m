@@ -92,14 +92,11 @@
                 [contArr addObject:b];
             }
             if ([[NSString stringWithFormat:@"%@", dic] isEqualToString:@""]) {
-                _label.text= @"暂无公告";
+                _label.text= @"公告";
             }else{
                 _label.text=[NSString stringWithFormat:@"%@",[dic valueForKey:@"title"]];
             }
-           
-            
             _dataArr=[[NSMutableArray alloc]init];
-            
             for (int i=0; i<contArr.count; i++) {
                 ZYJHeadLineModel *model = [[ZYJHeadLineModel alloc]init];
                 model.title = contArr[i];
