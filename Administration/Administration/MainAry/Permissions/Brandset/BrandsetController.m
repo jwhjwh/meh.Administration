@@ -185,7 +185,6 @@
     detailVC.blockStr=^(){
         self.str=@"1";
     };
-    detailVC.branarr = _dataArray[indexPath.row];
     detailVC.nameStr = _daArr[indexPath.row];
     detailVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];
     [self.navigationController pushViewController:detailVC animated:YES];

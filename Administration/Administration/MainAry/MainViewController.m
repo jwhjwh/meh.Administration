@@ -57,8 +57,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
     self.view.backgroundColor=[UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets=YES;
     [self initData];
     [self addLoop];
 }
@@ -216,8 +216,8 @@
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.view.mas_top).offset(0);
-        make.height.equalTo(self.view.mas_height).multipliedBy(1/3.f);
+        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        make.height.equalTo(self.view.mas_height).multipliedBy(1/4.f);
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
