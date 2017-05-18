@@ -58,7 +58,7 @@
     
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];//在imageview3上加载一个透明的button
-    [button setTitle:@"登陆" forState:UIControlStateNormal];
+    [button setTitle:@"登录" forState:UIControlStateNormal];
     button.tintColor = [UIColor whiteColor];
     [button.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
     

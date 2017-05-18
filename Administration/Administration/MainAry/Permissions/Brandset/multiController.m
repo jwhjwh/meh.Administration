@@ -77,15 +77,26 @@
     if (self.gameArrs.count==2) {
         for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
             if (indexPath.section==1) {
-                [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];            }
+                [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+            }
         }
     }else{
         for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
             [deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
         }
     }
+    if (_num==1) {
+          NSMutableArray *Barr=[NSMutableArray array];
+          for (branModel *model in deleteArrarys ) {
+            [Barr addObject:[NSString stringWithFormat:@"%@",model.ID]];
+          }
+        
+        [self updateDepartarr:deleteArrarys string:[NSString stringWithFormat:@"%@",Barr]];
+    }else{
         self.blockArr(deleteArrarys);
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    
     
 }
 -(void)buttonLiftItem{
@@ -329,7 +340,7 @@
             [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];
             _branTableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -343,5 +354,32 @@
     }view:self.view MBPro:YES];
     
 }
-
+-(void)updateDepartarr:(NSMutableArray*)array string:(NSString*)str{
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@user/updateDepartmentBrand.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":@"1",@"BrandID": str};
+    
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加品牌成功" andInterval:1.0];
+            self.blockArr(array);
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加品牌失败" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+}
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "ItemCell.h"
-#import "ItemModel.h"
+
 
 @interface ItemCell ()
 
@@ -39,18 +39,12 @@
         [_rightUpperButton addTarget:self action:@selector(rightUpperButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_container addSubview:_icon];
         [_container addSubview:_titleLabel];
-      
         [self.contentView addSubview:_container];
         
     }
     return self;
 }
 
-- (void)rightUpperButtonAction {
-    if ([self.delegate respondsToSelector:@selector(rightUpperButtonDidTappedWithItemCell:)]) {
-        [self.delegate rightUpperButtonDidTappedWithItemCell:self];
-    }
-}
 
 
 

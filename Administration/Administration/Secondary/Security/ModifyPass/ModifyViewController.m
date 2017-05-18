@@ -250,7 +250,7 @@
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0005"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"旧密码错误" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登陆超时，请重新登录" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登录超时，请重新登录" andInterval:1.0];
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
         }

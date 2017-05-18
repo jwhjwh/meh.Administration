@@ -8,6 +8,7 @@
 
 #import "BrandsetController.h"
 #import "AddbranController.h"
+#import "EditbrandController.h"
 #import "DetailsbrandController.h"
 #import "BranTableViewCell.h"
 #import "branModel.h"
@@ -81,7 +82,7 @@
                 }
     
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -174,7 +175,11 @@
     action1.backgroundColor = GetColor(206, 175,219 ,1);
     UITableViewRowAction * action2 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"编辑" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         //Action 2
-  
+        EditbrandController * EditVC=[[EditbrandController alloc]init];
+         EditVC.nameStr = _daArr[indexPath.row];
+         EditVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];
+        [self.navigationController pushViewController:EditVC animated:YES];
+       
       }];
     action2.backgroundColor = GetColor(220,220,220,1);
     return @[action1,action2];
@@ -261,7 +266,7 @@
             [_ArrID removeObjectAtIndex:IndexPath.row];
             [self.tableView reloadData];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -279,8 +284,6 @@
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
-    
 }
 
 @end

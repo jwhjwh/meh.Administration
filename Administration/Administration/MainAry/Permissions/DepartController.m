@@ -8,7 +8,7 @@
 
 #import "DepartController.h"
 #import "BrandsetController.h"
-
+#import "OtherDeparController.h"
 #import "branModel.h"
 @interface DepartController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -103,44 +103,18 @@
 {
         branModel *modld = _arr[indexPath.row];
         indexID = modld.Num.integerValue;
-     switch (indexID) {
-        case 1:{
-            //品牌部设置
-            BrandsetController *brandVC=[[BrandsetController alloc]init];
-            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
-            [self.navigationController pushViewController:brandVC animated:YES];
-        }
-            break;
-        case 2:{
-            BrandsetController *brandVC=[[BrandsetController alloc]init];
-            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
-            [self.navigationController pushViewController:brandVC animated:YES];
-        }
-            break;
-        case 3:{
-            BrandsetController *brandVC=[[BrandsetController alloc]init];
-            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
-            [self.navigationController pushViewController:brandVC animated:YES];
-       
-        }
-            break;
-            
-        case 4:{
-            BrandsetController *brandVC=[[BrandsetController alloc]init];
-            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
-            [self.navigationController pushViewController:brandVC animated:YES];
-
-        }
-            break;
-        case 5:{
-            BrandsetController *brandVC=[[BrandsetController alloc]init];
-            brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
-            [self.navigationController pushViewController:brandVC animated:YES];
-        }
-            break;
-        default:
-            break;
+    if(indexID==1){
+        //品牌部设置
+        BrandsetController *brandVC=[[BrandsetController alloc]init];
+        brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
+        [self.navigationController pushViewController:brandVC animated:YES];
+    }else{
+        OtherDeparController *brandVC=[[OtherDeparController alloc]init];
+        brandVC.numstr=[NSString stringWithFormat:@"%ld",(long)indexID];
+        brandVC.sting =[modld.Name substringToIndex:3];;
+        [self.navigationController pushViewController:brandVC animated:YES];
     }
+
 }
 -(void)getNetworkData{
     
@@ -166,7 +140,7 @@
             [infonTableview addEmptyViewWithImageName:@"" title:@"没有设定部门" Size:20.0];
             infonTableview.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];

@@ -56,20 +56,39 @@
 
 -(void)deltButn{
     if (self.isSearch) {
-        if (_deleteArrarys.count>0) {
-             self.blockArr(_deleteArrarys);
+        if(_num==1){
+            NSMutableArray *Emiarr=[NSMutableArray array];
+            for ( DirtmsnaModel *model  in _deleteArrarys) {
+                 [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+            }
+            [self updateDepartarr:_deleteArrarys string:[NSString stringWithFormat:@"%@",Emiarr]];
+        }else{
+            if (_deleteArrarys.count>0) {
+                self.blockArr(_deleteArrarys);
+            }
+            
+            [self.navigationController popViewControllerAnimated:YES];
         }
-       
-        [self.navigationController popViewControllerAnimated:YES];
+     
     }else{
         NSMutableArray *deleteArrarys = [NSMutableArray array];
         for (NSIndexPath *indexPath in _tableView.indexPathsForSelectedRows) {
             [deleteArrarys addObject:self.dataSource[indexPath.row]];
         }
-        if (deleteArrarys.count>0) {
-           self.blockArr(deleteArrarys);
+        if(_num==1){
+            NSMutableArray *Emiarr=[NSMutableArray array];
+            for ( DirtmsnaModel *model  in deleteArrarys) {
+                [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+            }
+            [self updateDepartarr:_deleteArrarys string:[NSString stringWithFormat:@"%@",Emiarr]];
+        }else{
+           
+            if (deleteArrarys.count>0) {
+                self.blockArr(deleteArrarys);
+            }
+            [self.navigationController popViewControllerAnimated:YES];
         }
-        [self.navigationController popViewControllerAnimated:YES];
+    
     }
   
     
@@ -186,7 +205,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Num":@"1",@"CompanyInfoId":compid};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Num":_Numstr,@"CompanyInfoId":compid};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
      
         
@@ -209,11 +228,11 @@
             [_tableView reloadData];
             
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [self.view addSubview:self.tableView];
             [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～～～" Size:20.0];
             _tableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -478,6 +497,38 @@
     }
 }
 
+-(void)updateDepartarr:(NSMutableArray*)array string:(NSString*)str{
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@user/updateDepartmentEmployee.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"employees": str};
+    
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加员工成功" andInterval:1.0];
+            self.blockArr(array);
+            dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 1.3 * NSEC_PER_SEC);
+            dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加员工失败" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+}
 
 
 @end

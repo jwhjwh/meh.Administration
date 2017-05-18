@@ -1,12 +1,12 @@
 //
-//  AddbranController.m
+//  EditbrandController.m
 //  Administration
 //
-//  Created by zhang on 2017/4/12.
+//  Created by zhang on 2017/5/15.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "AddbranController.h"
+#import "EditbrandController.h"
 #import "HoderReusableView.h"
 #import "multiController.h"
 #import "DirectorController.h"
@@ -16,39 +16,39 @@
 #import "ItemCell.h"
 #import "DirtmsnaModel.h"
 #import "EmistController.h"
-
-@interface AddbranController ()<UICollectionViewDelegate, UICollectionViewDataSource,ZXYAlertViewDelegate,UITextViewDelegate>
-{   BOOL isSele;
+#import "ModifyController.h"
+@interface EditbrandController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+{
+    NSIndexPath *index;
+    BOOL isSele;
     BOOL isSelede;
     BOOL ismay;
     BOOL isEay;
-    NSIndexPath *index;
 }
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic,strong) UIView *headerView;
-@property (nonatomic,strong) UITextField *textField;
+@property (nonatomic,strong) UIButton *Button;
 @property (nonatomic,strong) branModel *Bmodeld;
 @property (nonatomic,strong) branModel *Bmold;
 @property (nonatomic,strong) DirtmsnaModel *dirMoeld;
 @property (nonatomic,strong) DirtmsnaModel *dirtMoeld;
 //品牌
 @property (nonatomic,strong)NSMutableArray *branarr;
-
 //品牌加减
 @property (strong,nonatomic) NSArray *dateAry;
 @property (strong,nonatomic) NSArray *daAry;
+//总监加减
+@property (strong,nonatomic) NSArray *DrieAry;
+@property (strong,nonatomic) NSArray *DrAry;
 //总监
 @property (strong,nonatomic) NSMutableArray *paleAry;
 //经理
 @property (strong,nonatomic) NSMutableArray *ManaAry;
 //员工
 @property (strong,nonatomic) NSMutableArray *EmisAry;
-//总监加减
-@property (strong,nonatomic) NSArray *DrieAry;
-@property (strong,nonatomic) NSArray *DrAry;
+
 //名称
 @property (nonatomic,retain) NSString *nameBarn;
-
 
 @property (nonatomic,retain) UIView *fotView;
 //品牌字符串
@@ -57,14 +57,15 @@
 @property (nonatomic,retain) NSString *employees;
 //人员字符串
 @property (nonatomic,retain) NSString *mid;
+
 @end
 
-@implementation AddbranController
-
+@implementation EditbrandController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"添加品牌部";
+    self.title=@"编辑";
     self.hidesBottomBarWhenPushed = YES;
+    self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -72,13 +73,6 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(masgegeClick)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    
-    self.navigationItem.rightBarButtonItem = rightitem;
-    [self InterTableUI];
     _Bmodeld =[[branModel alloc]init];
     _Bmodeld.brandLogo=@"images/tj_ico01.png";
     _Bmodeld.finsk=@"";
@@ -91,15 +85,14 @@
     _dirtMoeld =[[DirtmsnaModel alloc]init];
     _dirtMoeld.icon=@"images/sc_ico01.png";
     _dirtMoeld.name=@"";
-    _branarr=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
     _daAry=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
     _dateAry=@[_Bmodeld,_Bmold];
     
-    _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+
     _DrieAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
     _DrAry=@[_dirMoeld,_dirtMoeld];
-    _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-    _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+  
+    [self getNetworkData];
     isSelede=YES;
     isSele=YES;
     ismay=YES;
@@ -113,9 +106,9 @@
     layout.minimumLineSpacing=0.5;
     //(2.2设置上下间距(图片左右间距大小
     layout.minimumInteritemSpacing=0;
-//    layout.sectionInset=UIEdgeInsetsMake(0.5, 0.25, 0.5,0.25);
-//    layout.headerReferenceSize = CGSizeMake(kScreenWidth, 35);
-    _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    //    layout.sectionInset=UIEdgeInsetsMake(0.5, 0.25, 0.5,0.25);
+    //    layout.headerReferenceSize = CGSizeMake(kScreenWidth, 35);
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, Scree_width, Scree_height-64) collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.showsVerticalScrollIndicator = NO;
     _collectionView.delegate = self;
@@ -128,20 +121,22 @@
     //广告栏位置大小
     self.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenHeight,70)];
     self.headerView.backgroundColor = [UIColor whiteColor];
-     UILabel * label=[[UILabel alloc]init];
+    UILabel * label=[[UILabel alloc]init];
     label.text =@"名称";
     [self.headerView addSubview:label];
-    _textField=[[UITextField alloc]init];
-    _textField.placeholder = @"请输入品牌名称";
-    [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-    [self.headerView addSubview:_textField];
+    _Button=[[UIButton alloc]init];
+    _Button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_Button setTitle:_nameStr forState:UIControlStateNormal];
+    [_Button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_Button addTarget:self action:@selector(targetButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.headerView addSubview:_Button];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.headerView.mas_top).offset(10);
         make.left.mas_equalTo(self.headerView.mas_left).offset(10);
         make.right.mas_equalTo(self.headerView.mas_right).offset(-10);
         make.height.offset(20);
     }];
-    [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_Button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.headerView.mas_right).offset(-10);
         make.top.mas_equalTo(label.mas_bottom).offset(5);
         make.left.mas_equalTo(self.headerView.mas_left).offset(10);
@@ -151,113 +146,6 @@
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
-}
--(void)masgegeClick{
-   
-    if (_nameBarn==nil) {
-    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写名称" andInterval:1.0];
-    }else if (_branarr.count<3){
-    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择负责品牌" andInterval:1.0];
-    }else{
-        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此品牌部" sureBtn:@"确认" cancleBtn:@"取消"];
-        NSMutableArray *Barr=[NSMutableArray array];
-        if (_branarr.count>=3) {
-            
-       for (branModel *model in [_branarr subarrayWithRange:NSMakeRange(0,_branarr.count-2)]) {
-                [Barr addObject:[NSString stringWithFormat:@"%@",model.ID]];
-            }
-            _BrandID=[NSString stringWithFormat:@"%@",Barr];
-        }else{
-            _BrandID=@"";
-        }
-        NSMutableArray *Emiarr=[NSMutableArray array];
-        if (_EmisAry.count>=3) {
-            for (DirtmsnaModel *model in [_EmisAry subarrayWithRange:NSMakeRange(0,_EmisAry.count-2)]) {
-                [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
-            }
-            _employees = [NSString stringWithFormat:@"%@",Emiarr];
-        }else{
-            _employees =@"";
-        }
-        NSMutableArray *palarr=[NSMutableArray array];
-        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
-        if ( _paleAry.count>=3) {
-            for (DirtmsnaModel *model in [_paleAry subarrayWithRange:NSMakeRange(0,_paleAry.count-2)]) {
-                [dic setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
-                [dic setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-              
-               
-            }
-              [palarr addObject:dic];
-        }
-        NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
-        if ( _ManaAry.count>=3) {
-            for (DirtmsnaModel *model in [_ManaAry subarrayWithRange:NSMakeRange(0,_ManaAry.count-2)]) {
-                [dict setObject:[NSString stringWithFormat:@"%@", model.usersid] forKey:@"usersid"];
-                [dict setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-               
-            }
-             [palarr addObject:dict];
-        }
-        if (palarr.count>0) {
-            NSError *error = nil;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:palarr options:NSJSONWritingPrettyPrinted error:&error];
-            _mid = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        }else{
-           _mid = @"";
-        }
-        alertView.resultIndex = ^(NSInteger index){
-            
-                NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
-                NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-                NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-                NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"BrandID":_BrandID,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid};
-                [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-                    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
-                         _nameBarn = nil;
-                         _textField.text=@"";
-                         _textField.placeholder = @"请输入品牌名称";
-                         _branarr=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
-                         _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                         _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                         _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                        [_collectionView reloadData];
-                        self.blockStr();
-                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                        
-                        alertView.resultIndex = ^(NSInteger index){
-                            ViewController *loginVC = [[ViewController alloc] init];
-                            UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                            [self presentViewController:loginNavC animated:YES completion:nil];
-                        };
-                        [alertView showMKPAlertView];
-                    }
-                    
-                    [_collectionView reloadData];
-                } failure:^(NSError *error) {
-                    
-                } view:self.view MBPro:YES];
-            
-        };
-        [alertView showMKPAlertView];
-
-    }
-  }
--(void)FieldText:(UITextField*)sender{
-    
-    switch (sender.tag) {
-        case 0:{
-            _nameBarn=sender.text;
-        
-
-        }
-            break;
-        default:
-            break;
-    }
 }
 //section列数
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -310,6 +198,7 @@
         }
             break;
         case 4:{
+            
             DirtmsnaModel *model= _EmisAry[indexPath.row];
             cell.titleLabel.text =model.name;
             [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
@@ -320,46 +209,55 @@
     }
     
     return cell;
-    
 }
 //点击Item详情
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-      ItemCell *cell = (ItemCell *) [collectionView cellForItemAtIndexPath:indexPath];
+    ItemCell *cell = (ItemCell *) [collectionView cellForItemAtIndexPath:indexPath];
     switch (indexPath.section) {
         case 1:{
-         
-           if (_branarr.count==1&&indexPath.row ==0) {
+            
+            if (_branarr.count==1&&indexPath.row ==0) {
                 [self addbaranded];
             }else if (_branarr.count>=3&&indexPath.row == _branarr.count-2) {
+                [self addcollectionView:collectionView foleg:NO arr:_branarr Num:1];
+                [self addbaranded];
+                isSelede=YES;
+            }else if (_branarr.count>=3&&indexPath.row == _branarr.count-1) {
+                if (isSelede==NO) {
                     [self addcollectionView:collectionView foleg:NO arr:_branarr Num:1];
-                    [self addbaranded];
                     isSelede=YES;
-                }else if (_branarr.count>=3&&indexPath.row == _branarr.count-1) {
-                    if (isSelede==NO) {
-                        [self addcollectionView:collectionView foleg:NO arr:_branarr Num:1];
-                        isSelede=YES;
+                }else{
+                    [self addcollectionView:collectionView foleg:YES arr:_branarr Num:1];
+                    isSelede=NO;
+                }
+            }else{
+                if (isSelede==NO) {
+                    if (_branarr.count==3&&indexPath.row==0) {
+                      [ELNAlerTool showAlertMassgeWithController:self andMessage:@"品牌不能为空，请先添加在删除" andInterval:1.0];
                     }else{
-                        [self addcollectionView:collectionView foleg:YES arr:_branarr Num:1];
-                        isSelede=NO;
+                        branModel *model =  _branarr[indexPath.row];
+                        [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1];
+                        __weak __typeof__(self) weakSelf = self;
+                        weakSelf.Str=^(){
+                            [_branarr removeObjectAtIndex:indexPath.row];
+                            [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                            if (_branarr.count==2) {
+                                [_branarr removeLastObject];
+                                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:1];
+                                [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                                isSelede=YES;
+                                [cell.rightUpperButton removeFromSuperview];
+                            }
+                        };
+
                     }
                 }else{
-                    if (isSelede==NO) {
-                        [_branarr removeObjectAtIndex:indexPath.row];
-                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
-                        if (_branarr.count==2) {
-                            [_branarr removeLastObject];
-                            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:1];
-                            [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
-                            isSelede=YES;
-                            [cell.rightUpperButton removeFromSuperview];
-                        }
-                    }else{
-                        //查看详情
-                        
-                    }
+                    //查看详情
+                    
                 }
-    
-}
+            }
+            
+        }
             break;
         case 2:{
             
@@ -379,6 +277,10 @@
                 }
             }else{
                 if (isSele==NO) {
+                DirtmsnaModel *model =  _paleAry[indexPath.row];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
                     [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
                     if (_paleAry.count==2) {
@@ -388,6 +290,7 @@
                         isSele=YES;
                         [cell.rightUpperButton removeFromSuperview];
                     }
+                    };
                 }else{
                     //查看详情
                     inftionxqController *inftionC=[[inftionxqController alloc]init];
@@ -396,6 +299,8 @@
                     [self.navigationController pushViewController:inftionC animated:YES];
                 }
             }
+            
+            
         }
             break;
         case 3:{
@@ -415,6 +320,10 @@
                 }
             }else{
                 if (ismay==NO) {
+                    DirtmsnaModel *model =  _ManaAry[indexPath.row];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Str=^(){
                     [_ManaAry removeObjectAtIndex:indexPath.row];
                     [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
                     if (_ManaAry.count==2) {
@@ -424,6 +333,7 @@
                         ismay=YES;
                         [cell.rightUpperButton removeFromSuperview];
                     }
+                    };
                 }else{
                     //查看详情
                     //查看详情
@@ -453,6 +363,10 @@
                 }
             }else{
                 if (isEay==NO) {
+                    DirtmsnaModel *model =  _EmisAry[indexPath.row];
+                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];
                     [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
                     if (_EmisAry.count==2) {
@@ -462,6 +376,7 @@
                         isEay=YES;
                         [cell.rightUpperButton removeFromSuperview];
                     }
+                    };
                 }else{
                     //查看详情
                     inftionxqController *inftionC=[[inftionxqController alloc]init];
@@ -470,16 +385,19 @@
                     [self.navigationController pushViewController:inftionC animated:YES];
                 }
             }
-
+            
         }
             break;
         default:
             break;
     }
-
+    
 }
+
 //头部显示的内容
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    
+    
     if (kind == UICollectionElementKindSectionHeader){
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:
                                                 UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
@@ -489,21 +407,22 @@
             return headerView;
         }else {
             HoderReusableView *headerReusaView = (HoderReusableView*)[collectionView dequeueReusableSupplementaryViewOfKind:
-                                                                      UICollectionElementKindSectionHeader withReuseIdentifier:@"ReusableView" forIndexPath:indexPath];
+                UICollectionElementKindSectionHeader withReuseIdentifier:@"ReusableView" forIndexPath:indexPath];
             headerReusaView.backgroundColor=GetColor(230,230,230,1);
             if(indexPath.section==1){
-            headerReusaView.label.text =@"负责品牌";
+                headerReusaView.label.text =@"负责品牌";
+                
                 return headerReusaView;
             }else if (indexPath.section==2){
-              headerReusaView.label.text = @"负责总监";
-               
+                headerReusaView.label.text = @"负责总监";
+                
                 return headerReusaView;
             } if(indexPath.section==3){
-                 headerReusaView.label.text =@"负责经理";
+                headerReusaView.label.text =@"负责经理";
                 
                 return headerReusaView;
             }else if (indexPath.section==4){
-                 headerReusaView.label.text =@"员工列表";
+                headerReusaView.label.text =@"员工列表";
                 
                 return headerReusaView;
             }
@@ -513,8 +432,91 @@
     return nil;
     
 }
+
+-(void)getNetworkData{
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@manager/queryDepartmentInfo.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Num":@"1",@"CompanyInfoId":compid,@"DepartmentID":_BarandID};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            [self InterTableUI];
+            if ([[responseObject valueForKey:@"bList"]count]==0) {
+            _branarr=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
+            }else{
+                _branarr=[NSMutableArray array];
+                for (NSDictionary *dic in [responseObject valueForKey:@"bList"]) {
+                    branModel *model=[[branModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [_branarr addObject:model];
+                }
+                for (branModel *model in _dateAry) {
+                    [_branarr addObject:model];
+                }
+            }
+          
+            if ([[[NSDictionary changeType:responseObject] valueForKey:@"dInfo"]isEqual:@""]) {
+                _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+             
+            }else{
+                _paleAry=[NSMutableArray array];
+                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
+                [model setValuesForKeysWithDictionary: [responseObject valueForKey:@"dInfo"]];
+                [_paleAry addObject:model];
+                for (DirtmsnaModel *model in _DrAry) {
+                    [_paleAry addObject:model];
+                    }
+            }
+            if ([[[NSDictionary changeType:responseObject] valueForKey:@"mInfo"]isEqual:@""]) {
+                _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+            }else{
+                _ManaAry=[NSMutableArray array];
+                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
+                [model setValuesForKeysWithDictionary: [responseObject valueForKey:@"mInfo"]];
+                [_ManaAry addObject:model];
+                for (DirtmsnaModel *model in _DrAry) {
+                    [_ManaAry addObject:model];
+                }
+            }
+            if ([[responseObject valueForKey:@"eList"]count]==0) {
+                _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+            }else{
+                _EmisAry=[NSMutableArray array];
+                for (NSDictionary *dic in [responseObject valueForKey:@"eList"]) {
+                    DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [_EmisAry addObject:model];
+                }
+                for (DirtmsnaModel *model in _DrAry) {
+                    [_EmisAry addObject:model];
+                }
+            }
+            
+            [_collectionView reloadData];
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有品牌信息" andInterval:1.0];
+            
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+    
+}
 -(void)addbaranded{
     multiController *multiCV=[[multiController alloc]init];
+    multiCV.num=1;
+    multiCV.BarandID=_BarandID;
     multiCV.blockArr =^(NSMutableArray *array){
         _branarr=[NSMutableArray array];
         _branarr=array;
@@ -529,10 +531,12 @@
 -(void)addpaledNstring:(NSString*)str {
     DirectorController *multiCV=[[DirectorController alloc]init];
     multiCV.str=str;
-    multiCV.Numstr=@"1";
+    multiCV.Num=1;
+    multiCV.BarandID=_BarandID;
     multiCV.blockArray =^(NSMutableArray *arr){
         _paleAry=[NSMutableArray array];
         _paleAry=arr;
+        
         for (DirtmsnaModel *model in _DrAry) {
             [_paleAry addObject:model];
         }
@@ -545,7 +549,8 @@
 -(void)addMaryNstring:(NSString*)str {
     DirectorController *multiCV=[[DirectorController alloc]init];
     multiCV.str=str;
-    multiCV.Numstr=@"1";
+    multiCV.Num=1;
+    multiCV.BarandID=_BarandID;
     multiCV.blockArray =^(NSMutableArray *arr){
         _ManaAry=[NSMutableArray array];
         _ManaAry=arr;
@@ -560,7 +565,8 @@
 -(void)addEmis{
     EmistController *multiCV=[[EmistController alloc]init];
     multiCV.str=@"添加员工";
-    multiCV.Numstr=@"1";
+    multiCV.num=1;
+    multiCV.BarandID=_BarandID;
     multiCV.blockArr =^(NSMutableArray *arr){
         _EmisAry=[NSMutableArray array];
         _EmisAry=arr;
@@ -586,23 +592,63 @@
     } completion:^(BOOL finished) {
         for (NSIndexPath *indexPath in indexPaths) {
             ItemCell *celled = (ItemCell *) [collectionView cellForItemAtIndexPath:indexPath];
-          
-          [ celled.rightUpperButton setImage:[UIImage imageNamed:@"scbut"] forState:UIControlStateNormal];
+            
+            [ celled.rightUpperButton setImage:[UIImage imageNamed:@"scbut"] forState:UIControlStateNormal];
             if (foleg==YES) {
                 [celled addSubview:celled.rightUpperButton];
             }else{
                 [celled.rightUpperButton removeFromSuperview];
             }
-         
+            
         }
     }];
 }
-
-
-
-
+-(void)targetButton{
+    ModifyController *modify=[[ModifyController alloc]init];
+    modify.BarandID =_BarandID;
+    modify.blockStr =^(NSString *str){
+        
+    [_Button setTitle:str forState:UIControlStateNormal];
+    };
+    [self.navigationController pushViewController:modify animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+-(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num{
+     NSString *uStr =[NSString stringWithFormat:@"%@%@",KURLHeader,Url];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic;
+    if (num==1) {
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"BrandID":branid};
+    }else{
+         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID};
+    }
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+          [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];
+            _Str();
+        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:string andInterval:1.0];
+            
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+    }failure:^(NSError *error) {
+        
+    }view:self.view MBPro:YES];
+    
+
 }
 
 

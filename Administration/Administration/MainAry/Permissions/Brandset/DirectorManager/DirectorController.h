@@ -11,4 +11,8 @@ typedef void  (^DIREBLOCK)(NSMutableArray *arr);
 @interface DirectorController : UIViewController
 @property (nonatomic,strong)DIREBLOCK blockArray;
 @property (nonatomic,strong)NSString *str;
+@property (nonatomic,assign)int Num;
+@property (nonatomic,strong)NSString *BarandID;
+
+@property (nonatomic,strong)NSString *Numstr;
 @end

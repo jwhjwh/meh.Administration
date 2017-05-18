@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ItemModel.h"
 
-@class ItemCell;
-@protocol ItemCellDelegate <NSObject>
-- (void)rightUpperButtonDidTappedWithItemCell:(ItemCell *)selectedItemCell;
 
-@end
+
 
 @interface ItemCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *icon;
@@ -21,8 +18,7 @@
 @property (nonatomic, strong) UIButton *rightUpperButton;
 
 @property (nonatomic, strong) UIView *container;
-@property (nonatomic, strong) ItemModel *itemModel;
-@property (nonatomic, weak) id <ItemCellDelegate> delegate;
+
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, assign) BOOL isEditing;
 @end
