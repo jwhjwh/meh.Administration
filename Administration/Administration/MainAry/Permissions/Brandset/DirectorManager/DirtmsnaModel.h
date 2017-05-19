@@ -20,4 +20,7 @@
 @property (nonatomic,retain)NSString *usersid;
 
 @property (nonatomic,copy)NSString *roleId;
+
+
+@property (nonatomic,retain)NSString *isdeles;
 @end

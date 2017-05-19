@@ -365,13 +365,13 @@
                                 //设置是否自动登录
                                 [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                     } else {
-                                                        NSLog(@"登陆失败");
+                                                        NSLog(@"登录失败");
                                                     }
                                                 
                                                 }];
             });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登陆" andInterval:1.0];
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){

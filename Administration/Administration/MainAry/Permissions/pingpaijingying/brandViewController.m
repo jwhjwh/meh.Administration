@@ -161,27 +161,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Brandmodle *model=[dict objectForKey: _array[indexPath.section][indexPath.row]];
-    EditbrandController *editbVC=[[EditbrandController alloc]init];
-    editbVC.strId=model.ID;
-    editbVC.imageStr=model.brandLogo;
-    editbVC.tittle=model.finsk;
-    editbVC.blcokStr=^(UIImage *goodPicture,NSString*String){
-     
-        if (!(String==nil)) {
-            model.finsk=String;
-        }
-        if (!(goodPicture==nil)) {
-            NSData *data = UIImageJPEGRepresentation(goodPicture, 1.0f);
-            model.brandLogo = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-        }
-        [dict setValue:model forKey:_array[indexPath.section][indexPath.row]];
-         [_tableView beginUpdates];
-        NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
-        [_tableView reloadRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationNone];
-        [_tableView endUpdates];
-    };
   
-    [self.navigationController pushViewController:editbVC animated:YES];
 }
 -(void)getNetworkData{
    
@@ -219,7 +199,7 @@
             [_tableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];
             _tableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];

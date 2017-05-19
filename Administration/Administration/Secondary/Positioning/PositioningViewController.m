@@ -125,7 +125,7 @@
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
@@ -207,10 +207,10 @@
      
                                     titleString:[NSString stringWithFormat:@"%@(%ld)",_array[section],[_InterNameAry[section]count]]
                                      titleColor:[UIColor blackColor]
-                                      titleFont:[UIFont boldSystemFontOfSize:16]
+                                      titleFont:[UIFont systemFontOfSize:16]
                               descriptionString:[NSString string]
                                descriptionColor:[UIColor whiteColor]
-                                descriptionFont:[UIFont boldSystemFontOfSize:13]
+                                descriptionFont:[UIFont systemFontOfSize:13]
                                      arrowImage:[UIImage imageNamed:@"jiantou_03"]
                                   arrowPosition:[self perferedArrowPosition]
                                    sectionState:((NSNumber *)self.statusArray[section]).integerValue];

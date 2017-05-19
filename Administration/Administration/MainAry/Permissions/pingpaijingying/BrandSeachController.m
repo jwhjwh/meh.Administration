@@ -97,23 +97,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Brandmodle *model=self.searchDataArray[indexPath.row];
-    EditbrandController *editbVC=[[EditbrandController alloc]init];
-    editbVC.strId=model.ID;
-    editbVC.imageStr=model.brandLogo;
-    editbVC.tittle=model.finsk;
-    editbVC.blcokStr=^(UIImage *goodPicture,NSString*String){
-        
-        if (!(String==nil)) {
-            model.finsk=String;
-        }
-        [self.searchDataArray replaceObjectAtIndex:indexPath.row withObject:model];
-        [_searchTableView beginUpdates];
-        NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
-        [_searchTableView reloadRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationNone];
-        [_searchTableView endUpdates];
-    };
-
-    [self.navigationController pushViewController:editbVC animated:YES];
 }
 -(void)upDataSearchSpecialOffe{
     NSString *uStr =[NSString stringWithFormat:@"%@brand/querybrand.action",KURLHeader];
@@ -133,7 +116,7 @@
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索产品信息" andInterval:1.0];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];

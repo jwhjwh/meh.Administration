@@ -10,4 +10,6 @@
 typedef void  (^BLOCK)(NSMutableArray *array);
 @interface multiController : UIViewController
 @property (nonatomic,strong)BLOCK blockArr;
+@property (nonatomic,assign)int num;
+@property (nonatomic,strong)NSString *BarandID;
 @end

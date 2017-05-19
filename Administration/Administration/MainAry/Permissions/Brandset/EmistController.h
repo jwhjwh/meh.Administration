@@ -11,4 +11,8 @@ typedef void  (^EBLOCK)(NSMutableArray *arr);
 @interface EmistController : UIViewController
 @property (nonatomic,strong)EBLOCK blockArr;
 @property (nonatomic,strong)NSString *str;
+@property (nonatomic,assign)int num;
+@property (nonatomic,strong)NSString *BarandID;
+
+@property (nonatomic,strong)NSString *Numstr;
 @end

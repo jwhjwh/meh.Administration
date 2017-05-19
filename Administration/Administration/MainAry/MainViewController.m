@@ -57,8 +57,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor=[UIColor whiteColor];
+
     [self initData];
     [self addLoop];
 }
@@ -66,6 +66,7 @@
 
 -(void)naveigtionAddSubView{
     self.title=@"首页";
+    self.automaticallyAdjustsScrollViewInsets=NO;
     _logoImage = [UIButton buttonWithType:UIButtonTypeCustom] ;
     _logoImage.frame =CGRectMake(12,4,36,36);
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii: _logoImage.bounds.size];
@@ -216,8 +217,8 @@
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.view.mas_top).offset(0);
-        make.height.equalTo(self.view.mas_height).multipliedBy(1/3.f);
+        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        make.height.equalTo(self.view.mas_height).multipliedBy(0.29f);
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -256,13 +257,10 @@
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     cell.resultBLock = ^(NSInteger index){
         int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
-        
         //判断角色的设定主题的现实
-        
         switch (str) {
             case 1:
-                
-                //            // 老板
+                // 老板
                 //            _arr=@[@"权限管理", @"店家跟踪", @"报表管理", @"店家信息", @"员工管理", @"经营品牌",@"公司公告", @"图片报岗"];
                 //            _arr1=@[@"quanxian", @"dianpugenzong", @"baobiaoguanli", @"dianjiaxinxi", @"yuangongguanli", @"jingyingpinpai",@"gongsigonggao", @"baogang"];
                 switch (index) {
