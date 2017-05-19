@@ -45,7 +45,9 @@
     return self;
 }
 
-
+-(void)rightUpperButtonAction{
+    
+}
 
 
 
