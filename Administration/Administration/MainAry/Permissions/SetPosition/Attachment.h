@@ -10,6 +10,6 @@
 
 @interface Attachment : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame height:(CGFloat)height withg:(CGFloat)withg;
+- (instancetype)initWithFrame:(CGRect)frame ;
 
 @end

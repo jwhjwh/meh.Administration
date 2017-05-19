@@ -63,6 +63,15 @@
     userlocationStyle.isRotateAngleValid = YES;
     userlocationStyle.isAccuracyCircleShow = NO;
     [_mapView updateLocationData:self.userLocation];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+}
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 /**
  *用户位置更新后，会调用此函数

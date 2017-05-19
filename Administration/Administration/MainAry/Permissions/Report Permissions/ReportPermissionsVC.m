@@ -98,7 +98,9 @@
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+           NSLog(@"%@",responseObject);
            for (NSDictionary *dic in responseObject[@"reportList"]) {
+               
                 ReportModel *model=[[ReportModel alloc]init];
                [model setValuesForKeysWithDictionary:dic];
                 [ _topAry addObject:model.num];
@@ -115,8 +117,8 @@
                }
                [_ywAry addObject:zwArr];
                [_numAry addObject:numArr];
-               NSLog(@"_numAry:%@",_numAry);
-               NSLog(@"_ywAry:%@",_ywAry);
+//               NSLog(@"_numAry:%@",_numAry);
+//               NSLog(@"_ywAry:%@",_ywAry);
            }
            [self subLabelUI];
        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){

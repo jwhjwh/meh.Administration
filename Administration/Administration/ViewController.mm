@@ -161,6 +161,7 @@
     _NameText.backgroundColor = [UIColor clearColor];
     _NameText.placeholder = @"用户名";
    placeholder(_NameText);
+
     [_NameText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:_NameText];
     [_NameText
@@ -197,6 +198,7 @@
     _PassText.backgroundColor = [UIColor clearColor];
     _PassText.placeholder = @"用户密码";
     placeholder(_PassText);
+
     [self.view addSubview:_PassText];
     [_PassText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_suoziView.mas_top).offset(0);
@@ -238,7 +240,6 @@
         make.right.mas_equalTo(_PassText.mas_right).offset(0);
         make.height.mas_equalTo(32);
     }];
-    
     //第三条线
     _view3 = [[UIView alloc]init];
     _view3.backgroundColor = [UIColor RGBview];
