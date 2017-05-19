@@ -174,7 +174,11 @@
         if (_copde == 3) {
             make.left.mas_equalTo(self.mas_left).offset(40);
             make.right.mas_equalTo(self.mas_right).offset(-40);
-        }else{
+        }if (_ywAry.count ==1) {
+            make.centerX.mas_equalTo(self.mas_centerX).offset(0);
+            make.width.mas_offset(1);
+        }
+        else{
             make.left.mas_equalTo(self.mas_left).offset(50);
             make.right.mas_equalTo(self.mas_right).offset(-50);
         }
@@ -200,23 +204,33 @@
     [self addSubview:vieww];
     [vieww mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(v.mas_bottom).offset(0);
-        make.left.mas_equalTo(self.mas_left).offset(0);
-        make.right.mas_equalTo(self.mas_right).offset(0);
+            make.left.mas_equalTo(self.mas_left).offset(0);
+            make.right.mas_equalTo(self.mas_right).offset(0);
         make.height.mas_equalTo(20);
         
     }];
-    for (int i = 0; i<_ywAry.count; i++) {
+    if (_ywAry.count == 1) {
         UIView* viewww = [[UIView alloc]init];
-        if (_copde ==3) {
-            viewww.frame = CGRectMake(((Scree_width-80)/(_ywAry.count-1))*i+40, 0
-                                      , 1, 20);
-        }else{
-            viewww.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx, 0
-                                      , 1, 20);
-        }
-        
+        viewww.frame = CGRectMake((Scree_width/2)-0.5, 0
+                                  , 1, 20);
         viewww.backgroundColor = [UIColor lightGrayColor];
         [vieww addSubview:viewww];
+    }else{
+        for (int i = 0; i<_ywAry.count; i++) {
+            UIView* viewww = [[UIView alloc]init];
+            if (_copde ==3) {
+                viewww.frame = CGRectMake(((Scree_width-80)/(_ywAry.count-1))*i+40, 0
+                                          , 1, 20);
+            }else{
+                viewww.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx, 0
+                                          , 1, 20);
+            }
+            
+            viewww.backgroundColor = [UIColor lightGrayColor];
+            [vieww addSubview:viewww];
+        }
+        
+
     }
     
     [self viewbuton:50 yy:201  v:vieww tagg:_copde];
@@ -233,23 +247,21 @@
         make.height.mas_equalTo(30);
     }];
     _imageAry = [[NSMutableArray alloc]init];
+    
     for (int i = 0; i<_ywAry.count; i ++) {
         _buttonname= [[UIButton alloc]init];
         [_buttonname setTitle:_ywAry[i] forState:UIControlStateNormal];
         if (_copde == 3) {
            _buttonname.frame = CGRectMake(((Scree_width-80)/(_ywAry.count-1))*i+40-(Scree_width-80)/5/2, 0, (Scree_width-80)/5, 25);
             _buttonname.font = [UIFont systemFontOfSize:kWidth*25];
+        }else if (_ywAry.count == 1){
+            _buttonname.frame = CGRectMake((Scree_width/2)-(Scree_width-80)/4/2, 0, (Scree_width-80)/4, 25);
+            _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
         }else{
          _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-(Scree_width-80)/4/2, 0, (Scree_width-80)/4, 25);
             _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
         }
-       
-        
-        
-        
         _buttonname.tag = i;
-        
-        
         _buttonname.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         _buttonname.layer.borderWidth = 1.0f;
         _buttonname.layer.cornerRadius = 2.0f;

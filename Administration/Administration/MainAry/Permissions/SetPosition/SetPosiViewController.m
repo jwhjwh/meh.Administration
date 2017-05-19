@@ -135,7 +135,7 @@ NSUInteger rsw;
     _MDStr = @"美导";
     _XZGLLStr = @"行政管理";
     _WLStr = @"物流";
-    _CKStr = @"内勤";
+    _CKStr = @"仓库";
     _CWZJStr = @"财务总监";//财务总监
     _KFJLStr = @"客服经理";//客服经理
     _WLJLStr = @"物流经理";//物流经理
@@ -448,7 +448,7 @@ NSUInteger rsw;
     [infonTableview endUpdates];
 }
 -(void)ui{
-     _imageAry = [[NSMutableArray alloc]init];
+     _imageAry = [[NSMutableArray  alloc]init];
     infonTableview= [[UITableView alloc]init];
     infonTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     infonTableview.dataSource=self;
@@ -464,7 +464,7 @@ NSUInteger rsw;
     topView.backgroundColor = [UIColor whiteColor];
     infonTableview.tableHeaderView=topView;
     
-   _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 280)];
+   _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, kHeight*970)];
     _footerView.backgroundColor = [UIColor whiteColor];
     infonTableview.tableFooterView=_footerView;
     
@@ -510,7 +510,7 @@ NSUInteger rsw;
     NSArray *oneAry= [[NSArray alloc]initWithObjects:@"9",@"10",@"11",@"7", nil];
     NSArray *oneLabelAry = [[NSArray alloc]initWithObjects:@"业务总监",@"市场总监",@"财务总监",@"行政管理", nil];
     
-    Attachment*attView = [[Attachment alloc]initWithFrame:CGRectMake((Scree_width/2)-(Scree_width-kWidth*160)/2, zjlLabel.bottom, Scree_width-kWidth*160, kHeight*25) height:kHeight*25 withg:kWidth*100];
+    Attachment*attView = [[Attachment alloc]initWithFrame:CGRectMake((Scree_width/2)-(Scree_width-kWidth*160)/2, zjlLabel.bottom, Scree_width-kWidth*160, kHeight*25) ];
     [topView addSubview:attView];
     for (int i = 0; i<oneAry.count; i++) {
         NSString *str = [[NSString alloc]init];
@@ -570,7 +570,7 @@ NSUInteger rsw;
         [_buttonAry addObject:_button.ZWbutton];
         [topView addSubview:_button];
     }
-    Attachment *attView1 = [[Attachment alloc]initWithFrame:CGRectMake(((Scree_width/2)-(Scree_width-kWidth*160)/2+(Scree_width-kWidth*160)/3*2)-(kWidth*260)/2, attView.bottom+kHeight*170, kWidth*280, kHeight*25) height:kHeight*25 withg:kWidth*100];
+    Attachment *attView1 = [[Attachment alloc]initWithFrame:CGRectMake(((Scree_width/2)-(Scree_width-kWidth*160)/2+(Scree_width-kWidth*160)/3*2)-(kWidth*260)/2, attView.bottom+kHeight*170, kWidth*280, kHeight*25) ];
     [topView addSubview:attView1];
     NSArray *rightThreeLabelAry = [[NSArray alloc]initWithObjects:@"客服经理",@"物流经理",@"财务经理", nil];
     NSArray *rightThreeAry = [[NSArray alloc]initWithObjects:@"12",@"13",@"15", nil];
@@ -600,7 +600,7 @@ NSUInteger rsw;
     [_buttonAry addObject:_button.ZWbutton];
     [topView addSubview:_button];
     
-    Attachment *attView2 = [[Attachment alloc]initWithFrame:CGRectMake(attView1.left-(kWidth*40)/2+(attView1.width/2)*1-kWidth*15-(kWidth*40)/2, attView1.bottom+kHeight*185, kWidth*80, kHeight*25) height:kHeight*25 withg:kWidth*100];
+    Attachment *attView2 = [[Attachment alloc]initWithFrame:CGRectMake(attView1.left-(kWidth*40)/2+(attView1.width/2)*1-kWidth*15-(kWidth*40)/2, attView1.bottom+kHeight*185, kWidth*80, kHeight*25)];
     [topView addSubview:attView2];
     
     NSArray *fourArry = [[NSArray alloc]initWithObjects:@"4",@"14", nil];
@@ -617,7 +617,7 @@ NSUInteger rsw;
         [_buttonAry addObject:_button.ZWbutton];
         [topView addSubview:_button];
     }
-    Attachment *attView3 = [[Attachment alloc]initWithFrame:CGRectMake(attView1.right-(kWidth*80)/2, attView1.bottom+kHeight*185, kWidth*80, kHeight*25) height:kHeight*25 withg:kWidth*100];
+    Attachment *attView3 = [[Attachment alloc]initWithFrame:CGRectMake(attView1.right-(kWidth*80)/2, attView1.bottom+kHeight*185, kWidth*80, kHeight*25)];
     [topView addSubview:attView3];
     
     NSArray *fiveArry = [[NSArray alloc]initWithObjects:@"16",@"17", nil];
@@ -635,7 +635,7 @@ NSUInteger rsw;
         [_buttonAry addObject:_button.ZWbutton];
         [topView addSubview:_button];
     }
-    //[self asklfjlw];
+    [self asklfjlw];
 }
 -(void)asklfjlw{
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPosition", KURLHeader];
@@ -645,100 +645,118 @@ NSUInteger rsw;
     NSDictionary *dic = [[NSDictionary alloc]init];
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
-        NSArray *array=[responseObject valueForKey:@"roleSetList"];
-        for (NSDictionary *dic in array) {
-            SetModel *model=[[SetModel alloc]init];
-            [model setValuesForKeysWithDictionary:dic];
-            [_lqzwnameAry addObject:model.NewName];
-            [_lqzwnumAry addObject:model.num];
-            int a = [model.num intValue];
-            switch (a) {
-                case 2:
-                    [self btnColorImage:_buttonAry[7] buttonImage:_imageAry[7]];
-                    _button.ZWbutton = _buttonAry[7];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 3:
-                    [self btnColorImage:_buttonAry[11] buttonImage:_imageAry[11]];
-                    _button.ZWbutton = _buttonAry[11];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 4:
-                    [self btnColorImage:_buttonAry[12] buttonImage:_imageAry[12]];
-                    _button.ZWbutton = _buttonAry[12];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 5:
-                    [self btnColorImage:_buttonAry[6] buttonImage:_imageAry[6]];
-                    _button.ZWbutton = _buttonAry[6];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 6:
-                    [self btnColorImage:_buttonAry[5] buttonImage:_imageAry[5]];
-                    _button.ZWbutton = _buttonAry[5];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 7:
-                    [self btnColorImage:_buttonAry[3] buttonImage:_imageAry[3]];
-                    _button.ZWbutton = _buttonAry[3];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 8:
-                    [self btnColorImage:_buttonAry[4] buttonImage:_imageAry[4]];
-                    _button.ZWbutton = _buttonAry[4];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 9:
-                    [self btnColorImage:_buttonAry[0] buttonImage:_imageAry[0]];
-                    _button.ZWbutton = _buttonAry[0];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 10:
-                    [self btnColorImage:_buttonAry[1] buttonImage:_imageAry[1]];
-                    _button.ZWbutton = _buttonAry[1];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 11:
-                    [self btnColorImage:_buttonAry[2] buttonImage:_imageAry[2]];
-                    _button.ZWbutton = _buttonAry[2];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 12:
-                    [self btnColorImage:_buttonAry[8] buttonImage:_imageAry[8]];
-                    _button.ZWbutton = _buttonAry[8];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 13:
-                    [self btnColorImage:_buttonAry[9] buttonImage:_imageAry[9]];
-                    _button.ZWbutton = _buttonAry[9];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 14:
-                    [self btnColorImage:_buttonAry[13] buttonImage:_imageAry[13]];
-                    _button.ZWbutton = _buttonAry[13];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 15:
-                    [self btnColorImage:_buttonAry[10] buttonImage:_imageAry[10]];
-                    _button.ZWbutton = _buttonAry[10];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 16:
-                    [self btnColorImage:_buttonAry[14] buttonImage:_imageAry[14]];
-                    _button.ZWbutton = _buttonAry[14];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                case 17:
-                    [self btnColorImage:_buttonAry[15] buttonImage:_imageAry[15]];
-                    _button.ZWbutton = _buttonAry[15];
-                    _button.ZWbutton.enabled = NO;
-                    break;
-                    
-                    
-                default:
-                    break;
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+             NSArray *array=[responseObject valueForKey:@"roleSetList"];
+            for (NSDictionary *dic in array) {
+                SetModel *model=[[SetModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_lqzwnameAry addObject:model.NewName];
+                [_lqzwnumAry addObject:model.num];
+                int a = [model.num intValue];
+                switch (a) {
+                    case 2:
+                        [self btnColorImage:_buttonAry[7] buttonImage:_imageAry[7]];
+                        _button.ZWbutton = _buttonAry[7];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 3:
+                        [self btnColorImage:_buttonAry[11] buttonImage:_imageAry[11]];
+                        _button.ZWbutton = _buttonAry[11];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 4:
+                        [self btnColorImage:_buttonAry[12] buttonImage:_imageAry[12]];
+                        _button.ZWbutton = _buttonAry[12];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 5:
+                        [self btnColorImage:_buttonAry[6] buttonImage:_imageAry[6]];
+                        _button.ZWbutton = _buttonAry[6];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 6:
+                        [self btnColorImage:_buttonAry[5] buttonImage:_imageAry[5]];
+                        _button.ZWbutton = _buttonAry[5];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 7:
+                        [self btnColorImage:_buttonAry[3] buttonImage:_imageAry[3]];
+                        _button.ZWbutton = _buttonAry[3];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 8:
+                        [self btnColorImage:_buttonAry[4] buttonImage:_imageAry[4]];
+                        _button.ZWbutton = _buttonAry[4];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 9:
+                        [self btnColorImage:_buttonAry[0] buttonImage:_imageAry[0]];
+                        _button.ZWbutton = _buttonAry[0];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 10:
+                        [self btnColorImage:_buttonAry[1] buttonImage:_imageAry[1]];
+                        _button.ZWbutton = _buttonAry[1];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 11:
+                        [self btnColorImage:_buttonAry[2] buttonImage:_imageAry[2]];
+                        _button.ZWbutton = _buttonAry[2];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 12:
+                        [self btnColorImage:_buttonAry[8] buttonImage:_imageAry[8]];
+                        _button.ZWbutton = _buttonAry[8];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 13:
+                        [self btnColorImage:_buttonAry[9] buttonImage:_imageAry[9]];
+                        _button.ZWbutton = _buttonAry[9];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 14:
+                        [self btnColorImage:_buttonAry[13] buttonImage:_imageAry[13]];
+                        _button.ZWbutton = _buttonAry[13];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 15:
+                        [self btnColorImage:_buttonAry[10] buttonImage:_imageAry[10]];
+                        _button.ZWbutton = _buttonAry[10];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 16:
+                        [self btnColorImage:_buttonAry[14] buttonImage:_imageAry[14]];
+                        _button.ZWbutton = _buttonAry[14];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                    case 17:
+                        [self btnColorImage:_buttonAry[15] buttonImage:_imageAry[15]];
+                        _button.ZWbutton = _buttonAry[15];
+                        _button.ZWbutton.enabled = NO;
+                        break;
+                        
+                        
+                    default:
+                        break;
+                }
             }
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+            
+        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求，未识别的设备" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
         }
+
+        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -1005,9 +1023,9 @@ NSUInteger rsw;
              make.top.mas_equalTo(_footerButton.mas_bottom).offset(10);
              make.left.mas_equalTo(self.view.mas_left).offset(0);
              make.right.mas_equalTo(self.view.mas_right).offset(0);
-             make.height.mas_offset(210);
+             make.height.mas_offset(kHeight*770);
          }];
-         
+#define 总经理
          ButtonView *zjlLabel = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*0];
          [zjlLabel.ZWbutton setTitle:_XGZJLStr forState:UIControlStateNormal];
          [_popFootCellView addSubview:zjlLabel];
@@ -1017,50 +1035,85 @@ NSUInteger rsw;
              make.height.mas_equalTo(kHeight*120);
              make.width.mas_equalTo(kWidth*45);
          }];
-         
-        Attachment *attView = [[Attachment alloc]initWithFrame:CGRectZero height:kHeight*25 withg:kWidth*100];
+#define 分叉线1
+        Attachment *attView = [[Attachment alloc]initWithFrame:CGRectZero ];
         [_popFootCellView addSubview:attView];
              [attView mas_makeConstraints:^(MASConstraintMaker *make) {
-                 if ((YWZJBOOL == NO && YWJLBOOL == NO)||
-                     (SCZJBOOL == NO && SCJLBOOL == NO)||
-                     (CWZJBOOL == NO && KFJLBOOL == NO)||
-                     (CWZJBOOL == NO && KFBOOL ==NO)||
-                     (CWZJBOOL == NO && WLJLBOOL == NO)||
-                     (CWZJBOOL == NO && WLBOOL == NO)||
-                     (CWZJBOOL == NO && CKBOOL == NO)||
-                     (CWZJBOOL == NO && CWJLBOOL == NO)||
-                     (CWZJBOOL == NO && KJBOOL == NO)||
-                     (CWZJBOOL == NO && CNBOOL == NO)||
-                     (WLJLBOOL == NO && WLBOOL == NO)||
-                     (WLJLBOOL == NO && CKBOOL == NO)||
-                     (CWJLBOOL == NO && KJBOOL == NO)||
-                     (CWJLBOOL == NO && CNBOOL == NO)||
-                     (YWJLBOOL == NO && YWBOOL == NO)||
-                     (SCJLBOOL == NO && MDBOOL == NO)||
-                     (KFJLBOOL == NO && KFBOOL == NO)) {
-                     make.width.mas_offset(1);
-                     make.height.mas_offset(1);
-                 }else if (XZGLBOOL == NO){
-                     if (_XZZWArry.count==2) {
-                         make.width.mas_offset(1);
-                         make.height.mas_offset(1);
+                if (_XZZWArry.count==2){
+                        make.width.mas_offset(1);
+                        make.height.mas_offset(1);
+                        make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                        make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                 }else if(XZGLBOOL == NO){
+                     if(XZGLBOOL == NO&&CWZJBOOL == NO&&SCZJBOOL == YES&&SCJLBOOL ==YES&&YWZJBOOL == YES&&YWJLBOOL == YES){
+                         make.width.mas_offset(kWidth*300);
+                         make.height.mas_offset(kHeight*25);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
                      }else{
                          make.left.mas_equalTo(self.view.mas_left).offset(kWidth*80);
                          make.right.mas_equalTo(self.view.mas_right).offset(-kWidth*80);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.height.mas_offset(kHeight*25);
                      }
                      
-                 }else{
-                     make.width.mas_offset(kWidth*420);
-                     make.height.mas_offset(kHeight*25);
+                 }else if(_XZZWArry.count == 3){
+                     if ((YWJLBOOL == NO &&YWBOOL == NO)||(SCJLBOOL == NO&& MDBOOL == NO)||(CWZJBOOL == NO&&KFJLBOOL == NO)||(CWZJBOOL == NO&&KFBOOL == NO)||(CWZJBOOL == NO&&WLJLBOOL == NO)||(CWZJBOOL == NO&&WLBOOL == NO)||(CWZJBOOL ==NO&&CKBOOL == NO)||(CWZJBOOL == NO&&CWJLBOOL == NO)||(CWZJBOOL == NO&&KJBOOL == NO)||(CWZJBOOL == NO&&CNBOOL == NO)||(KFJLBOOL == NO&&KFBOOL ==NO)||(WLJLBOOL == NO&&WLBOOL == NO)||(WLJLBOOL == NO &&CKBOOL==NO)||(CWJLBOOL == NO&&KJBOOL == NO)||(CWJLBOOL == NO&&CNBOOL == NO)) {
+                         make.width.mas_offset(1);//
+                         make.height.mas_offset(1);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                     }else{
+                         make.width.mas_offset(kWidth*260);
+                         make.height.mas_offset(kHeight*25);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                     }
+                 } else if (_XZZWArry.count == 4){
+                     if ((CWZJBOOL==NO&&((KFJLBOOL==NO&&KFBOOL==NO)||
+                                         (WLJLBOOL==NO&&WLBOOL==NO)||
+                                         (WLJLBOOL==NO&&CKBOOL==NO)||
+                                         (CWJLBOOL==NO&&KJBOOL==NO)||
+                                         (CWJLBOOL==NO&&CNBOOL==NO)))||(YWZJBOOL==NO&&YWJLBOOL==NO)||(SCZJBOOL==NO&&SCJLBOOL==NO)||
+                         (YWJLBOOL==NO&&YWZJBOOL==NO&&YWBOOL==NO)||(SCZJBOOL==NO&&SCJLBOOL==NO&&MDBOOL==NO)) {
+                         make.width.mas_offset(1);
+                         make.height.mas_offset(1);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                     }else if(YWZJBOOL==YES&&SCZJBOOL==YES&&YWJLBOOL==YES&&YWBOOL==YES&&SCJLBOOL==YES&&MDBOOL==YES&&XZGLBOOL==YES){
+                         make.width.mas_offset(kWidth*1);
+                         make.height.mas_offset(kHeight*1);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                         
+                     }else{
+                         make.width.mas_offset(kWidth*300);
+                         make.height.mas_offset(kHeight*25);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                     }
+                 }else if(YWZJBOOL==YES&&SCZJBOOL==YES&&YWJLBOOL==YES&&YWBOOL==YES&&SCJLBOOL==YES&&MDBOOL==YES&&XZGLBOOL==YES){
+                     make.width.mas_offset(kWidth*1);
+                     make.height.mas_offset(kHeight*1);
+                     make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                     
                  }
-                 make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
-                 make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                 else{
+                     make.width.mas_offset(kWidth*300);
+                     make.height.mas_offset(kHeight*25);
+                     make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                 }
+                 
              }];
-             _button = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*25];
-             [_popFootCellView addSubview:_button];
-         
-             [_button mas_makeConstraints:^(MASConstraintMaker *make) {
-                 if (YWZJBOOL == NO) {//选中
+#define 业务总监
+        ButtonView * ywzjbutton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*25];
+             [_popFootCellView addSubview:ywzjbutton];
+            [ywzjbutton.ZWbutton setTitle:_YWZJStr forState:UIControlStateNormal];
+          if (YWZJBOOL == NO) {//选中
+             [ywzjbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+                
                      if (SCZJBOOL == NO ||SCJLBOOL == NO ||CWZJBOOL == NO|| XZGLBOOL == NO||KFJLBOOL == NO||WLJLBOOL == NO ||CWJLBOOL == NO ||KFBOOL == NO||WLBOOL == NO || CKBOOL == NO||KJBOOL == NO||CNBOOL == NO) {
                          make.top.mas_equalTo(attView.mas_bottom).offset(0);
                          make.centerX.mas_equalTo(attView.mas_left).offset(0);
@@ -1069,17 +1122,426 @@ NSUInteger rsw;
                          make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
                      }
                      make.width.mas_equalTo(kWidth*45);
-                     make.height.mas_equalTo(kHeight*140);
+                     make.height.mas_equalTo(kHeight*160);
+                 
+             }];
+          }else{
+              //没选中
+              [ywzjbutton removeFromSuperview];
+          }
+#define 业务经理
+      ButtonView*   ywjlbutton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*70];
+         [_popFootCellView addSubview:ywjlbutton];
+         [ywjlbutton.ZWbutton setTitle:_YWJLStr forState:UIControlStateNormal];
+         if (YWJLBOOL == NO) {
+             [ywjlbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 if (YWZJBOOL == NO) {
+                     make.top.mas_equalTo(ywzjbutton.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(ywzjbutton.mas_centerX).offset(0);
+                 }else if(_XZZWArry.count==3){
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
                  }else{
-                     //没选中
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(attView.mas_left).offset(0);
+                }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*210);
+             }];
+             
+         }else{
+             [ywjlbutton removeFromSuperview];
+         }
+#define 业务
+         ButtonView *ywbutton =[[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*70];
+         [_popFootCellView addSubview:ywbutton];
+         [ywbutton.ZWbutton setTitle:_YWStr forState:UIControlStateNormal];
+         if (YWBOOL == NO) {
+             [ywbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(ywjlbutton.mas_bottom).offset(0);
+                 make.left.mas_equalTo(ywjlbutton.mas_left).offset(0);
+                 make.right.mas_equalTo(ywjlbutton.mas_right).offset(0);
+                 make.height.mas_offset(kHeight*180);
+             }];
+         }else{
+             [ywbutton removeFromSuperview];
+         }
+#define 市场总监
+         ButtonView *sczjButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*25];
+         [_popFootCellView addSubview:sczjButton];
+         [sczjButton.ZWbutton setTitle:_SCZJStr forState:UIControlStateNormal];
+         if (SCZJBOOL == NO) {
+             [sczjButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                 make.height.mas_offset(kHeight*160);
+                 make.width.mas_offset(kWidth*45);
+                 if (YWZJBOOL == YES&&YWJLBOOL == YES) {
+                     make.centerX.mas_equalTo(attView.mas_left).offset(0);
+                 }else if (CWZJBOOL==YES&&KFJLBOOL==YES&&WLJLBOOL==YES&&CWJLBOOL==YES&&KFBOOL==YES&&WLBOOL==YES&&CKBOOL==YES&&KJBOOL==YES&&CNBOOL==YES&&XZGLBOOL==YES){
+                     make.centerX.mas_equalTo(attView.mas_right).offset(0);
+                 }
+                 else{
+                     make.left.mas_equalTo(attView.mas_left).offset(kWidth*70);
                  }
              }];
-         
-         
+         }else{
+             [sczjButton removeFromSuperview];
+         }
+#define 市场经理
+         ButtonView *scjlButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*70];
+         [_popFootCellView addSubview:scjlButton];
+         [scjlButton.ZWbutton setTitle:_SCJLStr forState:UIControlStateNormal];
+         if (SCJLBOOL == NO) {
+             [scjlButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 if (SCZJBOOL == NO) {
+                     make.top.mas_equalTo(sczjButton.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(sczjButton.mas_centerX).offset(0);
+                 }else if(SCZJBOOL == YES && YWZJBOOL == YES && YWJLBOOL == YES){
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(attView.mas_left).offset(0);
+                 }else if ((YWZJBOOL == NO || YWJLBOOL == NO)&&SCZJBOOL&&(CWZJBOOL==NO||KFJLBOOL==NO||WLJLBOOL==NO||CWJLBOOL==NO||KFBOOL==NO||WLBOOL==NO||CKBOOL==NO||KJBOOL==NO||CNBOOL==NO||XZGLBOOL==NO)) {
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.left.mas_equalTo(attView.mas_left).offset(kWidth*70);
+                 }else if (CWZJBOOL==YES&&KFJLBOOL==YES&&WLJLBOOL==YES&&CWJLBOOL==YES&&KFBOOL==YES&&WLBOOL==YES&&CKBOOL==YES&&KJBOOL==YES&&CNBOOL==YES&&XZGLBOOL==YES){
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(attView.mas_right).offset(0);
+                 }
+                 make.height.mas_offset(kHeight*210);
+                 make.width.mas_offset(kWidth*45);
+             }];
+         }else{
+             [scjlButton removeFromSuperview];
+         }
+#define 美导
+         ButtonView *mdButton =[[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*70];
+         [_popFootCellView addSubview:mdButton];
+         [mdButton.ZWbutton setTitle:_MDStr forState:UIControlStateNormal];
+         if (MDBOOL == NO) {
+             [mdButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(scjlButton.mas_bottom).offset(0);
+                 make.left.mas_equalTo(scjlButton.mas_left).offset(0);
+                 make.height.mas_offset(kHeight*180);
+                 make.width.mas_equalTo(kWidth*45);
+             }];
+         }else{
+             [mdButton removeFromSuperview];
+         }
+#define 财务总监
+         ButtonView *cwzjbutton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*25];
+         [_popFootCellView addSubview:cwzjbutton];
+         [cwzjbutton.ZWbutton setTitle:_CWZJStr forState:UIControlStateNormal];
+         if (CWZJBOOL == NO) {
+             [cwzjbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*160);//
+                 if ((XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == NO)||
+                     (XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == YES&&YWJLBOOL == NO&&SCJLBOOL == NO) ||
+                     (XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == YES&&YWJLBOOL == YES&&SCJLBOOL == NO)||
+                     (XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == YES&&YWJLBOOL == NO&&SCJLBOOL == YES)||
+                     (XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == YES&&YWJLBOOL == YES&&SCJLBOOL == YES)||
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == YES&&YWJLBOOL == NO&&SCJLBOOL == NO)||
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == YES&&YWJLBOOL == NO&&SCJLBOOL == YES)||
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == YES&&YWJLBOOL == YES&&SCJLBOOL == NO)||
 
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == NO&&YWJLBOOL == NO&&SCJLBOOL == NO)||
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == NO&&YWJLBOOL == YES&&SCJLBOOL == NO)||
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == NO&&YWJLBOOL == NO&&SCJLBOOL == YES)||
+                     (XZGLBOOL == YES&&YWZJBOOL == YES&&SCZJBOOL == NO&&YWJLBOOL == YES&&SCJLBOOL == YES)
+                     ) {
+                     make.centerX.mas_equalTo(attView.mas_right).offset(0);
+                 }else if(YWZJBOOL == YES&&YWJLBOOL == YES&&SCZJBOOL == YES&& SCJLBOOL == YES &&XZGLBOOL == NO){
+                     make.centerX.mas_equalTo(attView.mas_left).offset(0);
+                 }else if((XZGLBOOL == NO&&YWZJBOOL == NO&&SCZJBOOL ==NO)||
+                          (XZGLBOOL == NO&&YWZJBOOL == NO&&SCZJBOOL ==YES&&SCJLBOOL == NO)||
+                          (XZGLBOOL == NO&&YWZJBOOL ==YES&&SCZJBOOL ==NO&&YWJLBOOL == NO)||
+                          (XZGLBOOL == NO&&YWZJBOOL ==YES&&SCZJBOOL ==YES&&YWJLBOOL ==NO&&SCJLBOOL==NO)){
+                     make.centerX.mas_equalTo(attView.mas_right).offset(-(Scree_width-kWidth*160)/3);
+                 }else if((XZGLBOOL == NO&&YWZJBOOL == NO&&YWJLBOOL == NO&&SCZJBOOL == YES &&SCJLBOOL ==YES)||
+                          (XZGLBOOL == NO&&YWZJBOOL==YES&&YWJLBOOL == NO&&SCZJBOOL == YES&& SCJLBOOL == YES)||
+                          (XZGLBOOL == NO&&YWZJBOOL==NO&&YWJLBOOL == YES&&SCZJBOOL == YES&& SCJLBOOL == YES)||
+                          (XZGLBOOL == NO&&YWZJBOOL == YES&&YWJLBOOL == YES&& SCZJBOOL == NO&&SCJLBOOL == YES)||
+                          (XZGLBOOL == NO&&YWZJBOOL == YES&&YWJLBOOL == YES&& SCZJBOOL == NO&&SCJLBOOL == NO)||
+                          (XZGLBOOL == NO&&YWZJBOOL == YES&&YWJLBOOL == YES&& SCZJBOOL == YES&&SCJLBOOL== NO)){
+                     make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
+                 }else if ((_XZZWArry.count ==2)||(YWZJBOOL==YES&&SCZJBOOL==YES&&YWJLBOOL==YES&&SCJLBOOL==YES&&XZGLBOOL==YES)){
+                     make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                 }
+             }];
+         }else{
+             [cwzjbutton removeFromSuperview];
+         }
+#define 行政管理
+         ButtonView *xzglButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*25];
+         [_popFootCellView addSubview:xzglButton];
+         [xzglButton.ZWbutton setTitle:_XZGLLStr forState:UIControlStateNormal];
+         if (XZGLBOOL == NO) {
+             [xzglButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                 
+                 make.height.mas_offset(kHeight*160);
+                 make.width.mas_offset(kWidth*45);
+                 if (_XZZWArry.count == 2) {
+                     make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
+                 }
+                 else{
+                     make.centerX.mas_equalTo(attView.mas_right).offset(0);
+                 }
+             }];
+         }else{
+             [xzglButton removeFromSuperview];
+         }
+#define 分叉线2
+         Attachment *attachView = [[Attachment alloc]initWithFrame:CGRectZero];
+         [_popFootCellView addSubview:attachView];
+         [attachView mas_makeConstraints:^(MASConstraintMaker *make) {
+             if (CWZJBOOL==NO) {
+                 make.top.mas_equalTo(cwzjbutton.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(cwzjbutton.mas_centerX).offset(0);
+             }else if ((YWZJBOOL==NO||YWJLBOOL==NO)&&(SCZJBOOL==NO||SCJLBOOL==NO)&&XZGLBOOL==NO){
+                 make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(attView.mas_centerX).offset(kWidth*70);
+             }else if (XZGLBOOL==YES){
+                 if ((YWZJBOOL==NO||YWJLBOOL==NO)||(SCZJBOOL==NO||SCJLBOOL==NO)) {
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(attView.mas_right).offset(0);
+                 }else{
+                     make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                 }
+             }else if (XZGLBOOL==NO&&(YWZJBOOL==NO||SCZJBOOL==NO||YWJLBOOL==NO||SCJLBOOL==NO)){
+                 make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
+             }else if(XZGLBOOL==NO&&YWZJBOOL==YES&&YWJLBOOL==YES&&SCZJBOOL==YES&&SCJLBOOL==YES){
+                 make.top.mas_equalTo(attView.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(attView.mas_left).offset(0);
+             }
+             if (_kfwlcwAry.count==1) {
+                 make.width.mas_offset(1);
+                 make.height.mas_offset(1);
+             }else if (_kfwlcwAry.count==2){
+                 if ((KFBOOL==NO&&KFJLBOOL==NO)||(WLJLBOOL==NO&&WLBOOL==NO)||(WLJLBOOL==NO&&CKBOOL==NO)||(CWJLBOOL==NO&&KJBOOL==NO)||(CWJLBOOL==NO&&CNBOOL==NO)) {
+                     make.width.mas_offset(1);
+                     make.height.mas_offset(1);
+                 }
+                 else{
+                     make.width.mas_offset(kWidth*200);
+                     make.height.mas_offset(kHeight*25);
+                 }
+             }else if ((KFJLBOOL==NO||KFBOOL==NO)&&(WLJLBOOL==NO||WLBOOL==NO||CKBOOL==NO)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)){
+                 make.width.mas_offset(kWidth*260);
+                 make.height.mas_offset(kHeight*25);
+             }else  if(_kfwlcwAry.count>=4){
+                 make.width.mas_offset(kWidth*260);
+                 make.height.mas_offset(kHeight*25);
+             }else{
+                 make.width.mas_offset(kWidth*1);
+                 make.height.mas_offset(kHeight*1);
+             }
+         }];
+#define  客服经理
+         ButtonView *kfjlButton=[[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:kfjlButton];
+         [kfjlButton.ZWbutton setTitle:_KFJLStr forState:UIControlStateNormal];
+         if (KFJLBOOL==NO) {
+             [kfjlButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                 if (WLJLBOOL==YES&&WLBOOL==YES&&CKBOOL==YES&&CWJLBOOL==YES&&KJBOOL==YES&&CNBOOL==YES) {
+                      make.centerX.mas_equalTo(attachView.mas_centerX).offset(0);
+                 }else{
+                  make.centerX.mas_equalTo(attachView.mas_left).offset(0);
+                 }
+                
+                 make.height.mas_equalTo(kHeight*185);
+                 make.width.mas_equalTo(kWidth*45);
+             }];
+            
+         }else{
+             [kfjlButton removeFromSuperview];
+         }
+#define 客服
+         ButtonView*kfButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*70];
+         [_popFootCellView addSubview:kfButton];
+         [kfButton.ZWbutton setTitle:_KFStr forState:UIControlStateNormal];
+         if (KFBOOL == NO) {
+             [kfButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 if (KFJLBOOL==NO) {
+                     make.top.mas_equalTo(kfjlButton.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(kfjlButton.mas_centerX).offset(0);
+                 }else{
+                     make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                     make.centerX.mas_equalTo(attachView.mas_left).offset(0);
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*180);
+                 
+             }];
+         }else{
+             [kfButton removeFromSuperview];
+         }
+#define 物流经理
+         ButtonView *wljlButton =[[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:wljlButton];
+         [wljlButton.ZWbutton setTitle:_WLJLStr forState:UIControlStateNormal];
+         if (WLJLBOOL==NO) {
+             [wljlButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                 if ((KFJLBOOL==YES&&KFBOOL==YES)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)) {
+                     make.centerX.mas_equalTo(attachView.mas_left).offset(0);
+                 }else if((KFJLBOOL==NO||KFBOOL==NO)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)){
+                     make.centerX.mas_equalTo(attachView.mas_centerX).offset(-kWidth*30);
+                 }else if((KFJLBOOL==NO||KFBOOL==NO)&&(CWJLBOOL==YES&&KJBOOL==YES&&CNBOOL==YES)){
+                     make.centerX.mas_equalTo(attachView.mas_right).offset(0);
+                 }else if (KFJLBOOL==YES&&KFBOOL==YES&&CWJLBOOL==YES&&KJBOOL==YES&&CNBOOL==YES){
+                     make.centerX.mas_equalTo(attachView.mas_centerX).offset(0);
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*185);
+             }];
+
+         }else{
+             [wljlButton removeFromSuperview];
+         }
+#define 分叉3
+         Attachment *attView3 = [[Attachment alloc]initWithFrame:CGRectZero];
+         [_popFootCellView addSubview:attView3];
+         [attView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+             if (WLJLBOOL==NO) {
+                 make.top.mas_equalTo(wljlButton.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(wljlButton.mas_centerX).offset(0);
+             }else{
+                 make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                 if ((KFJLBOOL==NO||KFBOOL==NO)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)) {
+                     make.centerX.mas_equalTo(attachView.mas_centerX).offset(-kWidth*30);
+                 }else if((KFJLBOOL==YES&&KFBOOL==YES)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)){
+                     make.centerX.mas_equalTo(attachView.mas_left).offset(kWidth*0);
+                 }else if((KFJLBOOL==NO||KFBOOL==NO)&&(CWJLBOOL==YES&&KJBOOL==YES&&CNBOOL==YES)){
+                     make.centerX.mas_equalTo(attachView.mas_right).offset(kWidth*0);
+                 }
+             }
+             if (WLBOOL==NO&&CKBOOL==NO) {
+                 make.width.mas_offset(kWidth*80);
+                 make.height.mas_offset(kHeight*25);
+             }else if(WLBOOL==YES&&CKBOOL==YES){
+                 make.width.mas_offset(0);
+                 make.height.mas_offset(0);
+             }else{
+                 make.width.mas_offset(1);
+                 make.height.mas_offset(1);
+             }
+         }];
+#define 物流
+         ButtonView*wlButton =[[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:wlButton];
+         [wlButton.ZWbutton setTitle:_WLStr forState:UIControlStateNormal];
+         if (WLBOOL==NO) {
+             [wlButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView3.mas_bottom).offset(0);
+                 if (CKBOOL==NO) {
+                     make.centerX.mas_equalTo(attView3.mas_left).offset(0);
+                 }else{
+                     make.centerX.mas_equalTo(attView3.mas_centerX).offset(0);
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*155);
+             }];
+         }else{
+             [wlButton removeFromSuperview];
+         }
+#define 仓库
+         ButtonView *ckButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:ckButton];
+         [ckButton.ZWbutton setTitle:_CKStr forState:UIControlStateNormal];
+         if (CKBOOL==NO) {
+             [ckButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView3.mas_bottom).offset(0);
+                 if (WLBOOL==NO) {
+                     make.centerX.mas_equalTo(attView3.mas_right).offset(0);
+                 }else{
+                     make.centerX.mas_equalTo(attView3.mas_centerX).offset(0);
+                     
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*155);
+             }];
+         }else{
+             [ckButton removeFromSuperview];
+         }
          
-     }
-        else{
+#define 财务经理
+         ButtonView *cwjlButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:cwjlButton];
+         [cwjlButton.ZWbutton setTitle:_CWJLStr forState:UIControlStateNormal];
+         if (CWJLBOOL == NO) {
+             [cwjlButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                 if (WLJLBOOL==YES&&WLBOOL==YES&&CKBOOL==YES&&KFJLBOOL==YES&&KFBOOL==YES) {
+                     make.centerX.mas_equalTo(attachView.mas_centerX).offset(0);
+                 }else{
+                     make.centerX.mas_equalTo(attachView.mas_right).offset(0);
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*185);
+             }];
+         }else{
+             [cwjlButton removeFromSuperview];
+         }
+#define 分叉4
+         Attachment *attView4 = [[Attachment alloc]initWithFrame:CGRectZero];
+         [_popFootCellView addSubview:attView4];
+         [attView4 mas_makeConstraints:^(MASConstraintMaker *make) {
+             if (CWJLBOOL==NO) {
+                 make.top.mas_equalTo(cwjlButton.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(cwjlButton.mas_centerX).offset(0);
+             }else if (KFJLBOOL==NO||KFBOOL==NO||WLJLBOOL==NO||WLBOOL==NO||CKBOOL==NO){
+                 make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(attachView.mas_right).offset(0);
+             }
+             if (KJBOOL==NO&&CNBOOL==NO) {
+                 make.width.mas_offset(kWidth*80);
+                 make.height.mas_offset(kHeight*25);
+             }else if((KJBOOL==NO&&CNBOOL==YES)||(KJBOOL==YES&&CNBOOL==NO)||(KJBOOL==YES&&CNBOOL==YES)){
+                 make.width.mas_offset(1);
+                 make.height.mas_offset(1);
+             }
+         }];
+#define 会计
+         ButtonView *kjButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:kjButton];
+         [kjButton.ZWbutton setTitle:_KJStr forState:UIControlStateNormal];
+         if (KJBOOL==NO) {
+             [kjButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView4.mas_bottom).offset(0);
+                 if (CNBOOL==NO) {
+                     make.centerX.mas_equalTo(attView4.mas_left).offset(0);
+                 }else{
+                     make.centerX.mas_equalTo(attView4.mas_centerX).offset(0);
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*155);
+             }];
+         }else{
+             [kjButton removeFromSuperview];
+         }
+#define 出纳
+         ButtonView*cnButton = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*45];
+         [_popFootCellView addSubview:cnButton];
+         [cnButton.ZWbutton setTitle:_CNStr forState:UIControlStateNormal];
+         if (CNBOOL==NO) {
+             [cnButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.top.mas_equalTo(attView4.mas_bottom).offset(0);
+                 if (KJBOOL==NO) {
+                     make.centerX.mas_equalTo(attView4.mas_right).offset(0);
+                 }else{
+                     make.centerX.mas_equalTo(attView4.mas_centerX).offset(0);
+                 }
+                 make.width.mas_offset(kWidth*45);
+                 make.height.mas_offset(kHeight*155);
+             }];
+         }else{
+             [cnButton removeFromSuperview];
+         }
+     }else{
          [_popFootCellView removeFromSuperview];
      }
 }

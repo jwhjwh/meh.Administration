@@ -11,17 +11,17 @@
 @implementation Attachment
 
 
-- (instancetype)initWithFrame:(CGRect)frame height:(CGFloat)height withg:(CGFloat)withg
+- (instancetype)initWithFrame:(CGRect)frame 
 {
     self = [super initWithFrame:frame];
     if (self) {
         //布局子视图
         //self.backgroundColor = [UIColor whiteColor];
-        [self subViewUI:height with:withg];
+        [self subViewUI];
     }
     return self;
 }
--(void)subViewUI:(CGFloat)height with:(CGFloat)with{
+-(void)subViewUI{
     UIView *view1 = [[UIView alloc]init];
     view1.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:view1];
