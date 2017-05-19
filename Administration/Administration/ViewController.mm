@@ -160,7 +160,8 @@
     _NameText.keyboardType = UIKeyboardTypeNumberPad;//键盘格式
     _NameText.backgroundColor = [UIColor clearColor];
     _NameText.placeholder = @"用户名";
-    [_NameText setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+   placeholder(_NameText);
+
     [_NameText addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:_NameText];
     [_NameText
@@ -196,7 +197,8 @@
     _PassText.delegate = self;
     _PassText.backgroundColor = [UIColor clearColor];
     _PassText.placeholder = @"用户密码";
-    [_PassText setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+    placeholder(_PassText);
+
     [self.view addSubview:_PassText];
     [_PassText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_suoziView.mas_top).offset(0);
@@ -230,7 +232,7 @@
     _valiText.delegate = self;
     _valiText.backgroundColor = [UIColor clearColor];
     _valiText.placeholder = @"识别码";
-    [_valiText setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+    placeholder(_valiText);
     [self.view addSubview:_valiText];
     [_valiText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_shibieView.mas_top).offset(0);
@@ -238,7 +240,6 @@
         make.right.mas_equalTo(_PassText.mas_right).offset(0);
         make.height.mas_equalTo(32);
     }];
-    
     //第三条线
     _view3 = [[UIView alloc]init];
     _view3.backgroundColor = [UIColor RGBview];
@@ -370,12 +371,24 @@
                                                 
                                                 }];
             });
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时请重新登录" andInterval:1.0];
         }
       
     } failure:^(NSError *error) {

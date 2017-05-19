@@ -110,6 +110,7 @@
     if (!_oldField) {
         _oldField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(60), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(355), ADAPTATION_HEIGHT(40))];
         _oldField.placeholder = @"6-16个字符，区分大小写";
+         placeholder(_oldField);
         _oldField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _oldField.autocapitalizationType = UITextAutocapitalizationTypeNone; //首字母是否大写
         _oldField.secureTextEntry = YES; //安全输入
@@ -123,6 +124,7 @@
         
         _oneField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(60), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(355), ADAPTATION_HEIGHT(40))];
         _oneField.placeholder = @"6-16个字符，区分大小写";
+         placeholder(_oneField);
         _oneField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _oneField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _oneField.secureTextEntry = YES;
@@ -136,6 +138,7 @@
     if (!_twoField) {
         _twoField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(60), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(355), ADAPTATION_HEIGHT(40))];
         _twoField.placeholder = @"6-16个字符，区分大小写";
+             placeholder(_twoField);
         _twoField.clearButtonMode = UITextFieldViewModeWhileEditing; //编辑时出现 ×
         _twoField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _twoField.secureTextEntry = YES;

@@ -35,6 +35,7 @@
     _textField.textAlignment = NSTextAlignmentCenter;
     _textField.backgroundColor =[UIColor whiteColor];
     _textField.placeholder = @"请输入品牌部名称";
+      placeholder(_textField);
     _textField.layer.cornerRadius=5;
     [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:_textField];
@@ -63,18 +64,23 @@
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
             
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
         }
-        
     }failure:^(NSError *error) {
         
     }view:self.view MBPro:YES];

@@ -133,6 +133,7 @@
     [self.headerView addSubview:label];
     _textField=[[UITextField alloc]init];
     _textField.placeholder = @"请输入品牌名称";
+       placeholder(_textField);
     [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
     [self.headerView addSubview:_textField];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -219,15 +220,23 @@
                          _nameBarn = nil;
                          _textField.text=@"";
                          _textField.placeholder = @"请输入品牌名称";
+                         placeholder(_textField);
                          _branarr=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
                          _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
                          _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
                          _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
                         [_collectionView reloadData];
                         self.blockStr();
-                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                        
+                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                        alertView.resultIndex = ^(NSInteger index){
+                            ViewController *loginVC = [[ViewController alloc] init];
+                            UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                            [self presentViewController:loginNavC animated:YES completion:nil];
+                        };
+                        [alertView showMKPAlertView];
+                    }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                         alertView.resultIndex = ^(NSInteger index){
                             ViewController *loginVC = [[ViewController alloc] init];
                             UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];

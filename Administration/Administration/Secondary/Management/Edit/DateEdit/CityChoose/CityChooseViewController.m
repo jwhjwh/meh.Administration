@@ -129,6 +129,7 @@
         _cityField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _cityField.adjustsFontSizeToFitWidth = YES;
         _cityField.placeholder =@"详细地址";
+         placeholder(_cityField);
         [cell addSubview:_cityField];
 
     }

@@ -90,6 +90,7 @@
     textfield.font =[UIFont systemFontOfSize:15];
     textfield.textAlignment = NSTextAlignmentCenter;
     textfield.placeholder =@"请输入美导类别名称";
+             placeholder(textfield);
     [centerView addSubview:textfield];
     
     

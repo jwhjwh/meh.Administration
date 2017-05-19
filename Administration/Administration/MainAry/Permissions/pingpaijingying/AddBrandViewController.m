@@ -52,6 +52,7 @@
     [_imageV addGestureRecognizer:tap];
     _textField=[[UITextField alloc]init];
     _textField.placeholder=@"请输入品牌名称";
+     placeholder(_textField);
     _textField.borderStyle=UITextBorderStyleLine;
     _textField.layer.borderColor = GetColor(230, 230, 230, 1).CGColor;
     _textField.layer.borderWidth = 1.0;

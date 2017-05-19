@@ -167,6 +167,7 @@
             idNoField.clearButtonMode = UITextFieldViewModeWhileEditing;
             idNoField.adjustsFontSizeToFitWidth = YES;
             idNoField.placeholder =@"必填";
+             placeholder(idNoField);
             idNoField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
             _IdNo = idNoField.text;
             [idNoField addTarget:self action:@selector(idNoFieldText:) forControlEvents:UIControlEventEditingChanged];
