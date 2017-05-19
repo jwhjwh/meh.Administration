@@ -208,6 +208,7 @@
         [_codeField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
         _codeField.tag = row;
         _codeField.placeholder =_HSarr[indexPath.row];
+              placeholder(_codeField);
         [cell addSubview:_codeField];
         
         if ([cell.textLabel.text isEqualToString:@"手机号"]) {
@@ -233,6 +234,7 @@
         _PassField.adjustsFontSizeToFitWidth = YES;
         [_PassField addTarget:self action:@selector(PassFieldWithText:) forControlEvents:UIControlEventEditingChanged];
         _PassField.placeholder =_HSarr[indexPath.row];
+              placeholder(_PassField);
         _PassField.secureTextEntry= YES;
         [cell addSubview:_PassField];
        
@@ -244,6 +246,7 @@
         _QRPassField.adjustsFontSizeToFitWidth = YES;
         [_QRPassField addTarget:self action:@selector(PassFieldWithText:) forControlEvents:UIControlEventEditingChanged];
         _QRPassField.placeholder =_HSarr[indexPath.row];
+          placeholder(_QRPassField);
         _QRPassField.secureTextEntry = YES;
         [cell addSubview:_QRPassField];
     }

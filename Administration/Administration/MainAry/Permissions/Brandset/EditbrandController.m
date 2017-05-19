@@ -46,7 +46,6 @@
 @property (strong,nonatomic) NSMutableArray *ManaAry;
 //员工
 @property (strong,nonatomic) NSMutableArray *EmisAry;
-
 //名称
 @property (nonatomic,retain) NSString *nameBarn;
 
@@ -58,9 +57,19 @@
 //人员字符串
 @property (nonatomic,retain) NSString *mid;
 
+
+@property (nonatomic,retain) NSString *ident;
 @end
 
 @implementation EditbrandController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([self.ident isEqualToString:@"1"]) {
+   
+        [self getNetworkData];
+        self.ident=@"0";
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"编辑";
@@ -498,8 +507,16 @@
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有品牌信息" andInterval:1.0];
             
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -524,7 +541,7 @@
             [_branarr addObject:model];
         }
         
-        [_collectionView reloadData];
+       _ident=@"1";
     };
     [self.navigationController pushViewController:multiCV animated:YES];
 }
@@ -532,6 +549,7 @@
     DirectorController *multiCV=[[DirectorController alloc]init];
     multiCV.str=str;
     multiCV.Num=1;
+    multiCV.Numstr=@"1";
     multiCV.BarandID=_BarandID;
     multiCV.blockArray =^(NSMutableArray *arr){
         _paleAry=[NSMutableArray array];
@@ -550,6 +568,7 @@
     DirectorController *multiCV=[[DirectorController alloc]init];
     multiCV.str=str;
     multiCV.Num=1;
+    multiCV.Numstr=@"1";
     multiCV.BarandID=_BarandID;
     multiCV.blockArray =^(NSMutableArray *arr){
         _ManaAry=[NSMutableArray array];
@@ -566,6 +585,7 @@
     EmistController *multiCV=[[EmistController alloc]init];
     multiCV.str=@"添加员工";
     multiCV.num=1;
+    multiCV.Numstr=@"1";
     multiCV.BarandID=_BarandID;
     multiCV.blockArr =^(NSMutableArray *arr){
         _EmisAry=[NSMutableArray array];
@@ -573,7 +593,7 @@
         for (DirtmsnaModel *model in _DrAry) {
             [_EmisAry addObject:model];
         }
-        [_collectionView reloadData];
+         _ident=@"1";
     };
     
     [self.navigationController pushViewController:multiCV animated:YES];
@@ -634,8 +654,16 @@
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:string andInterval:1.0];
             
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];

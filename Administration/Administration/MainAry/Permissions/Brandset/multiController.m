@@ -339,8 +339,16 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
             [_branTableView addEmptyViewWithImageName:@"" title:@"暂无经营品牌信息，添加几条吧～～" Size:20.0];
             _branTableView.emptyView.hidden = NO;
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -348,7 +356,6 @@
             };
             [alertView showMKPAlertView];
         }
-        
     }failure:^(NSError *error) {
         
     }view:self.view MBPro:YES];
@@ -366,10 +373,22 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加品牌成功" andInterval:1.0];
             self.blockArr(array);
+            dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 1.3 * NSEC_PER_SEC);
+            dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加品牌失败" andInterval:1.0];
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];

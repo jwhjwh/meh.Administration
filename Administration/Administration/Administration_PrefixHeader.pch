@@ -113,7 +113,7 @@ object:nil];
 #define  GetColor(RED,GREEN,BLUE,ALPHAl) [UIColor colorWithRed:RED / 255.0 green:GREEN / 255.0 blue:BLUE / 255.0 alpha:ALPHAl]
 
 
-
+#define placeholder(textfild)      [textfild setValue:[UIColor         lightGrayColor]forKeyPath:@"_placeholderLabel.textColor"]
 
 
 

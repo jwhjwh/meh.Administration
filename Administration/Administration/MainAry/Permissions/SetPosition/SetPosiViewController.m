@@ -222,6 +222,7 @@ NSUInteger rsw;
         }
     }
     _xgtextFie.placeholder =_XZZWArry[indexPath.row];
+        placeholder(self.xgtextFie);
     _xgtextFie.font = [UIFont boldSystemFontOfSize:13.0f];
     [_xgtextFie.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
     [_xgtextFie.layer setCornerRadius:3];

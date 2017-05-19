@@ -233,6 +233,7 @@ int str;
         _codeField = [[UITextField alloc]init];
         _codeField.font = [UIFont systemFontOfSize:14.0f];
         _codeField.placeholder = @"请输入内容";
+           placeholder(_codeField);
         _codeField.tag = row;
          _codeField.delegate = self;
         [_codeField addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
@@ -291,6 +292,7 @@ int str;
                         _codeField = [[UITextField alloc]init];
                         _codeField.font = [UIFont systemFontOfSize:14.0f];
                         _codeField.placeholder = @"请输入内容";
+                                 placeholder(_codeField);
                         [cell addSubview:_codeField];
                         [_codeField mas_makeConstraints:^(MASConstraintMaker *make) {
                             make.top.mas_equalTo(_dateLabel.mas_bottom).offset(0);

@@ -55,6 +55,7 @@
     _textFleid.delegate = self;
     _textFleid.textAlignment = NSTextAlignmentCenter;
     _textFleid.placeholder=@"填写群名称";
+     placeholder(_textFleid);
     [self.view addSubview:_textFleid];
     [_textFleid  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_HeadView.mas_bottom).offset(60);

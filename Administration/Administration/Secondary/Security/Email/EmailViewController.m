@@ -104,12 +104,24 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"解除成功" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"操作失败" andInterval:1.0];
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
-        }else
-        {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新发送" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
         }
+
 
     } failure:^(NSError *error) {
         

@@ -115,6 +115,7 @@
         placeHolderLabel.font = self.font;
         placeHolderLabel.backgroundColor = [UIColor clearColor];
         placeHolderLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+          placeholder(placeHolderLabel);
         placeHolderLabel.alpha = 0;
         [self addSubview:placeHolderLabel];
     }

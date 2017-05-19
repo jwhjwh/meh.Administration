@@ -47,6 +47,7 @@
 -(void)addSubViewS{
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.frame.size.width, 50*kHeight)];
     self.searchBar.placeholder=@"搜索";
+     placeholder(self.searchBar);
     self.searchBar.searchBarStyle=UISearchBarStyleMinimal;
     self.searchBar.delegate = self;
     [self.view addSubview:self.searchBar];
@@ -115,8 +116,16 @@
             [self.searchTableView reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索产品信息" andInterval:1.0];
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]||[[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -124,6 +133,7 @@
             };
             [alertView showMKPAlertView];
         }
+        
         
     }failure:^(NSError *error) {
         }view:self.view MBPro:YES];
