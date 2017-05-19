@@ -734,7 +734,7 @@ NSUInteger rsw;
         [_buttonAry addObject:_button.ZWbutton];
         [topView addSubview:_button];
     }
-    [self asklfjlw];
+    //[self asklfjlw];
 }
 -(void)asklfjlw{
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPosition", KURLHeader];
@@ -767,7 +767,7 @@ NSUInteger rsw;
                         break;
                     case 4:
                         [self btnColorImage:_buttonAry[12] buttonImage:_imageAry[12]];
-                        _button.ZWbutton = _buttonAry[12];
+                          _button.ZWbutton = _buttonAry[12];
                         _button.ZWbutton.enabled = NO;
                         WLBOOL=NO;
                         break;
@@ -1162,6 +1162,11 @@ NSUInteger rsw;
                          make.height.mas_offset(kHeight*25);
                          make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
                          make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
+                     }else if(YWZJBOOL==YES&&SCZJBOOL==YES&&YWJLBOOL==YES&&SCJLBOOL==YES){
+                         make.width.mas_offset(kWidth*300);
+                         make.height.mas_offset(kHeight*25);
+                         make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
+                         make.centerX.mas_equalTo(zjlLabel.mas_centerX).offset(0);
                      }else{
                          make.left.mas_equalTo(self.view.mas_left).offset(kWidth*80);
                          make.right.mas_equalTo(self.view.mas_right).offset(-kWidth*80);
@@ -1170,7 +1175,7 @@ NSUInteger rsw;
                      }
                      
                  }else if(_XZZWArry.count == 3){
-                     if ((YWJLBOOL == NO &&YWBOOL == NO)||(SCJLBOOL == NO&& MDBOOL == NO)||(CWZJBOOL == NO&&KFJLBOOL == NO)||(CWZJBOOL == NO&&KFBOOL == NO)||(CWZJBOOL == NO&&WLJLBOOL == NO)||(CWZJBOOL == NO&&WLBOOL == NO)||(CWZJBOOL ==NO&&CKBOOL == NO)||(CWZJBOOL == NO&&CWJLBOOL == NO)||(CWZJBOOL == NO&&KJBOOL == NO)||(CWZJBOOL == NO&&CNBOOL == NO)||(KFJLBOOL == NO&&KFBOOL ==NO)||(WLJLBOOL == NO&&WLBOOL == NO)||(WLJLBOOL == NO &&CKBOOL==NO)||(CWJLBOOL == NO&&KJBOOL == NO)||(CWJLBOOL == NO&&CNBOOL == NO)) {
+                     if ((YWJLBOOL == NO &&YWBOOL == NO)||(SCJLBOOL == NO&& MDBOOL == NO)||(CWZJBOOL == NO&&KFJLBOOL == NO)||(CWZJBOOL == NO&&KFBOOL == NO)||(CWZJBOOL == NO&&WLJLBOOL == NO)||(CWZJBOOL == NO&&WLBOOL == NO)||(CWZJBOOL ==NO&&CKBOOL == NO)||(CWZJBOOL == NO&&CWJLBOOL == NO)||(CWZJBOOL == NO&&KJBOOL == NO)||(CWZJBOOL == NO&&CNBOOL == NO)||(KFJLBOOL == NO&&KFBOOL ==NO)||(WLJLBOOL == NO&&WLBOOL == NO)||(WLJLBOOL == NO &&CKBOOL==NO)||(CWJLBOOL == NO&&KJBOOL == NO)||(CWJLBOOL == NO&&CNBOOL == NO)||(WLBOOL==NO&&CKBOOL==NO)||(KJBOOL==NO&&CNBOOL==NO)) {
                          make.width.mas_offset(1);//
                          make.height.mas_offset(1);
                          make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
@@ -1435,20 +1440,26 @@ NSUInteger rsw;
                  if ((KFBOOL==NO&&KFJLBOOL==NO)||(WLJLBOOL==NO&&WLBOOL==NO)||(WLJLBOOL==NO&&CKBOOL==NO)||(CWJLBOOL==NO&&KJBOOL==NO)||(CWJLBOOL==NO&&CNBOOL==NO)) {
                      make.width.mas_offset(1);
                      make.height.mas_offset(1);
+                 }else if(KFJLBOOL==YES&&WLJLBOOL==YES&&CWJLBOOL==YES&&KFBOOL==YES){
+                     make.width.mas_offset(1);
+                     make.height.mas_offset(1);
                  }
-                 else{
-                     make.width.mas_offset(kWidth*200);
-                     make.height.mas_offset(kHeight*25);
-                 }
+                 
              }else if ((KFJLBOOL==NO||KFBOOL==NO)&&(WLJLBOOL==NO||WLBOOL==NO||CKBOOL==NO)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)){
                  make.width.mas_offset(kWidth*260);
                  make.height.mas_offset(kHeight*25);
              }else  if(_kfwlcwAry.count>=4){
                  make.width.mas_offset(kWidth*260);
                  make.height.mas_offset(kHeight*25);
-             }else{
-                 make.width.mas_offset(kWidth*1);
-                 make.height.mas_offset(kHeight*1);
+             }else if(_kfwlcwAry.count==3){
+                 if((WLJLBOOL==NO&&WLBOOL==NO&&CKBOOL==NO)||(CWJLBOOL==NO&&KJBOOL==NO&&CNBOOL==NO)){
+                     make.width.mas_offset(kWidth*1);
+                     make.height.mas_offset(kHeight*1);
+                 }else{
+                     make.width.mas_offset(kWidth*260);
+                     make.height.mas_offset(kHeight*25);
+                 }
+                 
              }
          }];
 #define  客服经理
@@ -1529,6 +1540,8 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attachView.mas_left).offset(kWidth*0);
                  }else if((KFJLBOOL==NO||KFBOOL==NO)&&(CWJLBOOL==YES&&KJBOOL==YES&&CNBOOL==YES)){
                      make.centerX.mas_equalTo(attachView.mas_right).offset(kWidth*0);
+                 }else if((KFJLBOOL==YES&&KFBOOL==YES&&CWJLBOOL==YES&&KJBOOL==YES&&CNBOOL==YES)){
+                     make.centerX.mas_equalTo(attachView.mas_centerX).offset(0);
                  }
              }
              if (WLBOOL==NO&&CKBOOL==NO) {
@@ -1608,6 +1621,9 @@ NSUInteger rsw;
              }else if (KFJLBOOL==NO||KFBOOL==NO||WLJLBOOL==NO||WLBOOL==NO||CKBOOL==NO){
                  make.top.mas_equalTo(attachView.mas_bottom).offset(0);
                  make.centerX.mas_equalTo(attachView.mas_right).offset(0);
+             }else if(KFJLBOOL==YES&&KFBOOL==YES&&WLJLBOOL==YES&&WLBOOL==YES&&CKBOOL==YES){
+                 make.top.mas_equalTo(attachView.mas_bottom).offset(0);
+                 make.centerX.mas_equalTo(attachView.mas_centerX).offset(0);
              }
              if (KJBOOL==NO&&CNBOOL==NO) {
                  make.width.mas_offset(kWidth*80);
