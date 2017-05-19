@@ -239,7 +239,7 @@
         make.left.mas_equalTo(_PassText.mas_left).offset(0);
         make.right.mas_equalTo(_PassText.mas_right).offset(0);
         make.height.mas_equalTo(32);
-    }];
+    }];  
     //第三条线
     _view3 = [[UIView alloc]init];
     _view3.backgroundColor = [UIColor RGBview];

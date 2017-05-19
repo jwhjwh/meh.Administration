@@ -91,7 +91,9 @@
             [Barr addObject:[NSString stringWithFormat:@"%@",model.ID]];
           }
         
-        [self updateDepartarr:deleteArrarys string:[NSString stringWithFormat:@"%@",Barr]];
+        if(Barr.count>0){
+             [self updateDepartarr:deleteArrarys string:[NSString stringWithFormat:@"%@",Barr]];
+        }
     }else{
         self.blockArr(deleteArrarys);
         [self.navigationController popViewControllerAnimated:YES];
@@ -212,10 +214,12 @@
             for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
                    if (indexPath.section==1) {
                 [_deleteArrarys addObject:self.gameArrs[indexPath.section][indexPath.row]];
+                _delButton.backgroundColor=GetColor(206, 175,219 ,1);
+                [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
                    }
             }
-            _delButton.backgroundColor=GetColor(206, 175,219 ,1);
-            [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+           
+           
         }else{
             _deleteArrarys = [NSMutableArray array];
             for (NSIndexPath *indexPath in _branTableView.indexPathsForSelectedRows) {
