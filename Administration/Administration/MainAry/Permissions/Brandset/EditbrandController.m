@@ -191,7 +191,7 @@
         case 1:{
             branModel *model=_branarr[indexPath.row];
             cell.titleLabel.text =model.finsk;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"tj_ico"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         case 2:{

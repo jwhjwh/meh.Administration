@@ -95,8 +95,11 @@
              [self updateDepartarr:deleteArrarys string:[NSString stringWithFormat:@"%@",Barr]];
         }
     }else{
-        self.blockArr(deleteArrarys);
-        [self.navigationController popViewControllerAnimated:YES];
+        if(deleteArrarys.count>0){
+         self.blockArr(deleteArrarys);
+    [self.navigationController popViewControllerAnimated:YES];
+        }
+      
     }
     
     
