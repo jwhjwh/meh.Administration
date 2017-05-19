@@ -167,7 +167,105 @@ NSUInteger rsw;
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)masgegeClick{
+    [self xgzwmcAryadd];
+    NSMutableArray *arr=[NSMutableArray array];
+    for (int i =0; _ZWNumAry.count>i; i++) {
+        NSMutableDictionary *dic =[NSMutableDictionary dictionary];
+        [dic setValue:_ZWNumAry[i] forKey:@"Num"];
+        [dic setValue:_XGXZZWArry[i] forKey:@"NewName"];
+        [arr addObject:dic];
+    }
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonStr=[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/updatePositon.action", KURLHeader];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"names":jsonStr};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建成功" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
+        }else {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+            
+        }
+        
+        
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
 
+}
+-(void)xgzwmcAryadd{
+    
+    [_XGXZZWArry removeAllObjects];
+    [_ZWNumAry removeAllObjects];
+    [_XGXZZWArry addObject:_XGZJLStr];
+    [_ZWNumAry addObject:@"1"];
+    if (YWZJBOOL == NO) {
+        [_XGXZZWArry addObject:_YWZJStr];
+        [_ZWNumAry addObject:@"9"];
+    }
+    if (SCZJBOOL == NO) {
+        [_XGXZZWArry addObject:_SCZJStr];
+        [_ZWNumAry addObject:@"10"];
+    }
+    if (YWJLBOOL == NO ) {
+        [_XGXZZWArry addObject:_YWJLStr];
+        [_ZWNumAry addObject:@"8"];
+        [_XGXZZWArry addObject:_YWStr];
+        [_ZWNumAry addObject:@"5"];
+    }
+    if (SCJLBOOL == NO ) {
+        [_XGXZZWArry addObject:_SCJLStr];
+        [_ZWNumAry addObject:@"6"];
+        [_XGXZZWArry addObject:_MDStr];
+        [_ZWNumAry addObject:@"2"];
+    }if (XZGLBOOL == NO) {
+        [_XGXZZWArry addObject:_XZGLLStr];
+        [_ZWNumAry addObject:@"7"];
+    }if (WLBOOL == NO) {
+        [_XGXZZWArry addObject:_WLStr];
+        [_ZWNumAry addObject:@"4"];
+    }if (KFBOOL == NO) {
+        [_XGXZZWArry addObject:_KFStr];
+        [_ZWNumAry addObject:@"3"];
+    }if (CWZJBOOL==NO) {
+        [_XGXZZWArry addObject:_CWZJStr];
+        [_ZWNumAry addObject:@"11"];
+    }if (KFJLBOOL==NO) {
+        [_XGXZZWArry addObject:_KFJLStr];
+        [_ZWNumAry addObject:@"12"];
+    }if (WLJLBOOL==NO) {
+        [_XGXZZWArry addObject:_WLJLStr];
+        [_ZWNumAry addObject:@"13"];
+    }if (CKBOOL==NO) {
+        [_XGXZZWArry addObject:_CKStr];
+        [_ZWNumAry addObject:@"14"];
+    }if (CWJLBOOL==NO) {
+        [_XGXZZWArry addObject:_CWJLStr];
+        [_ZWNumAry addObject:@"15"];
+    }if (KJBOOL==NO) {
+        [_XGXZZWArry addObject:_KJStr];
+        [_ZWNumAry addObject:@"16"];
+    }if (CNBOOL==NO) {
+        [_XGXZZWArry addObject:_CNStr];
+        [_ZWNumAry addObject:@"17"];
+    }
+    
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -503,7 +601,7 @@ NSUInteger rsw;
     [zjlLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
     [zjlLabel.layer setCornerRadius:2];
     [zjlLabel.layer setBorderWidth:1];//设置边界的宽度
-    [zjlLabel.layer setBorderColor:([UIColor lightGrayColor].CGColor)];
+    [zjlLabel.layer setBorderColor:([UIColor orangeColor].CGColor)];
     [topView addSubview:zjlLabel];
 
 
@@ -658,81 +756,97 @@ NSUInteger rsw;
                         [self btnColorImage:_buttonAry[7] buttonImage:_imageAry[7]];
                         _button.ZWbutton = _buttonAry[7];
                         _button.ZWbutton.enabled = NO;
+                        MDBOOL=NO;
                         break;
                     case 3:
                         [self btnColorImage:_buttonAry[11] buttonImage:_imageAry[11]];
                         _button.ZWbutton = _buttonAry[11];
                         _button.ZWbutton.enabled = NO;
+                        KFBOOL=NO;
                         break;
                     case 4:
                         [self btnColorImage:_buttonAry[12] buttonImage:_imageAry[12]];
                         _button.ZWbutton = _buttonAry[12];
                         _button.ZWbutton.enabled = NO;
+                        WLBOOL=NO;
                         break;
                     case 5:
                         [self btnColorImage:_buttonAry[6] buttonImage:_imageAry[6]];
                         _button.ZWbutton = _buttonAry[6];
                         _button.ZWbutton.enabled = NO;
+                        YWBOOL=NO;
                         break;
                     case 6:
                         [self btnColorImage:_buttonAry[5] buttonImage:_imageAry[5]];
                         _button.ZWbutton = _buttonAry[5];
                         _button.ZWbutton.enabled = NO;
+                        SCJLBOOL=NO;
                         break;
                     case 7:
                         [self btnColorImage:_buttonAry[3] buttonImage:_imageAry[3]];
                         _button.ZWbutton = _buttonAry[3];
                         _button.ZWbutton.enabled = NO;
+                        XZGLBOOL=NO;
                         break;
                     case 8:
                         [self btnColorImage:_buttonAry[4] buttonImage:_imageAry[4]];
                         _button.ZWbutton = _buttonAry[4];
                         _button.ZWbutton.enabled = NO;
+                        YWJLBOOL=NO;
                         break;
                     case 9:
                         [self btnColorImage:_buttonAry[0] buttonImage:_imageAry[0]];
                         _button.ZWbutton = _buttonAry[0];
                         _button.ZWbutton.enabled = NO;
+                        YWZJBOOL=NO;
                         break;
                     case 10:
                         [self btnColorImage:_buttonAry[1] buttonImage:_imageAry[1]];
                         _button.ZWbutton = _buttonAry[1];
                         _button.ZWbutton.enabled = NO;
+                        SCZJBOOL=NO;
                         break;
                     case 11:
                         [self btnColorImage:_buttonAry[2] buttonImage:_imageAry[2]];
                         _button.ZWbutton = _buttonAry[2];
                         _button.ZWbutton.enabled = NO;
+                        CWZJBOOL=NO;
                         break;
                     case 12:
                         [self btnColorImage:_buttonAry[8] buttonImage:_imageAry[8]];
                         _button.ZWbutton = _buttonAry[8];
                         _button.ZWbutton.enabled = NO;
+                        KFJLBOOL=NO;
                         break;
                     case 13:
                         [self btnColorImage:_buttonAry[9] buttonImage:_imageAry[9]];
                         _button.ZWbutton = _buttonAry[9];
                         _button.ZWbutton.enabled = NO;
+                        WLJLBOOL=NO;
                         break;
                     case 14:
                         [self btnColorImage:_buttonAry[13] buttonImage:_imageAry[13]];
                         _button.ZWbutton = _buttonAry[13];
                         _button.ZWbutton.enabled = NO;
+                        CKBOOL=NO;
                         break;
                     case 15:
                         [self btnColorImage:_buttonAry[10] buttonImage:_imageAry[10]];
                         _button.ZWbutton = _buttonAry[10];
                         _button.ZWbutton.enabled = NO;
+                        CWJLBOOL=NO;
                         break;
                     case 16:
                         [self btnColorImage:_buttonAry[14] buttonImage:_imageAry[14]];
                         _button.ZWbutton = _buttonAry[14];
                         _button.ZWbutton.enabled = NO;
+                        KJBOOL=NO;
                         break;
                     case 17:
                         [self btnColorImage:_buttonAry[15] buttonImage:_imageAry[15]];
                         _button.ZWbutton = _buttonAry[15];
                         _button.ZWbutton.enabled = NO;
+                        CNBOOL=NO;
                         break;
                         
                         
@@ -740,7 +854,9 @@ NSUInteger rsw;
                         break;
                 }
             }
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
+        }else {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登陆超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
             
             alertView.resultIndex = ^(NSInteger index){
@@ -750,10 +866,6 @@ NSUInteger rsw;
             };
             [alertView showMKPAlertView];
             
-        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求，未识别的设备" andInterval:1.0];
-        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
         }
 
         
@@ -762,7 +874,6 @@ NSUInteger rsw;
     } view:self.view MBPro:YES];
 }
 -(void)qdbtnClick:(UIButton *)btn{
-    NSLog(@"%ld,-%@",(long)btn.tag,btn.titleLabel.text);
     switch (btn.tag) {
         case 2:
             //美导
