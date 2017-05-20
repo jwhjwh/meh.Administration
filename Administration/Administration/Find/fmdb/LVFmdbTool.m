@@ -10,7 +10,6 @@
 #import "LVModel.h"
 
 #define LVSQLITE_NAME @"modals.sqlite"
-
 @implementation LVFmdbTool
 
 
@@ -27,6 +26,7 @@ static FMDatabase *_fmdb;
     [_fmdb executeUpdate:@"CREATE TABLE IF NOT EXISTS t_modals(id INTEGER PRIMARY KEY, name TEXT NOT NULL, Call TEXT NOT NULL, ID_No TEXT NOT NULL,image TEXT  NOT NULL,time TEXT NOT NULL,roleld TEXT NOT NULL)"];
     
 }
+
 
 + (BOOL)insertModel:(LVModel *)model {
     NSString *insertSql =  [NSString stringWithFormat:@"INSERT INTO t_modals(name, Call, ID_No,image,time,roleld) VALUES ('%@', '%@', '%@','%@','%@','%@')",model.name,model.Call,model.ID_No,model.image,model.time,model.roleld];
@@ -74,7 +74,6 @@ static FMDatabase *_fmdb;
     }
     return [_fmdb executeUpdate:modifySql];
 }
-
 
 
 @end

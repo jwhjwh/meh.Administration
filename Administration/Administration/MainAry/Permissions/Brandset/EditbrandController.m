@@ -187,6 +187,7 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ItemCell *cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCell" forIndexPath:indexPath];
+    [cell.rightUpperButton addTarget:self action:@selector(rightUpperButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     switch (indexPath.section) {
         case 1:{
             branModel *model=_branarr[indexPath.row];
@@ -679,5 +680,99 @@
 
 }
 
+-(void)rightUpperButtonAction:(UIButton*)sender{
+     ItemCell *cell = (ItemCell *)[sender superview];
+    NSIndexPath * indexPath = [_collectionView indexPathForCell:cell];
+    switch (indexPath.section) {
+        case 1:{
+            if (isSelede==NO) {
+                if (_branarr.count==3&&indexPath.row==0) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"品牌不能为空，请先添加在删除" andInterval:1.0];
+                }else{
+                    branModel *model =  _branarr[indexPath.row];
+                    [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Str=^(){
+                        [_branarr removeObjectAtIndex:indexPath.row];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        if (_branarr.count==2) {
+                            [_branarr removeLastObject];
+                            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:1];
+                            [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                            isSelede=YES;
+                            [cell.rightUpperButton removeFromSuperview];
+                        }
+                    };
+                }
+            }
+        }
+            break;
+        case 2:{
+            
+            
+            if (isSele==NO) {
+                DirtmsnaModel *model =  _paleAry[indexPath.row];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                __weak __typeof__(self) weakSelf = self;
+                weakSelf.Str=^(){
+                    [_paleAry removeObjectAtIndex:indexPath.row];
+                    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                    if (_paleAry.count==2) {
+                        [_paleAry removeLastObject];
+                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:2];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        isSele=YES;
+                        [cell.rightUpperButton removeFromSuperview];
+                    }
+                };
+            }
+        
+    }
+            break;
+        case 3:{
+            if (ismay==NO) {
+                DirtmsnaModel *model =  _ManaAry[indexPath.row];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                __weak __typeof__(self) weakSelf = self;
+                weakSelf.Str=^(){
+                    [_ManaAry removeObjectAtIndex:indexPath.row];
+                    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                    if (_ManaAry.count==2) {
+                        [_ManaAry removeLastObject];
+                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:3];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        ismay=YES;
+                        [cell.rightUpperButton removeFromSuperview];
+                    }
+                };
+            }
+        
+      }
+            break;
+        case 4:{
+            if (isEay==NO) {
+                DirtmsnaModel *model =  _EmisAry[indexPath.row];
+                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2];
+                __weak __typeof__(self) weakSelf = self;
+                weakSelf.Str=^(){
+                    [_EmisAry removeObjectAtIndex:indexPath.row];
+                    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                    if (_EmisAry.count==2) {
+                        [_EmisAry removeLastObject];
+                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:4];
+                        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                        isEay=YES;
+                        [cell.rightUpperButton removeFromSuperview];
+                    }
+                };
+            }
+        
+         }
+            break;
+        default:
+            break;
+        }
 
+}
+    
 @end

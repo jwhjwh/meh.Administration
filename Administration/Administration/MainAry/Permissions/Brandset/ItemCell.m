@@ -36,7 +36,6 @@
         //省略
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         _rightUpperButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 22,0, 20, 20)];
-        [_rightUpperButton addTarget:self action:@selector(rightUpperButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_container addSubview:_icon];
         [_container addSubview:_titleLabel];
         [self.contentView addSubview:_container];
@@ -45,9 +44,7 @@
     return self;
 }
 
--(void)rightUpperButtonAction{
-    
-}
+
 
 
 
