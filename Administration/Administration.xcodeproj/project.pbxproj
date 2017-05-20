@@ -21,6 +21,7 @@
 		1F1D1F9E1E6D528B0021B1AD /* Brandmodle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D1F9D1E6D528B0021B1AD /* Brandmodle.m */; };
 		1F22AAE21EA0710A00CC56BB /* ChooseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F22AAE11EA0710A00CC56BB /* ChooseTableViewCell.m */; };
 		1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F22AAE41EA0BDBF00CC56BB /* multiController.m */; };
+		1F2486BC1ECEEC6100C1673F /* AddotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2486BB1ECEEC6100C1673F /* AddotherController.m */; };
 		1F2973961E6E3CD1003F2FD0 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973921E6E3CD1003F2FD0 /* pinyin.c */; };
 		1F2973971E6E3CD1003F2FD0 /* ZXDChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973951E6E3CD1003F2FD0 /* ZXDChineseString.m */; };
 		1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2973991E6E82F3003F2FD0 /* BrandSeachController.m */; };
@@ -332,7 +333,6 @@
 		1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF745411E9CC08C00BE2F08 /* UserWebManager.m */; };
 		1FF745461E9CCBAB00BE2F08 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF745451E9CCBAB00BE2F08 /* AVOSCloud.framework */; };
 		1FF7FB251ECBF1F600966C58 /* OtherDeparController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB241ECBF1F600966C58 /* OtherDeparController.m */; };
-		1FF7FB2E1ECBF8D400966C58 /* AddotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB2D1ECBF8D400966C58 /* AddotherController.m */; };
 		1FF7FB311ECC4B7B00966C58 /* EditotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB301ECC4B7B00966C58 /* EditotherController.m */; };
 		1FF7FB341ECC501900966C58 /* DetaotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB331ECC501900966C58 /* DetaotherController.m */; };
 		6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */; };
@@ -566,6 +566,8 @@
 		1F22AAE11EA0710A00CC56BB /* ChooseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseTableViewCell.m; sourceTree = "<group>"; };
 		1F22AAE31EA0BDBF00CC56BB /* multiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multiController.h; sourceTree = "<group>"; };
 		1F22AAE41EA0BDBF00CC56BB /* multiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = multiController.m; sourceTree = "<group>"; };
+		1F2486BA1ECEEC6100C1673F /* AddotherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddotherController.h; sourceTree = "<group>"; };
+		1F2486BB1ECEEC6100C1673F /* AddotherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddotherController.m; sourceTree = "<group>"; };
 		1F2973921E6E3CD1003F2FD0 /* pinyin.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = pinyin.c; sourceTree = "<group>"; };
 		1F2973931E6E3CD1003F2FD0 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		1F2973941E6E3CD1003F2FD0 /* ZXDChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDChineseString.h; sourceTree = "<group>"; };
@@ -1125,8 +1127,6 @@
 		1FF745451E9CCBAB00BE2F08 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		1FF7FB231ECBF1F600966C58 /* OtherDeparController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherDeparController.h; sourceTree = "<group>"; };
 		1FF7FB241ECBF1F600966C58 /* OtherDeparController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherDeparController.m; sourceTree = "<group>"; };
-		1FF7FB2C1ECBF8D400966C58 /* AddotherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddotherController.h; path = ../../../../../AddotherController.h; sourceTree = "<group>"; };
-		1FF7FB2D1ECBF8D400966C58 /* AddotherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddotherController.m; path = ../../../../../AddotherController.m; sourceTree = "<group>"; };
 		1FF7FB2F1ECC4B7B00966C58 /* EditotherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditotherController.h; sourceTree = "<group>"; };
 		1FF7FB301ECC4B7B00966C58 /* EditotherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditotherController.m; sourceTree = "<group>"; };
 		1FF7FB321ECC501900966C58 /* DetaotherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetaotherController.h; sourceTree = "<group>"; };
@@ -2591,10 +2591,10 @@
 		1FF7FB221ECBF1BC00966C58 /* OtherDepartments */ = {
 			isa = PBXGroup;
 			children = (
+				1F2486BA1ECEEC6100C1673F /* AddotherController.h */,
+				1F2486BB1ECEEC6100C1673F /* AddotherController.m */,
 				1FF7FB231ECBF1F600966C58 /* OtherDeparController.h */,
 				1FF7FB241ECBF1F600966C58 /* OtherDeparController.m */,
-				1FF7FB2C1ECBF8D400966C58 /* AddotherController.h */,
-				1FF7FB2D1ECBF8D400966C58 /* AddotherController.m */,
 				1FF7FB2F1ECC4B7B00966C58 /* EditotherController.h */,
 				1FF7FB301ECC4B7B00966C58 /* EditotherController.m */,
 				1FF7FB321ECC501900966C58 /* DetaotherController.h */,
@@ -3875,7 +3875,6 @@
 				1F6211C41E8CFFAF00F50851 /* EMSDWebImagePrefetcher.m in Sources */,
 				1F672ED11E82384300856A9C /* CrowdViewController.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
-				1FF7FB2E1ECBF8D400966C58 /* AddotherController.m in Sources */,
 				1F62119B1E8CFFAF00F50851 /* amrFileCodec.mm in Sources */,
 				6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */,
 				1F6AB7E41E8B978C006CB015 /* UIView+EXTENSION.m in Sources */,
@@ -4038,6 +4037,7 @@
 				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
+				1F2486BC1ECEEC6100C1673F /* AddotherController.m in Sources */,
 				1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */,
 				624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
