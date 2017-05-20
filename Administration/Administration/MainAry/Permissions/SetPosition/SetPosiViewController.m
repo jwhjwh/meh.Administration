@@ -1175,7 +1175,7 @@ NSUInteger rsw;
                      }
                      
                  }else if(_XZZWArry.count == 3){
-                     if ((YWJLBOOL == NO &&YWBOOL == NO)||(SCJLBOOL == NO&& MDBOOL == NO)||(CWZJBOOL == NO&&KFJLBOOL == NO)||(CWZJBOOL == NO&&KFBOOL == NO)||(CWZJBOOL == NO&&WLJLBOOL == NO)||(CWZJBOOL == NO&&WLBOOL == NO)||(CWZJBOOL ==NO&&CKBOOL == NO)||(CWZJBOOL == NO&&CWJLBOOL == NO)||(CWZJBOOL == NO&&KJBOOL == NO)||(CWZJBOOL == NO&&CNBOOL == NO)||(KFJLBOOL == NO&&KFBOOL ==NO)||(WLJLBOOL == NO&&WLBOOL == NO)||(WLJLBOOL == NO &&CKBOOL==NO)||(CWJLBOOL == NO&&KJBOOL == NO)||(CWJLBOOL == NO&&CNBOOL == NO)||(WLBOOL==NO&&CKBOOL==NO)||(KJBOOL==NO&&CNBOOL==NO)) {
+                     if ((YWJLBOOL == NO &&YWBOOL == NO)||(SCJLBOOL == NO&& MDBOOL == NO)||(CWZJBOOL == NO&&KFJLBOOL == NO)||(CWZJBOOL == NO&&KFBOOL == NO)||(CWZJBOOL == NO&&WLJLBOOL == NO)||(CWZJBOOL == NO&&WLBOOL == NO)||(CWZJBOOL ==NO&&CKBOOL == NO)||(CWZJBOOL == NO&&CWJLBOOL == NO)||(CWZJBOOL == NO&&KJBOOL == NO)||(CWZJBOOL == NO&&CNBOOL == NO)||(KFJLBOOL == NO&&KFBOOL ==NO)||(WLJLBOOL == NO&&WLBOOL == NO)||(WLJLBOOL == NO &&CKBOOL==NO)||(CWJLBOOL == NO&&KJBOOL == NO)||(CWJLBOOL == NO&&CNBOOL == NO)||(WLBOOL==NO&&CKBOOL==NO)||(KJBOOL==NO&&CNBOOL==NO)||(YWJLBOOL==YES&&YWZJBOOL==YES&&SCZJBOOL==YES&&SCJLBOOL==YES&&XZGLBOOL==YES)) {
                          make.width.mas_offset(1);//
                          make.height.mas_offset(1);
                          make.top.mas_equalTo(zjlLabel.mas_bottom).offset(0);
@@ -1443,6 +1443,9 @@ NSUInteger rsw;
                  }else if(KFJLBOOL==YES&&WLJLBOOL==YES&&CWJLBOOL==YES&&KFBOOL==YES){
                      make.width.mas_offset(1);
                      make.height.mas_offset(1);
+                 }else{
+                     make.width.mas_offset(kWidth*260);
+                     make.height.mas_offset(kHeight*25);
                  }
                  
              }else if ((KFJLBOOL==NO||KFBOOL==NO)&&(WLJLBOOL==NO||WLBOOL==NO||CKBOOL==NO)&&(CWJLBOOL==NO||KJBOOL==NO||CNBOOL==NO)){
