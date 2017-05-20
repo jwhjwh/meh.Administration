@@ -1,13 +1,13 @@
 //
-//  managViewController.h
+//  ManageViewController.h
 //  Administration
 //
-//  Created by zhang on 2017/3/3.
+//  Created by 九尾狐 on 2017/5/20.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface managViewController : UIViewController
+@interface ManageViewController : UIViewController
 
 @end

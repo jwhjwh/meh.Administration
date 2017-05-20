@@ -53,7 +53,7 @@
 -(void)addSubViewS{
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.frame.size.width, 50*kHeight)];
     self.searchBar.placeholder=@"搜索";
-    placeholder(self.searchBar);
+    //placeholder(self.searchBar);
     self.searchBar.searchBarStyle=UISearchBarStyleMinimal;
     self.searchBar.delegate = self;
     [self.view addSubview:self.searchBar];

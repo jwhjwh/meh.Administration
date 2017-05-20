@@ -288,7 +288,6 @@
 		1F767DD21E7924DA00305401 /* BuildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F767DD11E7924DA00305401 /* BuildViewController.m */; };
 		1F767DD51E79299600305401 /* AddmemberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F767DD41E79299600305401 /* AddmemberController.m */; };
 		1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */; };
-		1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F76A6F41E6967230063B3D7 /* managViewController.m */; };
 		1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC01E52F7CA005F53CE /* AFHTTPSessionManager.m */; };
 		1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC31E52F7CA005F53CE /* AFNetworkReachabilityManager.m */; };
 		1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F803FC51E52F7CA005F53CE /* AFSecurityPolicy.m */; };
@@ -348,6 +347,7 @@
 		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
+		620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FC39B1ED035E500C4D8B3 /* ManageViewController.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6218D0581E4E95FB00299989 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0571E4E95FB00299989 /* ViewController.mm */; };
@@ -1049,8 +1049,6 @@
 		1F767DD41E79299600305401 /* AddmemberController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddmemberController.m; sourceTree = "<group>"; };
 		1F76A6EC1E690F840063B3D7 /* YLDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLDropDownMenu.h; sourceTree = "<group>"; };
 		1F76A6ED1E690F840063B3D7 /* YLDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLDropDownMenu.m; sourceTree = "<group>"; };
-		1F76A6F31E6967230063B3D7 /* managViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = managViewController.h; sourceTree = "<group>"; };
-		1F76A6F41E6967230063B3D7 /* managViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = managViewController.m; sourceTree = "<group>"; };
 		1F803FBF1E52F7CA005F53CE /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		1F803FC01E52F7CA005F53CE /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		1F803FC11E52F7CA005F53CE /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -1156,6 +1154,8 @@
 		6207312A1E5D6F9100BCF51C /* EditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModel.m; sourceTree = "<group>"; };
 		620A8AC91E6575BE005CA222 /* DateEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateEditViewController.h; sourceTree = "<group>"; };
 		620A8ACA1E6575BE005CA222 /* DateEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateEditViewController.m; sourceTree = "<group>"; };
+		620FC39A1ED035E500C4D8B3 /* ManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageViewController.h; sourceTree = "<group>"; };
+		620FC39B1ED035E500C4D8B3 /* ManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageViewController.m; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -2469,8 +2469,8 @@
 		1F76A6F21E6965040063B3D7 /* yuangongguan */ = {
 			isa = PBXGroup;
 			children = (
-				1F76A6F31E6967230063B3D7 /* managViewController.h */,
-				1F76A6F41E6967230063B3D7 /* managViewController.m */,
+				620FC39A1ED035E500C4D8B3 /* ManageViewController.h */,
+				620FC39B1ED035E500C4D8B3 /* ManageViewController.m */,
 				1F5295D51E6A61CE005045AD /* GuanglixqVController.h */,
 				1F5295D61E6A61CE005045AD /* GuanglixqVController.m */,
 				1F5B13301E6AB77D00B6D8DC /* xiugaiViewController.h */,
@@ -2829,13 +2829,6 @@
 			path = WJTextView;
 			sourceTree = "<group>";
 		};
-		621D403F1EA1F6A000D043D0 /* BusinessViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BusinessViewController;
-			sourceTree = "<group>";
-		};
 		6220B6DF1E63C294007017BA /* Email */ = {
 			isa = PBXGroup;
 			children = (
@@ -2955,7 +2948,6 @@
 		625355781E6817780041F123 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
-				621D403F1EA1F6A000D043D0 /* BusinessViewController */,
 				626480811E9DD7120090EECB /* Report Permissions */,
 				6226E6611E778CA000767EBD /* SetPosition */,
 				627B27161E764B2700392170 /* Structure */,
@@ -3892,7 +3884,6 @@
 				1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
 				1F6211A01E8CFFAF00F50851 /* MBProgressHUD+Add.m in Sources */,
-				1F76A6F51E6967230063B3D7 /* managViewController.m in Sources */,
 				1F6211D61E8CFFB000F50851 /* PSTCollectionViewUpdateItem.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				1F6211E11E8CFFB000F50851 /* NSDateFormatter+Category.m in Sources */,
@@ -4046,6 +4037,7 @@
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
 				623ACAF91EAAF43600552D22 /* Attachment.m in Sources */,
+				620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
 				1F2E01B01EBC828200D36C3B /* AddbranTableViewCell.m in Sources */,

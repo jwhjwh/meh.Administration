@@ -14,7 +14,7 @@
 #import "businessViewController.h"//业务陌拜
 #import "TrackingViewController.h"
 #import "brandViewController.h"
-#import "managViewController.h"
+#import "ManageViewController.h"//员工管理
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -115,7 +115,6 @@
             _arr1=@[@"dianpugenzong", @"baobiaomokuai", @"dianjiaxinxi", @"gongsigonggao", @"baogang"];
             break;
         case 3:
-
             //内勤人员
             _arr=@[@"店家跟踪", @"我的报表", @"店家信息", @"公司公告", @"图片报岗"];
             _arr1=@[@"dianpugenzong",@"baobiaomokuai",@"dianjiaxinxi",@"gongsigonggao",@"baogang"];
@@ -286,8 +285,8 @@
                         
                         break;
                     case 14:{
-                        managViewController *managVc=[[managViewController alloc]init];
-                        [self.navigationController pushViewController:managVc animated:YES];
+                        ManageViewController *manageVC = [[ManageViewController alloc]init];
+                        [self.navigationController pushViewController:manageVC animated:YES];
                     }
                         break;
                     case 15:{

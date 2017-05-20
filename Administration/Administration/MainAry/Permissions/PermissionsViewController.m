@@ -43,7 +43,7 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterTableUI];
     _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"部门设置",@"职位类别设置",@"报表权限设置",@"识别码",nil];
-    
+    //
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -151,7 +151,6 @@
             break;
          
         case 5:{
-
             //报表权限设置 CreateViewController
             ReportPermissionsVC *perortVC = [[ReportPermissionsVC alloc]init];
             // CreateViewController *perortVC = [[CreateViewController alloc]init];
@@ -161,13 +160,12 @@
         }
             break;
         case 6:{
-
-            
             //识别码
             CodeViewController *codeVC = [[CodeViewController alloc]init];
             [self.navigationController showViewController:codeVC sender:nil];
         }
             break;
+       
     
         default:
             break;
