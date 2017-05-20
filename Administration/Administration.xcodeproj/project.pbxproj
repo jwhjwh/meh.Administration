@@ -349,6 +349,7 @@
 		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
+		620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FC39B1ED035E500C4D8B3 /* ManageViewController.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6218D0581E4E95FB00299989 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0571E4E95FB00299989 /* ViewController.mm */; };
@@ -1159,6 +1160,8 @@
 		6207312A1E5D6F9100BCF51C /* EditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModel.m; sourceTree = "<group>"; };
 		620A8AC91E6575BE005CA222 /* DateEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateEditViewController.h; sourceTree = "<group>"; };
 		620A8ACA1E6575BE005CA222 /* DateEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateEditViewController.m; sourceTree = "<group>"; };
+		620FC39A1ED035E500C4D8B3 /* ManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageViewController.h; sourceTree = "<group>"; };
+		620FC39B1ED035E500C4D8B3 /* ManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageViewController.m; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -2476,6 +2479,10 @@
 		1F76A6F21E6965040063B3D7 /* yuangongguan */ = {
 			isa = PBXGroup;
 			children = (
+
+				620FC39A1ED035E500C4D8B3 /* ManageViewController.h */,
+				620FC39B1ED035E500C4D8B3 /* ManageViewController.m */,
+
 				1F5295D51E6A61CE005045AD /* GuanglixqVController.h */,
 				1F5295D61E6A61CE005045AD /* GuanglixqVController.m */,
 				1F5B13301E6AB77D00B6D8DC /* xiugaiViewController.h */,
@@ -2834,13 +2841,6 @@
 			path = WJTextView;
 			sourceTree = "<group>";
 		};
-		621D403F1EA1F6A000D043D0 /* BusinessViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BusinessViewController;
-			sourceTree = "<group>";
-		};
 		6220B6DF1E63C294007017BA /* Email */ = {
 			isa = PBXGroup;
 			children = (
@@ -2960,7 +2960,6 @@
 		625355781E6817780041F123 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
-				621D403F1EA1F6A000D043D0 /* BusinessViewController */,
 				626480811E9DD7120090EECB /* Report Permissions */,
 				6226E6611E778CA000767EBD /* SetPosition */,
 				627B27161E764B2700392170 /* Structure */,
@@ -4051,6 +4050,7 @@
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
 				623ACAF91EAAF43600552D22 /* Attachment.m in Sources */,
+				620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */,
 				6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */,
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
 				1F2E01B01EBC828200D36C3B /* AddbranTableViewCell.m in Sources */,

@@ -1440,7 +1440,7 @@ NSUInteger rsw;
                  if ((KFBOOL==NO&&KFJLBOOL==NO)||(WLJLBOOL==NO&&WLBOOL==NO)||(WLJLBOOL==NO&&CKBOOL==NO)||(CWJLBOOL==NO&&KJBOOL==NO)||(CWJLBOOL==NO&&CNBOOL==NO)) {
                      make.width.mas_offset(1);
                      make.height.mas_offset(1);
-                 }else if(KFJLBOOL==YES&&WLJLBOOL==YES&&CWJLBOOL==YES&&KFBOOL==YES){
+                 }else if(KFJLBOOL==YES&&WLJLBOOL==YES&&CWJLBOOL==YES&&KFBOOL==YES&&((WLBOOL==NO&&CKBOOL==NO)||(KJBOOL==NO&&CNBOOL==NO))){
                      make.width.mas_offset(1);
                      make.height.mas_offset(1);
                  }else{
