@@ -51,7 +51,7 @@
     // Configure the view for the selected state
 }
 -(void)setModel:(branModel *)model{
-    _titleLabel.text =model.levelName;
+   _titleLabel.text =model.levelName;
     
 }
 @end
