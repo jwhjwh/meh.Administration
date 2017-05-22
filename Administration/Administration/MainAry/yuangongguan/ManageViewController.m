@@ -7,16 +7,23 @@
 //
 
 #import "ManageViewController.h"
-
-@interface ManageViewController ()
-
+#import "MainTableViewCell.h"
+@interface ManageViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
+@property (nonatomic,retain)UITableView *infonTableview;
+@property (nonatomic,strong) NSArray*LabelAry;
 @end
 
 @implementation ManageViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"员工管理";
+    
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -24,10 +31,15 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    // Do any additional setup after loading the view.
 }
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)Touchsearch{
+    //SearchViewController
+    SearchViewController *SearchVC = [[SearchViewController alloc]init];
+    [self.navigationController showViewController:SearchVC sender:nil];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
