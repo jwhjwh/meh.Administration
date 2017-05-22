@@ -359,6 +359,9 @@
 		6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0841E4E97EA00299989 /* UserGuideViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5C1E1E5843190051C6CC /* WJTextView.m */; };
 		621A5C211E5843B50051C6CC /* banben100.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A5C201E5843B50051C6CC /* banben100.png */; };
+		621D70101ED2C57400B3DD2E /* yggl_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700D1ED2C57400B3DD2E /* yggl_03.png */; };
+		621D70111ED2C57400B3DD2E /* yggl_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700E1ED2C57400B3DD2E /* yggl_01.png */; };
+		621D70121ED2C57400B3DD2E /* yggl_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700F1ED2C57400B3DD2E /* yggl_02.png */; };
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
@@ -1177,6 +1180,9 @@
 		621A5C1D1E5843190051C6CC /* WJTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJTextView.h; sourceTree = "<group>"; };
 		621A5C1E1E5843190051C6CC /* WJTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJTextView.m; sourceTree = "<group>"; };
 		621A5C201E5843B50051C6CC /* banben100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banben100.png; sourceTree = "<group>"; };
+		621D700D1ED2C57400B3DD2E /* yggl_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yggl_03.png; sourceTree = "<group>"; };
+		621D700E1ED2C57400B3DD2E /* yggl_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yggl_01.png; sourceTree = "<group>"; };
+		621D700F1ED2C57400B3DD2E /* yggl_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yggl_02.png; sourceTree = "<group>"; };
 		6220B6E01E63C2A7007017BA /* EmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailViewController.h; sourceTree = "<group>"; };
 		6220B6E11E63C2A7007017BA /* EmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailViewController.m; sourceTree = "<group>"; };
 		6220B6E41E641806007017BA /* PW_DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PW_DatePickerView.h; sourceTree = "<group>"; };
@@ -3253,6 +3259,9 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				621D700D1ED2C57400B3DD2E /* yggl_03.png */,
+				621D700E1ED2C57400B3DD2E /* yggl_01.png */,
+				621D700F1ED2C57400B3DD2E /* yggl_02.png */,
 				1F0B2F571EC016E200E3E891 /* scbut.png */,
 				1F063AB31EA4BECC0004F4CE /* bs_ico */,
 				62DEF9C01E8B492B00BC7D0C /* zx_ico.png */,
@@ -3596,7 +3605,6 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = PL68LJ4R77;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3721,6 +3729,7 @@
 				1F6CC7CC1E8A338C004FFE96 /* ass_ico.png in Resources */,
 				62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */,
 				62656D5A1E52B5700085A2BD /* gongsigonggao.png in Resources */,
+				621D70121ED2C57400B3DD2E /* yggl_02.png in Resources */,
 				1F3B3DCE1E8DF93C00E75027 /* icon_007_cover.png in Resources */,
 				62656D4F1E52B5700085A2BD /* Inder0.png in Resources */,
 				62656D4A1E52B5700085A2BD /* xuanzezhanghao.png in Resources */,
@@ -3738,9 +3747,11 @@
 				1F59AF211E5E76750000722A /* tjpco01.png in Resources */,
 				624E70FF1EC404980026C5E9 /* 职位结构3.jpg in Resources */,
 				1F767DC91E790C6E00305401 /* archite.png in Resources */,
+				621D70111ED2C57400B3DD2E /* yggl_01.png in Resources */,
 				1F3B3DD61E8DF93C00E75027 /* icon_018_cover.png in Resources */,
 				62656D4E1E52B5700085A2BD /* Inder1.png in Resources */,
 				1F767DCB1E79137100305401 /* jiantou_03.png in Resources */,
+				621D70101ED2C57400B3DD2E /* yggl_03.png in Resources */,
 				62656D4D1E52B5700085A2BD /* yuanhuan_03.png in Resources */,
 				1F4DBB4B1E5828B400733CF7 /* baobiaoguanli.png in Resources */,
 				1F6211DB1E8CFFB000F50851 /* MWPhotoBrowser.bundle in Resources */,
@@ -4286,7 +4297,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = PL68LJ4R77;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4333,7 +4344,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = PL68LJ4R77;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
