@@ -7,7 +7,6 @@
 //
 
 #import "ManageViewController.h"
-#import "MainTableViewCell.h"
 @interface ManageViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (nonatomic,retain)UITableView *infonTableview;
