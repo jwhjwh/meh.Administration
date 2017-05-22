@@ -16,7 +16,8 @@
 #import "JinnLockViewController.h"
 #import "Masonry.h"
 #import "JinnLockConfig.h"
-
+#import "USFmdbTool.h"
+#import "Userpas.h"
 #import <LocalAuthentication/LAContext.h>
 
 typedef NS_ENUM(NSInteger, JinnLockStep)
@@ -460,8 +461,23 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
         {
             if ([passcode isEqualToString:self.passcodeTemp])
             {
-                [JinnLockTool setGestureUnlockEnabled:YES];
-                [JinnLockTool setGesturePasscode:passcode];
+//                [JinnLockTool setGestureUnlockEnabled:YES];
+//                [JinnLockTool setGesturePasscode:passcode];
+                NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+                NSArray *modals = [USFmdbTool queryData:fuzzyQuerySql];
+                if (modals.count>0) {
+                    NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+                    [USFmdbTool deleteData:delesql];
+                }
+                
+                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:1];
+                BOOL isInsert =  [USFmdbTool insertModel:models];
+                if (isInsert) {
+                    NSLog(@"插入数据成功");
+                } else {
+                    NSLog(@"插入数据失败");
+                }
+                
                 
                 if ([self.delegate respondsToSelector:@selector(passcodeDidCreate:)])
                 {
@@ -510,9 +526,23 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
         {
             if ([passcode isEqualToString:self.passcodeTemp])
             {
-                [JinnLockTool setGestureUnlockEnabled:YES];
-                [JinnLockTool setGesturePasscode:passcode];
+//                [JinnLockTool setGestureUnlockEnabled:YES];
+//                [JinnLockTool setGesturePasscode:passcode];
+                NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+                NSArray *modals = [USFmdbTool queryData:fuzzyQuerySql];
+                if (modals.count>0) {
+                    NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+                    [USFmdbTool deleteData:delesql];
+                }
+                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:1];
+                BOOL isInsert =  [USFmdbTool insertModel:models];
+                if (isInsert) {
+                    NSLog(@"插入数据成功");
+                } else {
+                    NSLog(@"插入数据失败");
+                }
                 
+
                 if ([self.delegate respondsToSelector:@selector(passcodeDidModify:)])
                 {
                     [self.delegate passcodeDidModify:passcode];
@@ -559,8 +589,20 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
         {
             if ([passcode isEqualToString:[JinnLockTool currentGesturePasscode]])
             {
-                [JinnLockTool setGestureUnlockEnabled:NO];
-                
+//                [JinnLockTool setGestureUnlockEnabled:NO];
+                NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+                NSArray *modals = [USFmdbTool queryData:fuzzyQuerySql];
+                if (modals.count>0) {
+                    NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+                    [USFmdbTool deleteData:delesql];
+                }
+                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:0];
+                BOOL isInsert =  [USFmdbTool insertModel:models];
+                if (isInsert) {
+                    NSLog(@"插入数据成功");
+                } else {
+                    NSLog(@"插入数据失败");
+                }
                 if ([self.delegate respondsToSelector:@selector(passcodeDidRemove)])
                 {
                     [self.delegate passcodeDidRemove];

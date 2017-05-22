@@ -14,7 +14,10 @@
 #import "businessViewController.h"//业务陌拜
 #import "TrackingViewController.h"
 #import "brandViewController.h"
+<<<<<<< HEAD
+=======
 #import "ManageViewController.h"//员工管理
+>>>>>>> 876704a6a3e52a5b3ff4a8bd5c91f0f606d39609
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -159,6 +162,8 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+    
+    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
       NSArray *arr= [responseObject valueForKey:@"logoImg"];
         NSMutableArray *array=[NSMutableArray array];
         for (NSDictionary *dic in arr) {
@@ -166,6 +171,24 @@
             [array addObject:Url];
         }
         self.loop.imageArray=array;
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -285,8 +308,12 @@
                         
                         break;
                     case 14:{
+<<<<<<< HEAD
+                  
+=======
                         ManageViewController *manageVC = [[ManageViewController alloc]init];
                         [self.navigationController pushViewController:manageVC animated:YES];
+>>>>>>> 876704a6a3e52a5b3ff4a8bd5c91f0f606d39609
                     }
                         break;
                     case 15:{

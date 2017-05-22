@@ -15,6 +15,8 @@
 
 #import "JinnLockTool.h"
 #import "JinnLockConfig.h"
+#import "USFmdbTool.h"
+#import "Userpas.h"
 
 @implementation JinnLockTool
 
@@ -27,7 +29,21 @@
  */
 + (BOOL)isGestureUnlockEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJinnLockGestureUnlockEnabled];
+    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+    NSArray *modals = [USFmdbTool queryData:fuzzyQuerySql];
+    if(modals.count>0){
+       Userpas *model =modals[0];
+        if (model.isopen==0) {
+           return NO;
+        }else{
+            return YES;
+        }
+        
+    }else{
+         return NO;
+    }
+
+//    return [[NSUserDefaults standardUserDefaults] boolForKey:kJinnLockGestureUnlockEnabled];
 }
 
 /**
@@ -48,7 +64,10 @@
  */
 + (NSString *)currentGesturePasscode
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kJinnLockPasscode];
+    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
+     NSArray *modals = [USFmdbTool queryData:fuzzyQuerySql];
+    Userpas *model =modals[0];
+    return model.password;
 }
 
 /**
@@ -58,12 +77,12 @@
  */
 + (void)setGesturePasscode:(NSString *)passcode
 {
+   
     [[NSUserDefaults standardUserDefaults] setObject:passcode forKey:kJinnLockPasscode];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - 指纹解锁管理
-
 /**
  *  是否支持指纹识别(系统级别的)
  *
@@ -75,7 +94,6 @@
     
     return [[[LAContext alloc] init] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
 }
-
 /**
  *  是否允许指纹解锁(应用级别的)
  *
@@ -85,7 +103,6 @@
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJinnLockTouchIdUnlockEnabled];
 }
-
 /**
  *  设置是否允许指纹解锁功能
  *

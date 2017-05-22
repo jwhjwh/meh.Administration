@@ -328,6 +328,8 @@
 		1FF3BAE91E9F564100E62149 /* branModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3BAE81E9F564100E62149 /* branModel.m */; };
 		1FF51CD51EC943A600011E00 /* EditbrandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF51CD41EC943A600011E00 /* EditbrandController.m */; };
 		1FF51CD81EC99EFB00011E00 /* ModifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF51CD71EC99EFB00011E00 /* ModifyController.m */; };
+		1FF5DDA51ED022AE002BE213 /* Userpas.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF5DDA41ED022AE002BE213 /* Userpas.m */; };
+		1FF5DDA81ED024F8002BE213 /* USFmdbTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF5DDA71ED024F8002BE213 /* USFmdbTool.m */; };
 		1FF7453F1E9CC07900BE2F08 /* UserCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7453E1E9CC07900BE2F08 /* UserCacheManager.m */; };
 		1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF745411E9CC08C00BE2F08 /* UserWebManager.m */; };
 		1FF745461E9CCBAB00BE2F08 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF745451E9CCBAB00BE2F08 /* AVOSCloud.framework */; };
@@ -1121,6 +1123,10 @@
 		1FF51CD41EC943A600011E00 /* EditbrandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditbrandController.m; sourceTree = "<group>"; };
 		1FF51CD61EC99EFB00011E00 /* ModifyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyController.h; sourceTree = "<group>"; };
 		1FF51CD71EC99EFB00011E00 /* ModifyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyController.m; sourceTree = "<group>"; };
+		1FF5DDA31ED022AE002BE213 /* Userpas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Userpas.h; sourceTree = "<group>"; };
+		1FF5DDA41ED022AE002BE213 /* Userpas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Userpas.m; sourceTree = "<group>"; };
+		1FF5DDA61ED024F8002BE213 /* USFmdbTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFmdbTool.h; sourceTree = "<group>"; };
+		1FF5DDA71ED024F8002BE213 /* USFmdbTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = USFmdbTool.m; sourceTree = "<group>"; };
 		1FF7453D1E9CC07900BE2F08 /* UserWebManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserWebManager.h; sourceTree = "<group>"; };
 		1FF7453E1E9CC07900BE2F08 /* UserCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCacheManager.m; sourceTree = "<group>"; };
 		1FF745401E9CC08C00BE2F08 /* UserCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCacheManager.h; sourceTree = "<group>"; };
@@ -1674,6 +1680,10 @@
 				1F0102081E5FC09600802571 /* LVFmdbTool.m */,
 				1F01020A1E5FC0C300802571 /* LVModel.h */,
 				1F01020B1E5FC0C300802571 /* LVModel.m */,
+				1FF5DDA61ED024F8002BE213 /* USFmdbTool.h */,
+				1FF5DDA71ED024F8002BE213 /* USFmdbTool.m */,
+				1FF5DDA31ED022AE002BE213 /* Userpas.h */,
+				1FF5DDA41ED022AE002BE213 /* Userpas.m */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -2475,8 +2485,10 @@
 		1F76A6F21E6965040063B3D7 /* yuangongguan */ = {
 			isa = PBXGroup;
 			children = (
+
 				620FC39A1ED035E500C4D8B3 /* ManageViewController.h */,
 				620FC39B1ED035E500C4D8B3 /* ManageViewController.m */,
+
 				1F5295D51E6A61CE005045AD /* GuanglixqVController.h */,
 				1F5295D61E6A61CE005045AD /* GuanglixqVController.m */,
 				1F5B13301E6AB77D00B6D8DC /* xiugaiViewController.h */,
@@ -3960,6 +3972,7 @@
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
 				1F62119D1E8CFFAF00F50851 /* EMVoiceConverter.mm in Sources */,
 				62656C541E529BC10085A2BD /* IQUIWindow+Hierarchy.m in Sources */,
+				1FF5DDA51ED022AE002BE213 /* Userpas.m in Sources */,
 				1F3FAA001EB9891700162940 /* JobcatController.m in Sources */,
 				1F6211FD1E8CFFB000F50851 /* EaseBubbleView+Video.m in Sources */,
 				1F6211C31E8CFFAF00F50851 /* EMSDWebImageManager.m in Sources */,
@@ -4082,6 +4095,7 @@
 				1F6211E41E8CFFB000F50851 /* UIViewController+HUD.m in Sources */,
 				1F6211D31E8CFFB000F50851 /* PSTCollectionViewFlowLayout.m in Sources */,
 				1F6211DC1E8CFFB000F50851 /* EaseSDKHelper.m in Sources */,
+				1FF5DDA81ED024F8002BE213 /* USFmdbTool.m in Sources */,
 				1F6211F81E8CFFB000F50851 /* EaseBubbleView+File.m in Sources */,
 				1F6211E61E8CFFB000F50851 /* EaseConvertToCommonEmoticonsHelper.m in Sources */,
 				62942BF71E68FD36003F3A84 /* CreateViewController.m in Sources */,

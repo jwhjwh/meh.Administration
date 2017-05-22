@@ -241,46 +241,53 @@
         [_deleteArrarys removeObject:[self.gameArrs[indexPath.section] objectAtIndex:indexPath.row]];
         if (_deleteArrarys.count==0) {
             _delButton.backgroundColor=[UIColor whiteColor];
+            self.isAllSelected = !self.isAllSelected;
         }
-        
         [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
            }
   }else{
       [_deleteArrarys removeObject:[self.gameArrs[indexPath.section] objectAtIndex:indexPath.row]];
       if (_deleteArrarys.count==0) {
           _delButton.backgroundColor=[UIColor whiteColor];
+              self.isAllSelected = !self.isAllSelected;
       }
-      
       [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
            }
+ 
 }
 -(void)allDelBtn{
     self.isAllSelected = !self.isAllSelected;
     if (self.gameArrs.count==1) {
-        _array=self.gameArrs[0];
+        _deleteArrarys=[NSMutableArray array];
+       _array=self.gameArrs[0];
         for (int i = 0; i<_array.count; i++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
             if (self.isAllSelected) {
                 [self.branTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [_deleteArrarys addObject:_array[i]];
                 [_delButton setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
                 _delButton.backgroundColor=GetColor(206, 175,219 ,1);
             }else{//反选
+                [_deleteArrarys removeAllObjects];
                 _delButton.backgroundColor =[UIColor whiteColor];
-                [_delButton setTitle:@"确定(0)" forState:UIControlStateNormal];
+                [_delButton setTitle:@"确定" forState:UIControlStateNormal];
                 [self.branTableView deselectRowAtIndexPath:indexPath animated:YES];
             }
         }
     }else{
+           _deleteArrarys=[NSMutableArray array];
         _array=self.gameArrs[1];
         for (int i = 0; i<_array.count; i++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:1];
             if (self.isAllSelected) {
                 [self.branTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [_deleteArrarys addObject:_array[i]];
                 [_delButton setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
                 _delButton.backgroundColor=GetColor(206, 175,219 ,1);
             }else{//反选
+                [_deleteArrarys removeAllObjects];
                 _delButton.backgroundColor =[UIColor whiteColor];
-                [_delButton setTitle:@"确定(0)" forState:UIControlStateNormal];
+                [_delButton setTitle:@"确定" forState:UIControlStateNormal];
                 [self.branTableView deselectRowAtIndexPath:indexPath animated:YES];
             }
         }
