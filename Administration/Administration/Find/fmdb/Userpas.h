@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface Userpas : NSObject
-@property (nonatomic, copy) NSString *userid;
-@property (nonatomic,assign)int  isopen;
+@property (nonatomic,copy) NSString *userid;
+@property (nonatomic,copy)NSString  *isopen;
 @property (nonatomic,copy ) NSString *password;
-+ (instancetype)modalWith:(NSString *)userid password:(NSString*)password isopen:(int)isopen;
++ (instancetype)modalWith:(NSString *)userid password:(NSString*)password isopen:(NSString *)isopen;
 @end

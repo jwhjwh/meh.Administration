@@ -216,7 +216,7 @@ BOOL isAllSelected;
         ProvinceModel *c = self.provinceNary[indexPath.row];
         cell.textLabel.highlightedTextColor = [UIColor blueColor];
         cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
-        
+
         cell.textLabel.text = c.fullname;
         return cell;
         

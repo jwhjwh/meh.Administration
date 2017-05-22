@@ -9,7 +9,7 @@
 #import "Userpas.h"
 
 @implementation Userpas
-+ (instancetype)modalWith:(NSString *)userid password:(NSString*)password isopen:(int)isopen{
++ (instancetype)modalWith:(NSString *)userid password:(NSString*)password isopen:(NSString*)isopen{
     Userpas *model = [[self alloc] init];
     model.userid = userid;
     model.password = password;
