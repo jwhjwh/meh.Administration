@@ -470,7 +470,7 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
                     [USFmdbTool deleteData:delesql];
                 }
                 
-                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:1];
+                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:@"YES"];
                 BOOL isInsert =  [USFmdbTool insertModel:models];
                 if (isInsert) {
                     NSLog(@"插入数据成功");
@@ -534,7 +534,7 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
                     NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
                     [USFmdbTool deleteData:delesql];
                 }
-                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:1];
+                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:@"YES"];
                 BOOL isInsert =  [USFmdbTool insertModel:models];
                 if (isInsert) {
                     NSLog(@"插入数据成功");
@@ -596,7 +596,7 @@ typedef NS_ENUM(NSInteger, JinnLockStep)
                     NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_userpas WHERE userid = %@",[USER_DEFAULTS  objectForKey:@"phone"]];
                     [USFmdbTool deleteData:delesql];
                 }
-                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:0];
+                Userpas *models = [Userpas modalWith:[USER_DEFAULTS  objectForKey:@"phone"] password:passcode isopen:@"NO"];
                 BOOL isInsert =  [USFmdbTool insertModel:models];
                 if (isInsert) {
                     NSLog(@"插入数据成功");

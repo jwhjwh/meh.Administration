@@ -28,12 +28,12 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor RGBNav];
+    self.navigationController.navigationBar.tintColor = [UIColor RGBNav];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets=NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+   
     self.view.backgroundColor = [UIColor whiteColor];
     [self addSubViewS];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -52,6 +52,9 @@
 }
 -(void)addSubViewS{
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.frame.size.width, 50*kHeight)];
+    UIView *searchBarTextField = [[_searchBar.subviews.firstObject subviews] firstObject];
+    
+    searchBarTextField.tintColor = [UIColor redColor];
     self.searchBar.placeholder=@"搜索";
     //placeholder(self.searchBar);
     self.searchBar.searchBarStyle=UISearchBarStyleMinimal;
@@ -125,7 +128,6 @@
         NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
         [LVFmdbTool deleteData:delesql];
     }
-
     LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.nameid];
     BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {

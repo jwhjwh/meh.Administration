@@ -33,7 +33,7 @@
     NSArray *modals = [USFmdbTool queryData:fuzzyQuerySql];
     if(modals.count>0){
        Userpas *model =modals[0];
-        if (model.isopen==0) {
+        if ([model.isopen isEqualToString:@"NO"]) {
            return NO;
         }else{
             return YES;

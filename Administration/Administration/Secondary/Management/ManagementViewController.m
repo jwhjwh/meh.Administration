@@ -146,7 +146,7 @@
     
     if ([cell.textLabel.text  isEqual: @"个人信息"]) {
        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-       
+       cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     };
     return cell;

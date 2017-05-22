@@ -14,6 +14,7 @@
 #import<BaiduMapAPI_Map/BMKMapComponent.h>
 
 #import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+#import "JinnLockViewController.h"
 @interface ViewController ()<UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
 {
     BMKLocationService *_locService;  //定位
@@ -350,7 +351,18 @@
 //            if (error==nil) {
 //                NSLog(@"注册成功");
 //            }
-            [ZxdObject rootController];
+    
+            if ([JinnLockTool isGestureUnlockEnabled])
+            {
+                JinnLockViewController *lockViewController = [[JinnLockViewController alloc] initWithDelegate:nil
+                                                                                                         type:JinnLockTypeVerify
+                                                                                                   appearMode:JinnLockAppearModePresent];
+                  UIWindow *window = [UIApplication sharedApplication].delegate.window;
+              window.rootViewController =lockViewController;
+            }else{
+                
+                [ZxdObject rootController];
+            }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                   [self startLocation];
                 [[EMClient sharedClient] loginWithUsername:@"zhangchenchong"
