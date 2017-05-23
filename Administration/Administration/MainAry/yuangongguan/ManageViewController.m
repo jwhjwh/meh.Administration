@@ -43,11 +43,40 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addViewremind{
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight-150)];
+    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
+    [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    //防止图片变灰
+    _sousuoBtn.adjustsImageWhenHighlighted = NO;
+    _sousuoBtn.layer.masksToBounds = YES;
+    _sousuoBtn.layer.cornerRadius = 8.0;
+    [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
+    [self.view addSubview:_sousuoBtn];
+    [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo (self.view.mas_left).offset(10);
+        make.right.mas_equalTo(self.view.mas_right).offset(-10);
+        make.top.mas_equalTo(self.view.mas_top).offset(70);
+        make.height.mas_equalTo(40);
+    }];
+
+    self.tableView = [[UITableView alloc]init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_sousuoBtn.mas_bottom).offset(10);
+        make.right.mas_equalTo(self.view.mas_right).offset(0);
+        make.left.mas_equalTo(self.view.mas_left).offset(0);
+        make.height.mas_offset(200);
+    }];
+    
+}
+
+-(void)Touchsearch{
+    //SearchViewController
+    SearchViewController *SearchVC = [[SearchViewController alloc]init];
+    [self.navigationController showViewController:SearchVC sender:nil];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -86,7 +115,7 @@
     /**
      *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
      */
-     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = _nameArrs[indexPath.section][indexPath.row];
     cell.image.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@", _gameArrs[indexPath.section][indexPath.row]]];
@@ -101,6 +130,21 @@
 {
     
     return 50.0f;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section ==0) {
+        if (indexPath.row ==0) {
+            NSLog(@"创建员工账号");
+        }
+    }else{
+        if (indexPath.row ==0) {
+            NSLog(@"按职位查看");
+        }else{
+            NSLog(@"按部门查看");
+        }
+    }
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
