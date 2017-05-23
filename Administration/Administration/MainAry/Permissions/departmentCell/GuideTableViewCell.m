@@ -21,7 +21,7 @@
     // 设置圆角半径
     [self addSubview:_image];
     _titleLabel=[[UILabel alloc]init];
-    _titleLabel.font=[UIFont systemFontOfSize:20];
+
     
     [self addSubview:_titleLabel];
     

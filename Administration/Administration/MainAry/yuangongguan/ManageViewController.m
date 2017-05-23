@@ -42,12 +42,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addViewremind{
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight-150)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.scrollEnabled =NO; //设置tableview 不能滚动
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
-    
+   
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -62,6 +63,9 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     view.tintColor = GetColor(230,230,230,1);
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.textColor = [UIColor grayColor];
+    header.textLabel.font = [UIFont systemFontOfSize:14.0f];
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -91,9 +95,7 @@
     cell.titleLabel.text = _nameArrs[indexPath.section][indexPath.row];
     cell.image.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@", _gameArrs[indexPath.section][indexPath.row]]];
     cell.backgroundColor = [UIColor clearColor];
-
     return cell;
-    
 }
 
 #pragma mark - UITableViewDelegate
