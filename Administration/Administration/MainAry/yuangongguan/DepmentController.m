@@ -193,6 +193,7 @@
     DirtmsnaModel *model = _dataArray[indexPath.row];
     GuanglixqVController *guangVC=[[GuanglixqVController alloc]init];
     guangVC.uresID =model.usersid;
+    guangVC.name =_str;
     [self.navigationController pushViewController:guangVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {

@@ -45,6 +45,7 @@
     textFleid.layer.borderWidth = 2.0;
     textFleid.secureTextEntry = YES;
     [self.view addSubview:textFleid];
+    
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -58,26 +59,24 @@
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"user":_passtStr,@"userid":_uresID,@"mobile":_callNum};
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-            
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
-             
             } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                 alertView.resultIndex = ^(NSInteger index){
                     ViewController *loginVC = [[ViewController alloc] init];
-                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                    [self presentViewController:loginNavC animated:YES completion:nil];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
             }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                 alertView.resultIndex = ^(NSInteger index){
                     ViewController *loginVC = [[ViewController alloc] init];
-                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                    [self presentViewController:loginNavC animated:YES completion:nil];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
             }            
@@ -93,7 +92,4 @@
     [super didReceiveMemoryWarning];
    
 }
-
-
-
 @end

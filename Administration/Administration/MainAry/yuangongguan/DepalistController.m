@@ -65,7 +65,6 @@
     UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     view.backgroundColor =GetColor(201, 201, 201, 1);
     return view;
-    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {   if(_arr.count>0){

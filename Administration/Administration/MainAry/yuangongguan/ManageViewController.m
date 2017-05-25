@@ -66,7 +66,7 @@
         make.height.mas_equalTo(40);
     }];
 
-    self.tableView = [[UITableView alloc]init];
+    self.tableView = [[UITableView alloc]init];    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.scrollEnabled =NO; //设置tableview 不能滚动
@@ -86,6 +86,7 @@
     SearchViewController *SearchVC = [[SearchViewController alloc]init];
     [self.navigationController showViewController:SearchVC sender:nil];
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
@@ -102,6 +103,17 @@
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     header.textLabel.textColor = [UIColor grayColor];
     header.textLabel.font = [UIFont systemFontOfSize:14.0f];
+}
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
+    view.tintColor = GetColor(230,230,230,1);
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{   if(_gameArrs.count>0){
+    if (section==1) {
+        return 2;
+    }
+}
+    return 0;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -129,7 +141,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = _nameArrs[indexPath.section][indexPath.row];
     cell.image.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@", _gameArrs[indexPath.section][indexPath.row]]];
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor redColor];
     return cell;
 }
 
