@@ -13,11 +13,14 @@
 
 @property (strong,nonatomic) NSArray *ywAry;
 @property (strong,nonatomic) NSArray *numAry;
+@property (strong,nonatomic)  NSArray*powerAry;
 @property (strong,nonatomic) UIView* viewbuton;
 @property (strong,nonatomic) UIButton* buttonname;
 @property (strong,nonatomic) UIButton* qdbutton;
 @property (strong,nonatomic) UIImageView * gouimage1;
 @property (strong,nonatomic) NSMutableArray *imageAry;
+
+@property (strong,nonatomic) NSMutableArray *buttonAry;
 
 @property (strong,nonatomic) NSMutableArray *NSywAry;//业务权限数组
 @property (strong,nonatomic) NSMutableArray *NSmdAry;//美导权限数组
@@ -75,7 +78,8 @@
  */
 
 @property (assign,nonatomic) int copde;
-- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode numarr:(NSArray *)numarr;
+- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode numarr:(NSArray *)numarr powerAry:(NSArray*)powerAry;
+- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode numarr:(NSArray *)numarr ;
 -(UIView *)viewww:(CGFloat)xx yy:(CGFloat)yy v:(UIView*)v;
 -(UIView *)viewbuton:(CGFloat)xx yy:(CGFloat)yy names:(NSArray*)names v:(UIView*)v tagg:(int)tagg;
 @end

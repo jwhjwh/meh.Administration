@@ -349,6 +349,7 @@
 		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
+		620D3A171ED3CA5900D804A7 /* CreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620D3A161ED3CA5900D804A7 /* CreaViewController.m */; };
 		620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FC39B1ED035E500C4D8B3 /* ManageViewController.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1163,6 +1164,8 @@
 		6207312A1E5D6F9100BCF51C /* EditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModel.m; sourceTree = "<group>"; };
 		620A8AC91E6575BE005CA222 /* DateEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateEditViewController.h; sourceTree = "<group>"; };
 		620A8ACA1E6575BE005CA222 /* DateEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateEditViewController.m; sourceTree = "<group>"; };
+		620D3A151ED3CA5900D804A7 /* CreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreaViewController.h; sourceTree = "<group>"; };
+		620D3A161ED3CA5900D804A7 /* CreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreaViewController.m; sourceTree = "<group>"; };
 		620FC39A1ED035E500C4D8B3 /* ManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageViewController.h; sourceTree = "<group>"; };
 		620FC39B1ED035E500C4D8B3 /* ManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageViewController.m; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2485,10 +2488,8 @@
 		1F76A6F21E6965040063B3D7 /* yuangongguan */ = {
 			isa = PBXGroup;
 			children = (
-
 				620FC39A1ED035E500C4D8B3 /* ManageViewController.h */,
 				620FC39B1ED035E500C4D8B3 /* ManageViewController.m */,
-
 				1F5295D51E6A61CE005045AD /* GuanglixqVController.h */,
 				1F5295D61E6A61CE005045AD /* GuanglixqVController.m */,
 				1F5B13301E6AB77D00B6D8DC /* xiugaiViewController.h */,
@@ -3400,6 +3401,8 @@
 				62942BF91E6948F3003F3A84 /* SelectAlert.m */,
 				62942BF51E68FD36003F3A84 /* CreateViewController.h */,
 				62942BF61E68FD36003F3A84 /* CreateViewController.m */,
+				620D3A151ED3CA5900D804A7 /* CreaViewController.h */,
+				620D3A161ED3CA5900D804A7 /* CreaViewController.m */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -4047,6 +4050,7 @@
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
 				1F6212021E8CFFB000F50851 /* EaseImageView.m in Sources */,
 				1F806EA61E7F82CF00BF57EE /* RobotManager.m in Sources */,
+				620D3A171ED3CA5900D804A7 /* CreaViewController.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
 				1F6211AB1E8CFFAF00F50851 /* MJRefreshBackNormalFooter.m in Sources */,
 				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,

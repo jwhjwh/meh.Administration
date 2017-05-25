@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSMutableArray *topAry;
 @property (strong,nonatomic) NSMutableArray *topNameAry;
 @property (strong,nonatomic) NSMutableArray *numAry;
+@property (strong,nonatomic) NSMutableArray *powerAry;
 
 @end
 
@@ -31,12 +32,11 @@
     _topAry = [[NSMutableArray alloc]init];
      _topNameAry = [[NSMutableArray alloc]init];
     _numAry = [[NSMutableArray alloc]init];
+    _powerAry = [[NSMutableArray alloc]init];
     
-    //self.view.backgroundColor = [UIColor whiteColor];
-    //[self subLabelUI];
     [self reoirtNetWork];
     _guiiiiidView = [[GuiiiiiDView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    //[self.view addSubview:_guiiiiidView];
+   
     
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -78,13 +78,26 @@
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-    for (int i = 0; i<_topAry.count; i++) {
-        ZHTBtnView *zhtbtnview = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_ywAry[i] coode:[_topAry[i] intValue] numarr:_numAry[i]];
-        
-        zhtbtnview.frame = CGRectMake(0,(180+20)*i, self.view.frame.size.width, 180);
-        [backScroll addSubview:zhtbtnview];
+    if (_topAry.count==0) {
+        [self.view addSubview:_guiiiiidView];
+    }else{
+        if (_powerAry.count == 0) {
+            for (int i = 0; i<_topAry.count; i++) {
+                ZHTBtnView *zhtbtnview = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_ywAry[i] coode:[_topAry[i] intValue] numarr:_numAry[i]];
+                zhtbtnview.frame = CGRectMake(0,(180+20)*i, self.view.frame.size.width, 180);
+                [backScroll addSubview:zhtbtnview];
+            }
+        }else{
+            for (int i = 0; i<_topAry.count; i++) {
+                ZHTBtnView *zhtbtnview = [[ZHTBtnView alloc]initWithFrame:CGRectZero arr:_ywAry[i] coode:[_topAry[i] intValue] numarr:_numAry[i] powerAry:_powerAry[i]];
+                zhtbtnview.frame = CGRectMake(0,(180+20)*i, self.view.frame.size.width, 180);
+                [backScroll addSubview:zhtbtnview];
+        }
+       
     }
     
+    
+    }
 }
 -(void)reoirtNetWork{
   
@@ -106,6 +119,9 @@
                 [ _topAry addObject:model.num];
                [_topNameAry addObject:model.Name];
                
+               NSArray*atry =[model.power componentsSeparatedByString:@","];
+               [_powerAry addObject:atry];
+               
                NSMutableArray *zwArr=[NSMutableArray array];
                NSMutableArray *numArr=  [NSMutableArray array];
                
@@ -117,8 +133,6 @@
                }
                [_ywAry addObject:zwArr];
                [_numAry addObject:numArr];
-//               NSLog(@"_numAry:%@",_numAry);
-//               NSLog(@"_ywAry:%@",_ywAry);
            }
            [self subLabelUI];
        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
