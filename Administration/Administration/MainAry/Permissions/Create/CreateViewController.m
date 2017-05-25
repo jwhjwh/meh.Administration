@@ -402,7 +402,7 @@
             if (_arr.count == 7) {
                 [infonTableview beginUpdates];
                 _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
-                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]];
+                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:0]];
                 [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
                 [infonTableview endUpdates];
             }

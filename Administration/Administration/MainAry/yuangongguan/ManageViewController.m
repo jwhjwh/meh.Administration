@@ -8,8 +8,13 @@
 
 #import "ManageViewController.h"
 #import "GuideTableViewCell.h"
+
 #import "DepalistController.h"
 #import "JoblistController.h"
+
+#import "CreaViewController.h"
+#import "CreateViewController.h"
+
 @interface ManageViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (nonatomic,retain)UITableView *tableView;
@@ -139,6 +144,9 @@
     if (indexPath.section ==0) {
         if (indexPath.row ==0) {
             NSLog(@"创建员工账号");
+            CreaViewController *creaVC = [[CreaViewController alloc]init];
+            //CreateViewController *creaVC = [[CreateViewController alloc]init];
+            [self.navigationController pushViewController:creaVC animated:YES];
         }
     }else{
         if (indexPath.row ==0) {

@@ -125,7 +125,7 @@
         _selectTableView.delegate = self;
         _selectTableView.dataSource = self;
     }
-    _selectTableView.scrollEnabled = NO;
+   // _selectTableView.scrollEnabled = NO;
     return _selectTableView;
 }
 

@@ -48,6 +48,88 @@
     }
     return self;
 }
+- (instancetype)initWithFrame:(CGRect)frame arr:(NSArray *)arr coode:(int)coode numarr:(NSArray *)numarr powerAry:(NSArray*)powerAry
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        //布局子视图
+        _ywAry =arr;
+        _numAry = numarr;
+        _copde = coode;
+        _powerAry = powerAry;
+        [self subViewUI];
+        self.backgroundColor = [UIColor whiteColor];
+        _NSywAry = [[NSMutableArray alloc]init];
+        _NSmdAry = [[NSMutableArray alloc]init];
+        _NSwlAry = [[NSMutableArray alloc]init];
+        _NSkfAry = [[NSMutableArray alloc]init];
+        _NSckAry = [[NSMutableArray alloc]init];
+        _NScnAry = [[NSMutableArray alloc]init];
+        _NScwjlAry = [[NSMutableArray alloc]init];
+        _NSwljlAry = [[NSMutableArray alloc]init];
+        _NSkfjlAry = [[NSMutableArray alloc]init];
+        _NSscjlAry = [[NSMutableArray alloc]init];
+        _NSywjlAry = [[NSMutableArray alloc]init];
+        _NSkjAry = [[NSMutableArray alloc]init];
+        
+        switch (_copde) {
+            case 5:
+                
+                [_NSywAry addObjectsFromArray: powerAry];
+                break;
+            case 2:
+                
+                [_NSmdAry addObjectsFromArray: powerAry];
+                break;
+            case 4:
+                
+                [_NSwlAry addObjectsFromArray:powerAry];
+                break;
+            case 3:
+                [_NSkfAry addObjectsFromArray:powerAry];
+                break;
+            case 14:
+    
+                [_NSckAry addObjectsFromArray:powerAry];
+                break;
+            case 16:
+               
+                [_NSkjAry addObjectsFromArray:powerAry];
+                break;
+            case 17:
+                
+                [_NScnAry addObjectsFromArray:powerAry];
+                break;
+            case 15:
+               
+                [_NScwjlAry addObjectsFromArray:powerAry];
+                break;
+            case 13:
+               
+                [_NSwljlAry addObjectsFromArray:powerAry];
+                break;
+            case 12:
+                
+                [_NSkfjlAry addObjectsFromArray:powerAry];
+                break;
+            case 6:
+                
+                [_NSscjlAry addObjectsFromArray:powerAry];
+                break;
+            case 8:
+                
+                [_NSywjlAry addObjectsFromArray:powerAry];
+                break;
+                
+            default:
+                break;
+        }
+        
+
+        
+    }
+    return self;
+}
 -(void)subViewUI{
     UILabel *xiaoBT = [[UILabel alloc]init];
     switch (_copde) {
@@ -174,7 +256,7 @@
         if (_copde == 3) {
             make.left.mas_equalTo(self.mas_left).offset(40);
             make.right.mas_equalTo(self.mas_right).offset(-40);
-        }if (_ywAry.count ==1) {
+        }else if (_ywAry.count ==1) {
             make.centerX.mas_equalTo(self.mas_centerX).offset(0);
             make.width.mas_offset(1);
         }
@@ -247,7 +329,7 @@
         make.height.mas_equalTo(30);
     }];
     _imageAry = [[NSMutableArray alloc]init];
-    
+    _buttonAry = [[NSMutableArray alloc]init];
     for (int i = 0; i<_ywAry.count; i ++) {
         _buttonname= [[UIButton alloc]init];
         [_buttonname setTitle:_ywAry[i] forState:UIControlStateNormal];
@@ -262,22 +344,52 @@
             _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
         }
         _buttonname.tag = i;
-        _buttonname.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        
         _buttonname.layer.borderWidth = 1.0f;
         _buttonname.layer.cornerRadius = 2.0f;
         _buttonname.layer.masksToBounds = YES;
         [_buttonname setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         [_buttonname addTarget:self action:@selector(BtnClick:)forControlEvents:UIControlEventTouchUpInside];
+        
+        [_buttonAry addObject:_buttonname];
        _gouimage1 = [[UIImageView alloc]init];
+        if (_copde == 3) {
+            _gouimage1.frame = CGRectMake(((Scree_width-80)/5)-10, 15, 10, 10);
+        }else
+        {
         _gouimage1.frame = CGRectMake(((Scree_width-80)/4)-10, 15, 10, 10);
+        }
+        
         _gouimage1.tag= i;
-        _gouimage1.image = [UIImage imageNamed:@""];
+        
         [_imageAry addObject:_gouimage1];
+        
+        _buttonname.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        _gouimage1.image = [UIImage imageNamed:@""];
+        
         [_buttonname addSubview:_gouimage1];
         [_viewbuton addSubview:_buttonname];
     }
-    
+    for (int i = 0; i<_powerAry.count; i++) {
+        for (NSString *strr in _powerAry) {
+            NSString *str3 = [strr stringByReplacingOccurrencesOfString: @" " withString:@""];
+            NSInteger num = [str3 integerValue];
+            NSNumber *nums = @(num);
+            BOOL isbool = [_numAry containsObject: nums];
+            if (isbool == YES) {
+                for (int j =0; j<_numAry.count; j++) {
+                    if (_numAry[j]==nums) {
+                        _gouimage1 = _imageAry[j];
+                        _buttonname = _buttonAry[j];
+                        _buttonname.layer.borderColor = [[UIColor orangeColor] CGColor];
+                        _gouimage1.image = [UIImage imageNamed:@"xz_ico1"];
+                    }
+                }
+                
+            }
+        }
+    }
     
         [self xianViewUI];
     return _viewbuton;
@@ -311,6 +423,7 @@
     }];
 }
 -(void)updatenetworkingNumarr:(int )power numarr:(NSArray*)numarr{
+    
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/updateReportPermission.action", KURLHeader];
     NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *poower = [NSString stringWithFormat:@"%d", power];
@@ -335,51 +448,64 @@
 -(void)qdbtnClick:(UIButton *)btn{
     switch (_viewbuton.tag) {
         case 5:
-            [self updatenetworkingNumarr:5 numarr:_NSywAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                 [self updatenetworkingNumarr:5 numarr:_NSywAry];
+            }
             break;
         case 2:
-            NSLog(@"点的是美导的确定");
-            [self updatenetworkingNumarr:2 numarr:_NSmdAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:2 numarr:_NSmdAry];
+            }
             break;
         case 4:
-            NSLog(@"点的是物流的确定");
-            [self updatenetworkingNumarr:4 numarr:_NSwlAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:4 numarr:_NSwlAry];
+            }
             break;
         case 3:
-            NSLog(@"点的是客服的确定");
-            [self updatenetworkingNumarr:3 numarr:_NSkfAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:3 numarr:_NSkfAry];
+            }
             break;
         case 14:
-            NSLog(@"点的是仓库的确定");
-            [self updatenetworkingNumarr:14 numarr:_NSckAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:14 numarr:_NSckAry];
+            }
             break;
         case 16:
-            NSLog(@"点的是会计的确定");
-            [self updatenetworkingNumarr:16 numarr:_NSkjAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                 [self updatenetworkingNumarr:16 numarr:_NSkjAry];
+            }
             break;
         case 17:
-            NSLog(@"点的是出纳的确定");
-            [self updatenetworkingNumarr:17 numarr:_NScnAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:17 numarr:_NScnAry];
+            }
             break;
         case 15:
-            NSLog(@"点的是财务经理的确定");
-            [self updatenetworkingNumarr:15 numarr:_NScwjlAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:15 numarr:_NScwjlAry];
+            }
             break;
         case 13:
-            NSLog(@"点的是物流经理的确定");
-            [self updatenetworkingNumarr:13 numarr:_NSwljlAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:13 numarr:_NSwljlAry];
+            }
             break;
         case 12:
-            NSLog(@"点的是客服经理的确定");
-            [self updatenetworkingNumarr:12 numarr:_NSkfjlAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:12 numarr:_NSkfjlAry];
+            }
             break;
         case 6:
-            NSLog(@"点的是市场经理的确定");
-            [self updatenetworkingNumarr:6 numarr:_NSscjlAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:6 numarr:_NSscjlAry];
+            }
             break;
         case 8:
-            NSLog(@"点的是业务经理的确定");
-            [self updatenetworkingNumarr:8 numarr:_NSywjlAry];
+            if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
+                [self updatenetworkingNumarr:8 numarr:_NSywjlAry];
+            }
             break;
         default:
             break;
@@ -579,7 +705,7 @@
             [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
             break;
         case 4:
-            _gouimage1 = _imageAry[3];
+            _gouimage1 = _imageAry[4];
             [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
             break;
         default:
@@ -592,6 +718,7 @@
         gouimageback.image = [UIImage imageNamed:@""];
         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         [nsary removeObject:_numAry[btn.tag]];
+        NSLog(@"取消选择的职位:%@",nsary);
         if (nsary.count == 0) {
             [self buttonligbackcolor];
         }
@@ -599,6 +726,7 @@
         gouimageback.image = [UIImage imageNamed:@"xz_ico1"];
         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
         [nsary addObject:_numAry[btn.tag]];
+        NSLog(@"选择的职位:%@",nsary);
         [self buttonblueColorbackcolor];
     }
 
