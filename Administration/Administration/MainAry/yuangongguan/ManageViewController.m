@@ -8,7 +8,8 @@
 
 #import "ManageViewController.h"
 #import "GuideTableViewCell.h"
-
+#import "DepalistController.h"
+#import "JoblistController.h"
 @interface ManageViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (nonatomic,retain)UITableView *tableView;
@@ -141,9 +142,12 @@
         }
     }else{
         if (indexPath.row ==0) {
-            NSLog(@"按职位查看");
+            JoblistController *Joblist=[[JoblistController alloc]init];
+            [self.navigationController pushViewController:Joblist animated:YES];
+        
         }else{
-            NSLog(@"按部门查看");
+            DepalistController *DepVC=[[DepalistController alloc]init];
+            [self.navigationController pushViewController:DepVC animated:YES];
         }
     }
 

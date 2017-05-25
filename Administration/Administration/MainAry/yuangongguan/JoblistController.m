@@ -1,28 +1,28 @@
 //
-//  DepartController.m
+//  JoblistController.m
 //  Administration
 //
-//  Created by zhang on 2017/4/26.
+//  Created by zhang on 2017/5/23.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "DepartController.h"
-#import "BrandsetController.h"
-#import "OtherDeparController.h"
-#import "branModel.h"
-@interface DepartController ()<UITableViewDataSource,UITableViewDelegate>
+#import "JoblistController.h"
+#import "DepmentController.h"
+#import "SetModel.h"
+@interface JoblistController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
     NSInteger indexID;
 }
 @property (nonatomic,retain)NSMutableArray *arr;
+@property (nonatomic,strong)NSMutableArray *indexArray;
 @end
 
-@implementation DepartController
+@implementation JoblistController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"部门设置";
+    self.title=@"按职位查看";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -40,39 +40,34 @@
 }
 -(void)InterTableUI
 {
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+49) style:UITableViewStylePlain];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
     [ZXDNetworking setExtraCellLineHidden:infonTableview];
 }
-
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    view.tintColor = GetColor(230,230,230,1);
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.textColor = [UIColor grayColor];
+    header.textLabel.font = [UIFont systemFontOfSize:14.0f];
+}
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString * str = [NSString stringWithFormat:@"  %@",_indexArray[section]];
+    return str;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if(_arr.count>0){
-        return 1;
+    if (_arr.count>0) {
+        return 30;
     }
     return 0;
 }
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    view.tintColor =  GetColor(201, 201, 201, 1);
 
-}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
     return _arr.count;
-}
-- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
-    view.backgroundColor =GetColor(201, 201, 201, 1);
-    return view;
-    
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{   if(_arr.count>0){
-      return 2;
-    }
-      return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -81,7 +76,7 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-   
+    
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -90,47 +85,44 @@
     UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell ==nil)
     {
-    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-      branModel *modld = _arr[indexPath.row];
-    cell.textLabel.text =modld.Name;
+    SetModel *modld = _arr[indexPath.row];
+    cell.textLabel.text =modld.NewName;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        branModel *modld = _arr[indexPath.row];
-        indexID = modld.Num.integerValue;
-    if(indexID==1){
-        //品牌部设置
-        BrandsetController *brandVC=[[BrandsetController alloc]init];
-        brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
-        [self.navigationController pushViewController:brandVC animated:YES];
-    }else{
-        OtherDeparController *brandVC=[[OtherDeparController alloc]init];
-        brandVC.numstr=[NSString stringWithFormat:@"%ld",(long)indexID];
-        brandVC.sting =[modld.Name substringToIndex:3];;
-        [self.navigationController pushViewController:brandVC animated:YES];
-    }
+     SetModel *modld = _arr[indexPath.row];
+    DepmentController * DepmentCV=[[DepmentController alloc]init];
+    DepmentCV.str=modld.NewName;
+    DepmentCV.Numstr=modld.num;
+
+    [self.navigationController pushViewController:DepmentCV animated:YES];
+
 }
 -(void)getNetworkData{
-    NSString *uStr =[NSString stringWithFormat:@"%@manager/queryPositionSet.action",KURLHeader];
+    NSString *uStr =[NSString stringWithFormat:@"%@manager/checkPosition.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-    
+        
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *arr = [responseObject valueForKey:@"list"];
+            NSArray *arr = [responseObject valueForKey:@"list2"];
             _arr=[NSMutableArray array];
             for (NSDictionary *dic in arr) {
-                branModel *modld=[[branModel alloc]init];
+                SetModel *modld=[[SetModel alloc]init];
                 [modld setValuesForKeysWithDictionary:dic];
                 [_arr addObject:modld];
             }
-           
+            if (_arr.count>0) {
+                _indexArray=[NSMutableArray arrayWithObjects:@"职位列表", nil];
+                infonTableview.emptyView.hidden = YES;
+            }
             [infonTableview reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
@@ -178,4 +170,5 @@
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
 }
+
 @end

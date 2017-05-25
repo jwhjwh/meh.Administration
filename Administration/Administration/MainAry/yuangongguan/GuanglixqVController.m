@@ -16,6 +16,7 @@
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
 @property (nonatomic,retain)NSArray *arr;
+@property (nonatomic,retain)NSMutableArray *departarr;
 @property (nonatomic,retain)UIImageView *TXImage;
 @property (nonatomic,retain)NSString *logImage;//头像
 @property (nonatomic,retain)NSString *callNum;//电话
@@ -35,7 +36,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+49) style:UITableViewStylePlain];
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];
@@ -49,14 +50,29 @@
 {
     return _arr.count;
 }
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    view.tintColor = GetColor(230,230,230,1);
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.textColor = [UIColor grayColor];
+    header.textLabel.font = [UIFont systemFontOfSize:14.0f];
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
     return [_arr[section]count];
 }
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+   
+    if(section==1){
+         return @" 职位";
+    }
+    return nil;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{ if (section == 1 ){
-    return 0;
+{ if (section == 0 ||section == 1){
+    return 30;
+}else if(section == 4){
+     return 0;
 }
     return 10;
 }
@@ -73,6 +89,14 @@
     if (cell == nil) {
         cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
+    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
+     if (indexPath.section==4) {
+        cell.imageView.image=[UIImage imageNamed:@"location_ico"];
+        cell.textLabel.text=_arr[indexPath.section][indexPath.row];
+    }else{
+        cell.mingLabel.text=_arr[indexPath.section][indexPath.row];
+        
+    }
     if (indexPath.section==0) {
         _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
         [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
@@ -85,24 +109,20 @@
         tapSingleGR.numberOfTapsRequired = 1; //设置单击几次才触发方法
         [_TXImage addGestureRecognizer:tapSingleGR];
         
-    }
-    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
-    
-    cell.mingLabel.text=_arr[indexPath.section][indexPath.row];
-    
-    if (indexPath.section>0) {
+    }else if (indexPath.section==1) {
         if (indexPath.row==0) {
             UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-60,10,50, 30)];
             label.text=_state;
             label.font=[UIFont systemFontOfSize:14];
             [cell addSubview:label];
         }
-        cell.xingLabel.text=[NSString stringWithFormat:@"%@",_infoArray[indexPath.section-1][indexPath.row]];
-        if (indexPath.row>2) {
-        cell.mingLabel.font=[UIFont systemFontOfSize:17];
-        }
+        cell.xingLabel.text=[NSString stringWithFormat:@"%@",_infoArray[indexPath.row]];
+    }else  if (indexPath.section==2) {
+        cell.xingLabel.text=[NSString stringWithFormat:@"%@",_departarr[indexPath.row]];
     }
-    
+
+   
+  
     return cell;
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -126,7 +146,6 @@
                 xiugaiVC.callNum=_callNum;
                 [self.navigationController pushViewController:xiugaiVC animated:YES];
             }
-                
                 break;
             case 5:{
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"确定要删除该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
@@ -144,15 +163,24 @@
     }
 }
 -(void)loadData{
-    NSString *uStr =[NSString stringWithFormat:@"%@user/queryinfo.action",KURLHeader];
+    NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserBasicInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":_uresID};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"id":_uresID};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
       
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             EditModel *model = [[EditModel alloc]init];
-            [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
+            _departarr=[NSMutableArray array];
+            for (NSDictionary *dic in responseObject[@"list2"]) {
+            [model setValuesForKeysWithDictionary:[NSDictionary changeType:dic]];
+                if ([model.departmentName isEqualToString:@""]) {
+                    model.departmentName=@"未分配";
+                }
+                [_departarr addObject:model.NewName];
+                [_departarr addObject:model.departmentName];
+            }
             model.birthday = [model.birthday substringToIndex:10];
             _logImage=model.icon;
             _callNum=[NSString stringWithFormat:@"%@",model.account];
@@ -162,44 +190,13 @@
             }else{
                 _state=@"被冻结";
             }
-            _arr=@[@[@"头像"],@[@"账号",@"职位",@"真实姓名",@"冻结账户",@"重置密码",@"删除账号"]];
-            switch (model.roleId.intValue) {
-                case 1:
-                   model.rname=@"老板";
-                    break;
-                case 2:
-                    //市场美导
-                    model.rname=@"市场美导";
-                    break;
-                case 3:
-                    //内勤人员
-                    model.rname=@"内勤";
-                    break;
-                case 4:
-                    // 物流
-               model.rname=@"物流";
-                    break;
-                case 5:
-                    //业务
-              model.rname=@"业务";
-                    break;
-                case 6:
-                    // 品牌经理
-                model.rname=@"品牌经理";
-                    break;
-                case 7:
-                    //行政管理员
-                  model.rname=@"行政";
-                    break;
-                case 8:
-                    //业务经理
-                 model.rname=@"业务经理";
-                    break;
-                default:
-                    break;
+            NSMutableArray *array=[NSMutableArray array];
+            for (int i=0;[responseObject[@"list2"]count]>i ; i++) {
+                [array addObject:@"职位"];
+                [array addObject:@"所属部门"];
             }
-        NSArray *arr=@[model.account,model.rname,model.name,@"",@"",@""];
-           _infoArray = [[NSMutableArray alloc]initWithObjects:arr,nil];
+        _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
+        _infoArray = [[NSMutableArray alloc]initWithObjects:model.account,model.name,nil];
 
             [self.infonTableview reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
@@ -266,7 +263,25 @@
     }view:self.view MBPro:YES];
 }
 
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([self.infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.infonTableview setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.infonTableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 
 
 -(void)imageViewGestureAction:(UIGestureRecognizer *)tap{

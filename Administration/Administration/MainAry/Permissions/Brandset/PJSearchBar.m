@@ -35,7 +35,6 @@
         [blankString appendString:@" "];
     }
     self.placeholder = blankString;
-        placeholder(placeholder);
     self.backgroundColor = [UIColor whiteColor];
     self.searchTextField = [self valueForKey:@"searchField"];
     self.searchTextField.delegate = self;
@@ -43,7 +42,6 @@
     self.searchLabel.textColor = [UIColor colorWithWhite:0.418 alpha:0.650];
     self.searchLabel.font = [UIFont systemFontOfSize:14];
     self.searchLabel.text = placeholder;
-    placeholder(self.searchLabel);
     [self.searchTextField addSubview:self.searchLabel];
 }
 
