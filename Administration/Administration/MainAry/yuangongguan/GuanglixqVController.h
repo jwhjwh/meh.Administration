@@ -10,5 +10,6 @@
 typedef void (^cellBlock)();
 @interface GuanglixqVController : UIViewController
 @property (nonatomic,retain)NSString *uresID;
+@property (nonatomic,retain)NSString *name;
 @property (nonatomic,copy)cellBlock Cellblock;
 @end

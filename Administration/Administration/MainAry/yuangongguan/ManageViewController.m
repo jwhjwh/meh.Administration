@@ -8,8 +8,13 @@
 
 #import "ManageViewController.h"
 #import "GuideTableViewCell.h"
+
+#import "DepalistController.h"
+#import "JoblistController.h"
+
 #import "CreaViewController.h"
 #import "CreateViewController.h"
+
 @interface ManageViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @property (nonatomic,retain)UITableView *tableView;
@@ -35,51 +40,44 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    self.hidesBottomBarWhenPushed = YES;
     _indexArray=@[@"创建账号",@"员工管理"];
     _nameArrs = @[@[@"创建员工账号"],@[@"按职位查看",@"按部门查看"]];
     _gameArrs =@[@[@"yggl_01"],@[@"yggl_02",@"yggl_03"]];
-      [self addViewremind];
+    [self addViewremind];
 }
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addViewremind{
 
-    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
-    [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
+    [_sousuoBtn setBackgroundImage:[UIImage imageNamed:@"ss_ico01"] forState:UIControlStateNormal];
     //防止图片变灰
     _sousuoBtn.adjustsImageWhenHighlighted = NO;
     _sousuoBtn.layer.masksToBounds = YES;
     _sousuoBtn.layer.cornerRadius = 8.0;
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_sousuoBtn];
-    [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo (self.view.mas_left).offset(10);
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(self.view.mas_top).offset(70);
-        make.height.mas_equalTo(40);
-    }];
-
-    self.tableView = [[UITableView alloc]init];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    self.tableView= [[UITableView alloc]initWithFrame:CGRectMake(0,_sousuoBtn.bottom+10,self.view.bounds.size.width,self.view.bounds.size.height-50) style:UITableViewStylePlain];
+    self.tableView.dataSource=self;
+    self.tableView.delegate =self;
     self.tableView.scrollEnabled =NO; //设置tableview 不能滚动
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_sousuoBtn.mas_bottom).offset(10);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.height.mas_offset(200);
-    }];
-    
 }
 
 -(void)Touchsearch{
     //SearchViewController
     SearchViewController *SearchVC = [[SearchViewController alloc]init];
     [self.navigationController showViewController:SearchVC sender:nil];
+}
+#pragma mark - UITableViewDelegate
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 50.0f;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -128,12 +126,7 @@
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return 50.0f;
-}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {
@@ -145,9 +138,12 @@
         }
     }else{
         if (indexPath.row ==0) {
-            NSLog(@"按职位查看");
+            JoblistController *Joblist=[[JoblistController alloc]init];
+            [self.navigationController pushViewController:Joblist animated:YES];
+        
         }else{
-            NSLog(@"按部门查看");
+            DepalistController *DepVC=[[DepalistController alloc]init];
+            [self.navigationController pushViewController:DepVC animated:YES];
         }
     }
 

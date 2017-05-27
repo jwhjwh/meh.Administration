@@ -74,7 +74,6 @@
 #define kHeight [UIScreen mainScreen].bounds.size.height / 1334
 //后台本地接口
 #define KURLHeader @"http://192.168.1.121:8080/ReportManagement/"
-
 //服务器接口
 //#define KURLHeader @"http://192.168.1.254:8080/ReportManagement/"
 //外网接口

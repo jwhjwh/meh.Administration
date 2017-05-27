@@ -170,7 +170,7 @@
    
    
          _searchBar = [[PJSearchBar alloc] initWithFrame:CGRectMake(0, 65, self.view.bounds.size.width, 40) placeholder:@"搜索"];
-        placeholder(_searchBar);
+
          _searchBar.delegate = self;
          _searchBar.barTintColor = [UIColor redColor];
          [self.view addSubview:_searchBar];

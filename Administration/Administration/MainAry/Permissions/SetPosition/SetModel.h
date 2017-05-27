@@ -14,5 +14,4 @@
 @property (strong,nonatomic) NSString *NewName;
 @property (strong,nonatomic) NSString *num;
 
-
 @end

@@ -106,7 +106,7 @@
     return cell;
 }
 - (void)gestureUnLockSwitchChanged:(UISwitch *)sender{
-    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"确定要删除该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
+    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"冻结员工" message:@"确定要设置冻结该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index){
         UITableViewCell *cell =(UITableViewCell*)[[sender superview] superview];
          indPath=[infonTableview indexPathForCell:cell];
