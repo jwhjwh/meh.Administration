@@ -36,6 +36,8 @@
 @property (nonatomic,strong)UILabel *PINPLabel;
 @property (nonatomic,strong)UILabel *JSLabel;//角色
 
+@property (nonatomic,strong)UIButton *JsButton;//角色
+
 @end
 
 
@@ -53,7 +55,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     _arr = @[@"角色",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
-    _HSarr = @[@"职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
+    _HSarr = @[@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
      [self InterTableUI];
     [self ZwNetWork];
 }
@@ -213,7 +215,7 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // NSInteger row = [indexPath row];
+    NSInteger row = [indexPath row];
     static NSString *CellIdentifier =@"Cell";
     //定义cell的复用性当处理大量数据时减少内存开销
     UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -226,22 +228,141 @@
     cell.textLabel.text = _arr[indexPath.row];
     cell.textLabel.font =[UIFont boldSystemFontOfSize:13.0f];
     CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 38);
+    CGRect labelRect3 = CGRectMake(100, 1, self.view.bounds.size.width-200, 38);
     if ([cell.textLabel.text isEqualToString:@"角色"] ) {
-        _JSLabel = [[UILabel alloc]initWithFrame:labelRect2];
-        _JSLabel.text = _HSarr[indexPath.row];
-        _JSLabel.textColor = GetColor(199, 199, 205, 1);
-        _JSLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-        [cell addSubview:_JSLabel];
-        
-    }else{
-    
+        _JsButton = [[UIButton alloc]initWithFrame:CGRectMake(100, 1, self.view.bounds.size.width-300, 38)];
+        [_JsButton setTitle:_HSarr[indexPath.row] forState:UIControlStateNormal];
+        _JsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        _JsButton.font = [UIFont boldSystemFontOfSize:13.0f];
+        [_JsButton addTarget:self action:@selector(JsButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
+        [_JsButton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
+        [cell addSubview:_JsButton];
     }
+    if([cell.textLabel.text isEqualToString:@"姓名"]||[cell.textLabel.text isEqualToString:@"手机号"]||[cell.textLabel.text isEqualToString:@"验证码"]){
+        
+        _codeField =[[UITextField alloc]initWithFrame:labelRect3];
+        _codeField.backgroundColor=[UIColor whiteColor];
+        _codeField.font = [UIFont boldSystemFontOfSize:13.0f];
+        _codeField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _codeField.adjustsFontSizeToFitWidth = YES;
+        [_codeField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        _codeField.tag = row;
+        _codeField.placeholder =_HSarr[indexPath.row];
+        placeholder(_codeField);
+        [cell addSubview:_codeField];
+    }
+    if ([cell.textLabel.text isEqualToString:@"手机号"]) {
+            UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
+            [TXImage setTitle:@"获取验证码" forState:UIControlStateNormal];
+            [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
+            TXImage.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+            TXImage.frame=CGRectMake(self.view.bounds.size.width-100,0, 99, 39);
+            [TXImage setTitleColor:GetColor(144, 75, 174, 1) forState:UIControlStateNormal];
+            [cell addSubview:TXImage];
+        UIView *view =[[UIView alloc]init];
+        view.backgroundColor = [UIColor lightGrayColor];
+        view.frame = CGRectMake(self.view.bounds.size.width-101,0, 1, 38);
+        [cell addSubview:view];
+        
+    }
+    if ([cell.textLabel.text isEqualToString:@"所属部门"]||[cell.textLabel.text isEqualToString:@"管理部门"]){
+        _PINPLabel = [[UILabel alloc]initWithFrame:labelRect2];
+        _PINPLabel.textColor = GetColor(199, 199, 205, 1);
+        _PINPLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+        _PINPLabel.text = _HSarr[indexPath.row];
+        [cell addSubview:_PINPLabel];
+        
+    }
+        if ([cell.textLabel.text isEqualToString:@"密码"]){
+        _PassField =[[UITextField alloc]initWithFrame:labelRect2];
+        _PassField.backgroundColor=[UIColor whiteColor];
+        _PassField.font = [UIFont boldSystemFontOfSize:13.0f];
+        _PassField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _PassField.adjustsFontSizeToFitWidth = YES;
+        [_PassField addTarget:self action:@selector(PassFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        _PassField.placeholder =_HSarr[indexPath.row];
+        placeholder(_PassField);
+        _PassField.secureTextEntry= YES;
+        [cell addSubview:_PassField];
+        
+    }
+        if ([cell.textLabel.text isEqualToString:@"确认密码"]){
+        _QRPassField =[[UITextField alloc]initWithFrame:labelRect2];
+        _QRPassField.backgroundColor=[UIColor whiteColor];
+        _QRPassField.font = [UIFont boldSystemFontOfSize:13.0f];
+        _QRPassField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _QRPassField.adjustsFontSizeToFitWidth = YES;
+        [_QRPassField addTarget:self action:@selector(PassFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        _QRPassField.placeholder =_HSarr[indexPath.row];
+        placeholder(_QRPassField);
+        _QRPassField.secureTextEntry = YES;
+        [cell addSubview:_QRPassField];
+    }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
     return cell;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0 ) {
-        [self showAlert];
+-(void)JsButtonbtn:(UIButton *)btn{
+    [self showAlert];
+}
+- (void)PassFieldWithText:(UITextField *)textField
+{
+    if (_PassField.text.length > 0 && _QRPassField.text.length > 0 && _PassField.text == _QRPassField.text) {
+        _WCBtn.backgroundColor = GetColor(144, 75, 174, 1);
+        _WCBtn.enabled = YES;
+        
+    }else{
+        _WCBtn.backgroundColor = [UIColor lightGrayColor];
+        _WCBtn.enabled = NO;
+        
     }
+    
+}
+- (void)textFieldWithText:(UITextField *)textField
+{
+    
+    switch (textField.tag) {
+        case 1:
+            NameorID = textField.text;
+            NSLog(@"姓名:%@",textField.text);
+            break;
+        case 2:
+            if (textField.text.length>11) {
+                NSString *lengthstr = textField.text;
+                textField.text = [lengthstr substringToIndex:11];
+                
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"最多输入11位" andInterval:1.0];
+            }
+            _MobileStr = textField.text;
+            NSLog(@"手机号:%@",textField.text);
+            break;
+        case 3:
+            if (textField.text.length>6) {
+                NSString *lengthstr = textField.text;
+                textField.text = [lengthstr substringToIndex:6];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"最多输入6位" andInterval:1.0];
+            }
+            YZM = textField.text;
+            NSLog(@"验证码:%@",textField.text);
+            break;
+        default:
+            break;
+    }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 4){
+        if (_arr.count == 7) {
+            if ([_arr[4] isEqualToString:@"管辖部门"]) {
+            NSLog(@"管辖部门");
+            }else if ([_arr[4]isEqualToString:@"所属部门"]){
+            NSLog(@"所属部门");
+            }
+        }
+    }
+}
+-(void)showAllert {
+     
 }
 -(void)showAlert{
     NSLog(@"%@",titles);
@@ -249,32 +370,65 @@
         NSLog(@"选择了第%ld个",(long)selectIndex);
          jsid = numBS[selectIndex];
         NSLog(@":::%@",jsid);
-        if (selectIndex == 0 ||selectIndex == 1) {
-            if (_arr.count == 6) {
-                _arr = @[@"职位",@"姓名",@"品牌",@"手机号",@"验证码",@"密码",@"确认密码"];
-                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
-                [indexPaths addObject: indexPath];
-                [infonTableview beginUpdates];
-                [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
-                [infonTableview endUpdates];
+        NSString *String = jsid.description;
+        if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]||[String isEqualToString:@"3"]||[String isEqualToString:@"4"]||[String isEqualToString:@"14"]||[String isEqualToString:@"16"]||[String isEqualToString:@"17"]) {
+            NSLog(@"22222222");
+            UIView *view1 = [[UIView alloc]init];
+            CGRect labelRect3 = CGRectMake(self.view.bounds.size.width/2+30, 70, 1, 30);
+            view1.frame = labelRect3;
+            [self.view addSubview:view1];
+            if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]) {
+                view1.backgroundColor = [UIColor lightGrayColor];
+            }else{
+                view1.backgroundColor = [UIColor whiteColor];
             }
-        }else{
             if (_arr.count == 7) {
                 [infonTableview beginUpdates];
                 _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
-                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:0]];
+                _HSarr = @[@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
+                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
                 [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
                 [infonTableview endUpdates];
             }
-            else{
-                
+            if (_arr.count == 6) {
+                _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"所属部门",@"密码",@"确认密码"];
+                _HSarr = @[@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码"];
+                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
+                [indexPaths addObject: indexPath];
+                [infonTableview beginUpdates];
+                [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                [infonTableview endUpdates];
             }
+        }else {
+            if (_arr.count == 7) {
+                [infonTableview beginUpdates];
+                _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
+                _HSarr = @[@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
+                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+                [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
+                [infonTableview endUpdates];
+            }
+            
+            if (_arr.count == 6) {
+                _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"管辖部门",@"密码",@"确认密码"];
+                _HSarr = @[@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码"];
+                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
+                [indexPaths addObject: indexPath];
+                [infonTableview beginUpdates];
+                [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+                [infonTableview endUpdates];
+            }
+
         }
-    } selectValue:^(NSString *selectValue) {
-        NSLog(@"选择的值为%@",selectValue);
-        _JSLabel.text = selectValue;
-        _JSLabel.textColor= [UIColor blackColor];
+        
+        } selectValue:^(NSString *selectValue) {
+//        NSLog(@"选择的值为%@",selectValue);
+//        _JSLabel.text = selectValue;
+//        _JSLabel.textColor= [UIColor blackColor];
+        [_JsButton setTitle:selectValue forState:UIControlStateNormal];
+            [_JsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         
     } showCloseButton:NO];
