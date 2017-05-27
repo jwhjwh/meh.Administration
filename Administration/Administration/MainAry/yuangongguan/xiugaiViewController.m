@@ -10,6 +10,7 @@
 
 @interface xiugaiViewController ()<UITextFieldDelegate>
 @property (nonatomic,strong)NSString *passtStr;
+@property (nonatomic,strong)UITextField *textFleid;
 @end
 
 @implementation xiugaiViewController
@@ -38,6 +39,8 @@
     UITextField *textFleid=[[UITextField alloc]initWithFrame:CGRectMake(0, label.bottom, Scree_width,45)];
     textFleid.borderStyle=UITextBorderStyleLine;
     textFleid.delegate = self;
+    textFleid.placeholder =@"请输入6位以上数字";
+    placeholder(textFleid);
      [textFleid addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
     textFleid.keyboardType = UIKeyboardTypeNumberPad;//键盘格式
     textFleid.backgroundColor = [UIColor whiteColor];
@@ -57,7 +60,7 @@
         NSString *uStr =[NSString stringWithFormat:@"%@user/updatepass.action",KURLHeader];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"user":_passtStr,@"userid":_uresID,@"mobile":_callNum};
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Password":_passtStr,@"userid":_uresID,@"mobile":_callNum};
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
@@ -89,7 +92,6 @@
     _passtStr = textField.text;
 }
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-   
+   [super didReceiveMemoryWarning];
 }
 @end

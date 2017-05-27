@@ -40,45 +40,32 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    self.hidesBottomBarWhenPushed = YES;
     _indexArray=@[@"创建账号",@"员工管理"];
     _nameArrs = @[@[@"创建员工账号"],@[@"按职位查看",@"按部门查看"]];
     _gameArrs =@[@[@"yggl_01"],@[@"yggl_02",@"yggl_03"]];
-      [self addViewremind];
+    [self addViewremind];
 }
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addViewremind{
 
-    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
-    [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
+    [_sousuoBtn setBackgroundImage:[UIImage imageNamed:@"ss_ico01"] forState:UIControlStateNormal];
     //防止图片变灰
     _sousuoBtn.adjustsImageWhenHighlighted = NO;
     _sousuoBtn.layer.masksToBounds = YES;
     _sousuoBtn.layer.cornerRadius = 8.0;
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_sousuoBtn];
-    [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo (self.view.mas_left).offset(10);
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(self.view.mas_top).offset(70);
-        make.height.mas_equalTo(40);
-    }];
-
-    self.tableView = [[UITableView alloc]init];    
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    self.tableView= [[UITableView alloc]initWithFrame:CGRectMake(0,_sousuoBtn.bottom+10,self.view.bounds.size.width,self.view.bounds.size.height-50) style:UITableViewStylePlain];
+    self.tableView.dataSource=self;
+    self.tableView.delegate =self;
     self.tableView.scrollEnabled =NO; //设置tableview 不能滚动
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_sousuoBtn.mas_bottom).offset(10);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.height.mas_offset(200);
-    }];
-    
 }
 
 -(void)Touchsearch{
@@ -86,7 +73,12 @@
     SearchViewController *SearchVC = [[SearchViewController alloc]init];
     [self.navigationController showViewController:SearchVC sender:nil];
 }
-
+#pragma mark - UITableViewDelegate
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 50.0f;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
@@ -103,17 +95,6 @@
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     header.textLabel.textColor = [UIColor grayColor];
     header.textLabel.font = [UIFont systemFontOfSize:14.0f];
-}
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section{
-    view.tintColor = GetColor(230,230,230,1);
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{   if(_gameArrs.count>0){
-    if (section==1) {
-        return 2;
-    }
-}
-    return 0;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -141,16 +122,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = _nameArrs[indexPath.section][indexPath.row];
     cell.image.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@", _gameArrs[indexPath.section][indexPath.row]]];
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return 50.0f;
-}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {

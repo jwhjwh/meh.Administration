@@ -10,6 +10,7 @@
 #import "xiugaiViewController.h"
 #import "dongjieViewController.h"
 #import "inftionTableViewCell.h"
+#import "PerLomapController.h"
 #import "depmtCell.h"
 #import "EditModel.h"
 #import "DongImage.h"
@@ -154,7 +155,6 @@
          cell.xingLabel.text=[NSString stringWithFormat:@"%@",_departarr[indexPath.row]];
          }else{
              id obj = _departarr[indexPath.row];
-             NSLog(@"%@",_departarr[indexPath.row]);
              if([obj isKindOfClass:[NSString class]]){
                  //此元素是字符串
                  cell.xingLabel.text=[NSString stringWithFormat:@"%@",_departarr[indexPath.row]];
@@ -170,9 +170,9 @@
     return cell;
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section==1) {
+    if (indexPath.section==3) {
         switch (indexPath.row) {
-            case 3:{
+            case 0:{
                 dongjieViewController *dongjieVC=[[dongjieViewController alloc]init];
                 dongjieVC.state=_state;
                 dongjieVC.uresID=_uresID;
@@ -183,14 +183,14 @@
                 [self.navigationController pushViewController:dongjieVC animated:YES];
             }
                 break;
-            case 4:{
+            case 1:{
                 xiugaiViewController *xiugaiVC=[[xiugaiViewController alloc]init];
                 xiugaiVC.uresID=_uresID;
                 xiugaiVC.callNum=_callNum;
                 [self.navigationController pushViewController:xiugaiVC animated:YES];
             }
                 break;
-            case 5:{
+            case 2:{
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"确定要删除该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
                 alertView.resultIndex = ^(NSInteger index){
                 [self shanchuyuangong ];
@@ -201,6 +201,13 @@
             default:
                 break;
         }
+    }else if(indexPath.section==4){
+
+        PerLomapController *perLomaVC=[[PerLomapController alloc]init];
+        perLomaVC.uesrId=_uresID;
+        perLomaVC.name=_infoArray[1];
+        perLomaVC.account=[NSString stringWithFormat:@"%@",_infoArray[0]];
+        [self.navigationController pushViewController:perLomaVC animated:YES];
     }
 }
 -(void)loadData{
@@ -293,7 +300,7 @@
                 self.Cellblock();
             });
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

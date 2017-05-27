@@ -194,6 +194,13 @@
     GuanglixqVController *guangVC=[[GuanglixqVController alloc]init];
     guangVC.uresID =model.usersid;
     guangVC.name =_str;
+    guangVC.Cellblock=^(){
+        if (_Num==1) {
+            [self datalade];
+        }else{
+            [self checkPositionUsers];
+        }
+    };
     [self.navigationController pushViewController:guangVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
