@@ -128,6 +128,9 @@
 		1F59AF361E5EE16C0000722A /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59AF311E5EE16C0000722A /* FMResultSet.m */; };
 		1F5B13321E6AB77D00B6D8DC /* xiugaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5B13311E6AB77D00B6D8DC /* xiugaiViewController.m */; };
 		1F5B13351E6ABEA800B6D8DC /* dongjieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */; };
+		1F5D4E541ED9578C002F948F /* FIrstController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D4E511ED9578C002F948F /* FIrstController.m */; };
+		1F5D4E551ED9578C002F948F /* SecondController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D4E531ED9578C002F948F /* SecondController.m */; };
+		1F5D4E581ED95AA9002F948F /* SectionChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D4E571ED95AA9002F948F /* SectionChooseView.m */; };
 		1F5FF0161E8510450053C8AE /* ChatUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FF0151E8510450053C8AE /* ChatUIHelper.m */; };
 		1F6119EC1E665C620044641E /* PWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6119EB1E665C620044641E /* PWAlertView.m */; };
 		1F6119F31E66BF2D0044641E /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6119EE1E66BF2D0044641E /* Arrow.png */; };
@@ -732,6 +735,12 @@
 		1F5B13311E6AB77D00B6D8DC /* xiugaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xiugaiViewController.m; sourceTree = "<group>"; };
 		1F5B13331E6ABEA800B6D8DC /* dongjieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dongjieViewController.h; sourceTree = "<group>"; };
 		1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dongjieViewController.m; sourceTree = "<group>"; };
+		1F5D4E501ED9578C002F948F /* FIrstController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FIrstController.h; sourceTree = "<group>"; };
+		1F5D4E511ED9578C002F948F /* FIrstController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FIrstController.m; sourceTree = "<group>"; };
+		1F5D4E521ED9578C002F948F /* SecondController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondController.h; sourceTree = "<group>"; };
+		1F5D4E531ED9578C002F948F /* SecondController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondController.m; sourceTree = "<group>"; };
+		1F5D4E561ED95AA9002F948F /* SectionChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionChooseView.h; sourceTree = "<group>"; };
+		1F5D4E571ED95AA9002F948F /* SectionChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionChooseView.m; sourceTree = "<group>"; };
 		1F5FF0141E8510450053C8AE /* ChatUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUIHelper.h; sourceTree = "<group>"; };
 		1F5FF0151E8510450053C8AE /* ChatUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatUIHelper.m; sourceTree = "<group>"; };
 		1F6119EA1E665C620044641E /* PWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWAlertView.h; sourceTree = "<group>"; };
@@ -2817,6 +2826,12 @@
 			children = (
 				1F35C1D61E7FC3D00041EF5A /* ContactsController.h */,
 				1F35C1D51E7FC3D00041EF5A /* ContactsController.m */,
+				1F5D4E561ED95AA9002F948F /* SectionChooseView.h */,
+				1F5D4E571ED95AA9002F948F /* SectionChooseView.m */,
+				1F5D4E501ED9578C002F948F /* FIrstController.h */,
+				1F5D4E511ED9578C002F948F /* FIrstController.m */,
+				1F5D4E521ED9578C002F948F /* SecondController.h */,
+				1F5D4E531ED9578C002F948F /* SecondController.m */,
 				1F60057C1E7D151600B39497 /* cell */,
 				1F767DCC1E79203500305401 /* chat */,
 			);
@@ -3898,6 +3913,7 @@
 				1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */,
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,
 				62656B961E5295D70085A2BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				1F5D4E541ED9578C002F948F /* FIrstController.m in Sources */,
 				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,
 				1F6AB7FD1E8B9C8A006CB015 /* WBSPopShareView.m in Sources */,
 				620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */,
@@ -3932,6 +3948,7 @@
 				1F6AB7E41E8B978C006CB015 /* UIView+EXTENSION.m in Sources */,
 				1F6211F11E8CFFB000F50851 /* EaseUsersListViewController.m in Sources */,
 				624B74191E8F3E6F000D94BD /* cityModel.m in Sources */,
+				1F5D4E581ED95AA9002F948F /* SectionChooseView.m in Sources */,
 				1F4DBB551E58426700733CF7 /* MessageController.m in Sources */,
 				1F2E01AD1EBC67DC00D36C3B /* ItemModel.m in Sources */,
 				1F6211DE1E8CFFB000F50851 /* EaseMessageModel.m in Sources */,
@@ -4169,6 +4186,7 @@
 				1F6211A11E8CFFAF00F50851 /* MBProgressHUD.m in Sources */,
 				F79C2ACD1E8BEE450027E10C /* WFTailoringViewController.m in Sources */,
 				1F6212031E8CFFB000F50851 /* EaseTextView.m in Sources */,
+				1F5D4E551ED9578C002F948F /* SecondController.m in Sources */,
 				1F6211D21E8CFFB000F50851 /* PSTCollectionViewData.m in Sources */,
 				6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */,
 				1F59AF341E5EE16C0000722A /* FMDatabasePool.m in Sources */,
