@@ -74,7 +74,6 @@
         
         switch (_copde) {
             case 5:
-                
                 [_NSywAry addObjectsFromArray: powerAry];
                 break;
             case 2:
@@ -422,7 +421,7 @@
         make.height.mas_equalTo(25);
     }];
 }
--(void)updatenetworkingNumarr:(int )power numarr:(NSArray*)numarr{
+-(void)updatenetworkingNumarr:(int )power numarr:(NSMutableArray*)numarr{
     
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/updateReportPermission.action", KURLHeader];
     NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -430,8 +429,20 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString*sttt;
+    [numarr removeObject:@""""];
+//    if (numarr.count>0) {
+//        NSError *error = nil;
+//        
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:numarr options:NSJSONWritingPrettyPrinted error:&error];
+//      sttt = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//    }else{
+//        sttt = @"";
+//    }
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"Num":poower,@"Power":[NSString stringWithFormat:@"%@",numarr]};
-    NSLog(@"%@",dic);
+
+    //dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"Num":poower,@"Power":sttt};
+    NSLog(@"---%@",numarr);
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
@@ -717,7 +728,10 @@
     if ([gouimageback.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
         gouimageback.image = [UIImage imageNamed:@""];
         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        [nsary removeObject:_numAry[btn.tag]];
+        NSString *sttttt = [NSString stringWithFormat:@"%@",_numAry[btn.tag]];
+        
+        [nsary removeObject:sttttt];
+        
         NSLog(@"取消选择的职位:%@",nsary);
         if (nsary.count == 0) {
             [self buttonligbackcolor];
@@ -725,7 +739,11 @@
     }else{
         gouimageback.image = [UIImage imageNamed:@"xz_ico1"];
         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
-        [nsary addObject:_numAry[btn.tag]];
+        
+        NSString *sttttt = [NSString stringWithFormat:@"%@",_numAry[btn.tag]];
+        [nsary addObject:sttttt];
+        
+        [nsary removeObject:@""""];
         NSLog(@"选择的职位:%@",nsary);
         [self buttonblueColorbackcolor];
     }

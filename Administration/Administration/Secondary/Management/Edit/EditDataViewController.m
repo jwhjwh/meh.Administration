@@ -120,10 +120,12 @@
 }
 
 -(void)loadDataFromServer{
+    // [USER_DEFAULTS setObject:companyinfoid forKey:@"companyinfoid"];
     NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *companyinfoid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
@@ -144,7 +146,7 @@
                 _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
             }else{
                 _arr=@[@[@"头像"],@[@"账号",@"职位"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
-                NSArray *arr=@[model.account,model.rname];
+                NSArray *arr=@[model.account,model.NewName];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
@@ -153,7 +155,6 @@
                 _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
                 
             }
-            
             [_infonTableview reloadData];
         } else  {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];

@@ -734,7 +734,7 @@ NSUInteger rsw;
         [_buttonAry addObject:_button.ZWbutton];
         [topView addSubview:_button];
     }
-    //[self asklfjlw];
+    [self asklfjlw];
 }
 -(void)asklfjlw{
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPosition", KURLHeader];

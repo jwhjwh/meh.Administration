@@ -111,17 +111,18 @@
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-           NSLog(@"%@",responseObject);
            for (NSDictionary *dic in responseObject[@"reportList"]) {
-               
                 ReportModel *model=[[ReportModel alloc]init];
                [model setValuesForKeysWithDictionary:dic];
                 [ _topAry addObject:model.num];
                [_topNameAry addObject:model.Name];
                
-               NSArray*atry =[model.power componentsSeparatedByString:@","];
-               [_powerAry addObject:atry];
+               NSString *strUrl = [model.power stringByReplacingOccurrencesOfString:@" " withString:@""];
                
+                NSArray*atry =[strUrl componentsSeparatedByString:@","];
+                [_powerAry addObject:atry];
+              
+               NSLog(@"===%@",atry);
                NSMutableArray *zwArr=[NSMutableArray array];
                NSMutableArray *numArr=  [NSMutableArray array];
                
@@ -134,6 +135,7 @@
                [_ywAry addObject:zwArr];
                [_numAry addObject:numArr];
            }
+           
            [self subLabelUI];
        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -150,8 +152,6 @@
        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
        }
-        
-        
     } failure:^(NSError *error) {
         
         
