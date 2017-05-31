@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 
 
-#import "ContactsController.h"
+#import "FIrstController.h"
 #import "ChatViewController.h"
 
 #define kHaveUnreadAtMessage    @"kHaveAtMessage"
@@ -23,7 +23,7 @@
 @interface ChatUIHelper : NSObject <EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate>
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
-@property (nonatomic, strong) ContactsController *contactViewVC;
+@property (nonatomic, strong) FIrstController *contactViewVC;
 
 @property (nonatomic, strong) ChatViewController *chatVC;
 @property (nonatomic, weak) UIViewController *mainVC;

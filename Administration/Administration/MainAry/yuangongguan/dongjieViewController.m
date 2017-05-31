@@ -120,9 +120,13 @@
                        weakSelf.stateBlock(weakSelf.state);
                     weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
                 };
-      
+        self.suBlock=^(){
+            weakSelf.gestureUnLockSwitch.on=YES;
+            _state=@"使用中";
+            weakSelf.stateBlock(weakSelf.state);
+            weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                 };
             }else{
-               
                 [self xiugaishiyonzhuangtaicodeStr:@"1"];
                 __weak __typeof__(self) weakSelf = self;
                 self.Block=^(){
@@ -130,6 +134,12 @@
                         _state=@"使用中";
                         weakSelf.stateBlock(weakSelf.state);
                     weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                };
+                self.suBlock=^(){
+                    weakSelf.gestureUnLockSwitch.on=NO;
+                    _state=@"被冻结";
+                    weakSelf.stateBlock(weakSelf.state);
+                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
                 };
             }
         }else{
@@ -143,6 +153,12 @@
                         weakSelf.stateBlock(weakSelf.state);
                         weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
                 };
+                self.suBlock=^(){
+                    weakSelf.UnLockSwitch.on=YES;
+                    _state=@"被冻结";
+                    weakSelf.stateBlock(weakSelf.state);
+                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                };
             }else{
                 
                 [self xiugaishiyonzhuangtaicodeStr:@"0"];
@@ -152,6 +168,12 @@
                         _state=@"被冻结";
                         weakSelf.stateBlock(weakSelf.state);
                         weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                };
+                self.suBlock=^(){
+                    weakSelf.UnLockSwitch.on=NO;
+                    _state=@"使用中";
+                    weakSelf.stateBlock(weakSelf.state);
+                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
                 };
             }
         }
@@ -171,6 +193,7 @@
             self.Block();
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改状态失败" andInterval:1.0];
+            
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

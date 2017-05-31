@@ -280,6 +280,8 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"获取员工信息失败" andInterval:1.0];
         }
     }failure:^(NSError *error) {
         
