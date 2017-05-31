@@ -8,6 +8,7 @@
 
 #import "SecondController.h"
 #import "GuideTableViewCell.h"
+#import "inftionxqController.h"
 #import "ZJLXRTableViewCell.h"
 #import "DepalistController.h"
 #import "JoblistController.h"
@@ -15,7 +16,7 @@
 #import "LVFmdbTool.h"
 @interface SecondController () <UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
-@property (nonatomic,retain)UITableView *tableView;
+
 @property (nonatomic,retain)NSArray *indexArray;
 @property (nonatomic ,retain)NSArray *gameArrs;
 @property (nonatomic ,retain)NSArray *nameArrs;
@@ -28,17 +29,17 @@
     NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
     [self.tableView reloadData];
+//    self.tabBarController.tabBar.hidden = NO;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     _indexArray=@[@"最近联系人"];
     _nameArrs = @[@"按职位查看",@"按部门查看"];
     _gameArrs =@[@"yggl_02",@"yggl_03"];
     [self addViewremind];
 }
 -(void)addViewremind{
-    
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
     [_sousuoBtn setBackgroundImage:[UIImage imageNamed:@"ss_ico01"] forState:UIControlStateNormal];
@@ -54,6 +55,7 @@
     self.tableView= [[UITableView alloc]initWithFrame:CGRectMake(0,_sousuoBtn.bottom+10,self.view.bounds.size.width,self.view.frame.size.height-173) style:UITableViewStylePlain];
     self.tableView.dataSource=self;
     self.tableView.delegate =self;
+    //滑动条去掉
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
@@ -62,16 +64,18 @@
 #pragma mark - UITableViewDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    return 50.0f;
+    if(indexPath.section==0){
+     return 50.0f;
+}else{
+     return 70.0f;
+}
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
     if (section==0) {
         return _nameArrs.count;
     }
-    return 20;
+    return self.dataArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -104,7 +108,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
     /**
      *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
      */
@@ -125,7 +128,7 @@
         if (celled == nil) {
             celled = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
         }
-      
+        celled.LVmodel = self.dataArray[indexPath.row];
           return celled;
     }
   
@@ -136,13 +139,23 @@
 {
     if (indexPath.section ==0) {
         if (indexPath.row ==0) {
+            //职位
             JoblistController *Joblist=[[JoblistController alloc]init];
+            Joblist.Num=1;
             [self.navigationController pushViewController:Joblist animated:YES];
             
         }else{
+            //部门
             DepalistController *DepVC=[[DepalistController alloc]init];
+             DepVC.Num=1;
             [self.navigationController pushViewController:DepVC animated:YES];
         }
+    }else{
+        //详情
+        inftionxqController *imftionVC=[[inftionxqController alloc]init];
+        LVModel *LVmodel = self.dataArray[indexPath.row];
+        imftionVC.IDStr=LVmodel.ID_No;
+        [self.navigationController pushViewController:imftionVC animated:YES];
     }
     
 }

@@ -21,16 +21,19 @@
     SecondController *_twoVC;
 }
 @property(nonatomic,strong)SectionChooseView *sectionChooseView;
+
 @end
 
 @implementation ContactsController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     //设置导航栏
     [self setUpNav];
-    
     //创建控制器的对象
     _oneVC = [[FIrstController alloc] init];
     //    _oneVC.view.backgroundColor = [UIColor redColor];
@@ -65,7 +68,6 @@
     self.sectionChooseView.normalTitleFont = 16;
     self.sectionChooseView.selectTitleFont = 16;
     self.navigationItem.titleView = self.sectionChooseView;
-    
 }
 
 -(void)rightItemA{

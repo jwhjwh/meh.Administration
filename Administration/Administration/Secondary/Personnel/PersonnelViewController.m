@@ -168,17 +168,17 @@
     //其中参数0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
     [UIImageJPEGRepresentation(currentImage, 0.5) writeToFile:imageFilePath  atomically:YES];
     NSString * imgData = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"currentImage%d%ld.png",_a,indexPath.row]];
-    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@", pmodel.nameid];
+    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@", pmodel.usersid];
     NSDate *currentDate = [NSDate date];//获取当前时间，日期
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd hh:mm"];
     NSString *dateString = [dateFormatter stringFromDate:currentDate];
     NSArray *modals = [LVFmdbTool queryData:fuzzyQuerySql];
     if (modals.count>0) {
-        NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
+        NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.usersid];
         [LVFmdbTool deleteData:delesql];
     }
-    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.nameid];
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.usersid image:imgData time:dateString roleld:pmodel.NewName];
         BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {
      NSLog(@"插入数据成功");
@@ -186,7 +186,7 @@
         NSLog(@"插入数据失败");
     }
     inftionxqController *imftionVC=[[inftionxqController alloc]init];
-    imftionVC.IDStr=pmodel.nameid;
+    imftionVC.IDStr=pmodel.usersid;
     [self.navigationController pushViewController:imftionVC animated:YES];
 
 }

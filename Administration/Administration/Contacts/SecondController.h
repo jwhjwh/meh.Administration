@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SecondController : UIViewController
-
+@property (nonatomic,retain)UITableView *tableView;
 @end

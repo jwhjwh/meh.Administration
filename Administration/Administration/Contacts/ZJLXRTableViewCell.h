@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DirtmsnaModel.h"
+#import "LVModel.h"
 @interface ZJLXRTableViewCell : UITableViewCell
 
 @property (strong, nonatomic)  UIImageView *TXImage;//头像
@@ -15,4 +16,5 @@
 @property (strong, nonatomic)  UILabel *TelLabel;//电话
 @property (strong, nonatomic)  UILabel *zhiLabel;//职位
 @property (nonatomic,retain)DirtmsnaModel *model;
+@property (nonatomic,retain)LVModel *LVmodel;
 @end

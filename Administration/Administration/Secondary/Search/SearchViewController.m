@@ -27,7 +27,6 @@
 }
 - (void) viewWillDisappear:(BOOL)animated
 {
-    self.tabBarController.tabBar.hidden = NO;
     self.navigationController.navigationBar.tintColor = [UIColor RGBNav];
 }
 - (void)viewDidLoad {
@@ -118,17 +117,17 @@
     //其中参数0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
     [UIImageJPEGRepresentation(currentImage, 0.5) writeToFile:imageFilePath  atomically:YES];
     NSString * imgData = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"Image%ld.png",indexPath.row]];
-    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@",pmodel.nameid];
+    NSString *fuzzyQuerySql = [NSString stringWithFormat:@"SELECT * FROM t_modals WHERE ID_No = %@",pmodel.usersid];
     NSDate *currentDate = [NSDate date];//获取当前时间，日期
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd hh:mm"];
     NSString *dateString = [dateFormatter stringFromDate:currentDate];
     NSArray *modals = [LVFmdbTool queryData:fuzzyQuerySql];
     if (modals.count>0) {
-        NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.nameid];
+        NSString *delesql = [NSString stringWithFormat:@"DELETE FROM t_modals WHERE ID_No = %@",pmodel.usersid];
         [LVFmdbTool deleteData:delesql];
     }
-    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.nameid image:imgData time:dateString roleld:pmodel.nameid];
+    LVModel *models = [LVModel modalWith:pmodel.name call:[NSString stringWithFormat:@"%ld",pmodel.account] no:pmodel.usersid image:imgData time:dateString roleld:pmodel.NewName];
     BOOL isInsert =  [LVFmdbTool insertModel:models];
     if (isInsert) {
         
@@ -138,29 +137,26 @@
         NSLog(@"插入数据失败");
     }
     inftionxqController *imftionVC=[[inftionxqController alloc]init];
-    imftionVC.IDStr=pmodel.nameid;
+    imftionVC.IDStr=pmodel.usersid;
     [self.navigationController pushViewController:imftionVC animated:YES];
 }
 -(void)upDataSearchSpecialOffe{
-    NSString *uStr =[NSString stringWithFormat:@"%@user/findAllUser.action",KURLHeader];
+    NSString *uStr =[NSString stringWithFormat:@"%@manager/fuzzyQueryEmployee.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    if (_roleId.length==0) {
-       _roleId=@"";
-    }
-         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"roleId":_roleId,@"key":self.searchBar.text};
-
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Name":self.searchBar.text};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _searchDataArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *resuAry = responseObject[@"userList"];
+            NSArray *resuAry = responseObject[@"list"];
             for (NSDictionary *newDict in resuAry) {
                 PersonModel *model = [[PersonModel alloc]init];
                 [model setValuesForKeysWithDictionary:newDict];
                 [self.searchDataArray addObject:model];
             }
             [self.searchTableView reloadData];
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];

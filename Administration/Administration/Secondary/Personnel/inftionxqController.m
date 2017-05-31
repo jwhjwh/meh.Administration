@@ -30,9 +30,15 @@
 @property (nonatomic,retain)NSString *callName;//姓名
 @property (nonatomic,retain)UIImageView *TXImage;
 
+@property (nonatomic,retain)UIButton *buton;
 @end
 
 @implementation inftionxqController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=YES;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"信息";
@@ -44,9 +50,12 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    _infonTableview.showsVerticalScrollIndicator = NO;
+    _infonTableview.showsHorizontalScrollIndicator = NO;
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];
+    
     [self loadDataFromServer];
   
 }
@@ -97,11 +106,11 @@
         [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
         TXImage.frame=CGRectMake(self.view.bounds.size.width-50,5, 40, 40);
         [cell addSubview:TXImage];
-        UIButton *Image = [UIButton buttonWithType:UIButtonTypeCustom];
-        [Image setImage:[UIImage imageNamed:@"message"] forState: UIControlStateNormal];
-        [Image addTarget:self action:@selector(messagephone:) forControlEvents:UIControlEventTouchUpInside];
-        Image.frame=CGRectMake(self.view.bounds.size.width-100,5, 40, 37);
-        [cell addSubview:Image];
+//        UIButton *Image = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [Image setImage:[UIImage imageNamed:@"message"] forState: UIControlStateNormal];
+//        [Image addTarget:self action:@selector(messagephone:) forControlEvents:UIControlEventTouchUpInside];
+//        Image.frame=CGRectMake(self.view.bounds.size.width-100,5, 40, 37);
+//        [cell addSubview:Image];
     }
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     
@@ -173,6 +182,13 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            _buton= [UIButton buttonWithType:UIButtonTypeCustom];
+            _buton.frame =CGRectMake(0,Scree_height-49,Scree_width,49);
+            _buton.backgroundColor=GetColor(23, 137, 251, 1);
+            [_buton setTitle:@"发消息" forState:UIControlStateNormal];
+            [_buton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [_buton addTarget: self action: @selector(iamsges) forControlEvents: UIControlEventTouchUpInside];
+            [self.view addSubview:_buton];
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
             model.birthday = [model.birthday substringToIndex:10];
@@ -233,7 +249,10 @@ else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
 -(void)imageViewGestureAction:(UIGestureRecognizer *)tap{
    [DongImage showImage:_TXImage];
 }
--(void)messagephone:(UIButton *)sender{
+//-(void)messagephone:(UIButton *)sender{
+//
+//}
+-(void)iamsges{
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
     //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     //    messageVC.title = @"8001";

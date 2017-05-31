@@ -32,7 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"员工管理";
-    
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -40,7 +39,6 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    self.hidesBottomBarWhenPushed = YES;
     _indexArray=@[@"创建账号",@"员工管理"];
     _nameArrs = @[@[@"创建员工账号"],@[@"按职位查看",@"按部门查看"]];
     _gameArrs =@[@[@"yggl_01"],@[@"yggl_02",@"yggl_03"]];

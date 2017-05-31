@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JoblistController : UIViewController
-
+@property (nonatomic,assign)int Num;
 @end
