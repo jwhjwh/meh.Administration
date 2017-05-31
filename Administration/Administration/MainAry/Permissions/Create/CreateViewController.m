@@ -53,7 +53,6 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
     _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
     _HSarr = @[@"职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码"];
-    titles = @[@"品牌经理",@"市场美导",@"业务人员",@"内勤人员",@"物流人员",@"行政管理人员",@"业务经理"];
     [self InterTableUI];
     // Do any additional setup after loading the view.
 }

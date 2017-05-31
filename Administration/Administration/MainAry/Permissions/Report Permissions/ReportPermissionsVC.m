@@ -117,12 +117,16 @@
                 [ _topAry addObject:model.num];
                [_topNameAry addObject:model.Name];
                
-               NSString *strUrl = [model.power stringByReplacingOccurrencesOfString:@" " withString:@""];
+               if (model.power.length == 0) {
+                   NSString *strUrl = @"0";
+                   NSArray*atry =[strUrl componentsSeparatedByString:@","];
+                   [_powerAry addObject:atry];
+               }else{
+                   NSString *strUrl = [model.power stringByReplacingOccurrencesOfString:@" " withString:@""];
+                   NSArray*atry =[strUrl componentsSeparatedByString:@","];
+                   [_powerAry addObject:atry];
+               }
                
-                NSArray*atry =[strUrl componentsSeparatedByString:@","];
-                [_powerAry addObject:atry];
-              
-               NSLog(@"===%@",atry);
                NSMutableArray *zwArr=[NSMutableArray array];
                NSMutableArray *numArr=  [NSMutableArray array];
                

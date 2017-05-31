@@ -220,11 +220,8 @@
         [attributedText addAttributes:@{NSFontAttributeName : cell.detailLabel.font} range:NSMakeRange(0, attributedText.length)];
         cell.detailLabel.attributedText =  attributedText;
     
-    
-  
+
         cell.timeLabel.text = [self latestMessageTimeForConversationModel:model];
-   
-    
     return cell;
 
 }
