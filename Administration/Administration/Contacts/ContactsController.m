@@ -39,20 +39,20 @@
     //    _oneVC.view.backgroundColor = [UIColor redColor];
     _twoVC = [[SecondController alloc] init];
     //    _twoVC.view.backgroundColor = [UIColor grayColor];
-         [self.view addSubview:_oneVC.view];
-        [self addChildViewController:_oneVC];
-       [self addChildViewController:_twoVC];
+    [self.view addSubview:_oneVC.view];
+    [self addChildViewController:_oneVC];
+    [self addChildViewController:_twoVC];
 }
 /**
  *  设置导航栏（学生/老师）
  */
 - (void)setUpNav {
     UIBarButtonItem *lifttitem = [[UIBarButtonItem alloc] initWithTitle:@"群" style:(UIBarButtonItemStyleDone) target:self action:@selector(liftItemAction)];
-//    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    //    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     NSDictionary * dict = @{
-                           NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:16],
-                           NSForegroundColorAttributeName : [UIColor whiteColor]
-                           };
+                            NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:16],
+                            NSForegroundColorAttributeName : [UIColor whiteColor]
+                            };
     [lifttitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = lifttitem;
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"创建群" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemA)];
@@ -81,7 +81,7 @@
 #pragma mark -SMCustomSegmentDelegate
 
 - (void)SectionSelectIndex:(NSInteger)selectIndex {
-
+    
     switch (selectIndex) {
         case 0:{
             //第一个界面

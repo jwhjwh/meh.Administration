@@ -630,7 +630,7 @@ NSUInteger rsw;
 
 
     NSArray *twoary = [[NSArray alloc]initWithObjects:@"8",@"6", nil];
-    NSArray*twoLabelAry =[[NSArray alloc]initWithObjects:@"业务经理",@"品牌经理", nil];
+    NSArray*twoLabelAry =[[NSArray alloc]initWithObjects:@"业务经理",@"市场经理", nil];
     
     for (int j = 0; j<twoary.count; j++) {
         NSString *str = [[NSString alloc]init];

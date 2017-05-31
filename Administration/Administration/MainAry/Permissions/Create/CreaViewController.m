@@ -13,6 +13,10 @@
     UITableView *infonTableview;
     NSMutableArray *titles;
     NSMutableArray *numBS;
+    NSMutableArray *zwlbNum;//职位类别
+    NSMutableArray*zwlbAry;//职位类别数组
+    NSMutableArray *gxbmNum;//管辖部门num
+    NSMutableArray *gxbmAry;//管辖部门数组
 //    NSMutableArray *finskAry;
 //    NSMutableArray *brandLogoAry;
     NSString *jsid;
@@ -34,10 +38,9 @@
 
 @property (nonatomic,strong) NSString *MobileStr;
 @property (nonatomic,strong)UILabel *PINPLabel;
-@property (nonatomic,strong)UILabel *JSLabel;//角色
-
 @property (nonatomic,strong)UIButton *JsButton;//角色
-
+@property (nonatomic,strong)UIButton *JsLBButton;//角色类别
+@property (nonatomic,strong)NSMutableArray *gxnumAry;
 @end
 
 
@@ -129,14 +132,11 @@
             for (NSDictionary *dic in arr) {
                 NSString *strr = [NSString stringWithFormat:@"%@",[dic valueForKey:@"num"]];
                 if ([strr isEqualToString:@"1"]) {
-                    
                 }else{
                     [numBS  addObject:[dic valueForKey:@"num"]];
                     [titles addObject:[dic valueForKey:@"newName"]];
                 }
-                
             }
-
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
@@ -237,6 +237,14 @@
         [_JsButton addTarget:self action:@selector(JsButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
         [_JsButton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
         [cell addSubview:_JsButton];
+        //self.view.bounds.size.width/2+30, 70, 1, 30
+        _JsLBButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2+31, 1, self.view.bounds.size.width-(self.view.bounds.size.width/2+31), 38)];
+        _JsLBButton.font = [UIFont boldSystemFontOfSize:13.0f];
+        [_JsLBButton setTitle:@"选择职业类别" forState:UIControlStateNormal];
+        [_JsLBButton addTarget:self action:@selector(JsLBButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
+         [_JsLBButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _JsLBButton.enabled = NO;
+        [cell addSubview:_JsLBButton];
     }
     if([cell.textLabel.text isEqualToString:@"姓名"]||[cell.textLabel.text isEqualToString:@"手机号"]||[cell.textLabel.text isEqualToString:@"验证码"]){
         
@@ -265,7 +273,7 @@
         [cell addSubview:view];
         
     }
-    if ([cell.textLabel.text isEqualToString:@"所属部门"]||[cell.textLabel.text isEqualToString:@"管理部门"]){
+    if ([cell.textLabel.text isEqualToString:@"所属部门"]||[cell.textLabel.text isEqualToString:@"管辖部门"]){
         _PINPLabel = [[UILabel alloc]initWithFrame:labelRect2];
         _PINPLabel.textColor = GetColor(199, 199, 205, 1);
         _PINPLabel.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -303,8 +311,47 @@
     
     return cell;
 }
+-(void)JsLBButtonbtn:(UIButton *)btn{
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPositionLevel.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
+    NSString *nuum = [[NSString alloc]init];
+    NSString *String = jsid.description;
+    if ([String isEqual:@"5"]) {
+        nuum = @"2";
+    }else if([String isEqual:@"2"]){
+        nuum = @"1";
+    }
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":RoleId,@"Num":nuum};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+        {
+            NSArray *arr= [responseObject valueForKey:@"list"];
+            zwlbAry = [[NSMutableArray alloc]init];
+            zwlbNum = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in arr) {
+                    [zwlbNum  addObject:[dic valueForKey:@"num"]];
+                    [zwlbAry addObject:[dic valueForKey:@"levelName"]];
+            }
+            [self showAlert:zwlbAry button:btn];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+        }else{
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
 -(void)JsButtonbtn:(UIButton *)btn{
-    [self showAlert];
+    [self showAlert:titles button:btn];
 }
 - (void)PassFieldWithText:(UITextField *)textField
 {
@@ -354,33 +401,82 @@
     if(indexPath.row == 4){
         if (_arr.count == 7) {
             if ([_arr[4] isEqualToString:@"管辖部门"]) {
-            NSLog(@"管辖部门");
+                [self submShowAlert];
             }else if ([_arr[4]isEqualToString:@"所属部门"]){
             NSLog(@"所属部门");
             }
         }
     }
 }
--(void)showAllert {
-     
+-(void)submShowAlert{
+    _gxnumAry = [[NSMutableArray alloc]init];
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryDepartment.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+        {
+            NSArray *arr= [responseObject valueForKey:@"list"];
+            if (arr.count == 0) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有创建任何部门 " andInterval:1.0];
+            }else{
+                gxbmNum = [[NSMutableArray alloc]init];
+                gxbmAry = [[NSMutableArray alloc]init];
+                for (NSDictionary *dic in arr) {
+                    [gxbmNum  addObject:[dic valueForKey:@"num"]];
+                    [gxbmAry addObject:[dic valueForKey:@"departmentName"]];
+                }
+                [SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
+                    NSLog(@"选择了第%ld个",(long)selectIndex);
+                    [_gxnumAry addObject:gxbmNum[selectIndex]];
+                    [infonTableview beginUpdates];
+                    NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:5 inSection:0]];
+                    [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
+                   // [infonTableview endUpdates];
+                } selectValue:^(NSString *selectValue) {
+                    _PINPLabel.text = selectValue;
+                    _PINPLabel.textColor = [UIColor blackColor];
+                } showCloseButton:NO];
+            }
+            
+           
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+        }else{
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
+        }
+        
+
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
--(void)showAlert{
-    NSLog(@"%@",titles);
-    [ SelectAlert showWithTitle:@"选择职业" titles:titles selectIndex:^(NSInteger selectIndex) {
+-(void)showAlert :(NSArray *)arr button:(UIButton*)bbtn{
+    UIView *view1 = [[UIView alloc]init];
+    CGRect labelRect3 = CGRectMake(self.view.bounds.size.width/2+30, 70, 1, 30);
+    view1.frame = labelRect3;
+    [self.view addSubview:view1];
+    [ SelectAlert showWithTitle:@"选择职业" titles:arr selectIndex:^(NSInteger selectIndex) {
         NSLog(@"选择了第%ld个",(long)selectIndex);
          jsid = numBS[selectIndex];
         NSLog(@":::%@",jsid);
         NSString *String = jsid.description;
         if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]||[String isEqualToString:@"3"]||[String isEqualToString:@"4"]||[String isEqualToString:@"14"]||[String isEqualToString:@"16"]||[String isEqualToString:@"17"]) {
             NSLog(@"22222222");
-            UIView *view1 = [[UIView alloc]init];
-            CGRect labelRect3 = CGRectMake(self.view.bounds.size.width/2+30, 70, 1, 30);
-            view1.frame = labelRect3;
-            [self.view addSubview:view1];
             if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]) {
                 view1.backgroundColor = [UIColor lightGrayColor];
+                [_JsLBButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                [_JsLBButton setTitle:@"选择职位类别" forState:UIControlStateNormal];
+                _JsLBButton.enabled = YES;
             }else{
                 view1.backgroundColor = [UIColor whiteColor];
+                [_JsLBButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                _JsLBButton.enabled= NO;
             }
             if (_arr.count == 7) {
                 [infonTableview beginUpdates];
@@ -401,6 +497,16 @@
                 [infonTableview endUpdates];
             }
         }else {
+            if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]) {
+                view1.backgroundColor = [UIColor lightGrayColor];
+                [_JsLBButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                 [_JsLBButton setTitle:@"选择职位类别" forState:UIControlStateNormal];
+                _JsLBButton.enabled = YES;
+            }else{
+                view1.backgroundColor = [UIColor whiteColor];
+                [_JsLBButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                _JsLBButton.enabled = NO;
+            }
             if (_arr.count == 7) {
                 [infonTableview beginUpdates];
                 _arr = @[@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码"];
@@ -424,11 +530,9 @@
         }
         
         } selectValue:^(NSString *selectValue) {
-//        NSLog(@"选择的值为%@",selectValue);
-//        _JSLabel.text = selectValue;
-//        _JSLabel.textColor= [UIColor blackColor];
-        [_JsButton setTitle:selectValue forState:UIControlStateNormal];
-            [_JsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+        [bbtn setTitle:selectValue forState:UIControlStateNormal];
+        [bbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         
     } showCloseButton:NO];
