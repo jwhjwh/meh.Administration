@@ -324,7 +324,6 @@
                         [self.navigationController pushViewController:submittedVC animated:YES];
                     }
                         break;
-                        
                     default:
                         break;
                 }

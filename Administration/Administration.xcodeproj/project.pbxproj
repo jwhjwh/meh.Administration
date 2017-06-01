@@ -1196,7 +1196,7 @@
 		620D3A161ED3CA5900D804A7 /* CreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreaViewController.m; sourceTree = "<group>"; };
 		620FC39A1ED035E500C4D8B3 /* ManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageViewController.h; sourceTree = "<group>"; };
 		620FC39B1ED035E500C4D8B3 /* ManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageViewController.m; sourceTree = "<group>"; };
-		6218D04D1E4E95FB00299989 /* Administration.app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6218D0541E4E95FB00299989 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2721,7 +2721,7 @@
 		6218D04E1E4E95FB00299989 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6218D04D1E4E95FB00299989 /* Administration.app.app */,
+				6218D04D1E4E95FB00299989 /* Administration.app */,
 				6218D0661E4E95FB00299989 /* AdministrationTests.xctest */,
 				6218D0711E4E95FB00299989 /* AdministrationUITests.xctest */,
 			);
@@ -3601,9 +3601,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6218D04C1E4E95FA00299989 /* Administration.app */ = {
+		6218D04C1E4E95FA00299989 /* Administration */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration.app" */;
+			buildConfigurationList = 6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration" */;
 			buildPhases = (
 				6218D0491E4E95FA00299989 /* Sources */,
 				6218D04A1E4E95FA00299989 /* Frameworks */,
@@ -3614,9 +3614,9 @@
 			);
 			dependencies = (
 			);
-			name = Administration.app;
+			name = Administration;
 			productName = Administration;
-			productReference = 6218D04D1E4E95FB00299989 /* Administration.app.app */;
+			productReference = 6218D04D1E4E95FB00299989 /* Administration.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6218D0651E4E95FB00299989 /* AdministrationTests */ = {
@@ -3666,10 +3666,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-
 						DevelopmentTeam = PL68LJ4R77;
-
-
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3705,7 +3702,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6218D04C1E4E95FA00299989 /* Administration.app */,
+				6218D04C1E4E95FA00299989 /* Administration */,
 				6218D0651E4E95FB00299989 /* AdministrationTests */,
 				6218D0701E4E95FB00299989 /* AdministrationUITests */,
 			);
@@ -4247,12 +4244,12 @@
 /* Begin PBXTargetDependency section */
 		6218D0681E4E95FB00299989 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6218D04C1E4E95FA00299989 /* Administration.app */;
+			target = 6218D04C1E4E95FA00299989 /* Administration */;
 			targetProxy = 6218D0671E4E95FB00299989 /* PBXContainerItemProxy */;
 		};
 		6218D0731E4E95FB00299989 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6218D04C1E4E95FA00299989 /* Administration.app */;
+			target = 6218D04C1E4E95FA00299989 /* Administration */;
 			targetProxy = 6218D0721E4E95FB00299989 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -4375,11 +4372,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-
-				DEVELOPMENT_TEAM = PL68LJ4R77;
-
 				DEVELOPMENT_TEAM = "";
-
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4426,11 +4419,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-
-				DEVELOPMENT_TEAM = PL68LJ4R77;
-
 				DEVELOPMENT_TEAM = "";
-
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4526,7 +4515,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration.app" */ = {
+		6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6218D07B1E4E95FB00299989 /* Debug */,
