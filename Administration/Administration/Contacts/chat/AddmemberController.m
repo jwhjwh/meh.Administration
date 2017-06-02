@@ -32,41 +32,41 @@
 @end
 
 @implementation AddmemberController
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
-//    self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
-//    [self.ZJLXTable reloadData];
-//}
--(void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self registerNotifications];
-    [self refreshAndSortView];
-    
+    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
+    self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
+    [self.ZJLXTable reloadData];
 }
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self unregisterNotifications];
-    
-}
-
-#pragma mark - registerNotifications
--(void)registerNotifications{
-    [self unregisterNotifications];
-    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
-    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
-}
-
--(void)unregisterNotifications{
-    [[EMClient sharedClient].chatManager removeDelegate:self];
-    [[EMClient sharedClient].groupManager removeDelegate:self];
-}
-- (void)dealloc{
-    [self unregisterNotifications];
-}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    [self registerNotifications];
+//    [self refreshAndSortView];
+//    
+//}
+//
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    [self unregisterNotifications];
+//    
+//}
+//
+//#pragma mark - registerNotifications
+//-(void)registerNotifications{
+//    [self unregisterNotifications];
+//    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+//    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
+//}
+//
+//-(void)unregisterNotifications{
+//    [[EMClient sharedClient].chatManager removeDelegate:self];
+//    [[EMClient sharedClient].groupManager removeDelegate:self];
+//}
+//- (void)dealloc{
+//    [self unregisterNotifications];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -79,7 +79,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self UIBtn];
-    [self tableViewDidTriggerHeaderRefresh];
+//    [self tableViewDidTriggerHeaderRefresh];
     self.isAllSelected = NO;
 }
 -(void)buttonLiftItem{
@@ -93,7 +93,7 @@
     //搜索按钮
     UIView *viewles=[[UIView alloc]init];
     [self.view addSubview:viewles];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(SeachTap:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(SeachTap)];
     [viewles addGestureRecognizer:tap];
     [viewles mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo (self.view.mas_left);
@@ -201,34 +201,40 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ZJLXRTableViewCell *cell = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    if (cell == nil) {
+        cell = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    }
+    cell.tintColor = [UIColor RGBNav];
+    cell.LVmodel = self.dataArray[indexPath.row];
 //    ZJLXRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE"forIndexPath:indexPath];
 //      cell.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
 //    cell.model=self.dataArray[indexPath.row];
-    NSString *CellIdentifier = [EaseConversationCell cellIdentifierWithModel:nil];
-    EaseConversationCell *cell = (EaseConversationCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-    if (cell == nil) {
-        cell = [[EaseConversationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+//    NSString *CellIdentifier = [EaseConversationCell cellIdentifierWithModel:nil];
+//    EaseConversationCell *cell = (EaseConversationCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+//    if (cell == nil) {
+//        cell = [[EaseConversationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//    }
     
-    if ([self.dataArray count] <= indexPath.row) {
-        return cell;
-    }
-    
-    id<IConversationModel> model = [self.dataArray objectAtIndex:indexPath.row];
-    cell.model = model;
-    
-    
-    NSMutableAttributedString *attributedText = [[self latestMessageTitleForConversationModel:model] mutableCopy];
-    [attributedText addAttributes:@{NSFontAttributeName : cell.detailLabel.font} range:NSMakeRange(0, attributedText.length)];
-    cell.detailLabel.attributedText =  attributedText;
-    cell.timeLabel.text = [self latestMessageTimeForConversationModel:model];
+//    if ([self.dataArray count] <= indexPath.row) {
+//        return cell;
+//    }
+//    
+//    id<IConversationModel> model = [self.dataArray objectAtIndex:indexPath.row];
+//    cell.model = model;
+//    
+//    
+//    NSMutableAttributedString *attributedText = [[self latestMessageTitleForConversationModel:model] mutableCopy];
+//    [attributedText addAttributes:@{NSFontAttributeName : cell.detailLabel.font} range:NSMakeRange(0, attributedText.length)];
+//    cell.detailLabel.attributedText =  attributedText;
+//    cell.timeLabel.text = [self latestMessageTimeForConversationModel:model];
     
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 70;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
@@ -311,15 +317,21 @@
      for (NSIndexPath *indexPath in _ZJLXTable.indexPathsForSelectedRows) {
         [deleteArrarys addObject:self.dataArray[indexPath.row]];
     }
-    for ( id<IConversationModel> model in deleteArrarys) {
-        [source addObject:model.conversation.conversationId];
+    
+    //环信换获取添加人账号
+    //    for ( id<IConversationModel> model in deleteArrarys) {
+    //        [source addObject:model.conversation.conversationId];
+    //    }
+    //本地获取添加人账号
+    for (  LVModel *model in deleteArrarys) {
+        [source addObject:model.Call];
     }
-
     __weak AddmemberController *weakSelf = self;
     NSString *username = [[EMClient sharedClient] currentUsername];
     NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textStr];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
      EMGroupOptions *setting = [[EMGroupOptions alloc] init];
+        //被邀请的人自动加入群组
      setting.IsInviteNeedConfirm=NO;
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
@@ -357,6 +369,7 @@
 -(void)SpotionTap:(UITapGestureRecognizer*)sender{
     
 }
+/*
 #pragma mark - data
 
 -(void)refreshAndSortView
@@ -379,9 +392,9 @@
     }
     [self.ZJLXTable reloadData];
 }
-/*!
- @method@brief 加载会话列表 @discussion @result
- */
+
+// @method@brief 加载会话列表 @discussion @result
+ 
 - (void)tableViewDidTriggerHeaderRefresh
 {
     NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
@@ -409,7 +422,6 @@
             [self.dataArray addObject:model];
         }
     }
-    
     [self.ZJLXTable reloadData];
     [self tableViewDidFinishTriggerHeader:YES reload:NO];
 }
@@ -474,6 +486,7 @@
  @param conversationModel  会话model
  @result 返回传入会话model最近一条消息提示
  */
+/*
 - (NSString *)_latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
 {
     NSString *latestMessageTitle = @"";
@@ -514,6 +527,7 @@
  @param conversationModel  会话model
  @result 返回传入会话model最近一条消息时间
  */
+/*
 - (NSString *)_latestMessageTimeForConversationModel:(id<IConversationModel>)conversationModel
 {
     NSString *latestMessageTime = @"";
@@ -664,6 +678,7 @@
     [self tableViewDidTriggerHeaderRefresh];
     
 }
+*/
 //#pragma mark - EMGroupManagerDelegate
 //
 //- (void)didUpdateGroupList:(NSArray *)groupList
@@ -704,6 +719,12 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+
+}
+//搜索联系人
+-(void)SeachTap{
+    
+    //未做因图样未出，需求不明
 
 }
 @end
