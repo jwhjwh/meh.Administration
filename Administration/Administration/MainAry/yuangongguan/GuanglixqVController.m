@@ -222,7 +222,11 @@
             _departarr=[NSMutableArray array];
             for (NSDictionary *dic in responseObject[@"list2"]) {
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:dic]];
-                   [_departarr addObject:model.NewName];
+                if ([model.LevelName isEqualToString:@""]) {
+                        [_departarr addObject:model.NewName];
+                }else{
+                   [_departarr addObject:[NSString stringWithFormat:@"%@(%@)",model.NewName,model.LevelName]];
+                }
                 if ([model.departmentName isEqualToString:@""]) {
                     model.departmentName=@"未分配";
                      [_departarr addObject:model.departmentName];
@@ -233,9 +237,6 @@
                 }else{
                     [_departarr addObject:model.departmentName];
                 }
-            
-             
-               
             }
             model.birthday = [model.birthday substringToIndex:10];
             _logImage=model.icon;

@@ -21,6 +21,8 @@
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
 #import "NoticeView.h"
+#import "SetModel.h"
+
 #define MenuH 190
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
@@ -41,6 +43,8 @@
 @property(nonatomic,strong)NSArray *arr;
 //标题图片
 @property(nonatomic,strong)NSArray *arr1;
+//标识
+@property(nonatomic,strong)NSMutableArray *arrLogo;
 //判断红的消息
 @property(nonatomic,retain)NSString *number;
 @end
@@ -50,7 +54,6 @@
     [super viewWillAppear:animated];
     [self naveigtionAddSubView];
     self.tabBarController.tabBar.hidden=NO;
-    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -60,7 +63,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
-
     [self initData];
     [self addLoop];
 }
@@ -102,9 +104,7 @@
 -(void)initData
 {
     int str = [[USER_DEFAULTS objectForKey:@"roleId"]intValue];
-   
     //判断角色的设定主题的现实
-    
     switch (str) {
         case 1:
             // 老板
@@ -158,10 +158,11 @@
     }
     NSString *urlStr =[NSString stringWithFormat:@"%@user/querylogoImg.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"comId":compid};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-    
+        NSLog(@"00-----%@",responseObject);
     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
       NSArray *arr= [responseObject valueForKey:@"logoImg"];
         NSMutableArray *array=[NSMutableArray array];
@@ -170,7 +171,16 @@
             [array addObject:Url];
         }
         self.loop.imageArray=array;
-                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            NSArray *listarr= [responseObject valueForKey:@"list"];
+//        for (NSDictionary *ditList in listarr) {
+//            SetModel *model=[[SetModel alloc]init];
+//            [model setValuesForKeysWithDictionary:ditList];
+//            [_arr addObject:model.name];
+//            [_arr1 addObject:model.image];
+//            [_arrLogo addObject:model.locational];
+//        }
+      
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 ViewController *loginVC = [[ViewController alloc] init];
@@ -216,7 +226,6 @@
     self.loop.time = 2;
     [self.loop setPageColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] andCurrentPageColor:[UIColor whiteColor]];
     [self.view addSubview:self.loop];
- 
     //主题内容
     _tableView=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
        _tableView.scrollEnabled =NO; //设置tableview 不能滚动
@@ -330,7 +339,6 @@
                         [self.navigationController pushViewController:submittedVC animated:YES];
                     }
                         break;
-                        
                     default:
                         break;
                 }

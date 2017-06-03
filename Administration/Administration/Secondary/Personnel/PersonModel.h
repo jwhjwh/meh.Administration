@@ -27,10 +27,10 @@
 
 @property (strong,nonatomic) NSString *name;// 姓名
 
-@property (strong,nonatomic) NSString *nameid;//用户id
+@property (strong,nonatomic) NSString *usersid;//用户id
 
 @property (strong,nonatomic) NSString *roleId;//人员类型
-
+@property (strong,nonatomic) NSString *NewName;//人员职称
 @property (strong,nonatomic) NSString *sdasd;// 个性签名
 
 

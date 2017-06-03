@@ -11,7 +11,7 @@
 @interface DepmentController : UIViewController
 @property (nonatomic,strong)NSString *str;
 @property (nonatomic,assign)int Num;
-
+@property (nonatomic,assign)int dataShow;
 @property (nonatomic,strong)NSString *DepartmentID;
 @property (nonatomic,strong)NSString *Numstr;
 @end

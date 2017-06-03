@@ -32,7 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"员工管理";
-    
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -40,7 +39,6 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    self.hidesBottomBarWhenPushed = YES;
     _indexArray=@[@"创建账号",@"员工管理"];
     _nameArrs = @[@[@"创建员工账号"],@[@"按职位查看",@"按部门查看"]];
     _gameArrs =@[@[@"yggl_01"],@[@"yggl_02",@"yggl_03"]];
@@ -163,12 +161,17 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section==1) {
+         UIEdgeInsets UIEgde = UIEdgeInsetsMake(0, 15, 0, 15);
+          [cell setSeparatorInset:UIEgde];
+    }else{
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
         [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
     }
 }
 

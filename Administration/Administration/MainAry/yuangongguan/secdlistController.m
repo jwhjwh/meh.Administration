@@ -18,7 +18,11 @@
 @end
 
 @implementation secdlistController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=YES;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=_name;
@@ -104,6 +108,7 @@
     DepmentCV.Numstr=_number;
     DepmentCV.DepartmentID=modld.ID;
     DepmentCV.Num=1;
+    DepmentCV.dataShow=self.Num;
     [self.navigationController pushViewController:DepmentCV animated:YES];
 }
 -(void)getNetworkData{

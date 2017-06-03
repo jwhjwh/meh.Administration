@@ -13,10 +13,9 @@
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
     
-    if([key isEqualToString:@"id"]){
-     self.nameid = value;
+    if([key isEqualToString:@"newName"]){
+     self.NewName = value;
     }
-    
 }
 //kvc取值操作  取值误操作
 -(instancetype)valueForUndefinedKey:(NSString *)key

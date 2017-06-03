@@ -36,19 +36,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden=NO;
-    
     [self registerNotifications];
     [self refreshAndSortView];
     //    [self reloadApplyView];
     [self tableViewDidTriggerHeaderRefresh];
+//    self.tabBarController.tabBar.hidden = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self unregisterNotifications];
-    
+ 
 }
 
 #pragma mark - registerNotifications

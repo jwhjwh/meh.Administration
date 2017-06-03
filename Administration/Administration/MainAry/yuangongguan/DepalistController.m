@@ -19,6 +19,11 @@
 @end
 
 @implementation DepalistController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden=YES;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"按部门查看";
@@ -39,7 +44,7 @@
 }
 -(void)InterTableUI
 {
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,Scree_width,Scree_height-20) style:UITableViewStylePlain];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
@@ -102,6 +107,7 @@
     secdlistController * secdlisV=[[secdlistController alloc]init];
     secdlisV.number = modld.Num;
     secdlisV.name = modld.Name;
+    secdlisV.Num=self.Num;
     [self.navigationController pushViewController:secdlisV animated:YES];
 }
 -(void)getNetworkData{
@@ -160,7 +166,7 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }

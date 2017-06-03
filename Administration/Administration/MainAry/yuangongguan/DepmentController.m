@@ -7,6 +7,7 @@
 //
 
 #import "DepmentController.h"
+#import "inftionxqController.h"
 #import "GuanglixqVController.h"
 #import "ZJLXRTableViewCell.h"
 #import "DirtmsnaModel.h"
@@ -191,17 +192,23 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DirtmsnaModel *model = _dataArray[indexPath.row];
-    GuanglixqVController *guangVC=[[GuanglixqVController alloc]init];
-    guangVC.uresID =model.usersid;
-    guangVC.name =_str;
-    guangVC.Cellblock=^(){
-        if (_Num==1) {
-            [self datalade];
-        }else{
-            [self checkPositionUsers];
-        }
-    };
-    [self.navigationController pushViewController:guangVC animated:YES];
+    if (self.dataShow==1) {
+        inftionxqController *imftionVC=[[inftionxqController alloc]init];
+        imftionVC.IDStr=model.usersid;
+        [self.navigationController pushViewController:imftionVC animated:YES];
+    }else{
+        GuanglixqVController *guangVC=[[GuanglixqVController alloc]init];
+        guangVC.uresID =model.usersid;
+        guangVC.name =_str;
+        guangVC.Cellblock=^(){
+            if (_Num==1) {
+                [self datalade];
+            }else{
+                [self checkPositionUsers];
+            }
+        };
+        [self.navigationController pushViewController:guangVC animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
