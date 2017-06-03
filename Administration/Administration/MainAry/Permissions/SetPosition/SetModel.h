@@ -13,5 +13,7 @@
 
 @property (strong,nonatomic) NSString *NewName;
 @property (strong,nonatomic) NSString *num;
-
+@property (strong,nonatomic) NSString *image;//图片
+@property (strong,nonatomic) NSString *locational;//标示
+@property (strong,nonatomic) NSString *name;//名字
 @end

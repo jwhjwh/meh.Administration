@@ -24,6 +24,7 @@
             UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake((frameWidth-imageWidth)/2,imageTopH,imageWidth,imageWidth)];
             imageView.backgroundColor=[UIColor whiteColor];
             imageView.image=[UIImage imageNamed:imageStr];
+//             [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,imageStr]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
             [self addSubview:imageView];
         }
        

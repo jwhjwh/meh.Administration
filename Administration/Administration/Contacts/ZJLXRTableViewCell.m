@@ -36,7 +36,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
   
     _zhiLabel=[[UILabel alloc]init];
     _zhiLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _zhiLabel.textAlignment=NSTextAlignmentRight;
+    _zhiLabel.textAlignment=NSTextAlignmentCenter;
     _zhiLabel.font=[UIFont systemFontOfSize:12];
     _zhiLabel.textColor=[UIColor lightGrayColor];
     [self addSubview:_zhiLabel];
@@ -77,9 +77,9 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
 //        make.bottom.mas_equalTo(_TXImage.mas_bottom);
 //    }];
     [self _setupAvatarViewConstraints];
-    [self _setupTimeLabelConstraints];
     [self _setupTitleLabelConstraints];
     [self _setupDetailLabelConstraints];
+    [self _setupTimeLabelConstraints];
 }
 
 #pragma mark - Setup Constraints
@@ -107,10 +107,9 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
  */
 - (void)_setupTimeLabelConstraints
 {
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.zhiLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.NameLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:ZJLXRTableViewCellPadding]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.zhiLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.TelLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:8]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.zhiLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-ZJLXRTableViewCellPadding]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.zhiLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:0.5 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.zhiLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:0.25 constant:0]];
 }
 
 /*!
@@ -123,7 +122,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
 {
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.NameLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:ZJLXRTableViewCellPadding]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.NameLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:0.5 constant:-ZJLXRTableViewCellPadding]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.NameLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.zhiLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-ZJLXRTableViewCellPadding]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.NameLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.TXImage attribute:NSLayoutAttributeRight multiplier:1.0 constant:ZJLXRTableViewCellPadding]];
     
     self.titleWithAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.NameLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.TXImage attribute:NSLayoutAttributeRight multiplier:1.0 constant:ZJLXRTableViewCellPadding];
     self.titleWithoutAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.NameLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:ZJLXRTableViewCellPadding];
@@ -140,7 +139,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
 {
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.TelLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.NameLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.TelLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-ZJLXRTableViewCellPadding]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.TelLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.zhiLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:-ZJLXRTableViewCellPadding]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.TelLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.TXImage attribute:NSLayoutAttributeRight multiplier:1.0 constant:ZJLXRTableViewCellPadding]];
     
     self.detailWithAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.TelLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.TXImage attribute:NSLayoutAttributeRight multiplier:1.0 constant:ZJLXRTableViewCellPadding];
     self.detailWithoutAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.TelLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:ZJLXRTableViewCellPadding];
