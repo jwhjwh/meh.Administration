@@ -535,7 +535,6 @@ NSUInteger rsw;
     [indexPaths addObject: indexPath];
     [infonTableview beginUpdates];
     [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
-    
     [infonTableview endUpdates];
     
 }

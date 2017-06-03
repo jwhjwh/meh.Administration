@@ -350,7 +350,6 @@
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
 		62035F4C1E9F133200666399 /* bg_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62035F4B1E9F133200666399 /* bg_mt02.png */; };
-		62035F511E9F244700666399 /* GuiiiiiDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 62035F501E9F244700666399 /* GuiiiiiDView.m */; };
 		620731211E5D1DA200BCF51C /* JinnLockCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731171E5D1DA200BCF51C /* JinnLockCircle.m */; };
 		620731221E5D1DA200BCF51C /* JinnLockIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731191E5D1DA200BCF51C /* JinnLockIndicator.m */; };
 		620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207311B1E5D1DA200BCF51C /* JinnLockSudoko.m */; };
@@ -1173,8 +1172,6 @@
 		6200D6941E5BDF600014F9F3 /* PersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonModel.h; sourceTree = "<group>"; };
 		6200D6951E5BDF600014F9F3 /* PersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonModel.m; sourceTree = "<group>"; };
 		62035F4B1E9F133200666399 /* bg_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mt02.png; sourceTree = "<group>"; };
-		62035F4F1E9F244700666399 /* GuiiiiiDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiiiiiDView.h; sourceTree = "<group>"; };
-		62035F501E9F244700666399 /* GuiiiiiDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuiiiiiDView.m; sourceTree = "<group>"; };
 		620731161E5D1DA200BCF51C /* JinnLockCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockCircle.h; sourceTree = "<group>"; };
 		620731171E5D1DA200BCF51C /* JinnLockCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JinnLockCircle.m; sourceTree = "<group>"; };
 		620731181E5D1DA200BCF51C /* JinnLockIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JinnLockIndicator.h; sourceTree = "<group>"; };
@@ -1196,7 +1193,7 @@
 		620D3A161ED3CA5900D804A7 /* CreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreaViewController.m; sourceTree = "<group>"; };
 		620FC39A1ED035E500C4D8B3 /* ManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageViewController.h; sourceTree = "<group>"; };
 		620FC39B1ED035E500C4D8B3 /* ManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageViewController.m; sourceTree = "<group>"; };
-		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6218D04D1E4E95FB00299989 /* Administration.app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6218D0541E4E95FB00299989 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2721,7 +2718,7 @@
 		6218D04E1E4E95FB00299989 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6218D04D1E4E95FB00299989 /* Administration.app */,
+				6218D04D1E4E95FB00299989 /* Administration.app.app */,
 				6218D0661E4E95FB00299989 /* AdministrationTests.xctest */,
 				6218D0711E4E95FB00299989 /* AdministrationUITests.xctest */,
 			);
@@ -3077,8 +3074,6 @@
 				626480831E9DD73C0090EECB /* ReportPermissionsVC.m */,
 				62F55C2A1EA6EEA30020BD9D /* ReportModel.h */,
 				62F55C2B1EA6EEA30020BD9D /* ReportModel.m */,
-				62035F4F1E9F244700666399 /* GuiiiiiDView.h */,
-				62035F501E9F244700666399 /* GuiiiiiDView.m */,
 				62640EFA1EA0A9FC00085375 /* ZHTBtnView.h */,
 				62640EFB1EA0A9FC00085375 /* ZHTBtnView.m */,
 			);
@@ -3601,9 +3596,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6218D04C1E4E95FA00299989 /* Administration */ = {
+		6218D04C1E4E95FA00299989 /* Administration.app */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration" */;
+			buildConfigurationList = 6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration.app" */;
 			buildPhases = (
 				6218D0491E4E95FA00299989 /* Sources */,
 				6218D04A1E4E95FA00299989 /* Frameworks */,
@@ -3614,9 +3609,9 @@
 			);
 			dependencies = (
 			);
-			name = Administration;
+			name = Administration.app;
 			productName = Administration;
-			productReference = 6218D04D1E4E95FB00299989 /* Administration.app */;
+			productReference = 6218D04D1E4E95FB00299989 /* Administration.app.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6218D0651E4E95FB00299989 /* AdministrationTests */ = {
@@ -3701,7 +3696,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6218D04C1E4E95FA00299989 /* Administration */,
+				6218D04C1E4E95FA00299989 /* Administration.app */,
 				6218D0651E4E95FB00299989 /* AdministrationTests */,
 				6218D0701E4E95FB00299989 /* AdministrationUITests */,
 			);
@@ -3899,7 +3894,6 @@
 				1F193B251EB1DCBE00E437F9 /* guideController.m in Sources */,
 				1F6E313E1E5439C2006069ED /* MenuCell.m in Sources */,
 				1F6E313F1E5439C2006069ED /* YHJBtnView.m in Sources */,
-				62035F511E9F244700666399 /* GuiiiiiDView.m in Sources */,
 				1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */,
 				1F6211ED1E8CFFB000F50851 /* EaseConversationListViewController.m in Sources */,
 				1FEEC58A1ED3D47C006C3523 /* JoblistController.m in Sources */,
@@ -4243,12 +4237,12 @@
 /* Begin PBXTargetDependency section */
 		6218D0681E4E95FB00299989 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6218D04C1E4E95FA00299989 /* Administration */;
+			target = 6218D04C1E4E95FA00299989 /* Administration.app */;
 			targetProxy = 6218D0671E4E95FB00299989 /* PBXContainerItemProxy */;
 		};
 		6218D0731E4E95FB00299989 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6218D04C1E4E95FA00299989 /* Administration */;
+			target = 6218D04C1E4E95FA00299989 /* Administration.app */;
 			targetProxy = 6218D0721E4E95FB00299989 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -4514,7 +4508,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration" */ = {
+		6218D07A1E4E95FB00299989 /* Build configuration list for PBXNativeTarget "Administration.app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6218D07B1E4E95FB00299989 /* Debug */,
