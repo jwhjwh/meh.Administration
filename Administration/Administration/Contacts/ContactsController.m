@@ -16,7 +16,6 @@
 
 @interface ContactsController ()<SectionChooseVCDelegate>
 {
-    
     FIrstController *_oneVC;
     SecondController *_twoVC;
 }

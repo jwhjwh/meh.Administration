@@ -251,7 +251,7 @@ else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
 }
 //-(void)messagephone:(UIButton *)sender{
 //
-//}
+//} 
 -(void)iamsges{
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
     //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];

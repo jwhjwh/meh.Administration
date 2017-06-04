@@ -119,7 +119,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
-
+ 
         case 0:{ //职位介绍
         StructureViewController *StructVC= [[StructureViewController alloc]init];
         [self.navigationController showViewController:StructVC sender:nil];

@@ -106,78 +106,95 @@
     return cell;
 }
 - (void)gestureUnLockSwitchChanged:(UISwitch *)sender{
+ 
     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"冻结员工" message:@"确定要设置冻结该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index){
-        UITableViewCell *cell =(UITableViewCell*)[[sender superview] superview];
-         indPath=[infonTableview indexPathForCell:cell];
-        if (sender.tag==0) {
-            if ([_state isEqualToString:@"使用中"]) {
-                [self xiugaishiyonzhuangtaicodeStr:@"0"];
-                __weak __typeof__(self) weakSelf = self;
-                self.Block=^(){
-                    weakSelf.UnLockSwitch.on=YES;
-                     _state=@"被冻结";
-                       weakSelf.stateBlock(weakSelf.state);
-                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
-                };
-        self.suBlock=^(){
-            weakSelf.gestureUnLockSwitch.on=YES;
-            _state=@"使用中";
-            weakSelf.stateBlock(weakSelf.state);
-            weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
-                 };
-            }else{
-                [self xiugaishiyonzhuangtaicodeStr:@"1"];
-                __weak __typeof__(self) weakSelf = self;
-                self.Block=^(){
-                        weakSelf.UnLockSwitch.on=NO;
-                        _state=@"使用中";
+        if (index==2) {
+            UITableViewCell *cell =(UITableViewCell*)[[sender superview]superview];
+            indPath=[infonTableview indexPathForCell:cell];
+            if (sender.tag==0) {
+                if ([_state isEqualToString:@"使用中"]) {
+                    [self xiugaishiyonzhuangtaicodeStr:@"0"];
+                    __weak __typeof__(self) weakSelf = self;
+                    self.Block=^(){
+                        weakSelf.UnLockSwitch.on=YES;
+                        _state=@"被冻结";
                         weakSelf.stateBlock(weakSelf.state);
-                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
-                };
-                self.suBlock=^(){
-                    weakSelf.gestureUnLockSwitch.on=NO;
-                    _state=@"被冻结";
-                    weakSelf.stateBlock(weakSelf.state);
-                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
-                };
-            }
-        }else{
-            if ([_state isEqualToString:@"被冻结"]) {
-              
-                [self xiugaishiyonzhuangtaicodeStr:@"1"];
-                __weak __typeof__(self) weakSelf = self;
-                self.Block=^(){
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                    };
+                    self.suBlock=^(){
                         weakSelf.gestureUnLockSwitch.on=YES;
                         _state=@"使用中";
                         weakSelf.stateBlock(weakSelf.state);
                         weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
-                };
-                self.suBlock=^(){
-                    weakSelf.UnLockSwitch.on=YES;
-                    _state=@"被冻结";
-                    weakSelf.stateBlock(weakSelf.state);
-                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
-                };
-            }else{
-                
-                [self xiugaishiyonzhuangtaicodeStr:@"0"];
-                __weak __typeof__(self) weakSelf = self;
-                self.Block=^(){
+                    };
+                }else{
+                    [self xiugaishiyonzhuangtaicodeStr:@"1"];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Block=^(){
+                        weakSelf.UnLockSwitch.on=NO;
+                        _state=@"使用中";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                    };
+                    weakSelf.suBlock=^(){
                         weakSelf.gestureUnLockSwitch.on=NO;
                         _state=@"被冻结";
                         weakSelf.stateBlock(weakSelf.state);
                         weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
-                };
-                self.suBlock=^(){
-                    weakSelf.UnLockSwitch.on=NO;
-                    _state=@"使用中";
-                    weakSelf.stateBlock(weakSelf.state);
-                    weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
-                };
+                    };
+                }
+            }else{
+                if ([_state isEqualToString:@"被冻结"]) {
+                    [self xiugaishiyonzhuangtaicodeStr:@"1"];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Block=^(){
+                        weakSelf.gestureUnLockSwitch.on=YES;
+                        _state=@"使用中";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                    };
+                    weakSelf.suBlock=^(){
+                        weakSelf.UnLockSwitch.on=YES;
+                        _state=@"被冻结";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                    };
+                }else{
+                    
+                    [self xiugaishiyonzhuangtaicodeStr:@"0"];
+                    __weak __typeof__(self) weakSelf = self;
+                    weakSelf.Block=^(){
+                        weakSelf.gestureUnLockSwitch.on=NO;
+                        _state=@"被冻结";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@", weakSelf.state];
+                    };
+                    weakSelf.suBlock=^(){
+                        weakSelf.UnLockSwitch.on=NO;
+                        _state=@"使用中";
+                        weakSelf.stateBlock(weakSelf.state);
+                        weakSelf.label.text=[NSString stringWithFormat:@"账号状态:%@",weakSelf.state];
+                    };
+                }
+            }
+
+        }else{
+            if ([_state isEqualToString:@"使用中"]) {
+                if (sender.tag==0) {
+                    _gestureUnLockSwitch.on = YES;
+                }else{
+                    _UnLockSwitch.on=NO;
+                }
+            }else{
+                if (sender.tag==0) {
+                    _gestureUnLockSwitch.on = NO;
+                }else{
+                    _UnLockSwitch.on = YES;
+                }
             }
         }
-    };
+         };
     [alertView showMKPAlertView];
   
 }

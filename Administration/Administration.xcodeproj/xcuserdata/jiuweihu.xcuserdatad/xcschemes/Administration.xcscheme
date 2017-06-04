@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6218D04C1E4E95FA00299989"
-               BuildableName = "Administration.app"
-               BlueprintName = "Administration"
+               BuildableName = "Administration.app.app"
+               BlueprintName = "Administration.app"
                ReferencedContainer = "container:Administration.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -53,8 +53,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6218D04C1E4E95FA00299989"
-            BuildableName = "Administration.app"
-            BlueprintName = "Administration"
+            BuildableName = "Administration.app.app"
+            BlueprintName = "Administration.app"
             ReferencedContainer = "container:Administration.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -76,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6218D04C1E4E95FA00299989"
-            BuildableName = "Administration.app"
-            BlueprintName = "Administration"
+            BuildableName = "Administration.app.app"
+            BlueprintName = "Administration.app"
             ReferencedContainer = "container:Administration.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -102,8 +102,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6218D04C1E4E95FA00299989"
-            BuildableName = "Administration.app"
-            BlueprintName = "Administration"
+            BuildableName = "Administration.app.app"
+            BlueprintName = "Administration.app"
             ReferencedContainer = "container:Administration.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

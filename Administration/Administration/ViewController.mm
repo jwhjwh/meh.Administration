@@ -347,6 +347,7 @@
             [USER_DEFAULTS  setObject:userStr forKey:@"userid"];
             [USER_DEFAULTS setObject:name forKey:@"name"];
             [USER_DEFAULTS  setObject:_shibieStr forKey:@"udid"];
+            [USER_DEFAULTS  setObject:@"1" forKey:@"guiiiii"];
 //            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
 //            if (error==nil) {
 //                NSLog(@"注册成功");
