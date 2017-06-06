@@ -34,6 +34,7 @@
     
     
 }
+@property (nonatomic,retain)NSMutableArray *Fieldarr;
 @property (nonatomic,assign) BOOL hide;
 @property (nonatomic,retain)NSMutableArray *arr;//黑色标签
 @property (nonatomic,retain)NSMutableArray *HSarr;//灰色标签
@@ -44,11 +45,13 @@
 @property (nonatomic,strong)UITextField *codeField;//验证码输入框
 @property (nonatomic,strong)UITextField *PassField;//密码框
 @property (nonatomic,strong)UITextField *QRPassField;//确认密码框
+
 @property (nonatomic,strong) NSString *codeStr;//验证码
 @property (nonatomic,strong) UIButton *TXImage;//获取验证码
 
 @property (nonatomic,strong) NSString *MobileStr;
 @property (nonatomic,strong)UILabel *PINPLabel;
+@property (nonatomic,strong)UILabel *PINPLabel2;
 @property (nonatomic,strong)UIButton *JsButton;//角色
 @property (nonatomic,strong)UIButton *JsLBButton;//角色类别
 @property (nonatomic,strong)UIView *view1;//   |
@@ -62,6 +65,7 @@
     [super viewDidLoad];
     self.title=@"创建角色";
     self.view.backgroundColor = [UIColor whiteColor];
+    _Fieldarr = [[NSMutableArray alloc]init];
     _hide = YES;
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -237,23 +241,49 @@
                 }
                 [SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
                     NSLog(@"选择了第%ld个",(long)selectIndex);
-                    [_gxnumAry addObject:gxbmNum[selectIndex]];
-                    if ([_arr[4]isEqualToString:@"所属部门"]) {
-                        NSLog(@"1");
+                    for (int u = 0; u<_gxnumAry.count; u++) {
+                        NSString *obj = _gxnumAry[u];
+                        if (obj == gxbmNum[selectIndex]) {
+                            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择哦!" andInterval:1.0];
+                        }else{
+                            [_gxnumAry addObject:gxbmNum[selectIndex]];
+                            if ([_arr[4]isEqualToString:@"所属部门"]) {
+                                NSLog(@"1");
+                            }else
+                            {
+                                [_arr insertObject:@"" atIndex:5];
+                                [_HSarr insertObject:gxbmAry[selectIndex] atIndex:5];
+                                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
+                                [indexPaths addObject: indexPath];
+                                [infonTableview beginUpdates];
+                                [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
+                                [infonTableview endUpdates];
+                            }
+
+                        }
                     }
-                    [_arr insertObject:@"" atIndex:5];
-                    [_HSarr insertObject:@"" atIndex:5];
-                    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
-                    [indexPaths addObject: indexPath];
-                    [infonTableview beginUpdates];
-                    [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
-                    [infonTableview endUpdates];
-                    
                 } selectValue:^(NSString *selectValue) {
-                    _PINPLabel.text = selectValue;
-                    _PINPLabel.textColor = [UIColor blackColor];
-                } showCloseButton:NO];
+                    if ([_arr[4]isEqualToString:@"所属部门"]) {
+                        _PINPLabel.text = selectValue;
+                        _PINPLabel.textColor = [UIColor blackColor];
+
+                    }else
+                    {
+                        for (int u = 0; u<_HSarr.count; u++) {
+                            NSString *obj = _HSarr[u];
+                            if (obj == selectValue) {
+                               
+                            }else{
+                                _PINPLabel2.text = selectValue;
+                                _PINPLabel2.textColor = [UIColor blackColor];
+                            }
+                        }
+                        
+                        
+
+                    }
+                    } showCloseButton:NO];
             }
             
            
@@ -312,10 +342,27 @@
             if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]||[String isEqualToString:@"3"]||[String isEqualToString:@"4"]||[String isEqualToString:@"14"]||[String isEqualToString:@"16"]||[String isEqualToString:@"17"]) {
                 
                 
-                [self addRalodui];
+                //[self addRalodui];
+                _arr[4] = @"所属部门";
+                
                 cell.textLabel.text= @"所属部门";
                 _PINPLabel.text = @"选择部门";
                 _PINPLabel.textColor = [UIColor lightGrayColor];
+                for (int u = 0; u<_arr.count; u++) {
+                    NSString *obj = _arr[u];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:u inSection:0];
+                    UITableViewCell *cell = [infonTableview cellForRowAtIndexPath:indexPath];
+                    
+                    if ([obj isEqualToString:@""]) {
+                        
+                        [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                        cell.hidden= YES;
+                        [_arr removeObject:_arr[u]];
+                        _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码", nil];
+                    }
+                }
+                NSLog(@"%@",_HSarr);
+                [infonTableview reloadData];
             }else{
                 _arr[4] = @"管辖部门";
                 cell.textLabel.text= @"管辖部门";
@@ -349,35 +396,12 @@
     
     
     
-    
+    //cell.hidden = YES;//重点
+
     _arr = [[NSMutableArray alloc]initWithObjects:@"职位",@"姓名",@"手机号",@"验证码",@"所属部门",@"密码",@"确认密码", nil];
     _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码", nil];
     [infonTableview reloadData];
-    switch (_codeField.tag) {
-        case 0:
-            if (NameorID.length>0) {
-                _codeField.text = NameorID;
-            }
-            
-            break;
-        case 1:
-            if (_MobileStr.length>0) {
-                _codeField.text = _MobileStr;
-            }
-            
-            break;
-        case 2:
-            if (YZM.length>0) {
-                _codeField.text = YZM;
-            }
-            
-            break;
-            
-        default:
-            break;
-    }
-    _PassField.text = ccode;
-    _QRPassField.text = QRccode;
+    
    //
     NSLog(@"%@",_arr);
     NSLog(@"%@",_HSarr);
@@ -623,12 +647,7 @@
         [_JsButton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
         [cell addSubview:_JsButton];
         //self.view.bounds.size.width/2+30, 70, 1, 30
-        for(_view1 in cell.subviews){
-            if([_view1 isKindOfClass:[_view1 class]])
-            {
-                [_view1 removeFromSuperview];
-            }
-        }
+        
         _view1 = [[UIView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2+30, 6, 1, 30 )];
         [cell addSubview:_view1];
        
@@ -655,6 +674,8 @@
         [_codeField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
         _codeField.tag = row;
         _codeField.placeholder =_HSarr[indexPath.row];
+        
+        [_Fieldarr addObject:_codeField];
         placeholder(_codeField);
         [cell addSubview:_codeField];
     }
@@ -691,6 +712,32 @@
         _PINPLabel.font = [UIFont boldSystemFontOfSize:13.0f];
         _PINPLabel.text = _HSarr[indexPath.row];
         [cell addSubview:_PINPLabel];
+        
+    }
+    if ([cell.textLabel.text isEqualToString:@""]) {
+        for(_PINPLabel2 in cell.subviews){
+            if([_PINPLabel2 isKindOfClass:[UILabel class]])
+            {
+                [_PINPLabel2 removeFromSuperview];
+            }
+        }
+        for(_PassField in cell.subviews){
+            if([_PassField isKindOfClass:[UITextField class]])
+            {
+                [_PassField removeFromSuperview];
+            }
+        }
+        for(_QRPassField in cell.subviews){
+            if([_QRPassField isKindOfClass:[UITextField class]])
+            {
+                [_QRPassField removeFromSuperview];
+            }
+        }
+        _PINPLabel2 = [[UILabel alloc]initWithFrame:labelRect2];
+        _PINPLabel2.textColor = GetColor(199, 199, 205, 1);
+        _PINPLabel2.font = [UIFont boldSystemFontOfSize:13.0f];
+        _PINPLabel2.text = _HSarr[indexPath.row];
+        [cell addSubview:_PINPLabel2];
         
     }
     if ([cell.textLabel.text isEqualToString:@"密码"]){
