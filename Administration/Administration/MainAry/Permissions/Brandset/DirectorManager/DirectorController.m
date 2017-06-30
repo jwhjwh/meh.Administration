@@ -156,12 +156,14 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)updateDepartarr:(NSMutableArray*)array dict:(NSDictionary*)dict{
+-(void)updateDepartarr:(NSMutableArray*)array dict:(NSMutableDictionary*)dict{
       NSMutableArray *palarr=[NSMutableArray array];
+    
     [palarr addObject:dict];
+    
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:palarr options:NSJSONWritingPrettyPrinted error:&error];
-   NSString *Mid = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *Mid = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     NSString *uStr =[NSString stringWithFormat:@"%@user/updateDepartmentManager.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];

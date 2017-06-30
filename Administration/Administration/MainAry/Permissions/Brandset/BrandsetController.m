@@ -165,7 +165,10 @@
         for ( branModel *model in  _dataArray[indexPath.row]) {
             [LogoImage addObject:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]];
         }
-          cell.imageVie.image =[self addTwoImageToOne:[UIImage imageNamed:@"bg"] twoImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[0]]]] ThreeImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[1]]]] fourImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[2]]]]fiveImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[3]]]]];
+        if (LogoImage.count>0) {
+             cell.imageVie.image =[self addTwoImageToOne:[UIImage imageNamed:@"bg"] twoImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[0]]]] ThreeImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[1]]]] fourImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[2]]]]fiveImage:[UIImage imageWithData: [NSData dataWithContentsOfURL:[NSURL URLWithString:LogoImage[3]]]]];
+        }
+        
     }
     return cell;
 }

@@ -23,7 +23,7 @@
     NSMutableArray *gxbmNum;//管辖部门num
     NSMutableArray *gxbmAry;//管辖部门数组
     
-    NSMutableArray *ssbmNum;//管辖部门数组
+    NSString *ssbmNum;
 
     NSString *jsid;
     NSString *NameorID;
@@ -32,6 +32,8 @@
     NSString *ccode;
     NSString *QRccode;
     
+    int timeDown; //60秒后重新获取验证码
+    NSTimer *timer;
     
 }
 @property (nonatomic,retain)NSMutableArray *Fieldarr;
@@ -66,16 +68,19 @@
     self.title=@"创建角色";
     self.view.backgroundColor = [UIColor whiteColor];
     _Fieldarr = [[NSMutableArray alloc]init];
+    ccode = [[NSString alloc]init];
+    QRccode = [[NSString alloc]init];
     _hide = YES;
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
+    _gxnumAry = [[NSMutableArray alloc]init];
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
     _arr = [[NSMutableArray alloc]initWithObjects:@"角色",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码", nil];
-    _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码",@"输入密码", nil];
+    _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码(六位以上)",@"输入密码(六位以上)", nil];
     
         [self InterTableUI];
         [self ZwNetWork];
@@ -119,39 +124,72 @@
 
 #pragma mark  确定
 -(void)action_button{
-    if (YZM ==nil) {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入验证码" andInterval:1.0];
-    }else if ([_codeStr isEqualToString:YZM]) {
-        NSString *urlStr = [NSString stringWithFormat:@"%@user/adduser.action", KURLHeader];
-        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-        NSDictionary *dic = [[NSDictionary alloc]init];
-        if ([jsid isEqualToString:@"2"]||[jsid isEqualToString:@"6"]) {
-            dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"password":_PassField.text,@"roleId":jsid,@"mobile":_MobileStr,@"realName":NameorID,@"brandID":_PINPLabel.text};
-        }else{
-            dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"password":_PassField.text,@"roleId":jsid,@"mobile":_MobileStr,@"realName":NameorID};
-        }
-        [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
-            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
-            {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建成功" andInterval:1.0];
-            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"2000"]){
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"用户已存在" andInterval:1.0];
-            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
-            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
-            }else{
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建失败" andInterval:1.0];
-            }
-        } failure:^(NSError *error) {
-            
-        } view:self.view MBPro:YES];
-        
-    }else{
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"验证码无效" andInterval:1.0];
-
     
+    if (jsid ==nil) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择职位" andInterval:1.0];
+    }else if(NameorID == nil){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入姓名" andInterval:1.0];
+    }else if(_MobileStr == nil){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入手机号" andInterval:1.0];
+    }else if(YZM ==nil){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入验证码" andInterval:1.0];
+    }else  if((ccode.length<6)||(QRccode.length<6)){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码不够六位" andInterval:1.0];
+    }else {
+        if([ccode isEqualToString:QRccode]){
+            
+                NSString *poower = [NSString stringWithFormat:@"%@", _gxnumAry];
+                NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+                NSString *urlStr = [NSString stringWithFormat:@"%@user/adduser.action", KURLHeader];
+                NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+                NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+                NSDictionary *dic = [[NSDictionary alloc]init];
+                
+                NSString *ltoken=[ZXDNetworking encryptStringWithMD5:ccode];
+                
+                if ([jsid isEqual:@"2"]||[jsid isEqual:@"6"]) {
+                    if (_gxnumAry.count == 0) {
+                        dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"password":ltoken,@"realName":NameorID,@"RoleId":jsid,@"LevelID":ssbmNum,@"mobile":_MobileStr};
+                    }else{
+                    dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"password":ltoken,@"realName":NameorID,@"RoleId":jsid,@"DepartmentID":_gxnumAry,@"LevelID":ssbmNum,@"mobile":_MobileStr};
+                    }
+                    
+                }else{
+                    if (_gxnumAry.count == 0) {
+                        dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"password":ltoken,@"realName":NameorID,@"RoleId":jsid,@"mobile":_MobileStr};
+                    }else{
+                        dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"password":ltoken,@"realName":NameorID,@"RoleId":jsid,@"DepartmentID":poower,@"mobile":_MobileStr};
+                    }
+                    
+                }
+                [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+                    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+                    {
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"创建成功" sureBtn:@"确认" cancleBtn:nil];
+                        alertView.resultIndex = ^(NSInteger index){
+                            [self.navigationController popViewControllerAnimated:YES];
+                        };
+                        [alertView showMKPAlertView];
+                    }else if([[responseObject valueForKey:@"status"]isEqualToString:@"2000"]){
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"用户已存在" andInterval:1.0];
+                    }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+                    }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+                    }else{
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建失败" andInterval:1.0];
+                    }
+                } failure:^(NSError *error) {
+                    
+                } view:self.view MBPro:YES];
+
+            
+            
+            
+        }else{
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"两次密码不相同" andInterval:1.0];
+        }
+
     }
 }
 
@@ -182,9 +220,9 @@
                     [zwlbAry addObject:[dic valueForKey:@"levelName"]];
             }
             //[self showAlert:zwlbAry button:btn];
-            [SelectAlert showWithTitle:@"选择部门" titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
+            [SelectAlert showWithTitle:@"选择职业类别" titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
                 NSLog(@"选择了第%ld个",(long)selectIndex);
-                ssbmNum = [[NSMutableArray alloc]init];
+                ssbmNum = [[NSString alloc]init];
                 ssbmNum = zwlbNum[selectIndex];
                 
             } selectValue:^(NSString *selectValue) {
@@ -219,7 +257,7 @@
     }else{
         infonTableview.scrollEnabled =NO;
     }
-    _gxnumAry = [[NSMutableArray alloc]init];
+    
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryDepartment.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -236,52 +274,67 @@
                 gxbmNum = [[NSMutableArray alloc]init];
                 gxbmAry = [[NSMutableArray alloc]init];
                 for (NSDictionary *dic in arr) {
-                    [gxbmNum  addObject:[dic valueForKey:@"num"]];
+                    [gxbmNum  addObject:[dic valueForKey:@"id"]];
                     [gxbmAry addObject:[dic valueForKey:@"departmentName"]];
                 }
+               
                 [SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
-                    NSLog(@"选择了第%ld个",(long)selectIndex);
-                    for (int u = 0; u<_gxnumAry.count; u++) {
-                        NSString *obj = _gxnumAry[u];
-                        if (obj == gxbmNum[selectIndex]) {
-                            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择哦!" andInterval:1.0];
-                        }else{
+                    NSLog                                                                                                                                                                                                                                                                                                                                                                                                                                                                     (@"选择了第%ld个",(long)selectIndex);
+                    
+                    if (_gxnumAry.count>0) {
+                            NSString *ovje = gxbmNum[selectIndex];
+                            BOOL isbool = [_gxnumAry containsObject: ovje];
+                            if (isbool == 1) {
+                                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择哦 " andInterval:1.0];
+                            }else{
                             [_gxnumAry addObject:gxbmNum[selectIndex]];
-                            if ([_arr[4]isEqualToString:@"所属部门"]) {
-                                NSLog(@"1");
-                            }else
-                            {
-                                [_arr insertObject:@"" atIndex:5];
-                                [_HSarr insertObject:gxbmAry[selectIndex] atIndex:5];
-                                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-                                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
-                                [indexPaths addObject: indexPath];
-                                [infonTableview beginUpdates];
-                                [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
-                                [infonTableview endUpdates];
+                                if ([_arr[4]isEqualToString:@"所属部门"]) {
+                                }else
+                                {
+                                    [_arr insertObject:@"" atIndex:5];
+                                    //[_HSarr insertObject:gxbmAry[selectIndex] atIndex:5];
+                                    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
+                                    [indexPaths addObject: indexPath];
+                                    [infonTableview beginUpdates];
+                                    [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
+                                    [infonTableview endUpdates];
+                                }
+
                             }
+                        }else{
+                        [_gxnumAry addObject:gxbmNum[selectIndex]];
+                        if ([_arr[4]isEqualToString:@"所属部门"]) {
+                        }else
+                        {
+                            [_arr insertObject:@"" atIndex:5];
+                           // [_HSarr insertObject:gxbmAry[selectIndex] atIndex:5];
+                            NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
+                            [indexPaths addObject: indexPath];
+                            [infonTableview beginUpdates];
+                            [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
+                            [infonTableview endUpdates];
+                        }
 
                         }
-                    }
-                } selectValue:^(NSString *selectValue) {
+                    } selectValue:^(NSString *selectValue) {
                     if ([_arr[4]isEqualToString:@"所属部门"]) {
                         _PINPLabel.text = selectValue;
                         _PINPLabel.textColor = [UIColor blackColor];
+                        [_HSarr insertObject:selectValue atIndex:5];
 
                     }else
                     {
-                        for (int u = 0; u<_HSarr.count; u++) {
-                            NSString *obj = _HSarr[u];
-                            if (obj == selectValue) {
-                               
-                            }else{
-                                _PINPLabel2.text = selectValue;
-                                _PINPLabel2.textColor = [UIColor blackColor];
-                            }
+                       
+                        BOOL isbool = [_HSarr containsObject: selectValue];
+                        if (isbool == YES) {
+                            
+                        }else{
+                             [_HSarr insertObject:selectValue atIndex:5];
+                            _PINPLabel2.text = selectValue;
+                            _PINPLabel2.textColor = [UIColor blackColor];
                         }
-                        
-                        
-
                     }
                     } showCloseButton:NO];
             }
@@ -317,7 +370,7 @@
                 _arr = [[NSMutableArray alloc]initWithObjects:@"职位",@"姓名",@"手机号",@"验证码",@"管辖部门",@"密码",@"确认密码", nil];
                 
             }
-            _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码", nil];
+            _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码(六位以上)",@"输入密码(六位以上)", nil];
             NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
             [indexPaths addObject: indexPath];
@@ -358,16 +411,20 @@
                         [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
                         cell.hidden= YES;
                         [_arr removeObject:_arr[u]];
-                        _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码", nil];
+                        _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码(六位以上)",@"输入密码(六位以上)", nil];
                     }
                 }
                 NSLog(@"%@",_HSarr);
                 [infonTableview reloadData];
+                
+                [_gxnumAry removeAllObjects];
             }else{
                 _arr[4] = @"管辖部门";
                 cell.textLabel.text= @"管辖部门";
                 _PINPLabel.text = @"管辖部门";
+                _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码(六位以上)",@"输入密码(六位以上)", nil];
                 _PINPLabel.textColor = [UIColor lightGrayColor];
+                [_gxnumAry removeAllObjects];
             }
             if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]) {
                 _view1.backgroundColor = [UIColor lightGrayColor];
@@ -390,27 +447,29 @@
     } showCloseButton:NO];
 
 }
-#pragma mark 刷新列表
--(void)addRalodui{
-    
-    
-    
-    
-    //cell.hidden = YES;//重点
-
-    _arr = [[NSMutableArray alloc]initWithObjects:@"职位",@"姓名",@"手机号",@"验证码",@"所属部门",@"密码",@"确认密码", nil];
-    _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"选择部门",@"输入密码",@"输入密码", nil];
-    [infonTableview reloadData];
-    
-   //
-    NSLog(@"%@",_arr);
-    NSLog(@"%@",_HSarr);
+-(void)uiarde{
     
 }
-
+#pragma mark 验证码倒计时
+-(void)handleTimer{
+    if(timeDown>=0)
+    {
+        [_TXImage setUserInteractionEnabled:NO];
+        [_TXImage setTitleColor: GetColor(144, 75, 174, 1) forState:UIControlStateNormal];
+        int sec = ((timeDown%(24*3600))%3600)%60;
+        [_TXImage setTitle:[NSString stringWithFormat:@"(%d)秒",sec] forState:UIControlStateNormal];
+    }else{
+        [_TXImage setUserInteractionEnabled:YES];
+        [_TXImage setTitleColor:GetColor(144, 75, 174, 1) forState:UIControlStateNormal];
+        [_TXImage setTitle:@"重发验证码" forState:UIControlStateNormal];
+        
+        [timer invalidate];
+    }
+    timeDown = timeDown - 1;
+}
 #pragma mark 验证码
 -(void)callIphone:(UIButton*)sender{
-    
+    /*
     if (_MobileStr  == nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入11位手机号" andInterval:1.0];
     }else if (_MobileStr.length<11){
@@ -428,6 +487,8 @@
                 _codeStr = [responseObject objectForKey:@"code"];
                 NSLog(@"_codeStr:%@",_codeStr);
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"短信已发送，请注意查收" andInterval:1.0];
+                timeDown = 59;
+                timer = [NSTimer scheduledTimerWithTimeInterval:(1.0) target:self selector:@selector(handleTimer) userInfo:nil repeats:YES];
             }else{
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络堵塞了" andInterval:1.0];
             }
@@ -436,8 +497,7 @@
         } view:self.view MBPro:YES];
         
     }
-    
-    
+    */
 }
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
@@ -454,12 +514,16 @@
     _hide = !_hide;
     if (_hide == YES) {
         [_hideButton setBackgroundImage:[UIImage imageNamed:@"对-选中"] forState:UIControlStateNormal];
+        _PassField =_Fieldarr[0];
+        _QRPassField =_Fieldarr[1];
         _PassField.secureTextEntry = NO;
         _QRPassField.secureTextEntry = NO;
         
         
     }else{
         [_hideButton setBackgroundImage:[UIImage imageNamed:@"对-未选"] forState:UIControlStateNormal];
+        _PassField =_Fieldarr[0];
+        _QRPassField =_Fieldarr[1];
         _PassField.secureTextEntry = YES;
         _QRPassField.secureTextEntry = YES;
     }
@@ -477,7 +541,7 @@
         }
         if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
             [cell setSeparatorInset:UIEdgeInsetsZero];
-        }
+        } 
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -492,11 +556,12 @@
 }
 - (void)PassFieldWithText:(UITextField *)textField
 {
-    if (_PassField.text.length > 0 && _QRPassField.text.length > 0 && _PassField.text == _QRPassField.text) {
-        ccode = [[NSString alloc]init];
-        ccode = _PassField.text;
-        QRccode = [[NSString alloc]init];
-        QRccode = _QRPassField.text;
+    
+            ccode = textField.text;
+            NSLog(@"1:%@",textField.text);
+    
+    if ((ccode.length > 5 && QRccode.length > 5)&&([ccode isEqualToString:QRccode]) ) {
+        
         _WCBtn.backgroundColor = GetColor(144, 75, 174, 1);
         _WCBtn.enabled = YES;
         
@@ -505,7 +570,22 @@
         _WCBtn.enabled = NO;
         
     }
+}
+-(void)QRPassFieldWithText:(UITextField *)textField
+{
     
+    QRccode = textField.text;
+    NSLog(@"2:%@",textField.text);
+    if ((ccode.length > 5 && QRccode.length > 5)&&([ccode isEqualToString:QRccode])) {
+        
+        _WCBtn.backgroundColor = GetColor(144, 75, 174, 1);
+        _WCBtn.enabled = YES;
+        
+    }else{
+        _WCBtn.backgroundColor = [UIColor lightGrayColor];
+        _WCBtn.enabled = NO;
+        
+    }
 }
 - (void)textFieldWithText:(UITextField *)textField
 {
@@ -577,7 +657,7 @@
     [self.view addSubview:infonTableview];
     
     
-    UIView *fotView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 180)];
+    UIView *fotView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, Scree_width, 180)];
     fotView.backgroundColor = [UIColor whiteColor];
     infonTableview.tableFooterView=fotView;
     
@@ -675,7 +755,7 @@
         _codeField.tag = row;
         _codeField.placeholder =_HSarr[indexPath.row];
         
-        [_Fieldarr addObject:_codeField];
+       
         placeholder(_codeField);
         [cell addSubview:_codeField];
     }
@@ -756,6 +836,9 @@
         _PassField.placeholder =_HSarr[indexPath.row];
         placeholder(_PassField);
         _PassField.secureTextEntry= YES;
+        
+        [_Fieldarr addObject:_PassField];
+        
         [cell addSubview:_PassField];
         
     }
@@ -771,10 +854,11 @@
         _QRPassField.font = [UIFont boldSystemFontOfSize:13.0f];
         _QRPassField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _QRPassField.adjustsFontSizeToFitWidth = YES;
-        [_QRPassField addTarget:self action:@selector(PassFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        [_QRPassField addTarget:self action:@selector(QRPassFieldWithText:) forControlEvents:UIControlEventEditingChanged];
         _QRPassField.placeholder =_HSarr[indexPath.row];
         placeholder(_QRPassField);
         _QRPassField.secureTextEntry = YES;
+         [_Fieldarr addObject:_QRPassField];
         [cell addSubview:_QRPassField];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -21,6 +21,6 @@
 
 @property (nonatomic,copy)NSString *roleId;
 
-
+@property (nonatomic,copy)NSString *uuid;
 @property (nonatomic,retain)NSString *isdeles;
 @end

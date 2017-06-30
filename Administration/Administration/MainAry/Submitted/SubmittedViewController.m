@@ -114,9 +114,6 @@
             }
             [self.tableView reloadData];
     
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
@@ -133,7 +130,13 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无报岗" Size:20.0];
+            _tableView.emptyView.hidden = NO;
         }
+        
+        
+
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];

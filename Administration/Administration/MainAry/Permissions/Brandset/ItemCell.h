@@ -20,5 +20,6 @@
 @property (nonatomic, strong) UIView *container;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
+
 @property (nonatomic, assign) BOOL isEditing;
 @end

@@ -14,6 +14,10 @@
 #import "depmtCell.h"
 #import "EditModel.h"
 #import "DongImage.h"
+
+#import "BJZWViewController.h"
+
+
 @interface GuanglixqVController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
@@ -24,6 +28,16 @@
 @property (nonatomic,retain)NSString *callNum;//电话
 @property (nonatomic,retain)NSString *callName;//姓名
 @property (nonatomic,retain)NSString *state;//状态
+
+@property (nonatomic,retain) NSMutableArray *codeeAry;//->>>
+
+@property (nonatomic,retain)NSMutableArray *ZWAry;//职位名字
+@property (nonatomic,retain)NSMutableArray *ZWnumAry;//职位id
+@property (nonatomic,retain)NSMutableArray *ZWLBnumAry;//职位类别id
+@property (nonatomic,retain)NSMutableArray *ZWLBAry;//职位类别名字
+@property (nonatomic,retain)NSMutableArray *BMAry;//部门名字
+@property (nonatomic,retain)NSMutableArray *BMNumAry;//部门id
+
 @end
 
 @implementation GuanglixqVController
@@ -32,19 +46,36 @@
     [super viewDidLoad];
     self.title=@"员工管理";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _ZWAry = [[NSMutableArray alloc]init];
+    _ZWLBAry = [[NSMutableArray alloc]init];
+    _BMAry = [[NSMutableArray alloc]init];
+    _BMNumAry = [[NSMutableArray alloc]init];
+    _ZWnumAry = [[NSMutableArray alloc]init];
+    _ZWLBnumAry = [[NSMutableArray alloc]init];
+    
+    _codeeAry = [[NSMutableArray alloc]init];
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     _infonTableview.rowHeight = UITableViewAutomaticDimension;
     _infonTableview.estimatedRowHeight = 110;
-   
     [self.view addSubview:_infonTableview];
+    [_infonTableview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view.mas_top).offset(0);
+        make.left.mas_equalTo(self.view.mas_left).offset(0);
+        make.right.mas_equalTo(self.view.mas_right).offset(0);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
+    }];
+    
     [ZXDNetworking setExtraCellLineHidden:_infonTableview];
     [self loadData];
 }
@@ -65,7 +96,7 @@
      if(section==1){
       UIView *headV = [[UIView alloc] initWithFrame:CGRectMake(0, 0,Scree_width, 30)];
          
-         headV.backgroundColor = GetColor(230,230,230,1);
+        // headV.backgroundColor = GetColor(230,230,230,1);
          UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 50, 30)];
          lab.text=@"职位";
          lab.font = [UIFont systemFontOfSize:14.0f];
@@ -79,12 +110,35 @@
      }
       return nil;
 }
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    view.tintColor = GetColor(230,230,230,1);
+-(void)buttonsender{
+    BJZWViewController *BJZWVC = [[BJZWViewController alloc]init];
+    //NSArray *zwarry = [NSArray arrayWithObject:_ZWAry];
+    BJZWVC.ZW = _ZWAry;//职位
+    
+    //NSArray *zwnumarry = [NSArray arrayWithObject:_ZWnumAry];
+    BJZWVC.Numm = _ZWnumAry;//职位id
+    
+   // NSArray *zwlbarry = [NSArray arrayWithObject:_ZWLBAry];
+    BJZWVC.ZWLB = _ZWLBAry;//职位类别
+    
+    //NSArray *zwlbnumarry = [NSArray arrayWithObject:_ZWLBnumAry];
+    BJZWVC.lbNum = _ZWLBnumAry;//职位类别id
+    
+   // NSArray *bmarry = [NSArray arrayWithObject:_BMAry];
+    BJZWVC.gxbmAry = _BMAry;//部门
+    
+   // NSArray *bmnumbarry = [NSArray arrayWithObject:_BMNumAry];
+    BJZWVC.gxbmidAry = _BMNumAry;//部门id
+    
+    BJZWVC.codeAry = _codeeAry;
+    [self.navigationController pushViewController:BJZWVC animated:YES];
+}
+//- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+  //  view.tintColor = GetColor(230,230,230,1);
 //    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
 //    header.textLabel.textColor = [UIColor grayColor];
 //    header.textLabel.font = [UIFont systemFontOfSize:14.0f];
-}
+//}
 //-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
 //   
 //    if(section==1){
@@ -94,10 +148,10 @@
 //}
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 { if (section == 0 ||section == 1){
-    return 30;
-}else if(section == 4){
+        return 20;
+    }else if(section == 4){
      return 0;
-}
+    }
     return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,8 +215,11 @@
              }else{//不是字符串
                  depmtCell *celled=[[depmtCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"depmCell" arr:_departarr[indexPath.row]];
                  celled.mLabel.text=_arr[indexPath.section][indexPath.row];
+                 
                  [celled setNeedsUpdateConstraints];
+                 
                  [celled updateConstraintsIfNeeded];
+                 
                  return celled;
              }
          }
@@ -220,23 +277,87 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             EditModel *model = [[EditModel alloc]init];
             _departarr=[NSMutableArray array];
+            NSMutableArray *array=[NSMutableArray array];
             for (NSDictionary *dic in responseObject[@"list2"]) {
+                NSMutableArray *array2=[NSMutableArray array];
+                NSMutableArray *zwlbary = [NSMutableArray array];//职位类别
+                NSMutableArray *zwlbnumary = [NSMutableArray array];//职位类别id
+                NSMutableArray *zwary = [NSMutableArray array];//职位
+                NSMutableArray *zwnumary = [NSMutableArray array];//职位id
+                 NSMutableArray *bmnumary = [NSMutableArray array];//部门id
+                 NSMutableArray *bmary = [NSMutableArray array];//部门
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:dic]];
+                
+                NSString *string = [[NSString alloc] initWithFormat:@"%@",model.roleId];
+                [array addObject:@"职位"];
+                [array2 addObject:@"职位"];
+                if ([string isEqualToString:@"2"]||[string isEqualToString:@"5"]) {
+                    [array addObject:@"所属部门"];
+                    [array2 addObject:@"所属部门"];
+                }else{
+                    [array addObject:@"管理部门"];
+                    [array2 addObject:@"管理部门"];
+                }
+                [_codeeAry addObject:array2];
+                
                 if ([model.LevelName isEqualToString:@""]) {
                         [_departarr addObject:model.NewName];
+                    
+                        [zwlbary addObject:@"未分配"];//职位类别
+                        [zwlbnumary addObject:@"0"];//职位类别id
+                    
+                    [_ZWLBAry addObject:zwlbary];
+                    [_ZWLBnumAry addObject:zwlbnumary];
+                    
+                        [zwary addObject:model.NewName];//职位
+                        [zwnumary addObject:model.roleId];//职位id
+                    
+                    [_ZWAry addObject:zwary];
+                    [_ZWnumAry addObject:zwnumary];
+                    
                 }else{
                    [_departarr addObject:[NSString stringWithFormat:@"%@(%@)",model.NewName,model.LevelName]];
+                    [zwary addObject:model.NewName];//职位
+                    [zwnumary addObject:model.roleId];//职位id
+                    
+                    [_ZWAry addObject:zwary];
+                    [_ZWnumAry addObject:zwnumary];
+                    
+                    [_ZWLBAry addObject:model.LevelName];//职位类别
+                    [_ZWLBnumAry addObject:model.levelID];//职位类别id
+                    
                 }
                 if ([model.departmentName isEqualToString:@""]) {
                     model.departmentName=@"未分配";
-                     [_departarr addObject:model.departmentName];
+                    [_departarr addObject:model.departmentName];
+                    
+                    [bmary addObject:model.departmentName];
+                    [_BMAry addObject:bmary];//部门
+                    
+                    [bmnumary addObject:@"0"];
+                    [_BMNumAry addObject:bmnumary];//部门id
+                    
+                    
                 }else if([model.departmentName containsString:@","]){
-                   
                   NSArray* array = [model.departmentName componentsSeparatedByString:@","];
-                  [_departarr addObject:array];
+                    NSArray* numarray = [model.departmentID componentsSeparatedByString:@","];
+                    [_departarr addObject:array];
+                    
+                    [_BMAry addObject:array];//部门
+                    
+                    [_BMNumAry addObject:numarray];//部门id
+                    
                 }else{
                     [_departarr addObject:model.departmentName];
+                    [bmary addObject:model.departmentName];
+                    [_BMAry addObject:bmary];//部门
+                    
+                    [bmnumary addObject:model.departmentID];
+                    [_BMNumAry addObject:bmnumary];//部门id
+                    
                 }
+                
+                
             }
             model.birthday = [model.birthday substringToIndex:10];
             _logImage=model.icon;
@@ -247,20 +368,10 @@
             }else{
                 _state=@"被冻结";
             }
-            NSMutableArray *array=[NSMutableArray array];
-            if ([model.NewName containsString:@"总监"]||[model.NewName containsString:@"经理"]) {
-                for (int i=0;[responseObject[@"list2"]count]>i ; i++) {
-                    [array addObject:@"职位"];
-                    [array addObject:@"管理部门"];
-                }
-            }else{
-                for (int i=0;[responseObject[@"list2"]count]>i ; i++) {
-                    [array addObject:@"职位"];
-                    [array addObject:@"所属部门"];
-                }
-            }
-        _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
-                
+            
+            _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
+            //NSLog(@"标题: %@\n职位：%@\n职位id：%@\n职位类别：%@\n职位类别id：%@\n部门：%@\n部门id：%@",_codeeAry,_ZWAry,_ZWnumAry,_ZWLBAry,_ZWLBnumAry,_BMAry,_BMNumAry);
+            
         _infoArray = [[NSMutableArray alloc]initWithObjects:model.account,model.name,nil];
             [self.infonTableview reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
@@ -292,8 +403,9 @@
 -(void)shanchuyuangong{
     NSString *uStr =[NSString stringWithFormat:@"%@user/deluser.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *comp = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID,@"CompanyInfoId":comp};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];

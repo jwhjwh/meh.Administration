@@ -7,7 +7,6 @@
 //
 
 #import "PermissionsViewController.h"
-#import "CreateViewController.h"
 #import "CodeViewController.h"
 #import "StructureViewController.h"
 #import "SetPosiViewController.h"
@@ -42,7 +41,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterTableUI];
-    _arr = [[NSArray alloc]initWithObjects:@"职业结构介绍(必看)",@"公司职位设置",@"品牌设置",@"部门设置",@"职位类别设置",@"报表权限设置",@"识别码",nil];
+    _arr = [[NSArray alloc]initWithObjects:@"职位结构介绍(必看)",@"公司职位设置",@"品牌设置",@"部门设置",@"职位类别设置",@"报表权限设置",@"识别码",nil];
     //
 }
 -(void)buttonLiftItem{

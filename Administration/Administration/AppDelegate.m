@@ -58,7 +58,7 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    EMOptions *options = [EMOptions optionsWithAppkey:@"easemob-demo#chatdemoui"];
+    EMOptions *options = [EMOptions optionsWithAppkey:@"1126170609115009#jwhdzkereport"];
     options.apnsCertName = @"chatdemoui_dev";
    
     [[EMClient sharedClient] initializeSDKWithOptions:options];

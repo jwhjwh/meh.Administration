@@ -18,7 +18,7 @@
 
 @end
 
-#define MenuH 190
+#define MenuH 270
 #define Num 1
 #define pageH 0
 @implementation MenuCell
@@ -29,11 +29,18 @@
     if (self) {
         _firstVC=[[UIView alloc]initWithFrame:CGRectMake(0,0,Scree_width,MenuH)];
         _secondVC=[[UIView alloc]initWithFrame:CGRectMake(Scree_width,0,Scree_width,MenuH)];
-        UIScrollView *scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,Scree_width,MenuH+pageH)];
+        UIScrollView *scrollView=[[UIScrollView alloc]init];
+        if (menuArray.count>8) {
+          scrollView.frame =CGRectMake(0,0,Scree_width,MenuH+pageH);
+        }else{
+        scrollView.frame =CGRectMake(0,0,Scree_width,MenuH+pageH);
+        }
+        
         scrollView.contentSize=CGSizeMake(Num*Scree_width,MenuH+pageH);
         scrollView.pagingEnabled=YES;
+        
         //禁止滑动
-        //scrollView.alwaysBounceVertical = NO;
+        scrollView.alwaysBounceVertical = NO;
         scrollView.delegate=self;
         scrollView.showsHorizontalScrollIndicator=NO;
         [scrollView addSubview:_firstVC];
@@ -42,49 +49,56 @@
         
         for (int i=0;i<menuArray.count;i++) {
             if (i<4) {
-                CGRect frame=CGRectMake(i*Scree_width/4,0,Scree_width/4,MenuH/2);
+                CGRect frame=CGRectMake(i*Scree_width/4,0,Scree_width/4,MenuH/3);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
-            
+                NSString *teeg = model.teeeg;
+                int ivalue = [teeg intValue];
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
-                btnView.tag=10+i;
+                btnView.tag=ivalue;
                 [_firstVC addSubview:btnView];
                 UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OnTapBtnView:)];
                 [btnView addGestureRecognizer:tap];
             }
             else if (i<8)
             {
-                CGRect frame=CGRectMake((i-4)*Scree_width/4,MenuH/2,Scree_width/4,MenuH/2);
+                CGRect frame=CGRectMake((i-4)*Scree_width/4,MenuH/3,Scree_width/4,MenuH/3);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
+                NSString *teeg = model.teeeg;
+                int ivalue = [teeg intValue];
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
-                btnView.tag=10+i;
+                btnView.tag=ivalue;
                 [_firstVC addSubview:btnView];
                 UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OnTapBtnView:)];
                 [btnView addGestureRecognizer:tap];
             }
             else if (i<12)
             {
-                CGRect frame=CGRectMake((i-8)*Scree_width/4,0,Scree_width/4,MenuH/2);
+                CGRect frame=CGRectMake((i-8)*Scree_width/4,(MenuH/3)*2,Scree_width/4,MenuH/3);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
+                NSString *teeg = model.teeeg;
+                int ivalue = [teeg intValue];
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
-                btnView.tag=10+i;
-                [_secondVC addSubview:btnView];
+                btnView.tag=ivalue;
+                [_firstVC addSubview:btnView];
                 UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OnTapBtnView:)];
                 [btnView addGestureRecognizer:tap];
             }
             else
             {
-                CGRect frame=CGRectMake((i-12)*Scree_width/4,MenuH/2,Scree_width/4,MenuH/2);
+                CGRect frame=CGRectMake((i-12)*Scree_width/4,(MenuH/3)*3,Scree_width/4,MenuH/3);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
+                NSString *teeg = model.teeeg;
+                int ivalue = [teeg intValue];
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
-                btnView.tag=10+i;
+                btnView.tag=ivalue;
                 [_secondVC addSubview:btnView];
                 UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OnTapBtnView:)];
                 [btnView addGestureRecognizer:tap];

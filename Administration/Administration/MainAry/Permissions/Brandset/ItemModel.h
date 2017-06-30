@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, Status) {
 @interface ItemModel : NSObject
 @property (nonatomic, copy) NSString *imageName;
 @property (nonatomic, copy) NSString *itemTitle;
+@property (nonatomic,strong )NSString *uuid;
 @property (nonatomic, assign) Status status;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end

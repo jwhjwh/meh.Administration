@@ -240,12 +240,13 @@
 #pragma mark - 回调 只设置2 -- > 确定才回调
 - (void)buttonEvent:(UIButton *)sender
 {
-//    if (sender.tag == 2) {
+    //if (sender.tag == 2) {
         if (self.resultIndex) {
             self.resultIndex(sender.tag);
         }
-//    }
+    //}
     [self removeFromSuperview];
 }
+#pragma mark - 回调 只设置1 -- > 取消才回调
 
 @end

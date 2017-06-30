@@ -13,7 +13,7 @@
 #import "JoblistController.h"
 
 #import "CreaViewController.h"
-#import "CreateViewController.h"
+
 
 @interface ManageViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框

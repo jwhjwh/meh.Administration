@@ -132,9 +132,11 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
-            model.birthday = [model.birthday substringToIndex:10];
+            if (model.birthday.length>0) {
+                 model.birthday = [model.birthday substringToIndex:10];
+            }
             _logImage=model.icon;
-            if ([model.roleId isEqualToString:@"6"]||[model.roleId isEqualToString:@"2"]) {
+            if ([model.roleId isEqual:@"6"]||[model.roleId isEqual:@"2"]) {
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属品牌"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
                 NSArray *arr=@[model.account,model.NewName,model.departmentName,];
@@ -156,8 +158,25 @@
                 
             }
             [_infonTableview reloadData];
-        } else  {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else  {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误,获取个人信息失败" andInterval:1.0];
+
         }
     }
                failure:^(NSError *error) {

@@ -129,7 +129,7 @@
             
             [infonTableview reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到部门信息" andInterval:1.0];
             [infonTableview addEmptyViewWithImageName:@"" title:@"没有设定部门" Size:20.0];
             infonTableview.emptyView.hidden = NO;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {

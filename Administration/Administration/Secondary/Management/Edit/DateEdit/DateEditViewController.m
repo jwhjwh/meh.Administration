@@ -124,6 +124,7 @@
     {
         
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
    
     cell.textLabel.text = _arr[indexPath.section][indexPath.row];

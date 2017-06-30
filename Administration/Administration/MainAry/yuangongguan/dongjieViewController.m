@@ -109,7 +109,23 @@
  
     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"冻结员工" message:@"确定要设置冻结该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index){
-        if (index==2) {
+        
+        if (index == 1) {
+            if ([_state isEqualToString:@"使用中"]) {
+                if (sender.tag==0) {
+                    _gestureUnLockSwitch.on = YES;
+                }else{
+                    _UnLockSwitch.on=NO;
+                }
+            }else{
+                if (sender.tag==0) {
+                    _gestureUnLockSwitch.on = NO;
+                }else{
+                    _UnLockSwitch.on = YES;
+                }
+            }
+
+        }else if (index==2) {
             UITableViewCell *cell =(UITableViewCell*)[[sender superview]superview];
             indPath=[infonTableview indexPathForCell:cell];
             if (sender.tag==0) {

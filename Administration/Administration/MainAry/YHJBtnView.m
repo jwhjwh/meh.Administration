@@ -13,8 +13,8 @@
 -(id)initWithFrame:(CGRect)frame title:(NSString *)title imageStr:(NSString *)imageStr
 {
 #define frameWidth frame.size.width
-#define imageWidth 59  // 图片宽度,高度等
-#define imageTopH  15  // 图片距顶距离
+#define imageWidth 55  // 图片宽度,高度等
+#define imageTopH  10  // 图片距顶距离
     
     self=[super initWithFrame:frame];
     if (self) {
@@ -23,8 +23,9 @@
             // image
             UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake((frameWidth-imageWidth)/2,imageTopH,imageWidth,imageWidth)];
             imageView.backgroundColor=[UIColor whiteColor];
-            imageView.image=[UIImage imageNamed:imageStr];
-//             [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,imageStr]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+            //imageView.image=[UIImage imageNamed:imageStr];
+             [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageStr]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+            
             [self addSubview:imageView];
         }
        

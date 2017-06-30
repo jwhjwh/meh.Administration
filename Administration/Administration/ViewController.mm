@@ -332,7 +332,8 @@
             NSString *ApLtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"token"]];
             //用户ID
             NSString *userStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"id"]];
-            
+            //uuid 环信账号
+            NSString *uuid=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"uuid"]];
          //  角色
             NSString * roleId=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleId"]];
             //公司ID
@@ -348,6 +349,7 @@
             [USER_DEFAULTS setObject:name forKey:@"name"];
             [USER_DEFAULTS  setObject:_shibieStr forKey:@"udid"];
             [USER_DEFAULTS  setObject:@"1" forKey:@"guiiiii"];
+            [USER_DEFAULTS  setObject:uuid forKey:@"uuid"];
 //            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
 //            if (error==nil) {
 //                NSLog(@"注册成功");
@@ -366,17 +368,19 @@
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                   [self startLocation];
-                [[EMClient sharedClient] loginWithUsername:@"zhangchenchong"
-                                                  password:@"zxd9010"
+                [[EMClient sharedClient] loginWithUsername:uuid
+                                                  password:@"123456"
                                                 completion:^(NSString *aUsername, EMError *aError) {
+                                                    
                                                     if (!aError) {
-                            NSString *userOpenId = @"zhangchenchong";
-                            NSString *nickName =[USER_DEFAULTS objectForKey:@"name"];// 用户昵称
-//                            NSString *avatarUrl =[USER_DEFAULTS objectForKey:@"logoImage"];// 用户头像（绝对路径）
-                            NSString *avatarUrl = @"http://avatar.csdn.net/E/8/5/2_duruiqi_fx.jpg";// 用户头像（绝对路径）
-                                // 登录成功后，如果后端云没有缓存用户信息，则新增一个用户
-                                [UserWebManager createUser:userOpenId nickName:nickName avatarUrl:avatarUrl];
+//                            NSString *userOpenId = @"zhangchenchong";
+//                            NSString *nickName =[USER_DEFAULTS objectForKey:@"name"];// 用户昵称
+////                            NSString *avatarUrl =[USER_DEFAULTS objectForKey:@"logoImage"];// 用户头像（绝对路径）
+//                            NSString *avatarUrl = @"http://avatar.csdn.net/E/8/5/2_duruiqi_fx.jpg";// 用户头像（绝对路径）
+//                                // 登录成功后，如果后端云没有缓存用户信息，则新增一个用户
+//                                [UserWebManager createUser:userOpenId nickName:nickName avatarUrl:avatarUrl];
                                 //设置是否自动登录
+                                                        NSLog(@"登录成功");
                                 [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                     } else {
                                                         NSLog(@"登录失败");
@@ -385,23 +389,15 @@
                                                 }];
             });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"网络错误，请重新登陆" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登录超时,请重新登录" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码或识别码错误" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"用户名或密码错误" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0005"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司已冻结" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0055"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的账号已冻结" andInterval:1.0];
         }
       
     } failure:^(NSError *error) {

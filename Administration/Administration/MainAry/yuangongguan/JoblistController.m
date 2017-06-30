@@ -128,8 +128,8 @@
             }
             [infonTableview reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
-            [infonTableview addEmptyViewWithImageName:@"" title:@"没有设定部门" Size:20.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到职位信息" andInterval:1.0];
+            [infonTableview addEmptyViewWithImageName:@"" title:@"没有设定职位" Size:20.0];
             infonTableview.emptyView.hidden = NO;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];

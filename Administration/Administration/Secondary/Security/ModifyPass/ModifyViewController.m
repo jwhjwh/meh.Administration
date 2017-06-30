@@ -201,7 +201,7 @@
         _oldString = _oldField.text;
         _oneString = _oneField.text;
         _twoString = _twoField.text;
-        BOOL dog = [_oneString isEqual:_twoString];
+        BOOL dog = [_oneString isEqualToString:_twoString];
         if (dog == YES) {
            
             [self loadDataFromServer];

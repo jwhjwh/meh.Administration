@@ -13,6 +13,7 @@
     if (self = [super init]) {
         self.imageName = dict[@"imageName"];
         self.itemTitle = dict[@"itemTitle"];
+        self.uuid = dict[@"uuid"];
     }
     return self;
 }

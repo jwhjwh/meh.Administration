@@ -41,6 +41,8 @@
 //名称
 @property (nonatomic,retain) NSString *nameBarn;
 
+@property (nonatomic,strong)NSMutableArray *friend;
+
 
 @property (nonatomic,retain) UIView *fotView;
 //品牌字符串
@@ -84,6 +86,8 @@
     _DrAry=@[_dirMoeld,_dirtMoeld];
     _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
     _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+    
+    _friend = [[NSMutableArray alloc]init];
     isSelede=YES;
     isSele=YES;
     ismay=YES;
@@ -142,7 +146,7 @@
     if (_nameBarn==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写名称" andInterval:1.0];
     }else{
-        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此品牌部" sureBtn:@"确认" cancleBtn:@"取消"];
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此部门" sureBtn:@"确认" cancleBtn:@"取消"];
         NSMutableArray *Emiarr=[NSMutableArray array];
         if (_EmisAry.count>=3) {
             for (DirtmsnaModel *model in [_EmisAry subarrayWithRange:NSMakeRange(0,_EmisAry.count-2)]) {
@@ -158,6 +162,7 @@
             for (DirtmsnaModel *model in [_paleAry subarrayWithRange:NSMakeRange(0,_paleAry.count-2)]) {
                 [dic setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
                 [dic setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
+                [_friend addObject:model.uuid];
             }
             [palarr addObject:dic];
         }
@@ -166,7 +171,7 @@
             for (DirtmsnaModel *model in [_ManaAry subarrayWithRange:NSMakeRange(0,_ManaAry.count-2)]) {
                 [dict setObject:[NSString stringWithFormat:@"%@", model.usersid] forKey:@"usersid"];
                 [dict setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-                
+                [_friend addObject:model.uuid];
             }
             [palarr addObject:dict];
         }
@@ -179,46 +184,51 @@
         }
         
         alertView.resultIndex = ^(NSInteger index){
-            
-            NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
-            NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-            NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-            NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-            NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid};
-            [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
-                    _nameBarn = nil;
-                    _textField.text=@"";
-                    _textField.placeholder = @"请输入部门名称";
-                     placeholder(_textField);
-                    _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                    _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                    _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+            if (index == 2) {
+                NSString *fri = [_friend componentsJoinedByString:@","];
+                NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
+                NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+                NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+                NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+                NSLog(@"%@",[USER_DEFAULTS objectForKey:@"uuid"]);
+                NSString *uuid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"uuid"]];
+                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid,@"friend":fri};
+                [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+                    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
+                        _nameBarn = nil;
+                        _textField.text=@"";
+                        _textField.placeholder = @"请输入部门名称";
+                        placeholder(_textField);
+                        _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+                        _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+                        _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+                        [_collectionView reloadData];
+                        self.Str();
+                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                        alertView.resultIndex = ^(NSInteger index){
+                            ViewController *loginVC = [[ViewController alloc] init];
+                            UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                            [self presentViewController:loginNavC animated:YES completion:nil];
+                        };
+                        [alertView showMKPAlertView];
+                    }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                        alertView.resultIndex = ^(NSInteger index){
+                            ViewController *loginVC = [[ViewController alloc] init];
+                            UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                            [self presentViewController:loginNavC animated:YES completion:nil];
+                        };
+                        [alertView showMKPAlertView];
+                    }
+                    
                     [_collectionView reloadData];
-                    self.Str();
-                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                    alertView.resultIndex = ^(NSInteger index){
-                        ViewController *loginVC = [[ViewController alloc] init];
-                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                        [self presentViewController:loginNavC animated:YES completion:nil];
-                    };
-                    [alertView showMKPAlertView];
-                }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                    alertView.resultIndex = ^(NSInteger index){
-                        ViewController *loginVC = [[ViewController alloc] init];
-                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                        [self presentViewController:loginNavC animated:YES completion:nil];
-                    };
-                    [alertView showMKPAlertView];
-                }
-                
-                [_collectionView reloadData];
-            } failure:^(NSError *error) {
-                
-            } view:self.view MBPro:YES];
+                } failure:^(NSError *error) {
+                    
+                } view:self.view MBPro:YES];
+            }
+            
             
         };
         [alertView showMKPAlertView];
@@ -295,6 +305,7 @@
 }
 //点击Item详情
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
     ItemCell *cell = (ItemCell *) [collectionView cellForItemAtIndexPath:indexPath];
     switch (indexPath.section) {
        

@@ -50,7 +50,7 @@
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, kHeight*550)];
+    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, kHeight*650)];
     self.tableView.tableHeaderView=_imageView;
 }
 -(void)buttonLiftItem{
@@ -96,20 +96,22 @@
                      @"",
                      @"",
                      @"1.老板:管理所有员工拥有所有权限",
-                     @"2.行政管理:1)管理公司内所有报表等文档的手机整理 2)协",
-                     @"助老板管理 3)相当于一个老板的辅助管理账号.",
-                     @"3.业务总监:1)负责业务方面开拓市场所有规划 2)管理下属",
-                     @"业务经理",
-                     @"4.业务经理:1)负责完成业务总监的计划任务 2)管理下属业",
-                     @"务员",
+                     @"2.行政管理:1)管理公司内所有报表等文档的手机整理 ",
+                     @"         2)协助老板管理",
+                     @"         3)相当于一个老板的辅助管理账号.",
+                     @"3.业务总监:1)负责业务方面开拓市场所有规划 ",
+                     @"          2)管理下属业务经理",
+                     @"4.业务经理:1)负责完成业务总监的计划任务",
+                     @"          2)管理下属业务员",
                      @"5.业务:负责开拓新的合作客户",
-                     @"6.市场总监:1)负责已合作客户的整体销售计划 2)任务管理",
-                     @"下属各市场经理",
-                     @"7.市场经理:1)负责该品牌客户的销售、服务、管理 2)管理",
-                     @"下属品牌美导.",
+                     @"6.市场总监:1)负责已合作客户的整体销售计划 ",
+                     @"         2)任务管理下属各市场经理",
+                     @"7.市场经理:1)负责该品牌客户的销售、服务、管理 ",
+                     @"          2)管理下属品牌美导.",
                      @"8.美导:服务店家的美容导师.",
-                     @"9.财务总监:1)负责公司的财务计算 2)物流的运转 3)客服",
-                     @"与客户之间的沟通及管理下属.",
+                     @"9.财务总监:1)负责公司的财务计算",
+                     @"         2)物流的运转 ",
+                     @"         3)客服与客户之间的沟通及管理下属.",
                      @"10.客服经理:负责内部人员及客户的问题沟通及管理下",
                      @"属客服.",
                      @"11.客服:负责公司的客户机公司内部人员的沟通.",
@@ -117,8 +119,8 @@
                      @"13.物流:负责公司向店家供货的物流服务.",
                      @"14.仓库:负责货物的出入库及管理.",
                      @"15.财务经理:负责公司的财务管理及管理下属.",
-                     @"16.会计:负责公司所有明细分类账，直接将逐笔登记总账",
-                     @"等工作流程.",
+                     @"16.会计:负责公司所有明细分类账，直接将逐笔登记",
+                     @"总账等工作流程.",
                      @"17.出纳:负责货物价款首付及往来款项收付等."
                      
                      ];
@@ -146,7 +148,7 @@
     cell.textLabel.text = self.dataArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.tintColor = GetColor(76, 76, 76, 1);
-    cell.textLabel.font = [UIFont systemFontOfSize:kWidth*26];
+    cell.textLabel.font = [UIFont systemFontOfSize:kWidth*28];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

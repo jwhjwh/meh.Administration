@@ -11,4 +11,5 @@
 @interface ZYJHeadLineModel : NSObject
 @property (nonatomic,copy) NSString *type;
 @property (nonatomic,copy) NSString *title;
+@property (nonatomic,copy) NSString *teeeg;
 @end

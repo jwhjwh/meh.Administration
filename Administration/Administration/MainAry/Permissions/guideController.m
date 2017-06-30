@@ -199,8 +199,9 @@
                   _tableView.emptyView.hidden = YES;
             }
             [_tableView reloadData];
+            
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多信息" andInterval:1.0];
             [_tableView addEmptyViewWithImageName:@"" title:@"还没添加任何内容请点击下方进行添加!" Size:16.0];
             _tableView.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
@@ -247,6 +248,7 @@
                 scrollPosition:UITableViewScrollPositionMiddle];
                 
             }
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加失败" andInterval:1.0];
 //            [_tableView addEmptyViewWithImageName:@"" title:@"还没添加任何内容请点击下方进行添加"];

@@ -41,7 +41,7 @@
     _label.numberOfLines=0;
     _label.font = [UIFont systemFontOfSize:14];
     [self addSubview:_label];
-    _TopLineView = [[ZYJHeadLineView alloc]initWithFrame:CGRectMake(_hornImage.right+5, _hornImage.top-1,kMidViewWidth, kMidViewHeight)];
+    _TopLineView = [[ZYJHeadLineView alloc]initWithFrame:CGRectMake(_hornImage.right+5, _hornImage.top-1,self.bounds.size.width-40, kMidViewHeight)];
 
     [self addSubview:_TopLineView];
   
