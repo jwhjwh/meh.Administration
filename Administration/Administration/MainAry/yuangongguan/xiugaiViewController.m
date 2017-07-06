@@ -41,7 +41,7 @@
     textFleid.delegate = self;
     textFleid.placeholder =@"请输入6位以上数字";
     placeholder(textFleid);
-     [textFleid addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
+    [textFleid addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
     textFleid.keyboardType = UIKeyboardTypeNumberPad;//键盘格式
     textFleid.backgroundColor = [UIColor whiteColor];
     textFleid.layer.borderColor= [UIColor whiteColor].CGColor;
@@ -56,7 +56,7 @@
 -(void)tijiaoClick{
     if (_passtStr==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码不能为空" andInterval:1.0f];
-    }else{
+    }else if(_passtStr.length<6){
         NSString *uStr =[NSString stringWithFormat:@"%@user/updatepass.action",KURLHeader];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -69,29 +69,34 @@
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                 alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                     ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
             }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                 alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                     ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
-            }            
+            }
         }failure:^(NSError *error) {
             
         }view:self.view MBPro:YES];
+    }else
+    {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码不足6位哦" andInterval:1.0f];
     }
 }
 -(void)textFieldChange :(UITextField *)textField{
     _passtStr = textField.text;
 }
 - (void)didReceiveMemoryWarning {
-   [super didReceiveMemoryWarning];
+    [super didReceiveMemoryWarning];
 }
 @end

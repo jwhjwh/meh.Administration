@@ -203,8 +203,12 @@
         _twoString = _twoField.text;
         BOOL dog = [_oneString isEqualToString:_twoString];
         if (dog == YES) {
-           
-            [self loadDataFromServer];
+            if (  _oneString.length>5 && _twoString.length>5) {
+                [self loadDataFromServer];
+            }else{
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码长度不够哦" andInterval:1.0];
+            }
+            
         }else{
              [ELNAlerTool showAlertMassgeWithController:self andMessage:@"两次密码输入不相同" andInterval:1.0];
             }
@@ -253,6 +257,7 @@
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0005"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"旧密码错误" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登录超时，请重新登录" andInterval:1.0];
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];

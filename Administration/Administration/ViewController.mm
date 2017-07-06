@@ -389,9 +389,11 @@
                                                 }];
             });
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入内容有误,请重新输入" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登录超时,请重新登录" andInterval:1.0];
+            
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登录超时,请重新登录"
+                                            andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0004"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"用户名或密码错误" andInterval:1.0];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0005"]){
