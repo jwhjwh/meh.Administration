@@ -170,10 +170,7 @@
             }else{
                 _state=@"被冻结";
             }
-            
             _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
-            //NSLog(@"标题: %@\n职位：%@\n职位id：%@\n职位类别：%@\n职位类别id：%@\n部门：%@\n部门id：%@",_codeeAry,_ZWAry,_ZWnumAry,_ZWLBAry,_ZWLBnumAry,_BMAry,_BMNumAry);
-            
             _infoArray = [[NSMutableArray alloc]initWithObjects:model.account,model.name,nil];
             [self.infonTableview reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
@@ -411,7 +408,11 @@
 {
     sender.backgroundColor = GetColor(247,247,247,1);
     
+   
+    
+    
     BJZWViewController *BJZWVC = [[BJZWViewController alloc]init];
+    
     BJZWVC.ZW = _ZWAry;//职位
     BJZWVC.Numm = _ZWnumAry;//职位id
     BJZWVC.ZWLB = _ZWLBAry;//职位类别

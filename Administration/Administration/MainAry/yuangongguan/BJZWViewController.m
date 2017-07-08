@@ -30,6 +30,9 @@
 
 @property (strong,nonatomic) NSMutableArray *bjBtnAry;//编辑部门按钮数组
 
+@property (strong,nonatomic) NSMutableArray *sctagAry;//编辑部门tag按钮数组
+@property (strong,nonatomic) NSMutableArray *sctagAry2;//编辑部门tag按钮数组
+
 @property (strong,nonatomic)UIButton *tjBtn;//添加职位按钮
 @property (strong,nonatomic)UIButton *scBtn;//删除职位按钮
 @property (strong,nonatomic)UIButton *bjbtn;//编辑职位按钮
@@ -50,6 +53,8 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     NSLog(@"标题: %@\n职位：%@\n职位id：%@\n职位类别：%@\n职位类别id：%@\n部门：%@\n部门id：%@",_codeAry,_ZW,_Numm,_ZWLB,_lbNum,_gxbmAry,_gxbmidAry);
+    
+    
     [self tableViewUI];
     [self addalloc];
 }
@@ -57,6 +62,9 @@
     _scBtnAry = [[NSMutableArray alloc]init];
     _bjBtnAry = [[NSMutableArray alloc]init];
     _scBtnAry2 = [[NSMutableArray alloc]init];
+    _sctagAry = [[NSMutableArray alloc]init];
+    _sctagAry2 = [[NSMutableArray alloc]init];
+    [self ZwNetWork];
 }
 #pragma mark  请求角色
 -(void)ZwNetWork{
@@ -86,7 +94,7 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
             [USER_DEFAULTS  setObject:@"" forKey:@"token"];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
-        }else{
+        }else{ 
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
         }
         
@@ -101,7 +109,9 @@
     if ([btn.titleLabel.text isEqualToString:@"编辑"]) {
          [btn setTitle:@"完成" forState:UIControlStateNormal];
         NSSet *set = [NSSet setWithArray:_bjBtnAry];
-        _scBtnAry = [_scBtnAry valueForKeyPath:@"@distinctUnionOfObjects.self"];
+        
+        
+        //NSArray * bjset = [set allObjects];
         for (int u = 0; u<set.count; u++) {
             NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
             if ([stt isEqualToString: _bjBtnAry[u]]) {
@@ -127,21 +137,18 @@
         
     }else if([btn.titleLabel.text isEqualToString:@"完成"]){
         [btn setTitle:@"编辑" forState:UIControlStateNormal];
-        for (int u = 0; u<_bjBtnAry.count; u++) {
+        NSSet *set = [NSSet setWithArray:_bjBtnAry];
+       
+        for (int u = 0; u<set.count; u++) {
             NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
             if ([stt isEqualToString: _bjBtnAry[u]]) {
                 NSArray *scbtnary = _scBtnAry[u];
-                
-               
-                
-                
                 for (int a = 0; a<scbtnary.count; a++) {
                     _scBtnnnnn = scbtnary[a];
                     [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
                     [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
                     _scBtnnnnn.enabled = YES;
                 }
-                
                 [_tjBtn setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
                 [_tjBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                 _tjBtn.enabled = NO;
@@ -169,21 +176,28 @@
 
 #pragma mark 职位按钮
 -(void)JsButtonbtn:(UIButton*)btn{
-    NSLog(@"职位按钮");
+    [self showAlert:titles button:btn];
 }
-
+-(void)showAlert :(NSArray *)arrr button:(UIButton*)bbtn{
+   // [ SelectAlert showWithTitle:@"选择职业" titles:arr selectIndex:^(NSInteger selectIndex) {
+    [SelectAlert showWithTitle:@"选择职位" titles:arrr selectIndex:^(NSInteger selectIndex) {
+        NSLog(@"选择了第%ld个",(long)selectIndex);
+        NSString *tagg = numBS[selectIndex];
+        int taa = [tagg intValue];
+        bbtn.tag = taa;
+        
+    } selectValue:^(NSString *selectValue) {
+        
+    } showCloseButton:NO];
+}
 #pragma mark 职位类别按钮
 -(void)JsLBButtonbtn:(UIButton*)btn{
     NSLog(@"职位类别按钮");
 }
 #pragma mark 点击所属部门
 -(void)SSButtonbtn:(UIButton*)btn{
-    NSLog(@"点击所属部门");
-}
-
-#pragma mark 点击管辖部门
--(void)TJButtonbtn:(UIButton*)btn{
-    NSLog(@"点击管辖部门");
+  
+    NSLog(@"%@%ld",btn.titleLabel.text,(long)btn.tag);
 }
 #pragma mark cell 点击
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -194,8 +208,10 @@
 {
     
     inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-    if (cell == nil) {
+    //inftionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bcCell"];
+    if (!cell) {
         cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        // cell = [[inftionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -241,27 +257,22 @@
         cell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
         NSString*zwtag = _Numm[indexPath.section][0];
         tag = [zwtag intValue];
-        if (tag == 2|| tag == 5) {
+        
             UIButton *SSBMbutt = [[UIButton alloc]init];
             SSBMbutt.frame = CGRectMake(120, 1, self.view.bounds.size.width-100, 38);
-            [SSBMbutt setTitle:@"添加所属部门" forState:UIControlStateNormal];
+            if (tag == 2|| tag == 5) {
+                [SSBMbutt setTitle:@"添加所属部门" forState:UIControlStateNormal];
+            }else{
+                [SSBMbutt setTitle:@"添加管辖部门" forState:UIControlStateNormal];
+            }
             SSBMbutt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             SSBMbutt.font = [UIFont boldSystemFontOfSize:kWidth*30];
             [SSBMbutt addTarget:self action:@selector(SSButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
             [SSBMbutt setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            // _ZWbutton.tag = tag;
+            //NSInteger section  = indexPath.section;
+             SSBMbutt.tag= indexPath.section;
             [cell addSubview:SSBMbutt];
-        }else{
-            UIButton *GXBMbutt = [[UIButton alloc]init];
-            GXBMbutt.frame = CGRectMake(120, 1, self.view.bounds.size.width-100, 38);
-            [GXBMbutt setTitle:@"添加管辖部门" forState:UIControlStateNormal];
-            GXBMbutt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-            GXBMbutt.font = [UIFont boldSystemFontOfSize:kWidth*30];
-            [GXBMbutt addTarget:self action:@selector(TJButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
-            [GXBMbutt setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            //   _ZWbutton.tag = ivalue;
-            [cell addSubview:GXBMbutt];
-        }
+        
         
     }else{
         UILabel *XBTLabel  = [[UILabel alloc]initWithFrame:CGRectMake(120, 1, self.view.bounds.size.width-160, 38)];
@@ -277,31 +288,65 @@
         NSString*zwtag = _Numm[indexPath.section][0];
         NSArray *bmary = _gxbmAry[indexPath.section];
         tag = [zwtag intValue];
+        
+        NSArray *sxtag = [[NSArray alloc]init];
+        sxtag = _gxbmidAry[indexPath.section];
+        NSInteger row = indexPath.row-2;
+        NSInteger section  = indexPath.section;
+        NSString *uu= [NSString stringWithFormat:@"%ld%ld",(long)section,(long)row];
        
-        if (tag ==2||tag == 5) {
-            NSArray *ssbm = [[NSArray alloc]initWithObjects:_scBtnnnnn, nil];
-            [_scBtnAry addObject:ssbm];
-            [_scBtnAry2 removeAllObjects];
-        }else{
-            [_scBtnAry2 addObject:_scBtnnnnn];
-           
-            if (bmary.count ==_scBtnAry2.count){
-                for (NSArray *aet in _scBtnAry) {
-//                    if ([aet isEqualToArray:_scBtnAry2]) {
-//                        
-//                    }else{
-//                        [_scBtnAry addObject:_scBtnAry2];
-//                        _scBtnAry2 = [[NSMutableArray alloc]init];
-//                    }
-                    NSLog(@"%@",aet);
+        NSLog(@"%@",uu);
+        int taa = [uu intValue ];
+        _scBtnnnnn.tag = taa;
+       
+        
+        if (tag == 2|| tag == 5) {
+             NSArray *ssbm = [[NSArray alloc]initWithObjects:_scBtnnnnn, nil];
+            NSArray *tagary = [[NSArray alloc]initWithObjects:uu, nil];
+            if (_scBtnAry.count == _gxbmAry.count) {
+                for (int e= 0; e<_sctagAry.count; e++) {
+                    NSArray *taf = _sctagAry[e];
+                    for (int w = 0 ; w<taf.count; w++) {
+                        if ([uu isEqualToString:taf[w]]) {
+                            [_scBtnAry replaceObjectAtIndex:e withObject:ssbm];
+                            _scBtnAry2 = [[NSMutableArray alloc]init];
+                            _sctagAry2 = [[NSMutableArray alloc]init];
+                        }
+                    }
                 }
-                
-                
-                
+            }else{
+                _scBtnAry2 = [[NSMutableArray alloc]init];
+                _sctagAry2 = [[NSMutableArray alloc]init];
+                [_sctagAry addObject:tagary];
+                [_scBtnAry addObject:ssbm];
                 
             }
-            
+        }else{
+            [_scBtnAry2 addObject:_scBtnnnnn];
+            [_sctagAry2 addObject:uu];
+            if (bmary.count ==_scBtnAry2.count){
+                if (_scBtnAry.count == _gxbmAry.count) {
+                    for (int e= 0; e<_sctagAry.count; e++) {
+                        NSArray *taf = _sctagAry[e];
+                        for (int w = 0 ; w<taf.count; w++) {
+                            if ([uu isEqualToString:taf[w]]) {
+                                [_scBtnAry replaceObjectAtIndex:e withObject:_scBtnAry2];
+                                _scBtnAry2 = [[NSMutableArray alloc]init];
+                                _sctagAry2 = [[NSMutableArray alloc]init];
+                            }
+                        }
+                    }
+
+                }else{
+                    [_scBtnAry addObject:_scBtnAry2];
+                    [_sctagAry addObject:_sctagAry2];
+                     _scBtnAry2 = [[NSMutableArray alloc]init];
+                     _sctagAry2 = [[NSMutableArray alloc]init];
+                }
+            }
         }
+
+        NSLog(@"%@",_scBtnAry);
     }
     
     return cell;
@@ -325,6 +370,7 @@
 }
 #pragma mark UI
 -(void)tableViewUI{
+   
     infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+50) style:UITableViewStyleGrouped];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
