@@ -13,11 +13,13 @@
 #import "AlertViewExtension.h"
 #import "EditModel.h"
 #import "GBAlertView.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 #import "SJABHelper.h"
 #import "DongImage.h"
 #define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
-@interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate>
+@interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate,ABNewPersonViewControllerDelegate>
 {
      AlertViewExtension *alert;
     UIScrollView *_scrollView;
@@ -49,7 +51,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height-49) style:UITableViewStylePlain];
     _infonTableview.showsVerticalScrollIndicator = NO;
     _infonTableview.showsHorizontalScrollIndicator = NO;
     _infonTableview.dataSource=self;
@@ -140,15 +142,37 @@
                 }
                 else
                 {
-                    if ([SJABHelper addContactName:_callName phoneNum:_callNum withLabel:@"同事"])
-                    {
-                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加到通讯录成功" andInterval:1.0];
-                    };
+                    
+                    ABNewPersonViewController *newPersonViewController = [[ABNewPersonViewController alloc] init];
+                    
+                   
+                    ABRecordRef newPerson = ABPersonCreate();
+                   ABMutableMultiValueRef multiValue = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+                     CFErrorRef error = NULL;
+                    NSString *phonestr = [NSString stringWithFormat:@"%@",_callNum];
+                    multiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+                    ABMultiValueAddValueAndLabel(multiValue,(__bridge CFTypeRef)(phonestr), kABPersonPhoneMainLabel, NULL);
+                    ABRecordSetValue(newPerson, kABPersonPhoneProperty, multiValue , &error);
+                    
+                     
+                    
+                    newPersonViewController.displayedPerson = newPerson;
+                    
+                    newPersonViewController.newPersonViewDelegate = self;
+                    
+                    UINavigationController *newNavigationController = [[UINavigationController alloc]initWithRootViewController:newPersonViewController];
+                    
+                    
+                    [self presentModalViewController:newNavigationController animated:YES];
                 }
                 
             }
         }];
     }
+} -(void) newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person{
+    
+    [newPersonView dismissModalViewControllerAnimated:YES];
+    
 }
 //打电话
 -(void)callIphone:(UIButton*)sender{
@@ -218,6 +242,7 @@
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNavC animated:YES completion:nil];
@@ -226,6 +251,7 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNavC animated:YES completion:nil];

@@ -141,6 +141,7 @@
         
         }else{
             DepalistController *DepVC=[[DepalistController alloc]init];
+            DepVC.roid = @"1";
             [self.navigationController pushViewController:DepVC animated:YES];
         }
     }

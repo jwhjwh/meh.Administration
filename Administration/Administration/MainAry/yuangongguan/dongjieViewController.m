@@ -10,8 +10,8 @@
 @interface dongjieViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
-
-
+    
+    
     NSIndexPath* indPath;
 }
 @property (nonatomic,retain)NSArray *arr;
@@ -36,10 +36,10 @@
     _label.text=[NSString stringWithFormat:@"账号状态:%@",_state];
     _label.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:_label];
-   _arr = [[NSArray alloc]initWithObjects:@"解冻账号",@"冻结账户",nil];
-   infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
+    _arr = [[NSArray alloc]initWithObjects:@"解冻账号",@"冻结账户",nil];
+    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
     //分割线无
-//    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
+    //    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
     //不让滚动
     infonTableview.scrollEnabled = NO;
     infonTableview.showsVerticalScrollIndicator = NO;
@@ -99,14 +99,14 @@
             _UnLockSwitch.on = YES;
         }
     }
-
-  
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = _arr[indexPath.row];
     return cell;
 }
 - (void)gestureUnLockSwitchChanged:(UISwitch *)sender{
- 
+    
     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"冻结员工" message:@"确定要设置冻结该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index){
         
@@ -124,7 +124,7 @@
                     _UnLockSwitch.on = YES;
                 }
             }
-
+            
         }else if (index==2) {
             UITableViewCell *cell =(UITableViewCell*)[[sender superview]superview];
             indPath=[infonTableview indexPathForCell:cell];
@@ -194,7 +194,7 @@
                     };
                 }
             }
-
+            
         }else{
             if ([_state isEqualToString:@"使用中"]) {
                 if (sender.tag==0) {
@@ -210,9 +210,9 @@
                 }
             }
         }
-         };
+    };
     [alertView showMKPAlertView];
-  
+    
 }
 -(void)xiugaishiyonzhuangtaicodeStr:(NSString*)codeStr{
     NSString *uStr =[NSString stringWithFormat:@"%@user/upstate.action",KURLHeader];
@@ -230,6 +230,7 @@
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNavC animated:YES completion:nil];
@@ -238,6 +239,7 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNavC animated:YES completion:nil];
@@ -248,7 +250,7 @@
     }failure:^(NSError *error) {
         
     }view:self.view MBPro:YES];
-
+    
 }
 
 

@@ -148,16 +148,7 @@
         cell.accessoryType  = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
-    else if (indexPath.row == 1)
-    {
-        UISwitch *touchIdUnLockSwitch = [[UISwitch alloc] init];
-        [touchIdUnLockSwitch setOn:[JinnLockTool isTouchIdUnlockEnabled]];
-        [touchIdUnLockSwitch addTarget:self action:@selector(touchIdUnLockSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-        
-        cell.textLabel.text = @"用 Touch ID 解锁";
-        cell.accessoryView  = touchIdUnLockSwitch;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
+    
     
     return cell;
 }

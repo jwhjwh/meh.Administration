@@ -148,6 +148,7 @@
             //部门
             DepalistController *DepVC=[[DepalistController alloc]init];
              DepVC.Num=1;
+            DepVC.roid = @"0";
             [self.navigationController pushViewController:DepVC animated:YES];
         }
     }else{

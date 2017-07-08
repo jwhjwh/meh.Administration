@@ -112,9 +112,12 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限创建角色" andInterval:1.0];
         }else{
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络错误" andInterval:1.0];
         }
 
     } failure:^(NSError *error) {
@@ -175,6 +178,7 @@
                     }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
                     }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
                     }else{
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建失败" andInterval:1.0];
@@ -233,6 +237,7 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有设置职位类别，请先设置职位类别" andInterval:1.0];
@@ -343,6 +348,7 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];

@@ -10,4 +10,6 @@
 
 @interface DepalistController : UIViewController
 @property (nonatomic,assign)int Num;
+
+@property (nonatomic,strong) NSString *roid;
 @end
