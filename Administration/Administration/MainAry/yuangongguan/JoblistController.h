@@ -10,4 +10,11 @@
 
 @interface JoblistController : UIViewController
 @property (nonatomic,assign)int Num;
+@property (nonatomic,assign) BOOL isAddPerson;
+@property (nonatomic,strong) NSString *titleStr;
+@property (nonatomic,strong) UIImage *imageGroup;
+@property (nonatomic,strong) NSString *stringGroup;
+@property (nonatomic) BOOL isAddMenber;
+@property (nonatomic,strong) NSString *groupID;
+@property (nonatomic,strong) NSString *groupinformationId;
 @end

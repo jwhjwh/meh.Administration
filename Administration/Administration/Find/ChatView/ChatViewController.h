@@ -10,4 +10,5 @@
 
 @interface ChatViewController : EaseMessageViewController
 @property (nonatomic,strong) NSString *number;
+@property (nonatomic,strong) NSDictionary *dictInfo;
 @end

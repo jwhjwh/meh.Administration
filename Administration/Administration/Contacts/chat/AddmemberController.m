@@ -10,7 +10,8 @@
 #import "inftionxqController.h"
 #import "LVModel.h"
 #import "LVFmdbTool.h"
-
+#import "ChoosePostionViewController.h"
+#import "JoblistController.h"
 #import "ChatViewController.h"
 #import "ChatUIHelper.h"
 #import "RobotManager.h"
@@ -367,9 +368,16 @@
 
 }
 -(void)SpotionTap:(UITapGestureRecognizer*)sender{
-    
+    JoblistController *controller = [[JoblistController alloc]init];
+    controller.isAddPerson = YES;
+    controller.imageGroup = self.goursIamge;
+    controller.stringGroup = self.textStr;
+    controller.isAddMenber = self.isAddMenber;
+    controller.groupID = self.groupID;
+    controller.groupinformationId = self.groupinformationId;
+    [self.navigationController pushViewController:controller animated:YES];
 }
-/*
+
 #pragma mark - data
 
 -(void)refreshAndSortView
@@ -486,7 +494,7 @@
  @param conversationModel  会话model
  @result 返回传入会话model最近一条消息提示
  */
-/*
+
 - (NSString *)_latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
 {
     NSString *latestMessageTitle = @"";
@@ -527,7 +535,7 @@
  @param conversationModel  会话model
  @result 返回传入会话model最近一条消息时间
  */
-/*
+
 - (NSString *)_latestMessageTimeForConversationModel:(id<IConversationModel>)conversationModel
 {
     NSString *latestMessageTime = @"";
@@ -678,7 +686,7 @@
     [self tableViewDidTriggerHeaderRefresh];
     
 }
-*/
+
 //#pragma mark - EMGroupManagerDelegate
 //
 //- (void)didUpdateGroupList:(NSArray *)groupList

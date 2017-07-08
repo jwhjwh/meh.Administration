@@ -8,6 +8,7 @@
 
 #import "JoblistController.h"
 #import "DepmentController.h"
+#import "ChoosePostionViewController.h"
 #import "SetModel.h"
 @interface JoblistController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -26,7 +27,13 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"按职位查看";
+    if (self.isAddPerson) {
+        self.titleStr = @"添加群成员";
+    }else
+    {
+        self.titleStr = @"按职位查看";
+    }
+    self.title=self.titleStr;
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -98,12 +105,29 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.isAddPerson)
+    {
+        SetModel *modld = _arr[indexPath.row];
+        ChoosePostionViewController *controller = [[ChoosePostionViewController alloc]init];
+        controller.str=modld.NewName;
+        controller.Numstr=modld.num;
+        controller.dataShow=self.Num;
+        controller.imageGroup = self.imageGroup;
+        controller.stringGroup = self.stringGroup;
+        controller.isAddMenber = self.isAddMenber;
+        controller.groupID = self.groupID;
+        controller.groupinformationId = self.groupinformationId;
+        [self.navigationController pushViewController:controller animated:YES];
+        
+    }else
+    {
      SetModel *modld = _arr[indexPath.row];
     DepmentController * DepmentCV=[[DepmentController alloc]init];
     DepmentCV.str=modld.NewName;
     DepmentCV.Numstr=modld.num;
     DepmentCV.dataShow=self.Num;
     [self.navigationController pushViewController:DepmentCV animated:YES];
+    }
 
 }
 -(void)getNetworkData{

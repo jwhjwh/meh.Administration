@@ -49,8 +49,8 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
     _TelLabel=[[UILabel alloc]init];
     _TelLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _TelLabel.textColor=[UIColor lightGrayColor];
-   
     [self.contentView addSubview:_TelLabel];
+    
 //    [_TXImage mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.left.mas_equalTo(self.mas_left).offset(10);
 //        make.top.mas_equalTo(self.mas_top).offset(10);
@@ -165,6 +165,23 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
             [self addConstraint:self.titleWithoutAvatarLeftConstraint];
             [self addConstraint:self.detailWithoutAvatarLeftConstraint];
         }
+    }
+}
+
+-(void)setShowSelect:(BOOL)showSelect
+{
+    if (_showAvatar) {
+        [self removeConstraint:self.titleWithoutAvatarLeftConstraint];
+        [self removeConstraint:self.detailWithoutAvatarLeftConstraint];
+        [self addConstraint:self.titleWithAvatarLeftConstraint];
+        [self addConstraint:self.detailWithAvatarLeftConstraint];
+    }
+    else
+    {
+        [self removeConstraint:self.titleWithAvatarLeftConstraint];
+        [self removeConstraint:self.detailWithAvatarLeftConstraint];
+        [self addConstraint:self.titleWithoutAvatarLeftConstraint];
+        [self addConstraint:self.detailWithoutAvatarLeftConstraint];
     }
 }
 
