@@ -179,15 +179,46 @@
     [self showAlert:titles button:btn];
 }
 -(void)showAlert :(NSArray *)arrr button:(UIButton*)bbtn{
-   // [ SelectAlert showWithTitle:@"选择职业" titles:arr selectIndex:^(NSInteger selectIndex) {
+    
     [SelectAlert showWithTitle:@"选择职位" titles:arrr selectIndex:^(NSInteger selectIndex) {
         NSLog(@"选择了第%ld个",(long)selectIndex);
         NSString *tagg = numBS[selectIndex];
-        int taa = [tagg intValue];
-        bbtn.tag = taa;
+        
+        NSMutableArray *isbol = [[NSMutableArray alloc]init];
+        for (int i = 0; i<_Numm.count; i++) {
+            NSArray *num = _Numm[i];
+            BOOL isbool = [num containsObject: tagg];
+            if (isbool == 1) {
+                [isbol addObject:@"1"];
+            }
+        }
+        BOOL yesor = [isbol containsObject:@"1"];
+        if (yesor == 1) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
+        }else{
+            int taa = [tagg intValue];
+            bbtn.tag = taa;
+            
+        }
         
     } selectValue:^(NSString *selectValue) {
-        
+//        for (int i = 0; i<_ZW.count; i++) {
+//            NSArray *zwwar = _ZW[i];
+//            for (int y = 0; y<zwwar.count; y++) {
+//                NSString *zww  =zwwar[y];
+//                if ([zww isEqualToString:selectValue]) {
+//                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
+//                }else{
+//                    if ([zww isEqualToString:bbtn.titleLabel.text]) {
+//                        [bbtn setTitle:selectValue forState:UIControlStateNormal];
+//                        [_ZW[i] insertObject:selectValue atIndex:y];
+//                        NSLog(@"%@",bbtn.titleLabel.text);
+//                        NSLog(@"%@",_ZW);
+//                    }
+//
+//                }
+//            }
+//        }
     } showCloseButton:NO];
 }
 #pragma mark 职位类别按钮
@@ -207,11 +238,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-    //inftionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bcCell"];
+   // inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    inftionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bcCell"];
     if (!cell) {
-        cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-        // cell = [[inftionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
+        //cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+         cell = [[inftionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -220,6 +251,12 @@
     
     if (indexPath.row == 0) {
         cell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
+        for(_ZWbutton in cell.subviews){
+            if([_ZWbutton isMemberOfClass:[UIButton class]])
+            {
+                [_ZWbutton removeFromSuperview];
+            }
+        }
         _ZWbutton = [[UIButton alloc]init];
         _ZWbutton.frame = CGRectMake(120, 1, self.view.bounds.size.width-300, 38);
         [_ZWbutton setTitle:_ZW[indexPath.section][indexPath.row] forState:UIControlStateNormal];
