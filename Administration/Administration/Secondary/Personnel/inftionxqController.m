@@ -29,7 +29,7 @@
 @property (nonatomic,retain)NSString *callNum;//电话
 @property (nonatomic,retain)NSString *callName;//姓名
 @property (nonatomic,retain)UIImageView *TXImage;
-
+@property (nonatomic,strong)NSDictionary *dicinfo;
 @property (nonatomic,retain)UIButton *buton;
 @end
 
@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"信息";
-   
+    self.dicinfo = [[NSDictionary alloc]init];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -189,6 +189,7 @@
             [_buton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_buton addTarget: self action: @selector(iamsges) forControlEvents: UIControlEventTouchUpInside];
             [self.view addSubview:_buton];
+            self.dicinfo  = [NSDictionary dictionaryWithDictionary:responseObject[@"userInfo"]];
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
             model.birthday = [model.birthday substringToIndex:10];
@@ -256,7 +257,7 @@ else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
     //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     //    messageVC.title = @"8001";
-    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:@"fuccc" conversationType:EMConversationTypeChat];
+    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.dicinfo[@"name"] conversationType:EMConversationTypeChat];
     messageVC.title =  _callName;
     messageVC.hidesBottomBarWhenPushed = YES;
     [messageVC.faceView setEmotionManagers:@[manager]];

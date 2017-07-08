@@ -11,8 +11,8 @@
 //#import "ChatGroupDetailViewController.h"
 //#import "ChatroomDetailViewController.h"
 //#import "UserProfileViewController.h"
-//#import "UserProfileManager.h"
-//#import "ContactListSelectViewController.h"//
+#import "UserProfileManager.h"
+//#import "ContactListSelectViewController.h"
 #import "GroupdetailController.h"
 #import "ChatUIHelper.h"
 
@@ -69,7 +69,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insertCallMessage:) name:@"insertCallMessage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
-    
+   // NSLog(@"name = %@",[USER_DEFAULTS objectForKey:@"name"]);
     //通过会话管理者获取已收发消息只有单聊打开注释
 //    [self tableViewDidTriggerHeaderRefresh];
 }
@@ -182,7 +182,8 @@
     model.avatarImage = [UIImage imageNamed:@"tx100"];
     if (model.isSender) {
         DDLog(@"自己发送");
-        UserCacheInfo * userInfo = [UserCacheManager getById:model.nickname];
+        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"name"]];
+        // UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:model.nickname];
         if (userInfo) {
             model.avatarURLPath = userInfo.AvatarUrl;
             model.nickname = userInfo.NickName;
@@ -190,7 +191,7 @@
 
     }else{
         DDLog(@"对方发送");
-        UserCacheInfo * userInfo = [UserCacheManager getById:model.nickname];
+        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"name"]];
         if (userInfo) {
             model.avatarURLPath = userInfo.AvatarUrl;
             model.nickname = userInfo.NickName;
@@ -383,7 +384,7 @@
     if (object) {
         EMMessage *message = (EMMessage *)object;
         [self addMessageToDataSource:message progress:nil];
-        [[EMClient sharedClient].chatManager importMessages:@[message]];
+        [[EMClient sharedClient].chatManager importMessages:@[message] completion:nil];
     }
 }
 

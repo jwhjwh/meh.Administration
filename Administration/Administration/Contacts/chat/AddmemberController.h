@@ -20,4 +20,7 @@
 @property (nonatomic) BOOL showRefreshFooter;
 /** @brief 是否显示无数据时的空白提示，默认为NO(未实现提示页面) */
 @property (nonatomic) BOOL showTableBlankView;
+@property (nonatomic) BOOL isAddMenber;
+@property (nonatomic,strong) NSString *groupID;
+@property (nonatomic,strong) NSString *groupinformationId;
 @end

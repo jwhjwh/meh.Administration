@@ -39,6 +39,8 @@
 	<string>是否允许定位</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要您的同意相册权限访问</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

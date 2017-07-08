@@ -42,7 +42,7 @@
     }else{
         [self checkPositionUsers];
     }
-
+    
 }
 -(void)datalade{
     NSString *urlStr =[NSString stringWithFormat:@"%@manager/queryDepartments.action",KURLHeader];
@@ -61,7 +61,7 @@
                 model.isdeles=@"";
                 [self.dataArray addObject:model];
             }
-         
+            
             if (self.dataArray.count==0) {
                 [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～"  Size:20.0];
                 _tableView.emptyView.hidden = NO;
