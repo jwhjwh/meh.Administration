@@ -76,28 +76,28 @@
     
     NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":userid,@"GroupNumber":groupNum};
     
-    __weak GroupdetailController *weakSelf = self;
+    
     [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
         {
+            __weak GroupdetailController *weakSelf = self;
             weakSelf.groupInformation = [responseObject valueForKey:@"groupInformation"];
             weakSelf.groupMembers = [NSArray arrayWithObject:[responseObject valueForKey:@"groupMembers"] ];
-            return ;
-        }
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            return;
-        }
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            return;
-        }
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
-            return;
+            NSLog(@"1111%@%@",_groupInformation,_groupMembers);
+            
+            [self ui];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
+           
         }
          
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    NSLog(@"dddd%@",weakSelf.groupMembers);
+    
     
 }
 
@@ -107,15 +107,7 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title=@"群资料";
-    
-    self.groupInformation = [[NSDictionary alloc]init];
-    self.groupMembers = [[NSArray alloc]init];
-    
-    [self getDetailGroup];
-    
+-(void)ui{
     self.view.backgroundColor=GetColor(216, 216, 216, 1);
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(10, 0, 28,28);
@@ -240,7 +232,18 @@
     [button setTitle:[NSString stringWithFormat:@"%@",_dissOfExit] forState:UIControlStateNormal];
     [button addTarget: self action: @selector(dissolutionOfExit) forControlEvents: UIControlEventTouchUpInside];
     [view2 addSubview:button];
+
 }
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title=@"群资料";
+    
+    self.groupInformation = [[NSDictionary alloc]init];
+    self.groupMembers = [[NSArray alloc]init];
+    
+    [self getDetailGroup];
+    
+    }
 -(void)LiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }

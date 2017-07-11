@@ -63,7 +63,7 @@
     //_view1.backgroundColor = GetColor(127, 127, 127, 0.8);
     [self.view addSubview:_view1];
     
-    UIImageView *backImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, WIDTHh, HEIGHTt)];
+    UIImageView *backImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, WIDTHh, HEIGHTt)];
     backImage.image = [UIImage imageNamed:@"报表权限02"];
     [_view1 addSubview:backImage];
     

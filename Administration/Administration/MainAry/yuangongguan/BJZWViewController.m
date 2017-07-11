@@ -14,9 +14,11 @@
     UITableView *infonTableview;
     NSArray *arr;
     UIView *blockView;
-    
+    inftionTableViewCell *cell;
     NSMutableArray *titles;
     NSMutableArray *numBS;
+    NSUInteger sect;
+    NSUInteger rrow;
     int b;
 }
 @property (strong,nonatomic)UIButton *ZWbutton;//职位
@@ -36,6 +38,12 @@
 @property (strong,nonatomic)UIButton *tjBtn;//添加职位按钮
 @property (strong,nonatomic)UIButton *scBtn;//删除职位按钮
 @property (strong,nonatomic)UIButton *bjbtn;//编辑职位按钮
+
+
+@property (strong,nonatomic) NSMutableArray *ZWbtnAry;//职位按钮数组
+@property (strong,nonatomic) NSMutableArray *ViewbtnAry;//分割线数组
+@property (strong,nonatomic) NSMutableArray *ZWLBbtnAry;//职位按钮数组
+
 @end
 
 @implementation BJZWViewController
@@ -64,6 +72,9 @@
     _scBtnAry2 = [[NSMutableArray alloc]init];
     _sctagAry = [[NSMutableArray alloc]init];
     _sctagAry2 = [[NSMutableArray alloc]init];
+    _ZWbtnAry = [[NSMutableArray alloc]init];
+    _ViewbtnAry = [[NSMutableArray alloc]init];
+    _ZWLBbtnAry = [[NSMutableArray alloc]init];
     [self ZwNetWork];
 }
 #pragma mark  请求角色
@@ -183,7 +194,6 @@
     [SelectAlert showWithTitle:@"选择职位" titles:arrr selectIndex:^(NSInteger selectIndex) {
         NSLog(@"选择了第%ld个",(long)selectIndex);
         NSString *tagg = numBS[selectIndex];
-        
         NSMutableArray *isbol = [[NSMutableArray alloc]init];
         for (int i = 0; i<_Numm.count; i++) {
             NSArray *num = _Numm[i];
@@ -196,30 +206,85 @@
         if (yesor == 1) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
         }else{
-            int taa = [tagg intValue];
-            bbtn.tag = taa;
             
+            NSArray *numary = [[NSArray alloc]initWithObjects:tagg, nil];
+            for (int i = 0; i<_Numm.count; i++) {
+                NSArray *zebun = _Numm[i];
+                for (int y = 0; y<zebun.count; y++) {
+                    int zwnumm = [zebun[y] intValue];
+                    if (zwnumm == bbtn.tag) {
+                        [_Numm replaceObjectAtIndex:i withObject:numary];
+                        NSLog(@"%@",_Numm);
+                        int taa = [tagg intValue];
+                        bbtn.tag = taa;
+                        if ( taa == 2|| taa == 5||taa ==3||taa ==4||taa ==14||taa ==16||taa ==17 ) {
+                            _ZWLBbutton = _ZWbtnAry[i];
+                            _view1 = _ViewbtnAry[i];
+                            [_ZWLBbutton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
+                            _view1.backgroundColor = [UIColor lightGrayColor];
+                            [_ZWLBbutton setTitle:@"未分配" forState:UIControlStateNormal];
+                            _ZWLBbutton.enabled = YES;
+                           _codeAry[i][1] = @"所属部门";
+                            
+                            [infonTableview reloadData];
+                            
+                        }else{
+                            _ZWLBbutton = _ZWbtnAry[i];
+                            _view1 = _ViewbtnAry[i];
+                            [_ZWLBbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                            _view1.backgroundColor = [UIColor whiteColor];
+                            _codeAry[i][1] = @"管辖部门";
+                            _ZWLBbutton.enabled = NO;
+                             [infonTableview reloadData];
+                        }
+                    }
+                }
+            }
         }
         
     } selectValue:^(NSString *selectValue) {
-//        for (int i = 0; i<_ZW.count; i++) {
-//            NSArray *zwwar = _ZW[i];
-//            for (int y = 0; y<zwwar.count; y++) {
-//                NSString *zww  =zwwar[y];
-//                if ([zww isEqualToString:selectValue]) {
-//                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
-//                }else{
-//                    if ([zww isEqualToString:bbtn.titleLabel.text]) {
-//                        [bbtn setTitle:selectValue forState:UIControlStateNormal];
-//                        [_ZW[i] insertObject:selectValue atIndex:y];
-//                        NSLog(@"%@",bbtn.titleLabel.text);
-//                        NSLog(@"%@",_ZW);
-//                    }
-//
-//                }
-//            }
-//        }
+        NSMutableArray *isbol = [[NSMutableArray alloc]init];
+        for (int i = 0; i<_ZW.count; i++) {
+            NSArray *zw = _ZW[i];
+            BOOL isbool = [zw containsObject:selectValue];
+            if (isbool == 1) {
+                [isbol addObject:@"1"];
+            }
+        }
+        BOOL yeser = [isbol containsObject:@"1"];
+        if (yeser == 0) {
+            NSArray *zwary = [[NSArray alloc]initWithObjects:selectValue, nil];
+            for (int i = 0; i<_ZW.count; i++) {
+                NSArray *zw = _ZW[i];
+                for (int y = 0; y<zw.count; y++) {
+                    NSString *zww = zw[y];
+                    if (zww == bbtn.titleLabel.text) {
+                        [_ZW replaceObjectAtIndex:i withObject:zwary];
+                        [bbtn setTitle:selectValue forState:UIControlStateNormal];
+                    }
+                }
+            }
+        }
+        
     } showCloseButton:NO];
+    
+}
+-(void)addtableViewCellZWUI{
+    
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rrow inSection:sect];
+    [indexPaths addObject: indexPath];
+    [infonTableview beginUpdates];
+    [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
+    [infonTableview endUpdates];
+    
+}
+
+-(void)dimissTabelCellZWUI{
+    NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:rrow inSection:sect]];
+    [infonTableview beginUpdates];
+    [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
+    [infonTableview endUpdates];
 }
 #pragma mark 职位类别按钮
 -(void)JsLBButtonbtn:(UIButton*)btn{
@@ -238,11 +303,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-   // inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-    inftionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bcCell"];
+    cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    //inftionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bcCell"];
     if (!cell) {
-        //cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-         cell = [[inftionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
+        cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        // cell = [[inftionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -267,6 +332,7 @@
         NSString*zwtag = _Numm[indexPath.section][indexPath.row];
         tag = [zwtag intValue];
         _ZWbutton.tag = tag;
+        [_ZWbtnAry addObject:_ZWbutton];
         [cell addSubview:_ZWbutton];
         
         _view1 = [[UIView alloc]init];
@@ -276,7 +342,7 @@
         _ZWLBbutton.font = [UIFont boldSystemFontOfSize:kWidth*30];
         
         [_ZWLBbutton addTarget:self action:@selector(JsLBButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
-        if (tag ==2||tag ==5) {
+        if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
             [_ZWLBbutton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
             _view1.backgroundColor = [UIColor lightGrayColor];
             [_ZWLBbutton setTitle:_ZWLB[indexPath.section][indexPath.row] forState:UIControlStateNormal];
@@ -286,22 +352,19 @@
             _view1.backgroundColor = [UIColor whiteColor];
             _ZWLBbutton.enabled = NO;
         }
-        
+        [_ViewbtnAry addObject:_view1];
+        [_ZWLBbtnAry addObject:_ZWLBbutton];
         [cell addSubview:_view1];
+        
         [cell addSubview:_ZWLBbutton];
     }else if(indexPath.row ==1){
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
         cell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
         NSString*zwtag = _Numm[indexPath.section][0];
         tag = [zwtag intValue];
-        
             UIButton *SSBMbutt = [[UIButton alloc]init];
             SSBMbutt.frame = CGRectMake(120, 1, self.view.bounds.size.width-100, 38);
-            if (tag == 2|| tag == 5) {
-                [SSBMbutt setTitle:@"添加所属部门" forState:UIControlStateNormal];
-            }else{
-                [SSBMbutt setTitle:@"添加管辖部门" forState:UIControlStateNormal];
-            }
+            [SSBMbutt setTitle:[NSString stringWithFormat:@"添加%@",cell.textLabel.text] forState:UIControlStateNormal];
             SSBMbutt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             SSBMbutt.font = [UIFont boldSystemFontOfSize:kWidth*30];
             [SSBMbutt addTarget:self action:@selector(SSButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -316,6 +379,8 @@
         //NSLog(@"%@",_gxbmAry[indexPath.section][indexPath.row-2]);
         XBTLabel.text = _gxbmAry[indexPath.section][indexPath.row-2];
         XBTLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
+        
+        
         [cell addSubview:XBTLabel];
         
         _scBtnnnnn= [[UIButton alloc]initWithFrame:CGRectMake(120+self.view.bounds.size.width-160, 1, 40, 38)];
@@ -326,18 +391,14 @@
         NSArray *bmary = _gxbmAry[indexPath.section];
         tag = [zwtag intValue];
         
-        NSArray *sxtag = [[NSArray alloc]init];
-        sxtag = _gxbmidAry[indexPath.section];
+       
         NSInteger row = indexPath.row-2;
         NSInteger section  = indexPath.section;
         NSString *uu= [NSString stringWithFormat:@"%ld%ld",(long)section,(long)row];
        
-        NSLog(@"%@",uu);
         int taa = [uu intValue ];
         _scBtnnnnn.tag = taa;
-       
-        
-        if (tag == 2|| tag == 5) {
+        if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
              NSArray *ssbm = [[NSArray alloc]initWithObjects:_scBtnnnnn, nil];
             NSArray *tagary = [[NSArray alloc]initWithObjects:uu, nil];
             if (_scBtnAry.count == _gxbmAry.count) {
@@ -383,9 +444,8 @@
             }
         }
 
-        NSLog(@"%@",_scBtnAry);
+        
     }
-    
     return cell;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
