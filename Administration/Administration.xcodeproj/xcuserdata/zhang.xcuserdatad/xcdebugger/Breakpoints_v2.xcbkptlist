@@ -19,62 +19,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/Find/IM_sdk/EaseUI/EMUIKit/Helper/EaseSDKHelper.m"
-            timestampString = "520908855.267647"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "+sendTextMessage:to:messageType:messageExt:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Administration/Secondary/Personnel/inftionxqController.m"
             timestampString = "520910726.637757"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "260"
             endingLineNumber = "260"
-            landmarkName = "-iamsges"
+            landmarkName = "-loadDataFromServer"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/Find/ChatView/ChatViewController.m"
-            timestampString = "520909257.819056"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
-            landmarkName = "-messageViewController:modelForMessage:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/Find/IM_sdk/EaseUI/EMUIKit/ViewController/EaseMessageViewController.m"
-            timestampString = "520909332.227134"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1872"
-            endingLineNumber = "1872"
-            landmarkName = "-sendTextMessage:withExt:"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[inftionxqController loadDataFromServer]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Secondary/Personnel/inftionxqController.m"
+                  timestampString = "521447900.13118"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "260"
+                  endingLineNumber = "260"
+                  offsetFromSymbolStart = "6396">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[inftionxqController loadDataFromServer]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Secondary/Personnel/inftionxqController.m"
+                  timestampString = "521447900.133118"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "260"
+                  endingLineNumber = "260"
+                  offsetFromSymbolStart = "6432">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -90,22 +74,6 @@
             startingLineNumber = "1358"
             endingLineNumber = "1358"
             landmarkName = "-didSendText:withExt:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/Find/IM_sdk/EaseUI/EMUIKit/ViewController/EaseMessageViewController.m"
-            timestampString = "520909384.2814"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1848"
-            endingLineNumber = "1848"
-            landmarkName = "-sendTextMessage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -148,11 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Administration/Find/ChatView/ChatViewController.m"
-            timestampString = "520913881.119135"
+            timestampString = "521428867.306044"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
             landmarkName = "-insertCallMessage:"
             landmarkType = "7">
          </BreakpointContent>
@@ -195,38 +163,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/DepmentController.m"
-            timestampString = "521091631.437955"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "-checkPositionUsers"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/JoblistController.m"
-            timestampString = "521112409.63741"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Administration/Contacts/chat/ChoosePostionViewController.m"
             timestampString = "521113305.145672"
             startingColumnNumber = "9223372036854775807"
@@ -243,59 +179,60 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/Contacts/chat/ChoosePostionViewController.m"
-            timestampString = "521112636.195132"
+            filePath = "Administration/Contacts/chat/GroupCell.m"
+            timestampString = "521366152.513324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "-buttonSure:"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "-setModel:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/Contacts/chat/GroupMenberController.m"
+            timestampString = "521434909.190059"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "-getGroupMenbers"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[ChoosePostionViewController buttonSure:]"
+                  symbolName = "-[GroupMenberController getGroupMenbers]"
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Contacts/chat/ChoosePostionViewController.m"
-                  timestampString = "521194062.543413"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Contacts/chat/GroupMenberController.m"
+                  timestampString = "521447900.165867"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "3144">
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "692">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__42-[ChoosePostionViewController buttonSure:]_block_invoke.326"
+                  symbolName = "__40-[GroupMenberController getGroupMenbers]_block_invoke"
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Contacts/chat/ChoosePostionViewController.m"
-                  timestampString = "521194062.545365"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Contacts/chat/GroupMenberController.m"
+                  timestampString = "521447900.168174"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "56">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[ChoosePostionViewController buttonSure:]_block_invoke_2.330"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/Contacts/chat/ChoosePostionViewController.m"
-                  timestampString = "521194062.547377"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "56">
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -306,61 +243,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/Contacts/chat/GroupMenberController.m"
-            timestampString = "521178426.024153"
+            filePath = "Administration/Contacts/chat/ChoosePostionViewController.m"
+            timestampString = "521448327.903961"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/Contacts/chat/GroupMenberController.m"
-            timestampString = "521178426.024153"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "-getGroupMenbers"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/Contacts/chat/GroupdetailController.m"
-            timestampString = "521194061.227066"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/Contacts/chat/GroupdetailController.m"
-            timestampString = "521194061.227066"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "-getDetailGroup"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "-buttonSure:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

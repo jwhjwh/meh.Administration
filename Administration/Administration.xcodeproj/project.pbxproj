@@ -319,6 +319,7 @@
 		1FD6635F1F0DE7420072AAF0 /* SelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6635E1F0DE7420072AAF0 /* SelectCell.m */; };
 		1FDAB34B1F1076A500AB0495 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDAB34A1F1076A500AB0495 /* BaseViewController.m */; };
 		1FDAB34E1F1077B700AB0495 /* GroupMenberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDAB34D1F1077B700AB0495 /* GroupMenberController.m */; };
+		1FDAB3511F10E2D600AB0495 /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDAB3501F10E2D600AB0495 /* GroupCell.m */; };
 		1FDCBAA41E7A1E2A002C80FB /* seach.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA31E7A1E2A002C80FB /* seach.png */; };
 		1FDCBAA61E7A3247002C80FB /* tjtx_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA51E7A3247002C80FB /* tjtx_mt.png */; };
 		1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDCBAAB1E7A3E16002C80FB /* GroupdetailController.m */; };
@@ -343,6 +344,7 @@
 		1FF0746B1ED6C26200169D88 /* depmtCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF0746A1ED6C26200169D88 /* depmtCell.m */; };
 		1FF14A321EB2DC4000DE049A /* VTingPromotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF14A311EB2DC4000DE049A /* VTingPromotView.m */; };
 		1FF3BAE91E9F564100E62149 /* branModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3BAE81E9F564100E62149 /* branModel.m */; };
+		1FF4DEF41F132F4A005234E4 /* GroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4DEF31F132F4A005234E4 /* GroupModel.m */; };
 		1FF51CD51EC943A600011E00 /* EditbrandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF51CD41EC943A600011E00 /* EditbrandController.m */; };
 		1FF51CD81EC99EFB00011E00 /* ModifyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF51CD71EC99EFB00011E00 /* ModifyController.m */; };
 		1FF5DDA51ED022AE002BE213 /* Userpas.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF5DDA41ED022AE002BE213 /* Userpas.m */; };
@@ -1142,6 +1144,8 @@
 		1FDAB34A1F1076A500AB0495 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		1FDAB34C1F1077B700AB0495 /* GroupMenberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMenberController.h; sourceTree = "<group>"; };
 		1FDAB34D1F1077B700AB0495 /* GroupMenberController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMenberController.m; sourceTree = "<group>"; };
+		1FDAB34F1F10E2D600AB0495 /* GroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupCell.h; path = Administration/Contacts/chat/GroupCell.h; sourceTree = SOURCE_ROOT; };
+		1FDAB3501F10E2D600AB0495 /* GroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupCell.m; path = Administration/Contacts/chat/GroupCell.m; sourceTree = SOURCE_ROOT; };
 		1FDCBAA31E7A1E2A002C80FB /* seach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seach.png; sourceTree = "<group>"; };
 		1FDCBAA51E7A3247002C80FB /* tjtx_mt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tjtx_mt.png; sourceTree = "<group>"; };
 		1FDCBAAA1E7A3E16002C80FB /* GroupdetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupdetailController.h; sourceTree = "<group>"; };
@@ -1175,6 +1179,8 @@
 		1FF14A311EB2DC4000DE049A /* VTingPromotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTingPromotView.m; sourceTree = "<group>"; };
 		1FF3BAE71E9F564100E62149 /* branModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = branModel.h; sourceTree = "<group>"; };
 		1FF3BAE81E9F564100E62149 /* branModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = branModel.m; sourceTree = "<group>"; };
+		1FF4DEF21F132F4A005234E4 /* GroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupModel.h; sourceTree = "<group>"; };
+		1FF4DEF31F132F4A005234E4 /* GroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupModel.m; sourceTree = "<group>"; };
 		1FF51CD31EC943A600011E00 /* EditbrandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditbrandController.h; sourceTree = "<group>"; };
 		1FF51CD41EC943A600011E00 /* EditbrandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditbrandController.m; sourceTree = "<group>"; };
 		1FF51CD61EC99EFB00011E00 /* ModifyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyController.h; sourceTree = "<group>"; };
@@ -1767,6 +1773,8 @@
 			children = (
 				1FD6635D1F0DE7420072AAF0 /* SelectCell.h */,
 				1FD6635E1F0DE7420072AAF0 /* SelectCell.m */,
+				1FDAB34F1F10E2D600AB0495 /* GroupCell.h */,
+				1FDAB3501F10E2D600AB0495 /* GroupCell.m */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -2558,6 +2566,8 @@
 				1FDCBAAB1E7A3E16002C80FB /* GroupdetailController.m */,
 				1FDAB34C1F1077B700AB0495 /* GroupMenberController.h */,
 				1FDAB34D1F1077B700AB0495 /* GroupMenberController.m */,
+				1FF4DEF21F132F4A005234E4 /* GroupModel.h */,
+				1FF4DEF31F132F4A005234E4 /* GroupModel.m */,
 			);
 			path = chat;
 			sourceTree = "<group>";
@@ -3983,6 +3993,7 @@
 				627FE7A71E98BCA00068976C /* SetModel.m in Sources */,
 				1F6211BC1E8CFFAF00F50851 /* MWZoomingScrollView.m in Sources */,
 				1FF51CD51EC943A600011E00 /* EditbrandController.m in Sources */,
+				1FF4DEF41F132F4A005234E4 /* GroupModel.m in Sources */,
 				1F52C39A1E6810F800AF6180 /* PerLomapController.mm in Sources */,
 				1F6E31331E5425F6006069ED /* XLsn0wLoop.m in Sources */,
 				62656B961E5295D70085A2BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
@@ -4060,6 +4071,7 @@
 				1F6211B31E8CFFAF00F50851 /* UIScrollView+MJRefresh.m in Sources */,
 				1F5208271E5590A8001DE4C2 /* ZYJHeadLineView.m in Sources */,
 				626A548D1E862148009ACC00 /* CItyViewController.m in Sources */,
+				1FDAB3511F10E2D600AB0495 /* GroupCell.m in Sources */,
 				1F581BB01E763BC4009C6B08 /* StoreprofileController.m in Sources */,
 				6269A5611E6E51E90083160E /* SubmittedTableViewCell.m in Sources */,
 				62656C551E529BC10085A2BD /* IQKeyboardManager.m in Sources */,

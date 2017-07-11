@@ -73,7 +73,7 @@
 #import "ELNAlerTool.h"
 #import "PWAlertView.h"
 #import "ZYJHeadLineModel.h"
-
+#import "GroupModel.h"
 #import "NSDictionary+DeleteNull.h"
 
 #define USER_DEFAULTS [NSUserDefaults standardUserDefaults]

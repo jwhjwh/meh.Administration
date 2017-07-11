@@ -303,6 +303,7 @@
     if (self.conversation.type == EMConversationTypeGroupChat) {
         GroupdetailController *  GroupVC = [[GroupdetailController alloc]initWithGroupId:self.conversation.conversationId];
         GroupVC.popl=self.number;
+        GroupVC.dictInfo = self.dictInfo;
         [self.navigationController pushViewController:GroupVC animated:YES];
     }
     else if (self.conversation.type == EMConversationTypeChatRoom)

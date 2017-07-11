@@ -9,4 +9,5 @@
 #import "BaseViewController.h"
 
 @interface GroupMenberController : BaseViewController
+@property (nonatomic,strong) NSDictionary *groupinformation;
 @end
