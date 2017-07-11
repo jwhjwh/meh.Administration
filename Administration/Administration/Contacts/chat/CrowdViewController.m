@@ -7,19 +7,43 @@
 //
 
 #import "CrowdViewController.h"
-
+#import "GroupCell.h"
 #import "ChatViewController.h"
-@interface CrowdViewController ()<UITableViewDelegate, UITableViewDataSource,EMGroupManagerDelegate>
+@interface CrowdViewController ()<UITableViewDelegate, UITableViewDataSource,EMGroupManagerDelegate,EaseMessageViewControllerDelegate>
 
 /** tableView */
 @property (nonatomic, weak) UITableView *tableView;
 /** 群组列表 */
 @property (nonatomic, strong) NSMutableArray *groupArr;
+@property (nonatomic,strong) NSDictionary *dictInfo;
 @end
 
 @implementation CrowdViewController
+
+-(void)getGroup
+{
+   // [GroupModel shareGroupModel].resultArr = [[NSMutableArray alloc]init];
+    NSString *urlStr =[NSString stringWithFormat:@"%@group/selectMyGroup.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSString *userid = [USER_DEFAULTS objectForKey:@"userid"];
+    
+    NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":userid,@"roleId":[USER_DEFAULTS objectForKey:@"roleId"],@"companyInfoId":[USER_DEFAULTS valueForKey:@"companyinfoid"]};
+    __weak typeof(self)weakSelf = self;
+    [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            weakSelf.groupArr = [responseObject valueForKey:@"list"];
+           // [self didUpdateGroupList:weakSelf.groupArr];
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self getGroup];
     self.tabBarController.tabBar.hidden=YES;
 }
 - (void)viewDidLoad {
@@ -34,10 +58,11 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     // 创建群组列表
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,Scree_width, Scree_height) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,Scree_width, Scree_height) style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
+    [tableView registerClass:NSClassFromString(@"GroupCell.h") forCellReuseIdentifier:@"GroupCell"];
     self.tableView = tableView;
     
     //去除多余的cell线
@@ -46,35 +71,11 @@
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
     
     [self reloadDataSource];
-    // 获取群列表·
-    NSArray *array = [[EMClient sharedClient].groupManager getJoinedGroups];
   
-    self.groupArr = [NSMutableArray arrayWithArray:array];
-    if (self.groupArr.count == 0) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        // 从服务器获取群列表
-        __weak typeof(self) weakself = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            EMError *error = nil;
-            NSArray *groups = [[EMClient sharedClient].groupManager getMyGroupsFromServerWithError:&error];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (!error) {
-                    [MBProgressHUD hideHUDForView: self.view animated:NO];
-                    [weakself.groupArr removeAllObjects];
-                    [weakself.groupArr addObjectsFromArray:groups];
-                    if (self.groupArr.count==0) {
-                        [_tableView addEmptyViewWithImageName:@"" title:@"暂无经群组，创建一个吧～～" Size:20.0];
-                        _tableView.emptyView.hidden = NO;
-                    }
-                    [weakself.tableView reloadData];
-                }
-            });
-        });
-    }
-  
- 
-    
+    self.groupArr = [NSMutableArray array];
 }
+
+
 - (void)reloadDataSource
 {
     [self.groupArr removeAllObjects];
@@ -99,25 +100,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"GroupCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    GroupCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[GroupCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    EMGroup *group = self.groupArr[indexPath.row];
-    UserCacheInfo * userInfo = [UserCacheManager getById:group.groupId];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", group.subject];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
-    //2、调整大小
-    CGSize itemSize = CGSizeMake(40, 40);
-    UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
-    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-    [cell.imageView.image drawInRect:imageRect];
-    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    cell.imageView.layer.masksToBounds = YES;
-    // 设置圆角半径
-    cell.imageView.layer.cornerRadius =20.0f;
+    self.dictInfo = self.groupArr[indexPath.row];
+//    cell.headImageView.image = [UIImage imageNamed:dictInfo[@"img"]];
+//    cell.nameLabel.text = dictInfo[@"name"];
+//    cell.noReadLabel.text = dictInfo[@"unread"];
+ //   cell.model = self.groupArr[indexPath.row];
+    UserCacheInfo * userInfo = [UserCacheManager getById:self.dictInfo[@"id"]];
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@", self.dictInfo[@"name"]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    if (self.dictInfo[@"unread"]!=0) {
+        cell.noReadLabel.text = [NSString stringWithFormat:@"%@",self.dictInfo[@"unread"]];
+    }
+    else
+    {
+        [cell.noReadLabel removeFromSuperview];
+    }
+    
+   
     return cell;
 }
 //设置分区的高度
@@ -126,12 +130,22 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //设置cell选中的效果
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    EMGroup *group = [self.groupArr objectAtIndex:indexPath.row];
-    ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:group.groupId conversationType:EMConversationTypeGroupChat];
+    
+    EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    NSDictionary *dic = self.groupArr[indexPath.row];
+//    EMGroup *group = [self.groupArr objectAtIndex:indexPath.row];
+    
+    ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:[NSString stringWithFormat:@"%@",dic[@"groupNumber"]] conversationType:EMConversationTypeGroupChat];
+    
+    chatController.dictInfo = self.dictInfo;
     chatController.hidesBottomBarWhenPushed = YES;
-    chatController.title = group.subject;
+    chatController.title = dic[@"name"];
+    [chatController.faceView setEmotionManagers:@[manager]];
     [self.navigationController pushViewController:chatController animated:YES];
+    
+    
+    NSLog(@"dic = %@",dic);
 }
 
 - (void)dealloc {

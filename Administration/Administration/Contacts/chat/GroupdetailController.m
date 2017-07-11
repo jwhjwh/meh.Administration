@@ -24,8 +24,13 @@
 @property (strong,nonatomic) NSString * dissOfExit;
 @property (strong,nonatomic) UIButton *butn;
 
-@property (strong,nonatomic)NSArray *groupMembers;
-@property (strong,nonatomic)NSDictionary *groupInformation;
+@property (strong,nonatomic)  NSArray *groupMembers;
+@property (strong,nonatomic)  NSDictionary *groupInformation;
+
+@property (strong,nonatomic) UILabel *number;
+@property (strong,nonatomic) UIView *backView;
+
+@property (strong,nonatomic)UIButton *button;
 @end
 
 @implementation GroupdetailController
@@ -65,54 +70,98 @@
 
 -(void)getDetailGroup
 {
-    self.groupInformation = [[NSDictionary alloc]init];
-    self.groupMembers = [[NSArray alloc]init];
+    
     
     NSString *urlStr =[NSString stringWithFormat:@"%@group/selectGroup.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSString *userid = [USER_DEFAULTS objectForKey:@"userid"];
-    NSString *groupNum = _chatGroup.groupId;
+    NSString *groupNum = self.dictInfo[@"groupNumber"];
     
-    NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":userid,@"GroupNumber":groupNum};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":userid,@"GroupNumber":groupNum};
     
-    
-    [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
         {
-            __weak GroupdetailController *weakSelf = self;
-            weakSelf.groupInformation = [responseObject valueForKey:@"groupInformation"];
-            weakSelf.groupMembers = [NSArray arrayWithObject:[responseObject valueForKey:@"groupMembers"] ];
-            NSLog(@"1111%@%@",_groupInformation,_groupMembers);
+            self.groupInformation = [responseObject valueForKey:@"groupInformation"];
+            self.groupMembers = [responseObject valueForKey:@"groupMembers"] ;
+            NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.groupInformation[@"img"]];
+            [self.background sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@""]];
+            self.number.text=[NSString stringWithFormat:@"%lu名成员",(unsigned long)self.groupMembers.count];
             
-            [self ui];
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            if (self.groupInformation[@"departmentId"]==0) {
+                self.button.hidden = YES;
+            }
+            else
+            {
+                self.button.hidden  = NO;
+            }
             
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
             
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
-           
+            if ([[NSString stringWithFormat:@"%@",self.groupInformation[@"founder"]] isEqualToString:userid]) {
+                [self.button setTitle:@"解散群组" forState:UIControlStateNormal];
+            }
+            else
+            {
+                [self.button setTitle:@"退出群组" forState:UIControlStateNormal];
+            }
+            
+            NSDictionary *dict = [NSDictionary dictionary];
+            for (int i =0; i<self.groupMembers.count; i++) {
+                dict = self.groupMembers[i];
+                UIImageView *gousImage=[[UIImageView alloc]initWithFrame:CGRectMake(65+39*i, 8, 34, 34)];
+                gousImage.backgroundColor = GetColor(216, 216, 216, 1);
+                NSString *headImage=[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+                [gousImage sd_setImageWithURL:[NSURL URLWithString:headImage] placeholderImage:[UIImage imageNamed:@"banben100"]];
+                gousImage.layer.cornerRadius=17.0f;
+                gousImage.layer.masksToBounds = YES;
+                [self.backView addSubview:gousImage];
+                if (i==1) {
+                    break;
+                }
+            }
+            return ;
         }
-         
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            return;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            return;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
+            return;
+        }
+
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
-    
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self getDetailGroup];
+    [self ui];
 }
 
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title=@"群资料";
+    
+    self.groupInformation = [[NSDictionary alloc]init];
+    self.groupMembers = [[NSArray alloc]init];
+    
+}
 -(void)ui{
+
     self.view.backgroundColor=GetColor(216, 216, 216, 1);
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(10, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(LiftItem) forControlEvents: UIControlEventTouchUpInside];
+    
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     _background=[[UIImageView alloc]initWithFrame:CGRectMake(0,64,Scree_width, 230)];
@@ -145,29 +194,20 @@
     logImage.image=[UIImage imageNamed:@"yq_ico"];
     [view addSubview:logImage];
     
-    NSDictionary *dictInfo = [NSDictionary dictionary];
     
-    for (int i =0; i<self.groupMembers.count; i++) {
-        dictInfo = self.groupMembers[i];
-        UIImageView *gousImage=[[UIImageView alloc]initWithFrame:CGRectMake(65+39*i, 8, 34, 34)];
-        gousImage.backgroundColor = GetColor(216, 216, 216, 1);
-        gousImage.image=[UIImage imageNamed:@""];
-        gousImage.layer.cornerRadius=17.0f;
-        gousImage.layer.masksToBounds = YES;
-        [view addSubview:gousImage];
-        if (i==1) {
-            break;
-        }
-    }
+    self.number=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-110,15,80, 20)];
+    
+    [view addSubview:self.number];
+
     
     
     UIImageView *jiao=[[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-20, 15,14,20)];
     jiao.image=[UIImage imageNamed:@"jiantou_03"];
     [view addSubview:jiao];
     
-    UILabel *number=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-110,15,80, 20)];
-    number.text=[NSString stringWithFormat:@"%ld名成员",(long)self.groupMembers.count];
-    [view addSubview:number];
+    self.number=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-110,15,80, 20)];
+    
+    [view addSubview:self.number];
     
     UIButton *addbutn = [UIButton buttonWithType:UIButtonTypeCustom];
     addbutn.frame = CGRectMake(Scree_width-160,8, 34, 34);
@@ -207,43 +247,19 @@
     Introduction.textColor =[UIColor lightGrayColor];
     [view2 addSubview:Introduction];
     
-    UIButton *button= [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(Scree_width/2-50,100,100, 34);
-    [button.layer setCornerRadius:9];
-    button.layer.borderWidth = 1.0;
-    button.layer.borderColor =[UIColor RGBNav].CGColor;
-    NSString *loginUsername = [[EMClient sharedClient] currentUsername];
-    if ([self.chatGroup.owner isEqualToString:loginUsername]) {
+    self.button= [UIButton buttonWithType:UIButtonTypeCustom];
+    self.button.frame = CGRectMake(Scree_width/2-50,100,100, 34);
+    [self.button.layer setCornerRadius:9];
+    self.button.layer.borderWidth = 1.0;
+    self.button.layer.borderColor =[UIColor RGBNav].CGColor;
+    if ([self.button.titleLabel.text isEqualToString:@"解散群组"]) {
         self.occupantType = GroupOccupantTypeOwner;
         _dissOfExit=@"解散群组";
         [_butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
         [_butn addTarget: self action: @selector(photoItem) forControlEvents: UIControlEventTouchUpInside];
     }
-    if (self.occupantType != GroupOccupantTypeOwner) {
-        for (NSString *str in self.chatGroup.memberList) {
-            if ([str isEqualToString:loginUsername]) {
-                self.occupantType = GroupOccupantTypeMember;
-                _dissOfExit=@"退出群组";
-                break;
-            }
-        }
-    }
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [button setTitle:[NSString stringWithFormat:@"%@",_dissOfExit] forState:UIControlStateNormal];
-    [button addTarget: self action: @selector(dissolutionOfExit) forControlEvents: UIControlEventTouchUpInside];
-    [view2 addSubview:button];
-
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title=@"群资料";
-    
-    self.groupInformation = [[NSDictionary alloc]init];
-    self.groupMembers = [[NSArray alloc]init];
-    
-    [self getDetailGroup];
-    
-    }
+
 -(void)LiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -302,52 +318,26 @@
    
 }
 //退出群组或者解散群组
--(void)dissolutionOfExit{
-    if ([_dissOfExit isEqualToString:@"退出群组"]) {
-        __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.leave", @"quit the group")];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-            EMError *error = nil;
-            [[EMClient sharedClient].groupManager leaveGroup:weakSelf.chatGroup.groupId error:&error];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf hideHud];
-                if (error) {
-                    [weakSelf showHint:NSLocalizedString(@"group.leaveFail", @"exit the group failure")];
-                }
-                else{
-                    if ([self.popl isEqualToString:@"1"]) {
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                    }else{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
-                    }
-           
-                }
-            });
-        });
-
-    }else{
-        __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-            EMError *error = nil;
-            [[EMClient sharedClient].groupManager destroyGroup:weakSelf.chatGroup.groupId error:&error];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf hideHud];
-                if (error) {
-                    [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
-                }
-                else{
-                    if ([self.popl isEqualToString:@"1"]) {
-                 [self.navigationController popToRootViewControllerAnimated:YES];
-                    }else{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
-                    }
-
-                }
-            });
-        });
-
-    }
+-(void)dissolutionOfExit
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@group/deleteGroupMembers.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSString *userid = [USER_DEFAULTS objectForKey:@"userid"];
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":userid,@"groupinformationId":self.dictInfo[@"groupinformationId"],@"groupNumber":self.dictInfo[@"groupNumber"],@"uuid":[USER_DEFAULTS objectForKey:@"uuid"]};
+    
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSLog(@"成功");
+            [self.navigationController popToRootViewControllerAnimated:YES];
+           // [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
+            return ;
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 #pragma -mark 添加新成员
 -(void)addPerson
@@ -369,6 +359,7 @@
 }
 -(void)GroupofdetailsTap:(UITapGestureRecognizer*)sender{
     GroupMenberController *controller = [[GroupMenberController alloc]init];
+    controller.groupinformation = self.groupInformation;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

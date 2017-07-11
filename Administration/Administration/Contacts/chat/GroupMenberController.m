@@ -32,26 +32,16 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSString *userid = [USER_DEFAULTS objectForKey:@"userid"];
-    NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":userid,@"groupinformationId":@190};
+    NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":userid,@"groupinformationId":self.groupinformation[@"id"]};
     
     [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            self.arrayMenber = [NSMutableArray arrayWithObject:[responseObject valueForKey:@"list"]];
-            return ;
-        }
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            
-            return ;
-        }
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-            return ;
-        }
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
-            return ;
+        if ([[responseObject valueForKey:@"Status"]isEqualToString:@"0000"]) {
+            NSLog(@"成功");
         }
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
+
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -76,6 +66,12 @@
     
 }
 
+-(NSArray *)tableViewAtIndexes:(NSIndexSet *)indexes
+{
+    NSArray *array;
+    return array;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ZJLXRTableViewCell *cell = [[ZJLXRTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -91,10 +87,10 @@
     NSLog(@"dddd");
 }
 
--(NSArray *)tableViewAtIndexes:(NSIndexSet *)indexes
-{
-    return nil;
-}
+//-(NSArray *)tableViewAtIndexes:(NSIndexSet *)indexes
+//{
+//    return nil;
+//}
 
 #pragma -mark system
 - (void)viewDidLoad {
