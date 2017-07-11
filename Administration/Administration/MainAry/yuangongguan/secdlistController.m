@@ -116,7 +116,12 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":[USER_DEFAULTS objectForKey:@"roleId"],@"Num":_number};
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    if ([_roid isEqualToString:@"0"]) {
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":_roid,@"Num":_number};
+    }else{
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":[USER_DEFAULTS objectForKey:@"roleId"],@"Num":_number};
+    }
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

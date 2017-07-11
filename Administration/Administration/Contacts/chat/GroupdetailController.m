@@ -131,18 +131,20 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
             return;
         }
-         
+
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self getDetailGroup];
+    [self ui];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -151,6 +153,9 @@
     self.groupInformation = [[NSDictionary alloc]init];
     self.groupMembers = [[NSArray alloc]init];
     
+}
+-(void)ui{
+
     self.view.backgroundColor=GetColor(216, 216, 216, 1);
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(10, 0, 28,28);
@@ -253,20 +258,8 @@
         [_butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
         [_butn addTarget: self action: @selector(photoItem) forControlEvents: UIControlEventTouchUpInside];
     }
-//    if ([self.button.titleLabel.text isEqualToString:@"退出群组"]) {
-//        for (NSString *str in self.chatGroup.memberList) {
-//            if ([str isEqualToString:loginUsername]) {
-//                self.occupantType = GroupOccupantTypeMember;
-//                _dissOfExit=@"退出群组";
-//                break;
-//            }
-//        }
-//    }
-    [self.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [self.button setTitle:[NSString stringWithFormat:@"%@",_dissOfExit] forState:UIControlStateNormal];
-    [self.button addTarget: self action: @selector(dissolutionOfExit) forControlEvents: UIControlEventTouchUpInside];
-    [view2 addSubview:self.button];
 }
+
 -(void)LiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }

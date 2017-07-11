@@ -108,6 +108,7 @@
     secdlisV.number = modld.Num;
     secdlisV.name = modld.Name;
     secdlisV.Num=self.Num;
+    secdlisV.roid = self.roid;
     [self.navigationController pushViewController:secdlisV animated:YES];
 }
 -(void)getNetworkData{

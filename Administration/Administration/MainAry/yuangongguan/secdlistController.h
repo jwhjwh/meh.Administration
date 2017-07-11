@@ -12,4 +12,5 @@
 @property (nonatomic,strong)NSString *number;
 @property (nonatomic,strong)NSString *name;
 @property (nonatomic,assign)int Num;
+@property (nonatomic,strong) NSString *roid;
 @end

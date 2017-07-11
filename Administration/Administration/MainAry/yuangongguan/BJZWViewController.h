@@ -10,8 +10,8 @@
 
 @interface BJZWViewController : UIViewController
 
-@property(strong,nonatomic) NSArray*ZW;//职位
-@property (strong,nonatomic) NSArray*Numm;//职位id
+@property(strong,nonatomic) NSMutableArray*ZW;//职位
+@property (strong,nonatomic) NSMutableArray*Numm;//职位id
 @property(strong,nonatomic) NSArray*ZWLB;//职位类别
 @property (strong,nonatomic) NSArray*lbNum;//职位类别id
 @property(strong,nonatomic) NSMutableArray*gxbmAry;//部门数组
