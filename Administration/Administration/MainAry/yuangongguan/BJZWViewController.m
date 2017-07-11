@@ -206,7 +206,6 @@
         if (yesor == 1) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
         }else{
-            
             NSArray *numary = [[NSArray alloc]initWithObjects:tagg, nil];
             for (int i = 0; i<_Numm.count; i++) {
                 NSArray *zebun = _Numm[i];
@@ -214,7 +213,9 @@
                     int zwnumm = [zebun[y] intValue];
                     if (zwnumm == bbtn.tag) {
                         [_Numm replaceObjectAtIndex:i withObject:numary];
-                        NSLog(@"%@",_Numm);
+                        NSArray *bmary = [[NSArray alloc]init];
+                        [_gxbmAry replaceObjectAtIndex:i withObject:bmary];
+                        
                         int taa = [tagg intValue];
                         bbtn.tag = taa;
                         if ( taa == 2|| taa == 5||taa ==3||taa ==4||taa ==14||taa ==16||taa ==17 ) {
