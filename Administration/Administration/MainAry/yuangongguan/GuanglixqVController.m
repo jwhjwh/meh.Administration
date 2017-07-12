@@ -412,14 +412,20 @@
     
     
     BJZWViewController *BJZWVC = [[BJZWViewController alloc]init];
-    
-    BJZWVC.ZW = _ZWAry;//职位
-    BJZWVC.Numm = _ZWnumAry;//职位id
-    BJZWVC.ZWLB = _ZWLBAry;//职位类别
-    BJZWVC.lbNum = _ZWLBnumAry;//职位类别id
-    BJZWVC.gxbmAry = _BMAry;//部门
-    BJZWVC.gxbmidAry = _BMNumAry;//部门id
-    BJZWVC.codeAry = _codeeAry;
+    BJZWVC.ZW = [[NSMutableArray alloc]initWithArray:_ZWAry];
+    BJZWVC.Numm = [[NSMutableArray alloc]initWithArray:_ZWnumAry];
+    BJZWVC.lbNum = [[NSArray alloc]initWithArray:_ZWLBnumAry];
+    BJZWVC.ZWLB = [[NSArray alloc]initWithArray:_ZWLBAry];
+    BJZWVC.gxbmAry = [[NSMutableArray alloc]initWithArray:_BMAry];
+    BJZWVC.gxbmidAry = [[NSMutableArray alloc]initWithArray:_BMNumAry];
+    BJZWVC.codeAry = [[NSMutableArray alloc]initWithArray:_codeeAry];
+    //BJZWVC.ZW = _ZWAry;//职位
+   // BJZWVC.Numm = _ZWnumAry;//职位id
+   // BJZWVC.ZWLB = _ZWLBAry;//职位类别
+   // BJZWVC.lbNum = _ZWLBnumAry;//职位类别id
+  //   BJZWVC.gxbmAry = _BMAry;//部门
+   // BJZWVC.gxbmidAry = _BMNumAry;//部门id
+    //BJZWVC.codeAry = _codeeAry;
     [self.navigationController pushViewController:BJZWVC animated:YES];
 }
 #pragma mark - 补全分隔线左侧缺失

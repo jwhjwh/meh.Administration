@@ -274,7 +274,7 @@
         {
             NSArray *arr= [responseObject valueForKey:@"list"];
             if (arr.count == 0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有创建任何部门 " andInterval:1.0];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有创建部门 " andInterval:1.0];
             }else{
                 gxbmNum = [[NSMutableArray alloc]init];
                 gxbmAry = [[NSMutableArray alloc]init];

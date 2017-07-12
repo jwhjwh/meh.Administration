@@ -209,19 +209,7 @@
         }
         alertView.resultIndex = ^(NSInteger index){
             if (index == 2) {
-                /*
-                 @RequestParam final Integer usersid, 
-                 @RequestParam final String uuid,
-                 @RequestParam(required = false) final String mid,
-                 //部门管理者的usersid @RequestParam final String appkey, 
-                 @RequestParam final Integer CompanyInfoId, 
-                 @RequestParam(required = false) final String BrandID,
-                 @RequestParam final String DepartmentName,
-                 @RequestParam(required = false) final String employees, 
-                 @RequestParam final Integer Num, 
-                 @RequestParam final String friend,//环信账号
-                 */
-            
+
                 NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
                 NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                 NSString *uuid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"uuid"]];

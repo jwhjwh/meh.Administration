@@ -293,8 +293,52 @@
 }
 #pragma mark 点击所属部门
 -(void)SSButtonbtn:(UIButton*)btn{
-  
     NSLog(@"%@%ld",btn.titleLabel.text,(long)btn.tag);
+    NSString *jsid = _Numm[btn.tag][0];
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryDepartment.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid};
+    NSMutableArray* gxbmNum = [[NSMutableArray alloc]init];
+    NSMutableArray* gxbmAry = [[NSMutableArray alloc]init];
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
+        {
+            NSArray *arrt= [responseObject valueForKey:@"list"];
+            
+            if (arrt.count == 0) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有创建部门 " andInterval:1.0];
+            }else{
+                for (NSDictionary *dic in arrt) {
+                    [gxbmNum  addObject:[dic valueForKey:@"id"]];
+                    [gxbmAry addObject:[dic valueForKey:@"departmentName"]];
+                }
+                [SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
+                    NSLog(@"选择了第%ld个",(long)selectIndex);//gxbmNum[selectindex]
+                    NSString *tagg = gxbmNum[selectIndex];
+                    if ([btn.titleLabel.text isEqualToString: @"添加所属部门"]) {
+                        _gxbmidAry[btn.tag][0] = tagg;
+                    }else{
+                        [_gxbmidAry[btn.tag] addObject:tagg];
+                    }
+                    
+                } selectValue:^(NSString *selectValue) {
+                    if ([btn.titleLabel.text isEqualToString: @"添加所属部门"]) {
+                       [ _gxbmAry[btn.tag] addObject:selectValue];
+                    }else{
+                        [_gxbmAry[btn.tag] addObject:selectValue];
+                    }
+                    [infonTableview reloadData];
+                } showCloseButton:NO];
+
+        }
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
 }
 #pragma mark cell 点击
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -545,6 +589,7 @@
         make.top.mas_equalTo(fotView.mas_top).offset(23);
         make.height.mas_equalTo(50);
     }];
+     [infonTableview reloadData];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView

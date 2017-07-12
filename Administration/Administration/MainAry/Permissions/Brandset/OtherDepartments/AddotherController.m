@@ -87,7 +87,7 @@
     _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
     _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
     
-    _friend = [[NSMutableArray alloc]init];
+    
     isSelede=YES;
     isSele=YES;
     ismay=YES;
@@ -142,17 +142,23 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)masgegeClick{
-    
+    _friend = [[NSMutableArray alloc]init];
     if (_nameBarn==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写名称" andInterval:1.0];
     }else{
         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此部门" sureBtn:@"确认" cancleBtn:@"取消"];
         NSMutableArray *Emiarr=[NSMutableArray array];
+        NSMutableDictionary *roladd = [[NSMutableDictionary alloc]init];
         if (_EmisAry.count>=3) {
             for (DirtmsnaModel *model in [_EmisAry subarrayWithRange:NSMakeRange(0,_EmisAry.count-2)]) {
-                [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+               [roladd setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
+                [roladd setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"roleId"];
+                [_friend addObject:model.uuid];
+                [Emiarr addObject:roladd];
             }
-            _employees = [NSString stringWithFormat:@"%@",Emiarr];
+            NSError *error = nil;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:Emiarr options:NSJSONWritingPrettyPrinted error:&error];
+            _employees = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         }else{
             _employees =@"";
         }
@@ -182,17 +188,19 @@
         }else{
             _mid = @"";
         }
-        
+       // _BrandID=[NSString stringWithFormat:@"%@",Barr];
         alertView.resultIndex = ^(NSInteger index){
             if (index == 2) {
-                NSString *fri = [_friend componentsJoinedByString:@","];
+                
+                NSString *frr = [NSString stringWithFormat:@"%@",_friend];
+                
                 NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
                 NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                 NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
                 NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
                 NSLog(@"%@",[USER_DEFAULTS objectForKey:@"uuid"]);
                 NSString *uuid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"uuid"]];
-                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid,@"friend":fri};
+                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid,@"friend":frr};
                 [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
@@ -223,6 +231,8 @@
                             [self presentViewController:loginNavC animated:YES completion:nil];
                         };
                         [alertView showMKPAlertView];
+                    }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
+                        
                     }
                     
                     [_collectionView reloadData];
