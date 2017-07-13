@@ -124,7 +124,7 @@
         NSString *uuid = [NSString stringWithFormat:@"%@",model.uuid];
         NSString *usersid = [NSString stringWithFormat:@"%@",model.usersid];
         NSMutableDictionary *listUersid = [NSMutableDictionary dictionary];
-        [listUersid setValue:usersid forKey:@"usersid"];
+        [listUersid setValue:usersid forKey:@"id"];
         [listUersid setValue:uuid forKey:@"uuid"];
         [arrUsersid addObject:listUersid];
     }
@@ -142,19 +142,19 @@
         
         [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-                NSLog(@"成功");
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
                 return ;
             }
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]) {
-                NSLog(@"非法请求");
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
                 return ;
             }
-            if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-                NSLog(@"请重新登录");
+            if ([[responseObject valueForKey:@"status"] isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新登录" andInterval:1.0];
                 return ;
             }
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]) {
-                NSLog(@"失败");
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
                 return ;
             }
         } failure:^(NSError *error) {
@@ -168,20 +168,20 @@
     NSString *name = self.stringGroup;
     NSString *compid=[USER_DEFAULTS objectForKey:@"companyinfoid"];
     NSString *uuid = [USER_DEFAULTS objectForKey:@"uuid"];
-    NSData *pictureData = UIImagePNGRepresentation(self.imageGroup);
-    
+   // NSData *pictureData = UIImagePNGRepresentation(self.imageGroup);
+        NSData *pictureData = UIImageJPEGRepresentation(self.imageGroup, 1);
     NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Introduce":introduce,@"Name":name,@"CompanyInfoId":compid,@"uuid":uuid,@"ListUsersId":jsonStr};
         
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
-    [manager POST:urlStr parameters:dictInfo constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyMMddHHmm";
-        NSString *fileName = [formatter stringFromDate:[NSDate date]];
-        NSString *nameStr = @"file";
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+        [manager POST:urlStr parameters:dictInfo constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyMMddHHmm";
+            NSString *fileName = [formatter stringFromDate:[NSDate date]];
+            NSString *nameStr = @"file";
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.jpeg", fileName] mimeType:@"image/jpeg"];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -203,25 +203,25 @@
             [self.navigationController pushViewController:messageVC animated:YES];
         }
         if ([status isEqualToString:@"4444"]) {
-            NSLog(@"非法请求");
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
             return ;
         }
         if ([status isEqualToString:@"1001"]) {
-            NSLog(@"超时请重新登录");
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时请重新登录" andInterval:1.0];
             return ;
         }
         if ([status isEqualToString:@"1111"]) {
-            NSLog(@"创建失败");
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建失败" andInterval:1.0];
             return ;
         }
         if ([status isEqualToString:@"2000"]) {
-            NSLog(@"名称已存在");
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"名称已存在" andInterval:1.0];
             return ;
         }
             
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        NSLog(@"error = %@",error.localizedDescription);
     }];
     }
 }

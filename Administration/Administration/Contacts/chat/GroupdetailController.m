@@ -12,6 +12,7 @@
 #import "CrowdViewController.h"
 #import "AddmemberController.h"
 #import "GroupMenberController.h"
+typedef void (^finish)(id result);
 @interface GroupdetailController ()<ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic) GroupOccupantType occupantType;
 @property (nonatomic, strong)UIImage *goodPicture;
@@ -31,6 +32,8 @@
 @property (strong,nonatomic) UIView *backView;
 
 @property (strong,nonatomic)UIButton *button;
+
+
 @end
 
 @implementation GroupdetailController
@@ -69,6 +72,7 @@
 }
 
 -(void)getDetailGroup
+
 {
     
     
@@ -80,16 +84,27 @@
     
     NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":userid,@"GroupNumber":groupNum};
     
+    
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
         {
+            
             self.groupInformation = [responseObject valueForKey:@"groupInformation"];
             self.groupMembers = [responseObject valueForKey:@"groupMembers"] ;
             NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.groupInformation[@"img"]];
             [self.background sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@""]];
             self.number.text=[NSString stringWithFormat:@"%lu名成员",(unsigned long)self.groupMembers.count];
             
-            if (self.groupInformation[@"departmentId"]==0) {
+            __block NSString *string = string;
+            [self.groupInformation enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                if ([key isEqualToString:@"departmentId"]) {
+                    string = [NSString stringWithFormat:@"%@",obj];
+                    
+                }
+            }];
+            NSLog(@"string = %@",string);
+            
+            if (![string isEqualToString:@"0"]) {
                 self.button.hidden = YES;
             }
             else
@@ -100,6 +115,7 @@
             
             if ([[NSString stringWithFormat:@"%@",self.groupInformation[@"founder"]] isEqualToString:userid]) {
                 [self.button setTitle:@"解散群组" forState:UIControlStateNormal];
+                [_butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
             }
             else
             {
@@ -135,7 +151,7 @@
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -252,12 +268,9 @@
     [self.button.layer setCornerRadius:9];
     self.button.layer.borderWidth = 1.0;
     self.button.layer.borderColor =[UIColor RGBNav].CGColor;
-    if ([self.button.titleLabel.text isEqualToString:@"解散群组"]) {
-        self.occupantType = GroupOccupantTypeOwner;
-        _dissOfExit=@"解散群组";
-        [_butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
-        [_butn addTarget: self action: @selector(photoItem) forControlEvents: UIControlEventTouchUpInside];
-    }
+    [self.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.button addTarget:self action:@selector(dissolutionOfExit) forControlEvents:UIControlEventTouchUpInside];
+    [view2 addSubview:self.button];
 }
 
 -(void)LiftItem{

@@ -336,6 +336,7 @@
 		1FDCC2EA1E7A8FDA002C80FB /* HyphenateLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCC0D31E7A8596002C80FB /* HyphenateLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FDD3C731E7398CE00743779 /* FillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C721E7398CE00743779 /* FillTableViewCell.m */; };
 		1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C761E73F52500743779 /* XFDaterView.m */; };
+		1FEC4F051F14D9780054764F /* GroupMenberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEC4F041F14D9780054764F /* GroupMenberCell.m */; };
 		1FEEC5841ED3C9A2006C3523 /* DepalistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEC5831ED3C9A2006C3523 /* DepalistController.m */; };
 		1FEEC5871ED3CC42006C3523 /* secdlistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEC5861ED3CC42006C3523 /* secdlistController.m */; };
 		1FEEC58A1ED3D47C006C3523 /* JoblistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEC5891ED3D47C006C3523 /* JoblistController.m */; };
@@ -1164,6 +1165,8 @@
 		1FDD3C721E7398CE00743779 /* FillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillTableViewCell.m; sourceTree = "<group>"; };
 		1FDD3C751E73F52500743779 /* XFDaterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFDaterView.h; sourceTree = "<group>"; };
 		1FDD3C761E73F52500743779 /* XFDaterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFDaterView.m; sourceTree = "<group>"; };
+		1FEC4F031F14D9780054764F /* GroupMenberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupMenberCell.h; path = Administration/Contacts/chat/GroupMenberCell.h; sourceTree = SOURCE_ROOT; };
+		1FEC4F041F14D9780054764F /* GroupMenberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupMenberCell.m; path = Administration/Contacts/chat/GroupMenberCell.m; sourceTree = SOURCE_ROOT; };
 		1FEEC5821ED3C9A2006C3523 /* DepalistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepalistController.h; sourceTree = "<group>"; };
 		1FEEC5831ED3C9A2006C3523 /* DepalistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepalistController.m; sourceTree = "<group>"; };
 		1FEEC5851ED3CC42006C3523 /* secdlistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secdlistController.h; sourceTree = "<group>"; };
@@ -1775,6 +1778,8 @@
 				1FD6635E1F0DE7420072AAF0 /* SelectCell.m */,
 				1FDAB34F1F10E2D600AB0495 /* GroupCell.h */,
 				1FDAB3501F10E2D600AB0495 /* GroupCell.m */,
+				1FEC4F031F14D9780054764F /* GroupMenberCell.h */,
+				1FEC4F041F14D9780054764F /* GroupMenberCell.m */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -3741,7 +3746,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -4188,6 +4193,7 @@
 				1F6211BF1E8CFFAF00F50851 /* EMSDWebImageCompat.m in Sources */,
 				6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */,
 				1F4DCE781E88F55C00C80395 /* ApplyViewController.m in Sources */,
+				1FEC4F051F14D9780054764F /* GroupMenberCell.m in Sources */,
 				62656B8F1E5295D70085A2BD /* MASCompositeConstraint.m in Sources */,
 				1F6211FE1E8CFFB000F50851 /* EaseBubbleView+Voice.m in Sources */,
 				1F59AF351E5EE16C0000722A /* FMDatabaseQueue.m in Sources */,
@@ -4460,7 +4466,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4491,7 +4497,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "jwh.-555555";
+				PRODUCT_BUNDLE_IDENTIFIER = zhagde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4508,7 +4514,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4539,7 +4545,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "jwh.-555555";
+				PRODUCT_BUNDLE_IDENTIFIER = zhagde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
