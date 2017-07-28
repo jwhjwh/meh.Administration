@@ -22,9 +22,7 @@
 @property (strong,nonatomic) NSMutableArray *yeNameAry;
 @property (strong,nonatomic) NSMutableArray *pinNameAry;
 @property (strong,nonatomic) NSMutableArray *xingNameAry;
-@property (nonatomic, strong) NSMutableArray *mArray;
-@property (nonatomic, strong) NSMutableArray *tempMArray; // 用于判断手风琴的某个层级是否展开
-@property (nonatomic, strong) NSMutableArray *statusArray;
+@property (nonatomic, strong) NSMutableArray *statusArray;// 用于判断手风琴的某个层级是否展开
 @property (nonatomic,retain)UITableView *tableView;
 @end
 
@@ -113,14 +111,6 @@
             }
             _InterNameAry=[NSMutableArray arrayWithObjects:_shiNameAry,_neiNameAry,_wuNameAry,_yeNameAry,_pinNameAry,_xingNameAry,nil];
             _array=@[@"市场人员",@"内勤人员",@"物流人员",@"业务人员",@"品牌经理",@"行政管理"];
-            //            for (int i = 0; i<_InterNameAry.count; i++) {
-            //                NSMutableDictionary *mDic = [[NSMutableDictionary alloc]init];
-            //                [mDic setObject:[NSString stringWithFormat:@"%@(%lu)",_array[i],(unsigned long)[_InterNameAry[i]count]] forKey:@"name"];
-            //                [mDic setObject:_InterNameAry[i] forKey:@"mArr"];
-            //                [self.mArray addObject:mDic];
-            //                [self.tempMArray addObject:@"0"];
-            //            }
-            
             [self.tableView reloadData];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到联系人" andInterval:1.0];
@@ -150,7 +140,6 @@
 #pragma mark - YUFoldingTableViewDelegate / required（必须实现的代理）
 // 返回箭头的位置
 -(YUFoldingSectionHeaderArrowPosition )perferedArrowPosition
-
 {
     // 没有赋值，默认箭头在左
     NSUInteger intger=1;
@@ -223,9 +212,10 @@
                                    sectionState:((NSNumber *)self.statusArray[section]).integerValue];
     
     sectionHeaderView.tapDelegate = self;
-    
+    NSLog(@"%@",_statusArray);
     return sectionHeaderView;
 }
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     

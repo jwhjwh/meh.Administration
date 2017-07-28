@@ -9,14 +9,14 @@
 #import "depmtCell.h"
 
 @implementation depmtCell
-- (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier arr:(NSArray*)arr{
+- (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier arr:(NSArray*)arr numcode:(int)numcode{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self addSubviews:arr];
+        [self addSubviews:arr num:numcode];
     }
     return self;
 }
-- (void) addSubviews:(NSArray*)arr {
+- (void) addSubviews:(NSArray*)arr num:(int)numm {
    
     _mLabel=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 90, 30)];
     _mLabel.font=[UIFont systemFontOfSize:16];
@@ -24,11 +24,14 @@
     
     for (int i=0; arr.count>i; i++) {
    
-        _xLabel=[[UILabel alloc]initWithFrame:CGRectMake(120, 15+i*25, Scree_width-130, 20)];
+        _xLabel=[[UILabel alloc]initWithFrame:CGRectMake(120, 15+i*30, Scree_width-130, 20)];
         if (i>=1) {
             UIView *view=[[UIView alloc]initWithFrame:CGRectMake(120,40+(i-1)*25, Scree_width-120, 1)];
             view.backgroundColor = GetColor(230,230,230,1);
             [self addSubview:view];
+        }
+        if (numm  == 1) {
+            _xLabel.textColor = [UIColor lightGrayColor];
         }
         _xLabel.numberOfLines=0;
         _xLabel.text=arr[i];

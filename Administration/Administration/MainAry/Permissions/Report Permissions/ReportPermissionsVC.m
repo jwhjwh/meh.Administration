@@ -64,7 +64,7 @@
     [self.view addSubview:_view1];
     
     UIImageView *backImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, WIDTHh, HEIGHTt)];
-    backImage.image = [UIImage imageNamed:@"报表权限02"];
+    backImage.image = [UIImage imageNamed:@"报表权限02.jpg"];
     [_view1 addSubview:backImage];
     
     _imageview1 = [[UIImageView alloc]init];

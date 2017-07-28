@@ -430,6 +430,7 @@
 		6253557E1E681E740041F123 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6253557D1E681E740041F123 /* PermissionsViewController.m */; };
 		62570E901E7136B90051C83A /* wdbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 62570E8F1E7136B90051C83A /* wdbg.png */; };
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
+		625B1DC81F1DBEBC00C4287B /* 报表权限02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B1DC71F1DBEBC00C4287B /* 报表权限02.jpg */; };
 		625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 625C91FE1E85150800D9011B /* TrackingViewController.m */; };
 		626254061E728D99000B8F0F /* RectordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254051E728D99000B8F0F /* RectordViewController.m */; };
 		6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254081E7293B7000B8F0F /* RectordTableViewCell.m */; };
@@ -520,13 +521,13 @@
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
 		627332631EE7FF240013BB1A /* BJZWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 627332621EE7FF240013BB1A /* BJZWViewController.m */; };
 		627639F31EE93609001146C7 /* tj_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 627639F21EE93609001146C7 /* tj_ico01.png */; };
+		627932EB1F2AE3980079DAB1 /* ZZYPhotoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 627932EA1F2AE3980079DAB1 /* ZZYPhotoHelper.m */; };
 		627B27191E764B4100392170 /* StructureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 627B27181E764B4100392170 /* StructureViewController.m */; };
 		627FE7A71E98BCA00068976C /* SetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 627FE7A61E98BCA00068976C /* SetModel.m */; };
 		6287AA201E543802004F6387 /* shibiema.png in Resources */ = {isa = PBXBuildFile; fileRef = 6287AA1F1E543802004F6387 /* shibiema.png */; };
 		62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 62942BF91E6948F3003F3A84 /* SelectAlert.m */; };
 		62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */; };
 		62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A0D7361E6FD921003370FA /* ph_mt02.png */; };
-		62A75F6A1F05E02500122C53 /* 报表权限02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A75F691F05E02500122C53 /* 报表权限02.png */; };
 		62AFB9241F0A1A3C003FCE35 /* tj_ico02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB9231F0A1A3C003FCE35 /* tj_ico02.png */; };
 		62AFB9271F0A1A9C003FCE35 /* xx_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB9251F0A1A9C003FCE35 /* xx_ico01.png */; };
 		62AFB9281F0A1A9C003FCE35 /* xx_ico02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB9261F0A1A9C003FCE35 /* xx_ico02.png */; };
@@ -1336,6 +1337,7 @@
 		62570E8F1E7136B90051C83A /* wdbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wdbg.png; sourceTree = "<group>"; };
 		62578E781E6D5F5300D42603 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		62578E791E6D5F5300D42603 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
+		625B1DC71F1DBEBC00C4287B /* 报表权限02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "报表权限02.jpg"; sourceTree = "<group>"; };
 		625C91FD1E85150800D9011B /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
 		625C91FE1E85150800D9011B /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		626254041E728D99000B8F0F /* RectordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordViewController.h; sourceTree = "<group>"; };
@@ -1477,6 +1479,8 @@
 		627332611EE7FF240013BB1A /* BJZWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJZWViewController.h; sourceTree = "<group>"; };
 		627332621EE7FF240013BB1A /* BJZWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJZWViewController.m; sourceTree = "<group>"; };
 		627639F21EE93609001146C7 /* tj_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tj_ico01.png; sourceTree = "<group>"; };
+		627932E91F2AE3980079DAB1 /* ZZYPhotoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZYPhotoHelper.h; sourceTree = "<group>"; };
+		627932EA1F2AE3980079DAB1 /* ZZYPhotoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZYPhotoHelper.m; sourceTree = "<group>"; };
 		627B27171E764B4100392170 /* StructureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StructureViewController.h; sourceTree = "<group>"; };
 		627B27181E764B4100392170 /* StructureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StructureViewController.m; sourceTree = "<group>"; };
 		627FE7A51E98BCA00068976C /* SetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetModel.h; sourceTree = "<group>"; };
@@ -1487,7 +1491,6 @@
 		62A0D7271E6F8F2C003370FA /* MySubmittedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubmittedViewController.h; sourceTree = "<group>"; };
 		62A0D7281E6F8F2C003370FA /* MySubmittedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubmittedViewController.m; sourceTree = "<group>"; };
 		62A0D7361E6FD921003370FA /* ph_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ph_mt02.png; sourceTree = "<group>"; };
-		62A75F691F05E02500122C53 /* 报表权限02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "报表权限02.png"; sourceTree = "<group>"; };
 		62AFB9231F0A1A3C003FCE35 /* tj_ico02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tj_ico02.png; sourceTree = "<group>"; };
 		62AFB9251F0A1A9C003FCE35 /* xx_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico01.png; sourceTree = "<group>"; };
 		62AFB9261F0A1A9C003FCE35 /* xx_ico02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico02.png; sourceTree = "<group>"; };
@@ -2845,6 +2848,8 @@
 				624F11F71E66BBC20089C252 /* CityChoose */,
 				620A8AC91E6575BE005CA222 /* DateEditViewController.h */,
 				620A8ACA1E6575BE005CA222 /* DateEditViewController.m */,
+				627932E91F2AE3980079DAB1 /* ZZYPhotoHelper.h */,
+				627932EA1F2AE3980079DAB1 /* ZZYPhotoHelper.m */,
 			);
 			path = DateEdit;
 			sourceTree = "<group>";
@@ -3216,9 +3221,9 @@
 			children = (
 				62035F4B1E9F133200666399 /* bg_mt02.png */,
 				6264808B1E9E23B70090EECB /* bg_mt01.png */,
-				62A75F691F05E02500122C53 /* 报表权限02.png */,
 				626480821E9DD73C0090EECB /* ReportPermissionsVC.h */,
 				626480831E9DD73C0090EECB /* ReportPermissionsVC.m */,
+				625B1DC71F1DBEBC00C4287B /* 报表权限02.jpg */,
 				62F55C2A1EA6EEA30020BD9D /* ReportModel.h */,
 				62F55C2B1EA6EEA30020BD9D /* ReportModel.m */,
 				62640EFA1EA0A9FC00085375 /* ZHTBtnView.h */,
@@ -3893,12 +3898,12 @@
 				625355761E67AF8F0041F123 /* city.plist in Resources */,
 				1F4DBB521E58420800733CF7 /* fanhui.png in Resources */,
 				621A5C211E5843B50051C6CC /* banben100.png in Resources */,
-				62A75F6A1F05E02500122C53 /* 报表权限02.png in Resources */,
 				62A0D7371E6FD921003370FA /* ph_mt02.png in Resources */,
 				626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */,
 				624E71021EC404980026C5E9 /* 职位结构6.jpg in Resources */,
 				1F3B3DCD1E8DF93C00E75027 /* icon_007.gif in Resources */,
 				1F3B3DE01E8DF93C00E75027 /* icon_024_cover.png in Resources */,
+				625B1DC81F1DBEBC00C4287B /* 报表权限02.jpg in Resources */,
 				1F3B3DD01E8DF93C00E75027 /* icon_010_cover.png in Resources */,
 				62AFB9281F0A1A9C003FCE35 /* xx_ico02.png in Resources */,
 				1F3B3DCF1E8DF93C00E75027 /* icon_010.gif in Resources */,
@@ -4098,6 +4103,7 @@
 				1F6212081E8CFFB000F50851 /* EaseConversationCell.m in Sources */,
 				1F6211DD1E8CFFB000F50851 /* EaseConversationModel.m in Sources */,
 				62656C4F1E529BC10085A2BD /* IQNSArray+Sort.m in Sources */,
+				627932EB1F2AE3980079DAB1 /* ZZYPhotoHelper.m in Sources */,
 				1F6833BC1E72966700F74D50 /* businessViewController.m in Sources */,
 				1F803FEE1E52F7CA005F53CE /* UIRefreshControl+AFNetworking.m in Sources */,
 				1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */,
@@ -4563,7 +4569,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4612,7 +4618,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -11,5 +11,7 @@
 @interface depmtCell : UITableViewCell
 @property(nonatomic,retain)UILabel *mLabel;
 @property (nonatomic,retain)UILabel *xLabel;
-- (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier arr:(NSArray*)arr;
+
+- (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier arr:(NSArray*)arr numcode:(int)numcode;
+
 @end

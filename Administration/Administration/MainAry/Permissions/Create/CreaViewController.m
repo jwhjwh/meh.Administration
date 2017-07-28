@@ -369,6 +369,15 @@
         
         NSLog(@":::%@",jsid);
         NSString *String = jsid.description;
+        if ([String isEqualToString:@"7"]) {
+            if (_arr.count == 7) {
+                _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码(六位以上)",@"输入密码(六位以上)", nil];
+                _arr = [[NSMutableArray alloc]initWithObjects:@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码", nil];
+                [infonTableview reloadData];
+                [_gxnumAry removeAllObjects];
+            }
+            
+        }else{
         if (_arr.count == 6) {
             if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]||[String isEqualToString:@"3"]||[String isEqualToString:@"4"]||[String isEqualToString:@"14"]||[String isEqualToString:@"16"]||[String isEqualToString:@"17"]) {
                 
@@ -397,14 +406,11 @@
             }
             
         }else{
+            
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
             UITableViewCell *cell = [infonTableview cellForRowAtIndexPath:indexPath];
             if ([String isEqualToString:@"2"]||[String isEqualToString:@"5"]||[String isEqualToString:@"3"]||[String isEqualToString:@"4"]||[String isEqualToString:@"14"]||[String isEqualToString:@"16"]||[String isEqualToString:@"17"]) {
-                
-                
-                //[self addRalodui];
                 _arr[4] = @"所属部门";
-                
                 cell.textLabel.text= @"所属部门";
                 _PINPLabel.text = @"选择部门";
                 _PINPLabel.textColor = [UIColor lightGrayColor];
@@ -444,6 +450,8 @@
                 [_JsLBButton setTitle:@"选择职业类别" forState:UIControlStateNormal];
                 _JsLBButton.enabled = NO;
             }
+                 
+        }
         }
         } selectValue:^(NSString *selectValue) {
         
