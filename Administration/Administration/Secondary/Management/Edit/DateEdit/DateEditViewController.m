@@ -9,7 +9,7 @@
 #import "DateEditViewController.h"
 #import "PW_DatePickerView.h"
 #import "CityChooseViewController.h"
-
+#import "ZZYPhotoHelper.h"
 @interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate>
 {
     UITableView *infonTableview;
@@ -20,7 +20,7 @@
 @property (nonatomic,strong) UITextField *text1;//编辑
 @property (nonatomic,strong) UILabel *DayLabel;//出生日期
 @property (nonatomic,strong) UILabel *AddLabel;//现住地址
-
+@property (nonatomic,strong)UIImageView *TXImage;
 @property (nonatomic,strong) NSString *Age;
 @property (nonatomic,strong) NSString *IdNo;
 
@@ -81,6 +81,7 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+            [self.navigationController popViewControllerAnimated:YES];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else{
@@ -136,12 +137,12 @@
     if ([cell.textLabel.text  isEqualToString: @"头像"]) {
         NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
         
-        UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        [TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
-        TXImage.backgroundColor = [UIColor whiteColor];
-        TXImage.layer.masksToBounds = YES;
-        TXImage.layer.cornerRadius = 20.0;//设置圆角
-        [infonTableview addSubview:TXImage];
+       _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
+        [_TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        _TXImage.backgroundColor = [UIColor whiteColor];
+        _TXImage.layer.masksToBounds = YES;
+        _TXImage.layer.cornerRadius = 20.0;//设置圆角
+        [infonTableview addSubview:_TXImage];
         
     };
     CGRect labelRect2 = CGRectMake(150, 1, self.view.bounds.size.width-170, 48);
@@ -235,6 +236,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        if (indexPath.row ==0) {
+            [[ZZYPhotoHelper shareHelper] showImageViewSelcteWithResultBlock:^(id data) {
+                _TXImage.image = (UIImage *)data;
+
+            }];
+        }
+    }
+    
     
     if (indexPath.section == 1) {
         if (indexPath.row <1) {

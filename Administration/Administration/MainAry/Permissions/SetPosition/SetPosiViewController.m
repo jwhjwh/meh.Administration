@@ -1677,27 +1677,6 @@ NSUInteger rsw;
          [_popFootCellView removeFromSuperview];
      }
 }
--(void)addBUtton:(ButtonView *)buttonview nameStr:(NSString *)nameStr uiview:(UIView*)uiview button:(ButtonView*)button hei:(CGFloat)hei wid:(CGFloat)wid biaoshi:(int)biaoshi {
-
-    
-    [buttonview.ZWbutton setTitle:nameStr forState:UIControlStateNormal];
-    [_popFootCellView addSubview:buttonview];
-    [buttonview mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (biaoshi == 1) {
-            make.top.mas_equalTo(button.mas_bottom).offset(0);
-            make.centerX.mas_equalTo(button.mas_centerX).offset(0);
-        }else{
-            make.top.mas_equalTo(uiview.mas_bottom).offset(0);
-            make.centerX.mas_equalTo(uiview.mas_centerX).offset(0);
-        }
-        
-        make.height.mas_equalTo(hei);
-        make.width.mas_equalTo(wid);
-    }];
-
-    
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

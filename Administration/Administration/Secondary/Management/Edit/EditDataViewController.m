@@ -32,6 +32,9 @@
     
     self.tabBarController.tabBar.hidden=YES;
 }
+-(void)viewDidAppear:(BOOL)animated{
+    [self loadDataFromServer];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"个人信息";
