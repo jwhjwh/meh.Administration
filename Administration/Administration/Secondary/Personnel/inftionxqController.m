@@ -15,7 +15,7 @@
 #import "GBAlertView.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-
+#import "LVFmdbTool.h"
 #import "SJABHelper.h"
 #import "DongImage.h"
 #define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
@@ -33,6 +33,7 @@
 @property (nonatomic,retain)UIImageView *TXImage;
 @property (nonatomic,strong)NSDictionary *dicinfo;
 @property (nonatomic,retain)UIButton *buton;
+@property (nonatomic,strong)EaseUserModel *userModel;
 @end
 
 @implementation inftionxqController
@@ -216,11 +217,13 @@
             self.dicinfo  = [NSDictionary dictionaryWithDictionary:responseObject[@"userInfo"]];
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
-            model.birthday = [model.birthday substringToIndex:10];
+           // model.birthday = [model.birthday substringToIndex:10];
+            model.birthday = model.birthday;
              _logImage=model.icon;
             _callNum=[NSString stringWithFormat:@"%@",model.account];
             _callName=model.name;
-
+            self.userModel = [[EaseUserModel alloc]initWithBuddy:self.dicinfo[@"uuid"]];
+            self.userModel.nickname = self.dicinfo[@"name"];
             if (![model.LevelName isEqualToString:@""]) {
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"类别",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
@@ -280,14 +283,20 @@ else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
 //
 //} 
 -(void)iamsges{
+    
+    if ([LVFmdbTool isExist:self.dicinfo[@"usersid"] Current:[USER_DEFAULTS objectForKey:@"userid"]]==NO) {
+        [LVFmdbTool insertUser:[USER_DEFAULTS objectForKey:@"userid"] Userinfo:self.dicinfo];
+    }else
+    {
+        [LVFmdbTool updateLatePerson:self.dicinfo userID:self.dicinfo[@"usersid"] currentUser:[USER_DEFAULTS objectForKey:@"userid"]];
+    }
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
-    //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
-    //    messageVC.title = @"8001";
-    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.dicinfo[@"name"] conversationType:EMConversationTypeChat];
+    ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.userModel.buddy conversationType:EMConversationTypeChat];
+   // EaseMessageViewController *messageVC = [[EaseMessageViewController alloc]initWithConversationChatter:[NSString stringWithFormat:@"%@",self.model.name] conversationType:EMConversationTypeChat];
     messageVC.title =  _callName;
     messageVC.hidesBottomBarWhenPushed = YES;
+    messageVC.dictInfo = self.dicinfo;
     [messageVC.faceView setEmotionManagers:@[manager]];
-    // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
     [self.navigationController pushViewController:messageVC animated:YES];
 }
 @end

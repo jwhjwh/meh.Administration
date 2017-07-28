@@ -13,6 +13,7 @@
 
 #import "CreaViewController.h"
 #import "SelectAlert.h"
+#import "UserProfileManager.h"
 @interface CreaViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
@@ -599,6 +600,10 @@
     switch (textField.tag) {
         case 1:
             NameorID = textField.text;
+             [[EMClient sharedClient] setApnsNickname:textField.text];
+            
+            [[UserProfileManager sharedInstance] updateUserProfileInBackground:@{kPARSE_HXUSER_NICKNAME:textField.text} completion:^(BOOL success, NSError *error) {
+            }];
             NSLog(@"姓名:%@",textField.text);
             break;
         case 2:

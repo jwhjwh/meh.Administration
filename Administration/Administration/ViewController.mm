@@ -198,6 +198,8 @@
     _PassText.delegate = self;
     _PassText.backgroundColor = [UIColor clearColor];
     _PassText.placeholder = @"用户密码";
+    _PassText.keyboardType = UIKeyboardTypeASCIICapable;
+    _PassText.secureTextEntry = YES;
     placeholder(_PassText);
 
     [self.view addSubview:_PassText];

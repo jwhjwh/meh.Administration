@@ -12,85 +12,112 @@
 #import "SelectCell.h"
 #import "ChatViewController.h"
 @interface ChoosePostionViewController ()<UITableViewDelegate,UITableViewDataSource>
-
 @property (nonatomic,retain)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *dataArray;
-@property (nonatomic,strong)UIButton *allButton;
+
 @property (nonatomic,strong)UIButton *sureButton;
 @property (nonatomic,strong)NSMutableArray *selectArray;
-@property (nonatomic,strong)UIImageView *loni;
 @property (nonatomic,assign)NSIndexPath *selectIndex;
 @property (nonatomic,strong)NSMutableArray *indexArray;
+@property (nonatomic,strong)NSMutableDictionary *openSectionDict;
+@property (nonatomic,strong)NSMutableArray *arrayTitle;
+@property (nonatomic,assign)NSInteger KTAG;
 @end
 
 @implementation ChoosePostionViewController
+-(void)getAllMenbers
+{
+    NSString *stringUrl = [NSString stringWithFormat:@"%@group/insertGroupMembersselect.action",KURLHeader];
+    NSString *compid=[USER_DEFAULTS objectForKey:@"companyinfoid"];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSString *usersID = [USER_DEFAULTS objectForKey:@"userid"];
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":usersID,@"companyInfoId":compid};
+    [ZXDNetworking GET:stringUrl parameters:dict success:^(id responseObject) {
+        NSString *stringCode = [responseObject valueForKey:@"status"];
+        if ([stringCode isEqualToString:@"0000"]) {
+            self.dataArray = [[responseObject valueForKey:@"list"]mutableCopy];
+            for (NSArray *inArr in self.dataArray) {
+                NSDictionary *dict=inArr[0];
+                    NSString *string = dict[@"newName"];
+                    NSLog(@"%@", string);
+                    [self.arrayTitle addObject: string];
+            }
+            NSLog(@"arrtitle = %@",self.arrayTitle);
+            [self.tableView reloadData];
+            
+            return ;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            return;
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token超时请重新登录" andInterval:1.0];
+            return;
+        }
+        if ([stringCode isEqualToString:@"1111"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 
+}
 
+#pragma --mark system
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.dataArray removeAllObjects];
+    [self getAllMenbers];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"添加群成员";
-    
+    self.arrayTitle = [NSMutableArray array];
     self.selectArray = [NSMutableArray array];
-    self.view.backgroundColor = [UIColor whiteColor];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame =CGRectMake(0, 0, 28,28);
-    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
-    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem=buttonItem;
-    
+    self.openSectionDict = [NSMutableDictionary dictionary];
     //
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height-44) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.tableView registerClass:NSClassFromString(@"SelectCell") forCellReuseIdentifier:@"cell"];
     [self.view addSubview:self.tableView];
-    if (_Num==1) {
-        [self datalade];
-    }else{
-        [self checkPositionUsers];
-    }
+    
     [self loadBottonView];
 }
 
 -(void)loadBottonView
 {
-    UIView *viewBottom = [[UIView alloc]init];
-    viewBottom.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:viewBottom];
-    [viewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.view.mas_bottom);
-        make.height.mas_equalTo(48);
-    }];
-    
-    self.allButton = [[UIButton alloc]init];
-    [self.allButton setTitle:@"全选" forState:UIControlStateNormal];
-    [self.allButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.allButton addTarget:self action:@selector(buttonAll:) forControlEvents:UIControlEventTouchUpInside];
-    [viewBottom addSubview:self.allButton];
-    [self.allButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(viewBottom.mas_left);
-        make.top.mas_equalTo(viewBottom.mas_top);
-        make.bottom.mas_equalTo(viewBottom.mas_bottom);
-        make.right.mas_equalTo(viewBottom.mas_centerX);
-    }];
-    
+//    UIView *viewBottom = [[UIView alloc]init];
+//    viewBottom.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:viewBottom];
+//    [viewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.view.mas_left);
+//        make.right.mas_equalTo(self.view.mas_right);
+//        make.bottom.mas_equalTo(self.view.mas_bottom);
+//        make.height.mas_equalTo(48);
+//    }];
     self.sureButton = [[UIButton alloc]init];
     [self.sureButton setTitle:@"确定" forState:UIControlStateNormal];
+    [self.sureButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.sureButton addTarget:self action:@selector(buttonSure:) forControlEvents:UIControlEventTouchUpInside];
-    [viewBottom addSubview:self.sureButton];
+    [self.view addSubview:self.sureButton];
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(viewBottom.mas_right);
-        make.top.mas_equalTo(viewBottom.mas_top);
-        make.bottom.mas_equalTo(viewBottom.mas_bottom);
-        make.left.mas_equalTo(viewBottom.mas_centerX);
+        make.right.mas_equalTo(self.view.mas_right);
+        //make.top.mas_equalTo(self.view.mas_top);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
+        make.left.mas_equalTo(self.view.mas_left);
+        make.height.mas_equalTo(48);
     }];
     if (self.selectArray.count==0) {
-        [self.sureButton setBackgroundColor:[UIColor grayColor]];
+        [self.sureButton setBackgroundColor:[UIColor lightGrayColor]];
         self.sureButton.userInteractionEnabled = NO;
     }
     else
@@ -101,42 +128,28 @@
    
 }
 
--(void)buttonAll:(UIButton *)button
-{
-    for (int i = 0; i<self.dataArray.count; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-        SelectCell *cell = (SelectCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-            [self.sureButton setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
-        [self.sureButton setBackgroundColor:GetColor(204, 174, 212, 1)];
-        self.sureButton.userInteractionEnabled = YES;
-        
-    }
-}
 
 #pragma -mark 创建群或添加群成员
 -(void)buttonSure:(UIButton *)button
 {
     NSMutableArray *arrUsersid = [NSMutableArray array];
+    NSDictionary *dict = [NSDictionary dictionary];
     for (int i=0; i<self.selectArray.count; i++) {
-        DirtmsnaModel *model = self.selectArray[i];
-        NSString *uuid = [NSString stringWithFormat:@"%@",model.uuid];
-        NSString *usersid = [NSString stringWithFormat:@"%@",model.usersid];
+        dict = self.selectArray[i];
+        NSString *uuid = [NSString stringWithFormat:@"%@",dict[@"uuid"]];
+        NSString *usersid = [NSString stringWithFormat:@"%@",dict[@"id"]];
         NSMutableDictionary *listUersid = [NSMutableDictionary dictionary];
         [listUersid setValue:usersid forKey:@"id"];
         [listUersid setValue:uuid forKey:@"uuid"];
         [arrUsersid addObject:listUersid];
     }
-    
-    
-    
     NSData *data=[NSJSONSerialization dataWithJSONObject:arrUsersid options:NSJSONWritingPrettyPrinted error:nil];    
     NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    if (self.isAddMenber) {
+    //添加群成员（已有群）
+    if (self.isHaveGroup) {
         NSString *urlStr =[NSString stringWithFormat:@"%@group/insertGroupMembers.action",KURLHeader];
         NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"groupinformationId":self.groupinformationId,@"list":jsonStr,@"groupNumber":self.groupID};
         
@@ -160,7 +173,7 @@
         } failure:^(NSError *error) {
             
         } view:self.view MBPro:YES];
-    }else
+    }else //创建群时添加群成员
     {
         
     NSString *urlStr =[NSString stringWithFormat:@"%@group/insertGroup.action",KURLHeader];
@@ -168,8 +181,8 @@
     NSString *name = self.stringGroup;
     NSString *compid=[USER_DEFAULTS objectForKey:@"companyinfoid"];
     NSString *uuid = [USER_DEFAULTS objectForKey:@"uuid"];
-   // NSData *pictureData = UIImagePNGRepresentation(self.imageGroup);
-        NSData *pictureData = UIImageJPEGRepresentation(self.imageGroup, 1);
+    NSData *pictureData = UIImagePNGRepresentation(self.imageGroup);
+   //     NSData *pictureData = UIImageJPEGRepresentation(self.imageGroup, 1);
     NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Introduce":introduce,@"Name":name,@"CompanyInfoId":compid,@"uuid":uuid,@"ListUsersId":jsonStr};
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -181,7 +194,7 @@
             NSString *fileName = [formatter stringFromDate:[NSDate date]];
             NSString *nameStr = @"file";
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.jpeg", fileName] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -191,11 +204,11 @@
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
         NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
         if ([status isEqualToString:@"0000"]) {
-            NSLog(@"创建成功");
             EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
             //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
             //    messageVC.title = @"8001";
             ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:name conversationType:EMConversationTypeGroupChat];
+            messageVC.groupNmuber = dic[@"GroupNumber"];
             messageVC.hidesBottomBarWhenPushed = YES;
             messageVC.number = @"1";
             [messageVC.faceView setEmotionManagers:@[manager]];
@@ -226,108 +239,8 @@
     }
 }
 
--(void)datalade{
-    NSString *urlStr =[NSString stringWithFormat:@"%@manager/queryDepartments.action",KURLHeader];
-    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"DepartmentID":_DepartmentID};
-    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            self.dataArray = [NSMutableArray array];
-            NSArray *array=[responseObject valueForKey:@"list"];
-            
-            for (NSDictionary *dic in array) {
-                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                model.isdeles=@"";
-                [self.dataArray addObject:model];
-            }
-            
-            if (self.dataArray.count==0) {
-                [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～"  Size:20.0];
-                _tableView.emptyView.hidden = NO;
-            }
-            [_tableView reloadData];
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-        if (self.dataArray.count==0) {
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工" Size:20.0];
-            _tableView.emptyView.hidden = NO;
-        }
-        [self.tableView reloadData];
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
+
     
-    
-}
--(void)checkPositionUsers{
-    NSString *urlStr =[NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
-    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr};
-    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            self.dataArray = [NSMutableArray array];
-            NSArray *array=[responseObject valueForKey:@"list"];
-            
-            for (NSDictionary *dic in array) {
-                DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                model.isdeles=@"";
-                [self.dataArray addObject:model];
-            }
-            
-            if (self.dataArray.count==0) {
-                [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工～～"  Size:20.0];
-                _tableView.emptyView.hidden = NO;
-            }
-            [_tableView reloadData];
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-        if (self.dataArray.count==0) {
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工" Size:20.0];
-            _tableView.emptyView.hidden = NO;
-        }
-        [self.tableView reloadData];
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
-    
-    
-}
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -336,20 +249,76 @@
     return 74;
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.dataArray.count;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    if ([[self.openSectionDict valueForKey:[NSString stringWithFormat:@"%ld", section]] integerValue] == 0) { //根据记录的展开状态设置row的数量
+        return 0;
+    } else {
+       return [self.dataArray[section] count];
+    }
+   // return [self.dataArray[section] count];
     
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    return @"33";
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40)];
+    view.backgroundColor = [UIColor whiteColor];
+    view.tag = self.KTAG + section;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, view.bounds.size.width, view.bounds.size.height)];
+    
+    label.text = self.arrayTitle[section];
+    [view addSubview:label];
+    if ([[self.openSectionDict valueForKey:[NSString stringWithFormat:@"%ld", section]] integerValue] == 0) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (view.bounds.size.height - 10) / 2, 7, 10)];
+        imageView.image = [UIImage imageNamed:@"jiantou_03"]; // 三角形小图片
+        [view addSubview:imageView];
+    } else {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (view.bounds.size.height - 7) / 2, 10, 7)];
+        imageView.image = [UIImage imageNamed:@"down"];
+        [view addSubview:imageView];
+    }
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(collegeTaped:)];
+    [view addGestureRecognizer:tap];
+    return view;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.1;
+}
+#pragma mark - sectionHeader clicked
+- (void)collegeTaped:(UITapGestureRecognizer *)sender {
+    NSString *key = [NSString stringWithFormat:@"%ld", sender.view.tag - self.KTAG];
+    // 给展开标识赋值
+    NSLog(@"key = %@",key);
+    if ([[self.openSectionDict objectForKey:key] integerValue] == 0) {
+        [self.openSectionDict setObject:@"1" forKey:key];
+    } else {
+        [self.openSectionDict setObject:@"0" forKey:key];
+    }
+    NSUInteger index = sender.view.tag;
+    NSIndexSet *set = [NSIndexSet indexSetWithIndex:index -self.KTAG];
+    [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationFade];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    ZJLXRTableViewCell *cell = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-//    if (cell == nil) {
-//        cell = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-//    }
+
     SelectCell *cell = [[SelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = _dataArray[indexPath.row];
+    cell.model = _dataArray[indexPath.section][indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];
     
     for (NSIndexPath *index in self.indexArray) {
@@ -360,6 +329,7 @@
     }
     return cell;
 }
+
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -391,7 +361,7 @@
     {
         //勾选的图标
         cell.selectImage.image  = [UIImage imageNamed:@"xuanzhong"];
-        [self.selectArray addObject:self.dataArray[indexPath.row]];
+        [self.selectArray addObject:self.dataArray[indexPath.section][indexPath.row]];
         [self.indexArray addObject:indexPath];
         [self.sureButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[self.selectArray count]] forState:UIControlStateNormal];
         cell.isSelected = YES;
@@ -401,9 +371,14 @@
     {
         //反选的图标
         cell.selectImage.image  = [UIImage imageNamed:@"weixuanzhong"];
-        [self.selectArray removeObject:self.dataArray[indexPath.row]];
+        [self.selectArray removeObject:self.dataArray[indexPath.section][indexPath.row]];
         [self.indexArray removeObject:indexPath];
+        if (self.selectArray.count==0) {
+            [self.sureButton setTitle:@"确定"forState:UIControlStateNormal];
+        }else
+        {
         [self.sureButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[self.selectArray count]] forState:UIControlStateNormal];
+        }
         cell.isSelected = NO;
     }
 

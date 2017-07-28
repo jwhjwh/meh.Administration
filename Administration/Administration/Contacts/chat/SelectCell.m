@@ -28,7 +28,7 @@
     [self.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).offset(8);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25);
         make.width.mas_equalTo(25);
     }];
     
@@ -133,17 +133,15 @@
         self.isSelected = NO;
     }
     
-    //需要记录到成员量中
-    
 }
 
--(void)setModel:(DirtmsnaModel *)model{
-    self.NameLabel.text=model.name;
-    self.TelLabel.text=model.account;
+-(void)setModel:(NSDictionary *)model{
+    self.NameLabel.text=model[@"name"];
+    self.TelLabel.text=model[@"account"];
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
-    self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",model.NewName];
-    if ([model.NewName containsString:@"总监"]||[model.NewName containsString:@"经理"]) {
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model[@"icon"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",model[@"newName"]];
+    if ([model[@"newName"] containsString:@"总监"]||[model[@"newName"] containsString:@"经理"]) {
         _zhiLabel.textColor=[UIColor whiteColor];
         _zhiLabel.layer.cornerRadius =3.0f;
         _zhiLabel.layer.masksToBounds = YES;

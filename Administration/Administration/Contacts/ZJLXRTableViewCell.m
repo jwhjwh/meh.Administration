@@ -234,4 +234,18 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
         self.zhiLabel.backgroundColor=GetColor(205,176,218,1);
     }
 }
+-(void)setDict:(NSDictionary *)dict
+{
+    self.NameLabel.text=dict[@"name"];
+    self.TelLabel.text=dict[@"account"];
+    //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",dict[@"newName"]];
+    if ([dict[@"newName"] containsString:@"总监"]||[dict[@"newName"] containsString:@"经理"]) {
+        _zhiLabel.textColor=[UIColor whiteColor];
+        _zhiLabel.layer.cornerRadius =3.0f;
+        _zhiLabel.layer.masksToBounds = YES;
+        self.zhiLabel.backgroundColor=GetColor(205,176,218,1);
+}
+}
 @end

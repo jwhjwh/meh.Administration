@@ -85,6 +85,7 @@
         AddmemberController *addmenVC=[[AddmemberController alloc]init];
         addmenVC.goursIamge=self.goodPicture;
         addmenVC.textStr = self.textFleid.text;
+        addmenVC.isCreateGroup = YES;
         [self.navigationController pushViewController:addmenVC animated:YES];
     }
 }

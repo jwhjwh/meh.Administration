@@ -18,6 +18,7 @@ typedef enum{
 @interface GroupdetailController : UIViewController
 @property (nonatomic,strong) NSString *popl;
 @property (nonatomic,strong) NSDictionary *dictInfo;
+@property (nonatomic,strong) NSString *groupNum;
 - (instancetype)initWithGroupId:(NSString *)chatGroupId;
 
 @end

@@ -18,12 +18,6 @@
         [self.contentView addSubview:self.headImageView];
         self.headImageView.layer.cornerRadius = 25;
         self.headImageView.layer.masksToBounds = YES;
-//        CGSize itemSize = CGSizeMake(40, 40);
-//        UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
-//        CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-//        [self.headImageView.image drawInRect:imageRect];
-//        self.headImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
 
         [self.headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.contentView.mas_left).offset(10);
@@ -35,7 +29,7 @@
         self.nameLabel = [[UILabel alloc]init];
         [self.contentView addSubview:self.nameLabel];
         [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.contentView.left).offset(60);
+            make.left.mas_equalTo(self.contentView.left).offset(65);
             make.centerY.mas_equalTo(self.contentView.mas_centerY);
             make.height.mas_equalTo(20);
         }];

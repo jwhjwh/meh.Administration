@@ -201,6 +201,7 @@
     if (self.dataShow==1) {
         inftionxqController *imftionVC=[[inftionxqController alloc]init];
         imftionVC.IDStr=model.usersid;
+        imftionVC.model = _dataArray[indexPath.row];
         [self.navigationController pushViewController:imftionVC animated:YES];
     }else{
         GuanglixqVController *guangVC=[[GuanglixqVController alloc]init];

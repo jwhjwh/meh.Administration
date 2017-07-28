@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChoosePostionViewController : UIViewController
+@interface ChoosePostionViewController : BaseViewController
 @property (nonatomic,strong)NSString *str;
 @property (nonatomic,assign)int Num;
 @property (nonatomic,assign)int dataShow;
@@ -16,7 +16,8 @@
 @property (nonatomic,strong)NSString *Numstr;
 @property (nonatomic,strong) NSString *stringGroup;
 @property (nonatomic,strong) UIImage *imageGroup;
-@property (nonatomic)BOOL isAddMenber;
+@property (nonatomic)BOOL isHaveGroup;
+@property (nonatomic)BOOL isCreateGroup;
 @property (nonatomic,strong)NSString *groupID;
 @property (nonatomic,strong) NSString *groupinformationId;
 @end

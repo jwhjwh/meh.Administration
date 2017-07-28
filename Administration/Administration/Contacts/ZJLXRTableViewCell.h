@@ -21,4 +21,5 @@
 @property (strong, nonatomic)  UILabel *zhiLabel;//职位
 @property (nonatomic,retain)DirtmsnaModel *model;
 @property (nonatomic,retain)LVModel *LVmodel;
+@property (nonatomic,strong)NSDictionary *dict;
 @end

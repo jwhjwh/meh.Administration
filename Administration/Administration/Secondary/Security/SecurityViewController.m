@@ -59,7 +59,7 @@
     
 }
 -(void)buttonLiftItem{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

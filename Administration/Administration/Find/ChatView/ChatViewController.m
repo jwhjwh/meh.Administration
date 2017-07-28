@@ -15,12 +15,13 @@
 //#import "ContactListSelectViewController.h"
 #import "GroupdetailController.h"
 #import "ChatUIHelper.h"
-
-@interface ChatViewController ()<UIAlertViewDelegate, EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource,EMClientDelegate>
+#import "LVFmdbTool.h"
+@interface ChatViewController ()<UIAlertViewDelegate, EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource,EMClientDelegate,EMChatManagerDelegate>
 {
     UIMenuItem *_copyMenuItem;
     UIMenuItem *_deleteMenuItem;
     UIMenuItem *_transpondMenuItem;
+    LVModel *lvModel;
 }
 
 @property (nonatomic) BOOL isPlayingAudio;
@@ -62,7 +63,7 @@
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
-    
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     [self _setupBarButtonItem];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteAllMessages:) name:KNOTIFICATIONNAME_DELETEALLMESSAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitGroup) name:@"ExitGroup" object:nil];
@@ -72,6 +73,7 @@
    // NSLog(@"name = %@",[USER_DEFAULTS objectForKey:@"name"]);
     //通过会话管理者获取已收发消息只有单聊打开注释
 //    [self tableViewDidTriggerHeaderRefresh];
+   // [LVFmdbTool createTable];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -180,10 +182,20 @@
     id<IMessageModel> model = nil;
     model = [[EaseMessageModel alloc] initWithMessage:message];
     model.avatarImage = [UIImage imageNamed:@"tx100"];
+
     if (model.isSender) {
         DDLog(@"自己发送");
-        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"name"]];
-        // UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:model.nickname];
+       // [UserCacheManager saveInfo :self.dictInfo];
+        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"uuid"]];
+//        NSString *userid = [NSString stringWithFormat:@"%@",self.dictInfo[@"usersid"]];
+//        if ([LVFmdbTool isExist:userid Current:[USER_DEFAULTS objectForKey:@"userid"]]) {
+//             [LVFmdbTool insertUser:[USER_DEFAULTS objectForKey:@"userid"] Userinfo:self.dictInfo];
+//        }else
+//        {
+//           
+//            [LVFmdbTool updateLatePerson:self.dictInfo userID:self.dictInfo[@"userid"] currentUser:[USER_DEFAULTS objectForKey:@"userid"]];
+//        }
+        
         if (userInfo) {
             model.avatarURLPath = userInfo.AvatarUrl;
             model.nickname = userInfo.NickName;
@@ -199,7 +211,20 @@
     }
     model.failImageName = @"imageDownloadFail";
     return model;
+    
+//    id<IMessageModel> model = nil;
+//    model = [[EaseMessageModel alloc] initWithMessage:message];
+//    model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
+//    UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:model.nickname];
+//    if (profileEntity) {
+//        model.avatarURLPath = profileEntity.imageUrl;
+//        model.nickname = profileEntity.nickname;
+//    }
+//    model.failImageName = @"imageDownloadFail";
+//    return model;
 }
+
+
 
 - (NSArray*)emotionFormessageViewController:(EaseMessageViewController *)viewController
 {
@@ -287,6 +312,7 @@
         EMMessage *message = [self.conversation latestMessage];
         if (message == nil) {
             [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
+            
         }
     }
     if ([self.number isEqualToString:@"1"]) {
@@ -303,6 +329,7 @@
     if (self.conversation.type == EMConversationTypeGroupChat) {
         GroupdetailController *  GroupVC = [[GroupdetailController alloc]initWithGroupId:self.conversation.conversationId];
         GroupVC.popl=self.number;
+        GroupVC.groupNum = self.groupNmuber;
         GroupVC.dictInfo = self.dictInfo;
         [self.navigationController pushViewController:GroupVC animated:YES];
     }

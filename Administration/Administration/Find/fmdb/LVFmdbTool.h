@@ -24,5 +24,13 @@
 /** 修改数据 */
 + (BOOL)modifyData:(NSString *)modifySql;
 
++(void)createTable;
 
++(NSMutableArray *)selectLately:(NSString *)isCurrent;
+
++(void)insertUser:(NSString *)currentUserID Userinfo:(NSDictionary *)dict;
+
++(void)updateLatePerson:(NSDictionary *)dict userID:(NSString *)userid currentUser:(NSString *)currentUser;
+
++(BOOL)isExist:(NSString *)userid Current:(NSString *)currentUserID;
 @end
