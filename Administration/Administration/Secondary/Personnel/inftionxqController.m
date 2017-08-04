@@ -207,6 +207,10 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            
+            
+            
+            
             _buton= [UIButton buttonWithType:UIButtonTypeCustom];
             _buton.frame =CGRectMake(0,Scree_height-49,Scree_width,49);
             _buton.backgroundColor=GetColor(23, 137, 251, 1);
@@ -215,6 +219,7 @@
             [_buton addTarget: self action: @selector(iamsges) forControlEvents: UIControlEventTouchUpInside];
             [self.view addSubview:_buton];
             self.dicinfo  = [NSDictionary dictionaryWithDictionary:responseObject[@"userInfo"]];
+            [UserCacheManager saveInfo:self.dicinfo[@"uuid"] imgUrl:self.dicinfo[@"icon"] nickName:self.dicinfo[@"name"]];
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
            // model.birthday = [model.birthday substringToIndex:10];
@@ -284,7 +289,7 @@ else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
 //} 
 -(void)iamsges{
     
-    if ([LVFmdbTool isExist:self.dicinfo[@"usersid"] Current:[USER_DEFAULTS objectForKey:@"userid"]]==NO) {
+    if ([LVFmdbTool isExist:[NSString stringWithFormat:@"%@",self.dicinfo[@"usersid"]] Current:[USER_DEFAULTS objectForKey:@"userid"]]==NO) {
         [LVFmdbTool insertUser:[USER_DEFAULTS objectForKey:@"userid"] Userinfo:self.dicinfo];
     }else
     {

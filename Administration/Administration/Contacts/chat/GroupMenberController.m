@@ -13,7 +13,7 @@
 #import "TransferGroupViewController.h"
 #import "AddmemberController.h"
 #import "inftionxqController.h"
-#import "PinYin4Objc.h"
+#import "ModelArray.h"
 @interface GroupMenberController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate,UISearchBarDelegate>
 @property (nonatomic,strong)UITableView *tableViewMenber;
 @property (nonatomic,strong)NSMutableArray *arrayMenber;//源数据
@@ -35,6 +35,7 @@
 @property (nonatomic,strong)NSMutableArray *arraySearch;
 @property (nonatomic,strong)NSMutableArray *arrayName;
 @property (nonatomic,strong)NSArray *filterdArray;
+@property (nonatomic,strong)NSArray *array;
 @end
 
 @implementation GroupMenberController
@@ -57,8 +58,8 @@
             self.arrList = [responseObject valueForKey:@"list"];
             NSMutableArray *pinyinArr = [NSMutableArray array];
              self.resultArr = [NSMutableArray array];
-            NSDictionary *dict = [NSDictionary dictionary];
-            
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+           // [dict setValue:@"0" forKey:@"isSelect"];
             self.tempArray = [self.arrayMenber mutableCopy];
             
             //取出所有的名字
@@ -430,13 +431,30 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    NSArray *array = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#"];
-    return array;
+    self.array = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#"];
+    return self.array;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+
+{
+    NSInteger count = 0;
+    
+    for(NSString *character in self.array)
+    {
+        if([character isEqualToString:title])
+        {
+            return count;
+        }
+        count ++;
+    }
+    return 0;
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupMenberCell *cell = [[GroupMenberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    GroupMenberCell *cell = [self.tableViewMenber dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[GroupMenberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
@@ -513,7 +531,7 @@
         [self.navigationController pushViewController:controller animated:YES];
     }else
     {
-    NSDictionary *dict = self.resultArr[indexPath.section][indexPath.row];
+    NSMutableDictionary *dict = [self.resultArr[indexPath.section][indexPath.row] mutableCopy];
     if ([self.index isEqualToString:@"2"]) {
        // [self.resultArr removeObjectAtIndex:0];
         
@@ -522,21 +540,25 @@
         if (cell.isSelected) {
             cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
             cell.isSelected = YES;
+            NSString *string = @"1";
+            [dict setValue:string forKey:@"isSelect"];
             [self.arraySelect addObject:dict];
-            [self.buttonDelet setTitle:[NSString stringWithFormat:@"删除（%lu）",self.arraySelect.count] forState:UIControlStateNormal];
+            self.buttonDelet.userInteractionEnabled = YES;
+             [self.buttonDelet setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.arraySelect.count] forState:UIControlStateNormal];
             self.buttonDelet.userInteractionEnabled = YES;
             
         }else
         {
-            cell.selectImage.image = [UIImage imageNamed:@"yuanhuan_03"];
+            cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
             cell.isSelected = NO;
             [self.arraySelect removeObject:dict];
-            [self.buttonDelet setTitle:[NSString stringWithFormat:@"删除（%lu）",self.arraySelect.count] forState:UIControlStateNormal];
+            NSString *string = @"2";
+            [dict setValue:string forKey:@"isSelect"];
+            [self.buttonDelet setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.arraySelect.count] forState:UIControlStateNormal];
             if (self.arraySelect.count==0) {
-                [self.buttonDelet setTitle:[NSString stringWithFormat:@"删除（%lu）",self.arraySelect.count] forState:UIControlStateNormal];
+                [self.buttonDelet setTitle:@"确定" forState:UIControlStateNormal];
                 self.buttonDelet.userInteractionEnabled = NO;
             }
-            
         }
   
     }
@@ -555,26 +577,7 @@
     return 60;
 }
 
-//-(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-//{
-//    
-//    [self.arraySearch removeAllObjects];
-//    for (NSDictionary *dict in self.arrayMenber) {
-//        NSString *name = dict[@"name"];
-//        if (name.length>self.searchBar.text.length) {
-//            if ([self.searchBar.text isEqualToString:[name substringToIndex:self.searchBar.text.length]]) {
-//                [self.arraySearch addObject:dict];
-//                [self.tableViewMenber reloadData];
-//            }
-//        }else
-//        {
-//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"未找到" andInterval:1.0];
-//        }
-//    }
-//    
-//    return YES;
-//}
-
+#pragma -mark searchbar
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     NSDictionary *dict = [NSDictionary dictionary];
@@ -665,8 +668,12 @@
     
     
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"点击" style:UIBarButtonItemStyleDone target:self action:@selector(showActionSheet)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(showActionSheet)];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
+    
+    self.navigationItem.rightBarButtonItem = rightitem;
     
     
 }
@@ -683,6 +690,8 @@
     [self getGroupMenbers];
     
 }
+
+
 
 /*
 #pragma mark - Navigation

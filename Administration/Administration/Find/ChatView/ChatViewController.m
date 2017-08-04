@@ -182,28 +182,28 @@
     id<IMessageModel> model = nil;
     model = [[EaseMessageModel alloc] initWithMessage:message];
     model.avatarImage = [UIImage imageNamed:@"tx100"];
-
+  //  [UserCacheManager saveInfo:message.ext[@"userid"] imgUrl:message.ext[@"userimage"] nickName:message.ext[@"username"]];
     if (model.isSender) {
         DDLog(@"自己发送");
-       // [UserCacheManager saveInfo :self.dictInfo];
-        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"uuid"]];
-//        NSString *userid = [NSString stringWithFormat:@"%@",self.dictInfo[@"usersid"]];
-//        if ([LVFmdbTool isExist:userid Current:[USER_DEFAULTS objectForKey:@"userid"]]) {
-//             [LVFmdbTool insertUser:[USER_DEFAULTS objectForKey:@"userid"] Userinfo:self.dictInfo];
-//        }else
-//        {
-//           
-//            [LVFmdbTool updateLatePerson:self.dictInfo userID:self.dictInfo[@"userid"] currentUser:[USER_DEFAULTS objectForKey:@"userid"]];
-//        }
         
-        if (userInfo) {
-            model.avatarURLPath = userInfo.AvatarUrl;
-            model.nickname = userInfo.NickName;
-        }
+        [UserCacheManager saveInfo:message.ext[@"userid"] imgUrl:message.ext[@"userimage"] nickName:message.ext[@"username"]];
+        
+        UserCacheInfo *userinfo = [UserCacheManager getById:message.ext[@"userid"]];
+        model.avatarURLPath = userinfo.AvatarUrl;
+        model.nickname = userinfo.NickName;
+//        model.avatarImage = message.ext[@"userinmage"];
+//        model.nickname = message.ext[@"username"];
+        
+//        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"uuid"]];        
+//        if (userInfo) {
+//            model.avatarURLPath = userInfo.AvatarUrl;
+//            model.nickname = userInfo.NickName;
+//        }
 
     }else{
         DDLog(@"对方发送");
-        UserCacheInfo * userInfo = [UserCacheManager getById:[USER_DEFAULTS objectForKey:@"name"]];
+        [UserCacheManager saveInfo:message.ext[@"userid"] imgUrl:message.ext[@"userimage"] nickName:message.ext[@"username"]];
+        UserCacheInfo * userInfo = [UserCacheManager getById:message.ext[@"userid"]];
         if (userInfo) {
             model.avatarURLPath = userInfo.AvatarUrl;
             model.nickname = userInfo.NickName;
@@ -328,6 +328,7 @@
     [self.view endEditing:YES];
     if (self.conversation.type == EMConversationTypeGroupChat) {
         GroupdetailController *  GroupVC = [[GroupdetailController alloc]initWithGroupId:self.conversation.conversationId];
+      //  GroupdetailController *  GroupVC = [[GroupdetailController alloc]init];
         GroupVC.popl=self.number;
         GroupVC.groupNum = self.groupNmuber;
         GroupVC.dictInfo = self.dictInfo;

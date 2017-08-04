@@ -31,11 +31,11 @@ static FMDatabase *_fmdb;
     [SQL appendString:@" ,name "];
     [SQL appendString:@" ,Call "];
     [SQL appendString:@" ,ID_No"];
-    [SQL appendString:@" ,image "];
     [SQL appendString:@" ,roleId "];
     [SQL appendString:@" ,uuid "];
     [SQL appendString:@" ,newName"];
     [SQL appendString:@" ,isCurrent"];
+    [SQL appendString:@" ,image TEXT"];
     [SQL appendString:@" )"];
     [_fmdb executeUpdate:SQL];
     
@@ -141,6 +141,7 @@ static FMDatabase *_fmdb;
         [dict setValue:newName forKey:@"newName"];
         [dict setValue:uuid forKey:@"uuid"];
         [dict setValue:isCurrent forKey:@"isCurrent"];
+        [dict setObject:image forKey:@"image"];
         [arrM addObject:dict];
     }
     return arrM;
@@ -182,14 +183,14 @@ static FMDatabase *_fmdb;
 {
     NSMutableString *SQL = [NSMutableString stringWithFormat:@"UPDATE latelyPerson SET"];
     //[SQL appendFormat:@"UPDATE latelyPerson SET"];
-    [SQL appendString:[NSString stringWithFormat:@" ,userid = %@",dict[@"userid"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,name = %@",dict[@"name"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,idNo = %@",dict[@"idNo"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,image = %@",dict[@"icon"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,uuid = %@",dict[@"uuid"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,account = %@",dict[@"account"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,roleId = %@",dict[@"roleId"]]];
-    [SQL appendString:[NSString stringWithFormat:@" ,roleId = %@",dict[@"newName"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,userid = '%@'",dict[@"userid"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,name = '%@'",dict[@"name"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,idNo = '%@'",dict[@"idNo"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,image = '%@'",dict[@"icon"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,uuid = '%@'",dict[@"uuid"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,account = '%@'",dict[@"account"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,roleId = '%@'",dict[@"roleId"]]];
+    [SQL appendString:[NSString stringWithFormat:@" ,roleId = '%@'",dict[@"newName"]]];
    // [SQL appendString:[NSString stringWithFormat:@" ,currentUserID = %@",currentUser]];
     [SQL appendString:@"WHERE"];
     [SQL appendString:[NSString stringWithFormat:@"  userid = %@",userid]];
@@ -201,22 +202,19 @@ static FMDatabase *_fmdb;
 //查询当前用户的最近联系人是否存在某条记录
 +(BOOL)isExist:(NSString *)userid Current:(NSString *)currentUserID
 {
-    NSMutableString *SQL = [NSMutableString stringWithFormat:@"  SELECT * FROM latelyPerson"];
+    NSMutableString *SQL = [NSMutableString stringWithFormat:@"  SELECT *  FROM latelyPerson"];
     [SQL appendString:@"  WHERE"];
-    [SQL appendString:[NSString stringWithFormat:@"  userid = %@",userid]];
+    [SQL appendString:[NSString stringWithFormat:@"  userid = '%@'",userid]];
     [SQL appendString:@"  AND"];
-    [SQL appendString:[NSString stringWithFormat:@"  isCurrent = %@",currentUserID]];
+    [SQL appendString:[NSString stringWithFormat:@"  isCurrent = '%@'",currentUserID]];
     FMResultSet *set = [_fmdb executeQuery:SQL];
-    NSString *Userid;
-    while ([set next]) {
-        Userid = [set stringForColumn:@"userid"];
-        if (Userid==nil) {
-            return NO;
-        }
+    if ([set next]) {
+        return YES;
     }
     
-    return YES;
+    return NO;
 }
+
 
 
 @end

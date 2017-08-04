@@ -165,14 +165,14 @@
     
     NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,dictInfo[@"img"]];
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
-    
+  //  [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"] options:EMSDWebImageProgressiveDownload];
     int unread = [dictInfo[@"unread"] intValue];
     if (unread!=0) {
         cell.noReadLabel.text = [NSString stringWithFormat:@"%@",dictInfo[@"unread"]];
     }
     else
     {
-        [cell.noReadLabel removeFromSuperview];
+        cell.noReadLabel.hidden = YES;
     }
     
    

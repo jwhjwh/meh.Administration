@@ -35,6 +35,7 @@ typedef void (^finish)(id result);
 
 @property (strong,nonatomic)UIButton *button;
 
+@property (strong,nonatomic)UILabel * Introduction;
 
 @end
 
@@ -90,7 +91,7 @@ typedef void (^finish)(id result);
             
             self.groupInformation = [responseObject valueForKey:@"groupInformation"];
             self.groupMembers = [responseObject valueForKey:@"groupMembers"] ;
-            
+            self.Introduction.text = self.groupInformation[@"introduce"];
             NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.groupInformation[@"img"]];
             [self.background sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@""]];
             self.number.text=[NSString stringWithFormat:@"%lu名成员",(unsigned long)self.groupMembers.count];
@@ -167,8 +168,8 @@ typedef void (^finish)(id result);
     [super viewDidLoad];
     self.title=@"群资料";
     
-    self.groupInformation = [[NSDictionary alloc]init];
-    self.groupMembers = [[NSArray alloc]init];
+    self.groupInformation = [NSDictionary dictionary];
+    self.groupMembers = [NSArray array];
     
 }
 -(void)ui{
@@ -268,11 +269,11 @@ typedef void (^finish)(id result);
     theme.text =@"群介绍";
     [view2 addSubview:theme];
     
-    UILabel * Introduction = [[UILabel alloc]initWithFrame:CGRectMake(10, 45, Scree_width, 30)];
-    Introduction.text =[_chatGroup.description substringToIndex:15];
-    Introduction.font = [UIFont systemFontOfSize:15];
-    Introduction.textColor =[UIColor lightGrayColor];
-    [view2 addSubview:Introduction];
+    self.Introduction = [[UILabel alloc]initWithFrame:CGRectMake(10, 45, Scree_width, 30)];
+   // self.Introduction.text =[_chatGroup.description substringToIndex:10];
+    self.Introduction.font = [UIFont systemFontOfSize:15];
+    self.Introduction.textColor =[UIColor lightGrayColor];
+    [view2 addSubview:self.Introduction];
     
     self.button= [UIButton buttonWithType:UIButtonTypeCustom];
     self.button.frame = CGRectMake(Scree_width/2-50,100,100, 34);

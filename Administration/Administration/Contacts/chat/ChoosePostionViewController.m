@@ -316,7 +316,10 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    SelectCell *cell = [[SelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    SelectCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell==nil) {
+        cell = [[SelectCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = _dataArray[indexPath.section][indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];

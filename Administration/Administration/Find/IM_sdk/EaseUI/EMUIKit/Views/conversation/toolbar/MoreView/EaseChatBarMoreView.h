@@ -126,5 +126,8 @@ typedef enum{
  @result
  */
 - (void)moreView:(EaseChatBarMoreView *)moreView didItemInMoreViewAtIndex:(NSInteger)index;
+    
+    // 发送文件
+- (void)moreViewFileTransferAction:(EaseChatBarMoreView *)moreView;
 
 @end

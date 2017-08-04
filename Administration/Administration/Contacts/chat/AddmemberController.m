@@ -16,7 +16,10 @@
 #import "ChatUIHelper.h"
 #import "RobotManager.h"
 #import "SelectCell.h"
-@interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+#import "Cell.h"
+#import "ModelArray.h"
+#import "LineLayout.h"
+@interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
 
 @property (strong,nonatomic) UIView *view1;//第一条横线
 @property (strong,nonatomic) UIView *view2;//第二条横线
@@ -36,27 +39,59 @@
 @property (nonatomic,strong)NSMutableArray *arraySearch;
 @property (nonatomic,strong)NSArray *filterdArray;
 @property (nonatomic,strong)NSMutableArray *arrayName;
-@property (nonatomic,strong)UIImageView *imageViewHead;
-@property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,assign)NSInteger integer;
 @property (nonatomic,strong)NSMutableArray *arrayIsselect;
+@property (nonatomic,strong)ModelArray *modelArray;
+@property (nonatomic,strong)UICollectionView *collectView;
 /** 标记是否全选 */
 @property (nonatomic ,assign)BOOL isAllSelected;
 @end
 
 @implementation AddmemberController
+
+-(void)dealloc
+{
+    [self.modelArray removeObserver:self forKeyPath:@"selected"];
+}
+
+
+
+-(void)initCollectionView
+{
+    LineLayout *layout = [[LineLayout alloc]init];
+    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64 , 0, 40) collectionViewLayout:layout];
+    self.collectView.delegate = self;
+    self.collectView.dataSource =self;
+    [self.collectView registerClass:[Cell class] forCellWithReuseIdentifier:@"MY_CELL"];
+    // self.collectView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.collectView];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
   //  NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
     NSMutableArray *array = [NSMutableArray arrayWithArray:[LVFmdbTool selectLately:[USER_DEFAULTS objectForKey:@"userid"]]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
 //    NSString *string = @"0";
-//    self.arrayIsselect = [NSMutableArray arrayWithObjects:string count:self.dataArray.count];
+    
     [self.ZJLXTable reloadData];
     
     for (int i=0; i<self.dataArray.count; i++) {
         NSDictionary *dict = self.dataArray[i];
         [self.arrayName addObject:dict[@"name"]];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context{
+    NSLog(@"count = %lu",(unsigned long)self.modelArray.selected.count);
+    if (self.modelArray.selected.count!=0) {
+        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.modelArray.selected.count] forState:UIControlStateNormal];
+        self.buttonSure.userInteractionEnabled = YES;
+    }
+    else
+    {
+       [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+        self.buttonSure.userInteractionEnabled = NO;
     }
 }
 
@@ -81,6 +116,10 @@
     
     self.integer = 0;
     self.isAllSelected = NO;
+    
+    self.modelArray = [[ModelArray alloc]init];
+    self.modelArray.selected = [NSMutableArray array];
+    [self.modelArray addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -105,19 +144,19 @@
         make.height.mas_equalTo(40);
     }];
     
-    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 0, 40)];
-    self.scrollView.bounces = NO;
-    self.scrollView.scrollEnabled = YES;
-    [viewTop addSubview:self.scrollView];
-
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(collegeTaped:)];
-    [self.imageViewHead addGestureRecognizer:tap];
+    LineLayout *layout = [[LineLayout alloc]init];
+    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0 , 0, 40) collectionViewLayout:layout];
+    self.collectView.delegate = self;
+    self.collectView.dataSource =self;
+    [self.collectView registerClass:[Cell class] forCellWithReuseIdentifier:@"MY_CELL"];
+    // self.collectView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.collectView];
     
     UIImageView *imageview = [[UIImageView alloc]init];
     imageview.image = [UIImage imageNamed:@"seach"];
     [viewTop addSubview:imageview];
     [imageview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.scrollView.mas_right).offset(13);
+        make.left.mas_equalTo(self.collectView.mas_right).offset(13);
         make.top.mas_equalTo(viewTop.mas_top).offset(7);
         make.height.mas_equalTo(30);
         make.width.mas_equalTo(30);
@@ -212,23 +251,33 @@
         make.height.mas_equalTo(1);
     }];
 
-    _ZJLXTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 180, Scree_width, Scree_height-80)];
+    //_ZJLXTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 180, Scree_width, Scree_height-80)];
+    _ZJLXTable = [[UITableView alloc]init];
     _ZJLXTable.backgroundColor = [UIColor whiteColor];
-    // _ZJLXTable.separatorStyle = UITableViewCellSelectionStyleNone;
     _ZJLXTable.delegate = self;
     _ZJLXTable.dataSource = self;
     [self.view addSubview:_ZJLXTable];
+    [_ZJLXTable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view3.mas_bottom);
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-40);
+    }];
     
     /*=========================至关重要============================*/
     _ZJLXTable.allowsMultipleSelectionDuringEditing = YES;
     //去除多余的cell线
     [ZXDNetworking setExtraCellLineHidden:_ZJLXTable];
-    [_ZJLXTable registerNib:[UINib nibWithNibName:@"SelectCell.h" bundle:nil] forCellReuseIdentifier:@"cell"];
+    [_ZJLXTable registerClass:NSClassFromString(@"SelectCell") forCellReuseIdentifier:@"cell"];
+    
 
-    self.buttonAll = [[UIButton alloc]initWithFrame:CGRectMake(0, Scree_height-40, Scree_width/2, 40)];
+    self.buttonAll = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.buttonAll.frame = CGRectMake(0, Scree_height-40, Scree_width/2, 40);
     [self.buttonAll setTitle:@"全选" forState:UIControlStateNormal];
     [self.buttonAll setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.buttonAll addTarget:self action:@selector(allButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonAll.layer setBorderColor:(__bridge CGColorRef _Nullable)([UIColor lightGrayColor])];
+    [self.buttonAll.layer setBorderWidth:1.0f];
     [self.view addSubview:self.buttonAll];
 
     self.buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, Scree_height-40, Scree_width/2, 40)];
@@ -240,16 +289,21 @@
     
 }
 
-#pragma -mark gesturetap
--(void)collegeTaped:(UITapGestureRecognizer *)ges
-{
-}
-
-
 #pragma -mark button
 -(void)allButton
 {
-    
+    for (int i = 0; i<self.dataArray.count; i++) {
+        NSDictionary *dict = self.dataArray[i];
+        [dict setValue:@"0" forKey:@"isSelect"];
+        [self.dataArray replaceObjectAtIndex:i withObject:dict];
+        [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+        SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
+        cell.isSelected = YES;
+          //  [self.ZJLXTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
+    }
 }
 
 -(void)sureButton
@@ -277,7 +331,17 @@
         
         [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
+           //     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
+                EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
+                //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
+                //    messageVC.title = @"8001";
+                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.groupID conversationType:EMConversationTypeGroupChat];
+              //  messageVC.groupNmuber = dic[@"GroupNumber"];
+                messageVC.hidesBottomBarWhenPushed = YES;
+                messageVC.number = @"1";
+                [messageVC.faceView setEmotionManagers:@[manager]];
+                // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
+                [self.navigationController pushViewController:messageVC animated:YES];
                 return ;
             }
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]) {
@@ -430,10 +494,53 @@
     
 }
 
+#pragma -mark collectionView
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+{
+    return self.deleteArrarys.count;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    NSDictionary *dict = self.deleteArrarys[indexPath.row];
+    Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
+    //    cell.label.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
+    //    cell.label.backgroundColor = [UIColor whiteColor];
+    cell.imageViweH.backgroundColor = [UIColor whiteColor];
+    cell.imageViweH.image = dict[@"image"];
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = 0;
+    NSDictionary *dictC = self.deleteArrarys[indexPath.row];
+    row = [dictC[@"indexPath"] intValue];
+    [self.deleteArrarys removeObject:dictC];
+    [self.collectView reloadData];
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:0];
+    SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexpath];
+    cell.isSelected = NO;
+    cell.selectImage.image = [UIImage imageNamed:@""];
+    if (self.deleteArrarys.count>6) {
+        self.collectView.frame = CGRectMake(0, 64, 245, 40);
+        // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
+    }
+    else
+    {
+        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
+    }
+}
+
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
+
 #pragma -mark tableview
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SelectCell *cell = [[SelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    NSDictionary *dict = self.dataArray[indexPath.row];
+    SelectCell *cell = [self.ZJLXTable dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[SelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
@@ -443,14 +550,16 @@
         }else
     {
         cell.tintColor = [UIColor RGBNav];
-        cell.model = self.dataArray[indexPath.row];
+        cell.model = dict;
     }
     
-    if ([cell.model[@"isSelect"] isEqualToString:@"0"]) {
-        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
+    
+   // [dict setValue:@"0" forKey:@"isSelect"];
+    
+    if ([[dict valueForKey:@"isSelect"]isEqualToString:@"1"]) {
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong.png"];
     }
-    else
-    {
+    if ([[dict valueForKey:@"isSelect"]isEqualToString:@"2"]) {
         cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
     }
     
@@ -469,37 +578,54 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
-    NSDictionary *dict = self.dataArray[indexPath.row];
+    NSMutableDictionary *dic = [self.dataArray[indexPath.row] mutableCopy];
+    
     cell.isSelected = !cell.isSelected;
     if (cell.isSelected) {
-        self.integer++;
-        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];         self.scrollView.frame = CGRectMake(0, 0, 40*self.integer, 40);
-        self.imageViewHead  = [[UIImageView alloc]initWithFrame:CGRectMake(self.integer*40, 0, 40, 40)];
-        self.imageViewHead.image = [UIImage imageNamed:@"banben100"];
-        self.imageViewHead.layer.cornerRadius = 20;
-        self.imageViewHead.layer.masksToBounds = YES;
-        [self.scrollView addSubview:self.imageViewHead];
+        UIImage *image = [UIImage imageNamed:dic[@"image"]];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
         
-        NSInteger inte = self.imageViewHead.frame.size.width;
-        inte = self.imageViewHead.frame.size.width *self.integer+5;
-        self.scrollView.contentSize = CGSizeMake(inte, 40);
-        NSLog(@"i = %ld",(long)self.integer);
-        cell.selected = YES;
+        [dic setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexP"];
+        [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic];
         
+        [dict setValue:image forKey:@"image"];
+        [dict setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexPath"];
+        [self.deleteArrarys addObject:dict];
+        cell.isSelected = YES;
+        
+        if (self.deleteArrarys.count>6) {
+            self.collectView.frame = CGRectMake(0, 64, 245, 40);
+            // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
+        }
+        else
+        {
+            self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40+25, 40);
+        }
+        [self.collectView reloadData];
     }
     else
     {
-        cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
-        [self.deleteArrarys removeObject:dict];
+        cell.selectImage.image = [UIImage imageNamed:@""];
         cell.isSelected = NO;
-        [dict setValue:@"1" forKey:@"isSelect"];
+        int row = 0;
+        for (int i=0;i<self.deleteArrarys.count;i++) {
+            NSDictionary *dict = self.deleteArrarys[i];
+            if ([dic[@"indexP"]isEqualToString:dict[@"indexPath"]]) {
+                row=i;
+                
+            }
+        }
+        [self.deleteArrarys removeObjectAtIndex:row];
+        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
+        
+        [self.collectView reloadData];
     }
-    
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
     
-    [_deleteArrarys removeObject:[self.dataArray objectAtIndex:indexPath.row]];
-    [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+    //[_deleteArrarys removeObject:[self.dataArray objectAtIndex:indexPath.row]];
+   // [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
 }
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -508,23 +634,7 @@
     return UITableViewCellEditingStyleDelete;
     
 }
--(void)allDelBtn{
 
-    self.isAllSelected = !self.isAllSelected;
-    
-    for (int i = 0; i<self.dataArray.count; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-        if (self.isAllSelected) {
-            [self.ZJLXTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-              [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
-           
-        }else{//反选
-            [self.buttonSure setTitle:@"确定(0)" forState:UIControlStateNormal];
-            [self.ZJLXTable deselectRowAtIndexPath:indexPath animated:YES];
-            
-        }
-    }
-}
 -(void)SpotionTap:(UITapGestureRecognizer*)sender{
     
     if (self.isCreateGroup) {
