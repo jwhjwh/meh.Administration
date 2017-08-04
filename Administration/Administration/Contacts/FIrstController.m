@@ -24,7 +24,7 @@
 @property (nonatomic,strong)NSMutableArray *ImageAry;//各部门图片
 
 @property (nonatomic,strong)NSMutableArray *dataSource;
-
+@property (nonatomic,strong)NSArray *arrConversations;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 
 @end
@@ -40,7 +40,7 @@
     [self refreshAndSortView];
     //    [self reloadApplyView];
     [self tableViewDidTriggerHeaderRefresh];
-//    self.tabBarController.tabBar.hidden = NO;
+    //self.tabBarController.tabBar.hidden = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -66,11 +66,13 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self tableViewDidTriggerHeaderRefresh];
     [self UIBtn];
     
-    
+   //NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+  // EMConversation
 }
+
 -(void)UIBtn{
     //搜索按钮
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -214,6 +216,9 @@
     
     
     cell.timeLabel.text = [self latestMessageTimeForConversationModel:model];
+    
+    
+    
     
     
     return cell;
@@ -559,6 +564,7 @@
                 
                 ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
                 chatController.hidesBottomBarWhenPushed = YES;
+                chatController.groupNmuber = conversation.conversationId;
                 chatController.title = conversationModel.title;
                 [self.navigationController pushViewController:chatController animated:YES];
             }

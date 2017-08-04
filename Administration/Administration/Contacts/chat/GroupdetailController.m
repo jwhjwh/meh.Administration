@@ -28,11 +28,14 @@ typedef void (^finish)(id result);
 @property (strong,nonatomic)  NSArray *groupMembers;
 @property (strong,nonatomic)  NSDictionary *groupInformation;
 
+@property (strong,nonatomic) UIImageView *gousImage;
+@property (strong,nonatomic) NSArray *arrayGousImage;
 @property (strong,nonatomic) UILabel *number;
 @property (strong,nonatomic) UIView *backView;
 
 @property (strong,nonatomic)UIButton *button;
 
+@property (strong,nonatomic)UILabel * Introduction;
 
 @end
 
@@ -72,17 +75,14 @@ typedef void (^finish)(id result);
 }
 
 -(void)getDetailGroup
-
 {
-    
-    
     NSString *urlStr =[NSString stringWithFormat:@"%@group/selectGroup.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSString *userid = [USER_DEFAULTS objectForKey:@"userid"];
-    NSString *groupNum = self.dictInfo[@"groupNumber"];
+   // NSString *groupNum = self.dictInfo[@"groupNumber"];
     
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":userid,@"GroupNumber":groupNum};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":userid,@"GroupNumber":self.groupNum};
     
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -91,6 +91,7 @@ typedef void (^finish)(id result);
             
             self.groupInformation = [responseObject valueForKey:@"groupInformation"];
             self.groupMembers = [responseObject valueForKey:@"groupMembers"] ;
+            self.Introduction.text = self.groupInformation[@"introduce"];
             NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.groupInformation[@"img"]];
             [self.background sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@""]];
             self.number.text=[NSString stringWithFormat:@"%lu名成员",(unsigned long)self.groupMembers.count];
@@ -125,13 +126,11 @@ typedef void (^finish)(id result);
             NSDictionary *dict = [NSDictionary dictionary];
             for (int i =0; i<self.groupMembers.count; i++) {
                 dict = self.groupMembers[i];
-                UIImageView *gousImage=[[UIImageView alloc]initWithFrame:CGRectMake(65+39*i, 8, 34, 34)];
-                gousImage.backgroundColor = GetColor(216, 216, 216, 1);
+                self.gousImage = self.arrayGousImage[i];
+                self.gousImage.backgroundColor = [UIColor blueColor];;
                 NSString *headImage=[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
-                [gousImage sd_setImageWithURL:[NSURL URLWithString:headImage] placeholderImage:[UIImage imageNamed:@"banben100"]];
-                gousImage.layer.cornerRadius=17.0f;
-                gousImage.layer.masksToBounds = YES;
-                [self.backView addSubview:gousImage];
+                [self.gousImage sd_setImageWithURL:[NSURL URLWithString:headImage] placeholderImage:[UIImage imageNamed:@"banben100"]];
+                
                 if (i==1) {
                     break;
                 }
@@ -139,12 +138,15 @@ typedef void (^finish)(id result);
             return ;
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
             return;
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新登录" andInterval:1.0];
             return;
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
             return;
         }
 
@@ -166,8 +168,8 @@ typedef void (^finish)(id result);
     [super viewDidLoad];
     self.title=@"群资料";
     
-    self.groupInformation = [[NSDictionary alloc]init];
-    self.groupMembers = [[NSArray alloc]init];
+    self.groupInformation = [NSDictionary dictionary];
+    self.groupMembers = [NSArray array];
     
 }
 -(void)ui{
@@ -188,6 +190,7 @@ typedef void (^finish)(id result);
     
     _butn = [UIButton buttonWithType:UIButtonTypeCustom];
     _butn.frame = CGRectMake(_background.center.x-60, 115, 120, 20);
+    [_butn addTarget: self action: @selector(photoItem) forControlEvents: UIControlEventTouchUpInside];
     [_background addSubview:_butn];
     
     UILabel *labeltitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 165,160, 20)];
@@ -209,20 +212,29 @@ typedef void (^finish)(id result);
     [view addGestureRecognizer:logtap];
     logImage.image=[UIImage imageNamed:@"yq_ico"];
     [view addSubview:logImage];
+//    
+//    
+//    self.number=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-110,15,80, 20)];
+//    [view addSubview:self.number];
     
+    UIImageView *gousImage1 = [[UIImageView alloc]initWithFrame:CGRectMake(65, 8, 34, 34)];
+    gousImage1.layer.cornerRadius=17.0f;
+    //self.gousImage1.backgroundColor = [UIColor redColor];
+    gousImage1.layer.masksToBounds = YES;
+    [view addSubview:gousImage1];
     
-    self.number=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-110,15,80, 20)];
+    UIImageView *gousImage2 = [[UIImageView alloc]initWithFrame:CGRectMake(65+39, 8, 34, 34)];
+    gousImage2.layer.cornerRadius=17.0f;
+    gousImage2.layer.masksToBounds = YES;
+    [view addSubview:gousImage2];
     
-    [view addSubview:self.number];
-
-    
+    self.arrayGousImage = [NSArray arrayWithObjects:gousImage1,gousImage2,nil];
     
     UIImageView *jiao=[[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-20, 15,14,20)];
     jiao.image=[UIImage imageNamed:@"jiantou_03"];
     [view addSubview:jiao];
     
     self.number=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width-110,15,80, 20)];
-    
     [view addSubview:self.number];
     
     UIButton *addbutn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -257,11 +269,11 @@ typedef void (^finish)(id result);
     theme.text =@"群介绍";
     [view2 addSubview:theme];
     
-    UILabel * Introduction = [[UILabel alloc]initWithFrame:CGRectMake(10, 45, Scree_width, 30)];
-    Introduction.text =_chatGroup.description;
-    Introduction.font = [UIFont systemFontOfSize:15];
-    Introduction.textColor =[UIColor lightGrayColor];
-    [view2 addSubview:Introduction];
+    self.Introduction = [[UILabel alloc]initWithFrame:CGRectMake(10, 45, Scree_width, 30)];
+   // self.Introduction.text =[_chatGroup.description substringToIndex:10];
+    self.Introduction.font = [UIFont systemFontOfSize:15];
+    self.Introduction.textColor =[UIColor lightGrayColor];
+    [view2 addSubview:self.Introduction];
     
     self.button= [UIButton buttonWithType:UIButtonTypeCustom];
     self.button.frame = CGRectMake(Scree_width/2-50,100,100, 34);
@@ -342,10 +354,20 @@ typedef void (^finish)(id result);
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSLog(@"成功");
             [self.navigationController popToRootViewControllerAnimated:YES];
-           // [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
             return ;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0f];
+            return;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@" token超时请重新登录" andInterval:1.0f];
+            return;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0f];
+            return;
         }
         
     } failure:^(NSError *error) {
@@ -356,7 +378,7 @@ typedef void (^finish)(id result);
 -(void)addPerson
 {
     AddmemberController *controller = [[AddmemberController alloc]init];
-    controller.isAddMenber = YES;
+    controller.isHaveGroup = YES;
     controller.groupID = _chatGroup.groupId;
     controller.groupinformationId = self.groupInformation[@"id"];
     [self.navigationController pushViewController:controller animated:YES];

@@ -76,6 +76,14 @@
     self.fileSizeLabel.backgroundColor = [UIColor clearColor];
     [self.backgroundImageView addSubview:self.fileSizeLabel];
     
+   // [self _setupFileBubbleConstraints];
+    
+    // add by martin:发送文件
+    UIImageView *img = [UIImageView new];
+    img.frame = CGRectMake(EaseMessageCellPadding, EaseMessageCellPadding, 30, 30);
+    img.image = [UIImage imageNamed:@"chatBar_colorMore_file"];
+    [self.backgroundImageView addSubview:img];
+    
     [self _setupFileBubbleConstraints];
 }
 

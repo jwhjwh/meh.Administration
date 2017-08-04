@@ -26,7 +26,7 @@
 @implementation SecondController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
+    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool selectLately:[USER_DEFAULTS objectForKey:@"userid"]]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
     [self.tableView reloadData];
 //    self.tabBarController.tabBar.hidden = NO;
@@ -128,7 +128,7 @@
         if (celled == nil) {
             celled = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
         }
-        celled.LVmodel = self.dataArray[indexPath.row];
+        celled.dict = self.dataArray[indexPath.row];
           return celled;
     }
   
@@ -153,9 +153,11 @@
         }
     }else{
         //详情
+        ZJLXRTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        NSDictionary *dict = self.dataArray[indexPath.row];
         inftionxqController *imftionVC=[[inftionxqController alloc]init];
-        LVModel *LVmodel = self.dataArray[indexPath.row];
-        imftionVC.IDStr=LVmodel.ID_No;
+        cell.dict = dict;
+        imftionVC.IDStr=dict[@"userid"];
         [self.navigationController pushViewController:imftionVC animated:YES];
     }
     

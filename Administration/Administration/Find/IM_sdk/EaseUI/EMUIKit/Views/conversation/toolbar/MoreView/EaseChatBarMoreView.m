@@ -44,6 +44,7 @@
 @property (nonatomic, strong) UIButton *videoButton;
 @property (nonatomic, strong) UIButton *audioCallButton;
 @property (nonatomic, strong) UIButton *videoCallButton;
+@property (nonatomic, strong) UIButton *fileTransterButton;
 
 @end
 
@@ -132,6 +133,16 @@
         _videoCallButton.tag =MOREVIEW_BUTTON_TAG + 4;
         _maxIndex = 4;
         [_scrollview addSubview:_videoCallButton];
+        
+        // add by martin:发送文件
+        _fileTransterButton =[UIButton buttonWithType:UIButtonTypeCustom];
+        [_fileTransterButton setFrame:CGRectMake(insets * 2 + CHAT_BUTTON_SIZE, 10 * 2 + CHAT_BUTTON_SIZE + 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+        [_fileTransterButton setImage:[UIImage imageNamed:@"1.png"] forState:UIControlStateNormal];
+        [_fileTransterButton setImage:[UIImage imageNamed:@"chatBar_colorMore_fileSelected"] forState:UIControlStateHighlighted];
+        [_fileTransterButton addTarget:self action:@selector(fileTransferAction) forControlEvents:UIControlEventTouchUpInside];
+        _fileTransterButton.tag = MOREVIEW_BUTTON_TAG + 5;
+        _maxIndex = 5;
+        [_scrollview addSubview:_fileTransterButton];
     }
     else if (type == EMChatToolbarTypeGroup)
     {
@@ -333,6 +344,14 @@
     if (button && _delegate && [_delegate respondsToSelector:@selector(moreView:didItemInMoreViewAtIndex:)]) {
         [_delegate moreView:self didItemInMoreViewAtIndex:button.tag-MOREVIEW_BUTTON_TAG];
     }
+}
+
+//发送文件
+- (void)fileTransferAction
+{
+        if (_delegate && [_delegate respondsToSelector:@selector(moreViewFileTransferAction:)]) {
+            [_delegate moreViewFileTransferAction:self];
+        }
 }
 
 @end

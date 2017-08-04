@@ -21,4 +21,6 @@
 //返回一组字母排序数组(中英混排)
 +(NSMutableArray*)SortArray:(NSArray*)stringArr;
 
++(NSMutableArray*)ReturnSortChineseArrar:(NSArray*)stringArr;
+
 @end

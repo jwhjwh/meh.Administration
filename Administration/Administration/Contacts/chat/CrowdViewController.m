@@ -16,12 +16,14 @@
 /** 群组列表 */
 @property (nonatomic, strong) NSMutableArray *groupArr;
 @property (nonatomic,strong) NSDictionary *dictInfo;
+@property (nonatomic,strong) NSMutableArray *resultArr;
 @end
 
 @implementation CrowdViewController
 
 -(void)getGroup
 {
+    [self.groupArr removeAllObjects];
    // [GroupModel shareGroupModel].resultArr = [[NSMutableArray alloc]init];
     NSString *urlStr =[NSString stringWithFormat:@"%@group/selectMyGroup.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -29,13 +31,44 @@
     NSString *userid = [USER_DEFAULTS objectForKey:@"userid"];
     
     NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":userid,@"roleId":[USER_DEFAULTS objectForKey:@"roleId"],@"companyInfoId":[USER_DEFAULTS valueForKey:@"companyinfoid"]};
-    __weak typeof(self)weakSelf = self;
     [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            weakSelf.groupArr = [responseObject valueForKey:@"list"];
-           // [self didUpdateGroupList:weakSelf.groupArr];
+            self.groupArr = [[responseObject valueForKey:@"list"]mutableCopy];
+            NSMutableArray *arrayDefalut = [NSMutableArray array];
+            NSMutableArray *arrayCreated = [NSMutableArray array];
+            NSMutableArray *arrayJoined = [NSMutableArray array];
+            for (NSDictionary *dict in self.groupArr) {
+                int code = [dict[@"joinType"] intValue];
+                if (code==0) {
+                    [arrayDefalut addObject:dict];
+                }else if(code==1)
+                {
+                    [arrayCreated addObject:dict];
+                }else
+                {
+                    [arrayJoined addObject:dict];
+                }
+            }
+            [self.resultArr insertObject:arrayDefalut atIndex:0];
+            [self.resultArr insertObject:arrayCreated atIndex:1];
+            [self.resultArr insertObject:arrayJoined atIndex:2];
+            
             [self.tableView reloadData];
+            return ;
         }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            return;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token超时请重新登录" andInterval:1.0];
+            return;
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -43,6 +76,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.resultArr removeAllObjects];
     [self getGroup];
     self.tabBarController.tabBar.hidden=YES;
 }
@@ -70,8 +104,9 @@
     [[EMClient sharedClient].groupManager removeDelegate:self];
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
     
-    [self reloadDataSource];
-  
+   
+    
+    self.resultArr = [NSMutableArray array];
     self.groupArr = [NSMutableArray array];
 }
 
@@ -80,22 +115,41 @@
 {
     [self.groupArr removeAllObjects];
     
-    NSArray *rooms = [[EMClient sharedClient].groupManager getJoinedGroups];
-    [self.groupArr addObjectsFromArray:rooms];
+   // NSArray *rooms = [[EMClient sharedClient].groupManager getJoinedGroups];
+   // [self.groupArr addObjectsFromArray:rooms];
     
     [self.tableView reloadData];
 }
 #pragma mark - EMGroupManagerDelegate
 
-- (void)didUpdateGroupList:(NSArray *)groupList
+//- (void)didUpdateGroupList:(NSArray *)groupList
+//{
+//    [self.groupArr removeAllObjects];
+//    [self.groupArr addObjectsFromArray:groupList];
+//    [self.tableView reloadData];
+//}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    [self.groupArr removeAllObjects];
-    [self.groupArr addObjectsFromArray:groupList];
-    [self.tableView reloadData];
+    return self.resultArr.count;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.resultArr[section]count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.groupArr.count;
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if ([self.resultArr[section] count]!=0) {
+        if (section==0) {
+            return [NSString stringWithFormat:@"默认的群（%lu）",(unsigned long)[self.resultArr[section]count]];
+        }else if(section==1)
+        {
+            return [NSString stringWithFormat:@"我创建的群（%lu）",(unsigned long)[self.resultArr[section]count]];
+        }else
+            return [NSString stringWithFormat:@"我加入的群（%lu）",(unsigned long)[self.resultArr[section]count]];
+    }
+    else
+        return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,20 +159,20 @@
         cell = [[GroupCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    self.dictInfo = self.groupArr[indexPath.row];
-//    cell.headImageView.image = [UIImage imageNamed:dictInfo[@"img"]];
-//    cell.nameLabel.text = dictInfo[@"name"];
-//    cell.noReadLabel.text = dictInfo[@"unread"];
- //   cell.model = self.groupArr[indexPath.row];
-    UserCacheInfo * userInfo = [UserCacheManager getById:self.dictInfo[@"id"]];
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@", self.dictInfo[@"name"]];
-    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
-    if (self.dictInfo[@"unread"]!=0) {
-        cell.noReadLabel.text = [NSString stringWithFormat:@"%@",self.dictInfo[@"unread"]];
+    NSDictionary *dictInfo = self.resultArr[indexPath.section][indexPath.row];
+   // UserCacheInfo * userInfo = [UserCacheManager getById:self.dictInfo[@"id"]];
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@",dictInfo[@"name"]];
+    
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,dictInfo[@"img"]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
+  //  [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"] options:EMSDWebImageProgressiveDownload];
+    int unread = [dictInfo[@"unread"] intValue];
+    if (unread!=0) {
+        cell.noReadLabel.text = [NSString stringWithFormat:@"%@",dictInfo[@"unread"]];
     }
     else
     {
-        [cell.noReadLabel removeFromSuperview];
+        cell.noReadLabel.hidden = YES;
     }
     
    
@@ -133,14 +187,15 @@
     
     EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    NSDictionary *dic = self.groupArr[indexPath.row];
+    NSDictionary *dic = self.resultArr[indexPath.section][indexPath.row];
 //    EMGroup *group = [self.groupArr objectAtIndex:indexPath.row];
     
     ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:[NSString stringWithFormat:@"%@",dic[@"groupNumber"]] conversationType:EMConversationTypeGroupChat];
     
-    chatController.dictInfo = self.dictInfo;
+    chatController.dictInfo = dic;
     chatController.hidesBottomBarWhenPushed = YES;
     chatController.title = dic[@"name"];
+    chatController.groupNmuber = dic[@"groupNumber"];
     [chatController.faceView setEmotionManagers:@[manager]];
     [self.navigationController pushViewController:chatController animated:YES];
     

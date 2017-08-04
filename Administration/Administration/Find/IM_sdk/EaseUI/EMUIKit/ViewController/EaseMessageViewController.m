@@ -42,7 +42,7 @@
 }
 @end
 
-@interface EaseMessageViewController ()<EaseMessageCellDelegate>
+@interface EaseMessageViewController ()<EaseMessageCellDelegate,UIDocumentPickerDelegate,UIDocumentInteractionControllerDelegate>
 {
     UIMenuItem *_copyMenuItem;
     UIMenuItem *_deleteMenuItem;
@@ -50,6 +50,8 @@
     NSMutableArray *_atTargets;
     
     dispatch_queue_t _messageQueue;
+    
+    UIDocumentInteractionController *_fileInteractionController;// add by martin:发送文件
 }
 
 @property (strong, nonatomic) id<IMessageModel> playingVoiceModel;
@@ -92,8 +94,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
-//    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:248 / 255.0 green:248 / 255.0 blue:248 / 255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -104,8 +104,7 @@
     CGFloat chatbarHeight = [EaseChatToolbar defaultHeight];
     EMChatToolbarType barType = self.conversation.type == EMConversationTypeChat ? EMChatToolbarTypeChat : EMChatToolbarTypeGroup;
     self.chatToolbar = [[EaseChatToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - chatbarHeight, self.view.frame.size.width, chatbarHeight) type:barType];
-
-    self.chatToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;    
+    self.chatToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     //Initializa the gesture recognizer
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHidden:)];
@@ -121,7 +120,7 @@
     [EMCDDeviceManager sharedInstance].delegate = self;
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
-
+    
     if (self.conversation.type == EMConversationTypeChatRoom)
     {
         [self joinChatroom:self.conversation.conversationId];
@@ -151,7 +150,6 @@
  @method
  @brief 设置表情
  @discussion 加载默认表情，如果子类实现了dataSource的自定义表情回调，同时会加载自定义表情
- @result
  */
 - (void)setupEmotion
 {
@@ -178,8 +176,8 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    //移除消息回调
-    [[EMClient sharedClient].chatManager removeDelegate:self];    [[EMCDDeviceManager sharedInstance] stopPlaying];
+    
+    [[EMCDDeviceManager sharedInstance] stopPlaying];
     [EMCDDeviceManager sharedInstance].delegate = nil;
     
     if (_imagePicker){
@@ -204,8 +202,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //移除消息回调
-    [[EMClient sharedClient].chatManager removeDelegate:self];
+    
     self.isViewDidAppear = NO;
     [[EMCDDeviceManager sharedInstance] disableProximitySensor];
 }
@@ -229,8 +226,7 @@
 /*!
  @method
  @brief 加入聊天室
- @discussion
- @result
+ 
  */
 - (void)joinChatroom:(NSString *)chatroomId
 {
@@ -373,8 +369,7 @@
 /*!
  @method
  @brief tableView滑动到底部
- @discussion 
- @result
+ 
  */
 - (void)_scrollViewToBottom:(BOOL)animated
 {
@@ -388,8 +383,7 @@
 /*!
  @method
  @brief 当前设备是否可以录音
- @discussion
- @result
+ 
  */
 - (BOOL)_canRecord
 {
@@ -408,8 +402,8 @@
 }
 
 - (void)showMenuViewController:(UIView *)showInView
-                   andIndexPath:(NSIndexPath *)indexPath
-                    messageType:(EMMessageBodyType)messageType
+                  andIndexPath:(NSIndexPath *)indexPath
+                   messageType:(EMMessageBodyType)messageType
 {
     if (_menuController == nil) {
         _menuController = [UIMenuController sharedMenuController];
@@ -457,7 +451,7 @@
 /*!
  @method
  @brief mov格式视频转换为MP4格式
- @discussion
+ 
  @param movUrl   mov视频路径
  @result  MP4格式视频路径
  */
@@ -509,8 +503,7 @@
 /*!
  @method
  @brief 通过当前会话类型，返回消息聊天类型
- @discussion
- @result
+ 
  */
 - (EMChatType)_messageTypeFromConversationType
 {
@@ -534,9 +527,9 @@
 /*!
  @method
  @brief 下载消息附件
- @discussion
+ 
  @param message  待下载附件的消息
- @result
+ 
  */
 - (void)_downloadMessageAttachments:(EMMessage *)message
 {
@@ -591,13 +584,13 @@
 /*!
  @method
  @brief 传入消息是否需要发动已读回执
- @discussion
+ 
  @param message  待判断的消息
  @param read     消息是否已读
- @result
+ 
  */
 - (BOOL)shouldSendHasReadAckForMessage:(EMMessage *)message
-                                   read:(BOOL)read
+                                  read:(BOOL)read
 {
     NSString *account = [[EMClient sharedClient] currentUsername];
     if (message.chatType != EMChatTypeChat || message.isReadAcked || [account isEqualToString:message.from] || ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) || !self.isViewDidAppear)
@@ -622,10 +615,10 @@
 /*!
  @method
  @brief 为传入的消息发送已读回执
- @discussion
+ 
  @param messages  待发送已读回执的消息数组
  @param isRead    是否已读
- @result
+ 
  */
 - (void)_sendHasReadResponseForMessages:(NSArray*)messages
                                  isRead:(BOOL)isRead
@@ -641,7 +634,7 @@
         }
         else{
             isSend = [self shouldSendHasReadAckForMessage:message
-                                                      read:isRead];
+                                                     read:isRead];
         }
         
         if (isSend)
@@ -678,9 +671,9 @@
 /*!
  @method
  @brief 位置消息被点击选择
- @discussion
+ 
  @param model 消息model
- @result
+ 
  */
 - (void)_locationMessageCellSelected:(id<IMessageModel>)model
 {
@@ -693,9 +686,9 @@
 /*!
  @method
  @brief 视频消息被点击选择
- @discussion
+ 
  @param model 消息model
- @result
+ 
  */
 - (void)_videoMessageCellSelected:(id<IMessageModel>)model
 {
@@ -759,9 +752,9 @@
 /*!
  @method
  @brief 图片消息被点击选择
- @discussion
+ 
  @param model 消息model
- @result
+ 
  */
 - (void)_imageMessageCellSelected:(id<IMessageModel>)model
 {
@@ -823,9 +816,9 @@
 /*!
  @method
  @brief 语音消息被点击选择
- @discussion
+ 
  @param model 消息model
- @result
+ 
  */
 - (void)_audioMessageCellSelected:(id<IMessageModel>)model
 {
@@ -872,17 +865,100 @@
         }
     }
 }
+    
+// add by martin:发送文件
+// 打开文件
+- (void)_fileMessageCellSelected:(id<IMessageModel>)model
+    {
+        _scrollToBottomWhenAppear = NO;
+        EMFileMessageBody *body = (EMFileMessageBody*)model.message.body;
+        
+        //判断本地路径是否存在
+        NSString *localPath = [model.fileLocalPath length] > 0 ? model.fileLocalPath : body.localPath;
+        if ([localPath length] == 0) {
+            [self showHint:NSLocalizedString(@"message.fileFail", @"file for failure!")];
+            return;
+        }
+        
+        dispatch_block_t block = ^{
+            //发送已读回执
+            [self _sendHasReadResponseForMessages:@[model.message]
+                                           isRead:YES];
+            
+            int index = (int)[localPath rangeOfString:@"/" options:NSBackwardsSearch].location;;
+            NSString *dir = [localPath substringToIndex:index];
+            NSString *newLocalPath = [NSString stringWithFormat:@"%@/%@", dir, model.fileName];
+            
+            // 更改文件名
+            if (![[NSFileManager defaultManager] fileExistsAtPath:newLocalPath]) {
+                NSError *error = nil;
+                [[NSFileManager defaultManager] linkItemAtPath:localPath toPath:newLocalPath error:&error];
+            }
+            
+            [self openFileViewController:newLocalPath];
+        };
+        
+        if (body.downloadStatus == EMDownloadStatusSuccessed && [[NSFileManager defaultManager] fileExistsAtPath:localPath])
+        {
+            block();
+            return;
+        }
+        
+        [self showHudInView:self.view hint:@"文件下载中..."];
+        __weak EaseMessageViewController *weakSelf = self;
+        [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:^(EMMessage *message, EMError *error) {
+            [weakSelf hideHud];
+            if (!error) {
+                block();
+            }else{
+                [weakSelf showHint:NSEaseLocalizedString(@"message.videoFail", @"video for failure!")];
+            }
+        }];
+    }
+    
+    // 打开文件
+-(void)openFileViewController:(NSString *) file_url  {
+    
+    NSURL *file_URL = [NSURL fileURLWithPath:file_url];
+    
+    if (file_URL != nil) {
+        if (_fileInteractionController == nil) {
+            _fileInteractionController = [[UIDocumentInteractionController alloc] init];
+            
+            _fileInteractionController = [UIDocumentInteractionController interactionControllerWithURL:file_URL];
+            _fileInteractionController.delegate = self;
+            
+        }else {
+            _fileInteractionController.URL = file_URL;
+        }
+        
+        [_fileInteractionController presentPreviewAnimated:YES];
+    }
+}
+    
+- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
+    return self;
+}
+    
+- (UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller {
+    return self.view;
+}
+    
+- (CGRect)documentInteractionControllerRectForPreview:(UIDocumentInteractionController *)controller {
+    return self.view.frame;
+}
+
 
 #pragma mark - pivate data
 
 /*!
  @method
  @brief 加载历史消息
- @discussion
+ 
  @param messageId 参考消息的ID
  @param count     获取条数
  @param isAppend  是否在dataArray直接添加
- @result
+
  */
 - (void)_loadMessagesBefore:(NSString*)messageId
                       count:(NSInteger)count
@@ -1075,6 +1151,7 @@
             sendCell.selectionStyle = UITableViewCellSelectionStyleNone;
             sendCell.delegate = self;
         }
+        
         sendCell.model = model;
         return sendCell;
     }
@@ -1207,7 +1284,7 @@
             break;
         case EMMessageBodyTypeLocation:
         {
-             [self _locationMessageCellSelected:model];
+            [self _locationMessageCellSelected:model];
         }
             break;
         case EMMessageBodyTypeVoice:
@@ -1218,13 +1295,15 @@
         case EMMessageBodyTypeVideo:
         {
             [self _videoMessageCellSelected:model];
-
+            
         }
             break;
         case EMMessageBodyTypeFile:
         {
             _scrollToBottomWhenAppear = NO;
-            [self showHint:@"Custom implementation!"];
+            [self _fileMessageCellSelected:model];// add by martin:发送文件
+            //            [self showHint:@"Custom implementation!"];
+
         }
             break;
         default:
@@ -1702,7 +1781,7 @@
     self.menuIndexPath = nil;
 }
 
-#pragma mark - public 
+#pragma mark - public
 
 - (NSArray *)formatMessages:(NSArray *)messages
 {
@@ -1738,7 +1817,7 @@
             model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
             model.failImageName = @"imageDownloadFail";
         }
-
+        
         if (model) {
             [formattedArray addObject:model];
         }
@@ -1752,7 +1831,7 @@
 {
     [self.messsagesSource addObject:message];
     
-     __weak EaseMessageViewController *weakSelf = self;
+    __weak EaseMessageViewController *weakSelf = self;
     dispatch_async(_messageQueue, ^{
         NSArray *messages = [weakSelf formatMessages:@[message]];
         
@@ -1818,6 +1897,14 @@
 
 - (void)_sendMessage:(EMMessage *)message
 {
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:message.ext];
+    
+    [dic setValue:[USER_DEFAULTS objectForKey:@"uuid"] forKey:@"userid"];
+    [dic setValue:[USER_DEFAULTS objectForKey:@"name"] forKey:@"username"];
+    [dic setValue:[USER_DEFAULTS objectForKey:@"logoImage"] forKey:@"userimage"];
+    message.ext = dic;
+    
     if (self.conversation.type == EMConversationTypeGroupChat){
         message.chatType = EMChatTypeGroupChat;
     }
@@ -1870,9 +1957,10 @@
 - (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
 {
     EMMessage *message = [EaseSDKHelper sendTextMessage:text
-                                                   to:self.conversation.conversationId
-                                          messageType:[self _messageTypeFromConversationType]
-                                           messageExt:ext];
+                                                     to:self.conversation.conversationId
+                                            messageType:[self _messageTypeFromConversationType]
+                                             messageExt:ext];
+    
     [self _sendMessage:message];
 }
 
@@ -1881,11 +1969,11 @@
                          andAddress:(NSString *)address
 {
     EMMessage *message = [EaseSDKHelper sendLocationMessageWithLatitude:latitude
-                                                            longitude:longitude
-                                                              address:address
-                                                                   to:self.conversation.conversationId
-                                                          messageType:[self _messageTypeFromConversationType]
-                                                           messageExt:nil];
+                                                              longitude:longitude
+                                                                address:address
+                                                                     to:self.conversation.conversationId
+                                                            messageType:[self _messageTypeFromConversationType]
+                                                             messageExt:nil];
     [self _sendMessage:message];
 }
 
@@ -1917,9 +2005,9 @@
     }
     
     EMMessage *message = [EaseSDKHelper sendImageMessageWithImage:image
-                                                             to:self.conversation.conversationId
-                                                    messageType:[self _messageTypeFromConversationType]
-                                                     messageExt:nil];
+                                                               to:self.conversation.conversationId
+                                                      messageType:[self _messageTypeFromConversationType]
+                                                       messageExt:nil];
     [self _sendMessage:message];
 }
 
@@ -1935,10 +2023,10 @@
     }
     
     EMMessage *message = [EaseSDKHelper sendVoiceMessageWithLocalPath:localPath
-                                                           duration:duration
-                                                                 to:self.conversation.conversationId
-                                                        messageType:[self _messageTypeFromConversationType]
-                                                         messageExt:nil];
+                                                             duration:duration
+                                                                   to:self.conversation.conversationId
+                                                          messageType:[self _messageTypeFromConversationType]
+                                                           messageExt:nil];
     [self _sendMessage:message];
 }
 
@@ -1953,9 +2041,9 @@
     }
     
     EMMessage *message = [EaseSDKHelper sendVideoMessageWithURL:url
-                                                           to:self.conversation.conversationId
-                                                  messageType:[self _messageTypeFromConversationType]
-                                                   messageExt:nil];
+                                                             to:self.conversation.conversationId
+                                                    messageType:[self _messageTypeFromConversationType]
+                                                     messageExt:nil];
     [self _sendMessage:message];
 }
 
@@ -2092,5 +2180,62 @@
     return targets;
 }
 
+- (void)sendFileMessageWithURL:(NSURL *)url displayName:(NSString*)displayName
+    {
+        id progress = nil;
+        if (_dataSource && [_dataSource respondsToSelector:@selector(messageViewController:progressDelegateForMessageBodyType:)]) {
+            progress = [_dataSource messageViewController:self progressDelegateForMessageBodyType:EMMessageBodyTypeFile];
+        }
+        else{
+            progress = self;
+        }
+        
+        EMMessage *message = [EaseSDKHelper sendFileMessageWithURL:url
+                                                       displayName:displayName
+                                                                to:self.conversation.conversationId
+                                                       messageType:[self _messageTypeFromConversationType]
+                                                        messageExt:nil];
+        
+        [self _sendMessage:message];
+    }
+
+-(void)moreViewFileTransferAction:(EaseChatBarMoreView *)moreView{
+        
+        // 隐藏键盘
+        [self.chatToolbar endEditing:YES];
+        
+        // ios8+才支持icloud drive功能
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+            //older than iOS 8 code here
+            NSLog(@"IOS8以上才支持icloud drive.");
+        } else {
+            //iOS 8 specific code here
+            NSArray *documentTypes = @[@"public.content", @"public.text", @"public.source-code ", @"public.image", @"public.audiovisual-content", @"com.adobe.pdf", @"com.apple.keynote.key", @"com.microsoft.word.doc", @"com.microsoft.excel.xls", @"com.microsoft.powerpoint.ppt"];
+            
+            UIDocumentPickerViewController *documentPicker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:documentTypes inMode:UIDocumentPickerModeOpen];
+            documentPicker.delegate = self;
+            documentPicker.modalPresentationStyle = UIModalPresentationFormSheet;
+            [self presentViewController:documentPicker animated:YES completion:nil];
+        }
+    }
+    
+    // 选中icloud里的pdf文件
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
+    BOOL fileUrlAuthozied = [url startAccessingSecurityScopedResource];
+    if(fileUrlAuthozied){
+        NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] init];
+        NSError *error;
+        
+        [fileCoordinator coordinateReadingItemAtURL:url options:0 error:&error byAccessor:^(NSURL *newURL) {
+            
+            [self dismissViewControllerAnimated:YES completion:NULL];
+            [self sendFileMessageWithURL:newURL displayName:[[url path] lastPathComponent]];
+        }];
+        [url stopAccessingSecurityScopedResource];
+    }else{
+        //Error handling
+        
+    }
+}
 
 @end

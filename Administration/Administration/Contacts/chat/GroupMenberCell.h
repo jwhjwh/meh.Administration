@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface GroupMenberCell : UITableViewCell
-@property (strong,nonatomic) UIImageView *selectImage;
+@property (nonatomic) BOOL isSelected;
+@property (strong, nonatomic) UIImageView *selectImage;
 @property (strong, nonatomic)  UIImageView *TXImage;//头像
 @property (strong, nonatomic)  UILabel *nameLabel;//姓名
 @property (strong, nonatomic)  UILabel *TelLabel;//电话
@@ -17,5 +18,5 @@
 @property (strong, nonatomic)  UIButton *locationButton;
 @property (strong, nonatomic)  UILabel *labelDivision;
 @property (strong, nonatomic)  NSDictionary *dict;
-@property (assign, nonatomic)  NSInteger selectIndex;
+@property (assign, nonatomic)  NSString *selectIndex;
 @end

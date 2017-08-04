@@ -12,7 +12,7 @@
 #import "FIrstController.h"
 #import "SecondController.h"
 #import "SectionChooseView.h"
-
+#import "EaseConversationListViewController.h"
 
 @interface ContactsController ()<SectionChooseVCDelegate>
 {

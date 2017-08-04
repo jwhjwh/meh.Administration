@@ -15,59 +15,85 @@
 #import "ChatViewController.h"
 #import "ChatUIHelper.h"
 #import "RobotManager.h"
-@interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
+#import "SelectCell.h"
+#import "Cell.h"
+#import "ModelArray.h"
+#import "LineLayout.h"
+@interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
 
-@property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
-@property (strong,nonatomic) UIView *view1;//第一条线
+@property (strong,nonatomic) UIView *view1;//第一条横线
+@property (strong,nonatomic) UIView *view2;//第二条横线
+@property (strong,nonatomic) UIView *view3;//第三条横线
 @property (strong,nonatomic) UILabel * lxLabel;//最近联系人Label
 @property (strong,nonatomic) UITableView *ZJLXTable;//最近联系人列表
 @property (nonatomic,strong)NSMutableArray *dataArray;//数据源
 @property (nonatomic,strong) NSMutableArray *deleteArrarys;//选中的数据
 @property (nonatomic,strong)NSMutableArray *ImageAry;//各部门图片
-@property (nonatomic,strong)UIView *loni;
-@property (nonatomic,strong)UIButton *allDelButton;
-@property (nonatomic,strong)UIButton *delButton;
-
+@property (nonatomic,strong)UIButton *buttonAll;
+@property (nonatomic,strong)UIButton *buttonSure;
+@property (nonatomic,strong)UISearchBar *searchBar;
+@property (nonatomic,strong)UILabel *labelDivision;
+@property (nonatomic,strong)NSMutableArray *arrayResult;
+@property (nonatomic,strong)NSMutableString *stringText;
+@property (nonatomic,strong)UIView *viewBack;
+@property (nonatomic,strong)NSMutableArray *arraySearch;
+@property (nonatomic,strong)NSArray *filterdArray;
+@property (nonatomic,strong)NSMutableArray *arrayName;
+@property (nonatomic,assign)NSInteger integer;
+@property (nonatomic,strong)NSMutableArray *arrayIsselect;
+@property (nonatomic,strong)ModelArray *modelArray;
+@property (nonatomic,strong)UICollectionView *collectView;
 /** 标记是否全选 */
 @property (nonatomic ,assign)BOOL isAllSelected;
 @end
 
 @implementation AddmemberController
+
+-(void)dealloc
+{
+    [self.modelArray removeObserver:self forKeyPath:@"selected"];
+}
+
+
+
+-(void)initCollectionView
+{
+    LineLayout *layout = [[LineLayout alloc]init];
+    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64 , 0, 40) collectionViewLayout:layout];
+    self.collectView.delegate = self;
+    self.collectView.dataSource =self;
+    [self.collectView registerClass:[Cell class] forCellWithReuseIdentifier:@"MY_CELL"];
+    // self.collectView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.collectView];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
+  //  NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:[LVFmdbTool selectLately:[USER_DEFAULTS objectForKey:@"userid"]]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
+//    NSString *string = @"0";
+    
     [self.ZJLXTable reloadData];
+    
+    for (int i=0; i<self.dataArray.count; i++) {
+        NSDictionary *dict = self.dataArray[i];
+        [self.arrayName addObject:dict[@"name"]];
+    }
 }
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    [self registerNotifications];
-//    [self refreshAndSortView];
-//    
-//}
-//
-//-(void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    [self unregisterNotifications];
-//    
-//}
-//
-//#pragma mark - registerNotifications
-//-(void)registerNotifications{
-//    [self unregisterNotifications];
-//    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
-//    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
-//}
-//
-//-(void)unregisterNotifications{
-//    [[EMClient sharedClient].chatManager removeDelegate:self];
-//    [[EMClient sharedClient].groupManager removeDelegate:self];
-//}
-//- (void)dealloc{
-//    [self unregisterNotifications];
-//}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context{
+    NSLog(@"count = %lu",(unsigned long)self.modelArray.selected.count);
+    if (self.modelArray.selected.count!=0) {
+        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.modelArray.selected.count] forState:UIControlStateNormal];
+        self.buttonSure.userInteractionEnabled = YES;
+    }
+    else
+    {
+       [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+        self.buttonSure.userInteractionEnabled = NO;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,156 +106,462 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self UIBtn];
-//    [self tableViewDidTriggerHeaderRefresh];
+    self.navigationController.automaticallyAdjustsScrollViewInsets=NO;
+    self.deleteArrarys = [NSMutableArray array];
+    self.filterdArray = [NSMutableArray array];
+    self.arrayResult = [NSMutableArray array];
+    self.arraySearch = [NSMutableArray array];
+    self.arrayName = [NSMutableArray array];
+    self.arrayIsselect = [NSMutableArray array];
+    
+    self.integer = 0;
     self.isAllSelected = NO;
+    
+    self.modelArray = [[ModelArray alloc]init];
+    self.modelArray.selected = [NSMutableArray array];
+    [self.modelArray addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
 }
 -(void)buttonLiftItem{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
    
 }
 -(void)UIBtn{
-    //搜索按钮
-    UIView *viewles=[[UIView alloc]init];
-    [self.view addSubview:viewles];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(SeachTap)];
-    [viewles addGestureRecognizer:tap];
-    [viewles mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo (self.view.mas_left);
+    
+//    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, 0, 40)];
+//    self.scrollView.bounces = NO;
+//    self.scrollView.scrollEnabled = YES;
+//    [self.view addSubview:self.scrollView];
+    
+    UIView *viewTop = [[UIView alloc]init];
+    [self.view addSubview:viewTop];
+    [viewTop mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
         make.top.mas_equalTo(self.view.mas_top).offset(64);
         make.height.mas_equalTo(40);
     }];
-    UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:[UIImage imageNamed:@"seach"] forState:UIControlStateNormal];
-    button.adjustsImageWhenHighlighted = NO;
-    button.frame=CGRectMake(13,7,30,30);
-    //防止图片变灰
-    [viewles addSubview:button];
-    UILabel *labelSeach=[[UILabel alloc]initWithFrame:CGRectMake(50, 5, 80, 30)];
-    labelSeach.text=@"搜索";
-    [viewles addSubview:labelSeach];
+    
+    LineLayout *layout = [[LineLayout alloc]init];
+    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0 , 0, 40) collectionViewLayout:layout];
+    self.collectView.delegate = self;
+    self.collectView.dataSource =self;
+    [self.collectView registerClass:[Cell class] forCellWithReuseIdentifier:@"MY_CELL"];
+    // self.collectView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.collectView];
+    
+    UIImageView *imageview = [[UIImageView alloc]init];
+    imageview.image = [UIImage imageNamed:@"seach"];
+    [viewTop addSubview:imageview];
+    [imageview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.collectView.mas_right).offset(13);
+        make.top.mas_equalTo(viewTop.mas_top).offset(7);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(30);
+    }];
+    
+    self.labelDivision = [[UILabel alloc]init];
+    self.labelDivision.backgroundColor = [UIColor lightGrayColor];
+    [viewTop addSubview:self.labelDivision];
+    [self.labelDivision mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(imageview.mas_right).offset(5);
+        make.centerY.mas_equalTo(viewTop.mas_centerY);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(1);
+    }];
+    self.searchBar  = [[UISearchBar alloc]init];
+    self.searchBar.placeholder = @"";
+    //  [self.searchBar setImage:[UIImage imageNamed:@""] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    self.searchBar.delegate = self;
+    //去除放大镜
+    UITextField *txfSearchField = [self.searchBar valueForKey:@"_searchField"];
+    [txfSearchField setLeftViewMode:UITextFieldViewModeNever];
+    //设置背景颜色
+    self.searchBar.tintColor = [UIColor whiteColor];
+    [self.searchBar setBackgroundColor:[UIColor whiteColor]];
+    self.searchBar.barTintColor = [UIColor whiteColor];
+    [viewTop addSubview:self.searchBar];
+    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.labelDivision.mas_right).offset(5);
+        make.top.mas_equalTo(viewTop.mas_top);
+        make.bottom.mas_equalTo(viewTop.mas_bottom);
+        make.right.mas_equalTo(viewTop.mas_right);
+    }];
     
     //分割线
-    _view1 = [[UIView alloc]init];
+    self.view1 = [[UIView alloc]init];
     _view1.backgroundColor = [UIColor RGBview];
-    [self.view addSubview:_view1];
-    [_view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.view addSubview:self.view1];
+    [self.view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(0);
-        make.top.equalTo(viewles.mas_bottom);
+        make.top.equalTo(viewTop.mas_bottom);
         make.right.equalTo(self.view.mas_right).offset(0);
         make.height.mas_equalTo(1);
     }];
     
-    UIView *view=[[UIView alloc]init];
-    [self.view addSubview:view];
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.viewBack=[[UIView alloc]init];
+    [self.view addSubview:self.viewBack];
+    [self.viewBack mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(0);
-        make.top.equalTo(_view1.mas_bottom);
+        make.top.equalTo(self.view1.mas_bottom);
         make.right.equalTo(self.view.mas_right).offset(0);
         make.height.mas_equalTo(49);
     }];
     UITapGestureRecognizer *taposition = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(SpotionTap:)];
-    [view addGestureRecognizer:taposition];
-    UIButton *but=[UIButton buttonWithType:UIButtonTypeCustom];
-    [but setBackgroundImage:[UIImage imageNamed:@"archite"] forState:UIControlStateNormal];
-    but.adjustsImageWhenHighlighted = NO;
-    but.frame=CGRectMake(13,5, 39,39);
-    //防止图片变灰
-    [view addSubview:but];
+    [self.viewBack addGestureRecognizer:taposition];
+    
+    UIImageView *imagePosition = [[UIImageView alloc]initWithFrame:CGRectMake(13, 5, 39, 39)];
+    imagePosition.image = [UIImage imageNamed:@"archite"];
+    [self.viewBack addSubview:imagePosition];
+    
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(65,10 ,100, 29)];
     label.text=@"按职位选择";
-    [view addSubview:label];
-    UIButton *buton=[UIButton buttonWithType:UIButtonTypeCustom];
-    [buton setBackgroundImage:[UIImage imageNamed:@"jiantou_03"] forState:UIControlStateNormal];
-    buton.frame=CGRectMake(Scree_width-35,15,19,19);
-    //防止图片变灰
-    [view addSubview:buton];
-    UIView *line = [[UIView alloc]init];
-    line.backgroundColor = [UIColor RGBview];
-    [self.view addSubview:line];
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left);
-        make.top.equalTo(view.mas_bottom);
-        make.right.equalTo(self.view.mas_right);
-        make.height.mas_equalTo(1);
-    }];
-    //最近联系人
+    [self.viewBack addSubview:label];
+    
+    UIImageView *imageArrow=[[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-35,15,19,19)];
+    imageArrow.image = [UIImage imageNamed:@"jiantou_03"];
+    [self.viewBack addSubview:imageArrow];
+    
+    self.view2 = [[UIView alloc]initWithFrame:CGRectMake(0, 150, Scree_width, 1)];
+    self.view2.backgroundColor = [UIColor RGBview];
+    [self.view addSubview:self.view2];
+    
     _lxLabel = [[UILabel alloc]init];
     _lxLabel.text= @"最近联系人";
+    _lxLabel.backgroundColor = [UIColor whiteColor];
     _lxLabel.textColor = [UIColor RGBview];
     _lxLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:_lxLabel];
     [_lxLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.top.mas_equalTo(line.mas_bottom).offset(5);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.top.mas_equalTo(self.view2.mas_bottom).offset(5);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.height.mas_equalTo(20);
     }];
-    UIView *line1 = [[UIView alloc]init];
-    line1.backgroundColor = [UIColor RGBview];
-    [self.view addSubview:line1];
-    [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left);
-        make.top.equalTo(_lxLabel.mas_bottom).offset(5);
-        make.right.equalTo(self.view.mas_right);
+    
+    self.view3 = [[UIView alloc]init];
+    self.view3.backgroundColor = [UIColor RGBview];
+    [self.view addSubview:self.view3];
+    [self.view3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.lxLabel.mas_bottom);
         make.height.mas_equalTo(1);
     }];
-    //最近联系人列表
+
+    //_ZJLXTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 180, Scree_width, Scree_height-80)];
     _ZJLXTable = [[UITableView alloc]init];
     _ZJLXTable.backgroundColor = [UIColor whiteColor];
-    // _ZJLXTable.separatorStyle = UITableViewCellSelectionStyleNone;
     _ZJLXTable.delegate = self;
     _ZJLXTable.dataSource = self;
     [self.view addSubview:_ZJLXTable];
+    [_ZJLXTable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view3.mas_bottom);
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-40);
+    }];
     
-    UILongPressGestureRecognizer * longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-    longPressGr. minimumPressDuration=0.3f;
-    [_ZJLXTable addGestureRecognizer:longPressGr];
     /*=========================至关重要============================*/
     _ZJLXTable.allowsMultipleSelectionDuringEditing = YES;
     //去除多余的cell线
     [ZXDNetworking setExtraCellLineHidden:_ZJLXTable];
-    [_ZJLXTable registerNib:[UINib nibWithNibName:@"ZJLXRTableViewCell" bundle:nil] forCellReuseIdentifier:@"BASE"];
-    [_ZJLXTable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(line1.mas_bottom).offset(5);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-49);
-    }];
-  
+    [_ZJLXTable registerClass:NSClassFromString(@"SelectCell") forCellReuseIdentifier:@"cell"];
+    
+
+    self.buttonAll = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.buttonAll.frame = CGRectMake(0, Scree_height-40, Scree_width/2, 40);
+    [self.buttonAll setTitle:@"全选" forState:UIControlStateNormal];
+    [self.buttonAll setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.buttonAll addTarget:self action:@selector(allButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.buttonAll.layer setBorderColor:(__bridge CGColorRef _Nullable)([UIColor lightGrayColor])];
+    [self.buttonAll.layer setBorderWidth:1.0f];
+    [self.view addSubview:self.buttonAll];
+
+    self.buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, Scree_height-40, Scree_width/2, 40)];
+    [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+    [self.buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.buttonSure addTarget:self action:@selector(sureButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.buttonSure];
+
+    
 }
+
+#pragma -mark button
+-(void)allButton
+{
+    for (int i = 0; i<self.dataArray.count; i++) {
+        NSDictionary *dict = self.dataArray[i];
+        [dict setValue:@"0" forKey:@"isSelect"];
+        [self.dataArray replaceObjectAtIndex:i withObject:dict];
+        [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+        SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
+        cell.isSelected = YES;
+          //  [self.ZJLXTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
+    }
+}
+
+-(void)sureButton
+{
+    NSMutableArray *arrUsersid = [NSMutableArray array];
+    NSDictionary *dict = [NSDictionary dictionary];
+    for (int i=0; i<self.deleteArrarys.count; i++) {
+        dict = self.deleteArrarys[i];
+        NSString *uuid = [NSString stringWithFormat:@"%@",dict[@"uuid"]];
+        NSString *usersid = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        NSMutableDictionary *listUersid = [NSMutableDictionary dictionary];
+        [listUersid setValue:usersid forKey:@"id"];
+        [listUersid setValue:uuid forKey:@"uuid"];
+        [arrUsersid addObject:listUersid];
+    }
+    NSData *data=[NSJSONSerialization dataWithJSONObject:arrUsersid options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    //添加群成员（已有群）
+    if (self.isHaveGroup) {
+        NSString *urlStr =[NSString stringWithFormat:@"%@group/insertGroupMembers.action",KURLHeader];
+        NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"groupinformationId":self.groupinformationId,@"list":jsonStr,@"groupNumber":self.groupID};
+        
+        [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
+            if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
+           //     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
+                EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
+                //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
+                //    messageVC.title = @"8001";
+                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.groupID conversationType:EMConversationTypeGroupChat];
+              //  messageVC.groupNmuber = dic[@"GroupNumber"];
+                messageVC.hidesBottomBarWhenPushed = YES;
+                messageVC.number = @"1";
+                [messageVC.faceView setEmotionManagers:@[manager]];
+                // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
+                [self.navigationController pushViewController:messageVC animated:YES];
+                return ;
+            }
+            if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+                return ;
+            }
+            if ([[responseObject valueForKey:@"status"] isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新登录" andInterval:1.0];
+                return ;
+            }
+            if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+                return ;
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+    }else //创建群时添加群成员
+    {
+        
+        NSString *urlStr =[NSString stringWithFormat:@"%@group/insertGroup.action",KURLHeader];
+        NSString *introduce = [NSString stringWithFormat:@"本群创建于%@",[NSDate date]];
+        NSString *name = self.stringGroup;
+        NSString *compid=[USER_DEFAULTS objectForKey:@"companyinfoid"];
+        NSString *uuid = [USER_DEFAULTS objectForKey:@"uuid"];
+        NSData *pictureData = UIImagePNGRepresentation(self.goursIamge);
+        //     NSData *pictureData = UIImageJPEGRepresentation(self.imageGroup, 1);
+        NSDictionary *dictInfo = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Introduce":introduce,@"Name":name,@"CompanyInfoId":compid,@"uuid":uuid,@"ListUsersId":jsonStr};
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+        [manager POST:urlStr parameters:dictInfo constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyMMddHHmm";
+            NSString *fileName = [formatter stringFromDate:[NSDate date]];
+            NSString *nameStr = @"file";
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUDForView: self.view animated:NO];
+            NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+            NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+            NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
+            if ([status isEqualToString:@"0000"]) {
+                EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
+                //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
+                //    messageVC.title = @"8001";
+                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:name conversationType:EMConversationTypeGroupChat];
+                messageVC.groupNmuber = dic[@"GroupNumber"];
+                messageVC.hidesBottomBarWhenPushed = YES;
+                messageVC.number = @"1";
+                [messageVC.faceView setEmotionManagers:@[manager]];
+                // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
+                [self.navigationController pushViewController:messageVC animated:YES];
+            }
+            if ([status isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+                return ;
+            }
+            if ([status isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时请重新登录" andInterval:1.0];
+                return ;
+            }
+            if ([status isEqualToString:@"1111"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"创建失败" andInterval:1.0];
+                return ;
+            }
+            if ([status isEqualToString:@"2000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"名称已存在" andInterval:1.0];
+                return ;
+            }
+            
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"error = %@",error.localizedDescription);
+        }];
+    }
+}
+
+#pragma -mark searchBar
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (self.searchBar.text!=nil&& ![self.searchBar.text isEqualToString:@""]) {
+        self.viewBack.hidden = YES;
+        [self.viewBack mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_left).offset(0);
+            make.top.equalTo(_view1.mas_bottom);
+            make.right.equalTo(self.view.mas_right).offset(Scree_width);
+            make.height.mas_equalTo(49);
+        }];
+        self.view2.frame = CGRectMake(0, 100, Scree_width, 1);
+        _ZJLXTable.frame = CGRectMake(0, 130, Scree_width, Scree_height-80);
+        
+    }else
+    {
+        self.viewBack.hidden = NO;
+        //self.viewBack.height = 49;
+        [self.viewBack mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_left).offset(0);
+            make.top.equalTo(_view1.mas_bottom);
+            make.right.equalTo(self.view.mas_right).offset(0);
+            make.height.mas_equalTo(49);
+        }];
+        self.view2.frame = CGRectMake(0, 150, Scree_width, 1);
+        _ZJLXTable.frame = CGRectMake(0, 180, Scree_width, Scree_height-80);
+    }
+    NSDictionary *dict = [NSDictionary dictionary];
+    [self.arraySearch removeAllObjects];
+    for (int i=0;i<self.arrayName.count;i++) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF contains [cd] %@", searchText];
+        
+        self.filterdArray = [self.arrayName filteredArrayUsingPredicate:predicate];
+        
+        //        [self.arraySearch addObjectsFromArray:self.filterdArray];
+    }
+    for (int i=0; i<self.filterdArray.count; i++) {
+        for (int j=0; j<self.dataArray.count; j++) {
+            dict = self.dataArray[j];
+            if ([self.filterdArray[i]isEqualToString:dict[@"name"]]) {
+                [self.arraySearch addObject:dict];
+            }
+        }
+    }
+    [self.ZJLXTable reloadData];
+    
+}
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar isFirstResponder] ;
+    [self.ZJLXTable reloadData];
+    return YES;
+}
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar resignFirstResponder];
+    self.searchBar.text = @"";
+   
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self searchBarTextDidEndEditing:self.searchBar];
+    [self.ZJLXTable reloadData];
+    
+}
+
+#pragma -mark collectionView
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+{
+    return self.deleteArrarys.count;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    NSDictionary *dict = self.deleteArrarys[indexPath.row];
+    Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
+    //    cell.label.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
+    //    cell.label.backgroundColor = [UIColor whiteColor];
+    cell.imageViweH.backgroundColor = [UIColor whiteColor];
+    cell.imageViweH.image = dict[@"image"];
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = 0;
+    NSDictionary *dictC = self.deleteArrarys[indexPath.row];
+    row = [dictC[@"indexPath"] intValue];
+    [self.deleteArrarys removeObject:dictC];
+    [self.collectView reloadData];
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:0];
+    SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexpath];
+    cell.isSelected = NO;
+    cell.selectImage.image = [UIImage imageNamed:@""];
+    if (self.deleteArrarys.count>6) {
+        self.collectView.frame = CGRectMake(0, 64, 245, 40);
+        // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
+    }
+    else
+    {
+        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
+    }
+}
+
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
+
+#pragma -mark tableview
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZJLXRTableViewCell *cell = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    NSDictionary *dict = self.dataArray[indexPath.row];
+    SelectCell *cell = [self.ZJLXTable dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
-        cell = [[ZJLXRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        cell = [[SelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.tintColor = [UIColor RGBNav];
-    cell.LVmodel = self.dataArray[indexPath.row];
-//    ZJLXRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE"forIndexPath:indexPath];
-//      cell.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
-//    cell.model=self.dataArray[indexPath.row];
-//    NSString *CellIdentifier = [EaseConversationCell cellIdentifierWithModel:nil];
-//    EaseConversationCell *cell = (EaseConversationCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-//    if (cell == nil) {
-//        cell = [[EaseConversationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
+    if ([self.searchBar isFirstResponder]&&self.searchBar.text.length!=0) {
+            cell.tintColor = [UIColor RGBNav];
+            cell.model = self.arraySearch[indexPath.row];
+        }else
+    {
+        cell.tintColor = [UIColor RGBNav];
+        cell.model = dict;
+    }
     
-//    if ([self.dataArray count] <= indexPath.row) {
-//        return cell;
-//    }
-//    
-//    id<IConversationModel> model = [self.dataArray objectAtIndex:indexPath.row];
-//    cell.model = model;
-//    
-//    
-//    NSMutableAttributedString *attributedText = [[self latestMessageTitleForConversationModel:model] mutableCopy];
-//    [attributedText addAttributes:@{NSFontAttributeName : cell.detailLabel.font} range:NSMakeRange(0, attributedText.length)];
-//    cell.detailLabel.attributedText =  attributedText;
-//    cell.timeLabel.text = [self latestMessageTimeForConversationModel:model];
+    
+   // [dict setValue:@"0" forKey:@"isSelect"];
+    
+    if ([[dict valueForKey:@"isSelect"]isEqualToString:@"1"]) {
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong.png"];
+    }
+    if ([[dict valueForKey:@"isSelect"]isEqualToString:@"2"]) {
+        cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
+    }
     
     return cell;
 }
@@ -238,461 +570,103 @@
     return 70;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if ([self.searchBar isFirstResponder]&&self.searchBar.text.length!=0) {
+        return self.arraySearch.count;
+    }
     return self.dataArray.count;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    _deleteArrarys = [NSMutableArray array];
-    for (NSIndexPath *indexPath in _ZJLXTable.indexPathsForSelectedRows) {
-        [_deleteArrarys addObject:self.dataArray[indexPath.row]];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
+    NSMutableDictionary *dic = [self.dataArray[indexPath.row] mutableCopy];
+    
+    cell.isSelected = !cell.isSelected;
+    if (cell.isSelected) {
+        UIImage *image = [UIImage imageNamed:dic[@"image"]];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
+        
+        [dic setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexP"];
+        [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic];
+        
+        [dict setValue:image forKey:@"image"];
+        [dict setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexPath"];
+        [self.deleteArrarys addObject:dict];
+        cell.isSelected = YES;
+        
+        if (self.deleteArrarys.count>6) {
+            self.collectView.frame = CGRectMake(0, 64, 245, 40);
+            // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
+        }
+        else
+        {
+            self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40+25, 40);
+        }
+        [self.collectView reloadData];
     }
-      [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+    else
+    {
+        cell.selectImage.image = [UIImage imageNamed:@""];
+        cell.isSelected = NO;
+        int row = 0;
+        for (int i=0;i<self.deleteArrarys.count;i++) {
+            NSDictionary *dict = self.deleteArrarys[i];
+            if ([dic[@"indexP"]isEqualToString:dict[@"indexPath"]]) {
+                row=i;
+                
+            }
+        }
+        [self.deleteArrarys removeObjectAtIndex:row];
+        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
+        
+        [self.collectView reloadData];
+    }
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
     
-    [_deleteArrarys removeObject:[self.dataArray objectAtIndex:indexPath.row]];
-    [_delButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+    //[_deleteArrarys removeObject:[self.dataArray objectAtIndex:indexPath.row]];
+   // [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
 }
--(void)longPressToDo:(UILongPressGestureRecognizer *)gesture {
-    
-    if(gesture.state == UIGestureRecognizerStateBegan)
-    {
-        _ZJLXTable.editing = !_ZJLXTable.editing;
-        if (_ZJLXTable.editing) {
-            _loni=[[UIView alloc]initWithFrame:CGRectMake(0,Scree_height-49,Scree_width/2,1)];
-            _loni.backgroundColor=GetColor(230, 230, 230, 1);
-            [self.view addSubview:_loni];
-            _allDelButton=[UIButton buttonWithType:UIButtonTypeCustom];
-            _allDelButton.frame=CGRectMake(0,Scree_height-48,Scree_width/2,48);
-            [_allDelButton setTitle:@"全选" forState:UIControlStateNormal];
-            [_allDelButton setTitleColor:GetColor(7, 138, 249, 1) forState:UIControlStateNormal];
-            [_allDelButton addTarget:self action:@selector(allDelBtn) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:_allDelButton];
-            
-            _delButton=[UIButton buttonWithType:UIButtonTypeCustom];
-            _delButton.frame=CGRectMake(Scree_width/2,Scree_height-49,Scree_width/2, 49);
-            [_delButton setTitle:@"确定" forState:UIControlStateNormal];
-            [_delButton setBackgroundColor:GetColor(204, 174, 212, 1)];
-            [_delButton addTarget:self action:@selector(deltButn) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:_delButton];
-        }else{
-            [_loni removeFromSuperview];
-            [_allDelButton removeFromSuperview];
-            [_delButton removeFromSuperview];
-        }
-    }
-}
-//所点选的按钮
--(void)deleteArr
-{
-    
-  
-    
-    
-}
+
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     return UITableViewCellEditingStyleDelete;
     
 }
--(void)allDelBtn{
 
-    self.isAllSelected = !self.isAllSelected;
-    
-    for (int i = 0; i<self.dataArray.count; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-        if (self.isAllSelected) {
-            [self.ZJLXTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-              [_delButton setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
-           
-        }else{//反选
-            [_delButton setTitle:@"确定(0)" forState:UIControlStateNormal];
-            [self.ZJLXTable deselectRowAtIndexPath:indexPath animated:YES];
-            
-        }
-    }
-}
--(void)deltButn{
-    NSMutableArray *deleteArrarys = [NSMutableArray array];
-    NSMutableArray *source = [NSMutableArray array];
-     for (NSIndexPath *indexPath in _ZJLXTable.indexPathsForSelectedRows) {
-        [deleteArrarys addObject:self.dataArray[indexPath.row]];
-    }
-    
-    //环信换获取添加人账号
-    //    for ( id<IConversationModel> model in deleteArrarys) {
-    //        [source addObject:model.conversation.conversationId];
-    //    }
-    //本地获取添加人账号
-    for (  LVModel *model in deleteArrarys) {
-        [source addObject:model.Call];
-    }
-    __weak AddmemberController *weakSelf = self;
-    NSString *username = [[EMClient sharedClient] currentUsername];
-    NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textStr];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-     EMGroupOptions *setting = [[EMGroupOptions alloc] init];
-        //被邀请的人自动加入群组
-     setting.IsInviteNeedConfirm=NO;
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
-        [formatter setDateFormat:@"YYYY年MM月dd日"];
-        //----------将nsdate按formatter格式转成nsstring
-        NSString *nowtimeStr = [formatter stringFromDate:[NSDate date]];
-        NSString *description=[NSString stringWithFormat:@"本群创建于%@",nowtimeStr];
-     [[EMClient sharedClient].groupManager createGroupWithSubject:self.textStr description:description invitees:source message:messageStr setting:setting completion:^(EMGroup *aGroup, EMError *aError) {
-         EMGroup *group =aGroup;
-         EMError *error =aError;
-         [self dateimageGrouts:group];
-         dispatch_async(dispatch_get_main_queue(), ^{
-             [weakSelf hideHud];
-             if (group && !error) {
-                 [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
-                 _ZJLXTable.editing = !_ZJLXTable.editing;
-                 [_loni removeFromSuperview];
-                 [_allDelButton removeFromSuperview];
-                 [_delButton removeFromSuperview];
-                 ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:group.groupId conversationType:EMConversationTypeGroupChat];
-                 chatController.number =@"1";
-                 chatController.hidesBottomBarWhenPushed = YES;
-                 chatController.title = group.subject;
-                 [self.navigationController pushViewController:chatController animated:YES];
-             }
-             else{
-            [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
-             }
-         });
-        }];
-    });
-  
-
-}
 -(void)SpotionTap:(UITapGestureRecognizer*)sender{
+    
+    if (self.isCreateGroup) {
+        ChoosePostionViewController *controller = [[ChoosePostionViewController alloc]init];
+        controller.isCreateGroup = self.isCreateGroup;
+        controller.stringGroup = self.textStr;
+        controller.imageGroup = self.goursIamge;
+        [self.navigationController pushViewController:controller animated:YES];
+    }else if (self.isHaveGroup)
+    {
+        ChoosePostionViewController *controller = [[ChoosePostionViewController alloc]init];
+        controller.isHaveGroup = self.isHaveGroup;
+        controller.stringGroup = self.textStr;
+        controller.groupID = self.groupID;
+        controller.groupinformationId = self.groupinformationId;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+    else
+    {
     JoblistController *controller = [[JoblistController alloc]init];
     controller.isAddPerson = YES;
     controller.imageGroup = self.goursIamge;
     controller.stringGroup = self.textStr;
-    controller.isAddMenber = self.isAddMenber;
     controller.groupID = self.groupID;
     controller.groupinformationId = self.groupinformationId;
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-#pragma mark - data
-
--(void)refreshAndSortView
-{
-    if ([self.dataArray count] > 1) {
-        if ([[self.dataArray objectAtIndex:0] isKindOfClass:[EaseConversationModel class]]) {
-            NSArray* sorted = [self.dataArray sortedArrayUsingComparator:
-                               ^(EaseConversationModel *obj1, EaseConversationModel* obj2){
-                                   EMMessage *message1 = [obj1.conversation latestMessage];
-                                   EMMessage *message2 = [obj2.conversation latestMessage];
-                                   if(message1.timestamp > message2.timestamp) {
-                                       return(NSComparisonResult)NSOrderedAscending;
-                                   }else {
-                                       return(NSComparisonResult)NSOrderedDescending;
-                                   }
-                               }];
-            [self.dataArray removeAllObjects];
-            [self.dataArray addObjectsFromArray:sorted];
-        }
-    }
-    [self.ZJLXTable reloadData];
-}
-
-// @method@brief 加载会话列表 @discussion @result
- 
-- (void)tableViewDidTriggerHeaderRefresh
-{
-    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
-    NSArray* sorted = [conversations sortedArrayUsingComparator:
-                       ^(EMConversation *obj1, EMConversation* obj2){
-                           EMMessage *message1 = [obj1 latestMessage];
-                           EMMessage *message2 = [obj2 latestMessage];
-                           if(message1.timestamp > message2.timestamp) {
-                               return(NSComparisonResult)NSOrderedAscending;
-                           }else {
-                               return(NSComparisonResult)NSOrderedDescending;
-                           }
-                       }];
-    
-    
-    
-    [self.dataArray removeAllObjects];
-    for (EMConversation *converstion in sorted) {
-        EaseConversationModel *model = nil;
-        if (converstion.type==EMConversationTypeChat) {
-        model = [self modelForConversation:converstion];
-        }
-       
-        if (model) {
-            [self.dataArray addObject:model];
-        }
-    }
-    [self.ZJLXTable reloadData];
-    [self tableViewDidFinishTriggerHeader:YES reload:NO];
-}
-#pragma mark - setter
-
-- (void)setShowRefreshHeader:(BOOL)showRefreshHeader
-{
-    if (_showRefreshHeader != showRefreshHeader) {
-        _showRefreshHeader = showRefreshHeader;
-        if (_showRefreshHeader) {
-            __weak AddmemberController *weakSelf = self;
-            self.ZJLXTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-                [weakSelf tableViewDidTriggerHeaderRefresh];
-            }];
-            self.ZJLXTable.mj_header.accessibilityIdentifier = @"refresh_header";
-            //            header.updatedTimeHidden = YES;
-        }
-        else{
-            [self.ZJLXTable setMj_header:nil];
-        }
     }
 }
 
 
-- (void)setShowTableBlankView:(BOOL)showTableBlankView
-{
-    if (_showTableBlankView != showTableBlankView) {
-        _showTableBlankView = showTableBlankView;
-    }
-}
-#pragma mark - public refresh
 
-- (void)autoTriggerHeaderRefresh
-{
-    if (self.showRefreshHeader) {
-        [self tableViewDidTriggerHeaderRefresh];
-    }
-}
-- (void)tableViewDidFinishTriggerHeader:(BOOL)isHeader reload:(BOOL)reload
-{
-    __weak  AddmemberController *weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (reload) {
-            [weakSelf.ZJLXTable reloadData];
-        }
-        
-        if (isHeader) {
-            [weakSelf.ZJLXTable.mj_header endRefreshing];
-        }
-        else{
-            [weakSelf.ZJLXTable.mj_footer endRefreshing];
-        }
-    });
-}
 
-#pragma mark - private
-
-/*!
- @method
- @brief 获取会话最近一条消息内容提示
- @discussion
- @param conversationModel  会话model
- @result 返回传入会话model最近一条消息提示
- */
-
-- (NSString *)_latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
-{
-    NSString *latestMessageTitle = @"";
-    EMMessage *lastMessage = [conversationModel.conversation latestMessage];
-    if (lastMessage) {
-        EMMessageBody *messageBody = lastMessage.body;
-        switch (messageBody.type) {
-            case EMMessageBodyTypeImage:{
-                latestMessageTitle = NSEaseLocalizedString(@"message.image1", @"[image]");
-            } break;
-            case EMMessageBodyTypeText:{
-                NSString *didReceiveText = [EaseConvertToCommonEmoticonsHelper
-                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
-                latestMessageTitle = didReceiveText;
-            } break;
-            case EMMessageBodyTypeVoice:{
-                latestMessageTitle = NSEaseLocalizedString(@"message.voice1", @"[voice]");
-            } break;
-            case EMMessageBodyTypeLocation: {
-                latestMessageTitle = NSEaseLocalizedString(@"message.location1", @"[location]");
-            } break;
-            case EMMessageBodyTypeVideo: {
-                latestMessageTitle = NSEaseLocalizedString(@"message.video1", @"[video]");
-            } break;
-            case EMMessageBodyTypeFile: {
-                latestMessageTitle = NSEaseLocalizedString(@"message.file1", @"[file]");
-            } break;
-            default: {
-            } break;
-        }
-    }
-    return latestMessageTitle;
-}
-/*!
- @method
- @brief 获取会话最近一条消息时间
- @discussion
- @param conversationModel  会话model
- @result 返回传入会话model最近一条消息时间
- */
-
-- (NSString *)_latestMessageTimeForConversationModel:(id<IConversationModel>)conversationModel
-{
-    NSString *latestMessageTime = @"";
-    EMMessage *lastMessage = [conversationModel.conversation latestMessage];;
-    if (lastMessage) {
-        double timeInterval = lastMessage.timestamp ;
-        if(timeInterval > 140000000000) {
-            timeInterval = timeInterval / 1000;
-        }
-        NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"YYYY-MM-dd"];
-        latestMessageTime = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeInterval]];
-    }
-    return latestMessageTime;
-}
-
-#pragma mark - getter
-
-- (NSMutableArray *)dataArray
-{
-    if (_dataArray == nil) {
-        _dataArray = [NSMutableArray array];
-    }
-    
-    return _dataArray;
-}
-
--(NSAttributedString *)latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel{
-    NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:@""];
-    EMMessage *lastMessage = [conversationModel.conversation latestMessage];
-    if (lastMessage) {
-        NSString *latestMessageTitle = @"";
-        EMMessageBody *messageBody = lastMessage.body;
-        switch (messageBody.type) {
-            case EMMessageBodyTypeImage:{
-                latestMessageTitle = NSLocalizedString(@"message.image1", @"[image]");
-            } break;
-            case EMMessageBodyTypeText:{
-                // 表情映射。
-                NSString *didReceiveText = [EaseConvertToCommonEmoticonsHelper
-                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
-                latestMessageTitle = didReceiveText;
-                if ([lastMessage.ext objectForKey:MESSAGE_ATTR_IS_BIG_EXPRESSION]) {
-                    latestMessageTitle = @"[动画表情]";
-                }
-            } break;
-            case EMMessageBodyTypeVoice:{
-                latestMessageTitle = NSLocalizedString(@"message.voice1", @"[voice]");
-            } break;
-            case EMMessageBodyTypeLocation: {
-                latestMessageTitle = NSLocalizedString(@"message.location1", @"[location]");
-            } break;
-            case EMMessageBodyTypeVideo: {
-                latestMessageTitle = NSLocalizedString(@"message.video1", @"[video]");
-            } break;
-            case EMMessageBodyTypeFile: {
-                latestMessageTitle = NSLocalizedString(@"message.file1", @"[file]");
-            } break;
-            default: {
-            } break;
-        }
-        
-        if (lastMessage.direction == EMMessageDirectionReceive) {
-            NSString *from = @"";
-            NSDictionary *ext = lastMessage.ext;   //(环信：扩展消息）
-            if(ext){
-                from = [NSString stringWithFormat:@"%@:",[ext objectForKey:@"name"]];
-            }else{
-                from = lastMessage.from;
-            }
-            latestMessageTitle = [NSString stringWithFormat:@"%@", latestMessageTitle];
-        }
-        
-        NSDictionary *ext = conversationModel.conversation.ext;
-        if (ext && [ext[kHaveUnreadAtMessage] intValue] == kAtAllMessage) {
-            latestMessageTitle = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"group.atAll", nil), latestMessageTitle];
-            attributedStr = [[NSMutableAttributedString alloc] initWithString:latestMessageTitle];
-            [attributedStr setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1.0 green:.0 blue:.0 alpha:0.5]} range:NSMakeRange(0, NSLocalizedString(@"group.atAll", nil).length)];
-            
-        }
-        else if (ext && [ext[kHaveUnreadAtMessage] intValue] == kAtYouMessage) {
-            latestMessageTitle = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"group.atMe", @"[Somebody @ me]"), latestMessageTitle];
-            attributedStr = [[NSMutableAttributedString alloc] initWithString:latestMessageTitle];
-            [attributedStr setAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1.0 green:.0 blue:.0 alpha:0.5]} range:NSMakeRange(0, NSLocalizedString(@"group.atMe", @"[Somebody @ me]").length)];
-        }
-        else {
-            attributedStr = [[NSMutableAttributedString alloc] initWithString:latestMessageTitle];
-        }
-    }
-    
-    return attributedStr;
-    
-}
-- (NSString *)latestMessageTimeForConversationModel:(id<IConversationModel>)conversationModel
-{
-    NSString *latestMessageTime = @"";
-    EMMessage *lastMessage = [conversationModel.conversation latestMessage];;
-    if (lastMessage) {
-        latestMessageTime = [NSDate formattedTimeFromTimeInterval:lastMessage.timestamp];
-    }
-    
-    
-    return latestMessageTime;
-}
-#pragma mark - EaseConversationListViewControllerDataSource
-
-- (id<IConversationModel>)modelForConversation:(EMConversation *)conversation
-{
-    
-    EaseConversationModel *model = [[EaseConversationModel alloc] initWithConversation:conversation];
-    if (model.conversation.type == EMConversationTypeChat) {
-        if ([[RobotManager sharedInstance] isRobotWithUsername:conversation.conversationId]) {
-            model.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
-        } else {
-            UserCacheInfo *user = [UserCacheManager getById:conversation.conversationId];
-            if (user) {
-                model.title= user.NickName;
-                model.avatarURLPath = user.AvatarUrl;
-            }
-        }
-    } else if (model.conversation.type == EMConversationTypeGroupChat) {
-        NSString *imageName = @"tx23";
-        if (![conversation.ext objectForKey:@"subject"])
-        {
-            NSArray *groupArray = [[EMClient sharedClient].groupManager getJoinedGroups];
-            for (EMGroup *group in groupArray) {
-                if ([group.groupId isEqualToString:conversation.conversationId]) {
-                    NSMutableDictionary *ext = [NSMutableDictionary dictionaryWithDictionary:conversation.ext];
-                    [ext setObject:group.subject forKey:@"subject"];
-                    [ext setObject:[NSNumber numberWithBool:group.isPublic] forKey:@"isPublic"];
-                    conversation.ext = ext;
-                    break;
-                }
-            }
-        }
-        NSDictionary *ext = conversation.ext;
-        model.title = [ext objectForKey:@"subject"];
-        imageName = [[ext objectForKey:@"isPublic"] boolValue] ? @"tx23" : @"tx23";
-        model.avatarImage = [UIImage imageNamed:imageName];
-    }
-    return model;
-}
-#pragma mark - EMChatManagerDelegate
-//监听消息
-- (void)didReceiveMessages:(NSArray *)aMessages
-{
-    
-    [self tableViewDidTriggerHeaderRefresh];
-    
-}
-
-//#pragma mark - EMGroupManagerDelegate
-//
-//- (void)didUpdateGroupList:(NSArray *)groupList
-//{
-//    [self tableViewDidTriggerHeaderRefresh];
-//}
 //上传群头像
 -(void)dateimageGrouts:(EMGroup*)group{
     
@@ -729,10 +703,5 @@
     }];
 
 }
-//搜索联系人
--(void)SeachTap{
-    
-    //未做因图样未出，需求不明
 
-}
 @end

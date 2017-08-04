@@ -15,7 +15,7 @@
 //两次提示的默认间隔//两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
-@interface AppDelegate ()
+@interface AppDelegate ()<EMChatManagerDelegate>
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
@@ -87,7 +87,8 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
                  [[ChatUIHelper shareHelper] playSoundAndVibration];
                 break;
             case UIApplicationStateInactive:
-                 [[ChatUIHelper shareHelper] playSoundAndVibration];                break;
+                 [[ChatUIHelper shareHelper] playSoundAndVibration];
+                break;
             case UIApplicationStateBackground:
                 for(EMMessage *message in aMessages){
 
@@ -96,10 +97,7 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
                 break;
             default:
                 break;
-        }
-
-
-  
+        }  
 }
 
 

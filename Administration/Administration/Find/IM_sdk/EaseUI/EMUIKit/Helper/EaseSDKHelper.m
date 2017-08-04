@@ -170,8 +170,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSString *willSendText = [EaseConvertToCommonEmoticonsHelper convertToCommonEmoticons:text];
     EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:willSendText];
-   // NSString *from = [[EMClient sharedClient] currentUsername];
-    NSString *from = [USER_DEFAULTS objectForKey:@"name"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+   // NSString *from = [USER_DEFAULTS objectForKey:@"name"];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:toUser from:from to:toUser body:body ext:messageExt];
     message.chatType = messageType;
     
@@ -188,8 +188,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if (params) {
         body.params = params;
     }
-   // NSString *from = [[EMClient sharedClient] currentUsername];
-    NSString *from = [USER_DEFAULTS objectForKey:@"name"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    //NSString *from = [USER_DEFAULTS objectForKey:@"name"];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
     message.chatType = messageType;
     
@@ -204,8 +204,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                                     messageExt:(NSDictionary *)messageExt
 {
     EMLocationMessageBody *body = [[EMLocationMessageBody alloc] initWithLatitude:latitude longitude:longitude address:address];
-    //NSString *from = [[EMClient sharedClient] currentUsername];
-    NSString *from = [USER_DEFAULTS objectForKey:@"name"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+    //NSString *from = [USER_DEFAULTS objectForKey:@"name"];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
     message.chatType = messageType;
     
@@ -218,8 +218,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                                   messageExt:(NSDictionary *)messageExt
 {
     EMImageMessageBody *body = [[EMImageMessageBody alloc] initWithData:imageData displayName:@"image"];
-   // NSString *from = [[EMClient sharedClient] currentUsername];
-    NSString *from = [USER_DEFAULTS objectForKey:@"name"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+   // NSString *from = [USER_DEFAULTS objectForKey:@"name"];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
     message.chatType = messageType;
     
@@ -244,8 +244,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     EMVoiceMessageBody *body = [[EMVoiceMessageBody alloc] initWithLocalPath:localPath displayName:@"audio"];
     body.duration = (int)duration;
-   // NSString *from = [[EMClient sharedClient] currentUsername];
-    NSString *from = [USER_DEFAULTS objectForKey:@"name"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+   // NSString *from = [USER_DEFAULTS objectForKey:@"name"];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
     message.chatType = messageType;
     
@@ -258,12 +258,28 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                             messageExt:(NSDictionary *)messageExt
 {
     EMVideoMessageBody *body = [[EMVideoMessageBody alloc] initWithLocalPath:[url path] displayName:@"video.mp4"];
-   // NSString *from = [[EMClient sharedClient] currentUsername];
-    NSString *from = [USER_DEFAULTS objectForKey:@"name"];
+    NSString *from = [[EMClient sharedClient] currentUsername];
+   // NSString *from = [USER_DEFAULTS objectForKey:@"name"];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
     message.chatType = messageType;
     
     return message;
 }
+
+// add by martin:发送文件
++ (EMMessage *)sendFileMessageWithURL:(NSURL *)url
+                          displayName:(NSString*)displayName
+                                   to:(NSString *)to
+                          messageType:(EMChatType)messageType
+                           messageExt:(NSDictionary *)messageExt
+    {
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        EMFileMessageBody *body = [[EMFileMessageBody alloc] initWithData:data displayName:displayName];
+        NSString *from = [[EMClient sharedClient] currentUsername];
+        EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
+        message.chatType = messageType;
+        
+        return message;
+    }
 
 @end

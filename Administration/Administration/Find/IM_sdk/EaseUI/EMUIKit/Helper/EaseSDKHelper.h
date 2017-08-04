@@ -184,6 +184,13 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo;
                            messageType:(EMChatType)messageType
                             messageExt:(NSDictionary *)messageExt;
 
+// add by martin:发送文件
++ (EMMessage *)sendFileMessageWithURL:(NSURL *)url
+                          displayName:(NSString*)displayName
+                                   to:(NSString *)to
+                          messageType:(EMChatType)messageType
+                           messageExt:(NSDictionary *)messageExt;
+
 #pragma mark - call
 
 @end

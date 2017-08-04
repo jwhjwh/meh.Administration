@@ -14,4 +14,5 @@
 @property (nonatomic,assign)int dataShow;
 @property (nonatomic,strong)NSString *DepartmentID;
 @property (nonatomic,strong)NSString *Numstr;
+@property (nonatomic,strong)EaseUserModel *model;
 @end

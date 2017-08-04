@@ -11,4 +11,5 @@
 @interface inftionxqController : UIViewController
 
 @property (nonatomic,retain)NSString *IDStr;
+@property (nonatomic,strong)DirtmsnaModel *model;
 @end

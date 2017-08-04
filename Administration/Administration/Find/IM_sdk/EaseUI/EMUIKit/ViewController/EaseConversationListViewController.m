@@ -19,7 +19,7 @@
 #import "NSDate+Category.h"
 #import "EaseLocalDefine.h"
 
-@interface EaseConversationListViewController ()
+@interface EaseConversationListViewController ()<EMChatManagerDelegate>
 
 @end
 
