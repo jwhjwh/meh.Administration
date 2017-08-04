@@ -13,6 +13,7 @@
 @interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate>
 {
     UITableView *infonTableview;
+    NSDictionary *dic;
 }
 @property (nonatomic,strong) PW_DatePickerView *PWpickerView;
 
@@ -92,7 +93,40 @@
     } view:self.view MBPro:YES];
     
 }
+-(void)imageciew{
+    NSData *pictureData = UIImagePNGRepresentation(_TXImage.image);
+    NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"1"};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+        
+    [manager POST:urlStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyMMddHHmm";
+        NSString *fileName = [formatter stringFromDate:[NSDate date]];
+        NSString *nameStr = @"file";
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+         } progress:^(NSProgress * _Nonnull uploadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD hideHUDForView: self.view animated:NO];        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+        NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
+        if ([status isEqualToString:@"0000"]) {
+            //        self.blcokStr(self.goodPicture,_string,brandId);
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
+        } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
+        }
 
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     return _arr.count;
@@ -240,12 +274,10 @@
         if (indexPath.row ==0) {
             [[ZZYPhotoHelper shareHelper] showImageViewSelcteWithResultBlock:^(id data) {
                 _TXImage.image = (UIImage *)data;
-
+                [self imageciew];
             }];
         }
     }
-    
-    
     if (indexPath.section == 1) {
         if (indexPath.row <1) {
             self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
