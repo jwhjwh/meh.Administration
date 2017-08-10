@@ -83,27 +83,23 @@
     self.selectArray = [NSMutableArray array];
     self.openSectionDict = [NSMutableDictionary dictionary];
     //
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height-44) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.tableView registerClass:NSClassFromString(@"SelectCell") forCellReuseIdentifier:@"cell"];
     [self.view addSubview:self.tableView];
     
-    [self loadBottonView];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"点击" style:(UIBarButtonItemStyleDone) target:self action:@selector(buttonSure:)];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
+    
+   // [self loadBottonView];
 }
 
 -(void)loadBottonView
 {
-//    UIView *viewBottom = [[UIView alloc]init];
-//    viewBottom.backgroundColor = [UIColor whiteColor];
-//    [self.view addSubview:viewBottom];
-//    [viewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(self.view.mas_left);
-//        make.right.mas_equalTo(self.view.mas_right);
-//        make.bottom.mas_equalTo(self.view.mas_bottom);
-//        make.height.mas_equalTo(48);
-//    }];
     self.sureButton = [[UIButton alloc]init];
     [self.sureButton setTitle:@"确定" forState:UIControlStateNormal];
     [self.sureButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -155,7 +151,16 @@
         
         [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
+                EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
+                //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
+                //    messageVC.title = @"8001";
+                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.stringGroup conversationType:EMConversationTypeGroupChat];
+                messageVC.groupNmuber = self.groupID;
+                messageVC.hidesBottomBarWhenPushed = YES;
+                messageVC.number = @"1";
+                [messageVC.faceView setEmotionManagers:@[manager]];
+                // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
+                [self.navigationController pushViewController:messageVC animated:YES];
                 return ;
             }
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]) {

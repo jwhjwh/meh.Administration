@@ -202,10 +202,10 @@ CGFloat const EaseConversationCellPadding = 10;
     
     if (self.showAvatar) {
         if ([_model.avatarURLPath length] > 0){
-            [self.avatarView.imageView sd_setImageWithURL:[NSURL URLWithString:_model.avatarURLPath] placeholderImage:_model.avatarImage];
+            [self.avatarView.imageView sd_setImageWithURL:[NSURL URLWithString:_model.avatarURLPath] placeholderImage:[UIImage imageNamed:@"banben100"]];
         } else {
             if (_model.avatarImage) {
-                self.avatarView.image = _model.avatarImage;
+                self.avatarView.image = [UIImage imageNamed:@"banben100"];
             }
         }
     }

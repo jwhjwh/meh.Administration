@@ -207,10 +207,6 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            
-            
-            
-            
             _buton= [UIButton buttonWithType:UIButtonTypeCustom];
             _buton.frame =CGRectMake(0,Scree_height-49,Scree_width,49);
             _buton.backgroundColor=GetColor(23, 137, 251, 1);
@@ -289,7 +285,7 @@ else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
 //} 
 -(void)iamsges{
     
-    if ([LVFmdbTool isExist:[NSString stringWithFormat:@"%@",self.dicinfo[@"usersid"]] Current:[USER_DEFAULTS objectForKey:@"userid"]]==NO) {
+    if (![LVFmdbTool isExist:[NSString stringWithFormat:@"%@",self.dicinfo[@"usersid"]] Current:[USER_DEFAULTS objectForKey:@"userid"]]) {
         [LVFmdbTool insertUser:[USER_DEFAULTS objectForKey:@"userid"] Userinfo:self.dicinfo];
     }else
     {

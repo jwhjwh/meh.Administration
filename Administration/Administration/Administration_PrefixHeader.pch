@@ -16,7 +16,7 @@
 #import "EaseUI-Prefix.pch"
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-
+#import "ShareModel.h"
 #import "EaseUI.h"
 #define DDLog(xx, ...)  NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #import "ViewController.h"

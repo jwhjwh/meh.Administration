@@ -58,6 +58,7 @@
 @property (nonatomic) BOOL isKicked;
 @property (nonatomic) BOOL isPlayingAudio;
 @property (nonatomic, strong) NSMutableArray *atTargets;
+@property (nonatomic,strong)NSDictionary *notification;
 
 @end
 
@@ -92,6 +93,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -99,10 +101,11 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideImagePicker) name:@"hideImagePicker" object:nil];
-    
     //Initialization
     CGFloat chatbarHeight = [EaseChatToolbar defaultHeight];
+   
     EMChatToolbarType barType = self.conversation.type == EMConversationTypeChat ? EMChatToolbarTypeChat : EMChatToolbarTypeGroup;
+    
     self.chatToolbar = [[EaseChatToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - chatbarHeight, self.view.frame.size.width, chatbarHeight) type:barType];
     self.chatToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
@@ -176,7 +179,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+    [[EMClient sharedClient].chatManager removeDelegate:self];
     [[EMCDDeviceManager sharedInstance] stopPlaying];
     [EMCDDeviceManager sharedInstance].delegate = nil;
     

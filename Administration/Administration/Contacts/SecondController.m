@@ -26,10 +26,12 @@
 @implementation SecondController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool selectLately:[USER_DEFAULTS objectForKey:@"userid"]]];
+    NSString *string= [USER_DEFAULTS objectForKey:@"userid"];
+    NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool selectLately:string]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
+   
     [self.tableView reloadData];
-//    self.tabBarController.tabBar.hidden = NO;
+
 }
 
 - (void)viewDidLoad {
@@ -37,6 +39,7 @@
     _indexArray=@[@"最近联系人"];
     _nameArrs = @[@"按职位查看",@"按部门查看"];
     _gameArrs =@[@"yggl_02",@"yggl_03"];
+    
     [self addViewremind];
 }
 -(void)addViewremind{

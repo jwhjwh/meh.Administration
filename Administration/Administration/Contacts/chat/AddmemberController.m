@@ -55,18 +55,6 @@
 }
 
 
-
--(void)initCollectionView
-{
-    LineLayout *layout = [[LineLayout alloc]init];
-    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64 , 0, 40) collectionViewLayout:layout];
-    self.collectView.delegate = self;
-    self.collectView.dataSource =self;
-    [self.collectView registerClass:[Cell class] forCellWithReuseIdentifier:@"MY_CELL"];
-    // self.collectView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:self.collectView];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
   //  NSMutableArray *array=[NSMutableArray arrayWithArray:[LVFmdbTool queryData:nil]];
@@ -86,11 +74,13 @@
     NSLog(@"count = %lu",(unsigned long)self.modelArray.selected.count);
     if (self.modelArray.selected.count!=0) {
         [self.buttonSure setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.modelArray.selected.count] forState:UIControlStateNormal];
+        [self.buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         self.buttonSure.userInteractionEnabled = YES;
     }
     else
     {
        [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+        [self.buttonSure setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         self.buttonSure.userInteractionEnabled = NO;
     }
 }
@@ -149,7 +139,7 @@
     self.collectView.delegate = self;
     self.collectView.dataSource =self;
     [self.collectView registerClass:[Cell class] forCellWithReuseIdentifier:@"MY_CELL"];
-    // self.collectView.backgroundColor = [UIColor redColor];
+    self.collectView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectView];
     
     UIImageView *imageview = [[UIImageView alloc]init];
@@ -212,11 +202,9 @@
     UITapGestureRecognizer *taposition = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(SpotionTap:)];
     [self.viewBack addGestureRecognizer:taposition];
     
-    UIImageView *imagePosition = [[UIImageView alloc]initWithFrame:CGRectMake(13, 5, 39, 39)];
-    imagePosition.image = [UIImage imageNamed:@"archite"];
-    [self.viewBack addSubview:imagePosition];
+   
     
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(65,10 ,100, 29)];
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(10,10 ,100, 29)];
     label.text=@"按职位选择";
     [self.viewBack addSubview:label];
     
@@ -228,18 +216,18 @@
     self.view2.backgroundColor = [UIColor RGBview];
     [self.view addSubview:self.view2];
     
-    _lxLabel = [[UILabel alloc]init];
-    _lxLabel.text= @"最近联系人";
-    _lxLabel.backgroundColor = [UIColor whiteColor];
-    _lxLabel.textColor = [UIColor RGBview];
-    _lxLabel.font = [UIFont systemFontOfSize:15];
-    [self.view addSubview:_lxLabel];
-    [_lxLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.top.mas_equalTo(self.view2.mas_bottom).offset(5);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.height.mas_equalTo(20);
-    }];
+//    _lxLabel = [[UILabel alloc]init];
+//    _lxLabel.text= @"最近联系人";
+//    _lxLabel.backgroundColor = [UIColor whiteColor];
+//    _lxLabel.textColor = [UIColor RGBview];
+//    _lxLabel.font = [UIFont systemFontOfSize:15];
+//    [self.view addSubview:_lxLabel];
+//    [_lxLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.view.mas_left).offset(10);
+//        make.top.mas_equalTo(self.view2.mas_bottom).offset(5);
+//        make.right.mas_equalTo(self.view.mas_right);
+//        make.height.mas_equalTo(20);
+//    }];
     
     self.view3 = [[UIView alloc]init];
     self.view3.backgroundColor = [UIColor RGBview];
@@ -247,7 +235,7 @@
     [self.view3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.lxLabel.mas_bottom);
+        make.top.mas_equalTo(self.viewBack.mas_bottom);
         make.height.mas_equalTo(1);
     }];
 
@@ -275,14 +263,18 @@
     self.buttonAll.frame = CGRectMake(0, Scree_height-40, Scree_width/2, 40);
     [self.buttonAll setTitle:@"全选" forState:UIControlStateNormal];
     [self.buttonAll setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.buttonAll addTarget:self action:@selector(allButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonAll.layer setBorderColor:(__bridge CGColorRef _Nullable)([UIColor lightGrayColor])];
+    [self.buttonAll.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.buttonAll.layer setBorderWidth:1.0f];
+    [self.buttonAll addTarget:self action:@selector(allButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonAll];
 
-    self.buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, Scree_height-40, Scree_width/2, 40)];
+    self.buttonSure = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.buttonSure.frame = CGRectMake(Scree_width/2, Scree_height-40, Scree_width/2, 40);
     [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
-    [self.buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.buttonSure setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.buttonSure setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonSure.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.buttonSure.layer setBorderWidth:1.0f];
     [self.buttonSure addTarget:self action:@selector(sureButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonSure];
 
@@ -310,10 +302,10 @@
 {
     NSMutableArray *arrUsersid = [NSMutableArray array];
     NSDictionary *dict = [NSDictionary dictionary];
-    for (int i=0; i<self.deleteArrarys.count; i++) {
-        dict = self.deleteArrarys[i];
+    for (int i=0; i<self.modelArray.selected.count; i++) {
+        dict = self.self.modelArray.selected[i];
         NSString *uuid = [NSString stringWithFormat:@"%@",dict[@"uuid"]];
-        NSString *usersid = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        NSString *usersid = [NSString stringWithFormat:@"%@",dict[@"userid"]];
         NSMutableDictionary *listUersid = [NSMutableDictionary dictionary];
         [listUersid setValue:usersid forKey:@"id"];
         [listUersid setValue:uuid forKey:@"uuid"];
@@ -364,7 +356,7 @@
         
         NSString *urlStr =[NSString stringWithFormat:@"%@group/insertGroup.action",KURLHeader];
         NSString *introduce = [NSString stringWithFormat:@"本群创建于%@",[NSDate date]];
-        NSString *name = self.stringGroup;
+        NSString *name = self.textStr;
         NSString *compid=[USER_DEFAULTS objectForKey:@"companyinfoid"];
         NSString *uuid = [USER_DEFAULTS objectForKey:@"uuid"];
         NSData *pictureData = UIImagePNGRepresentation(self.goursIamge);
@@ -497,37 +489,46 @@
 #pragma -mark collectionView
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    return self.deleteArrarys.count;
+    return self.modelArray.selected.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSDictionary *dict = self.deleteArrarys[indexPath.row];
+    NSDictionary *dict = self.modelArray.selected[indexPath.row];
     Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
     //    cell.label.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
     //    cell.label.backgroundColor = [UIColor whiteColor];
     cell.imageViweH.backgroundColor = [UIColor whiteColor];
-    cell.imageViweH.image = dict[@"image"];
+//    if (dict[@"image"]==nil) {
+//        cell.imageViweH.image = [UIImage imageNamed:@"banben100"];
+//    }else
+//    {
+//        cell.imageViweH.image = [UIImage imageNamed:dict[@"image"]];
+//    }
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"image"]];
+    [cell.imageViweH sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = 0;
-    NSDictionary *dictC = self.deleteArrarys[indexPath.row];
-    row = [dictC[@"indexPath"] intValue];
-    [self.deleteArrarys removeObject:dictC];
+    NSDictionary *dictC = self.modelArray.selected[indexPath.row];
+    row = [dictC[@"indexP"] intValue];
+   // [self.arraySelect removeObject:dictC];
+    [[self.modelArray mutableArrayValueForKey:@"selected"]removeObject:dictC];
     [self.collectView reloadData];
     NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:0];
     SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexpath];
     cell.isSelected = NO;
-    cell.selectImage.image = [UIImage imageNamed:@""];
-    if (self.deleteArrarys.count>6) {
+    cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
+    if (self.modelArray.selected.count>6) {
         self.collectView.frame = CGRectMake(0, 64, 245, 40);
         // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
     }
     else
     {
-        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
+        self.collectView.frame = CGRectMake(0, 64, self.modelArray.selected.count*40, 40);
     }
 }
 
@@ -544,6 +545,8 @@
     if (cell == nil) {
         cell = [[SelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    cell.selectionStyle = UITableViewCellAccessoryNone;
+    cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
     if ([self.searchBar isFirstResponder]&&self.searchBar.text.length!=0) {
             cell.tintColor = [UIColor RGBNav];
             cell.model = self.arraySearch[indexPath.row];
@@ -582,42 +585,41 @@
     
     cell.isSelected = !cell.isSelected;
     if (cell.isSelected) {
-        UIImage *image = [UIImage imageNamed:dic[@"image"]];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
         
         [dic setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexP"];
         [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic];
         
-        [dict setValue:image forKey:@"image"];
+       // [dict setValue:image forKey:@"image"];
         [dict setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexPath"];
-        [self.deleteArrarys addObject:dict];
+        [[self.modelArray mutableArrayValueForKey:@"selected"] addObject:dic];;
         cell.isSelected = YES;
         
-        if (self.deleteArrarys.count>6) {
+        if (self.modelArray.selected.count>6) {
             self.collectView.frame = CGRectMake(0, 64, 245, 40);
             // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
         }
         else
         {
-            self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40+25, 40);
+            self.collectView.frame = CGRectMake(0, 64, self.modelArray.selected.count*40+25, 40);
         }
         [self.collectView reloadData];
     }
     else
     {
-        cell.selectImage.image = [UIImage imageNamed:@""];
+        cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
         cell.isSelected = NO;
         int row = 0;
-        for (int i=0;i<self.deleteArrarys.count;i++) {
-            NSDictionary *dict = self.deleteArrarys[i];
+        for (int i=0;i<self.modelArray.selected.count;i++) {
+            NSDictionary *dict = self.modelArray.selected[i];
             if ([dic[@"indexP"]isEqualToString:dict[@"indexPath"]]) {
                 row=i;
                 
             }
         }
-        [self.deleteArrarys removeObjectAtIndex:row];
-        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
+        [[self.modelArray mutableArrayValueForKey:@"selected"] removeObjectAtIndex:row];
+        self.collectView.frame = CGRectMake(0, 64, self.modelArray.selected.count*40, 40);
         
         [self.collectView reloadData];
     }

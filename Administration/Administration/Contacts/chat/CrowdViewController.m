@@ -162,10 +162,11 @@
     NSDictionary *dictInfo = self.resultArr[indexPath.section][indexPath.row];
    // UserCacheInfo * userInfo = [UserCacheManager getById:self.dictInfo[@"id"]];
     cell.nameLabel.text = [NSString stringWithFormat:@"%@",dictInfo[@"name"]];
-    
+    [EMSDWebImageDownloader.sharedDownloader setValue:@"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"forHTTPHeaderField:@"Accept"];
     NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,dictInfo[@"img"]];
-    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
-  //  [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"] options:EMSDWebImageProgressiveDownload];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"] completed:^(UIImage *image, NSError *error, EMSDImageCacheType cacheType, NSURL *imageURL) {
+        NSLog(@"error = %@",error);
+    }];
     int unread = [dictInfo[@"unread"] intValue];
     if (unread!=0) {
         cell.noReadLabel.text = [NSString stringWithFormat:@"%@",dictInfo[@"unread"]];
@@ -174,9 +175,21 @@
     {
         cell.noReadLabel.hidden = YES;
     }
+    cell.model = dictInfo;
     
    
     return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if ([self.resultArr[section] count]!=0) {
+        return 30;
+    }
+    return 0.1f;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1f;
 }
 //设置分区的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -199,8 +212,12 @@
     [chatController.faceView setEmotionManagers:@[manager]];
     [self.navigationController pushViewController:chatController animated:YES];
     
-    
-    NSLog(@"dic = %@",dic);
+    if ([self.resultArr[0] count]!=0&&indexPath.section==0) {
+        [ShareModel shareModel].isDefaultGroup = YES;
+    }else
+    {
+        [ShareModel shareModel].isDefaultGroup = NO;
+    }
 }
 
 - (void)dealloc {

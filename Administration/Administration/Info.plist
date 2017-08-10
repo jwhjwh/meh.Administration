@@ -42,9 +42,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要您的同意相册权限访问</string>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
+	<array/>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

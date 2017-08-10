@@ -14,6 +14,7 @@
 #import "AddmemberController.h"
 #import "inftionxqController.h"
 #import "ModelArray.h"
+#import "CellGroup.h"
 @interface GroupMenberController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate,UISearchBarDelegate>
 @property (nonatomic,strong)UITableView *tableViewMenber;
 @property (nonatomic,strong)NSMutableArray *arrayMenber;//源数据
@@ -36,6 +37,8 @@
 @property (nonatomic,strong)NSMutableArray *arrayName;
 @property (nonatomic,strong)NSArray *filterdArray;
 @property (nonatomic,strong)NSArray *array;
+@property (strong, nonatomic) NSMutableArray    *selectIndexs;  //多选选中的行
+@property (nonatomic ,strong)ModelArray *modelArray;
 @end
 
 @implementation GroupMenberController
@@ -75,14 +78,19 @@
                 int code = [[dic valueForKey:@"position"] intValue];
                 NSString *stringC = [NSString stringWithFormat:@"%d",code];
                 
+                //判断当前登录人是不是群主
+                if ([stringC isEqualToString:@"0"]&&[[NSString stringWithFormat:@"%@",dic[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
+                    self.isGroupBoss = YES;
+                }
                 //判断是否是群主
                 if ([stringC isEqualToString:@"0"]) {
-                    self.isGroupBoss = YES;
+                 //   self.isGroupBoss = YES;
                     [arrNew addObject:dic];
                     [self.resultArr insertObject:arrNew atIndex:0];
                     [self.arrayMenber removeObjectAtIndex:i];
                     break;
                 }
+                
             }
 
             //取出群主后的数组，取首字母
@@ -224,12 +232,12 @@
     NSDictionary *dict = [NSDictionary dictionary];
     GroupMenberCell *cell = (GroupMenberCell *)[[button superview] superview];
     NSIndexPath *indexPath = [self.tableViewMenber indexPathForCell:cell];
-    if (indexPath.section==0&&indexPath.row==0) {
-        dict = self.dictBoss;
-    }else
-    {
+//    if (indexPath.section==0&&indexPath.row==0) {
+//        dict = self.dictBoss;
+//    }else
+//    {
         dict = self.resultArr[indexPath.section][indexPath.row];
-    }
+//    }
     
     PerLomapController *controller = [[PerLomapController alloc]init];
     controller.uesrId = dict[@"userId"];
@@ -284,11 +292,12 @@
     
     NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":userid,@"groupinformationId":self.groupinformation[@"id"],@"groupNumber":self.groupinformation[@"groupNumber"],@"list":jsonStr};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
-        NSString *stringCode = [responseObject objectForKey:@"status"];
+        NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
             [self getGroupMenbers];
             [self.buttonDelet removeFromSuperview];
+            self.index = @"6";
             [self.tableViewMenber reloadData];
             return ;
         }
@@ -346,6 +355,7 @@
                 break;
             case 2:
                 [self loadDeletButton];
+                self.tableViewMenber.frame= CGRectMake(0,104, Scree_width, Scree_height-40);
                 [self.tableViewMenber reloadData];
                 break;
             case 3:
@@ -454,67 +464,71 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupMenberCell *cell = [self.tableViewMenber dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell==nil) {
-        cell = [[GroupMenberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    
-    cell.labelDivision.hidden = YES;
-    cell.locationButton.hidden = YES;
-    cell.zhiLabel.hidden = YES;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if ([self.searchBar isFirstResponder]) {
-        NSDictionary *dict = self.arraySearch[indexPath.row];
-        NSMutableString *name = [dict[@"name"] mutableCopy];
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:name];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(0, self.searchBar.text.length)];
-        
-        cell.nameLabel.attributedText = attributedString;
+    if ([self.index isEqualToString:@"2"]) {
+        GroupMenberCell *cell = [self.tableViewMenber dequeueReusableCellWithIdentifier:@"cell1"];
+        if (cell==nil) {
+            cell = [[GroupMenberCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell1"];
+        }
+        NSDictionary *dict = self.resultArr[indexPath.section][indexPath.row];
+        cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
         cell.TelLabel.text = dict[@"account"];
-        NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.dictBoss[@"img"]];
-        [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@"banben100"]];
-    }
-    else{
-    NSDictionary *dict = self.resultArr[indexPath.section][indexPath.row];
-    cell.nameLabel.text = dict[@"name"];
-    cell.TelLabel.text = dict[@"account"];
-    NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.dictBoss[@"img"]];
-    [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@"banben100"]];
-    
-    if ([[NSString stringWithFormat:@"%@",dict[@"userId"]] isEqualToString:[USER_DEFAULTS objectForKey:@"userid"]]) {
-        self.isMe = YES;
-        cell.zhiLabel.hidden= NO;
-        cell.zhiLabel.text = @"我";
-        cell.labelDivision.hidden = YES;
-        cell.locationButton.hidden = YES;
-    }else
-    {
-        cell.zhiLabel.hidden = YES;
-        if ([self.index isEqualToString:@"0"]) {
-            cell.locationButton.hidden = NO;
-            cell.labelDivision.hidden = NO;
-            [cell.locationButton addTarget:self action:@selector(getMenberLocaion:) forControlEvents:UIControlEventTouchUpInside];
+        NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+        [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
+        cell.nameLabel.text = dict[@"name"];
+        if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
+            cell.zhiLabel.text = @"我";
         }else
         {
-            cell.locationButton.hidden = YES;
-            cell.labelDivision.hidden = YES;
-        }
-        if ([self.index isEqualToString:@"2"]) {
             [cell.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.mas_equalTo(cell.contentView.mas_centerY);
-                make.height.mas_equalTo(30);
-                make.width.mas_equalTo(30);
                 make.left.mas_equalTo(cell.contentView.mas_left).offset(8);
-                    
-                }];
-                
+                make.centerY.mas_equalTo(cell.contentView.mas_centerY);
+                make.width.mas_equalTo(30);
+                make.height.mas_equalTo(30);
+            }];
+        }
+        for (NSIndexPath *index in _selectIndexs) {
+            if (indexPath == index) {
+                cell.isSelected = YES;
+                cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
             }
+        }
+        return cell;
+    }else
+    {
+        self.buttonDelet.hidden = YES;
+        CellGroup *cell = [self.tableViewMenber dequeueReusableCellWithIdentifier:@"cell2"];
+        if (cell==nil) {
+            cell = [[CellGroup alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell2"];
+        }
+        NSDictionary *dict = self.resultArr[indexPath.section][indexPath.row];
+        cell.TelLabel.text = dict[@"account"];
+        NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+        [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
         
+        if ([self.searchBar isFirstResponder]) {
+            NSMutableString *name = [dict[@"name"] mutableCopy];
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:name];
+            [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(0, self.searchBar.text.length)];
+            
+        }else
+        {
+            cell.nameLabel.text = dict[@"name"];
+        }
+        cell.locationButton.hidden = YES;
+        cell.labelDivision.hidden = YES;
+        if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
+            cell.zhiLabel.text = @"我";
+        }else
+        {
+            if ([self.index isEqualToString:@"0"]) {
+                cell.labelDivision.hidden = NO;
+                cell.locationButton.hidden = NO;
+                [cell.locationButton addTarget:self action:@selector(getMenberLocaion:) forControlEvents:UIControlEventTouchUpInside];
+            }
+        }
+        return cell;
     }
-    
-    }
-    
-    return cell;
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -531,44 +545,34 @@
         [self.navigationController pushViewController:controller animated:YES];
     }else
     {
-    NSMutableDictionary *dict = [self.resultArr[indexPath.section][indexPath.row] mutableCopy];
-    if ([self.index isEqualToString:@"2"]) {
-       // [self.resultArr removeObjectAtIndex:0];
-        
-        GroupMenberCell *cell = [self.tableViewMenber cellForRowAtIndexPath:indexPath];
-        cell.isSelected = !cell.isSelected;
-        if (cell.isSelected) {
-            cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-            cell.isSelected = YES;
-            NSString *string = @"1";
-            [dict setValue:string forKey:@"isSelect"];
-            [self.arraySelect addObject:dict];
-            self.buttonDelet.userInteractionEnabled = YES;
-             [self.buttonDelet setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.arraySelect.count] forState:UIControlStateNormal];
-            self.buttonDelet.userInteractionEnabled = YES;
+        NSMutableDictionary *dict = [self.resultArr[indexPath.section][indexPath.row] mutableCopy];
+        if ([self.index isEqualToString:@"2"]) {
+            // [self.resultArr removeObjectAtIndex:0];
             
-        }else
-        {
-            cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
-            cell.isSelected = NO;
-            [self.arraySelect removeObject:dict];
-            NSString *string = @"2";
-            [dict setValue:string forKey:@"isSelect"];
-            [self.buttonDelet setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.arraySelect.count] forState:UIControlStateNormal];
-            if (self.arraySelect.count==0) {
-                [self.buttonDelet setTitle:@"确定" forState:UIControlStateNormal];
-                self.buttonDelet.userInteractionEnabled = NO;
+            GroupMenberCell *cell = [self.tableViewMenber cellForRowAtIndexPath:indexPath];
+            cell.isSelected = !cell.isSelected;
+            
+            if (cell.isSelected) { //如果为选中状态
+                cell.isSelected = YES; //切换为选中
+                cell.selectImage.image=  [UIImage imageNamed:@"xuanzhong"];
+                [_selectIndexs addObject:indexPath]; //添加索引到数组
+                [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
+                
+            }else { //未选中
+                cell.isSelected = NO; //切换为未选中
+                cell.selectImage.image=  [UIImage imageNamed:@"weixuanhong"];
+                [_selectIndexs removeObject:indexPath]; //移除索引
+                [[self.modelArray mutableArrayValueForKey:@"selected"]removeObject:dict];
             }
+            
         }
-  
-    }
-    else
-    {
-        inftionxqController *controller = [[inftionxqController alloc]init];
-        controller.model = self.resultArr[indexPath.section][indexPath.row];
-        controller.IDStr = dict[@"userId"];
-        [self.navigationController pushViewController:controller animated:YES];
-    }
+        else
+        {
+            inftionxqController *controller = [[inftionxqController alloc]init];
+            controller.model = self.resultArr[indexPath.section][indexPath.row];
+            controller.IDStr = dict[@"userId"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     }
 }
 
@@ -627,9 +631,10 @@
 {
     [self searchBarTextDidEndEditing:self.searchBar];
     [self.tableViewMenber reloadData];
-    NSLog(@"2");
 }
-
+- (void)commentTableViewTouchInSide{
+    [self.searchBar resignFirstResponder];
+}
 #pragma -mark system
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -644,38 +649,38 @@
     self.tempArray = [NSMutableArray array];
     self.filterdArray = [NSMutableArray array];
     
+    self.selectIndexs = [NSMutableArray array];
+    self.modelArray = [[ModelArray alloc]init];
+    self.modelArray.selected = [NSMutableArray array];
+    [self.modelArray addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
+    
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 64, Scree_width, 40)];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"搜索";
     self.searchBar.backgroundColor = [UIColor lightGrayColor];
-    self.searchBar.showsCancelButton = YES;
     [self.view addSubview:self.searchBar];
     
 //    self.tableViewMenber = [[UITableView alloc]initWithFrame:CGRectMake(0, 104, Scree_width,Scree_height) style:UITableViewStyleGrouped];
-    self.tableViewMenber = [[UITableView alloc]init];
+    self.tableViewMenber = [[UITableView alloc]initWithFrame:CGRectMake(0, 104, Scree_width, Scree_height) style:UITableViewStyleGrouped];
     self.tableViewMenber.backgroundColor = [UIColor whiteColor];
     self.tableViewMenber.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableViewMenber.delegate = self;
     self.tableViewMenber.dataSource = self;
-    [self.tableViewMenber registerClass:NSClassFromString(@"GroupMenberCell") forCellReuseIdentifier:@"cell"];
+    [self.tableViewMenber registerClass:NSClassFromString(@"GroupMenberCell") forCellReuseIdentifier:@"cell1"];
+    [self.tableViewMenber registerClass:NSClassFromString(@"CellGroup") forCellReuseIdentifier:@"cell2"];
     [self.view addSubview:self.tableViewMenber];
-    [self.tableViewMenber mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.searchBar.mas_bottom);
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.view.mas_bottom);
-    }];
     
-    
-    
+    UITapGestureRecognizer *tableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentTableViewTouchInSide)];
+    tableViewGesture.numberOfTapsRequired = 1;
+    tableViewGesture.cancelsTouchesInView = NO;
+    [self.tableViewMenber addGestureRecognizer:tableViewGesture];
+
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(showActionSheet)];
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showActionSheet)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
-    
-    self.navigationItem.rightBarButtonItem = rightitem;
-    
-    
+    if (![ShareModel shareModel].isDefaultGroup) {
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -687,11 +692,30 @@
 {
     [super viewWillAppear:YES];
     [self.arrayMenber removeAllObjects];
+    self.index = @"6";
     [self getGroupMenbers];
-    
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context{
+    NSLog(@"count = %lu",(unsigned long)self.modelArray.selected.count);
+    if (self.modelArray.selected.count!=0) {
+        [self.buttonDelet setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.modelArray.selected.count] forState:UIControlStateNormal];
+        [self.buttonDelet setBackgroundColor:GetColor(204, 174, 212, 1)];
+        self.buttonDelet.userInteractionEnabled = YES;
+        
+    }
+    else
+    {
+        [self.buttonDelet setTitle:@"确定" forState:UIControlStateNormal];
+        [self.buttonDelet setBackgroundColor:[UIColor lightGrayColor]];
+        self.buttonDelet.userInteractionEnabled = NO;
+    }
+}
 
+-(void)dealloc
+{
+    [self.modelArray removeObserver:self forKeyPath:@"selected"];
+}
 
 /*
 #pragma mark - Navigation
