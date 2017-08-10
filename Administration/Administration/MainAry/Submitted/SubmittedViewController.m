@@ -43,27 +43,35 @@
     self.dataArray = [NSMutableArray array];
     self.pagenum = 1;
     
+    NSString*string =@"sdfsfsfsAdfsdf";
+    string = [string substringToIndex:7];//截取掉下标7之后的字符串
+    NSLog(@"截取掉下标7之后的字符串的值为：%@",string);
+    [string substringFromIndex:2];//截取掉下标2之前的字符串
+    NSLog(@"截取掉下标2之前的字符串的值为：%@",string);
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight	)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SubmittedTableViewCell" bundle:nil] forCellReuseIdentifier:@"BASE"];
     
-    [self getNetworkData:NO];
+    [self getNetworkData:YES];
     __weak typeof(self) weakSelf = self;
     //默认【下拉刷新】
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
          _dataArray = [NSMutableArray array];
         [weakSelf getNetworkData:YES];
+        [self.tableView reloadData];
     }];
 
     //默认【上拉加载】
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         //Call this Block When enter the refresh status automatically
         [weakSelf getNetworkData:NO];
+        [self.tableView reloadData];
     }];
 
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -87,8 +95,10 @@
     
     if (_pagenum == 1) {
     [self.tableView.mj_header endRefreshing];
-    }
+    }else{
      [self.tableView.mj_footer endRefreshing];
+    }
+    
 }
 -(void)getNetworkData:(BOOL)isRefresh{
     if (isRefresh) {
@@ -105,7 +115,7 @@
         //plist
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"plist"];
-              [self endRefresh];
+              //[self endRefresh];
             for (NSDictionary *dic in array) {
                 SubmittedModel *model=[[SubmittedModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
@@ -113,6 +123,7 @@
                 [self.dataArray addObject:model];
             }
             [self.tableView reloadData];
+            //[self.tableView.footer endRefreshing];
     
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -133,11 +144,17 @@
             };
             [alertView showMKPAlertView];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无报岗" Size:20.0];
-            _tableView.emptyView.hidden = NO;
+            
+            if (self.dataArray.count>0) {
+                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"这已经是全部的报岗了" andInterval:1.0];
+            }else{
+                [_tableView addEmptyViewWithImageName:@"" title:@"暂无报岗" Size:20.0];
+                _tableView.emptyView.hidden = NO;
+            }
+           
         }
         
-        
+        [self endRefresh];
 
     } failure:^(NSError *error) {
         
@@ -158,6 +175,7 @@
     if (self.dataArray.count <=0) {
         return cell;
     }
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SubmittedModel *model = _dataArray[indexPath.section];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;

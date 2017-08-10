@@ -61,6 +61,7 @@
     } view:self.view MBPro:YES];
 }
 -(void)buttonLiftItem{
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addSubViewS{

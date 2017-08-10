@@ -439,7 +439,6 @@
 		626254061E728D99000B8F0F /* RectordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254051E728D99000B8F0F /* RectordViewController.m */; };
 		6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254081E7293B7000B8F0F /* RectordTableViewCell.m */; };
 		6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 626254091E7293B7000B8F0F /* RectordTableViewCell.xib */; };
-		6262540E1E7293D5000B8F0F /* RectordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6262540D1E7293D5000B8F0F /* RectordModel.m */; };
 		62640EFC1EA0A9FC00085375 /* ZHTBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 62640EFB1EA0A9FC00085375 /* ZHTBtnView.m */; };
 		626480841E9DD73C0090EECB /* ReportPermissionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 626480831E9DD73C0090EECB /* ReportPermissionsVC.m */; };
 		6264808C1E9E23B70090EECB /* bg_mt01.png in Resources */ = {isa = PBXBuildFile; fileRef = 6264808B1E9E23B70090EECB /* bg_mt01.png */; };
@@ -1145,7 +1144,6 @@
 		1F820FE91E86028E00E11F17 /* AppDelegate+EaseMob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+EaseMob.m"; sourceTree = "<group>"; };
 		1F820FEA1E86028E00E11F17 /* AppDelegate+EaseMobDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+EaseMobDebug.h"; sourceTree = "<group>"; };
 		1F820FEB1E86028F00E11F17 /* AppDelegate+EaseMobDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+EaseMobDebug.m"; sourceTree = "<group>"; };
-		1F89F6FB1F341FA400D3B978 /* Administration.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Administration.entitlements; sourceTree = "<group>"; };
 		1F8CF49F1F0CC039002BAFC7 /* ChoosePostionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePostionViewController.h; sourceTree = "<group>"; };
 		1F8CF4A01F0CC039002BAFC7 /* ChoosePostionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePostionViewController.m; sourceTree = "<group>"; };
 		1FB0BF751E6FD7E0001CCFAA /* AddBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBrandViewController.h; sourceTree = "<group>"; };
@@ -1357,8 +1355,6 @@
 		626254071E7293B7000B8F0F /* RectordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordTableViewCell.h; sourceTree = "<group>"; };
 		626254081E7293B7000B8F0F /* RectordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordTableViewCell.m; sourceTree = "<group>"; };
 		626254091E7293B7000B8F0F /* RectordTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RectordTableViewCell.xib; sourceTree = "<group>"; };
-		6262540C1E7293D5000B8F0F /* RectordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordModel.h; sourceTree = "<group>"; };
-		6262540D1E7293D5000B8F0F /* RectordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordModel.m; sourceTree = "<group>"; };
 		62640EFA1EA0A9FC00085375 /* ZHTBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHTBtnView.h; sourceTree = "<group>"; };
 		62640EFB1EA0A9FC00085375 /* ZHTBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHTBtnView.m; sourceTree = "<group>"; };
 		626480821E9DD73C0090EECB /* ReportPermissionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportPermissionsVC.h; sourceTree = "<group>"; };
@@ -2918,7 +2914,6 @@
 				6218D05C1E4E95FB00299989 /* Assets.xcassets */,
 				6218D05E1E4E95FB00299989 /* LaunchScreen.storyboard */,
 				6218D0611E4E95FB00299989 /* Info.plist */,
-				1F89F6FB1F341FA400D3B978 /* Administration.entitlements */,
 				6218D0501E4E95FB00299989 /* Supporting Files */,
 				62656C6A1E52A4480085A2BD /* Administration_PrefixHeader.pch */,
 			);
@@ -3230,8 +3225,6 @@
 				626254071E7293B7000B8F0F /* RectordTableViewCell.h */,
 				626254081E7293B7000B8F0F /* RectordTableViewCell.m */,
 				626254091E7293B7000B8F0F /* RectordTableViewCell.xib */,
-				6262540C1E7293D5000B8F0F /* RectordModel.h */,
-				6262540D1E7293D5000B8F0F /* RectordModel.m */,
 			);
 			path = SubmittedRecord;
 			sourceTree = "<group>";
@@ -3855,11 +3848,13 @@
 					};
 					6218D0651E4E95FB00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = X3D9UD9RUS;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 6218D04C1E4E95FA00299989;
 					};
 					6218D0701E4E95FB00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = X3D9UD9RUS;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 6218D04C1E4E95FA00299989;
 					};
@@ -4318,7 +4313,6 @@
 				1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */,
 				624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
-				6262540E1E7293D5000B8F0F /* RectordModel.m in Sources */,
 				1F6211F31E8CFFB000F50851 /* EaseUserCell.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				627B27191E764B4100392170 /* StructureViewController.m in Sources */,
@@ -4576,7 +4570,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Administration/Administration.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = X3D9UD9RUS;
@@ -4600,11 +4594,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
-
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4615,12 +4605,12 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "jwh.-555555";
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.text;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4630,7 +4620,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Administration/Administration.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = X3D9UD9RUS;
@@ -4654,12 +4644,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Administration/Administration_PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
-
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-
-
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4670,11 +4655,11 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "jwh.-555555";
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.text;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -4682,6 +4667,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				INFOPLIST_FILE = AdministrationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.AdministrationTests;
@@ -4694,6 +4680,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				INFOPLIST_FILE = AdministrationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.AdministrationTests;
@@ -4705,6 +4692,7 @@
 		6218D0811E4E95FB00299989 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				INFOPLIST_FILE = AdministrationUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.AdministrationUITests;
@@ -4716,6 +4704,7 @@
 		6218D0821E4E95FB00299989 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				INFOPLIST_FILE = AdministrationUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.AdministrationUITests;

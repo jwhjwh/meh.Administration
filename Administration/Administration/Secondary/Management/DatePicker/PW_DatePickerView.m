@@ -74,6 +74,8 @@ static float ToolbarH = 44;
     NSDate *select = self.datePicker.date;
     NSDateFormatter *dateFormmater = [[NSDateFormatter alloc]init];
     [dateFormmater setDateFormat:@"yyyy-MM-dd"];
+    //NSString *resultString = [NSString stringWithFormat:@"%@",select];
+    //NSLog(@":datestr%@",datestr);
     NSString *resultString = [dateFormmater stringFromDate:select];
     
     if (self.delegate &&[self.delegate respondsToSelector:@selector(pickerView:didSelectDateString:type:)])

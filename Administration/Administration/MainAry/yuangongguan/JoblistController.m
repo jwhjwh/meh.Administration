@@ -27,12 +27,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.isAddPerson) {
-        self.titleStr = @"添加群成员";
-    }else
-    {
+    
         self.titleStr = @"按职位查看";
-    }
+    
     self.title=self.titleStr;
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -126,12 +123,15 @@
     DepmentCV.str=modld.NewName;
     DepmentCV.Numstr=modld.num;
     DepmentCV.dataShow=self.Num;
+    DepmentCV.DepartmentID = modld.DepartmentID;
+    
     [self.navigationController pushViewController:DepmentCV animated:YES];
    // }
 
 }
 -(void)getNetworkData{
-    NSString *uStr =[NSString stringWithFormat:@"%@manager/checkPosition.action",KURLHeader];
+    
+    NSString *uStr =[NSString stringWithFormat:@"%@manager/checkPositionDiff.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -139,7 +139,7 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *arr = [responseObject valueForKey:@"list2"];
+            NSArray *arr = [responseObject valueForKey:@"list"];
             _arr=[NSMutableArray array];
             for (NSDictionary *dic in arr) {
                 SetModel *modld=[[SetModel alloc]init];

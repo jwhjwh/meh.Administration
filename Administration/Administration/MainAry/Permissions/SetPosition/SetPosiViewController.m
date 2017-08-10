@@ -160,7 +160,7 @@ NSUInteger rsw;
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
 
-    [self ui];
+    [self asklfjlw];
     // Do any additional setup after loading the view.
 }
 -(void)buttonLiftItem{
@@ -282,6 +282,7 @@ NSUInteger rsw;
         _cell.textLabel.text = @"您选择的职位";
         _cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
         _cell.textLabel.textColor = GetColor(117, 117, 117, 1);
+        _cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     for(_asklLabel in _cell.subviews){
         if([_asklLabel isMemberOfClass:[UILabel class]])
@@ -291,7 +292,12 @@ NSUInteger rsw;
     }
     _asklLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 1, 80, 28)];
     _asklLabel.text = _XZZWArry[indexPath.row];
-    _asklLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    if (_asklLabel.text.length>4) {
+        _asklLabel.font = [UIFont boldSystemFontOfSize:kWidth*13];
+    }else{
+        _asklLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    }
+    
     _asklLabel.textAlignment = NSTextAlignmentCenter;
     _asklLabel.textColor = [UIColor orangeColor];
     [_asklLabel.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
@@ -314,12 +320,10 @@ NSUInteger rsw;
     }
     _xgtextFie = [[UITextField alloc]initWithFrame:CGRectMake(240, 1, self.view.bounds.size.width-242, 28)];
     _xgtextFie.textColor = [UIColor orangeColor];
-    
     if (_lqzwnameAry.count>0) {
-        if (_lqzwnumAry.count == _XZZWArry.count) {
-            _xgtextFie.text = _lqzwnameAry[indexPath.row];
-        }
+        _xgtextFie.text = _lqzwnameAry[indexPath.row];
     }
+    
     _xgtextFie.placeholder =_XZZWArry[indexPath.row];
         placeholder(self.xgtextFie);
     _xgtextFie.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -334,107 +338,125 @@ NSUInteger rsw;
     
     return _cell;
 }
-
+-(void)lqnamearry:(NSString*)str text:(NSString*)textstr{
+    for (int i = 0; i<_XZZWArry.count; i++) {
+        if ([_XZZWArry[i] isEqualToString:textstr]) {
+            _lqzwnameAry[i]= str;
+        }
+    }
+}
 -(void)idNofield:(UITextField *)fieldtext{
     if ([fieldtext.placeholder isEqualToString:@"业务经理"]) {
         if (fieldtext.text.length>0) {
             _YWJLStr = fieldtext.text;
         }else{
-            _YWJLStr = @"业务经理";
+            _YWJLStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_YWJLStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"业务总监"]){
         if (fieldtext.text.length>0) {
             _YWZJStr = fieldtext.text;
         }else{
-            _YWZJStr = @"业务总监";
+            _YWZJStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_YWZJStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"业务"]){
         if (fieldtext.text.length>0) {
             _YWStr = fieldtext.text;
         }else{
-            _YWStr = @"业务";
+            _YWStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_YWStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"市场总监"]){
         if (fieldtext.text.length>0) {
             _SCZJStr = fieldtext.text;
         }else{
-            _SCZJStr = @"市场总监";
+            _SCZJStr = fieldtext.placeholder;
         }
-    }
-    else if ([fieldtext.placeholder isEqualToString:@"市场经理"]){
+         [self lqnamearry:_SCZJStr text:fieldtext.placeholder];
+    }else if ([fieldtext.placeholder isEqualToString:@"市场经理"]){
         if (fieldtext.text.length>0) {
             _SCJLStr = fieldtext.text;
         }else{
-            _SCJLStr = @"市场经理";
+            _SCJLStr = fieldtext.placeholder;
         }
-    }
-    else if ([fieldtext.placeholder isEqualToString:@"美导"]){
+        [self lqnamearry:_SCJLStr text:fieldtext.placeholder];
+    }else if ([fieldtext.placeholder isEqualToString:@"美导"]){
         if (fieldtext.text.length>0) {
             _MDStr = fieldtext.text;
-        }else{
-            _MDStr = @"美导";
         }
+         [self lqnamearry:_MDStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"行政管理"]){
         if (fieldtext.text.length>0) {
             _XZGLLStr = fieldtext.text;
         }else{
-            _XZGLLStr = @"行政管理";
+            _XZGLLStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_XZGLLStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"物流"]){
         if (fieldtext.text.length>0) {
             _WLStr = fieldtext.text;
         }else{
-            _WLStr = @"物流";
+            _WLStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_WLStr text:fieldtext.placeholder];
     }
     else if ([fieldtext.placeholder isEqualToString:@"仓库"]){
         if (fieldtext.text.length>0) {
             _CKStr = fieldtext.text;
         }else{
-            _CKStr = @"仓库";
+            _CKStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_CKStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"财务总监"]){
         if (fieldtext.text.length>0) {
             _CWZJStr = fieldtext.text;
         }else{
-            _CWZJStr = @"财务总监";
+            _CWZJStr = fieldtext.placeholder;
         }
+         [self lqnamearry:_CWZJStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"客服经理"]){
         if (fieldtext.text.length>0) {
             _KFJLStr = fieldtext.text;
         }else{
-            _KFJLStr = @"客服经理";
+            _KFJLStr = fieldtext.placeholder;
         }
+         [self lqnamearry:_KFJLStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"物流经理"]){
         if (fieldtext.text.length>0) {
             _WLJLStr = fieldtext.text;
         }else{
-            _WLJLStr = @"物流经理";
+            _WLJLStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_WLJLStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"财务经理"]){
         if (fieldtext.text.length>0) {
             _CWJLStr = fieldtext.text;
         }else{
-            _CWJLStr = @"财务经理";
+            _CWJLStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_CWJLStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"客服"]){
         if (fieldtext.text.length>0) {
             _KFStr = fieldtext.text;
         }else{
-            _KFStr = @"客服";
+            _KFStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_KFStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"会计"]){
         if (fieldtext.text.length>0) {
             _KJStr = fieldtext.text;
         }else{
-            _KJStr = @"会计";
+            _KJStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_KJStr text:fieldtext.placeholder];
     }else if ([fieldtext.placeholder isEqualToString:@"出纳"]){
         if (fieldtext.text.length>0) {
             _CNStr = fieldtext.text;
         }else{
-            _CNStr = @"出纳";
+            _CNStr = fieldtext.placeholder;
         }
+        [self lqnamearry:_CNStr text:fieldtext.placeholder];
     }
 
 
@@ -554,7 +576,7 @@ NSUInteger rsw;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
     [infonTableview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(0);
+        make.top.mas_equalTo(self.view.mas_top).offset(64);
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.bottom).offset(0);
@@ -563,7 +585,7 @@ NSUInteger rsw;
     topView.backgroundColor = [UIColor whiteColor];
     infonTableview.tableHeaderView=topView;
     
-   _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, kHeight*970)];
+   _footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, kHeight*200)];
     _footerView.backgroundColor = [UIColor whiteColor];
     infonTableview.tableFooterView=_footerView;
     
@@ -734,7 +756,132 @@ NSUInteger rsw;
         [_buttonAry addObject:_button.ZWbutton];
         [topView addSubview:_button];
     }
-    [self asklfjlw];
+    [self backbutton];
+}
+-(void)backbutton{
+    for (int i = 0; i<_lqzwnumAry.count; i++) {
+        int a = [_lqzwnumAry[i] intValue];
+        switch (a) {
+            case 2:
+                [self btnColorImage:_buttonAry[7] buttonImage:_imageAry[7]];
+                _button.ZWbutton = _buttonAry[7];
+                _button.ZWbutton.enabled = NO;
+                MDBOOL=NO;
+                _MDStr = _lqzwnameAry[i];
+                break;
+            case 3:
+                [self btnColorImage:_buttonAry[11] buttonImage:_imageAry[11]];
+                _button.ZWbutton = _buttonAry[11];
+                _button.ZWbutton.enabled = NO;
+                KFBOOL=NO;
+                _KFStr = _lqzwnameAry[i];
+                break;
+            case 4:
+                [self btnColorImage:_buttonAry[12] buttonImage:_imageAry[12]];
+                _button.ZWbutton = _buttonAry[12];
+                _button.ZWbutton.enabled = NO;
+                WLBOOL=NO;
+                _WLStr= _lqzwnameAry[i];
+                break;
+            case 5:
+                [self btnColorImage:_buttonAry[6] buttonImage:_imageAry[6]];
+                _button.ZWbutton = _buttonAry[6];
+                _button.ZWbutton.enabled = NO;
+                YWBOOL=NO;
+                _YWStr= _lqzwnameAry[i];;
+                break;
+            case 6:
+                [self btnColorImage:_buttonAry[5] buttonImage:_imageAry[5]];
+                _button.ZWbutton = _buttonAry[5];
+                _button.ZWbutton.enabled = NO;
+                SCJLBOOL=NO;
+                _SCJLStr = _lqzwnameAry[i];
+                break;
+            case 7:
+                [self btnColorImage:_buttonAry[3] buttonImage:_imageAry[3]];
+                _button.ZWbutton = _buttonAry[3];
+                _button.ZWbutton.enabled = NO;
+                XZGLBOOL=NO;
+                _XZGLLStr = _lqzwnameAry[i];
+                break;
+            case 8:
+                [self btnColorImage:_buttonAry[4] buttonImage:_imageAry[4]];
+                _button.ZWbutton = _buttonAry[4];
+                _button.ZWbutton.enabled = NO;
+                YWJLBOOL=NO;
+                _YWJLStr = _lqzwnameAry[i];
+                break;
+            case 9:
+                [self btnColorImage:_buttonAry[0] buttonImage:_imageAry[0]];
+                _button.ZWbutton = _buttonAry[0];
+                _button.ZWbutton.enabled = NO;
+                YWZJBOOL=NO;
+                _YWZJStr = _lqzwnameAry[i];
+                break;
+            case 10:
+                [self btnColorImage:_buttonAry[1] buttonImage:_imageAry[1]];
+                _button.ZWbutton = _buttonAry[1];
+                _button.ZWbutton.enabled = NO;
+                SCZJBOOL=NO;
+                _SCZJStr = _lqzwnameAry[i];
+                break;
+            case 11:
+                [self btnColorImage:_buttonAry[2] buttonImage:_imageAry[2]];
+                _button.ZWbutton = _buttonAry[2];
+                _button.ZWbutton.enabled = NO;
+                CWZJBOOL=NO;
+                _CWZJStr = _lqzwnameAry[i];
+                break;
+            case 12:
+                [self btnColorImage:_buttonAry[8] buttonImage:_imageAry[8]];
+                _button.ZWbutton = _buttonAry[8];
+                _button.ZWbutton.enabled = NO;
+                KFJLBOOL=NO;
+                _KFJLStr = _lqzwnameAry[i];
+                break;
+            case 13:
+                [self btnColorImage:_buttonAry[9] buttonImage:_imageAry[9]];
+                _button.ZWbutton = _buttonAry[9];
+                _button.ZWbutton.enabled = NO;
+                WLJLBOOL=NO;
+                _WLJLStr = _lqzwnameAry[i];
+                break;
+            case 14:
+                [self btnColorImage:_buttonAry[13] buttonImage:_imageAry[13]];
+                _button.ZWbutton = _buttonAry[13];
+                _button.ZWbutton.enabled = NO;
+                CKBOOL=NO;
+                _CKStr = _lqzwnameAry[i];
+                break;
+            case 15:
+                [self btnColorImage:_buttonAry[10] buttonImage:_imageAry[10]];
+                _button.ZWbutton = _buttonAry[10];
+                _button.ZWbutton.enabled = NO;
+                CWJLBOOL=NO;
+                _CWJLStr = _lqzwnameAry[i];
+                break;
+            case 16:
+                [self btnColorImage:_buttonAry[14] buttonImage:_imageAry[14]];
+                _button.ZWbutton = _buttonAry[14];
+                _button.ZWbutton.enabled = NO;
+                KJBOOL=NO;
+                _KJStr = _lqzwnameAry[i];
+                break;
+            case 17:
+                [self btnColorImage:_buttonAry[15] buttonImage:_imageAry[15]];
+                _button.ZWbutton = _buttonAry[15];
+                _button.ZWbutton.enabled = NO;
+                CNBOOL=NO;
+                _CNStr = _lqzwnameAry[i];
+                break;
+                
+                
+            default:
+                break;
+        }
+
+    }
+    
 }
 -(void)asklfjlw{
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPosition", KURLHeader];
@@ -751,110 +898,9 @@ NSUInteger rsw;
                 [model setValuesForKeysWithDictionary:dic];
                 [_lqzwnameAry addObject:model.NewName];
                 [_lqzwnumAry addObject:model.num];
-                int a = [model.num intValue];
-                switch (a) {
-                    case 2:
-                        [self btnColorImage:_buttonAry[7] buttonImage:_imageAry[7]];
-                        _button.ZWbutton = _buttonAry[7];
-                        _button.ZWbutton.enabled = NO;
-                        MDBOOL=NO;
-                        break;
-                    case 3:
-                        [self btnColorImage:_buttonAry[11] buttonImage:_imageAry[11]];
-                        _button.ZWbutton = _buttonAry[11];
-                        _button.ZWbutton.enabled = NO;
-                        KFBOOL=NO;
-                        break;
-                    case 4:
-                        [self btnColorImage:_buttonAry[12] buttonImage:_imageAry[12]];
-                          _button.ZWbutton = _buttonAry[12];
-                        _button.ZWbutton.enabled = NO;
-                        WLBOOL=NO;
-                        break;
-                    case 5:
-                        [self btnColorImage:_buttonAry[6] buttonImage:_imageAry[6]];
-                        _button.ZWbutton = _buttonAry[6];
-                        _button.ZWbutton.enabled = NO;
-                        YWBOOL=NO;
-                        break;
-                    case 6:
-                        [self btnColorImage:_buttonAry[5] buttonImage:_imageAry[5]];
-                        _button.ZWbutton = _buttonAry[5];
-                        _button.ZWbutton.enabled = NO;
-                        SCJLBOOL=NO;
-                        break;
-                    case 7:
-                        [self btnColorImage:_buttonAry[3] buttonImage:_imageAry[3]];
-                        _button.ZWbutton = _buttonAry[3];
-                        _button.ZWbutton.enabled = NO;
-                        XZGLBOOL=NO;
-                        break;
-                    case 8:
-                        [self btnColorImage:_buttonAry[4] buttonImage:_imageAry[4]];
-                        _button.ZWbutton = _buttonAry[4];
-                        _button.ZWbutton.enabled = NO;
-                        YWJLBOOL=NO;
-                        break;
-                    case 9:
-                        [self btnColorImage:_buttonAry[0] buttonImage:_imageAry[0]];
-                        _button.ZWbutton = _buttonAry[0];
-                        _button.ZWbutton.enabled = NO;
-                        YWZJBOOL=NO;
-                        break;
-                    case 10:
-                        [self btnColorImage:_buttonAry[1] buttonImage:_imageAry[1]];
-                        _button.ZWbutton = _buttonAry[1];
-                        _button.ZWbutton.enabled = NO;
-                        SCZJBOOL=NO;
-                        break;
-                    case 11:
-                        [self btnColorImage:_buttonAry[2] buttonImage:_imageAry[2]];
-                        _button.ZWbutton = _buttonAry[2];
-                        _button.ZWbutton.enabled = NO;
-                        CWZJBOOL=NO;
-                        break;
-                    case 12:
-                        [self btnColorImage:_buttonAry[8] buttonImage:_imageAry[8]];
-                        _button.ZWbutton = _buttonAry[8];
-                        _button.ZWbutton.enabled = NO;
-                        KFJLBOOL=NO;
-                        break;
-                    case 13:
-                        [self btnColorImage:_buttonAry[9] buttonImage:_imageAry[9]];
-                        _button.ZWbutton = _buttonAry[9];
-                        _button.ZWbutton.enabled = NO;
-                        WLJLBOOL=NO;
-                        break;
-                    case 14:
-                        [self btnColorImage:_buttonAry[13] buttonImage:_imageAry[13]];
-                        _button.ZWbutton = _buttonAry[13];
-                        _button.ZWbutton.enabled = NO;
-                        CKBOOL=NO;
-                        break;
-                    case 15:
-                        [self btnColorImage:_buttonAry[10] buttonImage:_imageAry[10]];
-                        _button.ZWbutton = _buttonAry[10];
-                        _button.ZWbutton.enabled = NO;
-                        CWJLBOOL=NO;
-                        break;
-                    case 16:
-                        [self btnColorImage:_buttonAry[14] buttonImage:_imageAry[14]];
-                        _button.ZWbutton = _buttonAry[14];
-                        _button.ZWbutton.enabled = NO;
-                        KJBOOL=NO;
-                        break;
-                    case 17:
-                        [self btnColorImage:_buttonAry[15] buttonImage:_imageAry[15]];
-                        _button.ZWbutton = _buttonAry[15];
-                        _button.ZWbutton.enabled = NO;
-                        CNBOOL=NO;
-                        break;
-                        
-                        
-                    default:
-                        break;
-                }
+                
             }
+            [self ui];
         }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
         }else {
@@ -1074,7 +1120,7 @@ NSUInteger rsw;
 }
 -(void)btnColorImage:(UIButton*)btn buttonImage:(UIImageView*)backImage
 {
-
+ 
         if ([backImage.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
             backImage.image = [UIImage imageNamed:@""];
             btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -1110,33 +1156,28 @@ NSUInteger rsw;
 -(void)footerButtonClick:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"预览"]) {
         [btn setTitle:@"确定" forState:UIControlStateNormal];
-        _asdjklView = [[UIView alloc]init];
-        _asdjklView.backgroundColor  = [UIColor clearColor];
-        [infonTableview addSubview:_asdjklView];
-        [_asdjklView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.view.mas_left).offset(0);
-            make.top.mas_equalTo(self.view.mas_top).offset(64);
-            make.right.mas_equalTo(self.view.mas_right).offset(0);
-            make.bottom.mas_equalTo(infonTableview.tableFooterView.mas_top).offset(0);
-        }];
+        [self yulanUI];
         
     }else{
         [btn setTitle:@"预览" forState:UIControlStateNormal];
-        [_asdjklView removeFromSuperview];
+       // [_asdjklView removeFromSuperview];
+        [_popFootCellView removeFromSuperview];
         [self.view endEditing:YES];
+        
     }
-    [self yulanUI];
+   // [self yulanUI];
 }
 -(void)yulanUI{
      if ([_footerButton.titleLabel.text isEqualToString:@"确定"]) {
          _popFootCellView = [[UIView alloc]init];
          _popFootCellView.backgroundColor = [UIColor whiteColor];
-         [_footerView addSubview:_popFootCellView];
+         [infonTableview addSubview:_popFootCellView];
          [_popFootCellView mas_makeConstraints:^(MASConstraintMaker *make) {
-             make.top.mas_equalTo(_footerButton.mas_bottom).offset(10);
              make.left.mas_equalTo(self.view.mas_left).offset(0);
+             make.top.mas_equalTo(infonTableview.tableHeaderView.mas_bottom).offset(20);
              make.right.mas_equalTo(self.view.mas_right).offset(0);
-             make.height.mas_offset(kHeight*770);
+             make.bottom.mas_equalTo(infonTableview.tableFooterView.mas_top).offset(0);
+
          }];
 #define 总经理
          ButtonView *zjlLabel = [[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*0];
@@ -1145,8 +1186,13 @@ NSUInteger rsw;
          [zjlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_popFootCellView.mas_top).offset(0);
             make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
-             make.height.mas_equalTo(kHeight*120);
+             
              make.width.mas_equalTo(kWidth*45);
+             if (_XGZJLStr.length>3) {
+                 make.height.mas_offset(_XGZJLStr.length *(kHeight*50));
+             }else{
+                 make.height.mas_equalTo(kHeight*120);
+             }
          }];
 #define 分叉线1
         Attachment *attView = [[Attachment alloc]initWithFrame:CGRectZero ];
@@ -1240,7 +1286,12 @@ NSUInteger rsw;
                          make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
                      }
                      make.width.mas_equalTo(kWidth*45);
-                     make.height.mas_equalTo(kHeight*160);
+                 
+                 if (_YWZJStr.length>4) {
+                     make.height.mas_equalTo(_YWZJStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_equalTo(kHeight*210);
+                 }
                  
              }];
           }else{
@@ -1264,7 +1315,12 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attView.mas_left).offset(0);
                 }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*210);
+                
+                 if (_YWJLStr.length>4) {
+                     make.height.mas_equalTo(_YWJLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_equalTo(kHeight*210);
+                 }
              }];
              
          }else{
@@ -1279,7 +1335,12 @@ NSUInteger rsw;
                  make.top.mas_equalTo(ywjlbutton.mas_bottom).offset(0);
                  make.left.mas_equalTo(ywjlbutton.mas_left).offset(0);
                  make.right.mas_equalTo(ywjlbutton.mas_right).offset(0);
-                 make.height.mas_offset(kHeight*180);
+                 
+                 if (_YWStr.length>2) {
+                     make.height.mas_equalTo(_YWStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*180);
+                 }
              }];
          }else{
              [ywbutton removeFromSuperview];
@@ -1291,7 +1352,13 @@ NSUInteger rsw;
          if (SCZJBOOL == NO) {
              [sczjButton mas_makeConstraints:^(MASConstraintMaker *make) {
                  make.top.mas_equalTo(attView.mas_bottom).offset(0);
-                 make.height.mas_offset(kHeight*160);
+                 make.height.mas_offset(_SCZJStr.length *(kHeight*50));
+                 
+                 if (_SCZJStr.length>4) {
+                     make.height.mas_equalTo(_SCZJStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*210);
+                 }
                  make.width.mas_offset(kWidth*45);
                  if (YWZJBOOL == YES&&YWJLBOOL == YES) {
                      make.centerX.mas_equalTo(attView.mas_left).offset(0);
@@ -1324,8 +1391,13 @@ NSUInteger rsw;
                      make.top.mas_equalTo(attView.mas_bottom).offset(0);
                      make.centerX.mas_equalTo(attView.mas_right).offset(0);
                  }
-                 make.height.mas_offset(kHeight*210);
+                 
                  make.width.mas_offset(kWidth*45);
+                 if (_SCJLStr.length>4) {
+                     make.height.mas_equalTo(_SCJLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*210);
+                 }
              }];
          }else{
              [scjlButton removeFromSuperview];
@@ -1333,13 +1405,19 @@ NSUInteger rsw;
 #define 美导
          ButtonView *mdButton =[[ButtonView alloc]initWithFrame:CGRectZero height:kHeight*70];
          [_popFootCellView addSubview:mdButton];
+         NSLog(@"%@:%lu",_MDStr,(unsigned long)_MDStr.length);
          [mdButton.ZWbutton setTitle:_MDStr forState:UIControlStateNormal];
          if (MDBOOL == NO) {
              [mdButton mas_makeConstraints:^(MASConstraintMaker *make) {
                  make.top.mas_equalTo(scjlButton.mas_bottom).offset(0);
                  make.left.mas_equalTo(scjlButton.mas_left).offset(0);
-                 make.height.mas_offset(kHeight*180);
+                 
                  make.width.mas_equalTo(kWidth*45);
+                 if (_MDStr.length>2) {
+                     make.height.mas_equalTo(_MDStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*180);
+                 }
              }];
          }else{
              [mdButton removeFromSuperview];
@@ -1352,7 +1430,13 @@ NSUInteger rsw;
              [cwzjbutton mas_makeConstraints:^(MASConstraintMaker *make) {
                  make.top.mas_equalTo(attView.mas_bottom).offset(0);
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*160);//
+                 
+                 if (_CWZJStr.length>4) {
+                     make.height.mas_equalTo(_CWZJStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*160);
+                 }
+                 
                  if ((XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == NO)||
                      (XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == YES&&YWJLBOOL == NO&&SCJLBOOL == NO) ||
                      (XZGLBOOL == YES&&YWZJBOOL == NO&&SCZJBOOL == YES&&YWJLBOOL == YES&&SCJLBOOL == NO)||
@@ -1397,8 +1481,13 @@ NSUInteger rsw;
              [xzglButton mas_makeConstraints:^(MASConstraintMaker *make) {
                  make.top.mas_equalTo(attView.mas_bottom).offset(0);
                  
-                 make.height.mas_offset(kHeight*160);
+                 
                  make.width.mas_offset(kWidth*45);
+                 if (_XZGLLStr.length>4) {
+                     make.height.mas_equalTo(_XZGLLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*160);
+                 }
                  if (_XZZWArry.count == 2) {
                      make.centerX.mas_equalTo(attView.mas_centerX).offset(0);
                  }
@@ -1479,8 +1568,14 @@ NSUInteger rsw;
                   make.centerX.mas_equalTo(attachView.mas_left).offset(0);
                  }
                 
-                 make.height.mas_equalTo(kHeight*185);
+                
                  make.width.mas_equalTo(kWidth*45);
+                 if (_KFJLStr.length>4) {
+                     make.height.mas_equalTo(_KFJLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_equalTo(kHeight*185);
+                 }
+                 
              }];
             
          }else{
@@ -1500,7 +1595,12 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attachView.mas_left).offset(0);
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*180);
+                 
+                 if (_KFStr.length>2) {
+                     make.height.mas_equalTo(_KFStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*180);
+                 }
                  
              }];
          }else{
@@ -1523,7 +1623,12 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attachView.mas_centerX).offset(0);
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*185);
+                 
+                 if (_WLJLStr.length>4) {
+                     make.height.mas_equalTo(_WLJLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*185);
+                 }
              }];
 
          }else{
@@ -1572,7 +1677,12 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attView3.mas_centerX).offset(0);
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*155);
+                 
+                 if (_WLStr.length>2) {
+                     make.height.mas_equalTo(_WLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*155);
+                 }
              }];
          }else{
              [wlButton removeFromSuperview];
@@ -1591,7 +1701,11 @@ NSUInteger rsw;
                      
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*155);
+                 if (_CKStr.length>2) {
+                     make.height.mas_equalTo(_CKStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*155);
+                 }
              }];
          }else{
              [ckButton removeFromSuperview];
@@ -1610,7 +1724,11 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attachView.mas_right).offset(0);
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*185);
+                 if (_CWJLStr.length>4) {
+                     make.height.mas_equalTo(_CWJLStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*185);
+                 }
              }];
          }else{
              [cwjlButton removeFromSuperview];
@@ -1650,7 +1768,11 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attView4.mas_centerX).offset(0);
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*155);
+                 if (_KJStr.length>2) {
+                     make.height.mas_equalTo(_KJStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*155);
+                 }
              }];
          }else{
              [kjButton removeFromSuperview];
@@ -1668,7 +1790,11 @@ NSUInteger rsw;
                      make.centerX.mas_equalTo(attView4.mas_centerX).offset(0);
                  }
                  make.width.mas_offset(kWidth*45);
-                 make.height.mas_offset(kHeight*155);
+                 if (_CNStr.length>2) {
+                     make.height.mas_equalTo(_CNStr.length *(kHeight*50));
+                 }else{
+                     make.height.mas_offset(kHeight*155);
+                 }
              }];
          }else{
              [cnButton removeFromSuperview];

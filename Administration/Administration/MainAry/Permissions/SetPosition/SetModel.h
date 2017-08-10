@@ -16,4 +16,6 @@
 @property (strong,nonatomic) NSString *image;//图片
 @property (strong,nonatomic) NSString *locational;//标示
 @property (strong,nonatomic) NSString *name;//名字
+
+@property (strong,nonatomic) NSString *DepartmentID;
 @end

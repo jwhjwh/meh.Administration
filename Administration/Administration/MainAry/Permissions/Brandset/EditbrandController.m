@@ -154,6 +154,8 @@
     
 }
 -(void)buttonLiftItem{
+    //self.str = 1;
+    self.String(@"1");
     [self.navigationController popViewControllerAnimated:YES];
 }
 //section列数

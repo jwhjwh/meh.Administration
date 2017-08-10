@@ -351,9 +351,11 @@
                           
                           
                           [_Numm replaceObjectAtIndex:i withObject:numary];
-                          bbtn.tag = [tagg intValue];
-                          NSMutableArray *scbmary = [[NSMutableArray alloc]initWithArray:_gxbmAry[i]];
                           
+                          
+                          
+                          NSMutableArray *scbmary = [[NSMutableArray alloc]initWithArray:_gxbmAry[i]];
+                          _ZWLBbutton.tag = taa;
                           bbtn.tag = taa;
                           for (int t = 0; t<scbmary.count;) {
                               [scbmary removeObjectAtIndex:t];
@@ -408,7 +410,76 @@
 }
 #pragma mark 职位类别按钮
 -(void)JsLBButtonbtn:(UIButton*)btn{
-    NSLog(@"职位类别按钮");
+    NSLog(@"职位类别按钮");//manager/queryPositionLevel.action
+    NSString *jsid = [[NSString alloc]init];
+    NSString *lbnum = [[NSString alloc]init];
+
+    for (int i = 0; i<_Numm.count; i++) {
+        NSArray *zw = _Numm[i];
+        for (int y = 0; y<zw.count; y++) {
+            
+            NSString *zwnum = [NSString stringWithFormat:@"%@",zw[y]];
+             NSString *stringInt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
+            if ([zwnum isEqual: stringInt]) {
+                jsid = zwnum;
+                if ([jsid isEqualToString:@"5"]) {
+                    lbnum = @"2";
+                }else if([jsid isEqualToString:@"2"]){
+                    lbnum = @"1";
+                }else if ([jsid isEqualToString:@"16"]){
+                    lbnum = @"3";
+                }else if ([jsid isEqualToString:@"3"]){
+                    lbnum = @"4";
+                }else {
+                    lbnum = @"5";
+                }
+            }
+        }
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPositionLevel.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid,@"Num":lbnum};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
+            NSLog(@"%@",responseObject);
+            //id = 31;
+//            levelName = 4444444;
+            NSArray *arrt= [responseObject valueForKey:@"list"];
+            NSMutableArray *zwlbid = [[NSMutableArray alloc]init];
+            NSMutableArray *zwlbname = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in arrt) {
+                [zwlbid  addObject:[dic valueForKey:@"id"]];
+                [zwlbname addObject:[dic valueForKey:@"levelName"]];
+            }
+            //[SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
+            [SelectAlert showWithTitle:@"选择职位类别" titles:zwlbname selectIndex:^(NSInteger selectIndex) {
+                
+            } selectValue:^(NSString *selectValue) {
+                
+            } showCloseButton:NO];
+        }else if([[responseObject valueForKey:@"status"] isEqualToString:@"5000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"贵公司没有设置职业类别哦" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限更改职位" andInterval:1.0];
+        }else{
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
+        }
+
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
+    
 }
 #pragma mark 点击所属部门
 -(void)SSButtonbtn:(UIButton*)btn{

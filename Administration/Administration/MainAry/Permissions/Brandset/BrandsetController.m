@@ -26,6 +26,7 @@
 @implementation BrandsetController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    NSLog(@"::::%@",self.str);
     if ([self.str isEqualToString:@"1"]) {
          _tableView.emptyView.hidden = YES;
         [self datalade];
@@ -34,6 +35,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.str = [[NSString alloc]init];
     self.title=@"品牌部";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,7 +82,7 @@
                     }
                     [self.dataArray addObject:logoArr];
                 }
-    
+            [self.tableView reloadData];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
@@ -104,7 +106,7 @@
             [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息" Size:20.0];
             _tableView.emptyView.hidden = NO;
         }
-        [self.tableView reloadData];
+        //[self.tableView reloadData];
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -191,6 +193,10 @@
         EditbrandController * EditVC=[[EditbrandController alloc]init];
          EditVC.nameStr = _daArr[indexPath.row];
          EditVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];
+        EditVC.String=^(NSString *str){
+            self.str=@"1";
+        };
+        
         [self.navigationController pushViewController:EditVC animated:YES];
        
       }];
@@ -201,7 +207,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DetailsbrandController *detailVC=[[DetailsbrandController alloc]init];
     detailVC.blockStr=^(){
-        self.str=@"1";
+        self.str=@"0";
     };
     detailVC.nameStr = _daArr[indexPath.row];
     detailVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];

@@ -16,5 +16,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *submittedImage;
 @property (weak, nonatomic) IBOutlet UILabel *submittedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *birLabel;
+@property (weak, nonatomic) IBOutlet UILabel *DdLabel;
+@property (weak, nonatomic) IBOutlet UILabel *swgkLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *progress;
 
 @end

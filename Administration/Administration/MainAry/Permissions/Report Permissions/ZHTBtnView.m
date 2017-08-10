@@ -45,6 +45,23 @@
         _NSywjlAry = [[NSMutableArray alloc]init];
         _NSkjAry = [[NSMutableArray alloc]init];
         
+         _NSywoldAry = [[NSArray alloc]init];
+         _NSmdoldAry = [[NSArray alloc]init];
+         _NSwloldAry = [[NSArray alloc]init];
+         _NSkfoldAry = [[NSArray alloc]init];
+         _NSckoldAry = [[NSArray alloc]init];
+         _NScnoldAry = [[NSArray alloc]init];
+         _NScwjloldAry = [[NSArray alloc]init];
+         _NSwljloldAry = [[NSArray alloc]init];
+         _NSkfjloldAry = [[NSArray alloc]init];
+         _NSscjloldAry = [[NSArray alloc]init];
+         _NSywjloldAry = [[NSArray alloc]init];
+         _NSkjoldAry = [[NSArray alloc]init];
+        
+        
+        
+        
+        
     }
     return self;
 }
@@ -72,52 +89,78 @@
         _NSywjlAry = [[NSMutableArray alloc]init];
         _NSkjAry = [[NSMutableArray alloc]init];
         
+        
+        _NSywoldAry = [[NSArray alloc]init];
+        _NSmdoldAry = [[NSArray alloc]init];
+        _NSwloldAry = [[NSArray alloc]init];
+        _NSkfoldAry = [[NSArray alloc]init];
+        _NSckoldAry = [[NSArray alloc]init];
+        _NScnoldAry = [[NSArray alloc]init];
+        _NScwjloldAry = [[NSArray alloc]init];
+        _NSwljloldAry = [[NSArray alloc]init];
+        _NSkfjloldAry = [[NSArray alloc]init];
+        _NSscjloldAry = [[NSArray alloc]init];
+        _NSywjloldAry = [[NSArray alloc]init];
+        _NSkjoldAry = [[NSArray alloc]init];
+        
         switch (_copde) {
             case 5:
                 [_NSywAry addObjectsFromArray: powerAry];
+                _NSywoldAry = powerAry;
                 break;
             case 2:
                 
                 [_NSmdAry addObjectsFromArray: powerAry];
+                _NSmdoldAry = powerAry;
                 break;
             case 4:
                 
                 [_NSwlAry addObjectsFromArray:powerAry];
+                _NSwloldAry = powerAry;
                 break;
             case 3:
                 [_NSkfAry addObjectsFromArray:powerAry];
+                _NSkfoldAry = powerAry;
                 break;
             case 14:
     
                 [_NSckAry addObjectsFromArray:powerAry];
+                _NSckoldAry = powerAry;
                 break;
             case 16:
                
                 [_NSkjAry addObjectsFromArray:powerAry];
+                _NSkjoldAry = powerAry;
                 break;
             case 17:
                 
                 [_NScnAry addObjectsFromArray:powerAry];
+                _NScnoldAry = powerAry;
                 break;
             case 15:
                
                 [_NScwjlAry addObjectsFromArray:powerAry];
+                _NScwjloldAry = powerAry;
                 break;
             case 13:
                
                 [_NSwljlAry addObjectsFromArray:powerAry];
+                _NSwljloldAry = powerAry;
                 break;
             case 12:
                 
                 [_NSkfjlAry addObjectsFromArray:powerAry];
+                _NSkfjloldAry = powerAry;
                 break;
             case 6:
                 
                 [_NSscjlAry addObjectsFromArray:powerAry];
+                _NSscjloldAry = powerAry;
                 break;
             case 8:
                 
                 [_NSywjlAry addObjectsFromArray:powerAry];
+                _NSywjloldAry = powerAry;
                 break;
                 
             default:
@@ -332,14 +375,16 @@
     for (int i = 0; i<_ywAry.count; i ++) {
         _buttonname= [[UIButton alloc]init];
         [_buttonname setTitle:_ywAry[i] forState:UIControlStateNormal];
+        NSString *namele = _ywAry[i];
         if (_copde == 3) {
-           _buttonname.frame = CGRectMake(((Scree_width-80)/(_ywAry.count-1))*i+40-(Scree_width-80)/5/2, 0, (Scree_width-80)/5, 25);
+           _buttonname.frame = CGRectMake(((Scree_width-80)/(_ywAry.count-1))*i+40-namele.length*(kWidth*40)/2, 0, namele.length*(kWidth*35), 25);
+            
             _buttonname.font = [UIFont systemFontOfSize:kWidth*25];
         }else if (_ywAry.count == 1){
-            _buttonname.frame = CGRectMake((Scree_width/2)-(Scree_width-80)/4/2, 0, (Scree_width-80)/4, 25);
+            _buttonname.frame = CGRectMake((Scree_width/2)-namele.length*(kWidth*40)/2, 0, namele.length*(kWidth*40), 25);
             _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
         }else{
-         _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-(Scree_width-80)/4/2, 0, (Scree_width-80)/4, 25);
+         _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-namele.length*(kWidth*40)/2, 0, namele.length*(kWidth*40), 25);
             _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
         }
         _buttonname.tag = i;
@@ -354,10 +399,10 @@
         [_buttonAry addObject:_buttonname];
        _gouimage1 = [[UIImageView alloc]init];
         if (_copde == 3) {
-            _gouimage1.frame = CGRectMake(((Scree_width-80)/5)-10, 15, 10, 10);
+            _gouimage1.frame = CGRectMake(namele.length*(kWidth*40)-20, 15, 10, 10);
         }else
         {
-        _gouimage1.frame = CGRectMake(((Scree_width-80)/4)-10, 15, 10, 10);
+        _gouimage1.frame = CGRectMake(namele.length*(kWidth*40)-10, 15, 10, 10);
         }
         
         _gouimage1.tag= i;
@@ -659,73 +704,73 @@
 -(void)BtnClick:(UIButton *)btn{
     switch (_viewbuton.tag) {
         case 5:
-            [self backButton:btn nsarry:_NSywAry];
+            [self backButton:btn nsarry:_NSywAry oldary:_NSywoldAry];
             break;
         case 2:
-            [self backButton:btn nsarry:_NSmdAry];
+            [self backButton:btn nsarry:_NSmdAry oldary:_NSmdoldAry];
             break;
         case 4:
-            [self backButton:btn nsarry:_NSwlAry];
+            [self backButton:btn nsarry:_NSwlAry oldary:_NSwloldAry];
             break;
         case 3:
-            [self backButton:btn nsarry:_NSkfAry];
+            [self backButton:btn nsarry:_NSkfAry oldary:_NSkfoldAry];
             break;
         case 14:
-            [self backButton:btn nsarry:_NSckAry];
+            [self backButton:btn nsarry:_NSckAry oldary:_NSckoldAry];
             break;
         case 16:
-            [self backButton:btn nsarry:_NSkjAry];
+            [self backButton:btn nsarry:_NSkjAry oldary:_NSkjoldAry];
             break;
         case 17:
-            [self backButton:btn nsarry:_NScnAry];
+            [self backButton:btn nsarry:_NScnAry oldary:_NScnoldAry];
             break;
         case 15:
-            [self backButton:btn nsarry:_NScwjlAry];
+            [self backButton:btn nsarry:_NScwjlAry oldary:_NScwjloldAry];
             break;
         case 13:
-            [self backButton:btn nsarry:_NSwljlAry];
+            [self backButton:btn nsarry:_NSwljlAry oldary:_NSwljloldAry];
             break;
         case 12:
-            [self backButton:btn nsarry:_NSkfjlAry];
+            [self backButton:btn nsarry:_NSkfjlAry oldary:_NSkfjloldAry];
             break;
         case 6:
-            [self backButton:btn nsarry:_NSscjlAry];
+            [self backButton:btn nsarry:_NSscjlAry oldary:_NSscjloldAry];
             break;
         case 8:
-            [self backButton:btn nsarry:_NSywjlAry];
+            [self backButton:btn nsarry:_NSywjlAry oldary:_NSywjloldAry];
             break;
         default:
             break;
     }
 }
--(void)backButton:(UIButton *)backButton nsarry:(NSMutableArray *)nsarry{
+-(void)backButton:(UIButton *)backButton nsarry:(NSMutableArray *)nsarry oldary:(NSArray*)oldary{
     switch (backButton.tag) {
         case 0:
             _gouimage1 = _imageAry[0];
-            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
+            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry oldary:oldary];
             break;
         case 1:
             _gouimage1 = _imageAry[1];
-            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
+            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry oldary:oldary];
             break;
         case 2:
             _gouimage1 = _imageAry[2];
-            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
+            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry oldary:oldary];
             break;
         case 3:
             _gouimage1 = _imageAry[3];
-            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
+            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry oldary:oldary];
             break;
         case 4:
             _gouimage1 = _imageAry[4];
-            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry];
+            [self gouimageback:_gouimage1 btn:backButton nsary:nsarry oldary:oldary];
             break;
         default:
             break;
     }
 }
--(void)gouimageback:(UIImageView*)gouimageback btn:(UIButton *)btn nsary:(NSMutableArray*)nsary{
-    
+-(void)gouimageback:(UIImageView*)gouimageback btn:(UIButton *)btn nsary:(NSMutableArray*)nsary oldary:(NSArray*)oldary{
+
     if ([gouimageback.image isEqual:[UIImage imageNamed:@"xz_ico1"]]) {
         gouimageback.image = [UIImage imageNamed:@""];
         btn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -733,10 +778,21 @@
         
         [nsary removeObject:sttttt];
         
-        NSLog(@"取消选择的职位:%@",nsary);
-        if (nsary.count == 0) {
-            [self buttonligbackcolor];
+     
+       
+        NSArray *selectWrong = [oldary filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF in %@)", nsary]];
+        NSLog(@"不一样的%@",selectWrong);
+        if (selectWrong.count>0) {
+            [self buttonblueColorbackcolor];
+        }else{
+            NSArray *selectWrong1 = [nsary filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF in %@)", oldary]];
+            if (selectWrong1.count>0) {
+                [self buttonblueColorbackcolor];
+            }else{
+                [self buttonligbackcolor];
+            }
         }
+        
     }else{
         gouimageback.image = [UIImage imageNamed:@"xz_ico1"];
         btn.layer.borderColor = [[UIColor orangeColor] CGColor];
@@ -746,7 +802,20 @@
         
         [nsary removeObject:@""""];
         NSLog(@"选择的职位:%@",nsary);
-        [self buttonblueColorbackcolor];
+        NSArray *selectWrong = [oldary filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF in %@)", nsary]];
+        NSLog(@"不一样的%@",selectWrong);
+        if (selectWrong.count>0) {
+            [self buttonblueColorbackcolor];
+        }else{
+            NSArray *selectWrong1 = [nsary filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF in %@)", oldary]];
+            if (selectWrong1.count>0) {
+                [self buttonblueColorbackcolor];
+            }else{
+             [self buttonligbackcolor];
+            }
+           
+        }
+        
     }
 
 }

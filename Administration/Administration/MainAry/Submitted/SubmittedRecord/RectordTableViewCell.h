@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RectordModel.h"
+#import "SubmittedModel.h"
 @interface RectordTableViewCell : UITableViewCell
--(void)loadDataFromModel:(RectordModel *)model;
+-(void)loadDataFromModel:(SubmittedModel *)model;
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *submittedLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *submittedImage;
+@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *NRLabel;
+@property (weak, nonatomic) IBOutlet UILabel *JZCDLabel;
 @end

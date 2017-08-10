@@ -101,9 +101,22 @@
     downLineView.backgroundColor = [UIColor lightGrayColor];
     [centerView addSubview:downLineView];
 
+    //closeBtn取消按钮
+    closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    closeBtn.frame =CGRectMake(0, downLineView.bottom+10, centerView.frame.size.width/2, 30);
+    [centerView addSubview:closeBtn];
+    [closeBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [closeBtn setTitleColor:GetColor(7, 138, 249, 1) forState:UIControlStateNormal];
+    closeBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [closeBtn addTarget:self action:@selector(closeBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
+    
     //确认按钮
     sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sureBtn.frame =CGRectMake(centerView.frame.size.width/2-30, downLineView.bottom+10, 60, 30);
+    sureBtn.frame =CGRectMake(centerView.frame.size.width/2+10, downLineView.bottom+10, centerView.frame.size.width/2-10, 30);
     [centerView addSubview:sureBtn];
     [sureBtn setTitle:@"完成" forState:UIControlStateNormal];
     [sureBtn setTitleColor:GetColor(7, 138, 249, 1) forState:UIControlStateNormal];
@@ -158,7 +171,9 @@
     }
 }
 
-
+-(void)closeBtnAction{
+    [self dismissPopViewAnimate:YES];
+}
 -(void)sureBtnAction:(UIButton *)btn {
     [self dismissPopViewAnimate:YES];
         if (textfield.text.length != 0) {

@@ -342,6 +342,9 @@
                 NSString * companyinfoid=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"companyinfoid"]];
             //用户名字
             NSString * name=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"name"]];
+            
+            //用户所有职位
+            NSString *roleIds = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleIds"]];
             //用户手机号 phone
             [USER_DEFAULTS setObject:_nameStr forKey:@"phone"];
             [USER_DEFAULTS setObject:roleId forKey:@"roleId"];
@@ -352,6 +355,7 @@
             [USER_DEFAULTS  setObject:_shibieStr forKey:@"udid"];
             [USER_DEFAULTS  setObject:@"1" forKey:@"guiiiii"];
             [USER_DEFAULTS  setObject:uuid forKey:@"uuid"];
+            [USER_DEFAULTS  setObject:roleIds forKey:@"roleIds"];
 //            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
 //            if (error==nil) {
 //                NSLog(@"注册成功");

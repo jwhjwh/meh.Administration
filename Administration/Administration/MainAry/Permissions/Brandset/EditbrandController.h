@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 typedef void  (^BLOCKBarndStr)();
+typedef void  (^OtherStr)(NSString *str);
 @interface EditbrandController : UIViewController
 @property (nonatomic,strong)NSString *nameStr;
 @property (nonatomic,strong)NSString *BarandID;
+@property (nonatomic,strong)OtherStr String;
 @property (nonatomic,strong)BLOCKBarndStr Str;
 @end

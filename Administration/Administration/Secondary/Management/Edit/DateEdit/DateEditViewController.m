@@ -25,6 +25,8 @@
 @property (nonatomic,strong) NSString *Age;
 @property (nonatomic,strong) NSString *IdNo;
 
+@property (nonatomic,strong) NSString*phone;//手机号
+
 @property (nonatomic,strong) NSString *Wcode;
 @property (nonatomic,strong) NSString *Qcode;
 @property (nonatomic,strong) NSString *Interests;
@@ -78,7 +80,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSLog(@"%@%@%@%@",_DayLabel.text,_Age,_IdNo,_AddLabel.text);
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Birthday":_DayLabel.text,@"Age":_Age,@"IdNo":_IdNo,@"Address":_AddLabel.text,@"Wcode":_Wcode,@"Qcode":_Qcode,@"Interests":_Interests,@"SDASD":_SDASD};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Birthday":_DayLabel.text,@"Age":_Age,@"IdNo":_IdNo,@"Address":_AddLabel.text,@"Wcode":_Wcode,@"Qcode":_Qcode,@"Interests":_Interests,@"SDASD":_SDASD,@"phone":self.phone};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
@@ -225,6 +227,8 @@
         codeField.tag = row;
         switch (codeField.tag) {
             case 0:
+                self.phone = codeField.text;
+                NSLog(@"手机号是 :%@",codeField.text);
                 break;
             case 1:
                 self.Wcode = codeField.text;
@@ -312,6 +316,8 @@
 {
     switch (textField.tag) {
         case 0:
+            self.phone = textField.text;
+            NSLog(@"手机号是 :%@",textField.text);
             break;
         case 1:
             self.Wcode = textField.text;

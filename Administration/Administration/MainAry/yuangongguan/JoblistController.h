@@ -10,7 +10,7 @@
 
 @interface JoblistController : UIViewController
 @property (nonatomic,assign)int Num;
-@property (nonatomic,assign) BOOL isAddPerson;
+
 @property (nonatomic,strong) NSString *titleStr;
 @property (nonatomic,strong) UIImage *imageGroup;
 @property (nonatomic,strong) NSString *stringGroup;
