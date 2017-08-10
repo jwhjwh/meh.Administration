@@ -225,6 +225,7 @@
             _callName=model.name;
             self.userModel = [[EaseUserModel alloc]initWithBuddy:self.dicinfo[@"uuid"]];
             self.userModel.nickname = self.dicinfo[@"name"];
+            
             if (![model.LevelName isEqualToString:@""]) {
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"类别",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
@@ -262,7 +263,7 @@
             };
             [alertView showMKPAlertView];
         }
-else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+        else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"无员工信息" andInterval:1.0];
             _infonTableview.emptyView.hidden = NO;
         }

@@ -25,7 +25,7 @@
 
 //将文字添加到图片上
 
-+ (UIImage*)text:(NSString*)text addToView:(UIImage*)image{
++ (UIImage*)text:(NSString*)text city:(NSString *)city  addToView:(UIImage*)image{
     
     //设置字体样式
     
@@ -34,6 +34,7 @@
     NSDictionary*dict =@{NSFontAttributeName:font,NSForegroundColorAttributeName:[UIColor whiteColor]};
     
     CGSize textSize = [text sizeWithAttributes:dict];
+    CGSize citySize = [city sizeWithAttributes:dict];
     
     //绘制上下文
     
@@ -43,10 +44,12 @@
     
     int border =10;
     
-    CGRect re = {CGPointMake(image.size.width- textSize.width- border, image.size.height- textSize.height- border), textSize};
-    
+    CGRect re = {CGPointMake(image.size.width- textSize.width- border, image.size.height- textSize.height- border-50), textSize};
+    CGRect ree = {CGPointMake(image.size.width- citySize.width- border, image.size.height- citySize.height- border), citySize};
     //此方法必须写在上下文才生效
     [text drawInRect:re withAttributes:dict];
+    
+    [city drawInRect:ree withAttributes:dict];
     
     UIImage*newImage =UIGraphicsGetImageFromCurrentImageContext();
     

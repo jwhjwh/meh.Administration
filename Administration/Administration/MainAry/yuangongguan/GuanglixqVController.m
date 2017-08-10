@@ -244,6 +244,7 @@
                     celled.mLabel.text=_arr[indexPath.section][indexPath.row];
                     [celled setNeedsUpdateConstraints];
                     [celled updateConstraintsIfNeeded];
+                    celled.selectionStyle = UITableViewCellSeparatorStyleNone;
                     return celled;
                 }
             }
@@ -288,7 +289,7 @@
                     depmtCell *celled=[[depmtCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"depmCell" arr:_copedepar[indexPath.row] numcode:1];
                     celled.mLabel.text=_arr[indexPath.section][indexPath.row];
                     celled.mLabel.textColor = [UIColor lightGrayColor];
-                    
+                    celled.selectionStyle = UITableViewCellSeparatorStyleNone;
                     [celled setNeedsUpdateConstraints];
                     [celled updateConstraintsIfNeeded];
                     
@@ -432,47 +433,94 @@
     return 50;
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section==4) {
-        switch (indexPath.row) {
-            case 0:{
-                dongjieViewController *dongjieVC=[[dongjieViewController alloc]init];
-                dongjieVC.state=_state;
-                dongjieVC.uresID=_uresID;
-                dongjieVC.stateBlock=^(NSString*str){
-                    _state=str;
-                    [_infonTableview reloadData];
-                };
-                [self.navigationController pushViewController:dongjieVC animated:YES];
+    if(_copedepar.count>0 && _departarr>0){
+        if (indexPath.section==4) {
+            switch (indexPath.row) {
+                case 0:{
+                    dongjieViewController *dongjieVC=[[dongjieViewController alloc]init];
+                    dongjieVC.state=_state;
+                    dongjieVC.uresID=_uresID;
+                    dongjieVC.stateBlock=^(NSString*str){
+                        _state=str;
+                        [_infonTableview reloadData];
+                    };
+                    [self.navigationController pushViewController:dongjieVC animated:YES];
+                }
+                    break;
+                case 1:{
+                    xiugaiViewController *xiugaiVC=[[xiugaiViewController alloc]init];
+                    xiugaiVC.uresID=_uresID;
+                    xiugaiVC.callNum=_callNum;
+                    [self.navigationController pushViewController:xiugaiVC animated:YES];
+                }
+                    break;
+                case 2:{
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"删除后所有信息都被删除，不可恢复.确定要删除该员工吗?" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        if (index == 2) {
+                            [self shanchuyuangong ];
+                        }
+                        
+                    };
+                    [alertView showMKPAlertView];
+                }
+                    break;
+                default:
+                    break;
             }
-                break;
-            case 1:{
-                xiugaiViewController *xiugaiVC=[[xiugaiViewController alloc]init];
-                xiugaiVC.uresID=_uresID;
-                xiugaiVC.callNum=_callNum;
-                [self.navigationController pushViewController:xiugaiVC animated:YES];
-            }
-                break;
-            case 2:{
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"确定要删除该员工吗" sureBtn:@"确认" cancleBtn:@"取消"];
-                alertView.resultIndex = ^(NSInteger index){
-                    if (index == 2) {
-                        [self shanchuyuangong ];
-                    }
-                    
-                };
-                [alertView showMKPAlertView];
-            }
-                break;
-            default:
-                break;
+        }else if(indexPath.section==5){
+            
+            PerLomapController *perLomaVC=[[PerLomapController alloc]init];
+            perLomaVC.uesrId=_uresID;
+            perLomaVC.name=_infoArray[1];
+            perLomaVC.account=[NSString stringWithFormat:@"%@",_infoArray[0]];
+            [self.navigationController pushViewController:perLomaVC animated:YES];
         }
-    }else if(indexPath.section==4){
-        
-        PerLomapController *perLomaVC=[[PerLomapController alloc]init];
-        perLomaVC.uesrId=_uresID;
-        perLomaVC.name=_infoArray[1];
-        perLomaVC.account=[NSString stringWithFormat:@"%@",_infoArray[0]];
-        [self.navigationController pushViewController:perLomaVC animated:YES];
+
+    }else{
+        if (indexPath.section==3) {
+            switch (indexPath.row) {
+                case 0:{
+                    dongjieViewController *dongjieVC=[[dongjieViewController alloc]init];
+                    dongjieVC.state=_state;
+                    dongjieVC.uresID=_uresID;
+                    dongjieVC.stateBlock=^(NSString*str){
+                        _state=str;
+                        [_infonTableview reloadData];
+                    };
+                    [self.navigationController pushViewController:dongjieVC animated:YES];
+                }
+                    break;
+                case 1:{
+                    xiugaiViewController *xiugaiVC=[[xiugaiViewController alloc]init];
+                    xiugaiVC.uresID=_uresID;
+                    xiugaiVC.callNum=_callNum;
+                    [self.navigationController pushViewController:xiugaiVC animated:YES];
+                }
+                    break;
+                case 2:{
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"删除后所有信息都被删除，不可恢复.确定要删除该员工吗?" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        if (index == 2) {
+                            [self shanchuyuangong ];
+                        }
+                        
+                    };
+                    [alertView showMKPAlertView];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }else if(indexPath.section==4){
+            
+            PerLomapController *perLomaVC=[[PerLomapController alloc]init];
+            perLomaVC.uesrId=_uresID;
+            perLomaVC.name=_infoArray[1];
+            perLomaVC.account=[NSString stringWithFormat:@"%@",_infoArray[0]];
+            [self.navigationController pushViewController:perLomaVC animated:YES];
+        }
+
     }
 }
 #pragma mark 删除员工

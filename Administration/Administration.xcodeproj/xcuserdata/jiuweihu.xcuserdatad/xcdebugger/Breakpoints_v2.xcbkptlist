@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/Secondary/Positioning/PositioningViewController.m"
-            timestampString = "522656521.316792"
+            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
+            timestampString = "523587603.824553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "423"
+            endingLineNumber = "423"
+            landmarkName = "-JsLBButtonbtn:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,13 +35,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/Secondary/Positioning/PositioningViewController.m"
-            timestampString = "522656521.316792"
+            filePath = "Administration/MainAry/Permissions/Brandset/OtherDepartments/AddotherController.m"
+            timestampString = "523789790.448752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "-yuFoldingSectionHeaderTappedAtIndex:"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "-buttonLiftItem"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/Secondary/Management/Edit/EditDataViewController.m"
+            timestampString = "524042681.785842"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "-loadDataFromServer"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

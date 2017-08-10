@@ -169,6 +169,7 @@
                 [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
                     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
                     {
+                        
                         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"创建成功" sureBtn:@"确认" cancleBtn:nil];
                         alertView.resultIndex = ^(NSInteger index){
                             [self.navigationController popViewControllerAnimated:YES];
@@ -253,6 +254,7 @@
 #pragma mark  选择角色
 -(void)JsButtonbtn:(UIButton *)btn{
     [self showAlert:titles button:btn];
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }
 
 
@@ -604,14 +606,10 @@
 }
 - (void)textFieldWithText:(UITextField *)textField
 {
-    
     switch (textField.tag) {
         case 1:
             NameorID = textField.text;
-             [[EMClient sharedClient] setApnsNickname:textField.text];
             
-            [[UserProfileManager sharedInstance] updateUserProfileInBackground:@{kPARSE_HXUSER_NICKNAME:textField.text} completion:^(BOOL success, NSError *error) {
-            }];
             NSLog(@"姓名:%@",textField.text);
             break;
         case 2:

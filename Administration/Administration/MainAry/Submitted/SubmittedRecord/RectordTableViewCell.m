@@ -12,17 +12,19 @@
 
 
 
--(void)loadDataFromModel:(RectordModel *)model{
-    
-    
-    
-    
+-(void)loadDataFromModel:(SubmittedModel *)model{
     NSString *Subimagestr = [NSString stringWithFormat:@"%@%@",KURLHeader,model.picture];
     [self.submittedImage sd_setImageWithURL:[NSURL URLWithString:Subimagestr]placeholderImage:[UIImage imageNamed:@"ph_mt"]];
     
-    self.submittedLabel.text = model.describe;
+    self.dayLabel.text = [model.dates substringToIndex:16];
     
-    self.dayLabel.text = model.dateTimes;
+    self.submittedLabel.text  = [NSString stringWithFormat:@"时间 %@",[model.dateTimes substringToIndex:10]] ;
+    
+    self.cityLabel.text = [NSString stringWithFormat:@"地点 %@",model.locations];
+    
+    self.NRLabel.text = [NSString stringWithFormat:@"事务概括 %@",model.describe];
+    
+    self.JZCDLabel.text = [NSString stringWithFormat:@"进展程度  %@",model.progress];
     
 }
 - (void)awakeFromNib {

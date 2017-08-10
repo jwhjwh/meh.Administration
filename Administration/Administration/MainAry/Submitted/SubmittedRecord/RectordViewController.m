@@ -7,7 +7,7 @@
 //
 
 #import "RectordViewController.h"
-#import "RectordModel.h"
+#import "SubmittedModel.h"
 #import "RectordTableViewCell.h"
 #import "DateSubmittedViewController.h"
 @interface RectordViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -32,6 +32,7 @@
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
    [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     
@@ -90,7 +91,7 @@
             NSArray *array=[responseObject valueForKey:@"plist"];
                 [self endRefresh];
                 for (NSDictionary *dic in array) {
-                    RectordModel *model=[[RectordModel alloc]init];
+                    SubmittedModel *model=[[SubmittedModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
                     model.dateTimes = [model.dateTimes substringToIndex:16];
                     [self.dataArray addObject:model];
@@ -142,8 +143,9 @@
     if (self.dataArray.count <=0) {
         return cell;
     }
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    RectordModel *model = _dataArray[indexPath.section];
+    SubmittedModel *model = _dataArray[indexPath.section];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     cell.backgroundColor = [UIColor whiteColor];
     [cell loadDataFromModel:model];
@@ -157,8 +159,8 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     DateSubmittedViewController *detail = [[DateSubmittedViewController alloc]init];
-    RectordModel *model =self.dataArray[indexPath.section];
-    detail.contentid = model.Pid;
+    SubmittedModel *model =self.dataArray[indexPath.section];
+    detail.contentid = model.pid;
     
     [self.navigationController pushViewController:detail animated:YES];
     

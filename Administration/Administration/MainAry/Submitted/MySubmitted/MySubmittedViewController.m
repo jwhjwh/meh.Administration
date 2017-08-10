@@ -30,10 +30,15 @@
 //列表
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataLabel;
+@property (nonatomic,strong) NSMutableArray *ligdataLabel;
+@property (nonatomic,strong) NSMutableArray *ligLabelAry;
+
+
+@property (strong,nonatomic) UILabel *ligLabel;
 @property (strong, nonatomic)  UIImageView *dateImage;//图片
 @property (strong,nonatomic) UIButton *submittedBtn;//报岗记录按钮
 @property (strong,nonatomic) UILabel *subDayLabel; // 时间
-@property (strong,nonatomic) UITextView *DiDTextView;//地点
+@property (strong,nonatomic) UITextField *DiDTextView;//地点
 
 @property (nonatomic,strong) PW_DatePickerView *PWpickerView;
 @property (nonatomic, strong)UIImage *goodPicture;
@@ -44,6 +49,10 @@
 @property (nonatomic,strong) NSString *Wcode;
 @property (nonatomic,strong) NSString *Qcode;
 @property (nonatomic,strong) NSString *address;
+//DateTimes
+@property (nonatomic,strong) NSString *DateTimes;
+
+@property (nonatomic,strong) NSString *cityy;
 @end
 
 @implementation MySubmittedViewController
@@ -52,6 +61,9 @@
     [super viewDidLoad];
     [self startLocation];
     self.title = @"图片报岗";
+    _Qcode = [[NSString alloc]init];
+    _Age = [[NSString alloc]init];
+    _ligLabelAry = [[NSMutableArray alloc]init];
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -70,7 +82,8 @@
     rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     
-    self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"想做的事",@"进展程度", nil];
+    self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"事务概述",@"进展程度", nil];
+    self.ligdataLabel =[NSMutableArray arrayWithObjects:@"选择时间",@"填写地点",@"填写事务概述",@"填写进展程度", nil];
     [self mySubmittedUI];
 }
 -(void)buiftItem{
@@ -78,15 +91,16 @@
 }
 -(void)masgegeClick
 {
+    //1501010   //150222222232
     //picreport/queryPic.action  pageNo
-    if (self.goodPicture == nil || _Wcode == nil||[_Wcode isEqualToString:@""]) {
+    if (self.goodPicture == nil || _Wcode == nil||[_Wcode isEqualToString:@""]||_Age == nil||_Qcode == nil||_DateTimes == nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写内容" andInterval:1.0];
     }else{
     NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
     NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-   NSDictionary* dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"4",@"str":_Wcode};
+        NSDictionary* dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"4",@"str":_Wcode,@"DateTimes":_DateTimes,@"Progress":_Qcode,@"Locations":_Age};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
@@ -100,7 +114,6 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
         [MBProgressHUD hideHUDForView: self.view animated:NO];
         NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
         NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
@@ -135,7 +148,7 @@
         make.bottom.equalTo (self.view.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.right.equalTo(self.view.mas_right).offset(0);
-        make.height.mas_equalTo(@80);
+        make.height.mas_equalTo(kHeight*160);
     }];
     
     self.tableView = [[UITableView alloc]init];
@@ -143,7 +156,7 @@
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -177,6 +190,7 @@
     {
         
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.textLabel.text = _dataLabel[indexPath.row];
     CGRect labelRect2 = CGRectMake(100, 1, self.view.bounds.size.width-100, 48);
@@ -184,32 +198,35 @@
         _subDayLabel = [[UILabel alloc]initWithFrame:labelRect2];
         [cell addSubview:_subDayLabel];
     }else {
-        _DiDTextView =[[UITextView alloc]initWithFrame:labelRect2];
+        _DiDTextView =[[UITextField alloc]initWithFrame:labelRect2];
         _DiDTextView.backgroundColor=[UIColor whiteColor];
         _DiDTextView.font = [UIFont boldSystemFontOfSize:13.0f];
         _DiDTextView.tag = row;
-        _DiDTextView.delegate = self;
-        
-        
+        _DiDTextView.placeholder = _ligdataLabel[indexPath.row];
         [cell addSubview:_DiDTextView];
-    
+        [_DiDTextView addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }
     return cell;
 }
-- (void)textViewDidChange:(UITextView *)textView
-
+- (void)textFieldDidChange :(UITextField *)textField
 {
-    switch (textView.tag) {
+    switch (textField.tag) {
         case 1:
-            NSLog(@"dd:%@",textView.text);
+            //地点
+            NSLog(@"dd:%@",textField.text);
+            _Age = textField.text;
             break;
         case 2:
-            _Wcode = textView.text;
-            NSLog(@"Age%@",textView.text);
+            //事务概述
+            _Wcode = textField.text;
+            NSLog(@"Age%@",textField.text);
+            
             break;
         case 3:
+            //进展程度
+            _Qcode = textField.text;
+            NSLog(@"IdNo:%@,",textField.text);
             
-            NSLog(@"IdNo:%@,",textView.text);
             break;
         default:
             break;
@@ -222,7 +239,6 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-(50*4)-64-80)];
-    
         _dateImage = [[UIImageView alloc]init];
         _dateImage.image = [UIImage imageNamed:@"ph_mt02"];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTap:)];
@@ -260,9 +276,9 @@
     NSString *dateString = [dateFormatter stringFromDate:currentDate];
     if (!(_address==nil)) {
         
-        self.goodPicture = [ZxdObject  text:[NSString stringWithFormat:@"%@  %@",_address,dateString] addToView: [info objectForKey:UIImagePickerControllerEditedImage]];
+        self.goodPicture = [ZxdObject  text:[NSString stringWithFormat:@"%@  %@",_address,dateString] city:_cityy  addToView: [info objectForKey:UIImagePickerControllerEditedImage]];
     }else{
-        self.goodPicture = [ZxdObject  text:dateString addToView: [info objectForKey:UIImagePickerControllerEditedImage]];
+        self.goodPicture = [ZxdObject  text:dateString city:_cityy   addToView: [info objectForKey:UIImagePickerControllerEditedImage]];
     }
    
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -298,6 +314,8 @@
 - (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString type:(DateType)type;
 {
     _subDayLabel.text  = dateString;
+    _DateTimes = [[NSString alloc]init];
+    _DateTimes = _subDayLabel.text;
 }
 
 -(void)setExtraCellLineHidden: (UITableView *)tableView
@@ -339,23 +357,27 @@
     
     reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
     
-    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
     
-    if(flag){
-        
-        NSLog(@"反geo检索发送成功");
-        
-        [_locService stopUserLocationService];
-        
-    }else{
-        
-        NSLog(@"反geo检索发送失败");
-        
-    }
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (placemarks.count>0) {
+             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            if (placemark != nil) {
+                
+                 NSString *city = placemark.locality;
+                NSString *XIAN = placemark.administrativeArea;
+                NSString*shequ = placemark.subLocality;
+                _cityy = [NSString stringWithFormat:@"%@%@%@",XIAN,city,shequ];
+                
+                
+                //县区-城市-社区-
+                [_locService stopUserLocationService];
+            }
+        }
+    }];
     
 }
 -(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
-
 {
     
     NSLog(@"address:%@----%@",result.addressDetail,result.address);

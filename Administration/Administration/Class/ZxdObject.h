@@ -13,6 +13,6 @@
 +(void)rootController;
 //将文字添加到图片上
 
-+ (UIImage*)text:(NSString*)text addToView:(UIImage*)image;
++ (UIImage*)text:(NSString*)text city:(NSString*)city addToView:(UIImage*)image;
 
 @end

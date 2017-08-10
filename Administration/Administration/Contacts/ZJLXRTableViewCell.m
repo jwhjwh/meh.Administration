@@ -51,31 +51,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
     _TelLabel.textColor=[UIColor lightGrayColor];
     [self.contentView addSubview:_TelLabel];
     
-//    [_TXImage mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(self.mas_left).offset(10);
-//        make.top.mas_equalTo(self.mas_top).offset(10);
-//        make.width.offset(54);
-//        make.height.offset(54);
-//    }];
-  
-//    [_NameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(_TXImage.mas_right).offset(10);
-//        make.right.mas_equalTo(self.mas_right).offset(-10);
-//        make.top.mas_equalTo(_TXImage.mas_top);
-//        make.height.offset(30);
-//    }];
-//    [_zhiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.mas_equalTo(self.mas_right).offset(-10);
-//        make.top.mas_equalTo(_NameLabel.mas_bottom);
-//        make.width.offset(55);
-//        make.height.offset(16);
-//    }];
-//    [_TelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.mas_equalTo(self.mas_right).offset(-10);
-//        make.top.mas_equalTo(_NameLabel.mas_bottom);
-//        make.left.mas_equalTo(_TXImage.mas_right).offset(10);
-//        make.bottom.mas_equalTo(_TXImage.mas_bottom);
-//    }];
+
     [self _setupAvatarViewConstraints];
     [self _setupTitleLabelConstraints];
     [self _setupDetailLabelConstraints];

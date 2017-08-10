@@ -144,7 +144,13 @@
                 
                 NSArray *arr=@[model.account,model.NewName,model.departmentName,];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
-                NSArray *arr2=@[model.account,model.wcode,model.qcode];
+                NSArray *arr2 = [[NSArray alloc]init];
+                if (model.phone.length>1) {
+                    arr2=@[model.phone,model.wcode,model.qcode];
+                }else{
+                    arr2=@[model.account,model.wcode,model.qcode];
+                }
+                
                 NSArray *arr3=@[model.interests,model.sdasd];
                 NSArray *arr4 =@[model.birthday,model.age,model.idNo,model.address];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
@@ -153,7 +159,12 @@
                 _arr=@[@[@"头像"],@[@"账号",@"职位"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 NSArray *arr=@[model.account,model.NewName];
                 NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
-                NSArray *arr2=@[model.account,model.wcode,model.qcode];
+                NSArray *arr2 = [[NSArray alloc]init];
+                if (model.phone.length>1) {
+                    arr2=@[model.phone,model.wcode,model.qcode];
+                }else{
+                    arr2=@[model.account,model.wcode,model.qcode];
+                }
                 NSArray *arr3=@[model.interests,model.sdasd];
                 NSArray *arr4 =@[model.birthday,model.age,model.idNo,model.address];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];

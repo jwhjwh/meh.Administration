@@ -98,11 +98,18 @@
     
 }
 -(void)checkPositionUsers{
+    NSString *RoleId=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"roleIds"]];
     NSString *urlStr =[NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr};
+    NSDictionary *info = [[NSDictionary alloc]init];
+    if (self.DepartmentID.length>0) {
+        info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"roleIds":RoleId,@"DepartmentID":self.DepartmentID};
+    }else{
+        info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"roleIds":RoleId};
+    }
+    
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.dataArray = [NSMutableArray array];

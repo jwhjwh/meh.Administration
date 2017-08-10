@@ -25,7 +25,7 @@
 
 @property (nonatomic,strong) NSString *dateTimes;//日期
 
-@property (nonatomic,strong) NSString *describe;//内容
+@property (nonatomic,strong) NSString *describe;//时间
 
 @property (nonatomic,strong) NSString *icon;//头像
 
@@ -35,7 +35,17 @@
 
 @property (nonatomic,strong)NSString *picture;//报岗图片
 
+@property (nonatomic,strong) NSString *locations;//地点
 
+@property (nonatomic,strong) NSString *progress;//事务概括
+
+@property (nonatomic,strong) NSString *dates;// 报岗时间
+/*
+    describe = 456; -- 时间
+    locations = 123; --地点
+   progress = 789; --事务概括
+ 
+ */
 
 
 @end

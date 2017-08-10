@@ -657,7 +657,7 @@
     else
     {
     JoblistController *controller = [[JoblistController alloc]init];
-    controller.isAddPerson = YES;
+    
     controller.imageGroup = self.goursIamge;
     controller.stringGroup = self.textStr;
     controller.groupID = self.groupID;
