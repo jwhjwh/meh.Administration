@@ -57,6 +57,8 @@
 //人员字符串
 @property (nonatomic,retain) NSString *mid;
 
+//群号
+@property (nonatomic,retain) NSString *GroupNumber;
 
 @property (nonatomic,retain) NSString *ident;
 @end
@@ -248,7 +250,7 @@
                       [ELNAlerTool showAlertMassgeWithController:self andMessage:@"品牌不能为空，请先添加在删除" andInterval:1.0];
                     }else{
                         branModel *model =  _branarr[indexPath.row];
-                        [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1];
+                        [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1 uuid:nil];
                         __weak __typeof__(self) weakSelf = self;
                         weakSelf.Str=^(){
                             [_branarr removeObjectAtIndex:indexPath.row];
@@ -290,7 +292,7 @@
             }else{
                 if (isSele==NO) {
                 DirtmsnaModel *model =  _paleAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
@@ -333,7 +335,7 @@
             }else{
                 if (ismay==NO) {
                     DirtmsnaModel *model =  _ManaAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                     [_ManaAry removeObjectAtIndex:indexPath.row];
@@ -376,7 +378,7 @@
             }else{
                 if (isEay==NO) {
                     DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];
@@ -455,8 +457,10 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [self InterTableUI];
+            _GroupNumber = [[NSString alloc]initWithFormat:@"%@",[responseObject valueForKey:@"GroupNumber"]];
             if ([[responseObject valueForKey:@"bList"]count]==0) {
             _branarr=[[NSMutableArray alloc]initWithObjects:_Bmodeld,nil];
+                
             }else{
                 _branarr=[NSMutableArray array];
                 for (NSDictionary *dic in [responseObject valueForKey:@"bList"]) {
@@ -556,6 +560,7 @@
     multiCV.Num=1;
     multiCV.Numstr=@"1";
     multiCV.BarandID=_BarandID;
+    multiCV.GroupNumber = _GroupNumber;
     multiCV.blockArray =^(NSMutableArray *arr){
         _paleAry=[NSMutableArray array];
         _paleAry=arr;
@@ -575,6 +580,7 @@
     multiCV.Num=1;
     multiCV.Numstr=@"1";
     multiCV.BarandID=_BarandID;
+    multiCV.GroupNumber = _GroupNumber;
     multiCV.blockArray =^(NSMutableArray *arr){
         _ManaAry=[NSMutableArray array];
         _ManaAry=arr;
@@ -589,6 +595,7 @@
 -(void)addEmis{
     EmistController *multiCV=[[EmistController alloc]init];
     multiCV.str=@"添加员工";
+    multiCV.GroupNumber = _GroupNumber;
     multiCV.num=1;
     multiCV.Numstr=@"1";
     multiCV.BarandID=_BarandID;
@@ -629,8 +636,11 @@
     }];
 }
 -(void)targetButton{
+    [self.view endEditing:YES];
     ModifyController *modify=[[ModifyController alloc]init];
     modify.BarandID =_BarandID;
+    modify.GroupNumber = _GroupNumber;
+   
     modify.blockStr =^(NSString *str){
         
     [_Button setTitle:str forState:UIControlStateNormal];
@@ -641,16 +651,16 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num{
+-(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num uuid:(NSString *)uuid{
      NSString *uStr =[NSString stringWithFormat:@"%@%@",KURLHeader,Url];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic;
     if (num==1) {
-        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"BrandID":branid};
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"BrandID":branid,};
     }else{
-         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID};
+         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid};
     }
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -696,7 +706,7 @@
                     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"品牌不能为空，请先添加在删除" andInterval:1.0];
                 }else{
                     branModel *model =  _branarr[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1];
+                    [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1 uuid:nil];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_branarr removeObjectAtIndex:indexPath.row];
@@ -718,7 +728,7 @@
             
             if (isSele==NO) {
                 DirtmsnaModel *model =  _paleAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
@@ -738,7 +748,7 @@
         case 3:{
             if (ismay==NO) {
                 DirtmsnaModel *model =  _ManaAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_ManaAry removeObjectAtIndex:indexPath.row];
@@ -758,7 +768,7 @@
         case 4:{
             if (isEay==NO) {
                 DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2];
+                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];

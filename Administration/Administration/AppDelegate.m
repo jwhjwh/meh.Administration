@@ -12,6 +12,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import "AppDelegate+EaseMob.h"
 #import "ChatUIHelper.h"
+#import "IQKeyboardManager.h"
 //两次提示的默认间隔//两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
@@ -24,6 +25,13 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    IQKeyboardManager *managerr = [IQKeyboardManager sharedManager];
+    managerr.enable = YES;
+    managerr.overrideKeyboardAppearance = YES;
+    managerr.shouldResignOnTouchOutside = YES;
+    managerr.enableAutoToolbar = YES;
+    
     [NSThread sleepForTimeInterval:2.0];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     NSString *token=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"token"]];

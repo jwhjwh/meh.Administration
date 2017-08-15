@@ -59,9 +59,19 @@
         if(_num==1){
             NSMutableArray *Emiarr=[NSMutableArray array];
             for ( DirtmsnaModel *model  in _deleteArrarys) {
-                 [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+                    NSString*usersid=[NSString stringWithFormat:@"%@",model.usersid];
+                    NSString*roleid = [NSString stringWithFormat:@"%@",model.roleId];
+                    NSString *uuid = [NSString stringWithFormat:@"%@",model.uuid];
+                NSMutableDictionary *listUersidd = [NSMutableDictionary dictionary];
+                [listUersidd setValue:usersid forKey:@"usersid"];
+                [listUersidd setValue:uuid forKey:@"uuid"];
+                [listUersidd setValue:roleid forKey:@"roleId"];
+                [Emiarr addObject:listUersidd];
             }
-            [self updateDepartarr:_deleteArrarys string:[NSString stringWithFormat:@"%@",Emiarr]];
+            NSData *data=[NSJSONSerialization dataWithJSONObject:Emiarr options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            [self updateDepartarr:_deleteArrarys string:[NSString stringWithFormat:@"%@",jsonStr]];
+            
         }else{
             if (_deleteArrarys.count>0) {
                 self.blockArr(_deleteArrarys);
@@ -77,10 +87,19 @@
         }
         if(_num==1){
             NSMutableArray *Emiarr=[NSMutableArray array];
-            for ( DirtmsnaModel *model  in deleteArrarys) {
-                [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+            for ( DirtmsnaModel *model  in _deleteArrarys) {
+                NSString*usersid=[NSString stringWithFormat:@"%@",model.usersid];
+                NSString*roleid = [NSString stringWithFormat:@"%@",model.roleId];
+                NSString *uuid = [NSString stringWithFormat:@"%@",model.uuid];
+                NSMutableDictionary *listUersidd = [NSMutableDictionary dictionary];
+                [listUersidd setValue:usersid forKey:@"usersid"];
+                [listUersidd setValue:uuid forKey:@"uuid"];
+                [listUersidd setValue:roleid forKey:@"roleId"];
+                [Emiarr addObject:listUersidd];
             }
-            [self updateDepartarr:_deleteArrarys string:[NSString stringWithFormat:@"%@",Emiarr]];
+            NSData *data=[NSJSONSerialization dataWithJSONObject:Emiarr options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            [self updateDepartarr:_deleteArrarys string:[NSString stringWithFormat:@"%@",jsonStr]];
         }else{
            
             if (deleteArrarys.count>0) {
@@ -199,7 +218,9 @@
     [self.view addSubview:_view1];
      _deleteArrarys = [NSMutableArray array];
 }
-
+/*
+ 
+ */
 - (void)addDataSource{
   
     NSString *uStr =[NSString stringWithFormat:@"%@user/queryFreeEmployee.action",KURLHeader];
@@ -514,7 +535,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"employees": str};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"employees":str,@"GroupNumber":_GroupNumber};
     
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

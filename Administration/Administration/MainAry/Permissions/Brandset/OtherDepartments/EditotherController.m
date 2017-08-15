@@ -52,6 +52,9 @@
 @property (nonatomic,retain) NSString *mid;
 
 @property (nonatomic,retain)NSString *strname;
+
+//群号
+@property (nonatomic,retain) NSString *GroupNumber;
 @end
 
 @implementation EditotherController
@@ -217,7 +220,7 @@
             }else{
                 if (isSele==NO) {
                     DirtmsnaModel *model =  _paleAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_paleAry removeObjectAtIndex:indexPath.row];
@@ -260,7 +263,7 @@
             }else{
                 if (ismay==NO) {
                     DirtmsnaModel *model =  _ManaAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_ManaAry removeObjectAtIndex:indexPath.row];
@@ -303,7 +306,7 @@
             }else{
                 if (isEay==NO) {
                     DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2];
+                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_EmisAry removeObjectAtIndex:indexPath.row];
@@ -376,7 +379,7 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [self InterTableUI];
 
-            
+            _GroupNumber = [[NSString alloc]initWithFormat:@"%@",[responseObject valueForKey:@"GroupNumber"]];
             if ([[[NSDictionary changeType:responseObject] valueForKey:@"dInfo"]isEqual:@""]) {
                 _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
                 
@@ -469,6 +472,7 @@
     multiCV.Num=1;
     multiCV.BarandID=_BarandID;
     multiCV.Numstr=_departNum;
+    multiCV.GroupNumber = _GroupNumber;
     multiCV.blockArray =^(NSMutableArray *arr){
         _ManaAry=[NSMutableArray array];
         _ManaAry=arr;
@@ -486,6 +490,7 @@
     multiCV.num=1;
     multiCV.BarandID=_BarandID;
     multiCV.Numstr=_departNum;
+    multiCV.GroupNumber = _GroupNumber;
     multiCV.blockArr =^(NSMutableArray *arr){
         _EmisAry=[NSMutableArray array];
         _EmisAry=arr;
@@ -523,9 +528,10 @@
     }];
 }
 -(void)targetButton{
+    
     ModifyController *modify=[[ModifyController alloc]init];
     modify.BarandID =_BarandID;
-    
+    modify.GroupNumber = _GroupNumber;
     modify.blockStr =^(NSString *str){
         _strname=@"1";
         [_Button setTitle:str forState:UIControlStateNormal];
@@ -536,7 +542,7 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num{
+-(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num uuid:(NSString *)uuid{
     NSString *uStr =[NSString stringWithFormat:@"%@%@",KURLHeader,Url];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -545,7 +551,7 @@
     if (num==1) {
         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"BrandID":branid};
     }else{
-        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID};
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid};
     }
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -589,7 +595,7 @@
             
             if (isSele==NO) {
                 DirtmsnaModel *model =  _paleAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
@@ -610,7 +616,7 @@
         case 2:{
             if (ismay==NO) {
                 DirtmsnaModel *model =  _ManaAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_ManaAry removeObjectAtIndex:indexPath.row];
@@ -631,7 +637,7 @@
         case 3:{
             if (isEay==NO) {
                 DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2];
+                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];

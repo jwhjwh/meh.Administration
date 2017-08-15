@@ -364,14 +364,15 @@
              CLPlacemark *placemark = [placemarks objectAtIndex:0];
             if (placemark != nil) {
                 
-                 NSString *city = placemark.locality;
+                NSString *city = placemark.locality;
                 NSString *XIAN = placemark.administrativeArea;
                 NSString*shequ = placemark.subLocality;
+                
                 _cityy = [NSString stringWithFormat:@"%@%@%@",XIAN,city,shequ];
                 
-                
+                NSLog(@"%@",_cityy);
                 //县区-城市-社区-
-                [_locService stopUserLocationService];
+                //[_locService stopUserLocationService];
             }
         }
     }];

@@ -10,4 +10,6 @@
 
 @interface BrandsetController : UIViewController
 @property (nonatomic,strong)NSString *strNum;
+
+
 @end

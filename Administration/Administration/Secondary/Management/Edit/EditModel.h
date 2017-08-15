@@ -72,4 +72,7 @@ address = "\U6cb3\U5317\U7701\U77f3\U5bb6\U5e84\U5e02\U8f9b\U96c6\U5e02\U738b\U5
 @property (assign,nonatomic) NSString *phone;
 
 @property (assign,nonatomic) NSString *isPermission;//权限
+@property (assign,nonatomic) NSString *uuid;
+
+@property (assign,nonatomic) NSString *usersid;
 @end
