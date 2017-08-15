@@ -29,6 +29,7 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 
+@property (nonatomic,strong)UIImageView *backGround;
 /** @brief tableView的数据源，用户UI显示 */
 @property (strong, nonatomic) NSMutableArray *dataArray;
 

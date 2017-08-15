@@ -12,8 +12,9 @@
 #import "CrowdViewController.h"
 #import "AddmemberController.h"
 #import "GroupMenberController.h"
+#import "ChatViewController.h"
 typedef void (^finish)(id result);
-@interface GroupdetailController ()<ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface GroupdetailController ()<ZXYAlertViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIAlertViewDelegate>
 @property (nonatomic) GroupOccupantType occupantType;
 @property (nonatomic, strong)UIImage *goodPicture;
 
@@ -117,9 +118,11 @@ typedef void (^finish)(id result);
             if ([[NSString stringWithFormat:@"%@",self.groupInformation[@"founder"]] isEqualToString:userid]) {
                 [self.button setTitle:@"解散群组" forState:UIControlStateNormal];
                 [_butn setTitle: @"点击更换头像" forState:UIControlStateNormal];
+                _butn.userInteractionEnabled = YES;
             }
             else
             {
+                _butn.userInteractionEnabled = NO;
                 [self.button setTitle:@"退出群组" forState:UIControlStateNormal];
             }
             
@@ -171,6 +174,7 @@ typedef void (^finish)(id result);
     self.groupInformation = [NSDictionary dictionary];
     self.groupMembers = [NSArray array];
     
+    
 }
 -(void)ui{
 
@@ -184,8 +188,8 @@ typedef void (^finish)(id result);
     self.navigationItem.leftBarButtonItem=buttonItem;
     _background=[[UIImageView alloc]initWithFrame:CGRectMake(0,64,Scree_width, 230)];
     _background.userInteractionEnabled = YES;
-    UserCacheInfo * userInfo = [UserCacheManager getById:_chatGroup.groupId];
-    [_background sd_setImageWithURL:[NSURL URLWithString: userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@""]];
+   // UserCacheInfo * userInfo = [UserCacheManager getById:_chatGroup.groupId];
+   // [_background sd_setImageWithURL:[NSURL URLWithString: userInfo.AvatarUrl] placeholderImage:[UIImage imageNamed:@""]];
     [self.view addSubview:_background];
     
     _butn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -242,6 +246,14 @@ typedef void (^finish)(id result);
     [addbutn setBackgroundImage: [UIImage imageNamed:@"ass_ico"] forState:UIControlStateNormal];
     [addbutn addTarget:self action:@selector(addPerson) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:addbutn];
+    if ([ShareModel shareModel].isDefaultGroup) {
+        addbutn.hidden = YES;
+        addbutn.userInteractionEnabled = NO;
+    }else
+    {
+        addbutn.hidden = NO;
+        addbutn.userInteractionEnabled = YES;
+    }
     
     UIView *line=[[UIView alloc]initWithFrame:CGRectMake(0,view.bottom, Scree_width,1)];
     [self.view addSubview:line];
@@ -282,11 +294,12 @@ typedef void (^finish)(id result);
     self.button.layer.borderColor =[UIColor RGBNav].CGColor;
     [self.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.button addTarget:self action:@selector(dissolutionOfExit) forControlEvents:UIControlEventTouchUpInside];
-    [view2 addSubview:self.button];
+   // [view2 addSubview:self.button];
 }
 
 -(void)LiftItem{
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -300,8 +313,8 @@ typedef void (^finish)(id result);
     [alert show];
 }
 - (void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex==0) {
     
+    if (buttonIndex==0) {
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
@@ -316,9 +329,11 @@ typedef void (^finish)(id result);
             UINavigationController *naviVC = [[UINavigationController alloc] initWithRootViewController:photosVC];
             photosVC.tailoredImage = ^ (UIImage *image){
                 NSData *data = UIImageJPEGRepresentation(image,1.0f);
-                NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                NSString *encodedImageStr = [data base64EncodedStringWithOptions:0];
+               // NSString *encodedImageStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                 [USER_DEFAULTS  setObject:encodedImageStr forKey:@"blockImage"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"changeimage" object:nil userInfo:@{@"blockimage":encodedImageStr}];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"changeimage" object:nil userInfo:@{@"blockimage":encodedImageStr,@"groupNum":self.groupNum,@"status":@"1"}];
             };
             [self presentViewController:naviVC animated:YES completion:nil];
         }else{
@@ -333,12 +348,15 @@ typedef void (^finish)(id result);
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
+    [ShareModel shareModel].image = self.goodPicture;
+   // [ShareModel shareModel].isGroup = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
     if (_integer==0) {
           _background.image=self.goodPicture;
     }else{
         //裁剪后的图片
         [self dismissViewControllerAnimated:YES completion:nil];
+        
     }
    
 }
@@ -374,17 +392,41 @@ typedef void (^finish)(id result);
         
     } view:self.view MBPro:YES];
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    self.integer=1;
+    if (buttonIndex==1) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }else if (buttonIndex==2)
+    {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.sourceType = sourceType;
+        picker.allowsEditing = NO;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
 #pragma -mark 添加新成员
 -(void)addPerson
 {
     AddmemberController *controller = [[AddmemberController alloc]init];
     controller.isHaveGroup = YES;
-    controller.groupID = _chatGroup.groupId;
+    controller.groupID = self.groupNum;
     controller.groupinformationId = self.groupInformation[@"id"];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(void)notimageTap:(UITapGestureRecognizer*)sender{
+    
+//    UIAlertView *alt = [[UIAlertView alloc]initWithTitle:@"请选择照片" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"相机",@"相册", nil];
+//    [alt show];
+    
     _integer=1;
     ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
     alert.title = @"请选择照片";
@@ -392,6 +434,7 @@ typedef void (^finish)(id result);
     alert.delegate = self;
     [alert show];
 }
+
 -(void)GroupofdetailsTap:(UITapGestureRecognizer*)sender{
     GroupMenberController *controller = [[GroupMenberController alloc]init];
     controller.groupinformation = self.groupInformation;

@@ -18,6 +18,10 @@
 
 @property (nonatomic, readonly) UITableViewStyle style;
 
+//@property (nonatomic,strong)UIImageView *backGround;
+
+@property (strong, nonatomic) EMConversation *conversation;
+
 @end
 
 @implementation EaseRefreshTableViewController
@@ -34,6 +38,28 @@
     return self;
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)getBackgroundImage:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification valueForKey:@"userInfo"];
+    NSString *stringImage = userInfo[@"blockimage"];
+    NSData *dataImage = [[NSData alloc] initWithBase64EncodedString:stringImage options:0]; ;
+    self.backGround.frame = CGRectMake(0, 0, Scree_width, Scree_height-40-24-45);
+    self.backGround.image = [UIImage imageWithData:dataImage];
+    self.backGround.userInteractionEnabled = YES;
+   // [self.view addSubview:self.backGround];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+   // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getBackgroundImage:) name:@"changeimage" object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,13 +68,33 @@
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
     
+ //   blockimage
+   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getBackgroundImage:) name:@"changeimage" object:nil];
+    
+    NSString *stringImage = [USER_DEFAULTS valueForKey:@"blockImage"];
+    NSData *dataImage;
+    self.backGround = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    self.backGround.userInteractionEnabled = YES;
+    [self.view addSubview:self.backGround];
+    if (stringImage!=nil) {
+        dataImage = [[NSData alloc] initWithBase64EncodedString:stringImage options:0]; ;
+        self.backGround.image = [UIImage imageWithData:dataImage];
+    }else
+    {
+        self.backGround.image = [UIImage imageNamed:@""];
+    }
+    
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:self.style];
     _tableView.accessibilityIdentifier = @"table_view";
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = self.defaultFooterView;
-    [self.view addSubview:_tableView];
+    _tableView.backgroundColor = [UIColor clearColor];
+    [self.backGround addSubview:_tableView];
+    
+    
     
     _page = 0;
     _showRefreshHeader = NO;
@@ -153,7 +199,7 @@
 {
     static NSString *CellIdentifier = @"UITableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+    cell.backgroundColor = [UIColor clearColor];
     // Configure the cell...
     
     return cell;

@@ -142,7 +142,7 @@
         [_fileTransterButton addTarget:self action:@selector(fileTransferAction) forControlEvents:UIControlEventTouchUpInside];
         _fileTransterButton.tag = MOREVIEW_BUTTON_TAG + 5;
         _maxIndex = 5;
-        [_scrollview addSubview:_fileTransterButton];
+       // [_scrollview addSubview:_fileTransterButton];
     }
     else if (type == EMChatToolbarTypeGroup)
     {

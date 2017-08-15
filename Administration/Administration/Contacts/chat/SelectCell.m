@@ -139,7 +139,8 @@
     self.NameLabel.text=model[@"name"];
     self.TelLabel.text=model[@"account"];
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model[@"icon"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+ //   self.TXImage.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:model[@"image"]]];
     self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",model[@"newName"]];
     if ([model[@"newName"] containsString:@"总监"]||[model[@"newName"] containsString:@"经理"]) {
         _zhiLabel.textColor=[UIColor whiteColor];

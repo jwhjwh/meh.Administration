@@ -22,6 +22,8 @@
     UIMenuItem *_deleteMenuItem;
     UIMenuItem *_transpondMenuItem;
     LVModel *lvModel;
+    NSDictionary *notification;
+    EMConversationType type;
 }
 
 @property (nonatomic) BOOL isPlayingAudio;
@@ -56,6 +58,7 @@
     [[EMClient sharedClient].chatManager removeDelegate:self];
    
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -63,7 +66,6 @@
     self.showRefreshHeader = YES;
     self.delegate = self;
     self.dataSource = self;
-    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     [self _setupBarButtonItem];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteAllMessages:) name:KNOTIFICATIONNAME_DELETEALLMESSAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitGroup) name:@"ExitGroup" object:nil];
@@ -74,6 +76,8 @@
     //通过会话管理者获取已收发消息只有单聊打开注释
 //    [self tableViewDidTriggerHeaderRefresh];
    // [LVFmdbTool createTable];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -329,7 +333,7 @@
     if (self.conversation.type == EMConversationTypeGroupChat) {
         GroupdetailController *  GroupVC = [[GroupdetailController alloc]initWithGroupId:self.conversation.conversationId];
       //  GroupdetailController *  GroupVC = [[GroupdetailController alloc]init];
-        GroupVC.popl=self.number;
+       // GroupVC.popl=self.number;
         GroupVC.groupNum = self.groupNmuber;
         GroupVC.dictInfo = self.dictInfo;
         [self.navigationController pushViewController:GroupVC animated:YES];

@@ -17,4 +17,5 @@
 @property (nonatomic) BOOL isAddMenber;
 @property (nonatomic,strong) NSString *groupID;
 @property (nonatomic,strong) NSString *groupinformationId;
+@property (nonatomic) BOOL isManager;
 @end

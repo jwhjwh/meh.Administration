@@ -7,7 +7,7 @@
 //
 
 #import "TransferGroupViewController.h"
-#import "GroupMenberCell.h"
+#import "CellGroup.h"
 @interface TransferGroupViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 @property (nonatomic,strong)UITableView *tableview;
 @property (nonatomic,strong)NSDictionary *dictInfo;
@@ -75,9 +75,9 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupMenberCell *cell = [[GroupMenberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    CellGroup *cell = [self.tableview dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
-        cell = [[GroupMenberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[CellGroup alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.labelDivision.hidden = YES;
     cell.locationButton.hidden = YES;
@@ -134,8 +134,10 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
-    [self.tableview registerClass:NSClassFromString(@"GroupMenberCell.h") forCellReuseIdentifier:@"cell"];
+    [self.tableview registerClass:NSClassFromString(@"CellGroup") forCellReuseIdentifier:@"cell"];
     
+    [self.arrList removeObjectAtIndex:0];
+    [self.arrTitle removeObjectAtIndex:0];
 }
 
 - (void)didReceiveMemoryWarning {

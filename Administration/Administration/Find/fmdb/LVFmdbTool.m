@@ -118,10 +118,11 @@ static FMDatabase *_fmdb;
     [SQL appendString:[NSString stringWithFormat:@"  isCurrent = '%@'",isCurrent]];
     
     FMResultSet *set = [_fmdb executeQuery:SQL];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
     NSMutableArray *arrM = [NSMutableArray array];
     
     while ([set next]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         NSString *userid = [set stringForColumn:@"userid"];
         NSString *name = [set stringForColumn:@"name"];
         NSString *account = [set stringForColumn:@"account"];
@@ -136,12 +137,11 @@ static FMDatabase *_fmdb;
         [dict setValue:name forKey:@"name"];
         [dict setValue:account forKey:@"account"];
         [dict setValue:ID_No forKey:@"idNo"];
-        [dict setValue:image forKey:@"imge"];
+        [dict setValue:image forKey:@"image"];
         [dict setValue:roleId forKey:@"roleId"];
         [dict setValue:newName forKey:@"newName"];
         [dict setValue:uuid forKey:@"uuid"];
         [dict setValue:isCurrent forKey:@"isCurrent"];
-        [dict setObject:image forKey:@"image"];
         [arrM addObject:dict];
     }
     return arrM;
@@ -150,6 +150,8 @@ static FMDatabase *_fmdb;
 
 +(void)insertUser:(NSString *)currentUserID Userinfo:(NSDictionary *)dict
 {
+    NSString *string = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     NSMutableString *SQL = [NSMutableString stringWithFormat:@"INSERT INTO latelyPerson"];
     //[SQL appendFormat:@"  INSERT INTO latelyPerson"];
     [SQL appendString:@"  ("];
@@ -169,7 +171,10 @@ static FMDatabase *_fmdb;
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"name"]]];
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"account"]]];
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"idNo"]]];
+    
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"icon"]]];
+   // [SQL appendString:[NSString stringWithFormat:@" ,'%@'",data]];
+    
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"roleId"]]];
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"uuid"]]];
     [SQL appendString:[NSString stringWithFormat:@" ,'%@'",dict[@"newName"]]];
@@ -181,6 +186,8 @@ static FMDatabase *_fmdb;
 
 +(void)updateLatePerson:(NSDictionary *)dict userID:(NSString *)userid currentUser:(NSString *)currentUser
 {
+//    NSString *string = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
     NSMutableString *SQL = [NSMutableString stringWithFormat:@"UPDATE latelyPerson SET"];
     //[SQL appendFormat:@"UPDATE latelyPerson SET"];
     [SQL appendString:[NSString stringWithFormat:@" ,userid = '%@'",dict[@"userid"]]];

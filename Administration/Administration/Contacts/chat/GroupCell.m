@@ -50,14 +50,23 @@
     return self;
 }
 
--(void)setModel:(NSDictionary *)model;
-{
-    
-    model = self.model;
-    self.headImageView.image = [UIImage imageNamed:model[@"img"]];
-    self.nameLabel.text = model[@"name"];
-    self.noReadLabel.text = model[@"unread"];
-}
+//-(void)setModel:(NSDictionary *)model;
+//{
+//    
+//    model = self.model;
+//    self.nameLabel.text = [NSString stringWithFormat:@"%@",model[@"name"]];
+//    
+//    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,model[@"img"]];
+//    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
+//    int unread = [model[@"unread"] intValue];
+//    if (unread!=0) {
+//        self.noReadLabel.text = [NSString stringWithFormat:@"%@",model[@"unread"]];
+//    }
+//    else
+//    {
+//        self.noReadLabel.hidden = YES;
+//    }
+//}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

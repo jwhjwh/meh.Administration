@@ -286,7 +286,7 @@
 //} 
 -(void)iamsges{
     
-    if ([LVFmdbTool isExist:[NSString stringWithFormat:@"%@",self.dicinfo[@"usersid"]] Current:[USER_DEFAULTS objectForKey:@"userid"]]==NO) {
+    if (![LVFmdbTool isExist:[NSString stringWithFormat:@"%@",self.dicinfo[@"usersid"]] Current:[USER_DEFAULTS objectForKey:@"userid"]]) {
         [LVFmdbTool insertUser:[USER_DEFAULTS objectForKey:@"userid"] Userinfo:self.dicinfo];
     }else
     {

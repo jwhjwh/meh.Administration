@@ -226,7 +226,7 @@ static ChatUIHelper *helper = nil;
 {
     BOOL isRefreshCons = YES;
     for(EMMessage *message in aMessages){
-//        [UserCacheManager saveInfo:message.ext];// 通过消息的扩展属性传递昵称和头像时，需要调用这句代码缓存
+        [UserCacheManager saveInfo:message.ext];// 通过消息的扩展属性传递昵称和头像时，需要调用这句代码缓存
         BOOL needShowNotification = (message.chatType != EMChatTypeChat) ? [self _needShowNotification:message.conversationId] : YES;
         
 #ifdef REDPACKET_AVALABLE
@@ -359,7 +359,7 @@ static ChatUIHelper *helper = nil;
                inviter:(NSString *)aInviter
                message:(NSString *)aMessage
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:[NSString stringWithFormat:@"%@ invite you to group: %@ [%@]", aInviter, aGroup.subject, aGroup.groupId] delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@ 邀请你加入群: %@ ", aInviter, aGroup.subject] delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
 }
 
