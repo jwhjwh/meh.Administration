@@ -359,7 +359,7 @@ static ChatUIHelper *helper = nil;
                inviter:(NSString *)aInviter
                message:(NSString *)aMessage
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:[NSString stringWithFormat:@"%@ 邀请你加入群: %@ ", aInviter, aGroup.subject] delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@ 邀请你加入群: %@ ", aInviter, aGroup.subject] delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
 }
 

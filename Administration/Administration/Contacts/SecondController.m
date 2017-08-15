@@ -145,6 +145,7 @@
             //职位
             JoblistController *Joblist=[[JoblistController alloc]init];
             Joblist.Num=1;
+            Joblist.isManager = NO;
             [self.navigationController pushViewController:Joblist animated:YES];
             
         }else{

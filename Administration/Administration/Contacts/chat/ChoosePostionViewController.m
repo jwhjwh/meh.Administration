@@ -32,8 +32,15 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSString *usersID = [USER_DEFAULTS objectForKey:@"userid"];
+    NSDictionary *dict;
+    if (self.isHaveGroup) {
+        dict = @{@"appkey":appKeyStr,@"usersid":usersID,@"companyInfoId":compid,@"groupinformationId":self.groupinformationId};
+    }
+    else
+    {
+        dict = @{@"appkey":appKeyStr,@"usersid":usersID,@"companyInfoId":compid};
+    }
     
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":usersID,@"companyInfoId":compid};
     [ZXDNetworking GET:stringUrl parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
@@ -91,7 +98,7 @@
     [self.view addSubview:self.tableView];
     
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"点击" style:(UIBarButtonItemStyleDone) target:self action:@selector(buttonSure:)];
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(buttonSure:)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
     
@@ -308,7 +315,6 @@
 - (void)collegeTaped:(UITapGestureRecognizer *)sender {
     NSString *key = [NSString stringWithFormat:@"%ld", sender.view.tag - self.KTAG];
     // 给展开标识赋值
-    NSLog(@"key = %@",key);
     if ([[self.openSectionDict objectForKey:key] integerValue] == 0) {
         [self.openSectionDict setObject:@"1" forKey:key];
     } else {

@@ -13,4 +13,5 @@
 @property (nonatomic,strong)UIImage *image;
 @property (nonatomic) BOOL isGroup;
 @property (nonatomic) BOOL isDefaultGroup;
+@property (nonatomic ,strong)NSArray *arrayPosition;
 @end

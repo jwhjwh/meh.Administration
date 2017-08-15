@@ -30,7 +30,16 @@
 @end
 
 @implementation PerLomapController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [_mapView viewWillAppear];
+    _mapView.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [_mapView viewWillDisappear];
+    _mapView.delegate = nil; // 不用时，置nil
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];

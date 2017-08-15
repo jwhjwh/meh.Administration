@@ -45,12 +45,19 @@
 
 -(void)getBackgroundImage:(NSNotification *)notification
 {
-    NSLog(@"--------------------------------------------------------");
-    NSString *stringImage = [USER_DEFAULTS valueForKey:@"blockImage"];
+    NSDictionary *userInfo = [notification valueForKey:@"userInfo"];
+    NSString *stringImage = userInfo[@"blockimage"];
     NSData *dataImage = [[NSData alloc] initWithBase64EncodedString:stringImage options:0]; ;
     self.backGround.frame = CGRectMake(0, 0, Scree_width, Scree_height-40-24-45);
     self.backGround.image = [UIImage imageWithData:dataImage];
-    [self.view addSubview:self.backGround];
+    self.backGround.userInteractionEnabled = YES;
+   // [self.view addSubview:self.backGround];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+   // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getBackgroundImage:) name:@"changeimage" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -62,11 +69,12 @@
     }
     
  //   blockimage
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getBackgroundImage:) name:@"changeimage" object:nil];
+   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getBackgroundImage:) name:@"changeimage" object:nil];
     
     NSString *stringImage = [USER_DEFAULTS valueForKey:@"blockImage"];
     NSData *dataImage;
     self.backGround = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    self.backGround.userInteractionEnabled = YES;
     [self.view addSubview:self.backGround];
     if (stringImage!=nil) {
         dataImage = [[NSData alloc] initWithBase64EncodedString:stringImage options:0]; ;

@@ -356,6 +356,8 @@
             [USER_DEFAULTS  setObject:@"1" forKey:@"guiiiii"];
             [USER_DEFAULTS  setObject:uuid forKey:@"uuid"];
             [USER_DEFAULTS  setObject:roleIds forKey:@"roleIds"];
+            [USER_DEFAULTS setObject:[responseObject valueForKey:@"roleIds"] forKey:@"myRole"];
+            
 //            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
 //            if (error==nil) {
 //                NSLog(@"注册成功");
@@ -387,6 +389,7 @@
 //                                [UserWebManager createUser:userOpenId nickName:nickName avatarUrl:avatarUrl];
                                 //设置是否自动登录
                                                         NSLog(@"登录成功");
+                                                        
                                 [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                     } else {
                                                         NSLog(@"登录失败");

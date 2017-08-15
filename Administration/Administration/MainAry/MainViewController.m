@@ -14,7 +14,8 @@
 #import "businessViewController.h"//业务陌拜
 #import "TrackingViewController.h"
 #import "brandViewController.h"
-
+#import "ViewControllerEmployeeTable.h"//报表管理
+#import "ViewControllerChoosePosition.h"//选择职位
 #import "ManageViewController.h"//员工管理
 
 #import "MessageController.h"
@@ -299,6 +300,20 @@
                 break;
             case 6:
                 //报表管理
+            {
+                NSArray *arrayIds = [USER_DEFAULTS valueForKey:@"myRole"];
+                if (arrayIds.count>1) {
+                    ViewControllerChoosePosition *vc = [[ViewControllerChoosePosition alloc]init];
+                    self.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else
+                {
+                ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
+                self.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                
                 break;
             case 7:{
                 //业务陌拜

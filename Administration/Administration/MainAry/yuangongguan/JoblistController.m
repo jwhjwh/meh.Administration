@@ -123,6 +123,7 @@
     DepmentCV.str=modld.NewName;
     DepmentCV.Numstr=modld.num;
     DepmentCV.dataShow=self.Num;
+    DepmentCV.isManager = self.isManager;
     DepmentCV.DepartmentID = modld.DepartmentID;
     
     [self.navigationController pushViewController:DepmentCV animated:YES];
@@ -131,7 +132,14 @@
 }
 -(void)getNetworkData{
     
-    NSString *uStr =[NSString stringWithFormat:@"%@manager/checkPositionDiff.action",KURLHeader];
+    NSString *uStr;
+    if (self.isManager) {
+       uStr=[NSString stringWithFormat:@"%@manager/checkPositionDiff.action",KURLHeader];
+    }else
+    {
+        uStr=[NSString stringWithFormat:@"%@manager/checkPosition.action",KURLHeader];
+    }
+    
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -139,7 +147,14 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *arr = [responseObject valueForKey:@"list"];
+            NSArray *arr;
+            if (self.isManager) {
+                arr = [responseObject valueForKey:@"list"];
+            }else
+            {
+               arr = [responseObject valueForKey:@"list2"];
+            }
+            
             _arr=[NSMutableArray array];
             for (NSDictionary *dic in arr) {
                 SetModel *modld=[[SetModel alloc]init];

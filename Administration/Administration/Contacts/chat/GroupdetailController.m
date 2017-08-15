@@ -174,6 +174,7 @@ typedef void (^finish)(id result);
     self.groupInformation = [NSDictionary dictionary];
     self.groupMembers = [NSArray array];
     
+    
 }
 -(void)ui{
 

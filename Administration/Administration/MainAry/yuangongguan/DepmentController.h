@@ -15,4 +15,5 @@
 @property (nonatomic,strong)NSString *DepartmentID;
 @property (nonatomic,strong)NSString *Numstr;
 @property (nonatomic,strong)EaseUserModel *model;
+@property (nonatomic)BOOL isManager;
 @end

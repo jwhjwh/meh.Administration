@@ -137,6 +137,7 @@
     }else{
         if (indexPath.row ==0) {
             JoblistController *Joblist=[[JoblistController alloc]init];
+            Joblist.isManager = YES;
             [self.navigationController pushViewController:Joblist animated:YES];
         
         }else{

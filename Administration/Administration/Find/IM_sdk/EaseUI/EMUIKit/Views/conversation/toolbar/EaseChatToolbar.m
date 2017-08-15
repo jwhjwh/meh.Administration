@@ -34,6 +34,7 @@
 @property (nonatomic) CGFloat previousTextViewContentHeight;//上一次inputTextView的contentSize.height
 @property (nonatomic) NSLayoutConstraint *inputViewWidthItemsLeftConstraint;
 @property (nonatomic) NSLayoutConstraint *inputViewWidthoutItemsLeftConstraint;
+@property (nonatomic,strong)NSDictionary *dict;
 
 @end
 
@@ -98,6 +99,11 @@
 }
 
 #pragma mark - setup subviews
+-(void)getData:(NSNotification *)noti
+{
+    self.dict = [noti valueForKey:@"userInfo"];
+}
+
 
 /*!
  @method
@@ -113,6 +119,8 @@
     _backgroundImageView.backgroundColor = [UIColor clearColor];
     _backgroundImageView.image = [[UIImage imageNamed:@"EaseUIResource.bundle/messageToolbarBg"] stretchableImageWithLeftCapWidth:0.5 topCapHeight:10];
     [self addSubview:_backgroundImageView];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getData:) name:@"changeImage" object:nil];
     
     //toolbar
     _toolbarView = [[UIView alloc] initWithFrame:self.bounds];
@@ -194,6 +202,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     
     _delegate = nil;
     _inputTextView.delegate = nil;
