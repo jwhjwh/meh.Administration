@@ -77,7 +77,6 @@
 //    [self tableViewDidTriggerHeaderRefresh];
    // [LVFmdbTool createTable];
     
-    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -219,9 +219,10 @@
             EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
             //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
             //    messageVC.title = @"8001";
-            ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:name conversationType:EMConversationTypeGroupChat];
+            ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:[NSString stringWithFormat:@"%@",dic[@"GroupNumber"]] conversationType:EMConversationTypeGroupChat];
             messageVC.groupNmuber = dic[@"GroupNumber"];
             messageVC.hidesBottomBarWhenPushed = YES;
+            messageVC.title = name;
             messageVC.number = @"1";
             [messageVC.faceView setEmotionManagers:@[manager]];
             // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];

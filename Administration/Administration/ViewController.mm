@@ -358,6 +358,7 @@
             [USER_DEFAULTS  setObject:roleIds forKey:@"roleIds"];
             [USER_DEFAULTS setObject:[responseObject valueForKey:@"roleIds"] forKey:@"myRole"];
             
+            
 //            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
 //            if (error==nil) {
 //                NSLog(@"注册成功");

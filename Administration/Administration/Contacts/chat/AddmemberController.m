@@ -114,51 +114,8 @@
     self.modelArray.selected = [NSMutableArray array];
     [self.modelArray addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
     
-    //键盘监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
--(void)keyboardWillShow:(NSNotification *)notification
-
-{
-    
-    //这样就拿到了键盘的位置大小信息frame，然后根据frame进行高度处理之类的信息
-    
-    CGRect frame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    self.viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, frame.origin.y-90, Scree_width, 30)];
-    [self.ZJLXTable addSubview:self.viewTop];
-    
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width-60, 0, 40, 30)];
-    [button setTitle:@"完成" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(allReady) forControlEvents:UIControlEventTouchUpInside];
-    [self.viewTop addSubview:button];
-}
-
-/**
- 
- *  键盘将要隐藏
- 
- *
- 
- *  @param notification 通知
- 
- */
-
--(void)keyboardWillHidden:(NSNotification *)notification
-
-{
-    // CGRect frame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    [self.viewTop removeFromSuperview];
-}
-
--(void)allReady
-{
-    [self.searchBar resignFirstResponder];
-}
 
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -468,8 +425,9 @@
                 EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
                 //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
                 //    messageVC.title = @"8001";
-                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:name conversationType:EMConversationTypeGroupChat];
+                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:[NSString stringWithFormat:@"%@",dic[@"GroupNumber"]] conversationType:EMConversationTypeGroupChat];
                 messageVC.groupNmuber = dic[@"GroupNumber"];
+                messageVC.title = name;
                 messageVC.hidesBottomBarWhenPushed = YES;
                 messageVC.number = @"1";
                 [messageVC.faceView setEmotionManagers:@[manager]];
@@ -750,7 +708,15 @@
 }
 
 
-
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+//    self.searchDataArray = [NSMutableArray array];
+//    [self.searchTableView  reloadData];
+//    [self upDataSearchSpecialOffe];
+    [searchBar resignFirstResponder];
+    
+}
 
 //上传群头像
 -(void)dateimageGrouts:(EMGroup*)group{

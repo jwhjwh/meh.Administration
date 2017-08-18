@@ -124,6 +124,7 @@ typedef void (^finish)(id result);
             {
                 _butn.userInteractionEnabled = NO;
                 [self.button setTitle:@"退出群组" forState:UIControlStateNormal];
+                
             }
             
             NSDictionary *dict = [NSDictionary dictionary];
@@ -326,7 +327,7 @@ typedef void (^finish)(id result);
         if (_integer==1) {
             UIImageWriteToSavedPhotosAlbum([[UIImage alloc] init], nil, nil, nil);
             WFPhotosViewController *photosVC = [[WFPhotosViewController alloc] init];
-            UINavigationController *naviVC = [[UINavigationController alloc] initWithRootViewController:photosVC];
+         //   UINavigationController *naviVC = [[UINavigationController alloc] initWithRootViewController:photosVC];
             photosVC.tailoredImage = ^ (UIImage *image){
                 NSData *data = UIImageJPEGRepresentation(image,1.0f);
                 NSString *encodedImageStr = [data base64EncodedStringWithOptions:0];
@@ -335,7 +336,7 @@ typedef void (^finish)(id result);
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"changeimage" object:nil userInfo:@{@"blockimage":encodedImageStr,@"groupNum":self.groupNum,@"status":@"1"}];
             };
-            [self presentViewController:naviVC animated:YES completion:nil];
+            [self presentViewController:photosVC animated:YES completion:nil];
         }else{
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
@@ -351,14 +352,14 @@ typedef void (^finish)(id result);
     [ShareModel shareModel].image = self.goodPicture;
    // [ShareModel shareModel].isGroup = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
-    if (_integer==0) {
-          _background.image=self.goodPicture;
-    }else{
-        //裁剪后的图片
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
-    }
-   
+//    if (_integer==0) {
+//          _background.image=self.goodPicture;
+//    }else{
+//        //裁剪后的图片
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//        
+//    }
+    [self updateGroupImage:self.goodPicture];
 }
 //退出群组或者解散群组
 -(void)dissolutionOfExit
@@ -439,6 +440,44 @@ typedef void (^finish)(id result);
     GroupMenberController *controller = [[GroupMenberController alloc]init];
     controller.groupinformation = self.groupInformation;
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+-(void)updateGroupImage:(UIImage *)image
+{
+    NSData *pictureData = UIImagePNGRepresentation(image);
+    NSString *urlStr = [NSString stringWithFormat:@"%@group/selectGroupMembersPosition.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"groupinformationId":self.groupInformation[@"id"]};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+    [manager POST:urlStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyMMddHHmm";
+        NSString *fileName = [formatter stringFromDate:[NSDate date]];
+        NSString *nameStr = @"file";
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD hideHUDForView: self.view animated:NO];        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+        NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
+        if ([status isEqualToString:@"0000"]) {
+            self.background.image = image;
+            
+        } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"头像上传失败" andInterval:1.0];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+    
+    
 }
 
 

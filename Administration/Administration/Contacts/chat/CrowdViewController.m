@@ -202,7 +202,6 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSDictionary *dic = self.resultArr[indexPath.section][indexPath.row];
 //    EMGroup *group = [self.groupArr objectAtIndex:indexPath.row];
-    
     ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:[NSString stringWithFormat:@"%@",dic[@"groupNumber"]] conversationType:EMConversationTypeGroupChat];
     
     chatController.dictInfo = dic;
