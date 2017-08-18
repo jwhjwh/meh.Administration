@@ -375,7 +375,10 @@
             if (_arr.count == 7) {
                 _HSarr = [[NSMutableArray alloc]initWithObjects:@"选择职位",@"输入姓名",@"请输入11位手机号",@"请输入验证码",@"输入密码(六位以上)",@"输入密码(六位以上)", nil];
                 _arr = [[NSMutableArray alloc]initWithObjects:@"职位",@"姓名",@"手机号",@"验证码",@"密码",@"确认密码", nil];
-                [infonTableview reloadData];
+                NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+                [infonTableview beginUpdates];
+                [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
+                [infonTableview endUpdates];
                 [_gxnumAry removeAllObjects];
             }
             

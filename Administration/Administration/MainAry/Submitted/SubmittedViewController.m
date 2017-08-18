@@ -42,13 +42,6 @@
     // Do any additional setup after loading the view.
     self.dataArray = [NSMutableArray array];
     self.pagenum = 1;
-    
-    NSString*string =@"sdfsfsfsAdfsdf";
-    string = [string substringToIndex:7];//截取掉下标7之后的字符串
-    NSLog(@"截取掉下标7之后的字符串的值为：%@",string);
-    [string substringFromIndex:2];//截取掉下标2之前的字符串
-    NSLog(@"截取掉下标2之前的字符串的值为：%@",string);
-    
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight	)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -88,11 +81,11 @@
 
 -(void)masgegeClick{
     MySubmittedViewController *mySubmittedVC= [[MySubmittedViewController alloc]init];
+    
     [self.navigationController pushViewController:mySubmittedVC animated:YES];
 }
 
 -(void)endRefresh{
-    
     if (_pagenum == 1) {
     [self.tableView.mj_header endRefreshing];
     }else{
@@ -110,7 +103,9 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@picreport/queryAllPic.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pageNo":pageStr};
+    NSString *comp = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    //CompanyInfoId
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pageNo":pageStr,@"CompanyInfoId":comp};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         //plist
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

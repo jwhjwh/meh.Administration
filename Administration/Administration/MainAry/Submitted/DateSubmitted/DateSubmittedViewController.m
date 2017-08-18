@@ -40,7 +40,17 @@
     self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"事务概述",@"进展程度", nil];
     self.ligdataLabel =[NSMutableArray arrayWithObjects:@"选择时间",@"填写地点",@"填写事务概述",@"填写进展程度", nil];
 
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    btn.autoresizesSubviews=NO;
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     
+}
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)delemissClick{
     
@@ -98,16 +108,22 @@
     }else{
         cell.textLabel.text = _dataLabel[indexPath.row-1];
         cell.textLabel.textColor = [UIColor lightGrayColor];
+        NSString * labelStr = _dataArray[indexPath.row-1];
         
+        CGSize labelSize = {0, 0};
         
-        CGRect labelRect2 = CGRectMake(130, 1, self.view.bounds.size.width-130, 48);
+        labelSize = [labelStr sizeWithFont:[UIFont systemFontOfSize:14]
+                         constrainedToSize:CGSizeMake(self.view.bounds.size.width-130, 5000)
+                             lineBreakMode:UILineBreakModeWordWrap];
         
-        UILabel* NRtextLabel = [[UILabel alloc]initWithFrame:labelRect2];
+       
+        
+        UILabel* NRtextLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 0, self.view.bounds.size.width-130, labelSize.height)];
         
         NRtextLabel.text =_dataArray[indexPath.row-1];
         NRtextLabel.font = [UIFont systemFontOfSize:14.0f];
         NRtextLabel.textColor = [UIColor lightGrayColor];
-        
+       // NRtextLabel.textAlignment = NSTextAlignmentCenter;
         NRtextLabel.numberOfLines = 0;
         
         [cell addSubview:NRtextLabel];
@@ -130,7 +146,7 @@
                          constrainedToSize:CGSizeMake(self.view.bounds.size.width-130, 5000)
                              lineBreakMode:UILineBreakModeWordWrap];
         if (labelSize.height>50) {
-            return labelSize.height;
+            return labelSize.height+10;
         }else{
             return 50;
         }

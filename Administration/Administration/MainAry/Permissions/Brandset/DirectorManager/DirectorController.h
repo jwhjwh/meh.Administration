@@ -13,6 +13,7 @@ typedef void  (^DIREBLOCK)(NSMutableArray *arr);
 @property (nonatomic,strong)NSString *str;
 @property (nonatomic,assign)int Num;
 @property (nonatomic,strong)NSString *BarandID;
-
 @property (nonatomic,strong)NSString *Numstr;
+
+@property (nonatomic,strong)NSString *GroupNumber;
 @end

@@ -142,6 +142,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)masgegeClick{
+    [self.view endEditing:YES];
     _friend = [[NSMutableArray alloc]init];
     if (_nameBarn==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写名称" andInterval:1.0];

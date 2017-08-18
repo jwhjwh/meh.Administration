@@ -146,8 +146,9 @@
     if (_Num==1) {
         [dic setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
         [dic setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-        
+         [dic setObject:[NSString stringWithFormat:@"%@",model.uuid] forKey:@"uuid"];
         [self updateDepartarr:arr dict:dic];
+        
     }else{
     self.blockArray(arr);
     [self.navigationController popViewControllerAnimated:YES];
@@ -159,10 +160,8 @@
 }
 
 -(void)updateDepartarr:(NSMutableArray*)array dict:(NSMutableDictionary*)dict{
-      NSMutableArray *palarr=[NSMutableArray array];
-    
+    NSMutableArray *palarr=[NSMutableArray array];
     [palarr addObject:dict];
-    
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:palarr options:NSJSONWritingPrettyPrinted error:&error];
     NSString *Mid = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -170,7 +169,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"mid":Mid};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"mid":Mid,@"GroupNumber":_GroupNumber};
    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

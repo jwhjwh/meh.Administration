@@ -48,44 +48,50 @@
     _str=sender.text;
 }
 -(void)submitClick{
-    NSString *uStr =[NSString stringWithFormat:@"%@user/updateDepartmentName.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"DepartmentName":_str};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
-            _blockStr(_str);
-            dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
-            dispatch_after(timer, dispatch_get_main_queue(), ^(void){
-            [self.navigationController popViewControllerAnimated:YES];
-            });
-        } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
+    [self.view endEditing:YES];
+    if (_textField.text.length == 0) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写品牌部名称" andInterval:1.0];
+    }else{
+        NSString *uStr =[NSString stringWithFormat:@"%@user/updateDepartmentName.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"DepartmentName":_str,@"GroupNumber":_GroupNumber};
+        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+                _blockStr(_str);
+                dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+                dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
+                
+            }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }
+        }failure:^(NSError *error) {
             
-        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-    }failure:^(NSError *error) {
-        
-    }view:self.view MBPro:YES];
+        }view:self.view MBPro:YES];
+    }
+    
 
 
 }

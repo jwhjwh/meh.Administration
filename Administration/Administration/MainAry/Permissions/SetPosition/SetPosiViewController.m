@@ -1155,7 +1155,7 @@ NSUInteger rsw;
 }
 -(void)footerButtonClick:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"预览"]) {
-        [btn setTitle:@"确定" forState:UIControlStateNormal];
+        [btn setTitle:@"编辑" forState:UIControlStateNormal];
         [self yulanUI];
         
     }else{
@@ -1168,7 +1168,7 @@ NSUInteger rsw;
    // [self yulanUI];
 }
 -(void)yulanUI{
-     if ([_footerButton.titleLabel.text isEqualToString:@"确定"]) {
+     if ([_footerButton.titleLabel.text isEqualToString:@"编辑"]) {
          _popFootCellView = [[UIView alloc]init];
          _popFootCellView.backgroundColor = [UIColor whiteColor];
          [infonTableview addSubview:_popFootCellView];
@@ -1184,7 +1184,7 @@ NSUInteger rsw;
          [zjlLabel.ZWbutton setTitle:_XGZJLStr forState:UIControlStateNormal];
          [_popFootCellView addSubview:zjlLabel];
          [zjlLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(_popFootCellView.mas_top).offset(0);
+            make.top.mas_equalTo(_popFootCellView.mas_top).offset(10);
             make.centerX.mas_equalTo(_popFootCellView.mas_centerX).offset(0);
              
              make.width.mas_equalTo(kWidth*45);

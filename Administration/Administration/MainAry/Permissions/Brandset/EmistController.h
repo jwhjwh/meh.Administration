@@ -15,4 +15,5 @@ typedef void  (^EBLOCK)(NSMutableArray *arr);
 @property (nonatomic,strong)NSString *BarandID;
 
 @property (nonatomic,strong)NSString *Numstr;
+@property (nonatomic,strong)NSString *GroupNumber;
 @end

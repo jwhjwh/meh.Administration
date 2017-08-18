@@ -11,4 +11,6 @@ typedef void  (^BLOCKBarndname)(NSString *str);
 @interface ModifyController : UIViewController
 @property (nonatomic,strong)NSString *BarandID;
 @property (nonatomic,strong)BLOCKBarndname blockStr;
+
+@property (nonatomic,strong)NSString *GroupNumber;
 @end
