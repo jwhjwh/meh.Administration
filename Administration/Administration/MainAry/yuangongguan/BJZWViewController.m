@@ -807,10 +807,10 @@
         UILabel *XBTLabel  = [[UILabel alloc]initWithFrame:CGRectMake(120, 1, self.view.bounds.size.width-160, 38)];
         XBTLabel.text = _gxbmAry[indexPath.section][indexPath.row-2];
         XBTLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
-        [cell addSubview:XBTLabel];
+        [cell.contentView addSubview:XBTLabel];
         
         _scBtnnnnn= [[UIButton alloc]initWithFrame:CGRectMake(120+self.view.bounds.size.width-160, 1, 40, 38)];
-        [cell addSubview:_scBtnnnnn];
+        [cell.contentView addSubview:_scBtnnnnn];
         [_scBtnnnnn addTarget:self action:@selector(scbmbtn:) forControlEvents:UIControlEventTouchUpInside];
         if ([_bjbtnname[indexPath.section] isEqualToString:@"完成"]) {
             _scBtnnnnn.enabled = YES;
