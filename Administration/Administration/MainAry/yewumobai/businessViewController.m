@@ -34,7 +34,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
    
-    _InterNameAry = @[@"陌拜记录",@"目标客户",@"确定合作客户"];
+    _InterNameAry = @[@"陌拜记录",@"意向客户",@"目标客户",@"确定合作客户"];
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 83,self.view.bounds.size.width,1)];
     view.backgroundColor=GetColor(216, 216, 216, 1);
     [self.view addSubview:view];
@@ -83,17 +83,21 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
-        case 0:{
+        case 0:{//陌拜记录
             busableController *busableVC = [[busableController alloc]init];
             [self.navigationController showViewController:busableVC sender:nil];
         }
             
             break;
-        case 1:{
+        case 1:{//意向客户
             
         }
             break;
-        case 2:{
+        case 2:{//目标客户
+            
+        }
+            break;
+        case 3:{//确定合作客户
             
         }
             break;

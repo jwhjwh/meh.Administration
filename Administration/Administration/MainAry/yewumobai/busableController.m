@@ -35,7 +35,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
   
-    _InterNameAry = @[@"填写新的",@"已填纪录"];
+    _InterNameAry = @[@"填写新的",@"已填纪录",@"草稿箱"];
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0,83,self.view.bounds.size.width,1)];
     view.backgroundColor=GetColor(216, 216, 216, 1);
     [self.view addSubview:view];
@@ -53,7 +53,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return 2;
+    return _InterNameAry.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,8 +81,24 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
-    [self.navigationController pushViewController:fillVC animated:YES];
+    switch (indexPath.row) {
+        case 0:{//填写新的
+            FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
+            [self.navigationController pushViewController:fillVC animated:YES];
+        }
+            break;
+        case 1:{//已填记录
+            
+        } break;
+        case 2:{//草稿箱
+            
+        }  break;
+
+        default:
+            break;
+    }
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

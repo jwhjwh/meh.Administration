@@ -139,6 +139,8 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入验证码" andInterval:1.0];
     }else  if((ccode.length<6)||(QRccode.length<6)){
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码不够六位" andInterval:1.0];
+    }else if([ccode isEqualToString:QRccode]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"两次密码不相同" andInterval:1.0];
     }else {
         if([ccode isEqualToString:QRccode]){
             
@@ -192,8 +194,6 @@
             
             
             
-        }else{
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"两次密码不相同" andInterval:1.0];
         }
 
     }
@@ -580,7 +580,7 @@
             ccode = textField.text;
             NSLog(@"1:%@",textField.text);
     
-    if ((ccode.length > 5 && QRccode.length > 5)&&([ccode isEqualToString:QRccode]) ) {
+    if ((ccode.length > 5 && QRccode.length > 5)) {
         
         _WCBtn.backgroundColor = GetColor(144, 75, 174, 1);
         _WCBtn.enabled = YES;
@@ -596,7 +596,7 @@
     
     QRccode = textField.text;
     NSLog(@"2:%@",textField.text);
-    if ((ccode.length > 5 && QRccode.length > 5)&&([ccode isEqualToString:QRccode])) {
+    if ((ccode.length > 5 && QRccode.length > 5)) {
         
         _WCBtn.backgroundColor = GetColor(144, 75, 174, 1);
         _WCBtn.enabled = YES;
