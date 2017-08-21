@@ -1,5 +1,5 @@
 //
-//  ViewControllerShopDetail.h
+//  ViewControllerPerson.h
 //  Administration
 //
 //  Created by zhang on 2017/8/15.
@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewControllerShopDetail : UIViewController
-@property (nonatomic,strong)NSString *stringTitle;
-@property (nonatomic,strong)NSString *departmanetID;
+@interface ViewControllerPerson : BaseViewController
 @property (nonatomic,strong)NSString *num;
+@property (nonatomic,strong)NSString *departmentID;
 @end

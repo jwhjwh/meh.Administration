@@ -14,4 +14,5 @@
 @property (nonatomic) BOOL isGroup;
 @property (nonatomic) BOOL isDefaultGroup;
 @property (nonatomic ,strong)NSArray *arrayPosition;
+@property (nonatomic,strong)NSString *joinType;
 @end

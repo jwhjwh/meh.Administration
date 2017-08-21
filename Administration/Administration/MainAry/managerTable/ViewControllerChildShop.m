@@ -72,6 +72,7 @@
     ViewControllerShopDetail *vc = [[ViewControllerShopDetail alloc]init];
     vc.stringTitle = dic[@"departmentName"];
     vc.departmanetID = dic[@"id"];
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
     
 }
@@ -85,7 +86,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"店报表";
+    self.title = @"店报表";
     self.array = [NSArray array];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];

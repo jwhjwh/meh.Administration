@@ -7,7 +7,7 @@
 //
 
 #import "ViewControllerShopDetail.h"
-
+#import "ViewControllerPerson.h"
 @interface ViewControllerShopDetail ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *array;
@@ -34,9 +34,22 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewStylePlain reuseIdentifier:@"cell"];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
     }
+    cell.textLabel.text = self.array[indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        ViewControllerPerson *vc = [[ViewControllerPerson alloc]init];
+        vc.num = self.num;
+        vc.departmentID = self.departmanetID;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 #pragma -mark system
 
@@ -48,7 +61,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = self.stringTitle;
-    self.array = [NSArray array];
+    self.array = @[@"按员工查看",@"待审核",@"所有报表"];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;

@@ -1,88 +1,82 @@
 //
-//  ViewControllerShopTable.m
+//  ViewControllerPerson.m
 //  Administration
 //
 //  Created by zhang on 2017/8/15.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "ViewControllerShopTable.h"
-#import "ViewControllerChildShop.h"
-@interface ViewControllerShopTable ()<UITableViewDelegate,UITableViewDataSource>
+#import "ViewControllerPerson.h"
+#import "ViewControllerPersonTable.h"
+@interface ViewControllerPerson ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *array;
 @end
 
-@implementation ViewControllerShopTable
-#pragma custom
--(void)getAllShop
+@implementation ViewControllerPerson
+#pragma -mark custem
+-(void)getData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserDepartment.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/selectUsersid.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":[USER_DEFAULTS valueForKey:@"roleId"]};
+    NSDictionary *info = [[NSDictionary alloc]init];
     
-    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
-        NSString *string = [responseObject valueForKey:@"status"];
-        if ([string isEqualToString:@"0000"]) {
+        info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"RoleId":[USER_DEFAULTS valueForKey:@"roleId"],@"DepartmentId":self.departmentID};
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.array = [responseObject valueForKey:@"list"];
-            [self.tableView reloadData];
+            [_tableView reloadData];
+        }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登陆,请重新登录" andInterval:1];
             return ;
-        }
-        if ([string isEqualToString:@"1001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            
+        }if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"登录超时,请重新登录" andInterval:1];
             return;
+            
         }
-        if ([string isEqualToString:@"4444"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
-            return;
-        }
-        if ([string isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
-            return;
-        }
-        
         
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-}
 
-#pragma -mark tableView
+}
+#pragma -mark tableview
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return self.array.count;
+    return 2;
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    NSDictionary *dict = self.array[indexPath.row];
-    cell.textLabel.text = dict[@"Name"];
+    cell.textLabel.text = @"xingming";
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.array[indexPath.row];
-    ViewControllerChildShop *vc = [[ViewControllerChildShop alloc]init];
-    vc.num =[NSString stringWithFormat:@"%d",[dict[@"Num"]intValue]];
+  //  NSDictionary *dict = self.array[indexPath.row];
+    ViewControllerPersonTable *vc = [[ViewControllerPersonTable alloc]init];
+    vc.stringTitle = @"mingzi";
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma -mark system
+
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self getAllShop];
+    [self getData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = self.stringTitle;
+    self.title = @"按员工查看";
+    self.array = [NSArray array];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;
@@ -90,8 +84,6 @@
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
-    
-    self.array = [NSArray array];
     
 }
 

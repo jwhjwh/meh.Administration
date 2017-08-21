@@ -868,7 +868,7 @@
 
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    [self.searchBar resignFirstResponder];
+   // [self.searchBar resignFirstResponder];
     self.buttonCancel.hidden = NO;
     self.searchBar.showsCancelButton = NO;
     self.viewSearch.frame = CGRectMake(0, 64, Scree_width, 50);
@@ -881,55 +881,24 @@
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self searchBarTextDidEndEditing:self.searchBar];
+    [self searchBarTextDidEndEditing:searchBar];
     
-    [self.tableViewMenber reloadData];
+   // [self.tableViewMenber reloadData];
 }
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+
+        [self.tableViewMenber  reloadData];
+       // [self upDataSearchSpecialOffe];
+    [searchBar resignFirstResponder];
+}
+
 - (void)commentTableViewTouchInSide{
     [self.searchBar resignFirstResponder];
 }
 
-
--(void)keyboardWillShow:(NSNotification *)notification
-
-{
-    
-    //这样就拿到了键盘的位置大小信息frame，然后根据frame进行高度处理之类的信息
-    
-    CGRect frame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    self.viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, frame.origin.y-110, Scree_width, 30)];
-    [self.tableViewMenber addSubview:self.viewTop];
-    
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width-60, 0, 40, 30)];
-    [button setTitle:@"完成" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(allReady) forControlEvents:UIControlEventTouchUpInside];
-    [self.viewTop addSubview:button];
-}
-
-/**
- 
- *  键盘将要隐藏
- 
- *
- 
- *  @param notification 通知
- 
- */
-
--(void)keyboardWillHidden:(NSNotification *)notification
-
-{
-    
-    CGRect frame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    [self.viewTop removeFromSuperview];
-}
-
--(void)allReady
-{
-    [self.searchBar resignFirstResponder];
-}
 
 #pragma -mark system
 - (void)viewDidLoad {
