@@ -168,7 +168,7 @@
             _textField.text=_address;
             }
             if(!(indexPath.row==6)){
-            _textField.placeholder=@"必填";
+            _textField.placeholder=@"6";
             }
         }else{
             if(indexPath.row==1){
