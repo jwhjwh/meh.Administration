@@ -296,7 +296,7 @@
     
     label.text = self.arrayTitle[section];
     [view addSubview:label];
-    if ([[self.openSectionDict valueForKey:[NSString stringWithFormat:@"%ld", section]] integerValue] == 0) {
+    if ([[self.openSectionDict valueForKey:[NSString stringWithFormat:@"%ld", (long)section]] integerValue] == 0) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (view.bounds.size.height - 10) / 2, 7, 10)];
         imageView.image = [UIImage imageNamed:@"jiantou_03"]; // 三角形小图片
         [view addSubview:imageView];

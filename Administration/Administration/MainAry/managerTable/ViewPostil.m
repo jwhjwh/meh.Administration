@@ -21,25 +21,15 @@
 
 -(void)setUI
 {
-    UIView *viewTop = [[UIView alloc]init];
-    [self addSubview:viewTop];
-    [viewTop mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.mas_left);
-        make.top.mas_equalTo(self.mas_top);
-        //make.bottom.mas_equalTo(self.mas_bottom);
-        make.height.mas_equalTo(20);
-        make.right.mas_equalTo(self.mas_right);
-    }];
-    self.viewTop = viewTop;
     
     UIButton *buttonAdd = [[UIButton alloc]init];
     [buttonAdd setTitle:@"添加批注 +" forState:UIControlStateNormal];
     [buttonAdd setTitleColor:GetColor(134,110 ,97 ,1) forState:UIControlStateNormal];
-    [viewTop addSubview:buttonAdd];
+    [self addSubview:buttonAdd];
     [buttonAdd mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(viewTop.mas_left).offset(8);
-        make.top.mas_equalTo(viewTop.mas_top);
-        make.bottom.mas_equalTo(viewTop.mas_bottom);
+        make.left.mas_equalTo(self.mas_left).offset(8);
+        make.top.mas_equalTo(self.mas_top);
+        make.height.mas_equalTo(20);
         make.width.mas_equalTo(100);
     }];
     self.buttonAdd = buttonAdd;
@@ -48,7 +38,7 @@
     viewBottom.backgroundColor = [UIColor clearColor];
     [self addSubview:viewBottom];
     [viewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(viewTop.mas_bottom).offset(5);
+        make.top.mas_equalTo(buttonAdd.mas_bottom).offset(5);
         make.left.mas_equalTo(self.mas_left);
         make.right.mas_equalTo(self.mas_right);
         make.bottom.mas_equalTo(self.mas_bottom);
@@ -58,11 +48,12 @@
     UILabel *labelTime = [[UILabel alloc]init];
     labelTime.textColor = [UIColor lightGrayColor];
     labelTime.font = [UIFont systemFontOfSize:10];
+    labelTime.text = @"刚刚";
     [viewBottom addSubview:labelTime];
     [labelTime mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewBottom.mas_left).offset(8);
         make.top.mas_equalTo(viewBottom.mas_top);
-        make.width.mas_equalTo(100);
+       // make.width.mas_equalTo(100);
         make.height.mas_equalTo(10);
     }];
     self.labelTime = labelTime;
@@ -95,7 +86,7 @@
     textView1.backgroundColor = GetColor(235, 227, 203, 1);
     NSMutableAttributedString *attString1 = [[NSMutableAttributedString alloc]initWithString:@"批注对象：例：@“本月计划超额完成”"];
     [attString1 addAttribute:NSForegroundColorAttributeName value:GetColor(145, 124, 102, 1) range:NSMakeRange(0, 3)];
-    textView1.placeholder = (NSString *)attString1;
+    textView1.placeholder = @"批注对象：例：@“本月计划超额完成";
     [viewText addSubview:textView1];
     [textView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewText.mas_left);
@@ -111,7 +102,7 @@
     textView2.backgroundColor = GetColor(235, 227, 203, 1);
     NSMutableAttributedString *attString2 = [[NSMutableAttributedString alloc]initWithString:@"批注对象：例：@“本月计划超额完成”"];
     [attString2 addAttribute:NSForegroundColorAttributeName value:GetColor(145, 124, 102, 1) range:NSMakeRange(0, 3)];
-    textView2.placeholder = (NSString *)attString1;
+    textView2.placeholder = @"批注对象：例：@“本月计划超额完成";
     [viewText addSubview:textView2];
     [textView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewText.mas_left);

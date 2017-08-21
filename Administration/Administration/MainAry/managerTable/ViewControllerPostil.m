@@ -66,9 +66,14 @@
     {
         NSLog(@"显示");
         
-        ViewPostil *viewPostil = [[ViewPostil alloc]initWithFrame:CGRectMake(0, 30, Scree_width, 190)];
-        viewPostil.backgroundColor = [UIColor blueColor];
+        ViewPostil *viewPostil = [[ViewPostil alloc]init];
         [cell.contentView addSubview:viewPostil];
+        [viewPostil mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(cell.contentView.mas_left).offset(8);
+            make.right.mas_equalTo(cell.contentView.mas_right).offset(-8);
+            make.top.mas_equalTo(cell.contentView.mas_top).offset(30);
+            make.height.mas_equalTo(150);
+        }];
         
     }
     cell.contentView.backgroundColor = GetColor(255, 252, 241, 1);
