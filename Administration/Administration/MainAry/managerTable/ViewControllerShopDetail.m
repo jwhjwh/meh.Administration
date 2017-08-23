@@ -8,9 +8,12 @@
 
 #import "ViewControllerShopDetail.h"
 #import "ViewControllerPerson.h"
+#import "ViewControllerStayCheck.h"
+#import "ViewControllerAllTable.h"
 @interface ViewControllerShopDetail ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *array;
+@property (nonatomic,strong)NSMutableArray *arrayData;
 @end
 
 @implementation ViewControllerShopDetail
@@ -18,11 +21,33 @@
 #pragma -mark custem
 -(void)getData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserPosition.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/selectDayDayReportState",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"Sort":@"1",@"RoleId":self.roleId,@"DepartmentID":self.departmanetID};
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *stringCode = [responseObject valueForKey:@"status"];
+        if ([stringCode isEqualToString:@"0000"]) {
+            
+            return ;
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            return ;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return ;
+        }
+        if ([stringCode isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1];
+            return ;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
 }
 
 #pragma -mark tableVew
@@ -37,6 +62,12 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
     }
     cell.textLabel.text = self.array[indexPath.row];
+    if (indexPath.row==1) {
+        if (self.arrayData.count!=0) {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@(%ld)",self.array[1],self.arrayData.count];
+        }
+        cell.textLabel.text = self.array[1];
+    }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -47,6 +78,15 @@
         ViewControllerPerson *vc = [[ViewControllerPerson alloc]init];
         vc.num = self.num;
         vc.departmentID = self.departmanetID;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.row==1)
+    {
+        ViewControllerStayCheck *vc = [[ViewControllerStayCheck alloc]init];
+        vc.arrayData = self.arrayData;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        ViewControllerAllTable *vc = [[ViewControllerAllTable alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     
@@ -62,6 +102,7 @@
     // Do any additional setup after loading the view.
     self.title = self.stringTitle;
     self.array = @[@"按员工查看",@"待审核",@"所有报表"];
+    self.arrayData = [NSMutableArray array];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;

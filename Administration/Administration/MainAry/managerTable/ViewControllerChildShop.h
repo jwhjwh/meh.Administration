@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewControllerChildShop : BaseViewController
-@property(nonatomic)NSString *num;
+@property (nonatomic,strong)NSString *num;
+@property (nonatomic,strong)NSString *roleId;
 @end

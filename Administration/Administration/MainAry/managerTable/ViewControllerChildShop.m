@@ -73,6 +73,7 @@
     vc.stringTitle = dic[@"departmentName"];
     vc.departmanetID = dic[@"id"];
     vc.num = self.num;
+    vc.roleId = self.roleId;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

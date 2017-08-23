@@ -36,6 +36,7 @@
 {
     ViewControllerShopTable *vc = [[ViewControllerShopTable alloc]init];
     vc.stringTitle = self.array[indexPath.row];
+    vc.roleId = self.myRoleid;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -62,15 +63,15 @@
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     
-    for (NSString *string in [USER_DEFAULTS valueForKey:@"myRole"]) {
-        if ([string intValue]==5||[string intValue]==8||[string intValue]==9) {
+    
+        if ([self.myRoleid intValue]==5||[self.myRoleid intValue]==8||[self.myRoleid intValue]==9) {
             self.array = @[@"店报表",@"周报表"];
         }
         else
         {
             self.array = @[@"店报表",@"周报表",@"月报表"];
         }
-    }
+    
     
 }
 

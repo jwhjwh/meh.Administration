@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewControllerEmployeeTable : BaseViewController
+@property (nonatomic,strong)NSString *myRoleid;
 @end

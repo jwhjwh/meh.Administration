@@ -42,7 +42,6 @@
 {
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"indexp = %@",indexPath);
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = self.arrayTitle[indexPath.row];

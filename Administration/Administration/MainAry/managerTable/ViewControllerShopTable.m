@@ -21,7 +21,7 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":[USER_DEFAULTS valueForKey:@"roleId"]};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":self.roleId};
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *string = [responseObject valueForKey:@"status"];
@@ -71,6 +71,7 @@
     NSDictionary *dict = self.array[indexPath.row];
     ViewControllerChildShop *vc = [[ViewControllerChildShop alloc]init];
     vc.num =[NSString stringWithFormat:@"%d",[dict[@"Num"]intValue]];
+    vc.roleId = self.roleId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma -mark system

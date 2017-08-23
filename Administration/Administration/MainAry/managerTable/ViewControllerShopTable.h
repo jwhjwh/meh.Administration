@@ -10,4 +10,5 @@
 
 @interface ViewControllerShopTable : BaseViewController
 @property(nonatomic,strong)NSString *stringTitle;
+@property (nonatomic,strong)NSString *roleId;
 @end
