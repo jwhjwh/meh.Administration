@@ -176,6 +176,8 @@
             _bjbtn.enabled = NO;
             [_bjbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         }
+        btn.enabled = YES;
+        [btn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
          [btn setTitle:@"完成" forState:UIControlStateNormal];
         
         NSSet *set = [NSSet setWithArray:_bjBtnAry];
@@ -216,7 +218,11 @@
             }
         }
     }else if([btn.titleLabel.text isEqualToString:@"完成"]){
-        
+        for (int i = 0; i<_bjbuttonAry.count-1; i++) {
+            _bjbtn = _bjbuttonAry[i];
+            _bjbtn.enabled = YES;
+            [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
+        }
         [btn setTitle:@"编辑" forState:UIControlStateNormal];
         NSSet *set = [NSSet setWithArray:_bjBtnAry];
         for (int u = 0; u<set.count; u++) {
@@ -331,8 +337,28 @@
     } view:self.view MBPro:YES];
     
 }
-#pragma mark 修改用户职位
- //修改用户职位: user/updateUserPosition.action
+#pragma mark 修改用户职位 ---------------------------------------两个网络请求数据
+
+-(void)updateuserposition :(NSString *)uuid usersid:(NSString *)usersid{
+    //修改用户职位: user/updateUserPosition.action
+    NSString *addurlStr = [NSString stringWithFormat:@"%@user/updateUserPosition.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"uuid":uuid,@"id":usersid};
+    NSDictionary *update = [[NSDictionary alloc]init];
+    NSMutableArray *updatee = [[NSMutableArray alloc]init];
+    //update = @{@"id":};
+    //update -- id,departmentid,roleid,levelid
+    //uuid
+    // id
+    [ZXDNetworking GET:addurlStr parameters:dic success:^(id responseObject) {
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
 
 #pragma mark 删除职位请求
 -(void)dimissZW:(NSArray *)roled departid:(NSArray *)departid  uuid:(NSString *)uuuuid rowsect:(NSUInteger )rowsectt{
@@ -448,49 +474,20 @@
 }
 #pragma mark 删除部门
 -(void)scbmbtn:(UIButton *)btn{
-    NSLog(@"%ld",(long)btn.tag);
-    for (int s = 0; s<_scBtnAry.count; s++) {
-        NSMutableArray *scbtnart = _sctagAry[s];
-        for (int r=0; r<scbtnart.count; r++) {
-            NSString *scbtnarttag = scbtnart[r];
-            if ([scbtnarttag isEqualToString:[NSString stringWithFormat:@"%ld",(long)btn.tag]])
-            {
-                [scbtnart removeObjectAtIndex:r];
-                [_sctagAry replaceObjectAtIndex:s withObject:scbtnart];
-                
-                NSMutableArray * dimissbm = _gxbmAry[s];
-                if (dimissbm.count>0) {
-                    [dimissbm removeObjectAtIndex:r];
-                    [_gxbmAry replaceObjectAtIndex:s withObject:dimissbm];
-                    
-                    NSMutableArray *dimissbmid = _gxbmidAry[s];
-                    [dimissbmid removeObjectAtIndex:r];
-                    [_gxbmidAry replaceObjectAtIndex:s withObject:dimissbmid];
-                    [self dimissTabelCellZWUI:r+2 secct:s];
-                }else{
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择部门再进行删除" andInterval:1.0];
-                }
-            }
-        }
-        
-    }
+
+    
+    inftionTableViewCell *cellu = (inftionTableViewCell *)[btn superview];
+    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+    NSLog(@"%ld,%ld",(long)insd.section,(long)insd.row);
+    NSMutableArray *dimissbm = _gxbmAry[insd.section];
+    [dimissbm removeObjectAtIndex:insd.row-2];
+    NSMutableArray *dimissid = _gxbmidAry[insd.section];
+    [dimissid removeObjectAtIndex:insd.row-2];
+    
+    [_gxbmAry replaceObjectAtIndex:insd.section withObject:dimissbm];
+    [self dimissTabelCellZWUI:insd.row secct:insd.section];
     
     
-    
-     //NSInteger r = [roww integerValue];
-    // NSInteger s = [sectt integerValue];
-    /*
-    NSMutableArray * dimissbm = _gxbmAry[r];
-    [dimissbm removeObjectAtIndex:r];
-    [_gxbmAry replaceObjectAtIndex:s withObject:dimissbm];
-    
-    NSMutableArray *dimissbmid = _gxbmidAry[r];
-    [dimissbmid removeObjectAtIndex:r];
-    [_gxbmidAry replaceObjectAtIndex:s withObject:dimissbmid];
-    */
-    
-    
-    //[self dimissTabelCellZWUI:r+2 secct:s];
 }
 
 #pragma mark 职位按钮
@@ -945,72 +942,50 @@
             [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
             [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
         }
-        
-        
         NSString*zwtag = _Numm[indexPath.section][0];
-        NSArray *bmary = _gxbmAry[indexPath.section];
         tag = [zwtag intValue];
         
-       
-        NSInteger row = indexPath.row-2;
-        NSInteger section  = indexPath.section;
-        NSString *uu= [NSString stringWithFormat:@"%ld%ld",(long)section,(long)row];
-        
-        
-        int taa = [uu intValue ];
-        
-        _scBtnnnnn.tag = taa;
-        NSLog(@"----------->%ld",(long)_scBtnnnnn.tag);
         if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
-             NSMutableArray *ssbm = [[NSMutableArray alloc]initWithObjects:_scBtnnnnn, nil];
-            NSMutableArray *tagary = [[NSMutableArray alloc]init];
-            [tagary addObject:[NSString stringWithFormat:@"%d",taa]];
+            //所属部门
             if (_scBtnAry.count == _gxbmAry.count) {
-                for (int e= 0; e<_sctagAry.count; e++) {
-                    NSArray *taf = _sctagAry[e];
-                    for (int w = 0 ; w<taf.count; w++) {
-                        if ([uu isEqualToString:taf[w]]) {
-                            [_scBtnAry replaceObjectAtIndex:e withObject:ssbm];
-                            _scBtnAry2 = [[NSMutableArray alloc]init];
-                            _sctagAry2 = [[NSMutableArray alloc]init];
-                            [_sctagAry replaceObjectAtIndex:e withObject:tagary];
-                        }
-                    }
-                }
+                
             }else{
-                _scBtnAry2 = [[NSMutableArray alloc]init];
-                _sctagAry2 = [[NSMutableArray alloc]init];
-                [_sctagAry addObject:tagary];
-                [_scBtnAry addObject:ssbm];
-            }
-        }else{
-            [_scBtnAry2 addObject:_scBtnnnnn];
-            [_sctagAry2 addObject:uu];
-            NSMutableArray *tagary = [[NSMutableArray alloc]init];
-            [tagary addObject:[NSString stringWithFormat:@"%d",taa]];
-            if (bmary.count ==_scBtnAry2.count){
-#pragma mark cell 待续
                 if (_scBtnAry.count == _gxbmAry.count) {
-                    for (int e= 0; e<_sctagAry.count; e++) {
-                        NSArray *taf = _sctagAry[e];
-                        for (int w = 0 ; w<taf.count; w++) {
-                            if ([uu isEqualToString:taf[w]]) {
-                                [_scBtnAry replaceObjectAtIndex:e withObject:_scBtnAry2];
-                                _scBtnAry2 = [[NSMutableArray alloc]init];
-                                _sctagAry2 = [[NSMutableArray alloc]init];
-                                [_sctagAry replaceObjectAtIndex:e withObject:tagary];
-                            }
-                        }
-                    }
-
+                    _scBtnAry2 = [[NSMutableArray alloc]init];
+                    [_scBtnAry2 addObject:_scBtnnnnn];
+                    [_scBtnAry replaceObjectAtIndex:indexPath.section withObject:_scBtnAry2];
                 }else{
-                    [_scBtnAry addObject:_scBtnAry2];
-                    [_sctagAry addObject:_sctagAry2];
-                     _scBtnAry2 = [[NSMutableArray alloc]init];
-                     _sctagAry2 = [[NSMutableArray alloc]init];
-                   //  [_SSBMbtnAry addObject:_SSBMbutt];
+                    _scBtnAry2 = [[NSMutableArray alloc]init];
+                    [_scBtnAry2 addObject:_scBtnnnnn];
+                    [_scBtnAry addObject:[[NSMutableArray alloc]init]];
+                    [_scBtnAry insertObject:_scBtnAry2 atIndex:indexPath.section];
+                }
+
+            }
+                }else{
+            //管辖部门
+            if (_scBtnAry.count == _gxbmAry.count) {
+                
+            }else{
+                [_scBtnAry addObject:[[NSMutableArray alloc]init]];
+                if ([_scBtnAry[indexPath.section]count] == [_gxbmAry[indexPath.section]count]) {
+                    //替换
+                    NSMutableArray *linbm = [[NSMutableArray alloc]init];
+                    linbm = _scBtnAry[indexPath.section];
+                    [linbm replaceObjectAtIndex:indexPath.row-2 withObject:_scBtnnnnn];
+                    [_scBtnAry replaceObjectAtIndex:indexPath.section withObject:linbm];
+                }else{
+                    //直接加
+                    [_scBtnAry2 addObject:_scBtnnnnn];
+                    [_scBtnAry insertObject:_scBtnAry2 atIndex:indexPath.section];
                 }
             }
+            
+
+           
+            
+            
+            
         }
 
         
