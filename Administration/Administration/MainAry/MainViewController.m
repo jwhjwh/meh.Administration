@@ -103,6 +103,8 @@
     }
     _numberLabel.layer.cornerRadius =5.0f;
     [_masgeButton addSubview:_numberLabel];
+    
+    [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",[USER_DEFAULTS valueForKey:@"roleId"]];
 }
 -(void)initData
 {

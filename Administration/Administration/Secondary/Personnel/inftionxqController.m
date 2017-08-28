@@ -219,7 +219,10 @@
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
            // model.birthday = [model.birthday substringToIndex:10];
-            model.birthday = model.birthday;
+            if (model.birthday.length!=0) {
+              model.birthday = [model.birthday substringToIndex:9];
+            }
+           // model.birthday = model.birthday;
              _logImage=model.icon;
             _callNum=[NSString stringWithFormat:@"%@",model.account];
             _callName=model.name;

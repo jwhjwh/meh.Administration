@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewControllerPersonTable : UIViewController
+@interface ViewControllerPersonTable : BaseViewController
 @property (nonatomic,strong)NSString *stringTitle;
+@property (nonatomic,strong)NSString *roleId;
+@property (nonatomic,strong)NSString *departmentId;
+@property (nonatomic,strong)NSString *num;
+//被查看人的userid和角色ID
+@property (nonatomic,strong)NSString *userid;
+@property (nonatomic,strong)NSString *rid;
+@property (nonatomic,strong)NSString *positionName;//职位
 @end

@@ -26,7 +26,13 @@
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
-            self.array = [responseObject valueForKey:@"yList"];
+            if ([self.num isEqualToString:@"1"]) {
+                self.array = [responseObject valueForKey:@"mList"];
+            }else
+            {
+               self.array = [responseObject valueForKey:@"yList"]; 
+            }
+            
             [self.tableView reloadData];
             return ;
         }

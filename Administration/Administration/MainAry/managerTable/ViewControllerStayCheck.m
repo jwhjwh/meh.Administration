@@ -15,6 +15,16 @@
 @end
 
 @implementation ViewControllerStayCheck
+#pragma -mark custem
+-(void)getData
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/selectUsersid.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *info = [[NSDictionary alloc]init];
+    
+}
 #pragma -mark tabelView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

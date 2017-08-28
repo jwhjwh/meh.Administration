@@ -15,4 +15,6 @@
 @property (nonatomic) BOOL isDefaultGroup;
 @property (nonatomic ,strong)NSArray *arrayPosition;
 @property (nonatomic,strong)NSString *joinType;
+@property (nonatomic,strong)NSString *sort;
+@property (nonatomic,strong)NSString *roleID;
 @end

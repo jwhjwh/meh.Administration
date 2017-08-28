@@ -25,7 +25,7 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"Sort":@"1",@"RoleId":self.roleId,@"DepartmentID":self.departmanetID};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"Sort":[ShareModel shareModel].sort,@"RoleId":[ShareModel shareModel].roleID};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
@@ -77,6 +77,7 @@
     if (indexPath.row==0) {
         ViewControllerPerson *vc = [[ViewControllerPerson alloc]init];
         vc.num = self.num;
+        vc.myRole = self.roleId;
         vc.departmentID = self.departmanetID;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row==1)

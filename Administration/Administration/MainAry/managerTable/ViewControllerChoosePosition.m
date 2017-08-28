@@ -102,6 +102,7 @@
     ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
     NSDictionary *dict = self.arrayData[indexPath.section];
     vc.myRoleid = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
+    [ShareModel shareModel].roleID = [NSString stringWithFormat:dict[@"roleId"]];;
     [self.navigationController pushViewController:vc animated:YES];
 
 }

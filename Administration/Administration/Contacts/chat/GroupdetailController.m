@@ -421,6 +421,8 @@ typedef void (^finish)(id result);
     controller.groupID = self.groupNum;
     controller.groupinformationId = self.groupInformation[@"id"];
     [self.navigationController pushViewController:controller animated:YES];
+//    ViewControllerAdd *vc = [[ViewControllerAdd alloc]initWithNibName:@"ViewControllerAdd" bundle:nil];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)notimageTap:(UITapGestureRecognizer*)sender{

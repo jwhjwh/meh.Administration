@@ -72,6 +72,7 @@
             //     添加一个PointAnnotation
             BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc]init];
             
+            
             annotation.coordinate = coordinate;
             [ _mapView addAnnotation:annotation];
             

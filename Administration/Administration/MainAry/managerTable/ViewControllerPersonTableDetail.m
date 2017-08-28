@@ -10,6 +10,7 @@
 #import "CellTabelDetail.h"
 #import "ViewControllerPostil.h"
 #import "ZXYAlertView.h"
+#import "CellInfo.h"
 @interface ViewControllerPersonTableDetail ()<UITableViewDelegate,UITableViewDataSource,ZXYAlertViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,weak)UIView *viewHeader;
 @property (nonatomic,weak)UILabel *labelDate;
@@ -18,7 +19,7 @@
 @property (nonatomic,weak)UILabel *labelName;
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *arrayTitle;
-@property (nonatomic,strong)NSArray *arrContent;
+@property (nonatomic,strong)NSDictionary *dictContent;
 @property (nonatomic,strong)UIAlertView *alertView;
 @end
 
@@ -26,6 +27,44 @@
 #pragma -mark custem
 -(void)getData
 {
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryReportInfo",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":self.roleId,
+                           @"DepartmentID":self.departmentId,
+                           @"remark":self.remark,
+                           @"id":self.tableId
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *stringCode = [responseObject valueForKey:@"status"];
+        if ([stringCode isEqualToString:@"0000"]) {
+            
+            self.dictContent = responseObject[@"tableInfo"];
+            self.labelName.text = self.dictContent[@"name"];
+            self.labeAdress.text = self.dictContent[@"achievement"];
+            self.labelDate.text = [self.dictContent[@"dateLine"] substringToIndex:10];
+            [self.tableView reloadData];
+            return ;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据为空" andInterval:1];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 
 -(void)checkTable:(UIButton *)button
@@ -50,55 +89,18 @@
 
 -(void)initView
 {
-    UIView *viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 64, Scree_width, 112)];
-    viewHeader.backgroundColor = GetColor(200, 200, 200, 1);
-    [self.view addSubview:viewHeader];
-    self.viewHeader = viewHeader;
-    
-    NSArray *array = @[@"    日期",@"    陌拜地址",@"    职位",@"    姓名"];
-    for(int i=0;i<4;i++)
-    {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, i*28, 120, 27)];
-        label.textColor = [UIColor lightGrayColor];
-        label.backgroundColor = [UIColor whiteColor];
-        label.text = array[i];
-        [viewHeader addSubview:label];
-    }
-    
-    UILabel *labelDate = [[UILabel alloc]initWithFrame:CGRectMake(120, 0, Scree_width-120, 27)];
-    labelDate.textColor = [UIColor lightGrayColor];
-    labelDate.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelDate];
-    self.labelDate = labelDate;
-    
-    UILabel *labelAdress = [[UILabel alloc]initWithFrame:CGRectMake(120, 28, Scree_width-120, 27)];
-    labelAdress.textColor = [UIColor lightGrayColor];
-    labelAdress.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelAdress];
-    self.labeAdress = labelAdress;
-    
-    UILabel *labelPosition = [[UILabel alloc]initWithFrame:CGRectMake(120, 56, Scree_width-120, 27)];
-    labelPosition.textColor = [UIColor lightGrayColor];
-    labelPosition.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelPosition];
-    self.labelPosition = labelPosition;
-    
-    UILabel *labelName = [[UILabel alloc]initWithFrame:CGRectMake(120, 84, Scree_width-120, 27)];
-    labelName.textColor = [UIColor lightGrayColor];
-    labelName.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelName];
-    self.labelName = labelName;
-    
     UITableView *tableView = [[UITableView alloc]init];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+   // tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [ZXDNetworking setExtraCellLineHidden:tableView];
+    [tableView registerClass:[CellTabelDetail class] forCellReuseIdentifier:@"cell"];
+    [tableView registerClass:[CellInfo class] forCellReuseIdentifier:@"cell2"];
     tableView.estimatedRowHeight = 100;
     tableView.rowHeight = UITableViewAutomaticDimension;
-    [tableView registerClass:[CellTabelDetail class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:tableView];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(viewHeader.mas_bottom);
+        make.top.mas_equalTo(self.view.mas_top);
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
         make.bottom.mas_equalTo(self.view.mas_bottom);
@@ -126,29 +128,203 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReportState",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict;
+    
     if (buttonIndex==1) {
-        //审核接口
+        if (alertView.tag == 200) {
+            dict = @{@"appkey":appKeyStr,
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"CompanyInfoId":compid,
+                     @"RoleId":[ShareModel shareModel].roleID,
+                     @"DepartmentID":self.departmentId,
+                     @"Num":self.remark,
+                     @"Sort":[ShareModel shareModel].sort,
+                     @"State":@"1",
+                     @"code":@"2",
+                     @"id":self.dictContent[@"id"]};
+        }else
+        {
+            dict = @{@"appkey":appKeyStr,
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"CompanyInfoId":compid,
+                     @"RoleId":[ShareModel shareModel].roleID,
+                     @"DepartmentID":self.departmentId,
+                     @"Num":self.remark,
+                     @"Sort":[ShareModel shareModel].sort,
+                     @"State":@"2",
+                     @"code":@"2",
+                     @"id":self.dictContent[@"id"]};
+        }
+        
+        [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+            NSString *string = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];
+            if ([string isEqualToString:@"0000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+                return ;
+            }
+            if ([string isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+                return ;
+            }
+            if ([string isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+                return ;
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+        
+        
+        
+        
     }
 }
 
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return self.arrayTitle.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell==nil) {
-        cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    if ([self.postionName containsString:@"美导"]) {
+        if (indexPath.row<3) {
+            tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+            if (cell==nil) {
+                cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+            }
+            cell.labelTitle.text = self.arrayTitle[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    cell.labelInfo.text = self.dictContent[@"dateLine"];
+                    break;
+                case 1:
+                    cell.labelInfo.text = self.postionName;
+                    break;
+                case 2:
+                    cell.labelInfo.text = self.dictContent[@"name"];
+                    break;
+                    
+                default:
+                    break;
+            }
+             return cell;
+        }else
+        {
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            if (cell==nil) {
+                cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            }
+            
+            switch (indexPath.row) {
+                case 3:
+                    cell.labelContent.text = self.dictContent[@"store"];
+                    break;
+                case 4:
+                    cell.labelContent.text = self.dictContent[@"aim"];
+                    break;
+                case 5:
+                    cell.labelContent.text = self.dictContent[@"achievement"];
+                    break;
+                case 6:
+                    cell.labelContent.text = self.dictContent[@"shipment"];
+                    break;
+                case 7:
+                    cell.labelContent.text = self.dictContent[@"question"];
+                    break;
+                case 8:
+                    cell.labelContent.text = self.dictContent[@"solution"];
+                    break;
+                case 9:
+                    cell.labelContent.text = self.dictContent[@"apperception"];
+                    break;
+                case 10:
+                    cell.labelContent.text = self.dictContent[@"morgenPlan"];
+                    break;
+                case 11:
+                    cell.labelContent.text = self.dictContent[@"morgenAim"];
+                    break;
+                case 12:
+                    cell.labelContent.text = self.dictContent[@"summery"];
+                    break;
+                default:
+                    break;
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
+            cell.labelTitle.text = self.arrayTitle[indexPath.row];
+            return cell;
+        }
+       
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
-    cell.labelTitle.text = self.arrayTitle[indexPath.row];
-    cell.labelContent.text = @"哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈";
-    
-    return cell;
+   else
+   {
+       if (indexPath.row<4) {
+           tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+           CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+           if (cell==nil) {
+               cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+           }
+           cell.labelTitle.text = self.arrayTitle[indexPath.row];
+           switch (indexPath.row) {
+               case 0:
+                   cell.labelInfo.text = self.dictContent[@"dateLine"];
+                   break;
+               case 1:
+                   cell.labelInfo.text = self.dictContent[@"worship"];
+                   break;
+               case 2:
+                   cell.labelInfo.text = self.postionName;
+                   break;
+               case 3:
+                   cell.labelInfo.text = self.dictContent[@"name"];
+                   break;
+               default:
+                   break;
+           }
+           return cell;
+       }else
+       {
+           CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+           if (cell==nil) {
+               cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+           }
+           cell.selectionStyle = UITableViewCellSelectionStyleNone;
+           [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
+           cell.labelTitle.text = self.arrayTitle[indexPath.row];
+           switch (indexPath.row) {
+               case 4:
+                   cell.labelContent.text = self.dictContent[@"theTargetJob"];
+                   break;
+               case 5:
+                   cell.labelContent.text = self.dictContent[@"appraisal"];
+                   break;
+               case 6:
+                   cell.labelContent.text = self.dictContent[@"evaluation"];
+                   break;
+               case 7:
+                   cell.labelContent.text = self.dictContent[@"reason"];
+                   break;
+               case 8:
+                   cell.labelContent.text = self.dictContent[@"feelingToShare"];
+                   break;
+               case 9:
+                   cell.labelContent.text = self.dictContent[@"plans"];
+                   break;
+               default:
+                   break;
+           }
+           return cell;
+       }
+   }
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -160,15 +336,26 @@
 //}
 
 #pragma -mark system
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = self.stringTitle;
     [self initView];
     
-    self.arrayTitle = @[@"今日目标及工作详细内容",@"自我状态评估",@"自我打分",@"原因",@"感悟分享及心得",@"明日计划安排"];
-    self.arrContent = [NSArray array];
-    
+    if ([self.postionName containsString:@"美导"]) {
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"地区店名老板",@"目标",@"业绩",@"出货",@"发现问题",@"解决方案",@"感悟分享",@"明日计划",@"明日目标",@"总结"];
+    }else
+    {
+    self.arrayTitle = @[@"日期",@"陌拜地址",@"职位",@"姓名",@"今日目标及工作详细内容",@"自我状态评估",@"自我打分",@"原因",@"感悟分享及心得",@"明日计划安排"];
+    }
+    self.dictContent = [NSDictionary dictionary];
+
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"审核" style:(UIBarButtonItemStyleDone) target:self action:@selector(checkTable:)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];

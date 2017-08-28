@@ -37,6 +37,7 @@
     ViewControllerShopTable *vc = [[ViewControllerShopTable alloc]init];
     vc.stringTitle = self.array[indexPath.row];
     vc.roleId = self.myRoleid;
+    [ShareModel shareModel].sort = [NSString stringWithFormat:@"%ld",indexPath.row+1];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

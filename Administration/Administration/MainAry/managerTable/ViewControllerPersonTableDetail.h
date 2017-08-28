@@ -10,4 +10,9 @@
 
 @interface ViewControllerPersonTableDetail : BaseViewController
 @property (nonatomic,strong)NSString *stringTitle;
+@property (nonatomic,strong)NSString *departmentId;
+@property (nonatomic,strong)NSString *remark;
+@property (nonatomic,strong)NSString *tableId;
+@property (nonatomic,strong)NSString *roleId;
+@property (nonatomic,strong)NSString *postionName;
 @end
