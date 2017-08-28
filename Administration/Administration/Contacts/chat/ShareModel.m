@@ -16,6 +16,7 @@
     dispatch_once(&tooken, ^{
         sharedAccountManagerInstance = [[self alloc] init];
     });
+    
     return sharedAccountManagerInstance;
 }
 @end

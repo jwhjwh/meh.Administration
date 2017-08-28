@@ -357,7 +357,7 @@
             [USER_DEFAULTS  setObject:uuid forKey:@"uuid"];
             [USER_DEFAULTS  setObject:roleIds forKey:@"roleIds"];
             [USER_DEFAULTS setObject:[responseObject valueForKey:@"roleIds"] forKey:@"myRole"];
-            
+            [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleId"]];
             
 //            EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
 //            if (error==nil) {

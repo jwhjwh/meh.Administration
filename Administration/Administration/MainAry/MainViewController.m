@@ -103,6 +103,8 @@
     }
     _numberLabel.layer.cornerRadius =5.0f;
     [_masgeButton addSubview:_numberLabel];
+    
+    [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",[USER_DEFAULTS valueForKey:@"roleId"]];
 }
 -(void)initData
 {
@@ -310,6 +312,7 @@
                 {
                 ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
                 self.hidesBottomBarWhenPushed = YES;
+                vc.myRoleid = [USER_DEFAULTS valueForKey:@"roleId"];
                 [self.navigationController pushViewController:vc animated:YES];
                 }
             }

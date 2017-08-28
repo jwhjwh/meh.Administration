@@ -458,17 +458,15 @@
 -(NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 
 {
-    NSInteger count = 0;
-    
-    for(NSString *character in self.array)
+    if ([title isEqualToString:UITableViewIndexSearch])
     {
-        if([character isEqualToString:title])
-        {
-            return count;
-        }
-        count ++;
+        [tableView setContentOffset:CGPointZero animated:NO];//tabview移至顶部
+        return NSNotFound;
     }
-    return 0;
+    else
+    {
+        return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index] - 1; // -1 添加了搜索标识
+    }
     
 }
 
@@ -490,8 +488,10 @@
             cell.nameLabel.text = dict[@"name"];
             if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
                 cell.zhiLabel.text = @"我";
+                cell.zhiLabel.hidden = NO;
             }else
             {
+                cell.zhiLabel.hidden = YES;
                 [cell.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell.contentView.mas_left).offset(8);
                     make.centerY.mas_equalTo(cell.contentView.mas_centerY);
@@ -536,8 +536,10 @@
             cell.labelDivision.hidden = YES;
             if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
                 cell.zhiLabel.text = @"我";
+                cell.zhiLabel.hidden = NO;
             }else
             {
+                cell.zhiLabel.height = YES;
                 if ([self.index isEqualToString:@"0"]) {
                     cell.labelDivision.hidden = NO;
                     cell.locationButton.hidden = NO;
@@ -561,9 +563,11 @@
             [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
             cell.nameLabel.text = dict[@"name"];
             if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
+                cell.zhiLabel.hidden = NO;
                 cell.zhiLabel.text = @"我";
             }else
             {
+                cell.zhiLabel.hidden = YES;
                 [cell.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(cell.contentView.mas_left).offset(8);
                     make.centerY.mas_equalTo(cell.contentView.mas_centerY);
@@ -603,9 +607,11 @@
             cell.locationButton.hidden = YES;
             cell.labelDivision.hidden = YES;
             if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
+                cell.zhiLabel.hidden = NO;
                 cell.zhiLabel.text = @"我";
             }else
             {
+                cell.zhiLabel.hidden = YES;
                 if ([self.index isEqualToString:@"0"]) {
                     cell.labelDivision.hidden = NO;
                     cell.locationButton.hidden = NO;

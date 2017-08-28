@@ -769,9 +769,67 @@
             [_SSBMbutt setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             //NSInteger section  = indexPath.section;
             _SSBMbutt.tag= indexPath.section;
+<<<<<<< HEAD
             NSString *bjname =_bjbtnname[indexPath.section];
             if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
                 _SSBMbutt.enabled = YES;
+=======
+           
+        }
+        if (_SSBMbtnAry.count == _ZW.count) {
+            NSInteger tagstr = [_Numm[indexPath.section][0] intValue];
+            for (int i = 0; i<_SSBMbtnAry.count; i++) {
+                UIButton *zebtn = _SSBMbtnAry[i];
+                if (zebtn.tag == tagstr) {
+                    [_SSBMbtnAry replaceObjectAtIndex:i withObject:_SSBMbutt];
+                }
+            }
+        }else{
+            [_SSBMbtnAry addObject:_SSBMbutt];
+        }
+    }else{
+        UILabel *XBTLabel  = [[UILabel alloc]initWithFrame:CGRectMake(120, 1, self.view.bounds.size.width-160, 38)];
+        XBTLabel.text = _gxbmAry[indexPath.section][indexPath.row-2];
+        XBTLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
+        [cell.contentView addSubview:XBTLabel];
+        
+        _scBtnnnnn= [[UIButton alloc]initWithFrame:CGRectMake(120+self.view.bounds.size.width-160, 1, 40, 38)];
+        [cell.contentView addSubview:_scBtnnnnn];
+        [_scBtnnnnn addTarget:self action:@selector(scbmbtn:) forControlEvents:UIControlEventTouchUpInside];
+        if ([_bjbtnname[indexPath.section] isEqualToString:@"完成"]) {
+            _scBtnnnnn.enabled = YES;
+            [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
+            [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
+        }else{
+            _scBtnnnnn.enabled = NO;
+            [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+            [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
+        }
+        NSString*zwtag = _Numm[indexPath.section][0];
+        tag = [zwtag intValue];
+        
+        if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
+            //所属部门
+            if (_scBtnAry.count == _gxbmAry.count) {
+                
+            }else{
+                if (_scBtnAry.count == _gxbmAry.count) {
+                    _scBtnAry2 = [[NSMutableArray alloc]init];
+                    [_scBtnAry2 addObject:_scBtnnnnn];
+                    [_scBtnAry replaceObjectAtIndex:indexPath.section withObject:_scBtnAry2];
+                }else{
+                    _scBtnAry2 = [[NSMutableArray alloc]init];
+                    [_scBtnAry2 addObject:_scBtnnnnn];
+                    [_scBtnAry addObject:[[NSMutableArray alloc]init]];
+                    [_scBtnAry insertObject:_scBtnAry2 atIndex:indexPath.section];
+                }
+
+            }
+                }else{
+            //管辖部门
+            if (_scBtnAry.count == _gxbmAry.count) {
+                
+>>>>>>> 906526bfca98375805ea4f33a10bb82208a39a1c
             }else{
                 _SSBMbutt.enabled = NO;
             }

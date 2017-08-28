@@ -23,14 +23,13 @@
     
     self.selectImage = [[UIImageView alloc]init];
     self.selectImage.translatesAutoresizingMaskIntoConstraints = NO;
-    self.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
-    [self.contentView addSubview:self.selectImage];
-    [self.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
-        make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.mas_equalTo(25);
-        make.width.mas_equalTo(25);
-    }];
+  //  [self.contentView addSubview:self.selectImage];
+//    [self.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+//        make.centerY.mas_equalTo(self.contentView.mas_centerY);
+//        make.height.mas_equalTo(25);
+//        make.width.mas_equalTo(25);
+//    }];
     
     _TXImage=[[UIImageView alloc]init];
     // 设置圆角半径
@@ -39,7 +38,7 @@
     _TXImage.layer.cornerRadius =25.0f;
     [self.contentView addSubview:_TXImage];
     [self.TXImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.selectImage.mas_right).offset(3);
+        make.left.mas_equalTo(self.contentView.mas_left).offset(28);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
@@ -83,57 +82,8 @@
 }
 
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    if (self.editing) {
-        if (selected) {
-            // 编辑状态去掉渲染
-            self.contentView.backgroundColor = [UIColor whiteColor];
-            self.backgroundView.backgroundColor = [UIColor whiteColor];
-            // 左边选择按钮去掉渲染背景
-            UIView *view = [[UIView alloc] initWithFrame:self.multipleSelectionBackgroundView.bounds];
-            view.backgroundColor = [UIColor whiteColor];
-            self.selectedBackgroundView = view;
-            
-        }
-    }
-    
-}
 
-- (void) setEditing:(BOOL)editting animated:(BOOL)animated
-{
-    //不要破坏原本的系统动作
-    [super setEditing:editting animated:animated];
-//    //进入编辑状态
-//    //背景视图生成，以准备设置选中和未选中的不同背景色
-//    self.backgroundView = [[UIView alloc] init];
-//    self.backgroundView.backgroundColor = [UIColor whiteColor];
-//    self.selectImage = [[UIImageView alloc] initWithFrame:CGRectMake(6.0f,CGRectGetHeight(self.bounds)/2 - 14.5f,29.0f,29.0f)];
-//    self.selectImage.alpha = 1.0f;
-//    [self addSubview:self.selectImage];
-    //更新选中与否的界面显示
-    [self setChecked:_isSelected];
-    
-}
 
-- (void) setChecked:(BOOL)checked
-{
-    //选中
-    if (self.isSelected)
-    {
-        //勾选的图标
-        self.selectImage.image  = [UIImage imageNamed:@"xuanzhong"];
-        self.isSelected = YES;
-    }
-    //反选
-    else
-    {
-        //反选的图标
-        self.selectImage.image  = [UIImage imageNamed:@"weixuanzhong"];
-        self.isSelected = NO;
-    }
-    
-}
 
 -(void)setModel:(NSDictionary *)model{
     self.NameLabel.text=model[@"name"];

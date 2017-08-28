@@ -17,7 +17,7 @@
 #import "RobotManager.h"
 #import "SelectCell.h"
 #import "Cell.h"
-#import "ModelArray.h"
+//#import "ModelArray.h"
 #import "LineLayout.h"
 @interface AddmemberController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
 
@@ -41,7 +41,7 @@
 @property (nonatomic,strong)NSMutableArray *arrayName;
 @property (nonatomic,assign)NSInteger integer;
 @property (nonatomic,strong)NSMutableArray *arrayIsselect;
-@property (nonatomic,strong)ModelArray *modelArray;
+//@property (nonatomic,strong)ModelArray *modelArray;
 @property (nonatomic,strong)UICollectionView *collectView;
 @property (nonatomic,strong)UIView * viewTop;
 /** 标记是否全选 */
@@ -52,7 +52,7 @@
 
 -(void)dealloc
 {
-    [self.modelArray removeObserver:self forKeyPath:@"selected"];
+   // [self.modelArray removeObserver:self forKeyPath:@"selected"];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
@@ -64,7 +64,7 @@
     NSMutableArray *array = [NSMutableArray arrayWithArray:[LVFmdbTool selectLately:[USER_DEFAULTS objectForKey:@"userid"]]];
     self.dataArray=[NSMutableArray arrayWithArray:[[array reverseObjectEnumerator] allObjects]];
     //    NSString *string = @"0";
-    
+   // [[self.modelArray mutableArrayValueForKey:@"selected"] removeAllObjects];
     [self.ZJLXTable reloadData];
     
     for (int i=0; i<self.dataArray.count; i++) {
@@ -73,20 +73,20 @@
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context{
-    NSLog(@"count = %lu",(unsigned long)self.modelArray.selected.count);
-    if (self.modelArray.selected.count!=0) {
-        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.modelArray.selected.count] forState:UIControlStateNormal];
-        [self.buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        self.buttonSure.userInteractionEnabled = YES;
-    }
-    else
-    {
-        [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
-        [self.buttonSure setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        self.buttonSure.userInteractionEnabled = NO;
-    }
-}
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context{
+//    NSLog(@"count = %lu",(unsigned long)self.deleteArrarys.count);
+//    if (self.modelArray.selected.count!=0) {
+//        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.modelArray.selected.count] forState:UIControlStateNormal];
+//        [self.buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//        self.buttonSure.userInteractionEnabled = YES;
+//    }
+//    else
+//    {
+//        [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+//        [self.buttonSure setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//        self.buttonSure.userInteractionEnabled = NO;
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -100,6 +100,7 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self UIBtn];
     self.navigationController.automaticallyAdjustsScrollViewInsets=NO;
+    
     self.deleteArrarys = [NSMutableArray array];
     self.filterdArray = [NSMutableArray array];
     self.arrayResult = [NSMutableArray array];
@@ -110,9 +111,9 @@
     self.integer = 0;
     self.isAllSelected = NO;
     
-    self.modelArray = [[ModelArray alloc]init];
-    self.modelArray.selected = [NSMutableArray array];
-    [self.modelArray addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
+//    self.modelArray = [[ModelArray alloc]init];
+//    self.modelArray.selected = [NSMutableArray array];
+//    [self.modelArray addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
     
 }
 
@@ -223,19 +224,6 @@
     self.view2.backgroundColor = [UIColor RGBview];
     [self.view addSubview:self.view2];
     
-    //    _lxLabel = [[UILabel alloc]init];
-    //    _lxLabel.text= @"最近联系人";
-    //    _lxLabel.backgroundColor = [UIColor whiteColor];
-    //    _lxLabel.textColor = [UIColor RGBview];
-    //    _lxLabel.font = [UIFont systemFontOfSize:15];
-    //    [self.view addSubview:_lxLabel];
-    //    [_lxLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.left.mas_equalTo(self.view.mas_left).offset(10);
-    //        make.top.mas_equalTo(self.view2.mas_bottom).offset(5);
-    //        make.right.mas_equalTo(self.view.mas_right);
-    //        make.height.mas_equalTo(20);
-    //    }];
-    
     self.view3 = [[UIView alloc]init];
     self.view3.backgroundColor = [UIColor RGBview];
     [self.view addSubview:self.view3];
@@ -245,26 +233,6 @@
         make.top.mas_equalTo(self.viewBack.mas_bottom);
         make.height.mas_equalTo(1);
     }];
-    
-    //_ZJLXTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 180, Scree_width, Scree_height-80)];
-    _ZJLXTable = [[UITableView alloc]init];
-    _ZJLXTable.backgroundColor = [UIColor whiteColor];
-    _ZJLXTable.delegate = self;
-    _ZJLXTable.dataSource = self;
-    [self.view addSubview:_ZJLXTable];
-    [_ZJLXTable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view3.mas_bottom).offset(-1);
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-40);
-    }];
-    
-    /*=========================至关重要============================*/
-    _ZJLXTable.allowsMultipleSelectionDuringEditing = YES;
-    //去除多余的cell线
-    [ZXDNetworking setExtraCellLineHidden:_ZJLXTable];
-    [_ZJLXTable registerClass:NSClassFromString(@"SelectCell") forCellReuseIdentifier:@"cell"];
-    
     
     self.buttonAll = [UIButton buttonWithType:UIButtonTypeSystem];
     self.buttonAll.frame = CGRectMake(0, Scree_height-40, Scree_width/2, 40);
@@ -285,55 +253,61 @@
     [self.buttonSure addTarget:self action:@selector(sureButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonSure];
     
+    //_ZJLXTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 180, Scree_width, Scree_height-80)];
+    _ZJLXTable = [[UITableView alloc]init];
+    _ZJLXTable.backgroundColor = [UIColor whiteColor];
+    _ZJLXTable.delegate = self;
+    _ZJLXTable.dataSource = self;
+    [self.view addSubview:_ZJLXTable];
+    [_ZJLXTable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view3.mas_bottom).offset(-1);
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.bottom.mas_equalTo(self.buttonAll.mas_top);
+    }];
+    
+    /*=========================至关重要============================*/
+//    [_ZJLXTable setEditing:YES animated:YES];
+//    _ZJLXTable.allowsMultipleSelectionDuringEditing = YES;
+    //去除多余的cell线
+    [ZXDNetworking setExtraCellLineHidden:_ZJLXTable];
+    [_ZJLXTable registerClass:NSClassFromString(@"SelectCell") forCellReuseIdentifier:@"cell"];
+    
+    
+    
+    
     
 }
 
 #pragma -mark button
 -(void)allButton
 {
-    if (self.modelArray.selected.count!=0) {
+    [self.deleteArrarys removeAllObjects];
         for (int i = 0; i<self.dataArray.count; i++) {
             NSDictionary *dict = self.dataArray[i];
-            for (int j=0; j<self.modelArray.selected.count; j++) {
-                NSMutableDictionary *dic = [self.modelArray.selected[j]mutableCopy];
-                if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:dic[@"userid"]]) {
-                    [dict setValue:@"0" forKey:@"isSelect"];
-                    [self.dataArray replaceObjectAtIndex:i withObject:dict];
-                    [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-                    SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
-                    cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-                    cell.isSelected = YES;
-                    [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dic];
-                }
-            }
-            
-            
-            //            NSDictionary *dict = self.dataArray[i];
-            //            [dict setValue:@"0" forKey:@"isSelect"];
-            //            [self.dataArray replaceObjectAtIndex:i withObject:dict];
-            //            [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
-            //            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-            //            SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
-            //            cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-            //            cell.isSelected = YES;
-            //            //  [self.ZJLXTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-            //            [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
-        }
-    }else
-    {
-        for (int i = 0; i<self.dataArray.count; i++) {
-            NSDictionary *dict = self.dataArray[i];
-            [dict setValue:@"0" forKey:@"isSelect"];
+            [dict setValue:@"1" forKey:@"isSelect"];
             [self.dataArray replaceObjectAtIndex:i withObject:dict];
-            [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
+            [self.deleteArrarys addObject:dict];
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
             SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
             cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
             cell.isSelected = YES;
-            //  [self.ZJLXTable selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-            [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%d)",i+1] forState:UIControlStateNormal];
+           
         }
+    [self.collectView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    if (self.deleteArrarys.count>6) {
+        self.collectView.frame = CGRectMake(0, 64, 245, 40);
+    }
+    else
+    {
+        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40+25, 40);
+    }
+    
+    if (self.deleteArrarys.count!=0) {
+        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)self.deleteArrarys.count] forState:UIControlStateNormal];
+    }else
+    {
+        [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
     }
     
 }
@@ -342,8 +316,8 @@
 {
     NSMutableArray *arrUsersid = [NSMutableArray array];
     NSDictionary *dict = [NSDictionary dictionary];
-    for (int i=0; i<self.modelArray.selected.count; i++) {
-        dict = self.self.modelArray.selected[i];
+    for (int i=0; i<self.deleteArrarys.count; i++) {
+        dict = self.self.deleteArrarys[i];
         NSString *uuid = [NSString stringWithFormat:@"%@",dict[@"uuid"]];
         NSString *usersid = [NSString stringWithFormat:@"%@",dict[@"userid"]];
         NSMutableDictionary *listUersid = [NSMutableDictionary dictionary];
@@ -363,17 +337,8 @@
         
         [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-                //     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
-                EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
-                //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
-                //    messageVC.title = @"8001";
-                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.groupID conversationType:EMConversationTypeGroupChat];
-                //  messageVC.groupNmuber = dic[@"GroupNumber"];
-                messageVC.hidesBottomBarWhenPushed = YES;
-                messageVC.number = @"1";
-                [messageVC.faceView setEmotionManagers:@[manager]];
-                // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
-                [self.navigationController pushViewController:messageVC animated:YES];
+               
+                [self.navigationController popViewControllerAnimated:YES];
                 return ;
             }
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]) {
@@ -470,7 +435,7 @@
             make.height.mas_equalTo(49);
         }];
         self.view2.frame = CGRectMake(0, 100, Scree_width, 1);
-        _ZJLXTable.frame = CGRectMake(0, 130, Scree_width, Scree_height-80);
+      //  _ZJLXTable.frame = CGRectMake(0, 130, Scree_width, Scree_height-80);
         
     }else
     {
@@ -483,7 +448,7 @@
             make.height.mas_equalTo(49);
         }];
         self.view2.frame = CGRectMake(0, 150, Scree_width, 1);
-        _ZJLXTable.frame = CGRectMake(0, 180, Scree_width, Scree_height-80);
+      //  _ZJLXTable.frame = CGRectMake(0, 180, Scree_width, Scree_height-80);
     }
     NSDictionary *dict = [NSDictionary dictionary];
     [self.arraySearch removeAllObjects];
@@ -517,7 +482,6 @@
 {
     [self.searchBar resignFirstResponder];
     self.searchBar.text = @"";
-    
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -530,12 +494,13 @@
 #pragma -mark collectionView
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    return self.modelArray.selected.count;
+    return self.deleteArrarys.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSDictionary *dict = self.modelArray.selected[indexPath.row];
+    NSDictionary *dict = self.deleteArrarys[indexPath.row];
     Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
+    [cell setNeedsLayout];
     //    cell.label.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
     //    cell.label.backgroundColor = [UIColor whiteColor];
     cell.imageViweH.backgroundColor = [UIColor whiteColor];
@@ -554,22 +519,40 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = 0;
-    NSDictionary *dictC = self.modelArray.selected[indexPath.row];
-    row = [dictC[@"indexP"] intValue];
-    // [self.arraySelect removeObject:dictC];
-    [[self.modelArray mutableArrayValueForKey:@"selected"]removeObject:dictC];
+    NSLog(@"%ld",(long)indexPath.row);
+    NSDictionary *dictC = self.deleteArrarys[indexPath.row];
+    [self.deleteArrarys removeObject:dictC];
+    for (int i=0; i<self.dataArray.count; i++) {
+        NSDictionary *myD = self.dataArray[i];
+        if ([[NSString stringWithFormat:@"%@",dictC[@"userid"]] isEqualToString:[NSString stringWithFormat:@"%@",myD[@"userid"]]]) {
+            row=i;
+            [myD setValue:@"2" forKey:@"isSelect"];
+            [self.dataArray replaceObjectAtIndex:row withObject:myD];
+        }
+    }
+    
     [self.collectView reloadData];
+    
     NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:0];
     SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexpath];
     cell.isSelected = NO;
     cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
-    if (self.modelArray.selected.count>6) {
+    [self.ZJLXTable reloadData];
+    
+    if (self.deleteArrarys.count!=0) {
+        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)self.deleteArrarys.count] forState:UIControlStateNormal];
+    }else
+    {
+        [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+    }
+    
+    if (self.deleteArrarys.count>6) {
         self.collectView.frame = CGRectMake(0, 64, 245, 40);
         // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
     }
     else
     {
-        self.collectView.frame = CGRectMake(0, 64, self.modelArray.selected.count*40, 40);
+        self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40, 40);
     }
 }
 
@@ -581,13 +564,17 @@
 #pragma -mark tableview
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.dataArray[indexPath.row];
+    NSDictionary *dict = [NSDictionary dictionary];
+    if ([self.searchBar isFirstResponder]&&self.searchBar.text.length!=0) {
+       dict = self.arraySearch[indexPath.row];
+    }else
+    {
+        dict = self.dataArray[indexPath.row];
+    }
     SelectCell *cell = [self.ZJLXTable dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[SelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.selectionStyle = UITableViewCellAccessoryNone;
-    cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
     if ([self.searchBar isFirstResponder]&&self.searchBar.text.length!=0) {
         cell.tintColor = [UIColor RGBNav];
         cell.model = self.arraySearch[indexPath.row];
@@ -598,12 +585,21 @@
     }
     
     
-    // [dict setValue:@"0" forKey:@"isSelect"];
+        [cell.contentView addSubview:cell.selectImage];
+        [cell.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(cell.contentView.mas_left).offset(8);
+            make.centerY.mas_equalTo(cell.contentView.mas_centerY);
+            make.height.mas_equalTo(25);
+            make.width.mas_equalTo(25);
+        }];
     
+
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([[dict valueForKey:@"isSelect"]isEqualToString:@"1"]) {
         cell.selectImage.image = [UIImage imageNamed:@"xuanzhong.png"];
     }
-    if ([[dict valueForKey:@"isSelect"]isEqualToString:@"2"]) {
+    else  {
+        [[dict valueForKey:@"isSelect"]isEqualToString:@"2"];
         cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
     }
     
@@ -622,28 +618,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexPath];
-    NSMutableDictionary *dic = [self.dataArray[indexPath.row] mutableCopy];
+    NSMutableDictionary *dic1 = [self.dataArray[indexPath.row] mutableCopy];
     
     cell.isSelected = !cell.isSelected;
     if (cell.isSelected) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-        
-        [dic setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexP"];
-        [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic];
+        [dic1 setValue:@"1" forKey:@"isSelect"];
+        [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic1];
+        [dic1 setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexP"];
+        [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic1];
         
         // [dict setValue:image forKey:@"image"];
         [dict setValue:[NSString stringWithFormat:@"%ld",(long)indexPath.row] forKey:@"indexPath"];
-        [[self.modelArray mutableArrayValueForKey:@"selected"] addObject:dic];;
+        [self.deleteArrarys  addObject:dic1];
         cell.isSelected = YES;
         
-        if (self.modelArray.selected.count>6) {
+        if (self.deleteArrarys.count>6) {
             self.collectView.frame = CGRectMake(0, 64, 245, 40);
             // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
         }
         else
         {
-            self.collectView.frame = CGRectMake(0, 64, self.modelArray.selected.count*40+25, 40);
+            self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40+25, 40);
         }
         [self.collectView reloadData];
     }
@@ -651,32 +648,42 @@
     {
         cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
         cell.isSelected = NO;
+        [dic1 setValue:@"2" forKey:@"isSelect"];
+        [self.dataArray replaceObjectAtIndex:indexPath.row withObject:dic1];
         int row = 0;
-        for (int i=0;i<self.modelArray.selected.count;i++) {
-            NSDictionary *dict = self.modelArray.selected[i];
-            if ([dic[@"indexP"]isEqualToString:dict[@"indexPath"]]) {
+        for (int i=0;i<self.deleteArrarys.count;i++) {
+            NSDictionary *dict = self.deleteArrarys[i];
+            if ([dic1[@"indexP"]isEqualToString:dict[@"indexPath"]]) {
                 row=i;
                 
             }
         }
-        [[self.modelArray mutableArrayValueForKey:@"selected"] removeObjectAtIndex:row];
-        self.collectView.frame = CGRectMake(0, 64, self.modelArray.selected.count*40, 40);
+        [self.deleteArrarys  removeObjectAtIndex:row];
+        if (self.deleteArrarys.count>6) {
+            self.collectView.frame = CGRectMake(0, 64, 245, 40);
+            // self.collectView.contentSize = CGSizeMake(self.arraySelect.count*6+5, 40);
+        }
+        else
+        {
+            self.collectView.frame = CGRectMake(0, 64, self.deleteArrarys.count*40+25, 40);
+        }
         
         [self.collectView reloadData];
     }
-}
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
+    if (self.deleteArrarys.count!=0) {
+        [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)self.deleteArrarys.count] forState:UIControlStateNormal];
+    }else
+    {
+        [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+    }
     
-    //[_deleteArrarys removeObject:[self.dataArray objectAtIndex:indexPath.row]];
-    // [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
 }
+//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath  {
+//    
+//    //[_deleteArrarys removeObject:[self.dataArray objectAtIndex:indexPath.row]];
+//    // [self.buttonSure setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[_deleteArrarys count]] forState:UIControlStateNormal];
+//}
 
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return UITableViewCellEditingStyleDelete;
-    
-}
 
 -(void)SpotionTap:(UITapGestureRecognizer*)sender{
     
@@ -715,6 +722,7 @@
 //    [self.searchTableView  reloadData];
 //    [self upDataSearchSpecialOffe];
     [searchBar resignFirstResponder];
+   
     
 }
 

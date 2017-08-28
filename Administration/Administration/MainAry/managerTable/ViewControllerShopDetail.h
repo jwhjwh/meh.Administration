@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewControllerShopDetail : UIViewController
+@interface ViewControllerShopDetail : BaseViewController
 @property (nonatomic,strong)NSString *stringTitle;
 @property (nonatomic,strong)NSString *departmanetID;
 @property (nonatomic,strong)NSString *num;
+@property (nonatomic,strong)NSString *roleId;
 @end

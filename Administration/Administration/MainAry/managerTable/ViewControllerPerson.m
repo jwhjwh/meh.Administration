@@ -28,6 +28,7 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.array = [responseObject valueForKey:@"list"];
             [_tableView reloadData];
+            return ;
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登陆,请重新登录" andInterval:1];
@@ -47,7 +48,7 @@
 #pragma -mark tableview
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return self.array.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -55,15 +56,30 @@
     if (cell==nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text = @"xingming";
+    NSDictionary *dict = self.array[indexPath.row];
+    cell.textLabel.text = dict[@"name"];
+    cell.detailTextLabel.text = dict[@"account"];
+    cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/2;
+    cell.imageView.layer.masksToBounds = YES;
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  //  NSDictionary *dict = self.array[indexPath.row];
+    NSDictionary *dict = self.array[indexPath.row];
     ViewControllerPersonTable *vc = [[ViewControllerPersonTable alloc]init];
-    vc.stringTitle = @"mingzi";
+    vc.stringTitle = dict[@"name"];
+    vc.departmentId = self.departmentID;
+    vc.roleId = self.myRole;
+    vc.num = self.num;
+    vc.positionName = dict[@"newName"];
+    vc.userid = [NSString stringWithFormat:@"%@",dict[@"usersid"]];
+    vc.rid = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     [self.navigationController pushViewController:vc animated:YES];
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
 }
 #pragma -mark system
 

@@ -158,16 +158,9 @@
         
         [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-                EaseEmotionManager *manager = [[ EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:5 emotions:[EaseEmoji allEmoji]];
-                //    EaseMessageViewController *messageVC = [[ EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
-                //    messageVC.title = @"8001";
-                ChatViewController *messageVC = [[ ChatViewController alloc] initWithConversationChatter:self.stringGroup conversationType:EMConversationTypeGroupChat];
-                messageVC.groupNmuber = self.groupID;
-                messageVC.hidesBottomBarWhenPushed = YES;
-                messageVC.number = @"1";
-                [messageVC.faceView setEmotionManagers:@[manager]];
-                // UINavigationController *nc = [[ UINavigationController alloc] initWithRootViewController:messageVC];
-                [self.navigationController pushViewController:messageVC animated:YES];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+
                 return ;
             }
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"4444"]) {
@@ -296,7 +289,7 @@
     
     label.text = self.arrayTitle[section];
     [view addSubview:label];
-    if ([[self.openSectionDict valueForKey:[NSString stringWithFormat:@"%ld", section]] integerValue] == 0) {
+    if ([[self.openSectionDict valueForKey:[NSString stringWithFormat:@"%ld", (long)section]] integerValue] == 0) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (view.bounds.size.height - 10) / 2, 7, 10)];
         imageView.image = [UIImage imageNamed:@"jiantou_03"]; // 三角形小图片
         [view addSubview:imageView];

@@ -239,7 +239,7 @@
         EMMessageBody *messageBody = lastMessage.body;
         switch (messageBody.type) {
             case EMMessageBodyTypeImage:{
-                latestMessageTitle = NSEaseLocalizedString(@"message.image1", @"[image]");
+                latestMessageTitle = NSEaseLocalizedString(@"图片", @"[image]");
             } break;
             case EMMessageBodyTypeText:{
                 NSString *didReceiveText = [EaseConvertToCommonEmoticonsHelper
@@ -247,16 +247,16 @@
                 latestMessageTitle = didReceiveText;
             } break;
             case EMMessageBodyTypeVoice:{
-                latestMessageTitle = NSEaseLocalizedString(@"message.voice1", @"[voice]");
+                latestMessageTitle = NSEaseLocalizedString(@"[语音]", @"[voice]");
             } break;
             case EMMessageBodyTypeLocation: {
-                latestMessageTitle = NSEaseLocalizedString(@"message.location1", @"[location]");
+                latestMessageTitle = NSEaseLocalizedString(@"[位置]", @"[location]");
             } break;
             case EMMessageBodyTypeVideo: {
-                latestMessageTitle = NSEaseLocalizedString(@"message.video1", @"[video]");
+                latestMessageTitle = NSEaseLocalizedString(@"[视频]", @"[video]");
             } break;
             case EMMessageBodyTypeFile: {
-                latestMessageTitle = NSEaseLocalizedString(@"message.file1", @"[file]");
+                latestMessageTitle = NSEaseLocalizedString(@"[文件]", @"[file]");
             } break;
             default: {
             } break;
