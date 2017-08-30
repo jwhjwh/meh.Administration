@@ -13,7 +13,6 @@
 @interface ViewControllerAllTable ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSUInteger _page;//接口page
-    NSNumber *page;
     //是不是第一次执行请求
     
     BOOL _isFirstLoadData ;

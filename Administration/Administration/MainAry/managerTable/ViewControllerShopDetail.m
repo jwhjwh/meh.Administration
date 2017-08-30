@@ -12,7 +12,7 @@
 #import "ViewControllerAllTable.h"
 @interface ViewControllerShopDetail ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
-@property (nonatomic,strong)NSArray *array;
+@property (nonatomic,strong)NSMutableArray *array;
 @property (nonatomic,strong)NSMutableArray *arrayData;
 @end
 
@@ -21,15 +21,19 @@
 #pragma -mark custem
 -(void)getData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/selectDayDayReportState",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/selectState0count.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"Sort":[ShareModel shareModel].sort,@"RoleId":[ShareModel shareModel].roleID};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"Sort":[ShareModel shareModel].sort,@"RoleId":[ShareModel shareModel].roleID,@"DepartmentID":self.departmanetID};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
-            
+            if ([responseObject[@"count"] intValue]!=0) {
+                NSString *string = [NSString stringWithFormat:@"待审核（%d）",[responseObject[@"count"] intValue]];
+                [self.array replaceObjectAtIndex:1 withObject:string];
+            }
+            [self.tableView reloadData];
             return ;
         }
         if ([stringCode isEqualToString:@"1001"]) {
@@ -83,7 +87,8 @@
     }else if (indexPath.row==1)
     {
         ViewControllerStayCheck *vc = [[ViewControllerStayCheck alloc]init];
-        vc.arrayData = self.arrayData;
+        vc.departmentID = self.departmanetID;
+        vc.num = self.num;
         [self.navigationController pushViewController:vc animated:YES];
     }else
     {
@@ -102,7 +107,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = self.stringTitle;
-    self.array = @[@"按员工查看",@"待审核",@"所有报表"];
+    self.array = [NSMutableArray arrayWithObjects:@"按员工查看",@"待审核",@"所有报表", nil];
     self.arrayData = [NSMutableArray array];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];

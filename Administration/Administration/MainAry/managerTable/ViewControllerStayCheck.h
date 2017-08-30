@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewControllerStayCheck : BaseViewController
-@property (nonatomic,strong)NSArray *arrayData;
+@property (nonatomic,strong)NSString *departmentID;
+@property (nonatomic,strong)NSString *num;
 @end

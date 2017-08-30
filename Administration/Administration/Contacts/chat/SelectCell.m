@@ -23,13 +23,14 @@
     
     self.selectImage = [[UIImageView alloc]init];
     self.selectImage.translatesAutoresizingMaskIntoConstraints = NO;
-  //  [self.contentView addSubview:self.selectImage];
-//    [self.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
-//        make.centerY.mas_equalTo(self.contentView.mas_centerY);
-//        make.height.mas_equalTo(25);
-//        make.width.mas_equalTo(25);
-//    }];
+    self.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
+    [self.contentView addSubview:self.selectImage];
+    [self.selectImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.centerY.mas_equalTo(self.contentView.mas_centerY);
+        make.height.mas_equalTo(25);
+        make.width.mas_equalTo(25);
+    }];
     
     _TXImage=[[UIImageView alloc]init];
     // 设置圆角半径
@@ -91,12 +92,29 @@
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
     [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
  //   self.TXImage.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:model[@"image"]]];
-    self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",model[@"newName"]];
-    if ([model[@"newName"] containsString:@"总监"]||[model[@"newName"] containsString:@"经理"]) {
+    NSString *zhiwei;
+    if ([[NSString stringWithFormat:@"%@",model[@"newName"]] containsString:@","]) {
+        for (int i=0;i<[model[@"newName"]length];i++) {
+            NSString *string = [model[@"newName"] substringWithRange:NSMakeRange(i, 1)];
+            if ([string isEqualToString:@","]) {
+                zhiwei = [model[@"newName"]substringToIndex:i];
+                self.zhiLabel.text=[NSString stringWithFormat:@"%@...",zhiwei];
+                break;
+            }
+        }
+    }else
+    {
+        zhiwei = model[@"newName"];
+        self.zhiLabel.text=zhiwei;
+    }
+    
+    
+    if ([zhiwei containsString:@"总监"]||[zhiwei containsString:@"经理"]) {
         _zhiLabel.textColor=[UIColor whiteColor];
         _zhiLabel.layer.cornerRadius =3.0f;
         _zhiLabel.layer.masksToBounds = YES;
         self.zhiLabel.backgroundColor=GetColor(205,176,218,1);
+
         
     }
 }

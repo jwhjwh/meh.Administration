@@ -9,6 +9,9 @@
 #import "ViewControllerPersonTable.h"
 #import "ViewControllerPersonTableDetail.h"
 #import "VCInsideWeekTable.h"
+#import "VCArtMonthTable.h"
+#import "VCInsideMonthTable.h"
+#import "VCBusinessWeekTable.h"
 #import "VCWeekTable.h"
 #import "CellTbale.h"
 @interface ViewControllerPersonTable ()<UITableViewDelegate,UITableViewDataSource>
@@ -95,15 +98,104 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.array[indexPath.row];
-    ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
-    vc.stringTitle = dict[@"name"];
-    vc.roleId = self.rid;
-    vc.departmentId = self.departmentId;
-    vc.postionName = self.positionName;
-    vc.remark = dict[@"remark"];
-    vc.tableId = dict[@"id"];
-  //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
+        ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
+        vc.stringTitle = dict[@"name"];
+        vc.roleId = self.rid;
+        vc.departmentId = self.departmentId;
+        vc.postionName = self.positionName;
+        vc.remark = dict[@"remark"];
+        vc.tableId = dict[@"id"];
+        //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
+    {
+        if ([self.positionName containsString:@"美导"]) {
+            VCWeekTable *vc = [[VCWeekTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+            vc.roleId = self.rid;
+            vc.departmentId = self.departmentId;
+            vc.postionName = self.positionName;
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+            }else
+            {
+                vc.isSelect = NO;
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if([self.positionName containsString:@"业务"])
+        {
+            VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+            vc.roleId = self.rid;
+            vc.departmentId = self.departmentId;
+            vc.postionName = self.positionName;
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+            }else
+            {
+                vc.isSelect = NO;
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+            vc.roleId = self.rid;
+            vc.departmentId = self.departmentId;
+            vc.postionName = self.positionName;
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+            }else
+            {
+                vc.isSelect = NO;
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else
+    {
+        if ([self.positionName containsString:@"美导"])
+        {
+            VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+            vc.roleId = self.rid;
+            vc.departmentId = self.departmentId;
+            vc.postionName = self.positionName;
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+            }else
+            {
+                vc.isSelect = NO;
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }else
+        {
+            VCInsideMonthTable *vc = [[VCInsideMonthTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+            vc.roleId = self.rid;
+            vc.departmentId = self.departmentId;
+            vc.postionName = self.positionName;
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+            }else
+            {
+                vc.isSelect = NO;
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

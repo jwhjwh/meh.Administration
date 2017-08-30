@@ -216,8 +216,24 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
     self.TelLabel.text=dict[@"account"];
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
     [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
-    self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",dict[@"newName"]];
-    if ([dict[@"newName"] containsString:@"总监"]||[dict[@"newName"] containsString:@"经理"]) {
+    NSString *zhiwei;
+    if ([[NSString stringWithFormat:@"%@",dict[@"newName"]] containsString:@","]) {
+        for (int i=0;i<[dict[@"newName"]length];i++) {
+            NSString *string = [dict[@"newName"] substringWithRange:NSMakeRange(i, 1)];
+            if ([string isEqualToString:@","]) {
+                zhiwei = [dict[@"newName"]substringToIndex:i];
+                self.zhiLabel.text=[NSString stringWithFormat:@"%@...",zhiwei];
+                break;
+            }
+        }
+    }else
+    {
+        zhiwei = dict[@"newName"];
+        self.zhiLabel.text=zhiwei;
+    }
+    
+    
+    if ([zhiwei containsString:@"总监"]||[zhiwei containsString:@"经理"]) {
         _zhiLabel.textColor=[UIColor whiteColor];
         _zhiLabel.layer.cornerRadius =3.0f;
         _zhiLabel.layer.masksToBounds = YES;

@@ -12,11 +12,6 @@
 #import "ZXYAlertView.h"
 #import "CellInfo.h"
 @interface ViewControllerPersonTableDetail ()<UITableViewDelegate,UITableViewDataSource,ZXYAlertViewDelegate,UIAlertViewDelegate>
-@property (nonatomic,weak)UIView *viewHeader;
-@property (nonatomic,weak)UILabel *labelDate;
-@property (nonatomic,weak)UILabel *labeAdress;
-@property (nonatomic,weak)UILabel *labelPosition;
-@property (nonatomic,weak)UILabel *labelName;
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSDictionary *dictContent;
@@ -34,7 +29,7 @@
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
-                           @"RoleId":self.roleId,
+                           @"RoleId":[ShareModel shareModel].roleID,
                            @"DepartmentID":self.departmentId,
                            @"remark":self.remark,
                            @"id":self.tableId
@@ -44,9 +39,6 @@
         if ([stringCode isEqualToString:@"0000"]) {
             
             self.dictContent = responseObject[@"tableInfo"];
-            self.labelName.text = self.dictContent[@"name"];
-            self.labeAdress.text = self.dictContent[@"achievement"];
-            self.labelDate.text = [self.dictContent[@"dateLine"] substringToIndex:10];
             [self.tableView reloadData];
             return ;
         }
