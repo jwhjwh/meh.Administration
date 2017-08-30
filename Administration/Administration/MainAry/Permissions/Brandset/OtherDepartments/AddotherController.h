@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void  (^BLOCKStr)();
+typedef void  (^OtherStr)(NSString *str);
+typedef void  (^BLOCKBarndStr)();
 @interface AddotherController : UIViewController
-@property (nonatomic,strong)BLOCKStr Str;
+@property (nonatomic,strong)OtherStr String;
+@property (nonatomic,strong)BLOCKBarndStr Str;
 @property (nonatomic,strong)NSString *departmentNum;
 @property (nonatomic,strong)NSString *depatrtname;
 @end

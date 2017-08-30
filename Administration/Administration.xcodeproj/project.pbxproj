@@ -424,6 +424,9 @@
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
+		622B2C341F5661C9009929D6 /* qd_ico_cs.png in Resources */ = {isa = PBXBuildFile; fileRef = 622B2C321F5661C9009929D6 /* qd_ico_cs.png */; };
+		622B2C351F5661C9009929D6 /* qd_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 622B2C331F5661C9009929D6 /* qd_ico.png */; };
+		622B2C381F569CF1009929D6 /* SiginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 622B2C371F569CF1009929D6 /* SiginViewController.m */; };
 		62345B451E53F4FA001760F8 /* bj01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62345B421E53F4FA001760F8 /* bj01@1x.png */; };
 		623ACAF61EAAEE5D00552D22 /* SetPosiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623ACAF51EAAEE5D00552D22 /* SetPosiViewController.m */; };
 		623ACAF91EAAF43600552D22 /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 623ACAF81EAAF43500552D22 /* Attachment.m */; };
@@ -1363,6 +1366,10 @@
 		6220B6E51E641806007017BA /* PW_DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PW_DatePickerView.m; sourceTree = "<group>"; };
 		6226E65E1E77773C00767EBD /* UIDevice+FEPlatForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+FEPlatForm.h"; sourceTree = "<group>"; };
 		6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+FEPlatForm.m"; sourceTree = "<group>"; };
+		622B2C321F5661C9009929D6 /* qd_ico_cs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qd_ico_cs.png; sourceTree = "<group>"; };
+		622B2C331F5661C9009929D6 /* qd_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qd_ico.png; sourceTree = "<group>"; };
+		622B2C361F569CF1009929D6 /* SiginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiginViewController.h; sourceTree = "<group>"; };
+		622B2C371F569CF1009929D6 /* SiginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiginViewController.m; sourceTree = "<group>"; };
 		62345B421E53F4FA001760F8 /* bj01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj01@1x.png"; sourceTree = "<group>"; };
 		623ACAF41EAAEE5D00552D22 /* SetPosiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPosiViewController.h; sourceTree = "<group>"; };
 		623ACAF51EAAEE5D00552D22 /* SetPosiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPosiViewController.m; sourceTree = "<group>"; };
@@ -2544,6 +2551,8 @@
 				1F581BBD1E767F1B009C6B08 /* InputboxController.m */,
 				1FDD3C711E7398CE00743779 /* FillTableViewCell.h */,
 				1FDD3C721E7398CE00743779 /* FillTableViewCell.m */,
+				622B2C361F569CF1009929D6 /* SiginViewController.h */,
+				622B2C371F569CF1009929D6 /* SiginViewController.m */,
 			);
 			name = mobao;
 			sourceTree = "<group>";
@@ -3596,6 +3605,8 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				622B2C321F5661C9009929D6 /* qd_ico_cs.png */,
+				622B2C331F5661C9009929D6 /* qd_ico.png */,
 				1F0DD2B81F4FA89F00465325 /* up_ico02.png */,
 				1FDB4AE01F4AE13900ED2731 /* zw_ico.png */,
 				1FDB4AD51F4A916E00ED2731 /* sc_icof.png */,
@@ -4106,6 +4117,7 @@
 				624B74181E8F3E6F000D94BD /* city_province.plist in Resources */,
 				62656D571E52B5700085A2BD /* baobiaomokuai.png in Resources */,
 				6287AA201E543802004F6387 /* shibiema.png in Resources */,
+				622B2C341F5661C9009929D6 /* qd_ico_cs.png in Resources */,
 				1F59AF211E5E76750000722A /* tjpco01.png in Resources */,
 				624E70FF1EC404980026C5E9 /* 职位结构3.jpg in Resources */,
 				1F767DC91E790C6E00305401 /* archite.png in Resources */,
@@ -4127,6 +4139,7 @@
 				1F3B3DE61E8DF93C00E75027 /* icon_030_cover.png in Resources */,
 				1F4A98EB1E63AEFC003492DF /* phone.png in Resources */,
 				62656D651E52B5700085A2BD /* zilianxiren.png in Resources */,
+				622B2C351F5661C9009929D6 /* qd_ico.png in Resources */,
 				624E70FD1EC404980026C5E9 /* 职位结构1.jpg in Resources */,
 				1F3B3DD81E8DF93C00E75027 /* icon_019_cover.png in Resources */,
 				1F3B3DCB1E8DF93C00E75027 /* icon_002.gif in Resources */,
@@ -4462,6 +4475,7 @@
 				1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */,
 				1F2E01B01EBC828200D36C3B /* AddbranTableViewCell.m in Sources */,
 				1FF745421E9CC08C00BE2F08 /* UserWebManager.m in Sources */,
+				622B2C381F569CF1009929D6 /* SiginViewController.m in Sources */,
 				1FF51CD81EC99EFB00011E00 /* ModifyController.m in Sources */,
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				1FF14A321EB2DC4000DE049A /* VTingPromotView.m in Sources */,

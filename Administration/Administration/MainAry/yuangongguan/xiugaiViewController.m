@@ -60,7 +60,8 @@
         NSString *uStr =[NSString stringWithFormat:@"%@user/updatepass.action",KURLHeader];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Password":_passtStr,@"userid":_uresID,@"mobile":_callNum};
+        NSString *Password=[ZXDNetworking encryptStringWithMD5:_passtStr];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Password":Password,@"userid":_uresID,@"mobile":_callNum};
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];

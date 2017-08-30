@@ -14,4 +14,5 @@ typedef void  (^OtherStr)(NSString *str);
 @property (nonatomic,strong)NSString *BarandID;
 @property (nonatomic,strong)OtherStr String;
 @property (nonatomic,strong)BLOCKBarndStr Str;
+
 @end

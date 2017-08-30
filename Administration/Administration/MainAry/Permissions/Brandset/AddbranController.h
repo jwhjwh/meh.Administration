@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void  (^BLOCKStr)();
+
+typedef void  (^OtherStr)(NSString *str);
+typedef void  (^BLOCKBarndStr)();
 @interface AddbranController : UIViewController
-@property (nonatomic,strong)BLOCKStr blockStr;
+@property (nonatomic,strong)OtherStr String;
+@property (nonatomic,strong)BLOCKBarndStr Str;
+
 @end
+
+
+
+

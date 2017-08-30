@@ -103,7 +103,7 @@
         branModel *modld = _arr[indexPath.row];
         indexID = modld.Num.integerValue;
     if(indexID==1){
-        //品牌部设置
+        //品牌部设置---市场
         BrandsetController *brandVC=[[BrandsetController alloc]init];
         brandVC.strNum=[NSString stringWithFormat:@"%ld",(long)indexID];
         [self.navigationController pushViewController:brandVC animated:YES];

@@ -14,6 +14,9 @@
 #import "XFDaterView.h"
 #import "CityChoose.h"
 #import "SelectAlert.h"
+
+#import "SiginViewController.h"
+
 #import<BaiduMapAPI_Map/BMKMapView.h>
 
 #import<BaiduMapAPI_Location/BMKLocationService.h>
@@ -144,50 +147,73 @@
     
     return 50;
 }
+-(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
 
+    return 2;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section ==0) {
+        return 1;
+    }else{
+        return _arr.count;
+    }
     
-    return _arr.count;
+    
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {     CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-170, 48);
+   
     if(indexPath.row<7){
     inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     if (cell ==nil)
     {
        cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
-        if (indexPath.row>2) {
-             _textField=[[UITextField alloc]initWithFrame:labelRect2];
-             _textField.font = [UIFont boldSystemFontOfSize:14.0f];
-            [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-            _textField.tag = indexPath.row;
-            [cell addSubview:_textField];
-            if (indexPath.row==4) {
-            _textField.text=_address;
-            }
-            if(!(indexPath.row==6)){
-            _textField.placeholder=@"6";
-            }
-        }else{
-            if(indexPath.row==1){
-            cell.xingLabel.text=[USER_DEFAULTS objectForKey:@"name"];
-                _storepersonnel=[USER_DEFAULTS objectForKey:@"name"];
-
-            }else{
-            cell.xingLabel.textColor=[UIColor lightGrayColor];
-            cell.xingLabel.text=@"必填";
-            }
-            if (indexPath.row==0&&!(_storedate==nil)) {
-                cell.xingLabel.text= _storedate;
-                cell.xingLabel.textColor=[UIColor blackColor];
-            }
+        if (indexPath.section == 0) {
+            UIImageView *SiginImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-15, 10, 30, 30)];
+            SiginImage.image = [UIImage imageNamed:@"qd_ico"];
+            [cell addSubview:SiginImage];
+            UILabel *SiginLabel = [[UILabel alloc]initWithFrame:CGRectMake(((self.view.frame.size.width/2)-15)+30, 10, 50, 30)];
+            SiginLabel.text = @"签到";
+            [cell addSubview:SiginLabel];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
         }
-    cell.mingLabel.text=_arr[indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.section ==1) {
+            if (indexPath.row>2) {
+                _textField=[[UITextField alloc]initWithFrame:labelRect2];
+                _textField.font = [UIFont boldSystemFontOfSize:14.0f];
+                [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                _textField.tag = indexPath.row;
+                [cell addSubview:_textField];
+                if (indexPath.row==4) {
+                    _textField.text=_address;
+                }
+                if(!(indexPath.row==6)){
+                    _textField.placeholder=@"6";
+                }
+            }else{
+                if(indexPath.row==1){
+                    cell.xingLabel.text=[USER_DEFAULTS objectForKey:@"name"];
+                    _storepersonnel=[USER_DEFAULTS objectForKey:@"name"];
+                    
+                }else{
+                    cell.xingLabel.textColor=[UIColor lightGrayColor];
+                    cell.xingLabel.text=@"必填";
+                }
+                if (indexPath.row==0&&!(_storedate==nil)) {
+                    cell.xingLabel.text= _storedate;
+                    cell.xingLabel.textColor=[UIColor blackColor];
+                }
+            }
+            cell.mingLabel.text=_arr[indexPath.row];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+    
     return cell;
-}else{
+    }else{
     FillTableViewCell *cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
     if (cell == nil) {
         cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
@@ -205,91 +231,98 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   _Index=indexPath;
     inftionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    switch (indexPath.row) {
-        case 0:
-            dater=[[XFDaterView alloc]initWithFrame:CGRectZero];
-            dater.delegate=self;
-            [dater showInView:self.view animated:YES];
-            break;
-        case 2:{
-            [self.view endEditing:YES];
-            self.cityChoose = [[CityChoose alloc] init];
-            self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
-                cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
-                cell.xingLabel.textColor=[UIColor blackColor];
-                _storeregion=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
-            };
-            [self.view addSubview:self.cityChoose];
-        }
-            break;
-        case 7:{
-            InputboxController *inputVC=[[InputboxController alloc]init];
-            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content,int num){
-                if (num==7) {
-                _storebrand=content;
-                  
-                }
-            };
-            [self.navigationController pushViewController:inputVC animated:YES];
-        }
-            break;
-        case 8:{
-         
-            [SelectAlert showWithTitle:@"类型" titles:@[@"A类",@"B类",@"C类"] selectIndex:^(NSInteger selectIndex) {
+    
+    if (indexPath.section == 0) {
+        SiginViewController *siginVC = [[SiginViewController alloc]init];
+        [self.navigationController pushViewController:siginVC animated:YES];
+    }else{
+        switch (indexPath.row) {
+            case 0:
+                dater=[[XFDaterView alloc]initWithFrame:CGRectZero];
+                dater.delegate=self;
+                [dater showInView:self.view animated:YES];
+                break;
+            case 2:{
+                [self.view endEditing:YES];
+                self.cityChoose = [[CityChoose alloc] init];
+                self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
+                    cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                    cell.xingLabel.textColor=[UIColor blackColor];
+                    _storeregion=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                };
+                [self.view addSubview:self.cityChoose];
+            }
+                break;
+            case 7:{
+                InputboxController *inputVC=[[InputboxController alloc]init];
+                inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.blcokStr=^(NSString *content,int num){
+                    if (num==7) {
+                        _storebrand=content;
+                        
+                    }
+                };
+                [self.navigationController pushViewController:inputVC animated:YES];
+            }
+                break;
+            case 8:{
                 
-            } selectValue:^(NSString *selectValue) {
-                FillTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
-                cell.xingLabel.text=selectValue;
-                _clascation=selectValue;
-            } showCloseButton:NO];
+                [SelectAlert showWithTitle:@"类型" titles:@[@"A类",@"B类",@"C类"] selectIndex:^(NSInteger selectIndex) {
+                    
+                } selectValue:^(NSString *selectValue) {
+                    FillTableViewCell *cell = [_infonTableview cellForRowAtIndexPath:_Index];
+                    cell.xingLabel.text=selectValue;
+                    _clascation=selectValue;
+                } showCloseButton:NO];
+            }
+                break;
+            case 9:{
+                StoreprofileController *stireVC=[[StoreprofileController alloc]init];
+                stireVC.blcokString=^(NSString *type,NSString *year,NSString *perpon,NSString *beds){
+                    _stotrType=type;
+                    _planDur=year;
+                    _brandBusin=perpon;
+                    _Berths=beds;
+                    
+                };
+                [self.navigationController pushViewController:stireVC animated:YES];
+            }
+                break;
+            case 10:{
+                InputboxController *inputVC=[[InputboxController alloc]init];
+                inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.blcokStr=^(NSString *content,int num){
+                    _Abrief=content;
+                    
+                };
+                [self.navigationController pushViewController:inputVC animated:YES];
+            }
+                break;
+            case 11:{
+                InputboxController *inputVC=[[InputboxController alloc]init];
+                inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.blcokStr=^(NSString *content,int num){
+                    _instructions=content;
+                    
+                };
+                [self.navigationController pushViewController:inputVC animated:YES];
+            }
+                break;
+            case 12 :{
+                InputboxController *inputVC=[[InputboxController alloc]init];
+                inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.blcokStr=^(NSString *content,int num){
+                    _note=content;
+                    
+                };
+                [self.navigationController pushViewController:inputVC animated:YES];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 9:{
-            StoreprofileController *stireVC=[[StoreprofileController alloc]init];
-            stireVC.blcokString=^(NSString *type,NSString *year,NSString *perpon,NSString *beds){
-                _stotrType=type;
-                _planDur=year;
-                _brandBusin=perpon;
-                _Berths=beds;
-          
-            };
-            [self.navigationController pushViewController:stireVC animated:YES];
-        }
-            break;
-        case 10:{
-            InputboxController *inputVC=[[InputboxController alloc]init];
-            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content,int num){
-                _Abrief=content;
-               
-            };
-            [self.navigationController pushViewController:inputVC animated:YES];
-        }
-            break;
-        case 11:{
-            InputboxController *inputVC=[[InputboxController alloc]init];
-            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content,int num){
-                _instructions=content;
-                
-            };
-            [self.navigationController pushViewController:inputVC animated:YES];
-        }
-            break;
-        case 12 :{
-            InputboxController *inputVC=[[InputboxController alloc]init];
-            inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            inputVC.blcokStr=^(NSString *content,int num){
-                _note=content;
-                
-            };
-            [self.navigationController pushViewController:inputVC animated:YES];
-        }
-            break;
-        default:
-            break;
     }
+    
     
     
 }

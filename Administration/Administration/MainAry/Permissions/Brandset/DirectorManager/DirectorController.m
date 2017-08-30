@@ -4,7 +4,7 @@
 //
 //  Created by zhang on 2017/5/6.
 //  Copyright © 2017年 九尾狐. All rights reserved.
-//
+// 添加负责总监 ---- 添加负责人
 
 #import "DirectorController.h"
 #import "ZJLXRTableViewCell.h"
@@ -202,7 +202,7 @@
             [alertView showMKPAlertView];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"2000"]){
             
-     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该部门已有负责人,请先删除当前负责人,在添加" andInterval:1.5];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该部门已有负责人,请先删除当前负责人,在添加" andInterval:1.5];
             
         }
         

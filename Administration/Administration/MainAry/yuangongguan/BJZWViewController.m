@@ -456,16 +456,21 @@
 #pragma mark 点击删除职位
 -(void)scaction_button :(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"删除职位"]) {
-        [btn setTitle:@"取消删除" forState:UIControlStateNormal];
-        for (int i = 0; i<_bjBtnAry.count; i++) {
-            _bjbtn = _bjbuttonAry[i];
-            NSString *bjbtn = @"删除";
-            [_bjbtnname replaceObjectAtIndex:i withObject:bjbtn];
-            [_bjbtn setTitle:@"删除" forState:UIControlStateNormal];
+        if (_ZWidAry.count < 1) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该员工不能没有职位" andInterval:1.0];
+        }else{
+            [btn setTitle:@"取消删除" forState:UIControlStateNormal];
+            for (int i = 0; i<_bjBtnAry.count; i++) {
+                _bjbtn = _bjbuttonAry[i];
+                NSString *bjbtn = @"删除";
+                [_bjbtnname replaceObjectAtIndex:i withObject:bjbtn];
+                [_bjbtn setTitle:@"删除" forState:UIControlStateNormal];
+            }
+            [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+            [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            _tjBtn.enabled = NO;
         }
-        [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
-        [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        _tjBtn.enabled = NO;
+        
         
        
     }else{
@@ -556,6 +561,9 @@
         
     }else if ([btn.titleLabel.text isEqualToString:@"删除"]){
         //删除职位
+        if (_ZWidAry.count==1) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该员工不能没有职位" andInterval:1.0];
+        }
         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
         alertView.resultIndex = ^(NSInteger index){
             if (index == 2) {
