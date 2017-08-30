@@ -30,6 +30,8 @@
 
 @property (nonatomic,strong)NSMutableArray *chuancan;
 
+@property (nonatomic,strong)NSMutableArray *uuidAry;
+
 @end
 
 @implementation GuanglixqVController
@@ -67,11 +69,12 @@
             _departarr=[NSMutableArray array];
             _copedepar = [NSMutableArray array];
             _chuancan = [NSMutableArray array];
+            _uuidAry = [NSMutableArray array];
             NSMutableArray *array=[NSMutableArray array];
             NSMutableArray *array2 = [NSMutableArray array];
             for (NSDictionary *dic in responseObject[@"list2"]) {
                 [model setValuesForKeysWithDictionary:[NSDictionary changeType:dic]];
-                
+                [_uuidAry addObject:model.uuid];
                 NSString *isper = [[NSString alloc]initWithFormat:@"%@",model.isPermission];
                 NSString *string = [[NSString alloc] initWithFormat:@"%@",model.roleId];
                
@@ -529,7 +532,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *comp = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID,@"CompanyInfoId":comp};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID,@"CompanyInfoId":comp,@"uuid":_uuidAry[0]};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];

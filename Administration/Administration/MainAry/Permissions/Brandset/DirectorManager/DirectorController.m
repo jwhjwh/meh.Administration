@@ -146,8 +146,8 @@
     if (_Num==1) {
         [dic setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
         [dic setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-         [dic setObject:[NSString stringWithFormat:@"%@",model.uuid] forKey:@"uuid"];
-        [self updateDepartarr:arr dict:dic];
+        
+        [self updateDepartarr:arr dict:dic uuid:model.uuid];
         
     }else{
     self.blockArray(arr);
@@ -159,7 +159,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)updateDepartarr:(NSMutableArray*)array dict:(NSMutableDictionary*)dict{
+-(void)updateDepartarr:(NSMutableArray*)array dict:(NSMutableDictionary*)dict uuid:(NSString *)uuid{
     NSMutableArray *palarr=[NSMutableArray array];
     [palarr addObject:dict];
     NSError *error = nil;
@@ -169,7 +169,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"mid":Mid,@"GroupNumber":_GroupNumber};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"Num":_Numstr,@"mid":Mid,@"GroupNumber":_GroupNumber,@"uuid":uuid};
    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -200,6 +200,10 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"2000"]){
+            
+     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该部门已有负责人,请先删除当前负责人,在添加" andInterval:1.5];
+            
         }
         
     }failure:^(NSError *error) {

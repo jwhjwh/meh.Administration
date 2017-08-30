@@ -29,6 +29,11 @@
 /** 竖线 */
 @property(nonatomic,retain) UIView *verLineView;
 
+
+
+/** 横线2 */
+@property(nonatomic,retain) UIView *lineView2;
+
 @end
 
 
@@ -57,8 +62,14 @@
             CGFloat titleW = self.titleLbl.bounds.size.width;
             CGFloat titleH = self.titleLbl.bounds.size.height;
             
-            self.titleLbl.frame = CGRectMake((AlertW-titleW)/2, 2*MKPSpace, titleW, titleH);
+            self.titleLbl.frame = CGRectMake((AlertW-titleW)/2, 1*MKPSpace, titleW, titleH);
         }
+        
+            self.lineView2 = [[UIView alloc]init];
+            self.lineView2.frame = CGRectMake(0,1*MKPSpace+(self.titleLbl.height)+1 , AlertW, 1);
+            self.lineView2.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.6];
+            [self.alertView addSubview:self.lineView2];
+        
         if (message) {
             
             self.msgLbl = [self GetAdaptiveLable:CGRectMake(MKPSpace, CGRectGetMaxY(self.titleLbl.frame)+MKPSpace, AlertW-2*MKPSpace, 20) AndText:message andIsTitle:NO];
@@ -112,12 +123,15 @@
             self.sureBtn.frame = CGRectMake(CGRectGetMaxX(self.verLineView.frame), CGRectGetMaxY(self.lineView.frame), (AlertW-1)/2+1, 40);
 
             // 改颜色
-            [self.sureBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor RGBNav]] forState:UIControlStateNormal];
-            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor RGBNav]] forState:UIControlStateSelected];
+            [self.sureBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+            [self.sureBtn setBackgroundImage:[self imageWithColor:[UIColor RGBNav]] forState:UIControlStateHighlighted];
+            
             [self.sureBtn setTitle:sureTitle forState:UIControlStateNormal];
             self.sureBtn.tag = 2;
             [self.sureBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [self.sureBtn addTarget:self action:@selector(button1BackGroundHighlighted:) forControlEvents:UIControlEventTouchDown];
             
             UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.sureBtn.bounds byRoundingCorners:UIRectCornerBottomRight cornerRadii:CGSizeMake(5.0, 5.0)];
             CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
@@ -137,6 +151,7 @@
             [self.cancleBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.2]] forState:UIControlStateNormal];
             [self.cancleBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.2]] forState:UIControlStateSelected];
             [self.cancleBtn setTitle:cancleTitle forState:UIControlStateNormal];
+            
             
 
 
@@ -161,7 +176,7 @@
             [self.sureBtn setTitle:sureTitle forState:UIControlStateNormal];
             self.sureBtn.tag = 2;
             [self.sureBtn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
-            
+            [self.sureBtn addTarget:self action:@selector(button1BackGroundHighlighted:) forControlEvents:UIControlEventTouchDown];
             UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.sureBtn.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(5.0, 5.0)];
             CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
             maskLayer.frame = self.sureBtn.bounds;
@@ -181,6 +196,11 @@
                 
     }
     return self;
+}
+- (void)button1BackGroundHighlighted:(UIButton *)sender
+{
+    
+    sender.backgroundColor = [UIColor RGBNav];
 }
 -(UILabel *)GetAdaptiveLable:(CGRect)rect AndText:(NSString *)contentStr andIsTitle:(BOOL)isTitle
 {
@@ -240,6 +260,7 @@
 #pragma mark - 回调 只设置2 -- > 确定才回调
 - (void)buttonEvent:(UIButton *)sender
 {
+    
     //if (sender.tag == 2) {
         if (self.resultIndex) {
             self.resultIndex(sender.tag);

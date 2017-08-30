@@ -21,6 +21,8 @@
 @property (nonatomic,strong)NSArray *natureArr;
 @property (nonatomic,strong)NSString *str;
 @property(nonatomic,strong)NSMutableArray *ArrID;
+
+@property(nonatomic,strong)NSMutableArray *groupNumber;
 @end
 
 @implementation BrandsetController
@@ -67,13 +69,15 @@
             self.dataArray = [NSMutableArray array];
             _daArr = [NSMutableArray array];
             _ArrID = [NSMutableArray array];
+            _groupNumber  = [NSMutableArray array];
             NSArray *array=[responseObject valueForKey:@"mList"];
             for (NSDictionary *dic in array) {
                 
                 NSArray *barndArr = [dic valueForKey:@"brandList"];
                 [_daArr addObject:[dic valueForKey:@"departmentName"]];
                 [_ArrID addObject:[dic valueForKey:@"id"]];
-            NSMutableArray *logoArr=[NSMutableArray array];
+                 [_groupNumber addObject:[dic valueForKey:@"groupNumber"]];
+                NSMutableArray *logoArr=[NSMutableArray array];
               
                     for (NSDictionary *dict in barndArr) {
                         branModel *model=[[branModel alloc]init];
@@ -276,13 +280,14 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"id":string};//加上群号
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"id":string,@"GroupNumber":_groupNumber[IndexPath.row]};//加上群号GroupNumber
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];
             [_dataArray removeObjectAtIndex:IndexPath.row];
             [_daArr removeObjectAtIndex:IndexPath.row];
             [_ArrID removeObjectAtIndex:IndexPath.row];
+            [_groupNumber removeObjectAtIndex:IndexPath.row];
             [self.tableView reloadData];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];

@@ -230,17 +230,17 @@
             self.userModel.nickname = self.dicinfo[@"name"];
             
             if (![model.LevelName isEqualToString:@""]) {
-                _arr=@[@[@"头像"],@[@"账号",@"职位",@"类别",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
+                _arr=@[@[@"头像"],@[@"账号",@"职位",@"类别",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
                 NSArray *arr=@[model.account,model.NewName,model.LevelName,model.departmentName];
-                NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
+                NSArray *arr1=@[model.name,model.birthday,model.age,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
             }else{
-                _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
+                _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 NSArray *arr=@[model.account,model.NewName,model.departmentName];
-                NSArray *arr1=@[model.name,model.birthday,model.age,model.idNo,model.address];
+                NSArray *arr1=@[model.name,model.birthday,model.age,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
