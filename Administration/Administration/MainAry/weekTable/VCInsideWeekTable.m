@@ -8,28 +8,56 @@
 
 #import "VCInsideWeekTable.h"
 #import "CellTabelDetail.h"
+#import "CellInfo.h"
 #import "ZXYAlertView.h"
 #import "ViewControllerPostil.h"
 @interface VCInsideWeekTable ()<UITableViewDelegate,UITableViewDataSource,ZXYAlertViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,weak)UITableView *tableView;
-@property (nonatomic)BOOL isSelect;
 @property (nonatomic ,strong)UIButton *buttonPlan;
 @property (nonatomic ,strong)UIButton *buttonSummary;
 @property (nonatomic,weak)UILabel *line;
-@property (nonatomic,weak) UIView *viewHeader;
-@property (nonatomic,weak) UILabel *labelDate;
-@property (nonatomic,weak) UILabel *labelName;
-@property (nonatomic,weak) UILabel *labelPosition;
 @property (nonatomic,strong)UIAlertView *alertView;
 @property (nonatomic,strong)UILabel *label;
 @end
 
 @implementation VCInsideWeekTable
 
--(void)getData:(NSDictionary *)dic
+-(void)getData
 {
-    
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryReportInfo",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"DepartmentID":self.departmentId,
+                           @"remark":self.remark,
+                           @"id":self.tableId
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *stringCode = [responseObject valueForKey:@"status"];
+        if ([stringCode isEqualToString:@"0000"]) {
+            [self.tableView reloadData];
+            return ;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据为空" andInterval:1];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 -(void)setUI
 {
@@ -52,42 +80,7 @@
     self.label.backgroundColor = GetColor(192, 192, 192, 1);
     self.label.text = @"本周主要工作";
     [self.view addSubview:self.label];
-    
-    UIView *viewHeader = [[UIView alloc]initWithFrame:CGRectMake(-1, 95, Scree_width+1, 81)];
-    viewHeader.backgroundColor = GetColor(200, 200, 200, 1);
-    viewHeader.layer.borderColor = GetColor(192, 192, 192, 1).CGColor;
-    viewHeader.layer.borderWidth = 1.0f;
-    [self.view addSubview:viewHeader];
-    self.viewHeader = viewHeader;
-    
-    NSArray *array = @[@"    日期",@"    职位",@"    姓名"];
-    for(int i=0;i<3;i++)
-    {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, i*28, 120, 27)];
-        label.textColor = [UIColor lightGrayColor];
-        label.backgroundColor = [UIColor whiteColor];
-        label.text = array[i];
-        [viewHeader addSubview:label];
-    }
-    
-    UILabel *labelDate = [[UILabel alloc]initWithFrame:CGRectMake(120, 0, Scree_width-120, 27)];
-    labelDate.textColor = [UIColor lightGrayColor];
-    labelDate.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelDate];
-    self.labelDate = labelDate;
-    
-    UILabel *labelPosition = [[UILabel alloc]initWithFrame:CGRectMake(120, 28, Scree_width-120, 27)];
-    labelPosition.textColor = [UIColor lightGrayColor];
-    labelPosition.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelPosition];
-    self.labelPosition = labelPosition;
-    
-    UILabel *labelName = [[UILabel alloc]initWithFrame:CGRectMake(120, 56, Scree_width-120, 27)];
-    labelName.textColor = [UIColor lightGrayColor];
-    labelName.backgroundColor = [UIColor whiteColor];
-    [viewHeader addSubview:labelName];
-    self.labelName = labelName;
-    
+
     if (self.isSelect) {
         line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
@@ -110,7 +103,8 @@
     self.line=  line;
     
     UITableView *tabelView = [[UITableView alloc]init];
-    [tabelView registerClass:[CellTabelDetail class] forCellReuseIdentifier:@"cell2"];
+    [tabelView registerClass:[CellTabelDetail class] forCellReuseIdentifier:@"cell"];
+    [tabelView registerClass:[CellInfo class] forCellReuseIdentifier:@"cell2"];
     tabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tabelView.delegate = self;
     tabelView.dataSource = self;
@@ -132,7 +126,7 @@
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
         [UIView animateWithDuration:1 animations:^{
             self.label.frame = CGRectMake(0, 176, Scree_width, 20);
         }];
@@ -141,7 +135,7 @@
         self.line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
         [self.buttonSummary setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"本周工作落实进展简述",@"本周工作进展及目标达成的反洗与评估",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"个人成长目标规划及方向预设"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周工作落实进展简述",@"本周工作进展及目标达成的反洗与评估",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"个人成长目标规划及方向预设"];
         [UIView animateWithDuration:1 animations:^{
             self.label.frame = CGRectMake(0, 176, Scree_width, 0);
         }];
@@ -176,15 +170,23 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
-    if (cell==nil) {
-        cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+    if (indexPath.row<3) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+        if (cell==nil) {
+            cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+        }
+        cell.labelTitle.text = self.arrayTitle[indexPath.row];
+        return cell;
+    }else
+    {
+        CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        if (cell==nil) {
+            cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        }
+        cell.labelTitle.text = self.arrayTitle[indexPath.row];
+        return cell;
     }
-    cell.labelTitle.text = self.arrayTitle[indexPath.row];
-    cell.labelContent.text = @"德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚德玛西亚";
-    [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
-    return cell;
-    
 }
 #pragma -mark alertView
 -(void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex
@@ -242,6 +244,10 @@
     }
 }
 #pragma -mark system
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self getData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

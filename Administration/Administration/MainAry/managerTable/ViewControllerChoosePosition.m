@@ -11,7 +11,7 @@
 #import "ViewControllerEmployeeTable.h"
 @interface ViewControllerChoosePosition ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong)UICollectionView *collectionView;
-@property (nonatomic,weak)NSMutableArray *arrayData;
+@property (nonatomic,strong)NSMutableArray *arrayData;
 @property (nonatomic,strong)NSMutableArray *arrayId;
 @end
 
@@ -93,7 +93,6 @@
     
 }
 
-
 //cell的点击事件
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -102,7 +101,7 @@
     ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
     NSDictionary *dict = self.arrayData[indexPath.section];
     vc.myRoleid = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
-    [ShareModel shareModel].roleID = [NSString stringWithFormat:dict[@"roleId"]];;
+    [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@", dict[@"roleId"]];
     [self.navigationController pushViewController:vc animated:YES];
 
 }
