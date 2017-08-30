@@ -769,11 +769,11 @@
             [_SSBMbutt setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             //NSInteger section  = indexPath.section;
             _SSBMbutt.tag= indexPath.section;
-<<<<<<< HEAD
+
             NSString *bjname =_bjbtnname[indexPath.section];
             if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
                 _SSBMbutt.enabled = YES;
-=======
+
            
         }
         if (_SSBMbtnAry.count == _ZW.count) {
