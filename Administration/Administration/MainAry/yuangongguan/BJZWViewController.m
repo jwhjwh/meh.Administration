@@ -2,85 +2,72 @@
 //  BJZWViewController.m
 //  Administration
 //
-//  Created by 九尾狐 on 2017/6/7.
+//  Created by 九尾狐 on 2017/8/24.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
 #import "BJZWViewController.h"
-#import "inftionTableViewCell.h"
-#import "SelectAlert.h"
 #import "EditModel.h"
 #import "depmtCell.h"
 #import "YUFoldingSectionHeader.h"
+#import "SelectAlert.h"
 @interface BJZWViewController ()<UITableViewDataSource,UITableViewDelegate,YUFoldingSectionHeaderDelegate>
-
 {
     UITableView *infonTableview;
-    
-    NSArray *arr;
-    UIView *blockView;
-    inftionTableViewCell *cell;
-    NSMutableArray *titles;
-    NSMutableArray *numBS;
-    int b;
 }
-@property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
-@property (strong,nonatomic)UITableView *noEdit;
+@property (strong,nonatomic)  UITableViewCell *infoncell;
+
+//控件
+@property (strong,nonatomic)UITableView *noEdit;//不可编辑列表
 @property (strong,nonatomic)UIButton *ZWbutton;//职位
 @property (strong,nonatomic)UIButton *ZWLBbutton;//职位类别
 @property (strong,nonatomic)UIView *view1;//线
-
 @property (strong,nonatomic) UILabel *BMLabel;//部门
 @property (strong,nonatomic)UIButton *scBtnnnnn;//删除部门按钮
-@property (strong,nonatomic) NSMutableArray *scBtnAry;//删除部门按钮数组1
-@property (strong,nonatomic) NSMutableArray *scBtnAry2;//删除部门按钮数组2
-
-@property (strong,nonatomic) NSMutableArray *bjBtnAry;//编辑部门按钮数组
-
-@property (strong,nonatomic) NSMutableArray *sctagAry;//编辑部门tag按钮数组
-@property (strong,nonatomic) NSMutableArray *sctagAry2;//编辑部门tag按钮数组
-
-
-
-
 @property (strong,nonatomic)UIButton *tjBtn;//添加职位按钮
 @property (strong,nonatomic)UIButton *scBtn;//删除职位按钮
 @property (strong,nonatomic)UIButton *bjbtn;//编辑职位按钮
 @property (strong,nonatomic)UIButton *SSBMbutt;//选择部门按钮
+//数据源
+@property (nonatomic, strong) EditModel *model;//个人信息model
+@property (strong,nonatomic) NSMutableArray *ZWnameAry;//职位名字
+@property (strong,nonatomic) NSMutableArray *ZWidAry;//职位ID
+@property (strong,nonatomic) NSMutableArray *ZWLBnameAry;//职位类别名字
+@property (strong,nonatomic) NSMutableArray *ZWLBidAry;//职位类别id
+@property (strong,nonatomic) NSMutableArray *BMnameAry;//部门名字
+@property (strong,nonatomic) NSMutableArray *BMidAry;//部门id
+//修改之前的id
+@property (nonatomic, strong) NSMutableArray *oldZWID;
+@property (nonatomic, strong) NSMutableArray *oldBMID;
+@property (nonatomic, strong) NSMutableArray *oldJBID;
 
-@property (strong,nonatomic) NSMutableArray *ZWbtnAry;//职位按钮数组
-@property (strong,nonatomic) NSMutableArray *ViewbtnAry;//分割线数组
-@property (strong,nonatomic) NSMutableArray *ZWLBbtnAry;//职位按钮数组
-@property (strong,nonatomic)NSMutableArray *SSBMbtnAry;//选择部门按钮数组
-
-
-@property(strong,nonatomic) NSMutableArray*ZW;//职位
-@property (strong,nonatomic) NSMutableArray*Numm;//职位id
-@property(strong,nonatomic) NSMutableArray*ZWLB;//职位类别
-@property (strong,nonatomic) NSMutableArray*lbNum;//职位类别id
-@property(strong,nonatomic) NSMutableArray*gxbmAry;//部门数组
-@property(strong,nonatomic) NSMutableArray*gxbmidAry;//部门id数组
-
-@property(strong,nonatomic)NSMutableArray *codeAry;
-
-@property (nonatomic, strong) NSMutableArray *statusArray;
-@property (nonatomic, strong) EditModel *model;
-
-
-@property (nonatomic, strong) NSMutableArray *bjbuttonAry;
 @property (nonatomic, strong) NSMutableArray *uuidary;
 
-@property (nonatomic, strong) NSMutableArray *bjbtnname;
+//控件数组
+@property (nonatomic, strong) NSMutableArray *bjbtnname;//编辑按钮名字
+@property (nonatomic, strong) NSMutableArray *bjbuttonAry;//编辑按钮
+@property (nonatomic, strong) NSMutableArray *bjBtnAry;//编辑按钮id
+@property (strong,nonatomic)NSMutableArray *codeAry;//左侧标签名字
 
-@property (nonatomic, strong) NSMutableArray *useridAry;
+@property (strong,nonatomic)NSMutableArray *ZWbtnAry;//职位按钮数组
+@property (strong,nonatomic)NSMutableArray *viweAry;//隔断数组
+@property (strong,nonatomic)NSMutableArray *ZWLBary;// 职位类别数组数组
+@property (strong,nonatomic)NSMutableArray *BMbtnAry;//部门按钮数组
+@property (strong,nonatomic)NSMutableArray *SCbtnAry;//删除部门按钮数组
+
+//-------
+@property (nonatomic, strong) NSMutableArray *statusArray;
+@property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
+
 @end
 
 @implementation BJZWViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"编辑职位";
-    b=0;
+    
+    
+    
     [self setExtraCellLineHidden:infonTableview];
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -90,45 +77,41 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
-    
     infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStyleGrouped];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
-    NSLog(@"%@%@",_twocodeAry,_noEditAry);
     [self addalloc];
     [self tableViewUI];
     [self loadData];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onChangeStatusBarOrientationNotification:)  name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-}
--(void)onChangeStatusBarOrientationNotification:(NSNotification *)notification
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_noEdit reloadData];
-    });
 }
 -(void)addalloc{
-    _ZW = [NSMutableArray array];
-    _Numm = [NSMutableArray array];
-     _ZWLB = [NSMutableArray array];
-     _lbNum = [NSMutableArray array];
-     _gxbmAry = [NSMutableArray array];
-     _gxbmidAry = [NSMutableArray array];
-     _codeAry = [NSMutableArray array];
+    _ZWnameAry = [[NSMutableArray alloc]init];//职位名字
+    _ZWidAry = [[NSMutableArray alloc]init];//职位ID
+    _ZWLBnameAry = [[NSMutableArray alloc]init];//职位类别名字
+    _ZWLBidAry = [[NSMutableArray alloc]init];//职位类别id
+    _BMnameAry = [[NSMutableArray alloc]init];//部门名字
+    _BMidAry = [[NSMutableArray alloc]init];//部门id
     
-    _scBtnAry = [[NSMutableArray alloc]init];
-    _bjBtnAry = [[NSMutableArray alloc]init];
-    _scBtnAry2 = [[NSMutableArray alloc]init];
-    _sctagAry = [[NSMutableArray alloc]init];
-    _sctagAry2 = [[NSMutableArray alloc]init];
-    _ZWbtnAry = [[NSMutableArray alloc]init];
-    _ViewbtnAry = [[NSMutableArray alloc]init];
-    _ZWLBbtnAry = [[NSMutableArray alloc]init];
-    _SSBMbtnAry= [[NSMutableArray alloc]init];
-    _bjbuttonAry = [[NSMutableArray alloc]init];
+    //未修改之前的id
+    _oldZWID = [[NSMutableArray alloc]init];
+    _oldJBID = [[NSMutableArray alloc]init];
+    _oldBMID = [[NSMutableArray alloc]init];
+    //按钮数组
+    _bjbtnname = [[NSMutableArray alloc]init];//编辑按钮名字
+    _codeAry = [[NSMutableArray alloc]init];//左侧标签名字
+    _bjbuttonAry = [[NSMutableArray alloc]init];//编辑按钮
+    _bjBtnAry = [[NSMutableArray alloc]init];//编辑按钮id
+    
+    _ZWbtnAry = [[NSMutableArray alloc]init];//职位按钮数组
+    _viweAry  = [[NSMutableArray alloc]init];//隔断数组
+    _ZWLBary  = [[NSMutableArray alloc]init];// 职位类别数组数组
+    _BMbtnAry = [[NSMutableArray alloc]init];//部门按钮数组
+    _SCbtnAry = [[NSMutableArray alloc]init];//删除部门按钮数组
+    
 }
-#pragma mark  请求角色
--(void)ZwNetWork:(UIButton*)btn{
+#pragma mark 点击职位
+-(void)JsButtonbtn:(UIButton *)btn{
     NSString *urlStr = [NSString stringWithFormat:@"%@user/queryUserCreate.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -140,8 +123,8 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
         {
             NSArray *arr= [responseObject valueForKey:@"list"];
-            titles = [[NSMutableArray alloc]init];
-            numBS = [[NSMutableArray alloc]init];
+           NSMutableArray* titles = [[NSMutableArray alloc]init];
+          NSMutableArray*  numBS = [[NSMutableArray alloc]init];
             for (NSDictionary *dic in arr) {
                 NSString *strr = [NSString stringWithFormat:@"%@",[dic valueForKey:@"num"]];
                 if ([strr isEqualToString:@"1"]) {
@@ -150,14 +133,14 @@
                     [titles addObject:[dic valueForKey:@"newName"]];
                 }
             }
-            [self showAlert:titles button:btn];
+            [self showAlert:titles numary:numBS button:btn];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
             [USER_DEFAULTS  setObject:@"" forKey:@"token"];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限更改职位" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限更改职位" andInterval:1.0];
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
         }
@@ -166,9 +149,328 @@
         
     } view:self.view MBPro:YES];
 }
+-(void)showAlert :(NSArray *)arrr numary:(NSArray *)numary button:(UIButton*)bbtn{
+    NSMutableArray *isbol = [[NSMutableArray alloc]init];
+    [SelectAlert showWithTitle:@"选择职位" titles:arrr selectIndex:^(NSInteger selectIndex) {
+        NSString *tagg = numary[selectIndex];
+        for (int i = 0; i<_ZWidAry.count; i++) {
+            NSArray *num = _ZWidAry[i];
+            BOOL isbool = [num containsObject: tagg];
+            if (isbool == 1) {
+                [isbol addObject:@"1"];
+            }
+        }
+        BOOL yesor = [isbol containsObject:@"1"];
+        if (yesor == 1) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
+        }else{
+            
+            int taa = [tagg intValue];
+             if ( taa == 2|| taa == 5||taa ==3||taa ==4||taa ==14||taa ==16||taa ==17 ) {
+                 UITableViewCell *cellu = (UITableViewCell *)[bbtn superview];
+                 NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+                 _ZWLBbutton = _ZWLBary[insd.section];
+                 _view1 = _viweAry[insd.section];
+                 [_ZWLBbutton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
+                 _view1.backgroundColor = [UIColor lightGrayColor];
+                 [_ZWLBbutton setTitle:@"未分配" forState:UIControlStateNormal];
+                 _ZWLBbutton.enabled = YES;
+                 NSMutableArray *cooode = _codeAry[insd.section];
+                 if (cooode.count>1) {
+                     cooode[1] = @"所属部门";
+                     [_codeAry replaceObjectAtIndex:insd.section withObject:cooode];
+                     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:insd.section];
+                     [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                 }else{
+                     [cooode addObject:@"所属部门"];
+                     [_codeAry replaceObjectAtIndex:insd.section withObject:cooode];
+                     [self addtableViewCellZWUI:1 secct:insd.section];
+                 }
+             }
+             else{
+                 UITableViewCell *cellu = (UITableViewCell *)[bbtn superview];
+                 NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+                 _ZWLBbutton = _ZWLBary[insd.section];
+                 _view1 = _viweAry[insd.section];
+                 [_ZWLBbutton setTitleColor:[UIColor whiteColor]  forState:UIControlStateNormal];
+                 _view1.backgroundColor = [UIColor whiteColor];
+                 [_ZWLBbutton setTitle:@"未分配" forState:UIControlStateNormal];
+                 _ZWLBbutton.enabled = NO;
+                 NSMutableArray *cooode = _codeAry[insd.section];
+                 if (cooode.count>1) {
+                     cooode[1] = @"管辖部门";
+                     [_codeAry replaceObjectAtIndex:insd.section withObject:cooode];
+                     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:insd.section];
+                     [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                 }else{
+                     [cooode addObject:@"管辖部门"];
+                     [_codeAry replaceObjectAtIndex:insd.section withObject:cooode];
+                     [self addtableViewCellZWUI:1 secct:insd.section];
+                 }
+            }
+            UITableViewCell *cellu = (UITableViewCell *)[bbtn superview];
+            NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+            NSMutableArray *numary = [[NSMutableArray alloc]init];
+            [numary addObject:tagg];
+            [_ZWidAry replaceObjectAtIndex:insd.section withObject:numary];
+            NSMutableArray *scbmary = [[NSMutableArray alloc]initWithArray:_BMnameAry[insd.section]];
+            NSMutableArray *scbmidary = [[NSMutableArray alloc]initWithArray:_BMidAry[insd.section]];
+            for (int t = 0; t<scbmary.count;) {
+                [scbmary removeObjectAtIndex:t];
+                [scbmidary removeObjectAtIndex:t];
+                [_BMnameAry replaceObjectAtIndex:insd.section withObject:scbmary];
+                [_BMidAry replaceObjectAtIndex:insd.section withObject:scbmidary];
+                [self dimissTabelCellZWUI:t+2 secct:insd.section];
+                
+            }
+        }
 
+    } selectValue:^(NSString *selectValue) {
+         BOOL yesor = [isbol containsObject:@"1"];
+        if (yesor == 0) {
+            NSArray *zwary = [[NSArray alloc]initWithObjects:selectValue, nil];
+            for (int i = 0; i<_ZWnameAry.count; i++) {
+                NSArray *zw = _ZWnameAry[i];
+                for (int y = 0; y<zw.count; y++) {
+                    NSString *zww = zw[y];
+                    if (zww == bbtn.titleLabel.text) {
+                        [_ZWnameAry replaceObjectAtIndex:i withObject:zwary];
+                        [bbtn setTitle:selectValue forState:UIControlStateNormal];
+                        
+                    }
+                }
+            }
+        }
 
-#pragma mark 编辑--完成
+    } showCloseButton:NO];
+}
+#pragma mark 点击职位类别
+-(void)JsLBButtonbtn:(UIButton *)btn{
+    NSString *jsid = [[NSString alloc]init];
+    NSString *lbnum = [[NSString alloc]init];
+    UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+    NSArray *jsiid = _ZWidAry[insd.section];
+    
+    jsid = [NSString stringWithFormat:@"%@",jsiid[0]];
+    if ([jsid isEqualToString:@"5"]) {
+        lbnum = @"2";
+    }else if([jsid isEqualToString:@"2"]){
+        lbnum = @"1";
+    }else if ([jsid isEqualToString:@"16"]){
+        lbnum = @"3";
+    }else if ([jsid isEqualToString:@"3"]){
+        lbnum = @"4";
+    }else {
+        lbnum = @"5";
+    }
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPositionLevel.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid,@"Num":lbnum};
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+         if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
+             NSArray *arrt= [responseObject valueForKey:@"list"];
+             NSMutableArray *zwlbidd = [[NSMutableArray alloc]init];
+             NSMutableArray *zwlbname = [[NSMutableArray alloc]init];
+             for (NSDictionary *dic in arrt) {
+                 [zwlbidd  addObject:[dic valueForKey:@"id"]];
+                 [zwlbname addObject:[dic valueForKey:@"levelName"]];
+             }
+
+             [SelectAlert showWithTitle:@"选择职位类别" titles:zwlbname selectIndex:^(NSInteger selectIndex) {
+                 UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+                 NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+                 NSMutableArray *zwlbid = [[NSMutableArray alloc]init];
+                 [zwlbid addObject:zwlbidd[selectIndex]];
+                 [_ZWLBidAry replaceObjectAtIndex:insd.section withObject:zwlbid];
+                 
+             } selectValue:^(NSString *selectValue) {
+                 [btn setTitle:selectValue forState:UIControlStateNormal];
+                 [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                 UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+                 NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+                 NSMutableArray *zwlbname = [[NSMutableArray alloc]init];
+                 [_ZWLBnameAry replaceObjectAtIndex:insd.section withObject:zwlbname];
+                 
+             } showCloseButton:NO];
+
+         }else if([[responseObject valueForKey:@"status"] isEqualToString:@"5000"]){
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"贵公司没有设置该职业类别哦" andInterval:1.0];
+         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+             [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
+         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限更改职位" andInterval:1.0];
+         }else{
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
+         }
+
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+#pragma mark 点击部门
+-(void)SSButtonbtn :(UIButton *)btn{
+    UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+    NSString *jsid = [NSString stringWithFormat:@"%d",[_ZWidAry[insd.section][0] intValue]];
+    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryDepartment.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid};
+    NSMutableArray* gxbmNum = [[NSMutableArray alloc]init];
+    NSMutableArray* gxbmAry = [[NSMutableArray alloc]init];
+    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
+            NSArray *arrt= [responseObject valueForKey:@"list"];
+              if (arrt.count == 0) {
+                  [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有创建部门 " andInterval:1.0];
+              }else{
+                  for (NSDictionary *dic in arrt) {
+                      [gxbmNum  addObject:[dic valueForKey:@"id"]];
+                      [gxbmAry addObject:[dic valueForKey:@"departmentName"]];
+                  }
+#pragma mark ----------------选择部门
+                [SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
+                    UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+                    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+                    NSString *tagg = gxbmNum[selectIndex];
+                    NSArray *bmid = _BMidAry[insd.section];
+                    BOOL yesor = [bmid containsObject: tagg];
+                    if (yesor == 1) {
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择部门哦" andInterval:1.0];
+                    }else{
+                        if ([btn.titleLabel.text isEqualToString: @"添加所属部门"]) {
+                            _BMidAry[insd.section][0] = tagg;
+                        }else{
+                            [_BMidAry[insd.section] addObject:tagg];
+                        }
+                    }
+                } selectValue:^(NSString *selectValue) {
+                    UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+                    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+                    NSString *bmtext = selectValue;
+                    NSArray *bmtextary = _BMnameAry[insd.section];
+                    BOOL yesor = [bmtextary containsObject:bmtext];
+                    if (yesor == 0) {
+                        if ([btn.titleLabel.text isEqualToString: @"添加所属部门"]) {
+                            NSMutableArray *ssbm = [[NSMutableArray alloc]init];
+                            [ssbm addObject:selectValue];
+                            if ([_BMnameAry[insd.section]count] == 0) {
+                                [_BMnameAry replaceObjectAtIndex:insd.section withObject:ssbm];
+                                [self addtableViewCellZWUI:insd.row+[_BMnameAry[insd.section]count] secct:insd.section];
+                            }else{
+                                [_BMnameAry replaceObjectAtIndex:insd.section withObject:ssbm];
+                                NSIndexPath *indexPathA = [NSIndexPath indexPathForRow:insd.row+1 inSection:insd.section]; //刷新第0段第2行
+                                [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPathA,nil] withRowAnimation:UITableViewRowAnimationNone];
+                            }
+                            
+                        }else{
+                        //添加管辖部门
+                            [_BMnameAry[insd.section] addObject:selectValue];
+                            [self addtableViewCellZWUI:insd.row+[_BMnameAry[insd.section]count] secct:insd.section];
+                        }
+                    }
+                } showCloseButton:NO];
+                
+              }
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有职位" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新登录" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+        }
+
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+
+}
+#pragma mark 点击删除部门
+-(void)scbmbtn:(UIButton *)btn{
+    UITableViewCell *cellu = (UITableViewCell *)[btn superview];
+    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
+    NSLog(@"%ld,%ld",(long)insd.section,(long)insd.row);
+    NSMutableArray *dimissbm = _BMnameAry[insd.section];
+    [dimissbm removeObjectAtIndex:insd.row-2];
+    NSMutableArray *dimissid = _BMidAry[insd.section];
+    [dimissid removeObjectAtIndex:insd.row-2];
+    
+    [_BMnameAry replaceObjectAtIndex:insd.section withObject:dimissbm];
+    [self dimissTabelCellZWUI:insd.row secct:insd.section];
+
+}
+
+#pragma mark 点击添加职位
+-(void)tjaction_button :(UIButton *)btn{
+    [_ZWnameAry addObject:[[NSMutableArray alloc]initWithObjects:@"选择职位", nil]];
+    [_ZWLBnameAry addObject:[[NSMutableArray alloc]initWithObjects:@"未分配", nil]];
+    [_ZWLBidAry addObject:[[NSMutableArray alloc]initWithObjects:@"0", nil]];
+    [_ZWidAry addObject:[[NSMutableArray alloc]initWithObjects:@"0", nil]];
+    [_BMnameAry addObject:[NSMutableArray array]];
+    [_BMidAry addObject:[NSMutableArray  array]];
+    [_bjbtnname addObject:@"上传"];
+    [_codeAry addObject:[[NSMutableArray  alloc]initWithObjects:@"职位", nil]];
+    // [infonTableview reloadData];
+    [_ZWbtnAry addObject:[[UIButton alloc]init]];
+    [_viweAry addObject:[[UIView alloc]init]];
+    [_ZWLBary addObject:[[UIButton alloc]init]];
+    [_BMbtnAry addObject:[[UIButton alloc]init]];
+    
+    NSIndexSet *indexSet1 = [[NSIndexSet alloc] initWithIndex: _ZWnameAry.count-1];
+    [infonTableview beginUpdates];
+    [infonTableview insertSections:indexSet1 withRowAnimation:UITableViewRowAnimationLeft];
+    [infonTableview endUpdates];
+    
+    [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+    [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    _tjBtn.enabled = NO;
+    
+    [_scBtn setImage:[UIImage imageNamed:@"sc_ico02"] forState:UIControlStateNormal];
+    [_scBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    _scBtn.enabled = NO;
+    
+    _ZWbutton = _ZWbtnAry[_ZWnameAry.count-1];
+    _ZWbutton.enabled = YES;
+    for (int i = 0; i<_bjbuttonAry.count-1; i++) {
+        _bjbtn = _bjbuttonAry[i];
+        _bjbtn.enabled = NO;
+        [_bjbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }
+}
+#pragma mark 点击删除职位
+-(void)scaction_button :(UIButton *)btn{
+    if ([btn.titleLabel.text isEqualToString:@"删除职位"]) {
+        [btn setTitle:@"取消删除" forState:UIControlStateNormal];
+        for (int i = 0; i<_bjBtnAry.count; i++) {
+            _bjbtn = _bjbuttonAry[i];
+            NSString *bjbtn = @"删除";
+            [_bjbtnname replaceObjectAtIndex:i withObject:bjbtn];
+            [_bjbtn setTitle:@"删除" forState:UIControlStateNormal];
+        }
+    }else{
+        [btn setTitle:@"删除职位" forState:UIControlStateNormal];
+        for (int i = 0; i<_bjBtnAry.count; i++) {
+            _bjbtn = _bjbuttonAry[i];
+            NSString *bjbtn = @"编辑";
+            [_bjbtnname replaceObjectAtIndex:i withObject:bjbtn];
+            [_bjbtn setTitle:@"编辑" forState:UIControlStateNormal];
+        }
+        
+    }
+}
+#pragma mark 编辑-完成-上传
 -(void)button1BackGroundNormal:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"编辑"]) {
         for (int i = 0; i<_bjbuttonAry.count-1; i++) {
@@ -176,124 +478,50 @@
             _bjbtn.enabled = NO;
             [_bjbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         }
+        NSString *bjbtn = @"完成";
+        [_bjbtnname replaceObjectAtIndex:btn.tag withObject:bjbtn];
+        
         btn.enabled = YES;
         [btn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
-         [btn setTitle:@"完成" forState:UIControlStateNormal];
+        [btn setTitle:@"完成" forState:UIControlStateNormal];
+        //btn.tag = section;
+        _ZWbutton = _ZWbtnAry[btn.tag];
+        _ZWbutton.enabled = YES;
+        NSMutableArray *tagary = _ZWidAry[btn.tag];
         
-        NSSet *set = [NSSet setWithArray:_bjBtnAry];
-        for (int u = 0; u<set.count; u++) {
-            NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
-            if ([stt isEqualToString: _bjBtnAry[u]]) {
-                 [_bjbtnname replaceObjectAtIndex:u withObject:@"完成"];
-                _ZWbutton = _ZWbtnAry[u];
-                if (_ZWbutton.tag == 5 ||_ZWbutton.tag == 2||_ZWbutton.tag == 3||_ZWbutton.tag == 4||_ZWbutton.tag == 14||_ZWbutton.tag == 16||_ZWbutton.tag == 17) {
-                    _ZWLBbutton = _ZWLBbtnAry[u];
-                    _ZWLBbutton.enabled = YES;
-                }
-                _ZWbutton.enabled = YES;
-                
-                if ([stt isEqualToString:@"0"]) {
-                    
-                }else{
-                    _SSBMbutt = _SSBMbtnAry[u];
-                    _SSBMbutt.enabled= YES;
-                    NSArray *scbtnary = _scBtnAry[u];
-                    if (scbtnary.count>0){
-                        for (int a = 0; a<scbtnary.count; a++) {
-                            _scBtnnnnn = scbtnary[a];
-                            _scBtnnnnn.enabled = YES;
-                            [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
-                            [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
-                        }
-                        
-                    }
-                }
-                [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
-                [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-                _tjBtn.enabled = NO;
-                
-                [_scBtn setImage:[UIImage imageNamed:@"sc_ico02"] forState:UIControlStateNormal];
-                [_scBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-                _scBtn.enabled = NO;
-            }
+        int ivalue = [tagary[0] intValue];
+        _ZWLBbutton = _ZWLBary[btn.tag];
+        if (ivalue == 5|| ivalue == 2 || ivalue == 3 || ivalue == 4 || ivalue == 14 || ivalue == 16 || ivalue == 17) {
+            _ZWLBbutton.enabled = YES;
         }
-    }else if([btn.titleLabel.text isEqualToString:@"完成"]){
-        for (int i = 0; i<_bjbuttonAry.count-1; i++) {
-            _bjbtn = _bjbuttonAry[i];
-            _bjbtn.enabled = YES;
-            [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
-        }
-        [btn setTitle:@"编辑" forState:UIControlStateNormal];
-        NSSet *set = [NSSet setWithArray:_bjBtnAry];
-        for (int u = 0; u<set.count; u++) {
-            NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
-            
-          
-            if ([stt isEqualToString: _bjBtnAry[u]]) {
-                [_bjbtnname replaceObjectAtIndex:u withObject:@"编辑"];
-                _ZWbutton = _ZWbtnAry[u];
-                _ZWbutton.enabled = NO;
-                _ZWLBbutton = _ZWLBbtnAry[u];
-                _ZWLBbutton.enabled = NO;
-                
-                if ([stt isEqualToString:@"0"]) {
-                    
-                }else{
-                    _SSBMbutt = _SSBMbtnAry[u];
-                    _SSBMbutt.enabled= NO;
-                    NSArray *scbtnary = _scBtnAry[u];
-                    if (scbtnary.count>0){
-                        for (int a = 0; a<scbtnary.count; a++) {
-                            _scBtnnnnn = scbtnary[a];
-                            _scBtnnnnn.enabled = NO;
-                            [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                            [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
-                        }
-                    }
-                }
-            }
-        }
-        NSString *str = @"选择职位";
-        NSMutableArray *zwbool = [NSMutableArray array];
-        for (int i = 0 ; i<_ZW.count; i++) {
-            NSArray *zwary = _ZW[i];
-            BOOL isbool = [zwary containsObject: str];
-            if (isbool  == 1) {
-                [zwbool addObject:@"1"];
-            }
-        }
-        bool isboolzw = [zwbool containsObject:@"1"];
-        if (isboolzw == 1) {
-            [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
-            [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            _tjBtn.enabled = NO;
-            
-            [_scBtn setImage:[UIImage imageNamed:@"sc_ico02"] forState:UIControlStateNormal];
-            [_scBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            _scBtn.enabled = NO;
-        }else{
-            [_tjBtn setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
-            [_tjBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            _tjBtn.enabled = YES;
-            
-            [_scBtn setImage:[UIImage imageNamed:@"sc_ico01"] forState:UIControlStateNormal];
-            [_scBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            _scBtn.enabled = YES;
-        }
-    }else if([btn.titleLabel.text isEqualToString:@"上传"]){
-        //[btn setTitle:@"编辑" forState:UIControlStateNormal];
-        NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
-        NSSet *set = [NSSet setWithArray:_bjBtnAry];
-        for (int u = 0; u<set.count; u++) {
-            if ([stt isEqualToString: _bjBtnAry[u]]) {
-                [_bjbtnname replaceObjectAtIndex:u withObject:@"编辑"];
-                [self complete:btn zwidary:_Numm[u] zwlbid:_lbNum[u] deparid:_gxbmidAry[u] userid:_useridAry[0] uuid:_uuidary[0]];
+        _SSBMbutt = _BMbtnAry[btn.tag];
+        _SSBMbutt.enabled = YES;
+        NSArray *scbtnary = _SCbtnAry[btn.tag];
+        if (scbtnary.count>0){
+            for (int a = 0; a<scbtnary.count; a++) {
+                _scBtnnnnn = scbtnary[a];
+                _scBtnnnnn.enabled = YES;
+                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
+                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
             }
             
         }
+        [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+        [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        _tjBtn.enabled = NO;
         
-    }else {
+        [_scBtn setImage:[UIImage imageNamed:@"sc_ico02"] forState:UIControlStateNormal];
+        [_scBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        _scBtn.enabled = NO;
+    }else if ([btn.titleLabel.text isEqualToString:@"完成"]){
+        //btn.tag = section;
         
+        NSLog(@"oRoleId:%@\n oDepartmentID:%@\n oLeveID:%@\n nRoleId:%@\n nDepartmentId:%@ \n nLeveID:%@",_oldZWID[btn.tag],_oldBMID[btn.tag],_oldJBID[btn.tag],_ZWidAry[btn.tag],_BMidAry[btn.tag],_ZWLBidAry[btn.tag]);
+    }else if ([btn.titleLabel.text isEqualToString:@"上传"]){
+#pragma mark 上传用户职位 ---------------------------------------
+        
+        
+    }else if ([btn.titleLabel.text isEqualToString:@"删除"]){
         //删除职位
         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
         alertView.resultIndex = ^(NSInteger index){
@@ -303,25 +531,60 @@
                     if ([stt isEqualToString: _bjBtnAry[u]]) {
                         //删除职位  RoleId  DepartmentID
                         
-                        [self dimissZW:_Numm[u] departid:_gxbmidAry[u] uuid:_uuidary[u] rowsect:u];
+                        [self dimissZW:_ZWidAry[u] departid:_BMidAry[u] uuid:_uuidary[u] rowsect:u];
                     }
                 }
-
+                
             }
             
         };
         [alertView showMKPAlertView];
+
     }
+    
+
 }
-#pragma mark 添加用户职位
+#pragma mark 修改用户职位 ---------------------------------------
+-(void)updateuserposition:(UIButton*)bbtn uuid: (NSString *)uuid usersid:(NSString *)usersid update:(NSString*)update{
+    NSString *updateurlStr = [NSString stringWithFormat:@"%@user/updateUserPosition.action", KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"id":usersid,@"uuid":uuid,@"update":update};
+    [ZXDNetworking GET:updateurlStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改完成" andInterval:1.0];
+        }else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
+
+
+#pragma mark 添加用户职位 ---------------------------------------
 -(void)complete:(UIButton *)bbttn zwidary:(NSArray *)zwidary zwlbid:(NSArray *)zwlbidary deparid:(NSArray *)Deparid userid:(NSString *)userid uuid:(NSString *)uuid{
-    //添加用户职位 :user/addUserPosition.action
-    /*
-     _bjbtn = _bjbuttonAry[u];
-     _bjbtn.enabled = YES;
-     [_bjbtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-     */
-    //usersid uuid 
     NSString *addurlStr = [NSString stringWithFormat:@"%@user/addUserPosition.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -331,30 +594,30 @@
     
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"id":userid,@"uuid":uuid,@"RoleId":zwidary[0],@"DepartmentID":string1,@"LevelID":zwlbidary[0]};
     [ZXDNetworking GET:addurlStr parameters:dic success:^(id responseObject) {
-        
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
-    
-}
-#pragma mark 修改用户职位 ---------------------------------------两个网络请求数据
+        if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加完成" andInterval:1.0];
+        }else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
 
--(void)updateuserposition :(NSString *)uuid usersid:(NSString *)usersid{
-    //修改用户职位: user/updateUserPosition.action
-    NSString *addurlStr = [NSString stringWithFormat:@"%@user/updateUserPosition.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic = [[NSDictionary alloc]init];
-    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"uuid":uuid,@"id":usersid};
-    NSDictionary *update = [[NSDictionary alloc]init];
-    NSMutableArray *updatee = [[NSMutableArray alloc]init];
-    //update = @{@"id":};
-    //update -- id,departmentid,roleid,levelid
-    //uuid
-    // id
-    [ZXDNetworking GET:addurlStr parameters:dic success:^(id responseObject) {
-        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -373,16 +636,16 @@
     if ([string1 isEqualToString:@"(0)"]) {
         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"uuid":uuuuid,@"RoleId":string,@"id":_model.usersid};
     }else{
-    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"uuid":uuuuid,@"RoleId":string,@"DepartmentID":string1,@"id":_model.usersid};
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"uuid":uuuuid,@"RoleId":string,@"DepartmentID":string1,@"id":_model.usersid};
     }
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-            [_Numm removeObjectAtIndex:rowsectt];
-            [_gxbmidAry removeObjectAtIndex:rowsectt];
-            [_ZW removeObjectAtIndex:rowsectt];
-            [_ViewbtnAry removeObjectAtIndex:rowsectt];
-            [_ZWLB removeObjectAtIndex:rowsectt];
-            [_lbNum removeObjectAtIndex:rowsectt];
+            [_ZWidAry removeObjectAtIndex:rowsectt];
+            [_BMidAry removeObjectAtIndex:rowsectt];
+            [_ZWnameAry removeObjectAtIndex:rowsectt];
+            [_viweAry removeObjectAtIndex:rowsectt];
+            [_ZWLBary removeObjectAtIndex:rowsectt];
+            [_ZWLBidAry removeObjectAtIndex:rowsectt];
             
             
             NSIndexSet *idxSet = [[NSIndexSet alloc] initWithIndex: rowsectt];
@@ -411,506 +674,106 @@
             };
             [alertView showMKPAlertView];
         }
-
+        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-}
-#pragma mark 添加职位
--(void)tjaction_button:(UIButton *)btn{
-    
-    [_ZW addObject:[[NSMutableArray alloc]initWithObjects:@"选择职位", nil]];
-    [_ZWLB addObject:[[NSMutableArray alloc]initWithObjects:@"未分配", nil]];
-    [_lbNum addObject:[[NSMutableArray alloc]initWithObjects:@"0", nil]];
-    [_Numm addObject:[[NSMutableArray alloc]initWithObjects:@"0", nil]];
-    [_gxbmAry addObject:[NSMutableArray array]];
-    [_gxbmidAry addObject:[NSMutableArray  array]];
-    [_bjbtnname addObject:@"上传"];
-    [_codeAry addObject:[[NSMutableArray  alloc]initWithObjects:@"职位", nil]];
-   // [infonTableview reloadData];
-    
-    
-    NSIndexSet *indexSet1 = [[NSIndexSet alloc] initWithIndex: _ZW.count-1];
-    [infonTableview beginUpdates];
-    [infonTableview insertSections:indexSet1 withRowAnimation:UITableViewRowAnimationLeft];
-    [infonTableview endUpdates];
-    
-    [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
-    [_tjBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    _tjBtn.enabled = NO;
-    
-    [_scBtn setImage:[UIImage imageNamed:@"sc_ico02"] forState:UIControlStateNormal];
-    [_scBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    _scBtn.enabled = NO;
-    
-    _ZWbutton = _ZWbtnAry[_ZW.count-1];
-    _ZWbutton.enabled = YES;
-    for (int i = 0; i<_bjbuttonAry.count-1; i++) {
-        _bjbtn = _bjbuttonAry[i];
-        _bjbtn.enabled = NO;
-        [_bjbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    }
-}
-#pragma mark 删除职位
--(void)scaction_button:(UIButton *)btn{
-    if ([btn.titleLabel.text isEqualToString:@"删除职位"]) {
-        [btn setTitle:@"取消删除" forState:UIControlStateNormal];
-        for (int i = 0; i<_bjBtnAry.count; i++) {
-            _bjbtn = _bjbuttonAry[i];
-            NSString *bjbtn = @"删除";
-            [_bjbtnname replaceObjectAtIndex:i withObject:bjbtn];
-            [_bjbtn setTitle:@"删除" forState:UIControlStateNormal];
-        }
-    }else{
-        [btn setTitle:@"删除职位" forState:UIControlStateNormal];
-        for (int i = 0; i<_bjBtnAry.count; i++) {
-            _bjbtn = _bjbuttonAry[i];
-            NSString *bjbtn = @"编辑";
-            [_bjbtnname replaceObjectAtIndex:i withObject:bjbtn];
-            [_bjbtn setTitle:@"编辑" forState:UIControlStateNormal];
-        }
-
-    }
-}
-#pragma mark 删除部门
--(void)scbmbtn:(UIButton *)btn{
 
     
-    inftionTableViewCell *cellu = (inftionTableViewCell *)[btn superview];
-    NSIndexPath *insd = [infonTableview indexPathForCell:cellu];
-    NSLog(@"%ld,%ld",(long)insd.section,(long)insd.row);
-    NSMutableArray *dimissbm = _gxbmAry[insd.section];
-    [dimissbm removeObjectAtIndex:insd.row-2];
-    NSMutableArray *dimissid = _gxbmidAry[insd.section];
-    [dimissid removeObjectAtIndex:insd.row-2];
-    
-    [_gxbmAry replaceObjectAtIndex:insd.section withObject:dimissbm];
-    [self dimissTabelCellZWUI:insd.row secct:insd.section];
-    
-    
 }
-
-#pragma mark 职位按钮
--(void)JsButtonbtn:(UIButton*)btn{
-    [self ZwNetWork:btn];
-}
--(void)showAlert :(NSArray *)arrr button:(UIButton*)bbtn{
-    NSLog(@"%@-%@",arrr,numBS);
-    NSMutableArray *isbol = [[NSMutableArray alloc]init];
-    [SelectAlert showWithTitle:@"选择职位" titles:arrr selectIndex:^(NSInteger selectIndex) {
-         NSLog(@"选择了第%ld个",(long)selectIndex);
-        NSString *tagg = numBS[selectIndex];
-        
-        
-        for (int i = 0; i<_Numm.count; i++) {
-            NSArray *num = _Numm[i];
-            BOOL isbool = [num containsObject: tagg];
-            if (isbool == 1) {
-                [isbol addObject:@"1"];
-            }
-        }
-        BOOL yesor = [isbol containsObject:@"1"];
-        if (yesor == 1) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择职位哦" andInterval:1.0];
-        }else{
-            NSArray *numary = [[NSArray alloc]initWithObjects:tagg, nil];
-              for (int i = 0; i<_Numm.count; i++) {
-                  NSArray *zebun = _Numm[i];
-                  for (int y = 0; y<zebun.count; y++) {
-                      int zwnumm = [zebun[y] intValue];
-                      if (zwnumm == bbtn.tag) {
-                           int taa = [tagg intValue];
-                          NSMutableArray *cooode = _codeAry[i];
-                          if ( taa == 2|| taa == 5||taa ==3||taa ==4||taa ==14||taa ==16||taa ==17 ) {
-                              
-                              _ZWLBbutton = _ZWLBbtnAry[i];
-                              _view1 = _ViewbtnAry[i];
-                              [_ZWLBbutton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
-                              _view1.backgroundColor = [UIColor lightGrayColor];
-                              [_ZWLBbutton setTitle:@"未分配" forState:UIControlStateNormal];
-                              _ZWLBbutton.enabled = YES;
-                              if (cooode.count>1) {
-                                  cooode[1] = @"所属部门";
-                                [_codeAry replaceObjectAtIndex:i withObject:cooode];
-                                  NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:i];
-                                  [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-                              }else{
-                                [cooode addObject:@"所属部门"];
-                                [_codeAry replaceObjectAtIndex:i withObject:cooode];
-                                  [self addtableViewCellZWUI:1 secct:i];
-                              }
-                          }else{
-                             
-                              
-                              _ZWLBbutton = _ZWLBbtnAry[i];
-                              _view1 = _ViewbtnAry[i];
-                              [_ZWLBbutton setTitleColor:[UIColor whiteColor]  forState:UIControlStateNormal];
-                              _view1.backgroundColor = [UIColor whiteColor];
-                              [_ZWLBbutton setTitle:@"未分配" forState:UIControlStateNormal];
-                              _ZWLBbutton.enabled = NO;
-                              
-                              if (cooode.count>1) {
-                                  cooode[1] = @"管辖部门";
-                                  //_SSBMbtnAry
-                                  
-                                  [_codeAry replaceObjectAtIndex:i withObject:cooode];
-                                  NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:i];
-                                 [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-                                  
-                              }else{
-                                  [cooode addObject:@"管辖部门"];
-                                  
-                                  [_codeAry replaceObjectAtIndex:i withObject:cooode];
-                                  [self addtableViewCellZWUI:1 secct:i];
-                                  
-                              }
-                              
-                              
-                          }
-                          [_Numm replaceObjectAtIndex:i withObject:numary];
-                          NSMutableArray *scbmary = [[NSMutableArray alloc]initWithArray:_gxbmAry[i]];
-                          NSMutableArray *scbmidary = [[NSMutableArray alloc]initWithArray:_gxbmAry[i]];
-                          _ZWLBbutton.tag = taa;
-                          bbtn.tag = taa;
-                          for (int t = 0; t<scbmary.count;) {
-                              [scbmary removeObjectAtIndex:t];
-                              [scbmidary removeObjectAtIndex:t];
-                              [_gxbmAry replaceObjectAtIndex:i withObject:scbmary];
-                              [_gxbmidAry replaceObjectAtIndex:i withObject:scbmidary];
-                              [self dimissTabelCellZWUI:t+2 secct:i];
-                              
-                          }
-                         
-                      }
-                  }
-              }
-            
-            
-            
-        } 
-    } selectValue:^(NSString *selectValue) {
-        BOOL yesor = [isbol containsObject:@"1"];
-        if (yesor == 0) {
-            NSArray *zwary = [[NSArray alloc]initWithObjects:selectValue, nil];
-            for (int i = 0; i<_ZW.count; i++) {
-                NSArray *zw = _ZW[i];
-                for (int y = 0; y<zw.count; y++) {
-                    NSString *zww = zw[y];
-                    if (zww == bbtn.titleLabel.text) {
-                        [_ZW replaceObjectAtIndex:i withObject:zwary];
-                        [bbtn setTitle:selectValue forState:UIControlStateNormal];
-                        
-                    }
-                }
-            }
-
-        }
-    } showCloseButton:NO];
-    
-}
--(void)addtableViewCellZWUI:(NSUInteger )rroow secct:(NSUInteger )secct{
-    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rroow inSection:secct];
-    [indexPaths addObject: indexPath];
-    [infonTableview beginUpdates];
-    [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
-    [infonTableview endUpdates];
-    
-}
-
--(void)dimissTabelCellZWUI:(NSUInteger )rroow secct:(NSUInteger )secct{
-    NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:rroow inSection:secct]];
-    [infonTableview beginUpdates];
-    [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
-    [infonTableview endUpdates];
-}
-#pragma mark 职位类别按钮
--(void)JsLBButtonbtn:(UIButton*)btn{
-    NSLog(@"职位类别按钮");//manager/queryPositionLevel.action
-    NSString *jsid = [[NSString alloc]init];
-    NSString *lbnum = [[NSString alloc]init];
-
-    for (int i = 0; i<_Numm.count; i++) {
-        NSArray *zw = _Numm[i];
-        for (int y = 0; y<zw.count; y++) {
-            
-            NSString *zwnum = [NSString stringWithFormat:@"%@",zw[y]];
-             NSString *stringInt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
-            if ([zwnum isEqual: stringInt]) {
-                jsid = zwnum;
-                if ([jsid isEqualToString:@"5"]) {
-                    lbnum = @"2";
-                }else if([jsid isEqualToString:@"2"]){
-                    lbnum = @"1";
-                }else if ([jsid isEqualToString:@"16"]){
-                    lbnum = @"3";
-                }else if ([jsid isEqualToString:@"3"]){
-                    lbnum = @"4";
-                }else {
-                    lbnum = @"5";
-                }
-            }
-        }
-    }
-    
-    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryPositionLevel.action", KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic = [[NSDictionary alloc]init];
-    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    
-    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid,@"Num":lbnum};
-    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
-            NSLog(@"%@",responseObject);
-            //id = 31;
-//            levelName = 4444444;
-            NSArray *arrt= [responseObject valueForKey:@"list"];
-            NSMutableArray *zwlbid = [[NSMutableArray alloc]init];
-            NSMutableArray *zwlbname = [[NSMutableArray alloc]init];
-            for (NSDictionary *dic in arrt) {
-                [zwlbid  addObject:[dic valueForKey:@"id"]];
-                [zwlbname addObject:[dic valueForKey:@"levelName"]];
-            }
-            //[SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
-            [SelectAlert showWithTitle:@"选择职位类别" titles:zwlbname selectIndex:^(NSInteger selectIndex) {
                 
-            } selectValue:^(NSString *selectValue) {
-                
-            } showCloseButton:NO];
-        }else if([[responseObject valueForKey:@"status"] isEqualToString:@"5000"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"贵公司没有设置该职业类别哦" andInterval:1.0];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限更改职位" andInterval:1.0];
-        }else{
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
-        }
-
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
-    
-    
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
-#pragma mark 点击所属部门
--(void)SSButtonbtn:(UIButton*)btn{
-    NSLog(@"%@%ld",btn.titleLabel.text,(long)btn.tag);
-    NSString *jsid = [NSString stringWithFormat:@"%d",[_Numm[btn.tag][0] intValue]];
-    NSString *urlStr = [NSString stringWithFormat:@"%@manager/queryDepartment.action", KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic = [[NSDictionary alloc]init];
-    NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"RoleId":jsid};
-    NSMutableArray* gxbmNum = [[NSMutableArray alloc]init];
-    NSMutableArray* gxbmAry = [[NSMutableArray alloc]init];
-    [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"])
-        {
-            NSArray *arrt= [responseObject valueForKey:@"list"];
-            
-            if (arrt.count == 0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您的公司没有创建部门 " andInterval:1.0];
-            }else{
-                for (NSDictionary *dic in arrt) {
-                    [gxbmNum  addObject:[dic valueForKey:@"id"]];
-                    [gxbmAry addObject:[dic valueForKey:@"departmentName"]];
-                }
-                
-                
-                [SelectAlert showWithTitle:@"选择部门" titles:gxbmAry selectIndex:^(NSInteger selectIndex) {
-                    NSLog(@"%@/n%@",gxbmAry,gxbmNum);//gxbmNum[selectindex]
-               
-                    NSString *tagg = gxbmNum[selectIndex];
-                    NSArray *bmid = _gxbmidAry[btn.tag];
-                    BOOL yesor = [bmid containsObject: tagg];
-                    if (yesor == 1) {
-                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择部门哦" andInterval:1.0];
-                    }else{
-                        if ([btn.titleLabel.text isEqualToString: @"添加所属部门"]) {
-                        _gxbmidAry[btn.tag][0] = tagg;
-                        }else{
-                        [_gxbmidAry[btn.tag] addObject:tagg];
-                        }
-                      }
-                } selectValue:^(NSString *selectValue) {
-                    NSString *bmtext = selectValue;
-                    NSArray *bmtextary = _gxbmAry[btn.tag];
-                    BOOL yesor = [bmtextary containsObject:bmtext];
-                    if (yesor == 1) {
-                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"不能重复选择部门哦" andInterval:1.0];
-                    }else{
-                        if ([btn.titleLabel.text isEqualToString: @"添加所属部门"]) {
-                        NSMutableArray*ssbmary = [[NSMutableArray alloc]initWithObjects:selectValue, nil];
-                            
-                            if ([_gxbmAry[btn.tag]count] ==1) {
-                                [_gxbmAry replaceObjectAtIndex:btn.tag withObject:ssbmary];
-                                NSIndexPath *indexPathA = [NSIndexPath indexPathForRow:[_codeAry[btn.tag]count]+[_gxbmAry[btn.tag]count]-1 inSection:btn.tag]; //刷新第0段第2行
-                                [infonTableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPathA,nil] withRowAnimation:UITableViewRowAnimationNone];
-                                _scBtnnnnn = _scBtnAry[btn.tag][0];
-                                _scBtnnnnn.enabled = YES;
-                                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
-                                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
-                            }else{
-                                [_gxbmAry replaceObjectAtIndex:btn.tag withObject:ssbmary];
-                            [self addtableViewCellZWUI:[_codeAry[btn.tag]count]+[_gxbmAry[btn.tag]count]-1 secct:btn.tag];
-                                _scBtnnnnn = _scBtnAry[btn.tag][0];
-                                _scBtnnnnn.enabled = YES;
-                                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
-                                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
-                            }
-                            
-                        }else{
-                            [_gxbmAry[btn.tag] addObject:selectValue];
-                            [self addtableViewCellZWUI:[_codeAry[btn.tag]count]+[_gxbmAry[btn.tag]count]-1 secct:btn.tag];
-                            _scBtnnnnn = _scBtnAry[btn.tag][0];
-                            _scBtnnnnn.enabled = YES;
-                            [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
-                            [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
-                        }
-                      //  NSUInteger seccct = btn.tag;
-                  // [infonTableview reloadData]; 5*2+5+50=1767-1994
-                       
-                        
-                        
-                    }
-                } showCloseButton:NO];
-
-        }
-        }
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
-    
-}
-#pragma mark cell 点击
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)setExtraCellLineHidden: (UITableView *)tableView
 {
-    NSLog(@"%ld",(long)indexPath.row);
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
 }
+-(void)buttonLiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark TableViewCell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:infonTableview]) {
-    cell = [[inftionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    int tag = 0;
-    if (indexPath.row == 0) {
-        cell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
-        for(_ZWbutton in cell.subviews){
-            if([_ZWbutton isMemberOfClass:[UIButton class]])
-            {
-                [_ZWbutton removeFromSuperview];
-            }
-        }
-        _ZWbutton = [[UIButton alloc]init];
-        _ZWbutton.frame = CGRectMake(120, 1, (self.view.bounds.size.width-120)/2
-                                     , 38);
-       
-        [_ZWbutton setTitle:_ZW[indexPath.section][indexPath.row] forState:UIControlStateNormal];
-        _ZWbutton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        _ZWbutton.font = [UIFont boldSystemFontOfSize:kWidth*25];
-        [_ZWbutton addTarget:self action:@selector(JsButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
-        [_ZWbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        if ([_Numm[indexPath.section]count] == 0) {
-            
-        }else{
-            NSString*zwtag = _Numm[indexPath.section][indexPath.row];
-            tag = [zwtag intValue];
-            _ZWbutton.tag = tag;
-        }
-        NSString *bjname =_bjbtnname[indexPath.section];
-        if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
-            _ZWbutton.enabled = YES;
-        }else{
-            _ZWbutton.enabled = NO;
-        }
-    
-        [cell addSubview:_ZWbutton];
-        if (_ZWbtnAry.count == _ZW.count) {
-            NSInteger tagstr = [_Numm[indexPath.section][indexPath.row] intValue];
-            for (int i = 0; i<_ZWbtnAry.count; i++) {
-                UIButton *zebtn = _ZWbtnAry[i];
-                if (zebtn.tag == tagstr) {
-                    [_ZWbtnAry replaceObjectAtIndex:i withObject:_ZWbutton];
+        _infoncell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCell"];
+        _infoncell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 0) {
+            //职位
+            _infoncell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
+            for(_ZWbutton in _infoncell.subviews){
+                if([_ZWbutton isMemberOfClass:[UIButton class]])
+                {
+                    [_ZWbutton removeFromSuperview];
                 }
             }
-        }else{
-            [_ZWbtnAry addObject:_ZWbutton];
-        }
-        _view1 = [[UIView alloc]init];
-        _view1.frame = CGRectMake(120+(self.view.bounds.size.width-120)/2, 6, 1, 30);
-        
-        _ZWLBbutton = [[UIButton alloc]initWithFrame:CGRectMake(121+(self.view.bounds.size.width-120)/2, 1, self.view.bounds.size.width-(self.view.bounds.size.width/2+31), 38)];
-        _ZWLBbutton.font = [UIFont boldSystemFontOfSize:kWidth*30];
-        
-        [_ZWLBbutton addTarget:self action:@selector(JsLBButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
-        
-        if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
-            [_ZWLBbutton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
-            _view1.backgroundColor = [UIColor lightGrayColor];
-            [_ZWLBbutton setTitle:_ZWLB[indexPath.section][indexPath.row] forState:UIControlStateNormal];
+            _ZWbutton = [[UIButton alloc]init];
+            _ZWbutton = _ZWbtnAry[indexPath.section];
+            _ZWbutton.frame = CGRectMake(120, 1, (self.view.bounds.size.width-120)/2, 38);
+            [_ZWbutton setTitle:_ZWnameAry[indexPath.section][indexPath.row] forState:UIControlStateNormal];
+            _ZWbutton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            _ZWbutton.font = [UIFont boldSystemFontOfSize:kWidth*25];
+            [_ZWbutton addTarget:self action:@selector(JsButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
+            [_ZWbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            NSString *bjname =_bjbtnname[indexPath.section];
             if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
-                _ZWLBbutton.enabled = YES;
+                _ZWbutton.enabled = YES;
             }else{
+                _ZWbutton.enabled = NO;
+            }
+            [_infoncell addSubview:_ZWbutton];
+            
+            _view1 = [[UIView alloc]init];
+            _view1 = _viweAry[indexPath.section];
+            _view1.frame = CGRectMake(120+(self.view.bounds.size.width-120)/2, 6, 1, 30);
+            _ZWLBbutton = [[UIButton alloc]init];
+            _ZWLBbutton = _ZWLBary[indexPath.section];
+            _ZWLBbutton.frame =CGRectMake(121+(self.view.bounds.size.width-120)/2, 1, self.view.bounds.size.width-(self.view.bounds.size.width/2+31), 38);
+            _ZWLBbutton.font = [UIFont boldSystemFontOfSize:kWidth*30];
+            
+            [_ZWLBbutton addTarget:self action:@selector(JsLBButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
+            int tag = 0;
+            NSString*zwtag = _ZWidAry[indexPath.section][indexPath.row];
+            tag = [zwtag intValue];
+            if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
+                [_ZWLBbutton setTitleColor:GetColor(199, 199, 205, 1) forState:UIControlStateNormal];
+                _view1.backgroundColor = [UIColor lightGrayColor];
+                [_ZWLBbutton setTitle:_ZWLBnameAry[indexPath.section][indexPath.row] forState:UIControlStateNormal];
+                if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
+                    _ZWLBbutton.enabled = YES;
+                }else{
+                    _ZWLBbutton.enabled = NO;
+                }
+                
+            }else{
+                [_ZWLBbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                _view1.backgroundColor = [UIColor whiteColor];
                 _ZWLBbutton.enabled = NO;
             }
+            [_infoncell addSubview:_view1];
+            [_infoncell addSubview:_ZWLBbutton];
+        }else if(indexPath.row == 1){
+            //部门--（所属。管辖）
+             _infoncell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
+             _infoncell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
             
-        }else{
-            [_ZWLBbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            _view1.backgroundColor = [UIColor whiteColor];
-            _ZWLBbutton.enabled = NO;
-        }
-        if ([_Numm[indexPath.section]count] == 0) {
-            
-        }else{
-            _ZWLBbutton.tag = [_Numm[indexPath.section][0] intValue];
-        }
-        if (_ZWLBbtnAry.count == _ZW.count) {
-            NSInteger tagstr = [_Numm[indexPath.section][0] intValue];
-            for (int i = 0; i<_ZWLBbtnAry.count; i++) {
-                UIButton *zebtn = _ZWLBbtnAry[i];
-                if (zebtn.tag == tagstr) {
-                    [_ZWLBbtnAry replaceObjectAtIndex:i withObject:_ZWLBbutton];
-                    [_ViewbtnAry replaceObjectAtIndex:i withObject:_view1];
-
-                }
-            }
-        }else{
-            [_ZWLBbtnAry addObject:_ZWLBbutton];
-            [_ViewbtnAry addObject:_view1];
-        }
-        
-        [cell addSubview:_view1];
-        [cell addSubview:_ZWLBbutton];
-    }else if(indexPath.row ==1){
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-        cell.textLabel.text = _codeAry[indexPath.section][indexPath.row];
             _SSBMbutt = [[UIButton alloc]init];
+            _SSBMbutt = _BMbtnAry[indexPath.section];
             _SSBMbutt.frame = CGRectMake(120, 1, self.view.bounds.size.width-100, 38);
-            [_SSBMbutt setTitle:[NSString stringWithFormat:@"添加%@",cell.textLabel.text] forState:UIControlStateNormal];
+            [_SSBMbutt setTitle:[NSString stringWithFormat:@"添加%@",_infoncell.textLabel.text] forState:UIControlStateNormal];
             _SSBMbutt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             _SSBMbutt.font = [UIFont boldSystemFontOfSize:kWidth*30];
             [_SSBMbutt addTarget:self action:@selector(SSButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
             [_SSBMbutt setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             //NSInteger section  = indexPath.section;
-             _SSBMbutt.tag= indexPath.section;
-        NSString *bjname =_bjbtnname[indexPath.section];
-        if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
-            _SSBMbutt.enabled = YES;
-        }else{
-            _SSBMbutt.enabled = NO;
-        }
-        
-            [cell addSubview:_SSBMbutt];
-        if ([_Numm[indexPath.section]count] == 0) {
-            
-        }else{
             _SSBMbutt.tag= indexPath.section;
+<<<<<<< HEAD
+            NSString *bjname =_bjbtnname[indexPath.section];
+            if ([bjname isEqualToString:@"完成"]||[bjname isEqualToString:@"上传"]) {
+                _SSBMbutt.enabled = YES;
+=======
            
         }
         if (_SSBMbtnAry.count == _ZW.count) {
@@ -966,127 +829,87 @@
             //管辖部门
             if (_scBtnAry.count == _gxbmAry.count) {
                 
+>>>>>>> 906526bfca98375805ea4f33a10bb82208a39a1c
             }else{
-                [_scBtnAry addObject:[[NSMutableArray alloc]init]];
-                if ([_scBtnAry[indexPath.section]count] == [_gxbmAry[indexPath.section]count]) {
-                    //替换
-                    NSMutableArray *linbm = [[NSMutableArray alloc]init];
-                    linbm = _scBtnAry[indexPath.section];
-                    [linbm replaceObjectAtIndex:indexPath.row-2 withObject:_scBtnnnnn];
-                    [_scBtnAry replaceObjectAtIndex:indexPath.section withObject:linbm];
-                }else{
-                    //直接加
-                    [_scBtnAry2 addObject:_scBtnnnnn];
-                    [_scBtnAry insertObject:_scBtnAry2 atIndex:indexPath.section];
-                }
+                _SSBMbutt.enabled = NO;
             }
             
+            [_infoncell addSubview:_SSBMbutt];
 
-           
             
+        }else{
+            //具体部门
+            UILabel *XBTLabel  = [[UILabel alloc]initWithFrame:CGRectMake(120, 1, self.view.bounds.size.width-160, 38)];
+            XBTLabel.text = _BMnameAry[indexPath.section][indexPath.row-2];
+            XBTLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
+            [_infoncell addSubview:XBTLabel];
             
-            
+            _scBtnnnnn= [[UIButton alloc]initWithFrame:CGRectMake(120+self.view.bounds.size.width-160, 1, 40, 38)];
+            [_infoncell addSubview:_scBtnnnnn];
+            [_scBtnnnnn addTarget:self action:@selector(scbmbtn:) forControlEvents:UIControlEventTouchUpInside];
+            if ([_bjbtnname[indexPath.section] isEqualToString:@"完成"]) {
+                _scBtnnnnn.enabled = YES;
+                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
+                [_scBtnnnnn setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateSelected];
+            }else{
+                _scBtnnnnn.enabled = NO;
+                [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                [_scBtnnnnn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
+            }
+            int tag ;
+            NSString*zwtag = _ZWidAry[indexPath.section][0];
+            tag = [zwtag intValue];
+            if (tag == 2|| tag == 5||tag ==3||tag ==4||tag ==14||tag ==16||tag ==17) {
+            //所属部门
+                
+                  NSMutableArray*  _scBtnAry2 = [[NSMutableArray alloc]init];
+                    [_scBtnAry2 addObject:_scBtnnnnn];
+                    [_SCbtnAry replaceObjectAtIndex:indexPath.section withObject:_scBtnAry2];
+                
+
+            }else{
+                //管辖部门
+                NSMutableArray *scbtn = [[NSMutableArray alloc]init];
+                scbtn = _SCbtnAry[indexPath.section];
+                [scbtn addObject:_scBtnnnnn];
+                [_SCbtnAry replaceObjectAtIndex:indexPath.section withObject:scbtn];
+            }
         }
-
         
-    }
-        return cell;
+        
+        return _infoncell;
     }else{
-     UITableViewCell*   ccell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCelll"];
+        UITableViewCell*   ccell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCelll"];
         ccell.selectionStyle = UITableViewCellSelectionStyleNone;
         ccell.textLabel.textColor = [UIColor lightGrayColor];
         ccell.textLabel.text = _twocodeAry[indexPath.row];
         ccell.textLabel.textColor = [UIColor lightGrayColor];
         
-           
-            UILabel *bmlabel = [[UILabel alloc]init];
-            bmlabel.frame = CGRectMake(120, 10, self.view.frame.size.width-120, 30);
+        
+        UILabel *bmlabel = [[UILabel alloc]init];
+        bmlabel.frame = CGRectMake(120, 10, self.view.frame.size.width-120, 30);
         bmlabel.textColor = [UIColor lightGrayColor];
-            id obj = _noEditAry[indexPath.row];
-            if([obj isKindOfClass:[NSString class]]){
-                //此元素是字符串
-                bmlabel.text=[NSString stringWithFormat:@"%@",_noEditAry[indexPath.row]];
-                [ccell addSubview:bmlabel];
-            }else{//不是字符串
-                depmtCell *celled=[[depmtCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"depmCell" arr:_noEditAry[indexPath.row] numcode:1];
-                celled.mLabel.textColor = [UIColor lightGrayColor];
-                celled.mLabel.text=_twocodeAry[indexPath.row];
-                celled.selectionStyle = UITableViewCellSeparatorStyleNone;
-                [celled setNeedsUpdateConstraints];
-                [celled updateConstraintsIfNeeded];
-                return celled;
+        id obj = _noEditAry[indexPath.row];
+        if([obj isKindOfClass:[NSString class]]){
+            //此元素是字符串
+            bmlabel.text=[NSString stringWithFormat:@"%@",_noEditAry[indexPath.row]];
+            [ccell addSubview:bmlabel];
+        }else{//不是字符串
+            depmtCell *celled=[[depmtCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"depmCell" arr:_noEditAry[indexPath.row] numcode:1];
+            celled.mLabel.textColor = [UIColor lightGrayColor];
+            celled.mLabel.text=_twocodeAry[indexPath.row];
+            celled.selectionStyle = UITableViewCellSeparatorStyleNone;
+            [celled setNeedsUpdateConstraints];
+            [celled updateConstraintsIfNeeded];
+            return celled;
             
         }
         return ccell;
     }
-    return nil;
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
-    if ([tableView isEqual:infonTableview]) {
-        UIView *headV = [[UIView alloc] initWithFrame:CGRectMake(0, 0,Scree_width, 30)];
-        headV.backgroundColor = GetColor(238, 238, 238, 1);
-        _bjbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _bjbtn.frame =CGRectMake(Scree_width-60,0,50,30);//0 129 238
-        [_bjbtn setTitle:_bjbtnname[section] forState:UIControlStateNormal];
-        [_bjbtn addTarget:self action:@selector(button1BackGroundNormal:) forControlEvents:UIControlEventTouchUpInside];
-        [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
-        _bjbtn.font = [UIFont boldSystemFontOfSize:kWidth*30];
-        NSString *tar = _Numm[section][0];
-        int w = [tar intValue];
-        _bjbtn.tag = w;
-        [headV addSubview:_bjbtn];
-        NSString *sttt = [NSString stringWithFormat:@"%ld",(long)_bjbtn.tag];
-        NSLog(@"编辑按钮的tag=%ld",(long)_bjbtn.tag);
-        if (_bjBtnAry.count == _ZW.count) {
-            for (int y = 0; y<_bjBtnAry.count; y++) {
-                NSString *bjtag =_bjBtnAry[y];
-                if ([bjtag isEqualToString:sttt]) {
-                    [_bjBtnAry replaceObjectAtIndex:y withObject:sttt];
-                    [_bjbuttonAry replaceObjectAtIndex:y withObject:_bjbtn];
-                }
-            }
-        }else{
-            [_bjBtnAry addObject:sttt];
-            [_bjbuttonAry addObject:_bjbtn];
-        }
-        
-        return headV;
-
-    }else{
-        if (_twocodeAry.count>0) {
-            YUFoldingSectionHeader *sectionHeaderView = [[YUFoldingSectionHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,30)  withTag:section];
-            [sectionHeaderView setupWithBackgroundColor:GetColor(238, 238, 238, 1)
-                                            titleString:[NSString stringWithFormat:@"其他职位(所在其他部门)"]
-                                             titleColor:[UIColor lightGrayColor]
-                                              titleFont:[UIFont systemFontOfSize:13]
-                                      descriptionString:[NSString string]
-                                       descriptionColor:[UIColor whiteColor]
-                                        descriptionFont:[UIFont systemFontOfSize:13]
-                                             arrowImage:[UIImage imageNamed:@"jiantou_03"]
-                                          arrowPosition:[self perferedArrowPosition]
-                                           sectionState:((NSNumber *)self.statusArray[section]).integerValue];
-            
-            sectionHeaderView.tapDelegate = self;
-            
-            return sectionHeaderView;
-        } 
-    }
-    return nil;
-}
-#pragma mark - YUFoldingTableViewDelegate / required（必须实现的代理）
-// 返回箭头的位置
--(YUFoldingSectionHeaderArrowPosition )perferedArrowPosition
-{
-    // 没有赋值，默认箭头在左
-    NSUInteger intger=1;
-    self.arrowPosition=intger;
-    return self.arrowPosition ? :YUFoldingSectionHeaderArrowPositionLeft;
-}
-
-
 #pragma mark UI
 -(void)tableViewUI{
+    
     UIView *view1 = [[UIView alloc]init];
     view1.backgroundColor = GetColor(201, 201, 201, 1);
     [infonTableview addSubview:view1];
@@ -1158,8 +981,6 @@
         make.height.mas_equalTo(50);
     }];
     
-    
-    
     _noEdit= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _noEdit.dataSource=self;
     _noEdit.delegate =self;
@@ -1172,28 +993,230 @@
     }];
     [_noEdit reloadData];
     
-    
-     [infonTableview reloadData];
+    [infonTableview reloadData];
     
 }
-
+#pragma mark - 网络请求
+-(void)loadData{
+    NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserBasicInfo.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"id":_uresID};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            _model = [[EditModel alloc]init];
+            _uuidary = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in responseObject[@"list2"]) {
+            NSMutableArray *array2=[NSMutableArray array];
+                NSMutableArray *zwlbary = [NSMutableArray array];//职位类别
+                NSMutableArray *zwlbnumary = [NSMutableArray array];//职位类别id
+                NSMutableArray *zwary = [NSMutableArray array];//职位
+                NSMutableArray *zwnumary = [NSMutableArray array];//职位id
+                NSMutableArray *bmnumary = [NSMutableArray array];//部门id
+                NSMutableArray *bmary = [NSMutableArray array];//部门
+                
+            [array2 addObject:@"职位"];
+            [_bjbtnname addObject:@"编辑"];
+                UIButton *zwbtn = [[UIButton alloc]init];
+               [_ZWbtnAry addObject:zwbtn];
+                UIView *view1 = [[UIButton alloc]init];
+                [_viweAry addObject:view1];
+                UIButton *zwlb = [[UIButton alloc]init];
+                [_ZWLBary addObject:zwlb];
+                UIButton *bmbtn = [[UIButton alloc]init];
+                [_BMbtnAry addObject:bmbtn];
+                [_uuidary addObject:_model.uuid];
+            [_model setValuesForKeysWithDictionary:[NSDictionary changeType:dic]];
+            NSString *isper = [[NSString alloc]initWithFormat:@"%@",_model.isPermission];
+            NSString *string = [[NSString alloc] initWithFormat:@"%@",_model.roleId];
+                if ([isper isEqualToString:@"1"]) {//有权限
+                    if ([string isEqualToString:@"2"]||[string isEqualToString:@"5"]||[string isEqualToString:@"3"]||[string isEqualToString:@"4"]||[string isEqualToString:@"14"]||[string isEqualToString:@"16"]||[string isEqualToString:@"17"]) {
+                        [array2 addObject:@"所属部门"];
+                    }else{
+                        [array2 addObject:@"管理部门"];
+                    }
+                    if ([_model.LevelName isEqualToString:@""]) {//职位类别
+                        [zwlbary addObject:@"未分配"];//职位类别
+                        [zwlbnumary addObject:@"0"];//职位类别id
+                        [zwary addObject:_model.NewName];//职位
+                        [zwnumary addObject:_model.roleId];//职位id
+                        [_ZWnameAry addObject:zwary];
+                        [_ZWidAry addObject:zwnumary];
+                        [_ZWLBnameAry addObject:zwlbary];
+                        [_ZWLBidAry addObject:zwlbnumary];
+                        [_oldJBID addObject:zwlbnumary];//职位类别id---
+                        [_oldZWID addObject:_model.roleId];//职位id---
+                    }else{
+                        [zwary addObject:_model.NewName];//职位
+                        [zwnumary addObject:_model.roleId];//职位id
+                        
+                        [_ZWnameAry addObject:zwary];
+                        [_ZWidAry addObject:zwnumary];
+                        
+                        [_ZWLBnameAry addObject:zwlbary];
+                        [_ZWLBidAry addObject:zwlbnumary];
+    
+                        [_oldJBID addObject:_model.levelID];//职位类别id---
+                        [_oldZWID addObject:_model.roleId];//职位id---
+                    }
+                    if ([_model.departmentName isEqualToString:@""]) {//部门
+                        _model.departmentName=@"未分配";
+                        [bmary addObject:_model.departmentName];
+                        [_BMnameAry addObject:bmary];//部门
+                        [bmnumary addObject:@"0"];
+                        [_BMidAry addObject:bmnumary];//部门id
+                        
+                        [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
+                        
+                        [_oldBMID addObject:bmnumary];//部门id-----
+                    }else if([_model.departmentName containsString:@","]){
+                        NSArray* array = [_model.departmentName componentsSeparatedByString:@","];
+                        NSArray* numarray = [_model.departmentID componentsSeparatedByString:@","];
+                        [_BMnameAry addObject:array];//部门
+                        [_BMidAry addObject:numarray];//部门id
+                        
+                        [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
+                        
+                        [_oldBMID addObject:bmnumary];//部门id-----
+                    }else{
+                        [bmary addObject:_model.departmentName];
+                        [_BMnameAry addObject:bmary];//部门
+                        [bmnumary addObject:_model.departmentID];
+                        [_BMidAry addObject:bmnumary];//部门id
+                        
+                        [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
+                        
+                        [_oldBMID addObject:bmnumary];//部门id-----
+                    }
+                     [_codeAry addObject:array2];
+                }else{//没权限修改职位
+            
+                }
+            }
+            [infonTableview reloadData];
+            [_noEdit reloadData];
+            NSLog(@"标签:%@\n 职位:%@\n 部门:%@\n职位类别id:%@",_codeAry,_ZWnameAry,_BMnameAry,_ZWLBidAry);
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有职位" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请重新登录" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if ([tableView isEqual:infonTableview]) {
+        UIView *headV = [[UIView alloc] initWithFrame:CGRectMake(0, 0,Scree_width, 30)];
+        headV.backgroundColor = GetColor(238, 238, 238, 1);
+        _bjbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _bjbtn.frame =CGRectMake(Scree_width-60,0,50,30);//0 129 238
+        
+        [_bjbtn setTitle:_bjbtnname[section] forState:UIControlStateNormal];
+        
+        
+        [_bjbtn addTarget:self action:@selector(button1BackGroundNormal:) forControlEvents:UIControlEventTouchUpInside];
+        NSString *bjname = @"完成";
+        NSString *scbjname = @"上传";
+        BOOL ifsc = [_bjbtnname containsObject:scbjname];
+        BOOL yesor = [_bjbtnname containsObject: bjname];
+        if (yesor == 1) {
+            if ([_bjbtn.titleLabel.text isEqualToString:@"完成"]) {
+                [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
+                _bjbtn.enabled = YES;
+            }else{
+                [_bjbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                _bjbtn.enabled = NO;
+            }
+        }else{
+            if (ifsc ==1) {
+                if([_bjbtn.titleLabel.text isEqualToString:@"上传"]){
+                    [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
+                    _bjbtn.enabled = YES;
+                }else{
+                    [_bjbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                    _bjbtn.enabled = NO;
+                }
+               
+            }else{
+              [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
+            }
+           
+        }
+        
+        
+        
+        
+        
+        _bjbtn.font = [UIFont boldSystemFontOfSize:kWidth*30];
+        _bjbtn.tag = section;
+        [headV addSubview:_bjbtn];
+         NSString *sttt = [NSString stringWithFormat:@"%ld",(long)_bjbtn.tag];
+        if (_bjBtnAry.count == _ZWnameAry.count) {
+            for (int y = 0; y<_bjBtnAry.count; y++) {
+                NSString *bjtag =_bjBtnAry[y];
+                if ([bjtag isEqualToString:sttt]) {
+                    [_bjBtnAry replaceObjectAtIndex:y withObject:sttt];
+                    [_bjbuttonAry replaceObjectAtIndex:y withObject:_bjbtn];
+                }
+            }
+        }else{
+            [_bjBtnAry addObject:sttt];
+            [_bjbuttonAry addObject:_bjbtn];
+        }
+        
+        return headV;
+        
+    }else{
+        if (_twocodeAry.count>0) {
+            YUFoldingSectionHeader *sectionHeaderView = [[YUFoldingSectionHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,30)  withTag:section];
+            [sectionHeaderView setupWithBackgroundColor:GetColor(238, 238, 238, 1)
+                                            titleString:[NSString stringWithFormat:@"其他职位(所在其他部门)"]
+                                             titleColor:[UIColor lightGrayColor]
+                                              titleFont:[UIFont systemFontOfSize:13]
+                                      descriptionString:[NSString string]
+                                       descriptionColor:[UIColor whiteColor]
+                                        descriptionFont:[UIFont systemFontOfSize:13]
+                                             arrowImage:[UIImage imageNamed:@"jiantou_03"]
+                                          arrowPosition:[self perferedArrowPosition]
+                                           sectionState:((NSNumber *)self.statusArray[section]).integerValue];
+            
+            sectionHeaderView.tapDelegate = self;
+            
+            return sectionHeaderView;
+        }
+        return nil;
+    }
+    
+}
+-(YUFoldingSectionHeaderArrowPosition )perferedArrowPosition
+{
+    // 没有赋值，默认箭头在左
+    NSUInteger intger=1;
+    self.arrowPosition=intger;
+    return self.arrowPosition ? :YUFoldingSectionHeaderArrowPositionLeft;
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     if([tableView isEqual:infonTableview]){
-        return _ZW.count;
+        return _ZWnameAry.count;
     }else{
-     
         return 1;
     }
-   
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:infonTableview]) {
-        if ([_gxbmAry[section]count] == 0) {
+        if ([_BMnameAry[section]count] == 0) {
             return [_codeAry[section]count];
         }else{
-            return [_codeAry[section]count]+[_gxbmAry[section]count];
+            return [_codeAry[section]count]+[_BMnameAry[section]count];
         }
         
     }else{
@@ -1222,13 +1245,13 @@
     if ([tableView isEqual:infonTableview]) {
         return 0.001;
     }
-     return 0.001;//不能为0，否则为默认高度
+    return 0.001;//不能为0，否则为默认高度
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:infonTableview]) {
-    return 40.0;
-   
+        return 40.0;
+        
     }else{
         id obj = _noEditAry[indexPath.row];
         if([obj isKindOfClass:[NSString class]]){
@@ -1239,22 +1262,6 @@
     }
     return 40.0;
 }
-
--(void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
--(void)buttonLiftItem{
-
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
     if ([infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -1264,102 +1271,10 @@
     if ([infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
         [infonTableview setLayoutMargins:UIEdgeInsetsZero];
     }
-    
 }
-#pragma mark - 网络请求
--(void)loadData{
-    NSString *uStr =[NSString stringWithFormat:@"%@user/queryUserBasicInfo.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"id":_uresID};
-    //[ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            _model = [[EditModel alloc]init];
-            _uuidary = [[NSMutableArray alloc]init];
-            _bjbtnname = [[NSMutableArray alloc]init];
-            _useridAry = [[NSMutableArray alloc]init];
-            for (NSDictionary *dic in responseObject[@"list2"]) {
-                NSMutableArray *array2=[NSMutableArray array];
-               
-                NSMutableArray *zwlbary = [NSMutableArray array];//职位类别
-                NSMutableArray *zwlbnumary = [NSMutableArray array];//职位类别id
-                NSMutableArray *zwary = [NSMutableArray array];//职位
-                NSMutableArray *zwnumary = [NSMutableArray array];//职位id
-                NSMutableArray *bmnumary = [NSMutableArray array];//部门id
-                NSMutableArray *bmary = [NSMutableArray array];//部门
-                [_model setValuesForKeysWithDictionary:[NSDictionary changeType:dic]];
-                
-                NSString *string = [[NSString alloc] initWithFormat:@"%@",_model.roleId];
-                NSString *isper = [[NSString alloc]initWithFormat:@"%@",_model.isPermission];
-                [array2 addObject:@"职位"];
-                [_uuidary addObject:_model.uuid];
-                [_useridAry addObject:_model.usersid];
-                
-                NSArray *aryt = [[NSArray alloc]init];
-                aryt = @[@"编辑"];
-                [_bjbtnname addObject:@"编辑"];
-            if ([isper isEqualToString:@"1"]) {//有权限
-                if ([string isEqualToString:@"2"]||[string isEqualToString:@"5"]||[string isEqualToString:@"3"]||[string isEqualToString:@"4"]||[string isEqualToString:@"14"]||[string isEqualToString:@"16"]||[string isEqualToString:@"17"]) {
-                    [array2 addObject:@"所属部门"];
-                }else{
-                    [array2 addObject:@"管理部门"];
-                }
-                if ([_model.LevelName isEqualToString:@""]) {
-                    [zwlbary addObject:@"未分配"];//职位类别
-                    [zwlbnumary addObject:@"0"];//职位类别id
-                    
-                    [zwary addObject:_model.NewName];//职位
-                    [zwnumary addObject:_model.roleId];//职位id
-                    
-                    [_ZW addObject:zwary];
-                    [_Numm addObject:zwnumary];
-                    [_ZWLB addObject:zwlbary];//职位类别
-                    [_lbNum addObject:zwlbnumary];//职位类别id
-                    
-                }else{
-                    [zwary addObject:_model.NewName];//职位
-                    [zwnumary addObject:_model.roleId];//职位id
-                    
-                    [_ZW addObject:zwary];
-                    [_Numm addObject:zwnumary];
-                    
-                    [_ZWLB addObject:_model.LevelName];//职位类别
-                    [_lbNum addObject:_model.levelID];//职位类别id
-                    //82d1a9c1be2341a3984aa6e2e1bd565
-                    
-                }
-                if ([_model.departmentName isEqualToString:@""]) {
-                    _model.departmentName=@"未分配";
-                    [bmary addObject:_model.departmentName];
-                    [_gxbmAry addObject:bmary];//部门
-                    [bmnumary addObject:@"0"];
-                    [_gxbmidAry addObject:bmnumary];//部门id
-                }else if([_model.departmentName containsString:@","]){
-                    NSArray* array = [_model.departmentName componentsSeparatedByString:@","];
-                    NSArray* numarray = [_model.departmentID componentsSeparatedByString:@","];
-                    [_gxbmAry addObject:array];//部门
-                    [_gxbmidAry addObject:numarray];//部门id
-                }else{
-                    [bmary addObject:_model.departmentName];
-                    [_gxbmAry addObject:bmary];//部门
-                    [bmnumary addObject:_model.departmentID];
-                    [_gxbmidAry addObject:bmnumary];//部门id
-                }
-                  [_codeAry addObject:array2];
-                
-            }
-                
-            }
-            
-        }
-        [infonTableview reloadData];
-        [_noEdit reloadData];
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
-}
+
+
+#pragma mark -  不可编辑列表
 -(NSMutableArray *)statusArray
 {
     if (!_statusArray) {
@@ -1401,14 +1316,18 @@
         }
     }
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
+-(void)addtableViewCellZWUI:(NSUInteger )rroow secct:(NSUInteger )secct{
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rroow inSection:secct];
+    [indexPaths addObject: indexPath];
+    [infonTableview beginUpdates];
+    [infonTableview insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationLeft];
+    [infonTableview endUpdates];
+}
+-(void)dimissTabelCellZWUI:(NSUInteger )rroow secct:(NSUInteger )secct{
+    NSArray *_tempIndexPathArr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:rroow inSection:secct]];
+    [infonTableview beginUpdates];
+    [infonTableview deleteRowsAtIndexPaths:_tempIndexPathArr withRowAnimation:UITableViewRowAnimationFade];
+    [infonTableview endUpdates];
+}
 @end
