@@ -56,7 +56,7 @@
 -(void)tijiaoClick{
     if (_passtStr==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"密码不能为空" andInterval:1.0f];
-    }else if(_passtStr.length<6){
+    }else if(_passtStr.length>5){
         NSString *uStr =[NSString stringWithFormat:@"%@user/updatepass.action",KURLHeader];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -64,6 +64,11 @@
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                     [self.navigationController popViewControllerAnimated:YES];
+                };
+                [alertView showMKPAlertView];
             } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {

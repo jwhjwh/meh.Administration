@@ -75,7 +75,8 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
-    vc.stringName = self.arrayTitle[indexPath.row];
+    vc.stringName = cell.labelContent.attributedText;
+    vc.tableID = self.tableId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

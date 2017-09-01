@@ -93,6 +93,8 @@
     }else
     {
         ViewControllerAllTable *vc = [[ViewControllerAllTable alloc]init];
+        vc.departmentID = self.departmanetID;
+        vc.num = self.num;
         [self.navigationController pushViewController:vc animated:YES];
     }
     

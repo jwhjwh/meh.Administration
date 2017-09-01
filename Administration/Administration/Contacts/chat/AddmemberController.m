@@ -292,7 +292,7 @@
             cell.isSelected = YES;
            
         }
-    [self.collectView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+  //  [self.collectView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     if (self.deleteArrarys.count>6) {
         self.collectView.frame = CGRectMake(0, 64, 245, 40);
     }
@@ -308,6 +308,7 @@
         [self.buttonSure setTitle:@"确定" forState:UIControlStateNormal];
     }
     [self.ZJLXTable reloadData];
+    [self.collectView reloadData];
     
 }
 
@@ -518,24 +519,24 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = 0;
-    NSLog(@"%ld",(long)indexPath.row);
-    NSDictionary *dictC = self.deleteArrarys[indexPath.row];
-    [self.deleteArrarys removeObject:dictC];
+    NSMutableDictionary *dictC = [self.deleteArrarys[indexPath.row]mutableCopy];
+    [self.deleteArrarys removeObject:self.deleteArrarys[indexPath.row]];
     for (int i=0; i<self.dataArray.count; i++) {
-        NSDictionary *myD = self.dataArray[i];
+        NSMutableDictionary *myD = [self.dataArray[i]mutableCopy];
         if ([[NSString stringWithFormat:@"%@",dictC[@"userid"]] isEqualToString:[NSString stringWithFormat:@"%@",myD[@"userid"]]]) {
             row=i;
-            [myD setValue:@"2" forKey:@"isSelect"];
-            [self.dataArray replaceObjectAtIndex:row withObject:myD];
+            [dictC setValue:@"2" forKey:@"isSelect"];
+            [self.dataArray replaceObjectAtIndex:row withObject:dictC];
+            break;
         }
     }
     
     [self.collectView reloadData];
     
-    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:0];
-    SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexpath];
-    cell.isSelected = NO;
-    cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
+//    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:0];
+//    SelectCell *cell = [self.ZJLXTable cellForRowAtIndexPath:indexpath];
+  //  cell.isSelected = NO;
+//    cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
     [self.ZJLXTable reloadData];
     
     if (self.deleteArrarys.count!=0) {
@@ -681,7 +682,6 @@
     else
     {
     dic1 = [self.dataArray[indexPath.row] mutableCopy];
-    cell.isSelected = !cell.isSelected;
     
     if ([dic1[@"isSelect"]isEqualToString:@"1"]) {
         cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
@@ -695,7 +695,7 @@
         int row = 0;
         for (int i=0;i<self.deleteArrarys.count;i++) {
             NSDictionary *dict = self.deleteArrarys[i];
-            if ([dic1[@"indexP"]isEqualToString:dict[@"indexPath"]]) {
+            if ([dic1[@"userid"]isEqualToString:dict[@"userid"]]) {
                 row=i;
                 
             }

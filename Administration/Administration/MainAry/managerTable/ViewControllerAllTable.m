@@ -84,6 +84,8 @@
 -(void)gotoNext
 {
     ViewControllerSelectTable *vc = [[ViewControllerSelectTable alloc]init];
+    vc.departmentID = self.departmentID;
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)getData
@@ -112,7 +114,7 @@
         if ([stringCode isEqualToString:@"0000"]) {
             hud.labelText = @"加载成功";
             [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
-            
+            [arrayData addObject:[responseObject valueForKey:@"list"]];
            // label.text = [];
             return ;
         }else
@@ -186,6 +188,14 @@
 
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [arrayData removeAllObjects];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

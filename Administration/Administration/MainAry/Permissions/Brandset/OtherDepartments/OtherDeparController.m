@@ -23,6 +23,7 @@
 @property (nonatomic,strong)NSString *str;
 @property(nonatomic,strong)NSMutableArray *ArrID;
 
+@property(nonatomic,strong)NSMutableArray *groupNumber;
 @end
 
 @implementation OtherDeparController
@@ -167,12 +168,14 @@
             self.dataArray = [NSMutableArray array];
             _daArr = [NSMutableArray array];
             _ArrID = [NSMutableArray array];
+            _groupNumber  = [NSMutableArray array];
             NSArray *array=[responseObject valueForKey:@"yList"];
             for (NSDictionary *dic in array) {
                 
                 NSArray *barndArr = [dic valueForKey:@"brandList"];
                 [_daArr addObject:[dic valueForKey:@"departmentName"]];
                 [_ArrID addObject:[dic valueForKey:@"id"]];
+                [_groupNumber addObject:[dic valueForKey:@"groupNumber"]];
                 NSMutableArray *logoArr=[NSMutableArray array];
                 
                 for (NSDictionary *dict in barndArr) {
@@ -242,18 +245,19 @@
     [self.navigationController pushViewController:addOtherVC animated:YES];
 }
 -(void)delDepartStr:(NSString*)string IndexPath:( NSIndexPath *)IndexPath{
-    
+    //GroupNumber 群号码
     NSString *urlStr =[NSString stringWithFormat:@"%@user/delDepartment.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_numstr,@"id":string};
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_numstr,@"id":string,@"GroupNumber":_groupNumber[IndexPath.row]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];
             [_dataArray removeObjectAtIndex:IndexPath.row];
             [_daArr removeObjectAtIndex:IndexPath.row];
             [_ArrID removeObjectAtIndex:IndexPath.row];
+            [_groupNumber removeObjectAtIndex:IndexPath.row];
             [infonTableview reloadData];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];

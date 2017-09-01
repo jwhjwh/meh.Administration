@@ -18,6 +18,8 @@
     NSIndexPath *indexP;
     NSMutableArray *arrayContent;
     
+    NSString *comment;//批注的内容
+    NSString *location;//报表的内容
 }
 @end
 
@@ -103,7 +105,18 @@
     [formatter setDateFormat:@"YYYY-MM-dd hh:mm"];
     NSString *DateTime = [formatter stringFromDate:date];
     cell.labelTime.text = DateTime;
+    
+    if (comment.length==0) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写批注内容" andInterval:1];
+        return;
+    }
+    if (location.length==0) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写批注对象" andInterval:1];
+        return;
+    }
+    
     if ([cell.buttonComp.titleLabel.text isEqualToString:@"完成"]) {
+        [self submitPostil];
         [cell.buttonComp setTitle:@"修改" forState:UIControlStateNormal];
         cell.textView1.userInteractionEnabled = NO;
         cell.textView2.userInteractionEnabled = NO;
@@ -156,6 +169,94 @@
     [tableView1 reloadSections:set withRowAnimation:UITableViewRowAnimationFade];
 }
 
+-(void)submitPostil
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@manager/addReportPostil",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"DepartmentID":self.departmentID,
+                           @"field":self.theKey,
+                           @"comment":comment,
+                           @"location":location,
+                           @"reportId":self.tableID,
+                           @"remark":self.remark};
+    
+    
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return ;
+        }
+        if ([code isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
+            return ;
+        }
+        if ([code isEqualToString:@"0003"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限" andInterval:1];
+            return ;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
+-(void)getData
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@manager/queryReportPostilInfo",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"DepartmentID":self.departmentID,
+                           @"field":self.theKey,
+                           @"reportId":self.tableID,
+                           @"remark":self.remark};
+    
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            return;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return;
+        }
+        if ([code isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
+            return;
+        }
+        if ([code isEqualToString:@"0003"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限" andInterval:1];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    
+}
 #pragma -mark alertView
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -182,6 +283,7 @@
     if (cell==nil) {
         cell = [[CellPostil alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    cell.contentView.backgroundColor = GetColor(255, 252, 241, 1);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(lpGR:)];
     // cell.buttonComp.hidden = YES;
@@ -244,7 +346,7 @@
         view.frame = CGRectMake(0, 0,tableView1.bounds.size.width, 70);
     }
     
-    view.backgroundColor = [UIColor whiteColor];
+    view.backgroundColor = GetColor(255, 252, 241, 1);
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(8, 10, 100, 30)];
     label.text = dict[@"position"];
@@ -295,6 +397,27 @@
     if ( cell.textView1.text.length!=0||cell.textView2.text.length!=0) {
         cell.buttonComp.hidden = NO;
         [cell.buttonComp setTitle:@"完成" forState:UIControlStateNormal];
+        if ([textView isEqual:cell.textView1]) {
+            if (cell.textView1.text.length!=0) {
+                location = cell.textView1.text;
+            }else
+            {
+               location = @"";
+            }
+            
+        }else if ([textView isEqual:cell.textView2]) {
+            if (cell.textView2.text.length!=0) {
+                comment = cell.textView2.text;
+            }else
+            {
+                comment = @"";
+            }
+            
+        }else
+        {
+            location = @"";
+            comment = @"";
+        }
     }
     else
     {
@@ -312,6 +435,8 @@
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    
+    
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
@@ -320,33 +445,46 @@
 }
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"批注";
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(-1, 64, Scree_width+1, 44)];
-    view.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    view.layer.borderWidth = 1.0f;
-    [self.view addSubview:view];
+//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(-1, 64, Scree_width+1, 44)];
+//    view.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    view.layer.borderWidth = 1.0f;
+//    [self.view addSubview:view];
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 40)];
-    label.text  = [NSString stringWithFormat:@"   %@",self.stringName];
+    label.attributedText  = self.stringName;
+    label.numberOfLines = 0;
     label.backgroundColor = GetColor(255, 249, 230, 1);
-    [view addSubview:label];
+    CGSize size = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
     
-    NSDictionary *dictTitle = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(submit)];
-    [rightitem setTitleTextAttributes:dictTitle forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    label.frame = CGRectMake(label.frame.origin.x, 0, label.frame.size.width, size.height);
+    [self.view addSubview:label];
+
+    
+//    NSDictionary *dictTitle = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+//    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:(UIBarButtonItemStyleDone) target:self action:@selector(submit)];
+//    [rightitem setTitleTextAttributes:dictTitle forState:UIControlStateNormal];
+//    self.navigationItem.rightBarButtonItem = rightitem;
     
     inter=1;
-    tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 108,Scree_width , Scree_height) style:UITableViewStyleGrouped];
+    tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,Scree_width , Scree_height) style:UITableViewStyleGrouped];
     [tableView1 registerClass:[CellPostil class] forCellReuseIdentifier:@"cell"];
     tableView1.delegate = self;
     tableView1.dataSource = self;
     tableView1.backgroundColor = GetColor(255, 252, 241, 1);
     tableView1.rowHeight = UITableViewAutomaticDimension;
+    tableView1.tableHeaderView = label;
     tableView1.estimatedRowHeight = 80;
     [self.view addSubview:tableView1];
     

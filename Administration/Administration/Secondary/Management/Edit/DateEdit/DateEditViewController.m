@@ -44,7 +44,7 @@
     self.title=@"编辑资料";
     [self InterTableUI];
     self.view.backgroundColor = [UIColor whiteColor];
-    _arr=@[@[@"头像"],@[@"出生日期",@"年龄",@"身份证号",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
+    _arr=@[@[@"头像"],@[@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
     // Do any additional setup after loading the view.
 }
 
@@ -71,7 +71,14 @@
     
 }
 -(void)buttonLiftItem{
-    [self.navigationController popViewControllerAnimated:YES];
+    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"退出后，已编辑的内容将会消失确定退出吗？？" sureBtn:@"确认" cancleBtn:@"取消"];
+    alertView.resultIndex = ^(NSInteger index){
+        if (index == 2) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    };
+    [alertView showMKPAlertView];
+    
 }
 
 -(void)masgegeClick{
@@ -80,11 +87,16 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSLog(@"%@%@%@%@",_DayLabel.text,_Age,_IdNo,_AddLabel.text);
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Birthday":_DayLabel.text,@"Age":_Age,@"IdNo":_IdNo,@"Address":_AddLabel.text,@"Wcode":_Wcode,@"Qcode":_Qcode,@"Interests":_Interests,@"SDASD":_SDASD,@"phone":self.phone};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Birthday":_DayLabel.text,@"Age":_Age,@"Address":_AddLabel.text,@"Wcode":_Wcode,@"Qcode":_Qcode,@"Interests":_Interests,@"SDASD":_SDASD,@"phone":self.phone};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
-            [self.navigationController popViewControllerAnimated:YES];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                if (index == 2) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            };
+            [alertView showMKPAlertView];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]){
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
         }else{
@@ -199,18 +211,6 @@
             [ageField addTarget:self action:@selector(ageFieldText:) forControlEvents:UIControlEventEditingChanged];
              [cell addSubview:ageField];
         }else if (indexPath.row == 2){
-            UITextField *idNoField =[[UITextField alloc]initWithFrame:labelRect2];
-            idNoField.backgroundColor=[UIColor whiteColor];
-            idNoField.font = [UIFont boldSystemFontOfSize:13.0f];
-            idNoField.clearButtonMode = UITextFieldViewModeWhileEditing;
-            idNoField.adjustsFontSizeToFitWidth = YES;
-            idNoField.placeholder =@"必填";
-             placeholder(idNoField);
-            idNoField.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
-            _IdNo = idNoField.text;
-            [idNoField addTarget:self action:@selector(idNoFieldText:) forControlEvents:UIControlEventEditingChanged];
-            [cell addSubview:idNoField];
-        }else if (indexPath.row == 3){
             _AddLabel = [[UILabel alloc]initWithFrame:labelRect2];
             _AddLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
             _AddLabel.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -236,7 +236,7 @@
                 break;
             case 2:
                 self.Qcode = codeField.text;
-                NSLog(@"IdNo:%@,%@",self.IdNo,codeField.text);
+                NSLog(@"Qcode:%@,%@",self.Qcode,codeField.text);
                 break;
             default:
                 break;
@@ -288,7 +288,7 @@
             self.PWpickerView.delegate = self;
             [self.PWpickerView show];
             
-        }else if (indexPath.row == 3){
+        }else if (indexPath.row == 2){
 
             CityChooseViewController *CityVC = [[CityChooseViewController alloc]init];
             [CityVC returnText:^(NSString *showText) {
@@ -309,9 +309,6 @@
 - (void)ageFieldText:(UITextField *)textField{
     self.Age = textField.text;
 }
-- (void)idNoFieldText:(UITextField *)textField{
-    self.IdNo = textField.text;
-}
 - (void)textFieldWithText:(UITextField *)textField
 {
     switch (textField.tag) {
@@ -325,7 +322,7 @@
             break;
         case 2:
             self.Qcode = textField.text;
-            NSLog(@"IdNo:%@,%@",self.IdNo,textField.text);
+            NSLog(@"Qcode:%@,%@",self.Qcode,textField.text);
             break;
         default:
             break;

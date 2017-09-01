@@ -66,7 +66,7 @@
         if ([stringCode isEqualToString:@"0000"]) {
             hud.labelText = @"加载成功";
             [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
-            self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
+            [self.arrayData addObject: [[responseObject valueForKey:@"list"]mutableCopy]];
             [self.tableView reloadData];
             // label.text = [];
             return ;

@@ -147,7 +147,7 @@
     if (_nameBarn==nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写名称" andInterval:1.0];
     }else{
-        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此部门" sureBtn:@"确认" cancleBtn:@"取消"];
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此部门" sureBtn:@"确定" cancleBtn:@"取消"];
         NSMutableArray *Emiarr=[NSMutableArray array];
         NSMutableDictionary *roladd = [[NSMutableDictionary alloc]init];
         if (_EmisAry.count>=3) {
@@ -205,15 +205,20 @@
                 [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
-                        _nameBarn = nil;
-                        _textField.text=@"";
-                        _textField.placeholder = @"请输入部门名称";
-                        placeholder(_textField);
-                        _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                        _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                        _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
-                        [_collectionView reloadData];
-                        self.Str();
+//                        _nameBarn = nil;
+//                        _textField.text=@"";
+//                        _textField.placeholder = @"请输入部门名称";
+//                        placeholder(_textField);
+//                        _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+//                        _ManaAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+//                        _EmisAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
+//                        [_collectionView reloadData];
+//                        self.Str();
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"添加成功" sureBtn:@"确认" cancleBtn:nil];
+                        alertView.resultIndex = ^(NSInteger index){
+                            [self.navigationController popViewControllerAnimated:YES];
+                        };
+                        [alertView showMKPAlertView];
                     }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                         alertView.resultIndex = ^(NSInteger index){

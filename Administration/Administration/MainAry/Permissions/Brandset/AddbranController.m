@@ -49,12 +49,14 @@
 //名称
 @property (nonatomic,retain) NSString *nameBarn;
 
+//uuid
+@property (nonatomic,retain) NSMutableArray *frinAry;
 
 @property (nonatomic,retain) UIView *fotView;
 //品牌字符串
 @property (nonatomic,retain) NSString *BrandID;
 //人员字符串
-@property (nonatomic,retain) NSString *employees;
+@property (nonatomic,retain) NSMutableArray *employees;
 //人员字符串
 @property (nonatomic,retain) NSString *mid;
 @end
@@ -104,6 +106,8 @@
     isSele=YES;
     ismay=YES;
     isEay=YES;
+    
+    
 }
 -(void)InterTableUI
 {
@@ -160,10 +164,13 @@
     }else if (_branarr.count<3){
     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择负责品牌" andInterval:1.0];
     }else{
+        NSString *empStr = [[NSString alloc]init];
+        _employees = [[NSMutableArray alloc]init];
         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要添加此部门" sureBtn:@"确认" cancleBtn:@"取消"];
         NSMutableArray *Barr=[NSMutableArray array];
+       
+        _frinAry = [[NSMutableArray alloc]init];
         if (_branarr.count>=3) {
-            
        for (branModel *model in [_branarr subarrayWithRange:NSMakeRange(0,_branarr.count-2)]) {
                 [Barr addObject:[NSString stringWithFormat:@"%@",model.ID]];
             }
@@ -171,22 +178,33 @@
         }else{
             _BrandID=@"";
         }
-        NSMutableArray *Emiarr=[NSMutableArray array];
+        
+        
         if (_EmisAry.count>=3) {
+            
             for (DirtmsnaModel *model in [_EmisAry subarrayWithRange:NSMakeRange(0,_EmisAry.count-2)]) {
-                [Emiarr addObject:[NSString stringWithFormat:@"%@",model.usersid]];
+                NSMutableDictionary *emdict = [[NSMutableDictionary alloc]init];
+                [emdict setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
+                [emdict setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"roleId"];
+                
+                [_frinAry addObject:[NSString stringWithFormat:@"%@",model.uuid]];
+                //[_employees addObject:emdict];
+                [_employees insertObject:emdict atIndex:0];
+            
             }
-            _employees = [NSString stringWithFormat:@"%@",Emiarr];
-        }else{
-            _employees =@"";
+            //_employees = [NSString stringWithFormat:@"%@",Emiarr];
+            
         }
+        
+        
+        
         NSMutableArray *palarr=[NSMutableArray array];
         NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
         if ( _paleAry.count>=3) {
             for (DirtmsnaModel *model in [_paleAry subarrayWithRange:NSMakeRange(0,_paleAry.count-2)]) {
                 [dic setObject:[NSString stringWithFormat:@"%@", model.usersid]  forKey:@"usersid"];
                 [dic setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-              
+                [_frinAry addObject:[NSString stringWithFormat:@"%@",model.uuid]];
                
             }
               [palarr addObject:dic];
@@ -196,7 +214,7 @@
             for (DirtmsnaModel *model in [_ManaAry subarrayWithRange:NSMakeRange(0,_ManaAry.count-2)]) {
                 [dict setObject:[NSString stringWithFormat:@"%@", model.usersid] forKey:@"usersid"];
                 [dict setObject:[NSString stringWithFormat:@"%@", model.roleId] forKey:@"RoleId"];
-               
+                [_frinAry addObject:[NSString stringWithFormat:@"%@",model.uuid]];
             }
              [palarr addObject:dict];
         }
@@ -207,15 +225,24 @@
         }else{
            _mid = @"";
         }
+        
+        if (_employees.count>0) {
+            NSError *error = nil;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_employees options:NSJSONWritingPrettyPrinted error:&error];
+            empStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        }else{
+            empStr = @"";
+        }
+        
         alertView.resultIndex = ^(NSInteger index){
             if (index == 2) {
-
+                NSString *string = [NSString stringWithFormat:@"(%@)",[_frinAry componentsJoinedByString:@","]];
                 NSString *urlStr =[NSString stringWithFormat:@"%@user/addDepartment.action",KURLHeader];
                 NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                 NSString *uuid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"uuid"]];
                 NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
                 NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"BrandID":_BrandID,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid};
+                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":@"1",@"BrandID":_BrandID,@"DepartmentName":_nameBarn,@"employees":empStr,@"mid":_mid,@"uuid":uuid,@"friend":string};
                 [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];

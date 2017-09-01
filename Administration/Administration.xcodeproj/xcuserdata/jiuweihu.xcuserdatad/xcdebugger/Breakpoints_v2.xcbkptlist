@@ -29,5 +29,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/Permissions/Brandset/AddbranController.m"
+            timestampString = "525670095.005741"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "-masgegeClick"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__33-[AddbranController masgegeClick]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiuweihu/Desktop/%E4%B9%9D%E5%B0%BE%E7%8B%90-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/Permissions/Brandset/AddbranController.m"
+                  timestampString = "525752067.094465"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "1347">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__33-[AddbranController masgegeClick]_block_invoke_2"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiuweihu/Desktop/%E4%B9%9D%E5%B0%BE%E7%8B%90-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/Permissions/Brandset/AddbranController.m"
+                  timestampString = "525752067.097154"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "247"
+                  endingLineNumber = "247"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -250,7 +250,7 @@
                       [ELNAlerTool showAlertMassgeWithController:self andMessage:@"品牌不能为空，请先添加在删除" andInterval:1.0];
                     }else{
                         branModel *model =  _branarr[indexPath.row];
-                        [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1 uuid:nil];
+                        [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1 uuid:nil roleid:nil];
                         __weak __typeof__(self) weakSelf = self;
                         weakSelf.Str=^(){
                             [_branarr removeObjectAtIndex:indexPath.row];
@@ -292,7 +292,7 @@
             }else{
                 if (isSele==NO) {
                 DirtmsnaModel *model =  _paleAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid roleid:model.roleId];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
@@ -335,7 +335,7 @@
             }else{
                 if (ismay==NO) {
                     DirtmsnaModel *model =  _ManaAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid roleid:model.roleId];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                     [_ManaAry removeObjectAtIndex:indexPath.row];
@@ -378,7 +378,7 @@
             }else{
                 if (isEay==NO) {
                     DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid roleid:model.roleId];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];
@@ -651,7 +651,7 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num uuid:(NSString *)uuid{
+-(void)getDataBrandString:(NSString *)Url NSString:(NSString*)string branid:(NSString*)branid num:(int)num uuid:(NSString *)uuid roleid:(NSString *)roleid{
      NSString *uStr =[NSString stringWithFormat:@"%@%@",KURLHeader,Url];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -660,7 +660,7 @@
     if (num==1) {
         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"BrandID":branid,};
     }else{
-         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid};
+         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid,@"RoleId":roleid};
     }
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -706,7 +706,7 @@
                     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"品牌不能为空，请先添加在删除" andInterval:1.0];
                 }else{
                     branModel *model =  _branarr[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1 uuid:nil];
+                    [self getDataBrandString:@"manager/delDepartmentBrand.action" NSString:@"删除失败"branid:model.ID num:1 uuid:nil roleid:nil];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_branarr removeObjectAtIndex:indexPath.row];
@@ -728,7 +728,7 @@
             
             if (isSele==NO) {
                 DirtmsnaModel *model =  _paleAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid roleid:model.roleId];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
@@ -748,7 +748,7 @@
         case 3:{
             if (ismay==NO) {
                 DirtmsnaModel *model =  _ManaAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid roleid:model.roleId];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_ManaAry removeObjectAtIndex:indexPath.row];
@@ -768,7 +768,7 @@
         case 4:{
             if (isEay==NO) {
                 DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid roleid:model.roleId];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];

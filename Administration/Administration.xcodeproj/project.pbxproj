@@ -324,8 +324,8 @@
 		1FC72E3A1F4BCE47000421EC /* ViewControllerStayCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E391F4BCE47000421EC /* ViewControllerStayCheck.m */; };
 		1FC72E3D1F4BD32A000421EC /* ViewControllerAllTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E3C1F4BD32A000421EC /* ViewControllerAllTable.m */; };
 		1FC72E401F4BE1DA000421EC /* ViewControllerSelectTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E3F1F4BE1DA000421EC /* ViewControllerSelectTable.m */; };
-		1FC72E851F4C2BDA000421EC /* ViewBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E841F4C2BDA000421EC /* ViewBack.m */; };
 		1FD215E11F4569940048719A /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD215E01F4569940048719A /* UIPlaceHolderTextView.m */; };
+		1FD320E71F57AE48004643A3 /* CellPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD320E61F57AE48004643A3 /* CellPerson.m */; };
 		1FD62BD31F43D673008871A7 /* ViewControllerPersonTableDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD21F43D673008871A7 /* ViewControllerPersonTableDetail.m */; };
 		1FD62BD61F43FA08008871A7 /* CellTabelDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD51F43FA08008871A7 /* CellTabelDetail.m */; };
 		1FD62BD91F442CF8008871A7 /* ViewControllerPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */; };
@@ -364,6 +364,7 @@
 		1FDD93151F42F4D5002E834B /* CellTbale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD93141F42F4D5002E834B /* CellTbale.m */; };
 		1FE15DAC1F1C55940063F187 /* TransferGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE15DAB1F1C55940063F187 /* TransferGroupViewController.m */; };
 		1FE1B6311F2F1178008B8A57 /* ModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1B6301F2F1178008B8A57 /* ModelArray.m */; };
+		1FE20D651F5659840097B976 /* BJZWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE20D641F5659840097B976 /* BJZWViewController.m */; };
 		1FE988DF1F4E6829001172C1 /* CellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988DE1F4E6829001172C1 /* CellInfo.m */; };
 		1FE988E21F4EC623001172C1 /* VCWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988E11F4EC623001172C1 /* VCWeekTable.m */; };
 		1FE988E51F4EC797001172C1 /* VCArtMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988E41F4EC797001172C1 /* VCArtMonthTable.m */; };
@@ -458,7 +459,6 @@
 		62578E7A1E6D5F5300D42603 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62578E791E6D5F5300D42603 /* CodeViewController.m */; };
 		625B1DC81F1DBEBC00C4287B /* 报表权限02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B1DC71F1DBEBC00C4287B /* 报表权限02.jpg */; };
 		625C91FF1E85150800D9011B /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 625C91FE1E85150800D9011B /* TrackingViewController.m */; };
-		6261C9141F4EA714007197F8 /* BJZWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6261C9131F4EA714007197F8 /* BJZWViewController.m */; };
 		626254061E728D99000B8F0F /* RectordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254051E728D99000B8F0F /* RectordViewController.m */; };
 		6262540A1E7293B7000B8F0F /* RectordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 626254081E7293B7000B8F0F /* RectordTableViewCell.m */; };
 		6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 626254091E7293B7000B8F0F /* RectordTableViewCell.xib */; };
@@ -1189,10 +1189,10 @@
 		1FC72E3C1F4BD32A000421EC /* ViewControllerAllTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerAllTable.m; sourceTree = "<group>"; };
 		1FC72E3E1F4BE1DA000421EC /* ViewControllerSelectTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerSelectTable.h; sourceTree = "<group>"; };
 		1FC72E3F1F4BE1DA000421EC /* ViewControllerSelectTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerSelectTable.m; sourceTree = "<group>"; };
-		1FC72E831F4C2BDA000421EC /* ViewBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewBack.h; sourceTree = "<group>"; };
-		1FC72E841F4C2BDA000421EC /* ViewBack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewBack.m; sourceTree = "<group>"; };
 		1FD215DF1F4569940048719A /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		1FD215E01F4569940048719A /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		1FD320E51F57AE48004643A3 /* CellPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPerson.h; sourceTree = "<group>"; };
+		1FD320E61F57AE48004643A3 /* CellPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellPerson.m; sourceTree = "<group>"; };
 		1FD62BD11F43D673008871A7 /* ViewControllerPersonTableDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerPersonTableDetail.h; sourceTree = "<group>"; };
 		1FD62BD21F43D673008871A7 /* ViewControllerPersonTableDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerPersonTableDetail.m; sourceTree = "<group>"; };
 		1FD62BD41F43FA08008871A7 /* CellTabelDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellTabelDetail.h; sourceTree = "<group>"; };
@@ -1252,6 +1252,7 @@
 		1FE15DAB1F1C55940063F187 /* TransferGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferGroupViewController.m; sourceTree = "<group>"; };
 		1FE1B62F1F2F1178008B8A57 /* ModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelArray.h; sourceTree = "<group>"; };
 		1FE1B6301F2F1178008B8A57 /* ModelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelArray.m; sourceTree = "<group>"; };
+		1FE20D641F5659840097B976 /* BJZWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJZWViewController.m; sourceTree = "<group>"; };
 		1FE988DD1F4E6829001172C1 /* CellInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellInfo.h; sourceTree = "<group>"; };
 		1FE988DE1F4E6829001172C1 /* CellInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellInfo.m; sourceTree = "<group>"; };
 		1FE988E01F4EC623001172C1 /* VCWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCWeekTable.h; sourceTree = "<group>"; };
@@ -1415,7 +1416,6 @@
 		625C91FD1E85150800D9011B /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
 		625C91FE1E85150800D9011B /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		6261C9121F4EA714007197F8 /* BJZWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJZWViewController.h; sourceTree = "<group>"; };
-		6261C9131F4EA714007197F8 /* BJZWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJZWViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		626254041E728D99000B8F0F /* RectordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordViewController.h; sourceTree = "<group>"; };
 		626254051E728D99000B8F0F /* RectordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectordViewController.m; sourceTree = "<group>"; };
 		626254071E7293B7000B8F0F /* RectordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectordTableViewCell.h; sourceTree = "<group>"; };
@@ -2714,7 +2714,7 @@
 				1F5B13331E6ABEA800B6D8DC /* dongjieViewController.h */,
 				1F5B13341E6ABEA800B6D8DC /* dongjieViewController.m */,
 				6261C9121F4EA714007197F8 /* BJZWViewController.h */,
-				6261C9131F4EA714007197F8 /* BJZWViewController.m */,
+				1FE20D641F5659840097B976 /* BJZWViewController.m */,
 			);
 			path = yuangongguan;
 			sourceTree = "<group>";
@@ -2848,10 +2848,10 @@
 				1FDB4AD31F4A89F000ED2731 /* CellPostil.m */,
 				1FDB4ADD1F4AC3D700ED2731 /* CollectionViewCellPosition.h */,
 				1FDB4ADE1F4AC3D700ED2731 /* CollectionViewCellPosition.m */,
-				1FC72E831F4C2BDA000421EC /* ViewBack.h */,
-				1FC72E841F4C2BDA000421EC /* ViewBack.m */,
 				1FE988DD1F4E6829001172C1 /* CellInfo.h */,
 				1FE988DE1F4E6829001172C1 /* CellInfo.m */,
+				1FD320E51F57AE48004643A3 /* CellPerson.h */,
+				1FD320E61F57AE48004643A3 /* CellPerson.m */,
 			);
 			path = cellTable;
 			sourceTree = "<group>";
@@ -4298,7 +4298,6 @@
 				1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */,
 				6252AA281E9CB13E00871377 /* MYPresentationController.m in Sources */,
 				620731241E5D1DA200BCF51C /* JinnLockTool.m in Sources */,
-				1FC72E851F4C2BDA000421EC /* ViewBack.m in Sources */,
 				1F6211AC1E8CFFAF00F50851 /* MJRefreshBackStateFooter.m in Sources */,
 				1F4FD9DF1EC1A187005AB739 /* PJSearchBar.m in Sources */,
 				1F6211E21E8CFFB000F50851 /* NSString+Valid.m in Sources */,
@@ -4315,11 +4314,7 @@
 				1FDB4AD41F4A89F000ED2731 /* CellPostil.m in Sources */,
 				62656C551E529BC10085A2BD /* IQKeyboardManager.m in Sources */,
 				1F6119EC1E665C620044641E /* PWAlertView.m in Sources */,
-
-				6261C9141F4EA714007197F8 /* BJZWViewController.m in Sources */,
-
 				1FE988E81F4ECAD0001172C1 /* VCInsideWeekTable.m in Sources */,
-
 				1FDD3C731E7398CE00743779 /* FillTableViewCell.m in Sources */,
 				1F6211A81E8CFFAF00F50851 /* MJRefreshAutoNormalFooter.m in Sources */,
 				1F803FE61E52F7CA005F53CE /* AFURLSessionManager.m in Sources */,
@@ -4340,6 +4335,7 @@
 				1F6AB7FC1E8B9C8A006CB015 /* PopView.m in Sources */,
 				62656B901E5295D70085A2BD /* MASConstraint.m in Sources */,
 				6218D0581E4E95FB00299989 /* ViewController.mm in Sources */,
+				1FD320E71F57AE48004643A3 /* CellPerson.m in Sources */,
 				1F6211C11E8CFFAF00F50851 /* EMSDWebImageDownloader.m in Sources */,
 				F736D1651E589245003A1A39 /* GongTableViewCell.m in Sources */,
 				1FE988DF1F4E6829001172C1 /* CellInfo.m in Sources */,
@@ -4480,6 +4476,7 @@
 				1F6211C21E8CFFAF00F50851 /* EMSDWebImageDownloaderOperation.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
+				1FE20D651F5659840097B976 /* BJZWViewController.m in Sources */,
 				6252AA291E9CB13E00871377 /* MYPresentedController.m in Sources */,
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				1F2E01AC1EBC67DC00D36C3B /* ItemCell.m in Sources */,
