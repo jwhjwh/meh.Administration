@@ -122,7 +122,7 @@
 }
 -(void)butItem{
     AddbranController *addbranVC=[[AddbranController alloc]init];
-    addbranVC.blockStr=^(){
+    addbranVC.String=^(NSString *str){
         self.str=@"1";
     };
     [self.navigationController pushViewController:addbranVC animated:YES];

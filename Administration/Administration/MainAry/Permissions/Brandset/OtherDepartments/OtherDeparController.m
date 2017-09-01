@@ -134,6 +134,7 @@
         //Action 2
         EditotherController * EditVC=[[EditotherController alloc]init];
         EditVC.nameStr = _daArr[indexPath.row];
+        
         EditVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];
         EditVC.String=^(NSString *str){
             self.str=@"1";
@@ -237,7 +238,7 @@
 }
 -(void)AddItem{
     AddotherController *addOtherVC =[[AddotherController alloc]init];
-    addOtherVC.Str=^(){
+    addOtherVC.String=^(NSString *str){
         self.str=@"1";
     };
     addOtherVC.departmentNum=self.numstr;

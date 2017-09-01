@@ -35,46 +35,62 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/Permissions/Brandset/AddbranController.m"
-            timestampString = "525670095.005741"
+            filePath = "Administration/MainAry/Permissions/Brandset/OtherDepartments/EditotherController.m"
+            timestampString = "525776095.707074"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
-            landmarkName = "-masgegeClick"
+            startingLineNumber = "569"
+            endingLineNumber = "569"
+            landmarkName = "-getDataBrandString:NSString:branid:num:uuid:"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__33-[AddbranController masgegeClick]_block_invoke"
+                  symbolName = "-[EditotherController getDataBrandString:NSString:branid:num:uuid:]"
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/%E4%B9%9D%E5%B0%BE%E7%8B%90-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/Permissions/Brandset/AddbranController.m"
-                  timestampString = "525752067.094465"
+                  urlString = "file:///Users/jiuweihu/Desktop/%E4%B9%9D%E5%B0%BE%E7%8B%90-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/Permissions/Brandset/OtherDepartments/EditotherController.m"
+                  timestampString = "525776401.923144"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "246"
-                  endingLineNumber = "246"
-                  offsetFromSymbolStart = "1347">
+                  startingLineNumber = "569"
+                  endingLineNumber = "569"
+                  offsetFromSymbolStart = "1920">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__33-[AddbranController masgegeClick]_block_invoke_2"
+                  symbolName = "__67-[EditotherController getDataBrandString:NSString:branid:num:uuid:]_block_invoke"
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/%E4%B9%9D%E5%B0%BE%E7%8B%90-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/Permissions/Brandset/AddbranController.m"
-                  timestampString = "525752067.097154"
+                  urlString = "file:///Users/jiuweihu/Desktop/%E4%B9%9D%E5%B0%BE%E7%8B%90-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/Permissions/Brandset/OtherDepartments/EditotherController.m"
+                  timestampString = "525776401.927054"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "247"
-                  endingLineNumber = "247"
-                  offsetFromSymbolStart = "54">
+                  startingLineNumber = "570"
+                  endingLineNumber = "570"
+                  offsetFromSymbolStart = "68">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/Permissions/Brandset/OtherDepartments/EditotherController.m"
+            timestampString = "525776095.707074"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
+            landmarkName = "-rightUpperButtonAction:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

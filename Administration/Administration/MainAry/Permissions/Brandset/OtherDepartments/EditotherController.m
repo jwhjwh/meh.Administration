@@ -53,6 +53,10 @@
 
 @property (nonatomic,retain)NSString *strname;
 
+@property (nonatomic,strong) NSString *ZJRoleId;//总监roleid
+@property (nonatomic,strong) NSString *JLRoleId;//经历roleid
+
+
 //群号
 @property (nonatomic,retain) NSString *GroupNumber;
 @end
@@ -220,7 +224,7 @@
             }else{
                 if (isSele==NO) {
                     DirtmsnaModel *model =  _paleAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                    [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:3 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_paleAry removeObjectAtIndex:indexPath.row];
@@ -306,7 +310,7 @@
             }else{
                 if (isEay==NO) {
                     DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                    [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:1 uuid:model.uuid];
                     __weak __typeof__(self) weakSelf = self;
                     weakSelf.Str=^(){
                         [_EmisAry removeObjectAtIndex:indexPath.row];
@@ -378,7 +382,8 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             [self InterTableUI];
-
+            _ZJRoleId = [[NSString alloc]init];
+            _JLRoleId = [[NSString alloc]init];
             _GroupNumber = [[NSString alloc]initWithFormat:@"%@",[responseObject valueForKey:@"GroupNumber"]];
             if ([[[NSDictionary changeType:responseObject] valueForKey:@"dInfo"]isEqual:@""]) {
                 _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
@@ -390,6 +395,7 @@
                 [_paleAry addObject:model];
                 for (DirtmsnaModel *model in _DrAry) {
                     [_paleAry addObject:model];
+                    
                 }
             }
             if ([[[NSDictionary changeType:responseObject] valueForKey:@"mInfo"]isEqual:@""]) {
@@ -401,6 +407,7 @@
                 [_ManaAry addObject:model];
                 for (DirtmsnaModel *model in _DrAry) {
                     [_ManaAry addObject:model];
+                    _JLRoleId = model.roleId;
                 }
             }
             if ([[responseObject valueForKey:@"eList"]count]==0) {
@@ -411,6 +418,7 @@
                     DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
                     [_EmisAry addObject:model];
+                    _ZJRoleId = model.roleId;
                 }
                 for (DirtmsnaModel *model in _DrAry) {
                     [_EmisAry addObject:model];
@@ -453,6 +461,7 @@
     multiCV.Num=1;
     multiCV.BarandID=_BarandID;
     multiCV.Numstr=_departNum;
+    multiCV.GroupNumber = _GroupNumber;
     multiCV.blockArray =^(NSMutableArray *arr){
         _paleAry=[NSMutableArray array];
         _paleAry=arr;
@@ -548,10 +557,14 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic;
+    //管理层   2
+    //底层 没有roleid  1
     if (num==1) {
-        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentID":_BarandID,@"BrandID":branid};
-    }else{
         dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid};
+    }else if(num == 2){
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid,@"RoleId":_JLRoleId};
+    }else{
+        dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"eid":branid,@"DepartmentID":_BarandID,@"GroupNumber":_GroupNumber,@"uuid":uuid,@"RoleId":_ZJRoleId};
     }
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -595,7 +608,7 @@
             
             if (isSele==NO) {
                 DirtmsnaModel *model =  _paleAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                [self getDataBrandString:@"manager/delDepartmentManager.action" NSString:@"删除失败"branid:model.usersid num:3 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_paleAry removeObjectAtIndex:indexPath.row];
@@ -637,7 +650,7 @@
         case 3:{
             if (isEay==NO) {
                 DirtmsnaModel *model =  _EmisAry[indexPath.row];
-                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:2 uuid:model.uuid];
+                [self getDataBrandString:@"manager/delDepartmentEmployee.action" NSString:@"删除失败"branid:model.usersid num:1 uuid:model.uuid];
                 __weak __typeof__(self) weakSelf = self;
                 weakSelf.Str=^(){
                     [_EmisAry removeObjectAtIndex:indexPath.row];

@@ -201,12 +201,16 @@
                 NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
                 NSLog(@"%@",[USER_DEFAULTS objectForKey:@"uuid"]);
                 NSString *uuid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"uuid"]];
-                NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid,@"friend":frr};
+                
+                NSDictionary *info = [[NSDictionary alloc]init];
+                if (_friend.count == 0) {
+                    info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid};
+                }else{
+                info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_departmentNum,@"DepartmentName":_nameBarn,@"employees":_employees,@"mid":_mid,@"uuid":uuid,@"friend":frr};
+                }
                 [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                     if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
-//                        _nameBarn = nil;
-//                        _textField.text=@"";
+                      //   _textField.text=@"";
 //                        _textField.placeholder = @"请输入部门名称";
 //                        placeholder(_textField);
 //                        _paleAry=[[NSMutableArray alloc]initWithObjects:_dirMoeld,nil];
@@ -216,6 +220,7 @@
 //                        self.Str();
                         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"添加成功" sureBtn:@"确认" cancleBtn:nil];
                         alertView.resultIndex = ^(NSInteger index){
+                            self.String(@"1");
                             [self.navigationController popViewControllerAnimated:YES];
                         };
                         [alertView showMKPAlertView];
