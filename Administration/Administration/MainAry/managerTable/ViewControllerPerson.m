@@ -12,6 +12,7 @@
 @interface ViewControllerPerson ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *array;
+
 @end
 
 @implementation ViewControllerPerson

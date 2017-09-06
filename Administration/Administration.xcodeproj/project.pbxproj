@@ -369,7 +369,6 @@
 		1FE988E21F4EC623001172C1 /* VCWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988E11F4EC623001172C1 /* VCWeekTable.m */; };
 		1FE988E51F4EC797001172C1 /* VCArtMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988E41F4EC797001172C1 /* VCArtMonthTable.m */; };
 		1FE988E81F4ECAD0001172C1 /* VCInsideWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988E71F4ECAD0001172C1 /* VCInsideWeekTable.m */; };
-		1FE988EB1F4ECC74001172C1 /* VCBusinessWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988EA1F4ECC74001172C1 /* VCBusinessWeekTable.m */; };
 		1FE988EE1F4ED0B9001172C1 /* VCInsideMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE988ED1F4ED0B9001172C1 /* VCInsideMonthTable.m */; };
 		1FEC4F051F14D9780054764F /* GroupMenberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEC4F041F14D9780054764F /* GroupMenberCell.m */; };
 		1FEEC5841ED3C9A2006C3523 /* DepalistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEC5831ED3C9A2006C3523 /* DepalistController.m */; };
@@ -392,6 +391,7 @@
 		1FF7FB251ECBF1F600966C58 /* OtherDeparController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB241ECBF1F600966C58 /* OtherDeparController.m */; };
 		1FF7FB311ECC4B7B00966C58 /* EditotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB301ECC4B7B00966C58 /* EditotherController.m */; };
 		1FF7FB341ECC501900966C58 /* DetaotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB331ECC501900966C58 /* DetaotherController.m */; };
+		1FF9F0D01F5A9AB80062F3EC /* VCBusinessWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F0CF1F5A9AB80062F3EC /* VCBusinessWeekTable.m */; };
 		6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */; };
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
@@ -1264,8 +1264,6 @@
 		1FE988E41F4EC797001172C1 /* VCArtMonthTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtMonthTable.m; sourceTree = "<group>"; };
 		1FE988E61F4ECAD0001172C1 /* VCInsideWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekTable.h; sourceTree = "<group>"; };
 		1FE988E71F4ECAD0001172C1 /* VCInsideWeekTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideWeekTable.m; sourceTree = "<group>"; };
-		1FE988E91F4ECC74001172C1 /* VCBusinessWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBusinessWeekTable.h; sourceTree = "<group>"; };
-		1FE988EA1F4ECC74001172C1 /* VCBusinessWeekTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBusinessWeekTable.m; sourceTree = "<group>"; };
 		1FE988EC1F4ED0B9001172C1 /* VCInsideMonthTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideMonthTable.h; sourceTree = "<group>"; };
 		1FE988ED1F4ED0B9001172C1 /* VCInsideMonthTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideMonthTable.m; sourceTree = "<group>"; };
 		1FEC4F031F14D9780054764F /* GroupMenberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupMenberCell.h; path = Administration/Contacts/chat/GroupMenberCell.h; sourceTree = SOURCE_ROOT; };
@@ -1308,6 +1306,8 @@
 		1FF7FB301ECC4B7B00966C58 /* EditotherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditotherController.m; sourceTree = "<group>"; };
 		1FF7FB321ECC501900966C58 /* DetaotherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetaotherController.h; sourceTree = "<group>"; };
 		1FF7FB331ECC501900966C58 /* DetaotherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetaotherController.m; sourceTree = "<group>"; };
+		1FF9F0CE1F5A9AB80062F3EC /* VCBusinessWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBusinessWeekTable.h; sourceTree = "<group>"; };
+		1FF9F0CF1F5A9AB80062F3EC /* VCBusinessWeekTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBusinessWeekTable.m; sourceTree = "<group>"; };
 		6200D68E1E5BDA760014F9F3 /* PersonneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonneTableViewCell.h; sourceTree = "<group>"; };
 		6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonneTableViewCell.m; sourceTree = "<group>"; };
 		6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonneTableViewCell.xib; sourceTree = "<group>"; };
@@ -2873,7 +2873,8 @@
 				1FE988EC1F4ED0B9001172C1 /* VCInsideMonthTable.h */,
 				1FE988ED1F4ED0B9001172C1 /* VCInsideMonthTable.m */,
 			);
-			path = monthTable;
+			name = monthTable;
+			path = ../monthTable;
 			sourceTree = "<group>";
 		};
 		1FE9889A1F4E6358001172C1 /* weekTable */ = {
@@ -2883,15 +2884,18 @@
 				1FE988E11F4EC623001172C1 /* VCWeekTable.m */,
 				1FE988E61F4ECAD0001172C1 /* VCInsideWeekTable.h */,
 				1FE988E71F4ECAD0001172C1 /* VCInsideWeekTable.m */,
-				1FE988E91F4ECC74001172C1 /* VCBusinessWeekTable.h */,
-				1FE988EA1F4ECC74001172C1 /* VCBusinessWeekTable.m */,
+				1FF9F0CE1F5A9AB80062F3EC /* VCBusinessWeekTable.h */,
+				1FF9F0CF1F5A9AB80062F3EC /* VCBusinessWeekTable.m */,
 			);
-			path = weekTable;
+			name = weekTable;
+			path = ../weekTable;
 			sourceTree = "<group>";
 		};
 		1FF094B71F41777A006313ED /* managerTable */ = {
 			isa = PBXGroup;
 			children = (
+				1FE988991F4E6358001172C1 /* monthTable */,
+				1FE9889A1F4E6358001172C1 /* weekTable */,
 				1FDD93121F42F4B3002E834B /* cellTable */,
 				1FDD93001F427B5F002E834B /* ViewControllerChoosePosition.h */,
 				1FDD93011F427B5F002E834B /* ViewControllerChoosePosition.m */,
@@ -3074,8 +3078,6 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
-				1FE988991F4E6358001172C1 /* monthTable */,
-				1FE9889A1F4E6358001172C1 /* weekTable */,
 				1FF094B71F41777A006313ED /* managerTable */,
 				625C91FC1E85150800D9011B /* Tracking */,
 				1F6833B91E72961C00F74D50 /* yewumobai */,
@@ -4204,7 +4206,6 @@
 				1F803FE91E52F7CA005F53CE /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */,
 				1FB248021F332C6A00EE8367 /* Cell.m in Sources */,
-				1FE988EB1F4ECC74001172C1 /* VCBusinessWeekTable.m in Sources */,
 				1F6211B91E8CFFAF00F50851 /* MWPhotoBrowser.m in Sources */,
 				1FD62BD31F43D673008871A7 /* ViewControllerPersonTableDetail.m in Sources */,
 				1FE988EE1F4ED0B9001172C1 /* VCInsideMonthTable.m in Sources */,
@@ -4464,6 +4465,7 @@
 				1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */,
 				624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */,
 				1F5295D71E6A61CE005045AD /* GuanglixqVController.m in Sources */,
+				1FF9F0D01F5A9AB80062F3EC /* VCBusinessWeekTable.m in Sources */,
 				1F6211F31E8CFFB000F50851 /* EaseUserCell.m in Sources */,
 				620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */,
 				1FC72E3A1F4BCE47000421EC /* ViewControllerStayCheck.m in Sources */,
@@ -4761,7 +4763,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4812,7 +4814,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

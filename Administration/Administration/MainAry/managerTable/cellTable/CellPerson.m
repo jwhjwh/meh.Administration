@@ -52,7 +52,7 @@
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.left.mas_equalTo(imageViewHead.mas_right).offset(5);
         make.height.mas_equalTo(17);
-        make.width.mas_equalTo(100);
+       // make.width.mas_equalTo(100);
     }];
     self.labelName = labelName;
     
@@ -64,7 +64,7 @@
         make.left.mas_equalTo(imageViewHead.mas_right).offset(5);
         make.top.mas_equalTo(labelName.mas_bottom).offset(5);
         make.height.mas_equalTo(12);
-        make.width.mas_equalTo(100);
+      //  make.width.mas_equalTo(100);
     }];
     self.labelAccount = labelAccount;
 }

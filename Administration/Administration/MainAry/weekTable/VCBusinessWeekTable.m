@@ -2,7 +2,7 @@
 //  VCBusinessWeekTable.m
 //  Administration
 //
-//  Created by zhang on 2017/8/24.
+//  Created by zhang on 2017/9/2.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
@@ -51,15 +51,11 @@
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
-            if (self.isSelect) {
-                self.arrayTask = [NSMutableArray arrayWithObjects:@"计划陌拜",@"回访",@"预计达成合作",@"预计回款", nil];
-                self.arrayTotal = [NSMutableArray arrayWithObjects:@"planStore",@"callbackStore",@"estimateStore",@"estimateMoneyStore", nil];
-            }else
-            {
-                self.arrayTask2 = [NSMutableArray arrayWithObjects:@"原计划陌拜",@"实际陌拜",@"其中专业美容院",@"前店后院",@"确定意向",@"知己达成合作",@"实际回款", nil];
-                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@"planStore",@"actualStore",@"specialtyStore",@"frontBackStore",@"confirmStore",@"cooperationStore",@"realityMoney", nil];
-            }
             
+                self.arrayTask2 = [NSMutableArray arrayWithObjects:@"原计划陌拜",@"实际陌拜",@"其中专业美容院",@"前店后院",@"确定意向",@"实际达成合作",@"实际回款", nil];
+                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@"planStore",@"actualStore",@"specialtyStore",@"frontBackStore",@"confirmStore",@"CooperationStore",@"RealityMoney", nil];
+            
+
             [self.tableView reloadData];
             return ;
         }
@@ -100,14 +96,14 @@
         line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周行程安排、目标与销售分级以及策略",@"本周其他工作跟进目标预设以及善后工作",@"本周重要事项备注及补充说明",@"下阶段工作预设及方向",@"个人成长会话安排及自我奖惩管理",@"其他事项"];
         
     }else
     {
         line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
         [self.buttonSummary setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务总结",@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周完成计划情况",@"工作目标达成进展简述",@"工作进度及目标达成的分析和评估",@"出现问题及解决方案或建议",@"自我心得体会及总结",@"本周市场手机的案例、模式及市场营销策略分享",@"其他事项"];
         
     }
     [self.view addSubview:line];
@@ -138,7 +134,7 @@
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周行程安排、目标与销售分解及策略",@"本周其他工作跟进目标预设以及善后工作",@"本周重要事项备注及补充说明",@"下极端工作预设及方向",@"个人成长规划安排及自我奖惩管理",@"其他事项"];
+        self.arrayTitle =  @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周行程安排、目标与销售分级以及策略",@"本周其他工作跟进目标预设以及善后工作",@"本周重要事项备注及补充说明",@"下阶段工作预设及方向",@"个人成长会话安排及自我奖惩管理",@"其他事项"];
         self.isSelect = YES;
         self.remark = @"5";
         
@@ -147,7 +143,7 @@
         self.line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
         [self.buttonSummary setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周本周完成计划情况",@"工作目标达成进展简述",@"工作进度及目标达成的反洗和评估",@"出现问题及结局方案或建议",@"自我心得体会及总结",@"本周市场手机的案例、模式及市场营销策略分享",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周完成计划情况",@"工作目标达成进展简述",@"工作进度及目标达成的分析和评估",@"出现问题及解决方案或建议",@"自我心得体会及总结",@"本周市场手机的案例、模式及市场营销策略分享",@"其他事项"];
         self.isSelect = NO;
         self.remark = @"6";
     }
@@ -158,9 +154,8 @@
 -(void)editContent:(UIButton *)button
 {
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
-
-    ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     
+    ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     for (NSString *key in [self.dictInfo allKeys]) {
         if ([cell.labelContent.text isEqualToString:self.dictInfo[key]]) {
             vc.theKey = key;
@@ -171,6 +166,7 @@
     vc.remark = self.remark;
     vc.tableID = self.tableId;
     vc.stringName = cell.labelContent.attributedText;
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -199,6 +195,7 @@
         if (cell==nil) {
             cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         switch (indexPath.row) {
             case 0:
                 cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:9],[self.dictInfo[@"endDate"] substringToIndex:9]];
@@ -221,78 +218,115 @@
         if (cell==nil) {
             cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
-        cell.labelContent.attributedText = nil;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
-        switch (indexPath.row) {
-            case 3:
-            {
-                if (self.isSelect) {
-                    for (int i=0; i<self.arrayTask.count; i++) {
-                        
-                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
-                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
-                        
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)];
-                        [self.mutAttribute appendAttributedString:string];
-                        //
-                    }
-                }else
+        cell.labelContent.attributedText = nil;
+        self.mutAttribute = [[NSMutableAttributedString alloc]init];
+        if (self.isSelect) {
+            switch (indexPath.row) {
+                case 3:
                 {
-                    for (int i=0; i<self.arrayTask2.count; i++) {
-                        
-                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
-                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal2[i]]];
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask2[i] length], string2.length)];
-                        [self.mutAttribute appendAttributedString:string];
-                        
-                    }
-                }
-                
-                
-                cell.labelContent.attributedText = self.mutAttribute;
-                
-                
-            }
-                break;
-            case 4:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"ovas"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"jaats"];
-                }
-                break;
-            case 5:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"important"];
                     
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"psp"];
+                    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"计划陌拜 %@ 家店,",self.dictInfo[@"planStore"]]];
+                    [string1 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(3,[NSString stringWithFormat:@"%@",self.dictInfo[@"planStore"]].length)];
+                    
+                    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"回访 %@ 家意向店\n",self.dictInfo[@"callbackStore"]]];
+                    [string2 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(2, [NSString stringWithFormat:@"%@",self.dictInfo[@"callbackStore"]].length)];
+                    
+                    NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"预计达成合作 %@ 家,",self.dictInfo[@"estimateStore"]]];
+                    [string3 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(6, [NSString stringWithFormat:@"%@",self.dictInfo[@"estimateStore"]].length)];
+                    
+                    NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"预计回款 %@ 万元,",self.dictInfo[@"EstimateMoneyStore"]]];
+                    [string5 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(3, [NSString stringWithFormat:@"%@",self.dictInfo[@"EstimateMoneyStore"]].length)];
+                    
+                    [self.mutAttribute appendAttributedString:string1];
+                    [self.mutAttribute appendAttributedString:string2];
+                    [self.mutAttribute appendAttributedString:string3];
+                    [self.mutAttribute appendAttributedString:string5];
+                   
                 }
-                break;
-            case 6:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"personalProject"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"comments"];
-                }
-                break;
-            case 7:
-                if (self.isSelect) {
+                    break;
+                case 4:
+                    cell.labelContent.text = self.dictInfo[@"strategy"];
+                    break;
+                case 5:
+                    cell.labelContent.text = self.dictInfo[@"preset"];
+                    break;
+                case 6:
+                    cell.labelContent.text = self.dictInfo[@"content"];
+                    break;
+                case 7:
+                    cell.labelContent.text = self.dictInfo[@"presetDirection"];
+                    break;
+                case 8:
+                    cell.labelContent.text = self.dictInfo[@"planningManagement"];
+                    break;
+                case 10:
                     cell.labelContent.text = self.dictInfo[@"others"];
-                }else
+                    break;
+                default:
+                    break;
+            }
+            
+        }else
+        {
+            switch (indexPath.row) {
+                case 3:
                 {
-                    cell.labelContent.text = self.dictInfo[@"others"];
+                    
+                    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"原计划陌拜 %@ 家店,",self.dictInfo[@"planStore"]]];
+                    [string1 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(5,[NSString stringWithFormat:@"%@",self.dictInfo[@"planStore"]].length)];
+                    
+                    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际陌拜 %@ 家\n",self.dictInfo[@"actualStore"]]];
+                    [string2 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"actualStore"]].length)];
+                    
+                    NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"其中专业美容院 %@ 家，",self.dictInfo[@"specialtyStore"]]];
+                    [string3 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, [NSString stringWithFormat:@"%@",self.dictInfo[@"specialtyStore"]].length)];
+                    
+                    
+                    NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"前店后院 %@ 家\n",self.dictInfo[@"frontBackStore"]]];
+                    [string5 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"frontBackStore"]].length)];
+                    
+                    NSMutableAttributedString *string6 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"确定意向 %@ 家，",self.dictInfo[@"confirmStore"]]];
+                    [string6 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4,[NSString stringWithFormat:@"%@",self.dictInfo[@"confirmStore"]].length)];
+                    
+                    NSMutableAttributedString *string7 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际达成合作 %@ 家\n",self.dictInfo[@"cooperationStore"]]];
+                    [string7 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(5,[NSString stringWithFormat:@"%@",self.dictInfo[@"cooperationStore"]].length)];
+                    
+                    NSMutableAttributedString *string8 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际回款 %@ 万\n",self.dictInfo[@"realityMoney"]]];
+                    [string8 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4,[NSString stringWithFormat:@"%@",self.dictInfo[@"realityMoney"]].length)];
+                    
+                    [self.mutAttribute appendAttributedString:string1];
+                    [self.mutAttribute appendAttributedString:string2];
+                    [self.mutAttribute appendAttributedString:string3];
+                    [self.mutAttribute appendAttributedString:string5];
+                    [self.mutAttribute appendAttributedString:string6];
+                    [self.mutAttribute appendAttributedString:string7];
+                    [self.mutAttribute appendAttributedString:string8];
+                    
+                    cell.labelContent.attributedText = self.mutAttribute;
                 }
-                break;
-                
-            default:
-                break;
+                    break;
+                case 4:
+                    cell.labelContent.text = self.dictInfo[@"workProgress"];
+                    break;
+                case 5:
+                    cell.labelContent.text = self.dictInfo[@"workAnalyzeAssess"];
+                    break;
+                case 6:
+                    cell.labelContent.text = self.dictInfo[@"problemSolution"];
+                    break;
+                case 7:
+                    cell.labelContent.text = self.dictInfo[@"selfSummary"];
+                    break;
+                case 8:
+                    cell.labelContent.text = self.dictInfo[@"caseStrategyShare"];
+                    break;
+                default:
+                    break;
+            }
         }
+        
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
         return cell;
     }
@@ -327,25 +361,27 @@
         //审核接口
         if (alertView.tag == 200) {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"2"};
+                     @"code":@"1",
+                     @"id":self.tableId};
         }else
         {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2"};
+                     @"code":@"2",
+                     @"id":self.tableId};
         }
         
         
@@ -394,5 +430,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

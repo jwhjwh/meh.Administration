@@ -24,6 +24,7 @@
         
         UILabel *labelContent = [[UILabel alloc]init];
         labelContent.numberOfLines = 0;
+        labelContent.font = [UIFont systemFontOfSize:17];
         labelContent.layer.borderColor = [UIColor lightGrayColor].CGColor;
         labelContent.layer.borderWidth = 1.0f;
         labelContent.textColor = [UIColor lightGrayColor];

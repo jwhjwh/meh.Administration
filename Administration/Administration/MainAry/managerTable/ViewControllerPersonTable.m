@@ -18,12 +18,38 @@
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *array;
 @property (nonatomic,strong) NSDictionary *remark;
+@property (nonatomic,assign)NSUInteger _page;//接口page
+//是不是第一次执行请求
+
+@property (nonatomic)BOOL _isFirstLoadData ;
+
+//是不是上拉加载数据（脚视图刷新）
+
+@property (nonatomic)BOOL _isFooterFresh ;
 @end
 
 @implementation ViewControllerPersonTable
 #pragma -mark custem
+
+- (void)removeHUD:(id)hud
+
+{
+    
+    //结束刷新
+    
+    [self.tableView.mj_header endRefreshing];
+    
+    [self.tableView.mj_footer endRefreshing];
+    
+    [hud removeFromSuperview];
+    
+}
+
 -(void)getData
 {
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
     NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserReport",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -35,13 +61,16 @@
                            @"DepartmentID":self.departmentId,
                            @"Num":self.num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"page":@"1",
+                           @"page":[NSString stringWithFormat:@"%ld",self._page],
                            @"id":self.userid,
                            @"rid":self.rid};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
+        [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
         if ([stringCode isEqualToString:@"0000"]) {
-            self.array = [responseObject valueForKey:@"list"];
+            for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
+                [self.array addObject:dict];
+            }
             [self.tableView reloadData];
             return ;
         }
@@ -54,7 +83,7 @@
             return;
         }
         if ([stringCode isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据为空" andInterval:1];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无更多数据" andInterval:1];
             return;
         }
     } failure:^(NSError *error) {
@@ -74,7 +103,7 @@
         cell = [[CellTbale alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     NSDictionary *dict = self.array[indexPath.row];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     
     [self.remark enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([key isEqualToString:[NSString stringWithFormat:@"%@",dict[@"remark"]]]) {
@@ -87,7 +116,19 @@
     cell.lableName.text = dict[@"name"];
     cell.lableAccount.text = @"13100000000";
     cell.labelTime.text = dict[@"dates"];
-    cell.labelStatus.text = @"驳回：06-03 12:30";
+    NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+    if ([state isEqualToString:@"0"]) {
+        cell.labelStatus.text = @"待审核";
+        cell.labelStatus.textColor = GetColor(192, 192, 192, 1);
+    }else if ([state isEqualToString:@"1"])
+    {
+        cell.labelStatus.text = [NSString stringWithFormat:@"通过:%@",dict[@"updateTime"]];
+        cell.labelStatus.textColor = GetColor(246, 0, 49, 1);
+    }else
+    {
+        cell.labelStatus.text = [NSString stringWithFormat:@"驳回:%@",dict[@"updateTime"]];
+        cell.labelStatus.textColor = GetColor(206, 157, 86, 1);
+    }
     return cell;
 }
 
@@ -106,6 +147,7 @@
         vc.postionName = self.positionName;
         vc.remark = dict[@"remark"];
         vc.tableId = dict[@"id"];
+        vc.num = self.num;
         //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
@@ -118,6 +160,7 @@
             vc.postionName = self.positionName;
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
+            vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
             }else
@@ -127,13 +170,14 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if([self.positionName containsString:@"业务"])
         {
-            VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
+            VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
             vc.roleId = self.rid;
             vc.departmentId = self.departmentId;
             vc.postionName = self.positionName;
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
+            vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
             }else
@@ -144,13 +188,14 @@
         }
         else
         {
-            VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
+            VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
             vc.roleId = self.rid;
             vc.departmentId = self.departmentId;
             vc.postionName = self.positionName;
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
+            vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
             }else
@@ -170,6 +215,7 @@
             vc.postionName = self.positionName;
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
+            vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
             }else
@@ -186,6 +232,7 @@
             vc.postionName = self.positionName;
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
+            vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
             }else
@@ -210,6 +257,7 @@
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.array removeAllObjects];
     [self getData];
 }
 
@@ -226,6 +274,51 @@
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
+    
+    //添加下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        self._page = 1;
+        
+        self._isFooterFresh = NO;
+        
+        [self getData];
+        
+    }];
+    
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+    
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
+    
+    
+    
+    //上拉加载
+    
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        
+        self._page++;
+        
+        self._isFooterFresh = YES;
+        
+        [self getData];
+        
+        
+        
+    }];
+    
+    self.tableView.mj_footer.automaticallyChangeAlpha = YES;
+    
+    
+    self._isFirstLoadData = YES;
+    
+    //不是上拉加载数据
+    
+    self._isFooterFresh = NO;
+    
+    //页码赋初值
+    
+    self._page=1;
     
     self.remark = @{@"1":@"业务日报表",
                            @"2":@"业务周计划",

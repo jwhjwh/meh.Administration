@@ -171,6 +171,7 @@
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.dictInfo[@"id"];
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -199,6 +200,7 @@
         if (cell==nil) {
             cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         switch (indexPath.row) {
             case 0:
                 cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:9],[self.dictInfo[@"endDate"] substringToIndex:9]];
@@ -221,6 +223,7 @@
         if (cell==nil) {
             cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelContent.attributedText = nil;
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
         switch (indexPath.row) {
@@ -341,25 +344,27 @@
         //审核接口
         if (alertView.tag == 200) {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"2"};
+                     @"code":@"1",
+                     @"id":self.tableId};
         }else
         {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2"};
+                     @"code":@"2",
+                     @"id":self.tableId};
         }
         
         

@@ -14,4 +14,5 @@
 @property (nonatomic,strong)NSString *remark;
 @property (nonatomic,strong)NSString *tableID;
 @property (nonatomic,strong)NSString *departmentID;
+@property (nonatomic,strong)NSString *num;
 @end

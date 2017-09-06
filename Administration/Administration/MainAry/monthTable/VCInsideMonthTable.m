@@ -50,6 +50,7 @@
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
+            
             [self.tableView reloadData];
             return ;
         }
@@ -72,7 +73,7 @@
 -(void)setUI
 {
     self.buttonPlan = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, Scree_width/2, 30)];
-    [self.buttonPlan setTitle:@"周计划" forState:UIControlStateNormal];
+    [self.buttonPlan setTitle:@"月计划" forState:UIControlStateNormal];
     self.buttonPlan.tag = 200;
     [self.buttonPlan addTarget:self action:@selector(buttonPlan:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonPlan];
@@ -80,7 +81,7 @@
     self.buttonSummary = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, 64, Scree_width/2, 30)];
     self.buttonSummary.tag = 300;
     [self.buttonSummary addTarget:self action:@selector(buttonPlan:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonSummary setTitle:@"周总结" forState:UIControlStateNormal];
+    [self.buttonSummary setTitle:@"月总结" forState:UIControlStateNormal];
     [self.view addSubview:self.buttonSummary];
     
     UILabel *line = [[UILabel alloc]init];
@@ -162,6 +163,7 @@
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.tableId;
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -205,6 +207,7 @@
                 break;
         }
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else
     {
@@ -212,24 +215,47 @@
         if (cell==nil) {
             cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelContent.attributedText = nil;
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
-        switch (indexPath.row) {
-            case 3:
-            {
-                if (self.isSelect) {
-                    for (int i=0; i<self.arrayTask.count; i++) {
-                        
-                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
-                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
-                        
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)];
-                        [self.mutAttribute appendAttributedString:string];
-                        //
-                    }
-                }else
+        
+        if (self.isSelect) {
+            switch (indexPath.row) {
+                case 3:
                 {
+                    
+                        for (int i=0; i<self.arrayTask.count; i++) {
+                            
+                            NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
+                            NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
+                            
+                            NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
+                            [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)];
+                            [self.mutAttribute appendAttributedString:string];
+                            //
+                        }
+                    }
+                    break;
+                case 4:
+                        cell.labelContent.text = self.dictInfo[@"workPlan"];
+                    break;
+                case 5:
+                        cell.labelContent.text = self.dictInfo[@"firstWeek"];
+                    break;
+                case 6:
+                        cell.labelContent.text = self.dictInfo[@"SecondWeek"];
+                    break;
+                case 7:
+                        cell.labelContent.text = self.dictInfo[@"FourthWeek"];
+                    break;
+                default:
+                    break;
+            }
+
+        }else
+        {
+            switch (indexPath.row) {
+                case 3:
                     for (int i=0; i<self.arrayTask2.count; i++) {
                         
                         NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
@@ -239,50 +265,27 @@
                         [self.mutAttribute appendAttributedString:string];
                         
                     }
-                }
-                
-                
-                cell.labelContent.attributedText = self.mutAttribute;
-                
-                
-            }
-                break;
-            case 4:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"ovas"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"jaats"];
-                }
-                break;
-            case 5:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"important"];
                     
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"psp"];
-                }
-                break;
-            case 6:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"personalProject"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"comments"];
-                }
-                break;
-            case 7:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"others"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"others"];
-                }
-                break;
-                
-            default:
-                break;
+                    cell.labelContent.attributedText = self.mutAttribute;
+                    break;
+                case 4:
+                    cell.labelContent.text = self.dictInfo[@"completeProgressBriefly"];
+                    break;
+                case 5:
+                    cell.labelContent.text = self.dictInfo[@"progressEvaluation"];
+                    break;
+                case 6:
+                    cell.labelContent.text = self.dictInfo[@"strategy"];
+                    break;
+                case 7:
+                    cell.labelContent.text = self.dictInfo[@"experience"];
+                    break;
+                case 8:
+                    cell.labelContent.text = self.dictInfo[@"directionPreset"];
+                    break;
+                default:
+                    break;
+            }
         }
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
         return cell;
@@ -318,25 +321,27 @@
         //审核接口
         if (alertView.tag == 200) {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"2"};
+                     @"code":@"1",
+                     @"id":self.tableId};
         }else
         {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2"};
+                     @"code":@"2",
+                     @"id":self.tableId};
         }
         
         

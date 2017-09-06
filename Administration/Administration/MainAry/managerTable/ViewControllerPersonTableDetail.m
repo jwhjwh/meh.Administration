@@ -16,6 +16,7 @@
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSDictionary *dictContent;
 @property (nonatomic,strong)UIAlertView *alertView;
+@property (nonatomic,strong)NSArray *arrayKey;
 @end
 
 @implementation ViewControllerPersonTableDetail
@@ -38,8 +39,18 @@
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             
+            NSString *stringKey = [responseObject valueForKey:@"name"];
+            self.arrayKey = [stringKey componentsSeparatedByString:@","];
+            for (NSString *key in self.arrayKey) {
+                if ([key isEqualToString:@""]) {
+                    
+                }
+            }
+            NSLog(@"arraykey = %@",self.arrayKey);
             self.dictContent = responseObject[@"tableInfo"];
-            [self.tableView reloadData];
+            if (self.dictContent!=nil) {
+               [self.tableView reloadData];
+            }
             return ;
         }
         if ([stringCode isEqualToString:@"4444"]) {
@@ -76,7 +87,17 @@
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.labelContent.attributedText;
+    for (NSString *key in [self.dictContent allKeys]) {
+        if ([cell.labelContent.text isEqualToString:self.dictContent[key]]) {
+            vc.theKey = key;
+            break;
+        }
+    }
+    vc.departmentID = self.departmentId;
+    vc.remark = self.remark;
+    vc.tableID = self.dictContent[@"id"];
     vc.tableID = self.tableId;
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -91,6 +112,7 @@
     [tableView registerClass:[CellInfo class] forCellReuseIdentifier:@"cell2"];
     tableView.estimatedRowHeight = 100;
     tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view.mas_top);
@@ -134,7 +156,7 @@
                      @"CompanyInfoId":compid,
                      @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
                      @"code":@"2",
@@ -146,7 +168,7 @@
                      @"CompanyInfoId":compid,
                      @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
                      @"code":@"2",
@@ -185,17 +207,23 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.postionName containsString:@"美导"]) {
+    
+    for ( int i=0; i<self.arrayKey.count; i++) {
+        
+    }
+    
+    if ([self.postionName containsString:@"美导"]||[self.postionName containsString:@"市场"]) {
         if (indexPath.row<3) {
             tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
             if (cell==nil) {
                 cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.labelTitle.text = self.arrayTitle[indexPath.row];
             switch (indexPath.row) {
                 case 0:
-                    cell.labelInfo.text = self.dictContent[@"dateLine"];
+                    cell.labelInfo.text = [self.dictContent[@"dateLine"]substringToIndex:9];
                     break;
                 case 1:
                     cell.labelInfo.text = self.postionName;
@@ -215,10 +243,13 @@
             if (cell==nil) {
                 cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             }
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             switch (indexPath.row) {
+                    
                 case 3:
                     cell.labelContent.text = self.dictContent[@"store"];
+                    cell.button.hidden = YES;
+                    cell.button.userInteractionEnabled = NO;
                     break;
                 case 4:
                     cell.labelContent.text = self.dictContent[@"aim"];
@@ -250,26 +281,24 @@
                 default:
                     break;
             }
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
             cell.labelTitle.text = self.arrayTitle[indexPath.row];
             return cell;
         }
        
     }
-   else
+   else if([self.postionName containsString:@"业务"])
    {
        if (indexPath.row<4) {
-           tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
            CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
            if (cell==nil) {
                cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
            }
+           cell.selectionStyle = UITableViewCellSelectionStyleNone;
            cell.labelTitle.text = self.arrayTitle[indexPath.row];
            switch (indexPath.row) {
                case 0:
-                   cell.labelInfo.text = self.dictContent[@"dateLine"];
+                   cell.labelInfo.text = [self.dictContent[@"dates"] substringToIndex:16];
                    break;
                case 1:
                    cell.labelInfo.text = self.dictContent[@"worship"];
@@ -301,7 +330,7 @@
                    cell.labelContent.text = self.dictContent[@"appraisal"];
                    break;
                case 6:
-                   cell.labelContent.text = self.dictContent[@"evaluation"];
+                   cell.labelContent.text = [NSString stringWithFormat:@"%@",self.dictContent[@"evaluation"]];
                    break;
                case 7:
                    cell.labelContent.text = self.dictContent[@"reason"];
@@ -317,16 +346,70 @@
            }
            return cell;
        }
+   }else
+   {
+       if (indexPath.row<4) {
+           tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+           CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+           if (cell==nil) {
+               cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+           }
+           cell.selectionStyle = UITableViewCellSelectionStyleNone;
+           cell.labelTitle.text = self.arrayTitle[indexPath.row];
+           switch (indexPath.row) {
+               case 0:
+                   cell.labelInfo.text = [self.dictContent[@"dates"] substringToIndex:16];
+                   break;
+               case 1:
+                   cell.labelInfo.text = self.dictContent[@"store"];
+                   break;
+               case 2:
+                   cell.labelInfo.text = self.postionName;
+                   break;
+               case 3:
+                   cell.labelInfo.text = self.dictContent[@"name"];
+                   break;
+               default:
+                   break;
+           }
+           return cell;
+       }else
+       {
+           CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+           if (cell==nil) {
+               cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+           }
+           cell.selectionStyle = UITableViewCellSelectionStyleNone;
+           [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
+           cell.labelTitle.text = self.arrayTitle[indexPath.row];
+           switch (indexPath.row) {
+               case 4:
+                   cell.labelContent.text = self.dictContent[@"targetDetail"];
+                   break;
+               case 5:
+                   cell.labelContent.text = self.dictContent[@"appraisal"];
+                   break;
+               case 6:
+                   cell.labelContent.text = [NSString stringWithFormat:@"%@",self.dictContent[@"evaluation"]];
+                   break;
+               case 7:
+                   cell.labelContent.text = self.dictContent[@"reason"];
+                   break;
+               case 8:
+                   cell.labelContent.text = self.dictContent[@"sentiment"];
+                   break;
+               case 9:
+                   cell.labelContent.text = self.dictContent[@"tomorrowPlan"];
+                   break;
+               default:
+                   break;
+           }
+           return cell;
+       }
    }
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CellTabelDetail *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    CGSize size = [cell.labelContent.text boundingRectWithSize:CGSizeMake(Scree_width, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
-//    
-//    return size.height+27;
-//}
+
 
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
@@ -341,14 +424,18 @@
     self.title = self.stringTitle;
     [self initView];
     
-    if ([self.postionName containsString:@"美导"]) {
+    if ([self.postionName containsString:@"美导"]||[self.postionName containsString:@"市场"]) {
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"地区店名老板",@"目标",@"业绩",@"出货",@"发现问题",@"解决方案",@"感悟分享",@"明日计划",@"明日目标",@"总结"];
-    }else
+    }else if([self.postionName containsString:@"业务"])
     {
     self.arrayTitle = @[@"日期",@"陌拜地址",@"职位",@"姓名",@"今日目标及工作详细内容",@"自我状态评估",@"自我打分",@"原因",@"感悟分享及心得",@"明日计划安排"];
+    }else
+    {
+        self.arrayTitle = @[@"日期",@"服务店家",@"职位",@"姓名",@"今日目标及工作详细内容",@"自我状态评估",@"自我打分",@"原因",@"感悟分享及心得",@"明日计划安排"];
     }
     self.dictContent = [NSDictionary dictionary];
-
+    self.arrayKey = [NSArray array];
+    
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"审核" style:(UIBarButtonItemStyleDone) target:self action:@selector(checkTable:)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];

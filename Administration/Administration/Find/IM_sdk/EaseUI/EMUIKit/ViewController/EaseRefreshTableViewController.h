@@ -57,8 +57,7 @@
 /*!
  @method
  @brief 下拉加载更多(下拉刷新)
- @discussion
- @return
+ 
  */
 - (void)tableViewDidTriggerHeaderRefresh;
 
