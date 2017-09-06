@@ -19,6 +19,8 @@
 
 #import<BaiduMapAPI_Map/BMKMapView.h>
 
+#import <CoreLocation/CoreLocation.h>
+
 #import<BaiduMapAPI_Location/BMKLocationService.h>
 
 #import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
@@ -27,6 +29,7 @@
 
 #import<BaiduMapAPI_Search/BMKPoiSearchType.h>
 @interface FillinfoViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XFDaterViewDelegate>
+
 {
       XFDaterView*dater;
     BMKLocationService *_locService;  //定位
@@ -47,6 +50,7 @@
 @property (nonatomic,retain)NSString *storeaddree;//地址
 @property (nonatomic,retain)NSString *storehead;//负责人
 @property (nonatomic,retain)NSString *storephone;//微信/手机
+@property (nonatomic,retain)NSString *storewxphone;//微信
 @property (nonatomic,retain)NSString *storebrand;//品牌
 @property (nonatomic,retain)NSString *clascation;//分类
 @property (nonatomic,retain)NSString *stotrType;//门店类型
@@ -57,6 +61,11 @@
 @property (nonatomic,retain)NSString *planDur;//经营年限
 @property (nonatomic,retain)NSString *Berths;//床位
 
+@property (nonatomic, strong) CLGeocoder *geoC;
+
+@property (nonatomic,retain)NSString *sigincity;
+@property (nonatomic,retain)NSString *ShopId;
+
 @end
 
 @implementation FillinfoViewController
@@ -65,6 +74,8 @@
     [super viewDidLoad];
     [self startLocation];
     self.title=@"陌拜记录";
+    [self NSStringalloc];
+
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -73,13 +84,42 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
-    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机／微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
+    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
     [self vSubviews];
     _islode=YES;
+}
+-(void)NSStringalloc{
+    _sigincity = [[NSString alloc]init];
+    _ShopId = [[NSString alloc]init];
+
+    _storephone = [[NSString alloc]init];
+    _storephone = @"";
+    _storewxphone = [[NSString alloc]init];
+    _storewxphone = @"";
+    _storebrand =  [[NSString alloc]init];
+    _storebrand = @"";
+    _clascation = [[NSString alloc]init];
+    _clascation = @"";
+    _stotrType = [[NSString alloc]init];
+    _stotrType = @"";
+    _Abrief = [[NSString alloc]init];
+    _Abrief = @"";
+    _instructions = [[NSString alloc]init];
+    _instructions = @"";
+    _note = [[NSString alloc]init];
+    _note = @"";
+    _brandBusin = [[NSString alloc]init];
+    _brandBusin = @"";
+    _planDur = [[NSString alloc]init];
+    _planDur = @"";
+    _Berths = [[NSString alloc]init];
+    _Berths = @"";
+    
+    
 }
 -(void)startLocation
 {   //初始化BMKLocationService
@@ -91,31 +131,30 @@
     _geocodesearch = [[BMKGeoCodeSearch alloc] init];
     _geocodesearch.delegate = self;
 }
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
-
+- (CLGeocoder *)geoC
 {
-    
-   // NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-    //地理反编码
-    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    
-    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
-    
-    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
-    
-    if(flag){
-        
-        NSLog(@"反geo检索发送成功");
-        
-        [_locService stopUserLocationService];
-        
-    }else{
-        
-        NSLog(@"反geo检索发送失败");
-        
+    if (!_geoC) {
+        _geoC = [[CLGeocoder alloc] init];
     }
-    
+    return _geoC;
 }
+
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (placemarks.count>0) {
+            CLPlacemark *place = [placemarks objectAtIndex:0];
+            if (place != nil) {
+                NSString *XIAN = place.administrativeArea;
+                NSLog(@"%@%@%@%@%@",place.country,XIAN,place.locality,place.subLocality,place.name);
+                [_locService stopUserLocationService];
+                //_sigincity = [[NSString alloc]init];
+                _sigincity = [NSString stringWithFormat:@"%@%@%@%@%@",place.country,XIAN,place.locality,place.subLocality,place.name];
+            }
+        }
+    }];
+}
+
 -(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 
 {
@@ -123,6 +162,7 @@
    // NSLog(@"address:%@----%@",result.addressDetail,result.address);
     _address=result.address;
     _storeaddree=result.address;
+    NSLog(@"address:%@",_address);
     [_infonTableview reloadData];
     //addressDetail:     层次化地址信息
     
@@ -191,7 +231,7 @@
                     _textField.text=_address;
                 }
                 if(!(indexPath.row==6)){
-                    _textField.placeholder=@"6";
+                    _textField.placeholder=@"必填";
                 }
             }else{
                 if(indexPath.row==1){
@@ -228,13 +268,65 @@
 }
     
 }
+-(void)SigintNetWorking{
+    
+        NSArray *array = [_storeregion componentsSeparatedByString:@" "];
+        if (_storedate == nil) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写时间" andInterval:1.0];
+        }else if (array[0]==nil && array[1] ==nil  && array[2] ==nil){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写地区" andInterval:1.0];
+        }else if( _storename ==nil){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写店名" andInterval:1.0];
+        }else if(_storeaddree == nil){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写详细地址" andInterval:1.0];
+        }else if(_storehead == nil){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写负责人" andInterval:1.0];
+        }else{
+            if([_ShopId isEqualToString:@""]){
+                NSString *uwStr =[NSString stringWithFormat:@"%@shop/insertShop.action",KURLHeader];
+                NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+                NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
+                NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+                
+                NSDictionary *dic=[[NSDictionary alloc]init];
+                dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Name":_storehead,@"RoleId":RoleId,@"Draft":@"1"};
+                [ZXDNetworking POST:uwStr parameters:dic success:^(id responseObject) {
+                    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                        SiginViewController *siginVC = [[SiginViewController alloc]init];
+                        _ShopId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"ShopId"]];
+                        siginVC.shopid =_ShopId;
+                        siginVC.Address = _sigincity;
+                        siginVC.Types = @"1";
+                        [self.navigationController pushViewController:siginVC animated:YES];
+                        
+                    }
+                    
+                    
+                    //ShopId = 10;  WorshipRecordId = 1;
+                    
+                } failure:^(NSError *error) {
+                    
+                } view:self.view];
+            }else{
+                SiginViewController *siginVC = [[SiginViewController alloc]init];
+                siginVC.shopid =_ShopId;
+                siginVC.Address = _sigincity;
+                siginVC.Types = @"1";
+                [self.navigationController pushViewController:siginVC animated:YES];
+            }
+            
+        }
+
+    
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   _Index=indexPath;
     inftionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     if (indexPath.section == 0) {
-        SiginViewController *siginVC = [[SiginViewController alloc]init];
-        [self.navigationController pushViewController:siginVC animated:YES];
+        [self SigintNetWorking];
+        
+        
     }else{
         switch (indexPath.row) {
             case 0:
@@ -253,7 +345,7 @@
                 [self.view addSubview:self.cityChoose];
             }
                 break;
-            case 7:{
+            case 8:{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 inputVC.blcokStr=^(NSString *content,int num){
@@ -265,7 +357,7 @@
                 [self.navigationController pushViewController:inputVC animated:YES];
             }
                 break;
-            case 8:{
+            case 9:{
                 
                 [SelectAlert showWithTitle:@"类型" titles:@[@"A类",@"B类",@"C类"] selectIndex:^(NSInteger selectIndex) {
                     
@@ -276,7 +368,7 @@
                 } showCloseButton:NO];
             }
                 break;
-            case 9:{
+            case 10:{
                 StoreprofileController *stireVC=[[StoreprofileController alloc]init];
                 stireVC.blcokString=^(NSString *type,NSString *year,NSString *perpon,NSString *beds){
                     _stotrType=type;
@@ -288,7 +380,7 @@
                 [self.navigationController pushViewController:stireVC animated:YES];
             }
                 break;
-            case 10:{
+            case 11:{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 inputVC.blcokStr=^(NSString *content,int num){
@@ -298,7 +390,7 @@
                 [self.navigationController pushViewController:inputVC animated:YES];
             }
                 break;
-            case 11:{
+            case 12:{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 inputVC.blcokStr=^(NSString *content,int num){
@@ -308,7 +400,7 @@
                 [self.navigationController pushViewController:inputVC animated:YES];
             }
                 break;
-            case 12 :{
+            case 13 :{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 inputVC.blcokStr=^(NSString *content,int num){
@@ -366,7 +458,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-    [self UploadInformation];
+    NSArray *zwlbAry = [[NSArray alloc]init];
+    zwlbAry = @[@"提交",@"保存至草稿箱"];
+    [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
+        NSLog(@"选择了第%ld个",(long)selectIndex);
+        if (selectIndex == 0) {
+            [self UploadInformation];
+        }else{
+            [self Savetodraftbox];
+        }
+        
+    } selectValue:^(NSString *selectValue) {
+        
+    } showCloseButton:NO];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -375,18 +480,18 @@
 }
 -(void)UploadInformation{
     if (_islode==YES) {
-        NSString *uStr =[NSString stringWithFormat:@"%@shop/addrecord.action",KURLHeader];
+        NSString *uStr =[NSString stringWithFormat:@"%@shop/insertShop.action",KURLHeader];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
         NSArray *array = [_storeregion componentsSeparatedByString:@" "];
-        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storepersonnel,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Principal":_storehead,@"Iphone":_storephone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note};
+         NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
+        NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"1",@"CompanyId":compid};
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
                 _islode=NO;
-            } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                 alertView.resultIndex = ^(NSInteger index){
@@ -412,6 +517,49 @@
     }else{
          [ELNAlerTool showAlertMassgeWithController:self andMessage:@"已提交成功，请勿重复提交" andInterval:1.0];
     }
-    
 }
+
+-(void)Savetodraftbox{
+    if (_islode==YES) {
+        NSString *uStr =[NSString stringWithFormat:@"%@shop/insertShop.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSArray *array = [_storeregion componentsSeparatedByString:@" "];
+        NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
+        NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"0",@"CompanyId":compid};
+        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+            
+            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
+                _islode=NO;
+            } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }
+        }failure:^(NSError *error) {
+            
+        }view:self.view MBPro:YES];
+    }else{
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"已提交成功，请勿重复提交" andInterval:1.0];
+    }
+
+
+}
+
 @end

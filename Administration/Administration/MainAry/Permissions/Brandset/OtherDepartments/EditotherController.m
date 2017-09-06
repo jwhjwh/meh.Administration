@@ -391,9 +391,12 @@
             }else{
                 _paleAry=[NSMutableArray array];
                 DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
+                
                 [model setValuesForKeysWithDictionary: [responseObject valueForKey:@"dInfo"]];
+                _ZJRoleId = model.roleId;
                 [_paleAry addObject:model];
                 for (DirtmsnaModel *model in _DrAry) {
+                   
                     [_paleAry addObject:model];
                     
                 }
@@ -404,10 +407,11 @@
                 _ManaAry=[NSMutableArray array];
                 DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
                 [model setValuesForKeysWithDictionary: [responseObject valueForKey:@"mInfo"]];
+                _JLRoleId = model.roleId;
                 [_ManaAry addObject:model];
                 for (DirtmsnaModel *model in _DrAry) {
                     [_ManaAry addObject:model];
-                    _JLRoleId = model.roleId;
+                    
                 }
             }
             if ([[responseObject valueForKey:@"eList"]count]==0) {
@@ -418,7 +422,7 @@
                     DirtmsnaModel *model=[[DirtmsnaModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
                     [_EmisAry addObject:model];
-                    _ZJRoleId = model.roleId;
+                    
                 }
                 for (DirtmsnaModel *model in _DrAry) {
                     [_EmisAry addObject:model];
@@ -465,7 +469,8 @@
     multiCV.blockArray =^(NSMutableArray *arr){
         _paleAry=[NSMutableArray array];
         _paleAry=arr;
-        
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self getNetworkData];
         for (DirtmsnaModel *model in _DrAry) {
             [_paleAry addObject:model];
         }
@@ -485,6 +490,8 @@
     multiCV.blockArray =^(NSMutableArray *arr){
         _ManaAry=[NSMutableArray array];
         _ManaAry=arr;
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self getNetworkData];
         for (DirtmsnaModel *model in _DrAry) {
             [_ManaAry addObject:model];
         }
@@ -503,6 +510,8 @@
     multiCV.blockArr =^(NSMutableArray *arr){
         _EmisAry=[NSMutableArray array];
         _EmisAry=arr;
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+         [self getNetworkData];
         for (DirtmsnaModel *model in _DrAry) {
             [_EmisAry addObject:model];
         }

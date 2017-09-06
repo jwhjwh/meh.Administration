@@ -606,12 +606,14 @@
         if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"添加完成" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
+                [bbttn setTitle:@"编辑" forState:UIControlStateNormal];
                 for (int i = 0; i<_bjbuttonAry.count-1; i++) {
                     _bjbtn = _bjbuttonAry[i];
                     _bjbtn.enabled = YES;
+                    [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
                     [_bjbuttonAry replaceObjectAtIndex:i withObject:_bjbtn];
                     [_bjbtnname replaceObjectAtIndex:i withObject:@"编辑"];
-                    [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
+                    
                 }
                 NSArray *scbtnary = _SCbtnAry[bbttn.tag];
                 if (scbtnary.count>0){

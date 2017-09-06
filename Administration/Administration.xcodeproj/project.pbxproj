@@ -548,6 +548,7 @@
 		626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626D96D41E5FCEA2002208D6 /* ModifyViewController.m */; };
 		626D96DA1E600A7C002208D6 /* 对-未选.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D81E600A7C002208D6 /* 对-未选.png */; };
 		626D96DB1E600A7C002208D6 /* 对-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 626D96D91E600A7C002208D6 /* 对-选中.png */; };
+		626DD6771F58048D008F820A /* qdjl_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 626DD6761F58048D008F820A /* qdjl_ico.png */; };
 		627639F31EE93609001146C7 /* tj_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 627639F21EE93609001146C7 /* tj_ico01.png */; };
 		627932EB1F2AE3980079DAB1 /* ZZYPhotoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 627932EA1F2AE3980079DAB1 /* ZZYPhotoHelper.m */; };
 		627B27191E764B4100392170 /* StructureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 627B27181E764B4100392170 /* StructureViewController.m */; };
@@ -1557,6 +1558,7 @@
 		626D96D41E5FCEA2002208D6 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 		626D96D81E600A7C002208D6 /* 对-未选.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-未选.png"; sourceTree = "<group>"; };
 		626D96D91E600A7C002208D6 /* 对-选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对-选中.png"; sourceTree = "<group>"; };
+		626DD6761F58048D008F820A /* qdjl_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qdjl_ico.png; sourceTree = "<group>"; };
 		627639F21EE93609001146C7 /* tj_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tj_ico01.png; sourceTree = "<group>"; };
 		627932E91F2AE3980079DAB1 /* ZZYPhotoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZYPhotoHelper.h; sourceTree = "<group>"; };
 		627932EA1F2AE3980079DAB1 /* ZZYPhotoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZYPhotoHelper.m; sourceTree = "<group>"; };
@@ -3605,6 +3607,7 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				626DD6761F58048D008F820A /* qdjl_ico.png */,
 				622B2C321F5661C9009929D6 /* qd_ico_cs.png */,
 				622B2C331F5661C9009929D6 /* qd_ico.png */,
 				1F0DD2B81F4FA89F00465325 /* up_ico02.png */,
@@ -4151,6 +4154,7 @@
 				1FDB4AD61F4A916E00ED2731 /* sc_icof.png in Resources */,
 				1F3B3DE51E8DF93C00E75027 /* icon_030.gif in Resources */,
 				6218D05B1E4E95FB00299989 /* Main.storyboard in Resources */,
+				626DD6771F58048D008F820A /* qdjl_ico.png in Resources */,
 				62035F4C1E9F133200666399 /* bg_mt02.png in Resources */,
 				1F4DBB4D1E582D7000733CF7 /* mobaijilu.png in Resources */,
 				62AFB9241F0A1A3C003FCE35 /* tj_ico02.png in Resources */,

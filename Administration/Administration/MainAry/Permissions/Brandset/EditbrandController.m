@@ -546,6 +546,8 @@
     multiCV.blockArr =^(NSMutableArray *array){
         _branarr=[NSMutableArray array];
         _branarr=array;
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self getNetworkData];
         for (branModel *model in _dateAry) {
             [_branarr addObject:model];
         }
@@ -564,7 +566,8 @@
     multiCV.blockArray =^(NSMutableArray *arr){
         _paleAry=[NSMutableArray array];
         _paleAry=arr;
-        
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self getNetworkData];
         for (DirtmsnaModel *model in _DrAry) {
             [_paleAry addObject:model];
         }
@@ -584,6 +587,8 @@
     multiCV.blockArray =^(NSMutableArray *arr){
         _ManaAry=[NSMutableArray array];
         _ManaAry=arr;
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self getNetworkData];
         for (DirtmsnaModel *model in _DrAry) {
             [_ManaAry addObject:model];
         }
@@ -602,6 +607,8 @@
     multiCV.blockArr =^(NSMutableArray *arr){
         _EmisAry=[NSMutableArray array];
         _EmisAry=arr;
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self getNetworkData];
         for (DirtmsnaModel *model in _DrAry) {
             [_EmisAry addObject:model];
         }

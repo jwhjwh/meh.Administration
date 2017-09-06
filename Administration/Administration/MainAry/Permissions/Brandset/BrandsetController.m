@@ -107,7 +107,7 @@
             [alertView showMKPAlertView];
         }
         if (self.dataArray.count==0) {
-            [_tableView addEmptyViewWithImageName:@"" title:@"暂无消息" Size:20.0];
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无部门" Size:20.0];
             _tableView.emptyView.hidden = NO;
         }
         //[self.tableView reloadData];

@@ -10,4 +10,6 @@
 
 @interface FillinfoViewController : UIViewController
 
+@property (nonatomic,strong) NSString *points;
+
 @end
