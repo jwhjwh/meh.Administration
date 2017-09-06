@@ -54,7 +54,7 @@
         textView2.font = [UIFont systemFontOfSize:14];
         textView2.backgroundColor = GetColor(235, 227, 203, 1);
         textView2.scrollEnabled = NO;
-        textView2.placeholder = @"批注对象：例：@“本月计划超额完成";
+        textView2.placeholder = @"批注内容：例：@“很好，继续努力";
         [self.contentView addSubview:textView2];
         
         [textView1 mas_makeConstraints:^(MASConstraintMaker *make) {

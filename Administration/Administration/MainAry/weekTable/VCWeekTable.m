@@ -46,17 +46,18 @@
     [self.arrayTask removeAllObjects];
     [self.dictInfo removeAllObjects];
     [self.tableView reloadData];
+    self.mutAttribute = [[NSMutableAttributedString alloc]init];
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             if (self.isSelect) {
-                self.arrayTask = [NSMutableArray arrayWithObjects:@"本周任务",@"客户账面余额",@"现累计出货",@"本周预计回款",@"本周预计出货",@"本周任务",@"客户账号余额",@"现累计出货",@"本周预计回款",@"预计出货", nil];
-                self.arrayTotal = [NSMutableArray arrayWithObjects:@"managerTask",@"managerBalance",@"managerAccumulateGoods",@"managerReturnedMoney",@"managerPredictGoods",@"personTask",@"personBalance",@"personAccumulateGoods",@"personReturnedMoney",@"personPredictGoods", nil];
+                self.arrayTask = [NSMutableArray arrayWithObjects:@"品牌任务",@"本周任务",@"客户账面余额",@"现累计出货",@"本周预计回款",@"本周预计出货",@"\n个人任务",@"本周任务",@"客户账号余额",@"现累计出货",@"本周预计回款",@"预计出货", nil];
+                self.arrayTotal = [NSMutableArray arrayWithObjects:@"",@"managerTask",@"managerBalance",@"managerAccumulateGoods",@"managerReturnedMoney",@"managerPredictGoods",@"",@"personTask",@"personBalance",@"personAccumulateGoods",@"personReturnedMoney",@"personPredictGoods", nil];
             }else
             {
-                self.arrayTask2 = [NSMutableArray arrayWithObjects:@"本周任务",@"本周原预计回款",@"实际回款",@"原预计出货",@"实际出货",@"现累计出货",@"客户账面余额:",@"周初约计",@"周末",@"本周任务",@"本周原预计回款",@"实际回款",@"原预计出货",@"实际出货",@"现累计出货",@"客户账面余额:",@"周初约计",@"周末", nil];
-                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@"managerTask",@"managerPredictMoney",@"managerPracticalMoney",@"managerPredictCargo",@"managerPracticalCargo",@"ManagerAccumulateCargo",@"",@"managerWeeklyMoney",@"managerWeekendMoney",@"task",@"predictMoney",@"practicalMoney",@"predictCargo",@"practicalCargo",@"accumulateCargo",@"",@"weeklyMoney",@"weekendMoney", nil];
+                self.arrayTask2 = [NSMutableArray arrayWithObjects:@"品牌任务",@"本周任务",@"本周原预计回款",@"实际回款",@"原预计出货",@"实际出货",@"现累计出货",@"客户账面余额:",@"周初约计",@"周末",@"\n个人任务",@"本周任务",@"本周原预计回款",@"实际回款",@"原预计出货",@"实际出货",@"现累计出货",@"客户账面余额:",@"周初约计",@"周末", nil];
+                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@""@"managerTask",@"managerPredictMoney",@"managerPracticalMoney",@"managerPredictCargo",@"managerPracticalCargo",@"ManagerAccumulateCargo",@"",@"managerWeeklyMoney",@"managerWeekendMoney",@"",@"task",@"predictMoney",@"practicalMoney",@"predictCargo",@"practicalCargo",@"accumulateCargo",@"",@"weeklyMoney",@"weekendMoney", nil];
             }
             
             [self.tableView reloadData];
@@ -100,8 +101,7 @@
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
-//        self.arrayTask = @[@"本周任务",@"客户账面余额",@"现累计出货",@"本周预计回款",@"本周预计出货",@"本周任务",@"客户账号余额",@"现累计出货",@"本周预计回款",@"预计出货"];
-//        self.arrayTotal = @[@"managerTask",@"managerBalance",@"managerAccumulateGoods",@"managerReturnedMoney",@"managerPredictGoods",@"personTask",@"personBalance",@"personAccumulateGoods",@"personReturnedMoney",@"personPredictGoods"];
+
     }else
     {
         line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
@@ -140,6 +140,7 @@
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
         self.isSelect = YES;
+        self.remark = @"5";
         
     }else
     {
@@ -148,6 +149,7 @@
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务总结",@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
         self.isSelect = NO;
+        self.remark = @"6";
     }
     [self getData];
     [self.tableView reloadData];
@@ -159,7 +161,16 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
-    vc.stringName = self.arrayTitle[indexPath.row];
+    vc.stringName = cell.labelContent.attributedText;
+    for (NSString *key in [self.dictInfo allKeys]) {
+        if ([cell.labelContent.text isEqualToString:self.dictInfo[key]]) {
+            vc.theKey = key;
+            break;
+        }
+    }
+    vc.departmentID = self.departmentId;
+    vc.remark = self.remark;
+    vc.tableID = self.dictInfo[@"id"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -211,27 +222,43 @@
             cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.labelContent.attributedText = nil;
+        [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
         switch (indexPath.row) {
             case 3:
             {
+                cell.button.hidden = YES;
+                cell.button.userInteractionEnabled = NO;
                 if (self.isSelect) {
                     for (int i=0; i<self.arrayTask.count; i++) {
                         
-                        NSString *string1 = [NSString stringWithFormat:@"%@%@万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
+                        NSString *string1;
+                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
                         
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[indexPath.row-3] intValue], 3)];
+                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]init];
+                        
+                        if (i==0||i==6) {
+                            string1 = [NSString stringWithFormat:@"%@\n\n",self.arrayTask[i]];
+                            string = [[NSMutableAttributedString alloc]initWithString:string1];
+                            [string addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, [self.arrayTask[i] length])];
+                            
+                        }else
+                        {
+                            string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
+                            string = [[NSMutableAttributedString alloc]initWithString:string1];
+                            [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)];
+                        }
+                        
                         [self.mutAttribute appendAttributedString:string];
                         //                    
                     }
                 }else
                 {
-                    for (int i=0; i<self.arrayTask.count; i++) {
+                    for (int i=0; i<self.arrayTask2.count; i++) {
                         
-                        NSString *string1 = [NSString stringWithFormat:@"%@%@万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
-                        
+                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
+                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal2[i]]];
                         NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[indexPath.row-3] intValue], 3)];
+                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask2[i] length], string2.length)];
                         [self.mutAttribute appendAttributedString:string];
                         
                     }
@@ -242,6 +269,39 @@
  
             
             }
+                break;
+            case 4:
+                if (self.isSelect) {
+                    cell.labelContent.text = self.dictInfo[@"ovas"];
+                }else
+                {
+                    cell.labelContent.text = self.dictInfo[@"jaats"];
+                }
+                break;
+            case 5:
+                if (self.isSelect) {
+                    cell.labelContent.text = self.dictInfo[@"important"];
+                    
+                }else
+                {
+                    cell.labelContent.text = self.dictInfo[@"psp"];
+                }
+                break;
+            case 6:
+                if (self.isSelect) {
+                    cell.labelContent.text = self.dictInfo[@"personalProject"];
+                }else
+                {
+                    cell.labelContent.text = self.dictInfo[@"comments"];
+                }
+                break;
+            case 7:
+                if (self.isSelect) {
+                    cell.labelContent.text = self.dictInfo[@"others"];
+                }else
+                {
+                    cell.labelContent.text = self.dictInfo[@"others"];
+                }
                 break;
                 
             default:
@@ -303,6 +363,24 @@
         }
         
         
+        [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+            NSString *string = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];
+            if ([string isEqualToString:@"0000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+                return ;
+            }
+            if ([string isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+                return ;
+            }
+            if ([string isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+                return ;
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+        
         
         
     }
@@ -310,7 +388,9 @@
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     [self getData];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

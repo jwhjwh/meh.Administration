@@ -8,6 +8,7 @@
 
 #import "ViewControllerPerson.h"
 #import "ViewControllerPersonTable.h"
+#import "CellPerson.h"
 @interface ViewControllerPerson ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *array;
@@ -27,7 +28,7 @@
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.array = [responseObject valueForKey:@"list"];
-            [_tableView reloadData];
+            [self.tableView reloadData];
             return ;
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
@@ -50,20 +51,18 @@
 {
     return self.array.count;
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    CellPerson *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+        cell = [[CellPerson alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     NSDictionary *dict = self.array[indexPath.row];
-    cell.textLabel.text = dict[@"name"];
-    cell.detailTextLabel.text = dict[@"account"];
-    cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/2;
-    cell.imageView.layer.masksToBounds = YES;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    cell.dict = dict;
     return cell;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.array[indexPath.row];
@@ -97,10 +96,10 @@
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
+    [tableView registerClass:[CellPerson class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
-    
 }
 
 - (void)didReceiveMemoryWarning {

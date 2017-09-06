@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewControllerPostil : BaseViewController
-@property (nonatomic,strong)NSString *stringName;
+@property (nonatomic,strong)NSAttributedString *stringName;
+@property (nonatomic,strong)NSString *theKey;
+@property (nonatomic,strong)NSString *remark;
+@property (nonatomic,strong)NSString *tableID;
+@property (nonatomic,strong)NSString *departmentID;
 @end

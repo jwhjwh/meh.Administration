@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewControllerAllTable : BaseViewController
-
+@property (nonatomic,strong)NSString *departmentID;
+@property (nonatomic,strong)NSString *num;
 @end
