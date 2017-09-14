@@ -1,23 +1,20 @@
 //
-//  InputboxController.m
+//  SmallInputViewController.m
 //  Administration
 //
-//  Created by zhang on 2017/3/13.
+//  Created by 九尾狐 on 2017/9/12.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "InputboxController.h"
+#import "SmallInputViewController.h"
 #import "WJTextView.h"
-
-@interface InputboxController ()
-
-
+@interface SmallInputViewController ()
 @property (nonatomic,strong) WJTextView *textView;
 @property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,assign) int a;
 @end
 
-@implementation InputboxController
+@implementation SmallInputViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,12 +50,18 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    
+    if (self.modifi ==YES) {
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
+    
+    
     _scrollView=[[UIScrollView alloc]init];
     _scrollView.showsVerticalScrollIndicator = NO;
+    
     [self.view addSubview:_scrollView];
     // 创建textView
     _textView = [[WJTextView alloc]init];
@@ -68,7 +71,12 @@
     if([_number isEqualToString: @"11"]){
         _textView.placehoder = @"必填";
     }
-
+    
+    if (self.dateStr.length>0) {
+        _textView.text = self.dateStr;
+    }
+    
+    
     // 设置提示文字颜色
     _textView.placehoderColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
     // 设置textView的字体
@@ -79,6 +87,9 @@
     _textView.isAutoHeight = YES;
     _textView.layer.masksToBounds = YES;
     _textView.layer.cornerRadius = 20.0;
+    
+    _textView.editable=self.modifi;
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     // 添加到视图上
     [_scrollView addSubview:_textView];
@@ -91,6 +102,7 @@
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));;
     }];
+
 }
 -(void)buiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -104,14 +116,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

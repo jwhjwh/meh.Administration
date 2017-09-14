@@ -89,10 +89,12 @@
         make.width.mas_offset(100);
     }];
     infonTableview= [[UITableView alloc]init];
-    infonTableview.backgroundColor = GetColor(237, 237, 237, 1);
+    infonTableview.backgroundColor = [UIColor whiteColor];
      infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;//没有分割线
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
+    infonTableview.estimatedRowHeight = 100;
+    infonTableview.rowHeight = UITableViewAutomaticDimension;
     [self.view addSubview:infonTableview];
     
     [infonTableview mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -292,8 +294,24 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"签到成功" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
+                
                 [_boomview.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
                 [_boomview removeFromSuperview];
+                NSArray *addreary = [NSArray arrayWithObjects:self.Address, nil];
+                [_dizhiAry insertObject:addreary atIndex:0];
+                
+                NSString *sj=[[NSString alloc]initWithFormat:@"%@",[responseObject valueForKey:@"Dates"]];
+                NSArray *sjas = [NSArray arrayWithObjects:sj, nil];
+                [_sjAry insertObject:sjas atIndex:0];
+                
+                NSArray *xqmu = [NSArray arrayWithObjects:_MoodDescribe, nil];
+                [_xqAry insertObject:xqmu atIndex:0];
+                
+                NSIndexSet *indexSet1 = [[NSIndexSet alloc] initWithIndex:0];
+                [infonTableview beginUpdates];
+                [infonTableview insertSections:indexSet1 withRowAnimation:UITableViewRowAnimationLeft];
+                [infonTableview endUpdates];
+                
             };
             [alertView showMKPAlertView];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
@@ -336,7 +354,7 @@
     }else{
         _backlabel.hidden = NO;
         _MoodDescribe = @"";
-        
+          
     }
 }
 //请求数据
@@ -348,26 +366,32 @@
     NSDictionary *dic = [[NSDictionary alloc]init];
     dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"ShopId":self.shopid,@"Types":self.Types};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        _dizhiAry = [[NSMutableArray alloc]init];
+        _sjAry = [[NSMutableArray alloc]init];
+        _xqAry = [[NSMutableArray alloc]init];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *arr= [responseObject valueForKey:@"list"];
-            _dizhiAry = [[NSMutableArray alloc]init];
-            _sjAry = [[NSMutableArray alloc]init];
-            _xqAry = [[NSMutableArray alloc]init];
             for (NSDictionary *dic in arr) {
                 if ([dic valueForKey:@"address"] == nil) {
-                    [_dizhiAry addObject:@""];
+                    NSArray *address = [[NSArray alloc]initWithObjects:@"", nil];
+                    [_dizhiAry addObject:address];
                 }else{
-                    [_dizhiAry  addObject:[dic valueForKey:@"address"]];
+                    NSArray *address = [[NSArray alloc]initWithObjects:[dic valueForKey:@"address"], nil];
+                    [_dizhiAry  addObject:address];
                 }
                 if ([dic valueForKey:@"dates"] == nil) {
-                    [_sjAry addObject:@""];
+                    NSArray *dates = [[NSArray alloc]initWithObjects:@"", nil];
+                    [_sjAry addObject:dates];
                 }else{
-                [_sjAry  addObject:[dic valueForKey:@"dates"]];
+                    NSArray *dates = [[NSArray alloc]initWithObjects:[dic valueForKey:@"dates"], nil];
+                    [_sjAry  addObject:dates];
                 }
                 if ([dic valueForKey:@"moodDescribe"] == nil) {
-                    [_xqAry addObject:@""];
+                    NSArray *moodDescribe = [[NSArray alloc]initWithObjects:@"", nil];
+                    [_xqAry addObject:moodDescribe];
                 }else{
-                    [_xqAry  addObject:[dic valueForKey:@"moodDescribe"]];
+                    NSArray *moodDescribe = [[NSArray alloc]initWithObjects:[dic valueForKey:@"moodDescribe"], nil];
+                    [_xqAry  addObject:moodDescribe];
                 }
                 
                 
@@ -408,37 +432,32 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return _sjAry.count;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return _dizhilabel.height+_shijianlabel.height+_xqmslabel.height+20;
-    
-    
-    //return 50;
-}
--(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
-    
     return 1;
 }
 
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
+    
+    return _sjAry.count;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 10;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier =@"Cell";
-    //定义cell的复用性当处理大量数据时减少内存开销
-    UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     if (cell ==nil)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UIImageView *xiaolian = [[UIImageView alloc]init];
     xiaolian.image = [UIImage imageNamed:@"qd_ico"];
     [cell addSubview:xiaolian];
     [xiaolian mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(cell.mas_top).offset(2);
+        make.top.mas_equalTo(cell.mas_top).offset(5);
         make.left.mas_equalTo(cell.mas_left).offset(5);
         make.height.mas_offset(20);
         make.width.mas_offset(20);
@@ -446,7 +465,7 @@
     
     
    _dizhilabel = [[UILabel alloc]init];
-    NSString *dizhitext = [NSString stringWithFormat:@"地址: %@",_dizhiAry[indexPath.row]];
+    NSString *dizhitext = [NSString stringWithFormat:@"地址: %@",_dizhiAry[indexPath.section][0]];
     _dizhilabel.textColor = GetColor(150, 150, 150, 1);
     _dizhilabel.font = [UIFont systemFontOfSize:16];
     _dizhilabel.numberOfLines = 0;
@@ -464,18 +483,12 @@
     CGSize dizhimszee = [_dizhilabel.text sizeWithFont: [UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(cell.width-40,2000)];
     
     [cell addSubview:_dizhilabel];
-    [_dizhilabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(cell.mas_top).offset(5);
-        make.left.mas_equalTo(xiaolian.mas_right).offset(5);
-        make.right.mas_equalTo(cell.mas_right).offset(-10);
-        make.height.mas_offset(dizhimszee.height);
-    }];
     
     _shijianlabel= [[UILabel alloc]init];
     if (_sjAry[indexPath.row] == nil) {
         
     }else{
-        NSString *sj = [[NSString alloc]initWithFormat:@"%@", [_sjAry[indexPath.row] substringWithRange:NSMakeRange(5, 11)]];
+        NSString *sj = [[NSString alloc]initWithFormat:@"%@", [_sjAry[indexPath.section][0] substringWithRange:NSMakeRange(5, 11)]];
         _shijianlabel.text = [NSString stringWithFormat:@"时间: %@",sj];
     }
     
@@ -494,15 +507,9 @@
     [_shijianlabel setAttributedText:sjStr];
     
     [cell addSubview:_shijianlabel];
-    [_shijianlabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_dizhilabel.mas_bottom).offset(5);
-        make.left.mas_equalTo(xiaolian.mas_right).offset(5);
-        make.right.mas_equalTo(cell.mas_right).offset(-10);
-        make.height.mas_offset(35);
-    }];
     
     _xqmslabel = [[UILabel alloc]init];
-    NSString *labelstr = [NSString stringWithFormat:@"心情描述: %@",_xqAry[indexPath.row]];
+    NSString *labelstr = [NSString stringWithFormat:@"心情描述: %@",_xqAry[indexPath.section][0]];
     _xqmslabel.textColor = GetColor(150, 150, 150, 1);
     _xqmslabel.numberOfLines = 0;
     
@@ -520,13 +527,34 @@
     [_xqmslabel setAttributedText:xqmsStr];
     CGSize xqmszee = [_xqmslabel.text sizeWithFont: [UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(cell.width-40,2000)];
     [cell addSubview:_xqmslabel];
+    
+    
+    [_dizhilabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(cell.mas_left).offset(25);
+        make.right.mas_equalTo(cell.mas_right).offset(-5);
+        make.top.mas_equalTo(cell.mas_top).offset(5);
+        make.bottom.mas_equalTo(_shijianlabel.mas_top).offset(-5);
+    }];
+    
+    
+    [_shijianlabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_dizhilabel.mas_bottom).offset(5);
+        make.left.mas_equalTo(cell.mas_left).offset(25);
+        make.right.mas_equalTo(cell.mas_right).offset(-5);
+        make.bottom.mas_equalTo(_xqmslabel.mas_top).offset(-5);
+    }];
+    
+    
     [_xqmslabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_shijianlabel.mas_bottom).offset(5);
-        make.left.mas_equalTo(xiaolian.mas_right).offset(5);
-        make.right.mas_equalTo(cell.mas_right).offset(-10);
-        make.height.mas_offset(xqmszee.height);
+        make.right.mas_equalTo(cell.mas_right).offset(-5);
+        make.left.mas_equalTo(cell.mas_left).offset(25);
+        make.bottom.mas_equalTo(cell.mas_bottom).offset(-5);
     }];
     return cell;
+    
+    
+    
     
 }
 

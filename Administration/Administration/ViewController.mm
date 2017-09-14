@@ -356,6 +356,7 @@
             [USER_DEFAULTS  setObject:@"1" forKey:@"guiiiii"];
             [USER_DEFAULTS  setObject:uuid forKey:@"uuid"];
             [USER_DEFAULTS  setObject:roleIds forKey:@"roleIds"];
+            
             [USER_DEFAULTS setObject:[responseObject valueForKey:@"roleIds"] forKey:@"myRole"];
             [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"roleId"]];
             

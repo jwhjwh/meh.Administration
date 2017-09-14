@@ -188,7 +188,12 @@
     DateSubmittedViewController *detail = [[DateSubmittedViewController alloc]init];
     SubmittedModel *model =self.dataArray[indexPath.section];
     detail.contentid = model.pid;
-    
+    detail.datesubString=^(NSString *content){
+        if ([content isEqualToString:@"1"]) {
+           [self getNetworkData:YES];
+            
+        }
+    };
     [self.navigationController pushViewController:detail animated:YES];
     
     

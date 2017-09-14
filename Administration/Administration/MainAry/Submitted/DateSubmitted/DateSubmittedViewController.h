@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void  (^BAELOCKck)(NSString *content);
 
 @interface DateSubmittedViewController : UIViewController
+@property (nonatomic,copy)BAELOCKck datesubString;
 
 @property (nonatomic,copy)NSString *contentid;
 

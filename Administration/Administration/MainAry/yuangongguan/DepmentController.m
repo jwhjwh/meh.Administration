@@ -98,15 +98,19 @@
     
 }
 -(void)checkPositionUsers{
-    NSString *RoleId=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"roleIds"]];
-    NSString *urlStr =[NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
+    
+    //manager/checkPositionUsersDiff.action 
+    NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleIds"]];
+    NSString *urlStr =[[NSString alloc]init];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info = [[NSDictionary alloc]init];
     if (self.DepartmentID.length>0) {
-        info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"roleIds":RoleId,@"DepartmentID":self.DepartmentID};
+        urlStr = [NSString stringWithFormat:@"%@manager/checkPositionUsersDiff.action",KURLHeader];
+        info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"RoleId":RoleId,@"DepartmentID":self.DepartmentID};
     }else{
+        urlStr = [NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
         info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"roleIds":RoleId};
     }
     

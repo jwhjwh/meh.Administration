@@ -17,6 +17,7 @@
 }
 @property (nonatomic,retain)NSMutableArray *arr;
 @property (nonatomic,strong)NSMutableArray *indexArray;
+@property (nonatomic,strong)NSString *departmentId;
 @end
 
 @implementation JoblistController
@@ -124,7 +125,12 @@
     DepmentCV.Numstr=modld.num;
     DepmentCV.dataShow=self.Num;
     DepmentCV.isManager = self.isManager;
-    DepmentCV.DepartmentID = modld.DepartmentID;
+    if (_departmentId == nil) {
+        
+    }else{
+        DepmentCV.DepartmentID = _departmentId;
+    }
+    
     
     [self.navigationController pushViewController:DepmentCV animated:YES];
    // }
@@ -148,6 +154,8 @@
         
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *arr;
+            _departmentId = [[NSString alloc]init];
+            _departmentId =[responseObject valueForKey:@"DepartmentID"];
             if (self.isManager) {
                 arr = [responseObject valueForKey:@"list"];
             }else
