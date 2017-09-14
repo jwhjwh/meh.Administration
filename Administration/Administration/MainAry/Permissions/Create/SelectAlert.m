@@ -146,7 +146,11 @@
         _selectValue = [selectValue copy];
         _showCloseButton = showCloseButton;
         [self addSubview:self.alertView];
-        [self.alertView addSubview:self.titleLabel];
+        if (title == nil) {
+            
+        }else{
+             [self.alertView addSubview:self.titleLabel];
+        }
         [self.alertView addSubview:self.selectTableView];
         if (_showCloseButton) {
             [self.alertView addSubview:self.closeButton];
@@ -198,14 +202,25 @@
 }
 
 - (void)initUI {
-    self.alertView.frame = CGRectMake(50, ([UIScreen mainScreen].bounds.size.height-alertHeight)/2.0, [UIScreen mainScreen].bounds.size.width-100, alertHeight);
+    if (self.titleLabel.text == nil) {
+        self.alertView.frame = CGRectMake(50, ([UIScreen mainScreen].bounds.size.height-alertHeight)/2.0, [UIScreen mainScreen].bounds.size.width-100, alertHeight-buttonHeight);
+    }else{
+     self.alertView.frame = CGRectMake(50, ([UIScreen mainScreen].bounds.size.height-alertHeight)/2.0, [UIScreen mainScreen].bounds.size.width-100, alertHeight);
+    }
+   
+    
     self.titleLabel.frame = CGRectMake(0, 0, _alertView.frame.size.width, buttonHeight);
+    
     float reduceHeight = buttonHeight;
     if (_showCloseButton) {
         self.closeButton.frame = CGRectMake(0, _alertView.frame.size.height-buttonHeight, _alertView.frame.size.width, buttonHeight);
         reduceHeight = buttonHeight*2;
     }
+    if (self.titleLabel.text ==nil) {
+       self.selectTableView.frame = CGRectMake(0, 0, _alertView.frame.size.width, _alertView.frame.size.height);
+    }else{
     self.selectTableView.frame = CGRectMake(0, buttonHeight, _alertView.frame.size.width, _alertView.frame.size.height-reduceHeight);
+    }
 }
 
 
