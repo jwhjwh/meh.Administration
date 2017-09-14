@@ -9,7 +9,7 @@
 #import "ViewControllerShopDetail.h"
 #import "ViewControllerPerson.h"
 #import "ViewControllerStayCheck.h"
-#import "ViewControllerAllTable.h"
+#import "ViewControllerPosition.h"
 @interface ViewControllerShopDetail ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *array;
@@ -28,26 +28,29 @@
     NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num,@"Sort":[ShareModel shareModel].sort,@"RoleId":[ShareModel shareModel].roleID,@"DepartmentID":self.departmanetID};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
-        if ([stringCode isEqualToString:@"0000"]) {
-            if ([responseObject[@"count"] intValue]!=0) {
-                NSString *string = [NSString stringWithFormat:@"待审核（%d）",[responseObject[@"count"] intValue]];
-                [self.array replaceObjectAtIndex:1 withObject:string];
-            }
+        if (![stringCode isKindOfClass:[NSNull class]]) {
+            if ([stringCode isEqualToString:@"0000"]) {
+                if ([responseObject[@"count"] intValue]!=0) {
+                    NSString *string = [NSString stringWithFormat:@"待审核（%d）",[responseObject[@"count"] intValue]];
+                    [self.array replaceObjectAtIndex:1 withObject:string];
+                }
+        }
+        
             [self.tableView reloadData];
             return ;
         }
-        if ([stringCode isEqualToString:@"1001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
-            return ;
-        }
-        if ([stringCode isEqualToString:@"4444"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
-            return ;
-        }
-        if ([stringCode isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1];
-            return ;
-        }
+//        if ([stringCode isEqualToString:@"1001"]) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+//            return ;
+//        }
+//        if ([stringCode isEqualToString:@"4444"]) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+//            return ;
+//        }
+//        if ([stringCode isEqualToString:@"5000"]) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1];
+//            return ;
+//        }
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -92,7 +95,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else
     {
-        ViewControllerAllTable *vc = [[ViewControllerAllTable alloc]init];
+        ViewControllerPosition *vc = [[ViewControllerPosition alloc]init];
         vc.departmentID = self.departmanetID;
         vc.num = self.num;
         [self.navigationController pushViewController:vc animated:YES];

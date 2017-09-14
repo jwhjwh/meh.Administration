@@ -63,7 +63,7 @@
         labelTime.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:labelTime];
         [labelTime mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(imageView.mas_left).offset(8);
+            make.right.mas_equalTo(imageView.mas_left).offset(-8);
             make.top.mas_equalTo(self.contentView.mas_top).offset(5);
             make.height.mas_equalTo(12);
         }];
@@ -73,7 +73,7 @@
         labelStatus.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:labelStatus];
         [labelStatus mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(imageView.mas_left).offset(8);
+            make.right.mas_equalTo(imageView.mas_left).offset(-8);
             make.centerY.mas_equalTo(self.contentView.mas_centerY);
             make.height.mas_equalTo(12);
         }];

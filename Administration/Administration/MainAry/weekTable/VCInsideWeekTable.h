@@ -15,5 +15,8 @@
 @property (nonatomic,strong)NSString *tableId;
 @property (nonatomic,strong)NSString *roleId;
 @property (nonatomic,strong)NSString *postionName;
+@property (nonatomic,strong)NSString *num;
 @property (nonatomic)BOOL isSelect;
+@property (nonatomic,strong)NSString *summaryId;
+@property (nonatomic,strong)NSString *state;
 @end

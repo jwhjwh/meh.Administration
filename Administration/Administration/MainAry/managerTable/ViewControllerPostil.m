@@ -16,11 +16,22 @@
     NSMutableArray * array;
     BOOL isSelect;
     NSIndexPath *indexP;
-    NSMutableArray *arrayContent;
-    
+   
     NSString *comment;//批注的内容
     NSString *location;//报表的内容
+    
+    NSString *stringObj;
+    
+    BOOL isAddPostil;
+    
+    
+    NSMutableArray *array1;
+    NSMutableArray *array2;
+    NSMutableArray *array3;
+    NSMutableArray *array4;
+    
 }
+@property (nonatomic ,strong)NSString *postiliD;
 @end
 
 @implementation ViewControllerPostil
@@ -40,7 +51,7 @@
         
         indexP = [tableView1 indexPathForRowAtPoint:point]; // 可以获取我们在哪个cell上长按
         
-        NSLog(@"%@",indexP);
+       
     }
     
     if (lpGR.state == UIGestureRecognizerStateEnded)//手势结束
@@ -54,7 +65,7 @@
 
 -(UIButton *)showDeletImage:(CGRect )frame;
 {
-    NSLog(@"长安");
+   
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     [button setBackgroundImage:[UIImage imageNamed:@"sc_icof"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(deleteCell:) forControlEvents:UIControlEventTouchUpInside];
@@ -72,19 +83,26 @@
     inter --;
     
     CellPostil *cell = (CellPostil *)[button superview].superview;
-    NSLog(@"cell.te = %@",cell.textView1.text);
-    
     
     NSIndexPath *indexPath = [tableView1 indexPathForCell:cell];
     
     NSMutableDictionary *dict = [array[indexPath.section]mutableCopy];
+    NSMutableArray  *arrayC = [dict[@"list"] mutableCopy];
     
-    NSMutableArray *mutArray = [arrayContent[indexPath.section]mutableCopy];
-    [mutArray removeObjectAtIndex:indexPath.row];
-    [arrayContent replaceObjectAtIndex:indexPath.section withObject:mutArray];
+    NSDictionary *dct = arrayC[indexPath.row];
+    if ([[NSString stringWithFormat:@"%@",dct[@"id"]]isEqualToString:@""]) {
+        [arrayC removeObjectAtIndex:indexPath.row];
+        
+        [dict setValue:arrayC forKey:@"list"];
+        [array replaceObjectAtIndex:indexPath.section withObject:dict];
+    }else
+    {
+        [self deletePositil:[NSString stringWithFormat:@"%@",dct[@"id"]]];
+    }
     
-    [dict setValue:[NSString stringWithFormat:@"%ld",inter] forKey:@"number"];
-    [array replaceObjectAtIndex:indexPath.section withObject:dict];
+    
+    
+    
     NSIndexSet *set = [NSIndexSet indexSetWithIndex:indexPath.section];
     [tableView1 reloadSections:set withRowAnimation:UITableViewRowAnimationFade];
     [button removeFromSuperview];
@@ -92,11 +110,18 @@
 
 -(void)allReady:(UIButton *)button
 {
-    
     CellPostil *cell = (CellPostil *)[[button superview]superview];
     NSIndexPath *indePath = [tableView1 indexPathForCell:cell];
-    NSMutableArray *mutArray = arrayContent[indePath.section];
-    NSMutableDictionary *dict = mutArray[indePath.row];
+    NSDictionary *dict = array[indePath.section];
+    NSArray *arrayL = dict[@"list"];
+    NSDictionary *dic = arrayL[indePath.row];
+    if (dic[@"id"]==nil||[[NSString stringWithFormat:@"%@",dic[@"id"]] isEqualToString:@""]) {
+        self.postiliD = @"";
+    }
+    else
+    {
+        self.postiliD = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    }
     NSDate *date = [NSDate date];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -106,64 +131,60 @@
     NSString *DateTime = [formatter stringFromDate:date];
     cell.labelTime.text = DateTime;
     
-    if (comment.length==0) {
+    if (cell.textView1.text.length==0) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写批注内容" andInterval:1];
         return;
     }
-    if (location.length==0) {
+    if (cell.textView2.text.length==0) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写批注对象" andInterval:1];
         return;
     }
     
     if ([cell.buttonComp.titleLabel.text isEqualToString:@"完成"]) {
         [self submitPostil];
+        isAddPostil = YES;
         [cell.buttonComp setTitle:@"修改" forState:UIControlStateNormal];
         cell.textView1.userInteractionEnabled = NO;
         cell.textView2.userInteractionEnabled = NO;
-        [dict setValue:cell.textView1.text forKey:@"textView1"];
-        [dict setValue:cell.textView2.text forKey:@"textView2"];
-        [dict setValue:@"3" forKey:@"buttonState"];
-        [dict setValue:DateTime forKey:@"date"];
-        [mutArray replaceObjectAtIndex:indePath.row withObject:dict];
-        [arrayContent replaceObjectAtIndex:indePath.section  withObject:mutArray];
-        
     }else
     {
         [cell.buttonComp setTitle:@"完成" forState:UIControlStateNormal];
         cell.textView1.userInteractionEnabled = YES;
         cell.textView2.userInteractionEnabled = YES;
-        [dict setValue:cell.textView1.text forKey:@"textView1"];
-        [dict setValue:cell.textView2.text forKey:@"textView2"];
-        [dict setValue:@"2" forKey:@"buttonState"];
-        [dict setValue:DateTime forKey:@"date"];
-        [mutArray replaceObjectAtIndex:indePath.row withObject:dict];
-        [arrayContent replaceObjectAtIndex:indePath.section  withObject:mutArray];
     }
     
 }
 
 -(void)addPostil:(UIButton *)sender
 {
-    
-    
     NSMutableDictionary *dictL = [NSMutableDictionary dictionary];
-    [dictL setValue:@"" forKey:@"textView1"];
-    [dictL setValue:@"" forKey:@"textView2"];
-    [dictL setValue:@"1" forKey:@"buttonState"];
-    [dictL setValue:@"" forKey:@"date"];
+    [dictL setValue:@"" forKey:@"addTime"];
+    [dictL setValue:@"" forKey:@"comment"];
+    [dictL setValue:@"1" forKey:@"fieldValue"];
+    [dictL setValue:@"" forKey:@"id"];
+    [dictL setValue:@"" forKey:@"location"];
+    [dictL setValue:@"" forKey:@"mid"];
+    [dictL setValue:@"" forKey:@"reportId"];
+    [dictL setValue:@"" forKey:@"reportRemark"];
+    [dictL setValue:@"" forKey:@"roleId"];
     
     NSUInteger index = sender.tag;
     NSIndexSet *set = [NSIndexSet indexSetWithIndex:index -10];
     NSMutableDictionary *dict = [array[index-10]mutableCopy];
     
-    NSMutableArray *mutArray = [arrayContent[index-10]mutableCopy];
+    NSMutableArray *mutArray = [dict[@"list"]mutableCopy];
     [mutArray insertObject:dictL atIndex:0];
     
-    [arrayContent replaceObjectAtIndex:index-10 withObject:mutArray];
+   
+    [dict setValue:mutArray forKey:@"list"];
+    
+    [array replaceObjectAtIndex:index-10 withObject:dict];
     
     inter = [dict[@"number"]intValue];
     inter ++;
+
     
+    [USER_DEFAULTS setValue:@"" forKey:@"postilID"];
     [dict setValue:[NSString stringWithFormat:@"%ld",inter] forKey:@"number"];
     [array replaceObjectAtIndex:index-10 withObject:dict];
     [tableView1 reloadSections:set withRowAnimation:UITableViewRowAnimationFade];
@@ -176,6 +197,8 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    
+    
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
@@ -185,7 +208,9 @@
                            @"comment":comment,
                            @"location":location,
                            @"reportId":self.tableID,
-                           @"remark":self.remark};
+                           @"remark":self.remark,
+                           @"id":self.postiliD,
+                           @"Num":self.num};
     
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -215,6 +240,24 @@
     } view:self.view MBPro:YES];
 }
 
+-(void)deletePositil:(NSString *)postilID
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@manager/mDeletePostil",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"id":postilID};
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        
+        if ([code isEqualToString:@"0000"]) {
+            [self getData];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
 -(void)getData
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@manager/queryReportPostilInfo",KURLHeader];
@@ -232,8 +275,73 @@
                            @"remark":self.remark};
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        [array1 removeAllObjects];
+        [array2 removeAllObjects];
+        [array3 removeAllObjects];
+        [array4 removeAllObjects];
         NSString *code = [responseObject valueForKey:@"status"];
+        NSMutableArray *arraylist = [[responseObject valueForKey:@"list"]mutableCopy];
+        NSMutableDictionary *dictInfo = [NSMutableDictionary dictionary];
+//        if (arraylist==nil) {
+//            arraylist  = [NSMutableArray array];
+//            [dictInfo setValue:@"" forKey:@"addTime"];
+//            [dictInfo setValue:@"" forKey:@"comment"];
+//            [dictInfo setValue:@"" forKey:@"fieldValue"];
+//            [dictInfo setValue:@"" forKey:@"id"];
+//            [dictInfo setValue:@"" forKey:@"location"];
+//            [dictInfo setValue:@"" forKey:@"mid"];
+//            [dictInfo setValue:@"" forKey:@"reportId"];
+//            [dictInfo setValue:@"" forKey:@"reportRemark"];
+//            [dictInfo setValue:@"" forKey:@"roleId"];
+//            [array1 addObject:dictInfo];
+//            [array2 addObject:dictInfo];
+//            [array3 addObject:dictInfo];
+//            [array4 addObject:dictInfo];
+//        }
+        self.postiliD = @"";
+        for (NSDictionary *dictionary in arraylist) {
+            NSString *roleid = [NSString stringWithFormat:@"%@",dictionary[@"roleId"]];
+            if ([roleid isEqualToString:@"1"]) {
+                [array1 addObject:dictionary];
+            }else if([roleid isEqualToString:@"7"])
+            {
+                [array2 addObject:dictionary];
+            }else if ([roleid isEqualToString:@"8"]||[roleid isEqualToString:@"6"]||[roleid isEqualToString:@"12"]||[roleid isEqualToString:@"13"]||[roleid isEqualToString:@"15"])
+            {
+                [array3 addObject:dictionary];
+            }else
+            {
+                [array4 addObject:dictionary];
+            }
+            
+        }
+        
+        NSString *roleid = [USER_DEFAULTS valueForKey:@"roleId"];
+        
+        [dictPosition enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            if ([roleid isEqualToString:key]) {
+                obj = dictPosition[roleid];
+                stringObj = [NSString stringWithFormat:@"%@",obj];
+                if ([stringObj containsString:@"老板"]) {
+                    array =  [NSMutableArray arrayWithObjects:@{@"position":@"经理批注",@"show":@"0",@"number":@"0",@"list":array3},@{@"position":@"行政批注",@"show":@"0",@"number":@"0",@"list":array2},@{@"position":@"老板批注",@"show":@"1",@"number":@"1",@"list":array1}, nil];
+                    
+                }else if([stringObj containsString:@"行政"])
+                {
+                    array = [NSMutableArray arrayWithObjects:@{@"position":@"经理批注",@"show":@"0",@"number":@"0",@"list":array3},@{@"position":@"行政批注",@"show":@"1",@"number":@"1",@"list":array2},@{@"position":@"老板批注",@"show":@"0",@"number":@"0",@"list":array1}, nil];
+                }else if([stringObj containsString:@"总监"])
+                {
+                    array = [NSMutableArray arrayWithObjects:@{@"position":@"总监批注",@"show":@"1",@"number":@"1",@"list":array4},@{@"position":@"行政批注",@"show":@"0",@"number":@"0",@"list":array2},@{@"position":@"老板批注",@"show":@"0",@"number":@"0",@"list":array1}, nil];
+                }else
+                {
+                    array = [NSMutableArray arrayWithObjects:@{@"position":@"经理批注",@"show":@"1",@"number":@"1",@"list":array3},@{@"position":@"行政批注",@"show":@"0",@"number":@"0",@"list":array2},@{@"position":@"老板批注",@"show":@"0",@"number":@"0",@"list":array1}, nil];
+                }
+            }
+        }];
+        
+        
         if ([code isEqualToString:@"0000"]) {
+            
+            [tableView1 reloadData];
             return ;
         }
         if ([code isEqualToString:@"1001"]) {
@@ -245,7 +353,7 @@
             return;
         }
         if ([code isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
+            [tableView1 reloadData];
             return;
         }
         if ([code isEqualToString:@"0003"]) {
@@ -257,14 +365,6 @@
     } view:self.view MBPro:YES];
     
 }
-#pragma -mark alertView
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex==1) {
-        //提交数据
-        [self back];
-    }
-}
 
 #pragma -mark tabelView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -274,7 +374,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSDictionary *dict =array[section];
-    return [dict[@"number"]intValue];
+   // return array[section];
+    NSArray *arr = dict[@"list"];
+    return arr.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -291,40 +393,47 @@
     cell.textView1.delegate = self;
     cell.textView2.delegate = self;
     longPressGR.minimumPressDuration = 1;
+    NSDictionary *dict = array[indexPath.section];
+    NSArray *arrayList = dict[@"list"];
+    NSDictionary *dictInfo = arrayList[indexPath.row];
     
-    NSDictionary *dict = arrayContent[indexPath.section][indexPath.row];
-    if (dict[@"textView1"]!=nil) {
-        cell.textView1.text = dict[@"textView1"];
-    }
-    
-    if (dict[@"textView2"]!=nil) {
-        cell.textView2.text = dict[@"textView2"];
-    }
-    
-    if ([dict[@"buttonState"] isEqualToString:@"1"]) {
-        cell.buttonComp.hidden = YES;
-        cell.textView1.userInteractionEnabled = YES;
-        cell.textView2.userInteractionEnabled = YES;
-        
-    }else if ([dict[@"buttonState"] isEqualToString:@"2"])
-    {
-        [cell.buttonComp setTitle:@"完成" forState:UIControlStateNormal];
-        cell.textView1.userInteractionEnabled = YES;
-        cell.textView2.userInteractionEnabled = YES;
-        cell.buttonComp.hidden = NO;
+    //NSDictionary *dcit1 = arrayContent[indexPath.section][indexPath.row];
+   
+    cell.textView1.text = dictInfo[@"location"];
+    cell.textView2.text = dictInfo[@"comment"];
+    if ([dictInfo[@"addTime"] length]!=0) {
+        cell.labelTime.text = [dictInfo[@"addTime"] substringToIndex:15];
     }else
     {
+        cell.labelTime.text = @"刚刚";
+    }
+    
+    if ([[ShareModel shareModel].roleID isEqualToString:[NSString stringWithFormat:@"%@",dict[@"roleId"]]]) {
+        cell.buttonComp.hidden = NO;
+        cell.buttonComp.userInteractionEnabled = YES;
+    }else
+    {
+        cell.buttonComp.hidden = YES;
+        cell.buttonComp.userInteractionEnabled = NO;
+    }
+    
+  //  [cell.buttonComp setTitle:@"修改" forState:UIControlStateNormal];
+    
+    if (cell.textView1.text.length!=0||cell.textView2.text.length!=0) {
+        cell.buttonComp.hidden = NO;
+        cell.buttonComp.userInteractionEnabled = YES;
         [cell.buttonComp setTitle:@"修改" forState:UIControlStateNormal];
         cell.textView1.userInteractionEnabled = NO;
         cell.textView2.userInteractionEnabled = NO;
-        cell.buttonComp.hidden = NO;
-    }
-    NSString *stringDate = dict[@"date"];
-    if (stringDate.length==0) {
-        cell.labelTime.text = @"刚刚";
+        
     }else
     {
-        cell.labelTime.text = dict[@"date"];
+        cell.buttonComp.hidden = YES;
+        cell.buttonComp.userInteractionEnabled = NO;
+        cell.textView1.userInteractionEnabled = YES;
+        cell.textView2.userInteractionEnabled = YES;
+
+        
     }
     
     [cell addGestureRecognizer:longPressGR];
@@ -356,7 +465,7 @@
     button.tag = section+10;
     [button setTitle:@"添加批注 +" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:12];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitleColor:GetColor(142, 124, 108, 1) forState:UIControlStateNormal];
     [button addTarget:self action:@selector(addPostil:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     
@@ -396,6 +505,7 @@
     CellPostil *cell = (CellPostil *)[textView superview].superview;
     if ( cell.textView1.text.length!=0||cell.textView2.text.length!=0) {
         cell.buttonComp.hidden = NO;
+        cell.buttonComp.userInteractionEnabled = YES;
         [cell.buttonComp setTitle:@"完成" forState:UIControlStateNormal];
         if ([textView isEqual:cell.textView1]) {
             if (cell.textView1.text.length!=0) {
@@ -449,6 +559,28 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
+    UITextView *textView = [[UITextView alloc]init];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    textView.backgroundColor = GetColor(255, 249, 230, 1);
+    
+    CGSize size = [self.stringName boundingRectWithSize:CGSizeMake(Scree_width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size;
+    textView.text = self.stringName;
+    textView.font = [UIFont systemFontOfSize:17];
+    textView.frame = CGRectMake(0, 0, Scree_width, size.height+20);
+    [self.view addSubview:textView];
+    
+    tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,Scree_width , Scree_height) style:UITableViewStyleGrouped];
+    [tableView1 registerClass:[CellPostil class] forCellReuseIdentifier:@"cell"];
+    tableView1.delegate = self;
+    tableView1.dataSource = self;
+    tableView1.backgroundColor = GetColor(255, 252, 241, 1);
+    tableView1.rowHeight = UITableViewAutomaticDimension;
+    tableView1.tableHeaderView = textView;
+    tableView1.estimatedRowHeight = 80;
+    [self.view addSubview:tableView1];
+    
     [self getData];
 }
 
@@ -457,48 +589,16 @@
     // Do any additional setup after loading the view.
     self.title = @"批注";
     
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(-1, 64, Scree_width+1, 44)];
-//    view.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    view.layer.borderWidth = 1.0f;
-//    [self.view addSubview:view];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 40)];
-    label.attributedText  = self.stringName;
-    label.numberOfLines = 0;
-    label.backgroundColor = GetColor(255, 249, 230, 1);
-    CGSize size = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
+    self.postiliD = @"";
     
-    label.frame = CGRectMake(label.frame.origin.x, 0, label.frame.size.width, size.height);
-    [self.view addSubview:label];
-
-    
-//    NSDictionary *dictTitle = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-//    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:(UIBarButtonItemStyleDone) target:self action:@selector(submit)];
-//    [rightitem setTitleTextAttributes:dictTitle forState:UIControlStateNormal];
-//    self.navigationItem.rightBarButtonItem = rightitem;
+    array1 = [NSMutableArray array];
+    array2 = [NSMutableArray array];
+    array3 = [NSMutableArray array];
+    array4 = [NSMutableArray array];
     
     inter=1;
-    tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,Scree_width , Scree_height) style:UITableViewStyleGrouped];
-    [tableView1 registerClass:[CellPostil class] forCellReuseIdentifier:@"cell"];
-    tableView1.delegate = self;
-    tableView1.dataSource = self;
-    tableView1.backgroundColor = GetColor(255, 252, 241, 1);
-    tableView1.rowHeight = UITableViewAutomaticDimension;
-    tableView1.tableHeaderView = label;
-    tableView1.estimatedRowHeight = 80;
-    [self.view addSubview:tableView1];
     
-    arrayContent = [NSMutableArray array];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:@"" forKey:@"textView1"];
-    [dict setValue:@"" forKey:@"textView2"];
-    [dict setValue:@"1" forKey:@"buttonState"];
-    [dict setValue:@"" forKey:@"date"];
-    for (int i=0; i<3; i++) {
-        NSMutableArray *mutArray = [NSMutableArray arrayWithObject:dict];
-        [arrayContent insertObject:mutArray atIndex:0];
-    }
-    NSLog(@"mutArray = %@",arrayContent);
     
     dictPosition = @{@"1":@"老板",
                      @"2":@"美导",
@@ -517,28 +617,7 @@
                      @"15":@"财务经理",
                      @"16":@"会计",
                      @"17":@"出纳"};
-    NSString *roleid = [USER_DEFAULTS valueForKey:@"roleId"];
-    
-    [dictPosition enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([roleid isEqualToString:key]) {
-            obj = dictPosition[roleid];
-            NSLog(@"obj = %@",obj);
-            NSString *stringObj = [NSString stringWithFormat:@"%@",obj];
-            if ([stringObj containsString:@"老板"]) {
-                array =  [NSMutableArray arrayWithObjects:@{@"position":@"经理批注",@"show":@"0",@"number":@"0"},@{@"position":@"行政批注",@"show":@"0",@"number":@"0"},@{@"position":@"老板批注",@"show":@"1",@"number":@"1"}, nil];
-                
-            }else if([stringObj containsString:@"行政"])
-            {
-                array = [NSMutableArray arrayWithObjects:@{@"position":@"经理批注",@"show":@"0",@"number":@"0"},@{@"position":@"行政批注",@"show":@"1",@"number":@"1"},@{@"position":@"老板批注",@"show":@"0",@"number":@"0"}, nil];
-            }else if([stringObj containsString:@"总监"])
-            {
-                array = [NSMutableArray arrayWithObjects:@{@"position":@"总监批注",@"show":@"1",@"number":@"1"},@{@"position":@"行政批注",@"show":@"0",@"number":@"0"},@{@"position":@"老板批注",@"show":@"0",@"number":@"0"}, nil];
-            }else
-            {
-                array = [NSMutableArray arrayWithObjects:@{@"position":@"经理批注",@"show":@"1",@"number":@"1"},@{@"position":@"行政批注",@"show":@"0",@"number":@"0"},@{@"position":@"老板批注",@"show":@"0",@"number":@"0"}, nil];
-            }
-        }
-    }];
+
    
 }
 

@@ -7,6 +7,12 @@
 //
 
 #import "ViewControllerSelectTable.h"
+#import "ViewControllerPersonTableDetail.h"
+#import "VCInsideWeekTable.h"
+#import "VCArtMonthTable.h"
+#import "VCInsideMonthTable.h"
+#import "VCBusinessWeekTable.h"
+#import "VCWeekTable.h"
 #import "CellTbale.h"
 @interface ViewControllerSelectTable ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UIButton *buttonStart;
@@ -20,7 +26,7 @@
 @property (nonatomic,weak)UIDatePicker *dataPick;
 @property (nonatomic,weak)UIButton *buttonCancle;
 @property (nonatomic,weak)UIButton *buttonSure;
-
+@property (nonatomic,strong) NSDictionary *remark;
 @property (nonatomic,strong)NSMutableArray *arrayData;
 
 @property (nonatomic,assign)NSUInteger _page;//接口page
@@ -252,8 +258,6 @@
     
     self.tableView.mj_header.automaticallyChangeAlpha = YES;
     
-    
-    
     //上拉加载
     
     tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
@@ -285,7 +289,7 @@
 
 -(void)getData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/selectDayDayReportState.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/timeQuery",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -322,40 +326,33 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    //    hud.mode = MBProgressHUDModeText;
-    
-    hud.labelText = @"加载中...";
-    
-    hud.labelFont = [UIFont systemFontOfSize:12];
-    
-    hud.margin = 10.f;
-    
-    hud.dimBackground = YES;
-    
-    [self.view addSubview:hud];
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            [self.arrayData addObject:[responseObject valueForKey:@"list"]];
-            [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
+            [self.arrayData removeAllObjects];
+            for (NSDictionary *dict in [responseObject valueForKey:@"lists"]) {
+                [self.arrayData addObject:dict];
+            }
+            
             [self.tableView reloadData];
-        }else
-        {
-            [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
-            if ([code isEqualToString:@"1001"]) {
+            return ;
+        }
+           
+        if ([code isEqualToString:@"1001"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
                 return ;
             }
-            if ([code isEqualToString:@"4444"]) {
+        if ([code isEqualToString:@"4444"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
                 return ;
             }
-            if ([code isEqualToString:@"5000"]) {
+        if ([code isEqualToString:@"5000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据为空" andInterval:1];
                 return ;
             }
-        }
+        
         
     } failure:^(NSError *error) {
         
@@ -398,13 +395,169 @@
     if (cell==nil) {
         cell = [[CellTbale alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    if (self.arrayData.count==0) {
+        return cell;
+    }
+    NSDictionary *dict = self.arrayData[indexPath.row];
+    [self.remark enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([key isEqualToString:[NSString stringWithFormat:@"%@",dict[@"remark"]]]) {
+            NSString *string = [NSString stringWithFormat:@"%@",obj];
+            cell.labelMold.text = [string substringWithRange:NSMakeRange(2, 3)];
+            *stop = YES;
+        }
+    }];
+    
+    cell.lableName.text = dict[@"name"];
+    cell.lableAccount.text = dict[@"phone"];
+    cell.labelTime.text = dict[@"dates"];
+    NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+    if ([state isEqualToString:@"0"]) {
+        cell.labelStatus.text = @"待审核";
+        cell.labelStatus.textColor = GetColor(192, 192, 192, 1);
+    }else if ([state isEqualToString:@"1"])
+    {
+        cell.labelStatus.text = [NSString stringWithFormat:@"通过:%@",dict[@"updateTime"]];
+        cell.labelStatus.textColor = GetColor(246, 0, 49, 1);
+    }else
+    {
+        cell.labelStatus.text = [NSString stringWithFormat:@"驳回:%@",dict[@"updateTime"]];
+        cell.labelStatus.textColor = GetColor(206, 157, 86, 1);
+    }
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 61;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dict = self.arrayData[indexPath.row];
+    NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]] ;
+    if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
+        ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
+        vc.stringTitle = dict[@"name"];
+      //  vc.roleId = self.rid;
+        vc.departmentId = self.departmentID;
+        vc.postionName = self.positionName;
+        vc.remark = dict[@"remark"];
+        vc.tableId = dict[@"id"];
+        vc.num = self.num;
+        //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
+    {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            VCWeekTable *vc = [[VCWeekTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+          //  vc.roleId = self.rid;
+            vc.departmentId = self.departmentID;
+            vc.postionName = dict[@"newName"];
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            vc.num = self.num;
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
+            }else
+            {
+                vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"])
+        {
+            VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+           // vc.roleId = self.rid;
+            vc.departmentId = self.departmentID;
+            vc.postionName = dict[@"newName"];
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            vc.num = self.num;
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
+            }else
+            {
+                vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+          //  vc.roleId = self.rid;
+            vc.departmentId = self.departmentID;
+            vc.postionName = dict[@"newName"];
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            vc.num = self.num;
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
+            }else
+            {
+                vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else
+    {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"])
+        {
+            VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+           // vc.roleId = self.rid;
+            vc.departmentId = self.departmentID;
+            vc.postionName = dict[@"newName"];
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            vc.num = self.num;
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
+            }else
+            {
+                vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }else
+        {
+            VCInsideMonthTable *vc = [[VCInsideMonthTable alloc]init];
+            vc.stringTitle = dict[@"name"];
+          //  vc.roleId = self.rid;
+            vc.departmentId = self.departmentID;
+            vc.postionName = dict[@"newName"];
+            vc.remark = dict[@"remark"];
+            vc.tableId = dict[@"id"];
+            vc.num = self.num;
+            if ([dict[@"code"] intValue]==1) {
+                vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
+            }else
+            {
+                vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
 #pragma -mark
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.arrayData removeAllObjects];
+    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -434,6 +587,21 @@
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"查询" style:(UIBarButtonItemStyleDone) target:self action:@selector(selectCheck)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
+    
+    self.remark = @{@"1":@"业务日报表",
+                    @"2":@"业务周计划",
+                    @"3":@"业务周总结",
+                    @"4":@"市场店报表",
+                    @"5":@"市场周计划",
+                    @"6":@"市场周总结",
+                    @"7":@"市场月计划",
+                    @"8":@"市场月总结",
+                    @"9":@"内勤日报表",
+                    @"10":@"内勤周计划",
+                    @"11":@"内勤周总结",
+                    @"12":@"内勤月计划",
+                    @"13":@"内勤月总结"};
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -27,7 +27,7 @@
         make.left.mas_equalTo(self.contentView.mas_left).offset(8);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo(14);
-        make.width.mas_equalTo(50);
+        make.width.mas_equalTo(100);
     }];
     self.labelTitle = labelTitle;
     
@@ -41,6 +41,17 @@
         make.height.mas_equalTo(14);
     }];
     self.labelInfo = labelInfo;
+    
+    UILabel *labelLine = [[UILabel alloc]init];
+    labelLine.backgroundColor = [UIColor lightGrayColor];
+    [self.contentView addSubview:labelLine];
+    [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+        make.left.mas_equalTo(self.contentView.mas_left);
+        make.right.mas_equalTo(self.contentView.mas_right);
+        make.height.mas_equalTo(1);
+    }];
+    [self.contentView addSubview:labelLine];
 }
 
 - (void)awakeFromNib {

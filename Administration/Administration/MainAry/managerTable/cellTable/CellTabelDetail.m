@@ -24,6 +24,7 @@
         
         UILabel *labelContent = [[UILabel alloc]init];
         labelContent.numberOfLines = 0;
+        labelContent.font = [UIFont systemFontOfSize:17];
         labelContent.layer.borderColor = [UIColor lightGrayColor].CGColor;
         labelContent.layer.borderWidth = 1.0f;
         labelContent.textColor = [UIColor lightGrayColor];
@@ -37,7 +38,7 @@
         self.labelContent = labelContent;
         
         UIButton *button = [[UIButton alloc]init];
-        [button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"tjpco01"] forState:UIControlStateNormal];
         [self.contentView addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(self.contentView.mas_right).offset(-8);

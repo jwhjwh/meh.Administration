@@ -11,12 +11,10 @@
 #import "ZXYAlertView.h"
 #import "CellInfo.h"
 #import "ViewControllerPostil.h"
+#import "VCArtMonthSummary.h"
+#import "CellSummary.h"
 @interface VCArtMonthTable ()<UITableViewDelegate,UITableViewDataSource,ZXYAlertViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSArray *arrayTitle;
-@property (nonatomic,strong)NSMutableArray *arrayTask;
-@property (nonatomic,strong)NSMutableArray *arrayTotal;
-@property (nonatomic,strong)NSMutableArray *arrayTask2;
-@property (nonatomic,strong)NSMutableArray *arrayTotal2;
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic ,strong)UIButton *buttonPlan;
 @property (nonatomic ,strong)UIButton *buttonSummary;
@@ -24,9 +22,38 @@
 @property (nonatomic,strong)NSMutableDictionary *dictInfo;
 @property (nonatomic,weak)UILabel *line;
 @property (nonatomic,strong)NSMutableAttributedString *mutAttribute;
+@property (nonatomic,strong)NSArray *arrayKey;
+@property (nonatomic,strong)NSMutableArray *arraySummary;
+@property (nonatomic)BOOL havePermission;
 @end
 
 @implementation VCArtMonthTable
+
+-(void)getSummary
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserSumReport",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dcit = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"Num":self.num,
+                           @"Sort":[ShareModel shareModel].sort,
+                           @"flag":@"1",
+                           @"PlanId":self.tableId};
+    [ZXDNetworking GET:urlStr parameters:dcit success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            [self.tableView reloadData];
+        }else
+        {
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
 
 -(void)getData
 {
@@ -34,33 +61,53 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,
-                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"CompanyInfoId":compid,
-                           @"RoleId":[ShareModel shareModel].roleID,
-                           @"DepartmentID":self.departmentId,
-                           @"remark":self.remark,
-                           @"id":self.tableId
-                           };
+    NSDictionary *dict;
+    if (self.isSelect) {
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"RoleId":[ShareModel shareModel].roleID,
+                 @"DepartmentID":self.departmentId,
+                 @"remark":self.remark,
+                 @"id":self.tableId
+                 };
+    }else
+    {
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"RoleId":[ShareModel shareModel].roleID,
+                 @"DepartmentID":self.departmentId,
+                 @"remark":self.remark,
+                 @"id":self.summaryId
+                 };
+    }
+
     
-    [self.arrayTotal removeAllObjects];
-    [self.arrayTask removeAllObjects];
-    [self.dictInfo removeAllObjects];
-    [self.tableView reloadData];
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
-            if (self.isSelect) {
-                self.arrayTask = [NSMutableArray arrayWithObjects:@"品牌任务",@"计划",@"冲刺",@"个人任务：",@"计划",@"冲刺", nil];
-                self.arrayTotal = [NSMutableArray arrayWithObjects:@"",@"",@"taskPlanMony",@"taskSprintMoney",@"",@"personPlanMoney",@"personSprintMoney" ,nil];
-            }else
-            {
-                self.arrayTask2 = [NSMutableArray arrayWithObjects:@"品牌任务",@"品牌中任务",@"实际出货",@"完成比例",@"个人任务",@"个人任务",@"个人出货",@"完成比例",@"占品牌完成任务", nil];
-                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@"",@"ManagerBrandMission",@"ManagerPracticalCargo",@"ManagerFinishRatio",@"",@"brandMission",@"practicalCargo",@"finishRatio",@"performRatio", nil];
+           self.tableId = self.dictInfo[@"planId"];
+            if (self.dictInfo.count!=0) {
+                if ([responseObject valueForKey:@"name"]!=nil) {
+                    NSString *stringKey = [responseObject valueForKey:@"name"];
+                    self.arrayKey = [stringKey componentsSeparatedByString:@","];
+                }
+                
+                if (![[responseObject valueForKey:@"power"] isEqualToString:@""]) {
+                    NSArray *permission = [[responseObject valueForKey:@"power"] componentsSeparatedByString:@","];
+                    for (NSString *roleid in permission) {
+                        if ([roleid isEqualToString:[USER_DEFAULTS valueForKey:@"roleId"]]) {
+                            self.havePermission = YES;
+                            break;
+                        }
+                    }
+                }
+               
+                [self.tableView reloadData];
             }
             
-            [self.tableView reloadData];
             return ;
         }
         if ([stringCode isEqualToString:@"4444"]) {
@@ -82,7 +129,7 @@
 -(void)setUI
 {
     self.buttonPlan = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, Scree_width/2, 30)];
-    [self.buttonPlan setTitle:@"周计划" forState:UIControlStateNormal];
+    [self.buttonPlan setTitle:@"月计划" forState:UIControlStateNormal];
     self.buttonPlan.tag = 200;
     [self.buttonPlan addTarget:self action:@selector(buttonPlan:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.buttonPlan];
@@ -90,7 +137,7 @@
     self.buttonSummary = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, 64, Scree_width/2, 30)];
     self.buttonSummary.tag = 300;
     [self.buttonSummary addTarget:self action:@selector(buttonPlan:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonSummary setTitle:@"周总结" forState:UIControlStateNormal];
+    [self.buttonSummary setTitle:@"月总结" forState:UIControlStateNormal];
     [self.view addSubview:self.buttonSummary];
     
     UILabel *line = [[UILabel alloc]init];
@@ -100,14 +147,14 @@
         line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月任务计划",@"工作主线和方向",@"本月重点服务店家和行程目标安排",@"对公司要求和建议",@"本月个人成长管理",@"其他事项"];
         
     }else
     {
         line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
         [self.buttonSummary setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务总结",@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月目标完成情况",@"本月出货及回款情况分析",@"工作得失及建议",@"个人问题及规划",@"其他事项"];
         
     }
     [self.view addSubview:line];
@@ -116,6 +163,7 @@
     UITableView *tabelView = [[UITableView alloc]init];
     [tabelView registerClass:[CellTabelDetail class] forCellReuseIdentifier:@"cell"];
     [tabelView registerClass:[CellInfo class] forCellReuseIdentifier:@"cell2"];
+    [tabelView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell3"];
     tabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tabelView.delegate = self;
     tabelView.dataSource = self;
@@ -134,25 +182,26 @@
 -(void)buttonPlan:(UIButton *)button
 {
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
+    [self.arraySummary removeAllObjects];
     if (button.tag==200) {
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月任务计划",@"工作主线和方向",@"本月重点服务店家和行程目标安排",@"对公司要求和建议",@"本月个人成长管理",@"其他事项"];
         self.isSelect = YES;
-        self.remark = @"5";
-        
+        self.remark = @"7";
+        [self getData];
     }else
     {
         self.line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
         [self.buttonSummary setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务总结",@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
+        self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月目标完成情况",@"本月出货及回款情况分析",@"工作得失及建议",@"个人问题及规划",@"其他事项"];
         self.isSelect = NO;
-        self.remark = @"6";
+        self.remark = @"8";
+        [self getSummary];
     }
-    [self getData];
-    [self.tableView reloadData];
+    
 }
 
 -(void)editContent:(UIButton *)button
@@ -172,6 +221,7 @@
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.tableId;
+    vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -189,20 +239,55 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return self.arrayTitle.count;
+    if (self.isSelect) {
+        return self.arrayTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arrayTitle.count;
+        }
+    }
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.arraySummary.count!=0&&!self.isSelect) {
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
+        if (cell==nil) {
+            cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+        }
+        NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.labelPostion.text = self.postionName;
+        if (dict[@"months"]) {
+            cell.labelFilledTime.text = [dict[@"months"] substringToIndex:7];
+        }
+        if (![dict[@"updateTime"] isKindOfClass:[NSNull class]]) {
+            cell.labelState.text = dict[@"updateTime"];
+        }
+        if (![dict[@"dates"] isKindOfClass:[NSNull class]]) {
+            cell.labelUpTime.text = [dict[@"dates"] substringToIndex:10];
+        }
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        return cell;
+    }else
+    {
     if (indexPath.row<3) {
-        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if (cell==nil) {
             cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
         }
         switch (indexPath.row) {
             case 0:
-                cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:9],[self.dictInfo[@"endDate"] substringToIndex:9]];
+                if (self.dictInfo[@"months"]!=NULL) {
+                   cell.labelInfo.text = [self.dictInfo[@"months"]substringToIndex:7];
+                }else
+                {
+                    cell.labelInfo.text = @"";
+                }
+                
                 break;
             case 1:
                 cell.labelInfo.text = self.postionName;
@@ -215,6 +300,7 @@
                 break;
         }
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else
     {
@@ -222,83 +308,306 @@
         if (cell==nil) {
             cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
         cell.labelContent.attributedText = nil;
-        switch (indexPath.row) {
-            case 3:
-            {
-                if (self.isSelect) {
-                    for (int i=0; i<self.arrayTask.count; i++) {
-                        
-                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
-                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
-                        
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)];
-                        [self.mutAttribute appendAttributedString:string];
-                        //
-                    }
-                }else
-                {
-                    for (int i=0; i<self.arrayTask2.count; i++) {
-                        
-                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
-                        NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal2[i]]];
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask2[i] length], string2.length)];
-                        [self.mutAttribute appendAttributedString:string];
-                        
-                    }
-                }
-                
-                
-                cell.labelContent.attributedText = self.mutAttribute;
-                
-                
-            }
-                break;
-            case 4:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"ovas"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"jaats"];
-                }
-                break;
-            case 5:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"important"];
-                    
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"psp"];
-                }
-                break;
-            case 6:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"personalProject"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"comments"];
-                }
-                break;
-            case 7:
-                if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"others"];
-                }else
-                {
-                    cell.labelContent.text = self.dictInfo[@"others"];
-                }
-                break;
-                
-            default:
-                break;
+        self.mutAttribute = [[NSMutableAttributedString alloc]init];
+        if (self.havePermission) {
+            cell.button.hidden = NO;
+            cell.button.userInteractionEnabled = YES;
+        }else
+        {
+            cell.button.hidden = YES;
+            cell.button.userInteractionEnabled = NO;
         }
-        cell.labelTitle.text = self.arrayTitle[indexPath.row];
+        if (self.isSelect) {
+            switch (indexPath.row) {
+                case 3:
+                {
+                    cell.button.hidden = YES;
+                    cell.button.userInteractionEnabled = NO;
+                    
+                    NSMutableAttributedString *string0 = [[NSMutableAttributedString alloc]initWithString:@"品牌任务："];
+                    
+                    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"计划 %@ 万,",self.dictInfo[@"taskPlanMoney"]]];
+                    [string1 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(2,[NSString stringWithFormat:@"%@",self.dictInfo[@"taskPlanMoney"]].length+2)];
+                    
+                    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"冲刺 %@ 万\n",self.dictInfo[@"taskSprintMoney"]]];
+                    [string2 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(2, [NSString stringWithFormat:@"%@",self.dictInfo[@"taskSprintMoney"]].length+2)];
+                    
+                    NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:@"个人任务："];
+                    
+                    NSMutableAttributedString *string4 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"计划 %@ 万,",self.dictInfo[@"personPlanMoney"]]];
+                    [string4 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(2, [NSString stringWithFormat:@"%@",self.dictInfo[@"personPlanMoney"]].length+2)];
+                    
+                    NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"冲刺 %@ 万\n",self.dictInfo[@"personSprintMoney"]]];
+                    [string5 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(2,[NSString stringWithFormat:@"%@",self.dictInfo[@"personSprintMoney"]].length+2)];
+                    
+                    [self.mutAttribute appendAttributedString:string0];
+                    [self.mutAttribute appendAttributedString:string1];
+                    [self.mutAttribute appendAttributedString:string2];
+                    [self.mutAttribute appendAttributedString:string3];
+                    [self.mutAttribute appendAttributedString:string4];
+                    [self.mutAttribute appendAttributedString:string5];
+
+                    cell.labelContent.attributedText = self.mutAttribute;
+                }
+                    break;
+                case 4:
+                    if (self.dictInfo[@"direction"]) {
+                        cell.labelContent.text = self.dictInfo[@"direction"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    
+                    if(self.arrayKey.count!=0){
+                      if ([self.arrayKey containsObject:@"direction"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                   
+                    break;
+                case 5:
+                    if (self.dictInfo[@"shopsArrange"]) {
+                        cell.labelContent.text = self.dictInfo[@"shopsArrange"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"shopsArrange"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                        
+                    
+                    break;
+                case 6:
+                    
+                    if (self.dictInfo[@"requestForProposal"]) {
+                        cell.labelContent.text = self.dictInfo[@"requestForProposal"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"requestForProposal"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                case 7:
+                    
+                    if (self.dictInfo[@"personalGrowth"]) {
+                        cell.labelContent.text = self.dictInfo[@"personalGrowth"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"personalGrowth"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                case 8:
+                    
+                    if (self.dictInfo[@"others"]) {
+                        cell.labelContent.text = self.dictInfo[@"others"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"others"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+  
+        }else
+        {
+            switch (indexPath.row) {
+                case 3:
+                {
+                    cell.button.hidden = YES;
+                    cell.button.userInteractionEnabled = NO;
+                    
+                    NSMutableAttributedString *string0 = [[NSMutableAttributedString alloc]initWithString:@"品牌任务：\n"];
+                    
+                    NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"品牌中任务 %@ 万元,",self.dictInfo[@"managerBrandMission"]]];
+                    [string1 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(5,[NSString stringWithFormat:@"%@",self.dictInfo[@"managerBrandMission"]].length+2)];
+                    
+                    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际出货 %@ 万\n",self.dictInfo[@"managerPracticalCargo"]]];
+                    [string2 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"managerPracticalCargo"]].length+2)];
+                    
+                    NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"完成比例 %@ %%\n",self.dictInfo[@"managerFinishRatio"]]];
+                    [string3 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"managerFinishRatio"]].length+2)];
+                    
+                    NSMutableAttributedString *string4 = [[NSMutableAttributedString alloc]initWithString:@"个人任务：\n"];
+                    
+                    NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"个人任务 %@ 万,",self.dictInfo[@"brandMission"]]];
+                    [string5 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"brandMission"]].length+2)];
+                    
+                    NSMutableAttributedString *string6 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"个人出货 %@ 万\n",self.dictInfo[@"practicalCargo"]]];
+                    [string6 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4,[NSString stringWithFormat:@"%@",self.dictInfo[@"practicalCargo"]].length+2)];
+                    
+                    NSMutableAttributedString *string7 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"完成比例 %@ %%\n",self.dictInfo[@"finishRatio"]]];
+                    [string7 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4,[NSString stringWithFormat:@"%@",self.dictInfo[@"finishRatio"]].length+2)];
+                    
+                    NSMutableAttributedString *string8 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"占品牌完成任务 %@ %%\n",self.dictInfo[@"performRatio"]]];
+                    [string8 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7,[NSString stringWithFormat:@"%@",self.dictInfo[@"performRatio"]].length+2)];
+                    
+                    
+                    [self.mutAttribute appendAttributedString:string0];
+                    [self.mutAttribute appendAttributedString:string1];
+                    [self.mutAttribute appendAttributedString:string2];
+                    [self.mutAttribute appendAttributedString:string3];
+                    [self.mutAttribute appendAttributedString:string4];
+                    [self.mutAttribute appendAttributedString:string5];
+                    [self.mutAttribute appendAttributedString:string6];
+                    [self.mutAttribute appendAttributedString:string7];
+                    [self.mutAttribute appendAttributedString:string8];
+                    cell.labelContent.attributedText = self.mutAttribute;
+                }
+                    break;
+                case 4:
+                    if (self.dictInfo[@"sca"]) {
+                        cell.labelContent.text = self.dictInfo[@"sca"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                        //cell.labelContent.text = self.dictInfo[@"SCA"];
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"sca"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                case 5:
+                    
+                    if (self.dictInfo[@"experience"]) {
+                        cell.labelContent.text = self.dictInfo[@"experience"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"experience"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                case 6:
+                    
+                    if (self.dictInfo[@"problem"]) {
+                        cell.labelContent.text = self.dictInfo[@"problem"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"problem"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                case 7:
+                    
+                    if (self.dictInfo[@"others"]) {
+                        cell.labelContent.text = self.dictInfo[@"others"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if(self.arrayKey.count!=0){
+                        if ([self.arrayKey containsObject:@"others"]) {
+                            [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        }
+                    }else
+                    {
+                        cell.button.hidden = YES;
+                        cell.button.userInteractionEnabled = NO;
+                    }
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+
+        }
+        
+                cell.labelTitle.text = self.arrayTitle[indexPath.row];
         return cell;
     }
-    
+    }
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.isSelect) {
+        if (self.arraySummary.count!=0) {
+            //跳转页面
+            NSDictionary *dict = self.arraySummary[indexPath.row];
+            VCArtMonthSummary *vc = [[VCArtMonthSummary alloc]init];
+            vc.departmentId = self.departmentId;
+            vc.remark = self.remark;
+            vc.summaryId = dict[@"id"];
+            vc.isSelect = NO;
+            vc.tableId=  self.tableId;
+            vc.postionName = self.postionName;
+            vc.state = self.state;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
 #pragma -mark alertView
 -(void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -328,25 +637,27 @@
         //审核接口
         if (alertView.tag == 200) {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"2"};
+                     @"code":@"",
+                     @"id":self.tableId};
         }else
         {
             dict = @{@"appkey":appKeyStr,
-                     @"usersid ":[USER_DEFAULTS valueForKey:@"userid"],
+                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
                      @"RoleId":self.roleId,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.remark,
+                     @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2"};
+                     @"code":@"2",
+                     @"id":self.tableId};
         }
         
         
@@ -373,22 +684,23 @@
     }
 }
 #pragma -mark system
--(void)viewWillAppear:(BOOL)animated
-{
-    [self getData];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUI];
-    
+    [self getData];
     self.dictInfo = [NSMutableDictionary dictionary];
+    self.arrayKey = [NSArray array];
+    self.arraySummary = [NSMutableArray array];
     
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"审核" style:(UIBarButtonItemStyleDone) target:self action:@selector(checkTable:)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    if ([self.state isEqualToString:@"0"]) {
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

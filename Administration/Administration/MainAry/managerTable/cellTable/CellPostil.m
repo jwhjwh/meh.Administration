@@ -42,7 +42,7 @@
         
         
         UIPlaceHolderTextView *textView1 = [[UIPlaceHolderTextView alloc]init];
-        textView1.textColor = [UIColor redColor];
+        textView1.textColor = GetColor(129, 104, 82, 1);
         textView1.font = [UIFont systemFontOfSize:14];
         textView1.backgroundColor = GetColor(235, 227, 203, 1);
         textView1.scrollEnabled = NO;
