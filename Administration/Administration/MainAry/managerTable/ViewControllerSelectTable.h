@@ -11,4 +11,5 @@
 @interface ViewControllerSelectTable : BaseViewController
 @property (nonatomic,strong)NSString *departmentID;
 @property (nonatomic,strong)NSString *num;
+@property (nonatomic,strong)NSString *positionName;
 @end

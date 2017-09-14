@@ -11,4 +11,7 @@
 @interface ViewControllerAllTable : BaseViewController
 @property (nonatomic,strong)NSString *departmentID;
 @property (nonatomic,strong)NSString *num;
+@property (nonatomic,strong)NSString *rid;
+@property (nonatomic,strong)NSString *power;
+@property (nonatomic,strong)NSString *positionName;
 @end

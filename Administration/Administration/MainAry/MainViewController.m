@@ -17,7 +17,7 @@
 #import "ViewControllerEmployeeTable.h"//报表管理
 #import "ViewControllerChoosePosition.h"//选择职位
 #import "ManageViewController.h"//员工管理
-
+#import "VCChoosePostion.h"//我的报表
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -299,6 +299,10 @@
                 break;
             case 5:
                 //我的报表
+            {
+                VCChoosePostion *vc = [[VCChoosePostion alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
                 break;
             case 6:
                 //报表管理

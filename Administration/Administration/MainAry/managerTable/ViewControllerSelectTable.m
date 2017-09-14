@@ -433,12 +433,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
+    NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]] ;
     if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
         ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
         vc.stringTitle = dict[@"name"];
       //  vc.roleId = self.rid;
         vc.departmentId = self.departmentID;
-        vc.postionName = dict[@"newName"];
+        vc.postionName = self.positionName;
         vc.remark = dict[@"remark"];
         vc.tableId = dict[@"id"];
         vc.num = self.num;
@@ -446,7 +447,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
     {
-        if ([dict[@"newName"] containsString:@"美导"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
             VCWeekTable *vc = [[VCWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
           //  vc.roleId = self.rid;
@@ -457,12 +458,14 @@
             vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
-        }else if([dict[@"newName"] containsString:@"业务"])
+        }else if([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"])
         {
             VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
@@ -474,9 +477,11 @@
             vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -492,15 +497,17 @@
             vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
     }else
     {
-        if ([dict[@"newName"] containsString:@"美导"])
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"])
         {
             VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
             vc.stringTitle = dict[@"name"];
@@ -512,9 +519,11 @@
             vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else
@@ -529,9 +538,11 @@
             vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }

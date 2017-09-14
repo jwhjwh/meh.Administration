@@ -67,7 +67,9 @@
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
+        
         if ([stringCode isEqualToString:@"0000"]) {
+            [self.array removeAllObjects];
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
                 [self.array addObject:dict];
             }
@@ -114,8 +116,14 @@
     }];
     
     cell.lableName.text = dict[@"name"];
-    cell.lableAccount.text = @"13100000000";
-    cell.labelTime.text = dict[@"dates"];
+    cell.lableAccount.text = dict[@"phone"];
+    if (dict[@"dates"]) {
+        cell.labelTime.text = [dict[@"dates"] substringToIndex:16];
+    }else
+    {
+        cell.labelTime.text = @"";
+    }
+    
     NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
     if ([state isEqualToString:@"0"]) {
         cell.labelStatus.text = @"待审核";
@@ -123,11 +131,11 @@
     }else if ([state isEqualToString:@"1"])
     {
         cell.labelStatus.text = [NSString stringWithFormat:@"通过:%@",dict[@"updateTime"]];
-        cell.labelStatus.textColor = GetColor(246, 0, 49, 1);
+       cell.labelStatus.textColor = GetColor(206, 157, 86, 1);
     }else
     {
         cell.labelStatus.text = [NSString stringWithFormat:@"驳回:%@",dict[@"updateTime"]];
-        cell.labelStatus.textColor = GetColor(206, 157, 86, 1);
+        cell.labelStatus.textColor = GetColor(246, 0, 49, 1);
     }
     return cell;
 }
@@ -139,6 +147,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.array[indexPath.row];
+    NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
     if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
         ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
         vc.stringTitle = dict[@"name"];
@@ -148,24 +157,27 @@
         vc.remark = dict[@"remark"];
         vc.tableId = dict[@"id"];
         vc.num = self.num;
+        vc.state = state;
         //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
     {
-        if ([self.positionName containsString:@"美导"]) {
+        if ([self.positionName containsString:@"美导"]||[self.positionName containsString:@"市场"]) {
             VCWeekTable *vc = [[VCWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
             vc.roleId = self.rid;
             vc.departmentId = self.departmentId;
             vc.postionName = self.positionName;
             vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
+            vc.state = state;
             vc.num = self.num;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else if([self.positionName containsString:@"业务"])
@@ -178,11 +190,14 @@
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
             vc.num = self.num;
+            vc.state = state;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -196,17 +211,20 @@
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
             vc.num = self.num;
+            vc.state = state;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
     }else
     {
-        if ([self.positionName containsString:@"美导"])
+        if ([self.positionName containsString:@"美导"]||[self.positionName containsString:@"市场"])
         {
             VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
             vc.stringTitle = dict[@"name"];
@@ -216,11 +234,14 @@
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
             vc.num = self.num;
+            vc.state = state;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else
@@ -233,11 +254,14 @@
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
             vc.num = self.num;
+            vc.state = state;
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
+                vc.tableId = dict[@"id"];
             }else
             {
                 vc.isSelect = NO;
+                vc.summaryId = dict[@"id"];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }

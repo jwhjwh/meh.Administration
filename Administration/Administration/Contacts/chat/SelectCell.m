@@ -82,10 +82,6 @@
     
 }
 
-
-
-
-
 -(void)setModel:(NSDictionary *)model{
     self.NameLabel.text=model[@"name"];
     self.TelLabel.text=model[@"account"];
@@ -114,8 +110,6 @@
         _zhiLabel.layer.cornerRadius =3.0f;
         _zhiLabel.layer.masksToBounds = YES;
         self.zhiLabel.backgroundColor=GetColor(205,176,218,1);
-
-        
     }
 }
 -(void)setLVmodel:(LVModel *)LVmodel{

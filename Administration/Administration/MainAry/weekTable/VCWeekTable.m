@@ -7,10 +7,12 @@
 //
 
 #import "VCWeekTable.h"
+#import "VCWeekSummaryDetail.h"
 #import "CellTabelDetail.h"
 #import "CellInfo.h"
 #import "ZXYAlertView.h"
 #import "ViewControllerPostil.h"
+#import "CellSummary.h"
 @interface VCWeekTable ()<UITableViewDelegate,UITableViewDataSource,ZXYAlertViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSMutableArray *arrayTask;
@@ -24,29 +26,78 @@
 @property (nonatomic,strong)NSMutableDictionary *dictInfo;
 @property (nonatomic,weak)UILabel *line;
 @property (nonatomic,strong)NSMutableAttributedString *mutAttribute;
+@property (nonatomic,strong)NSArray *arrayKey;
+@property (nonatomic,strong)NSMutableArray *arraySummary;
+@property (nonatomic)BOOL havePermission;
 @end
 
 @implementation VCWeekTable
+-(void)getSummary
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserSumReport",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dcit = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"Num":self.num,
+                           @"Sort":[ShareModel shareModel].sort,
+                           @"flag":@"1",
+                           @"PlanId":self.tableId};
+    [ZXDNetworking GET:urlStr parameters:dcit success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if (![[responseObject valueForKey:@"power"] isEqualToString:@""]) {
+            NSArray *permission = [[responseObject valueForKey:@"power"] componentsSeparatedByString:@","];
+            for (NSString *roleid in permission) {
+                if ([roleid isEqualToString:[USER_DEFAULTS valueForKey:@"roleId"]]) {
+                    self.havePermission = YES;
+                    break;
+                }
+            }
+        }
+        if ([code isEqualToString:@"0000"]) {
+            self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            [self.tableView reloadData];
+        }else
+        {
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
 -(void)getData
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@report/queryReportInfo",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,
-                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"CompanyInfoId":compid,
-                           @"RoleId":[ShareModel shareModel].roleID,
-                           @"DepartmentID":self.departmentId,
-                           @"remark":self.remark,
-                           @"id":self.tableId
-                           };
     
-    [self.arrayTotal removeAllObjects];
-    [self.arrayTask removeAllObjects];
-    [self.dictInfo removeAllObjects];
-    [self.tableView reloadData];
+    NSDictionary *dict;
+    if (self.isSelect) {
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"RoleId":[ShareModel shareModel].roleID,
+                 @"DepartmentID":self.departmentId,
+                 @"remark":self.remark,
+                 @"id":self.tableId
+                 };
+    }else
+    {
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"RoleId":[ShareModel shareModel].roleID,
+                 @"DepartmentID":self.departmentId,
+                 @"remark":self.remark,
+                 @"id":self.summaryId
+                 };
+    }
+    
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
+    [self.dictInfo removeAllObjects];
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
@@ -57,9 +108,11 @@
             }else
             {
                 self.arrayTask2 = [NSMutableArray arrayWithObjects:@"品牌任务",@"本周任务",@"本周原预计回款",@"实际回款",@"原预计出货",@"实际出货",@"现累计出货",@"客户账面余额:",@"周初约计",@"周末",@"\n个人任务",@"本周任务",@"本周原预计回款",@"实际回款",@"原预计出货",@"实际出货",@"现累计出货",@"客户账面余额:",@"周初约计",@"周末", nil];
-                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@""@"managerTask",@"managerPredictMoney",@"managerPracticalMoney",@"managerPredictCargo",@"managerPracticalCargo",@"ManagerAccumulateCargo",@"",@"managerWeeklyMoney",@"managerWeekendMoney",@"",@"task",@"predictMoney",@"practicalMoney",@"predictCargo",@"practicalCargo",@"accumulateCargo",@"",@"weeklyMoney",@"weekendMoney", nil];
+                self.arrayTotal2 = [NSMutableArray arrayWithObjects:@"",@"managerTask",@"managerPredictMoney",@"managerPracticalMoney",@"managerPredictCargo",@"managerPracticalCargo",@"managerAccumulateCargo",@"",@"managerWeeklyMoney",@"managerWeekendMoney",@"",@"task",@"predictMoney",@"practicalMoney",@"predictCargo",@"practicalCargo",@"accumulateCargo",@"",@"weeklyMoney",@"weekendMoney", nil];
+                self.tableId = self.dictInfo[@"planId"];
             }
-            
+            NSString *stringKey = [responseObject valueForKey:@"name"];
+            self.arrayKey = [stringKey componentsSeparatedByString:@","];
             [self.tableView reloadData];
             return ;
         }
@@ -116,6 +169,7 @@
     UITableView *tabelView = [[UITableView alloc]init];
     [tabelView registerClass:[CellTabelDetail class] forCellReuseIdentifier:@"cell"];
     [tabelView registerClass:[CellInfo class] forCellReuseIdentifier:@"cell2"];
+    [tabelView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell3"];
     tabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tabelView.delegate = self;
     tabelView.dataSource = self;
@@ -134,6 +188,13 @@
 -(void)buttonPlan:(UIButton *)button
 {
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
+    [self.dictInfo removeAllObjects];
+    [self.arrayTask removeAllObjects];
+    [self.arrayTask2 removeAllObjects];
+    [self.arrayTotal removeAllObjects];
+    [self.arrayTotal2 removeAllObjects];
+    [self.arraySummary removeAllObjects];
+    [self.tableView reloadData];
     if (button.tag==200) {
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
@@ -141,7 +202,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
         self.isSelect = YES;
         self.remark = @"5";
-        
+        [self getData];
     }else
     {
         self.line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
@@ -150,9 +211,10 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务总结",@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
         self.isSelect = NO;
         self.remark = @"6";
+        [self getSummary];
     }
-    [self getData];
-    [self.tableView reloadData];
+    
+    
 }
 
 -(void)editContent:(UIButton *)button
@@ -188,14 +250,35 @@
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
+    if (self.isSelect) {
         return self.arrayTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arrayTitle.count;
+        }
+    }
+    
         
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.arraySummary.count!=0&&!self.isSelect) {
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
+        if (cell==nil) {
+            cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+        }
+        NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.labelPostion.text = self.postionName;
+        cell.dictInfo = dict;
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        return cell;
+    }else
+    {
     if (indexPath.row<3) {
-        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if (cell==nil) {
             cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
@@ -203,7 +286,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         switch (indexPath.row) {
             case 0:
-                cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:9],[self.dictInfo[@"endDate"] substringToIndex:9]];
+                cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:10],[self.dictInfo[@"endDate"] substringToIndex:10]];
                 break;
             case 1:
                 cell.labelInfo.text = self.postionName;
@@ -225,7 +308,16 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelContent.attributedText = nil;
+        self.mutAttribute = [[NSMutableAttributedString alloc]init];
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
+        if (self.havePermission) {
+            cell.button.hidden = NO;
+            cell.button.userInteractionEnabled = YES;
+        }else
+        {
+            cell.button.hidden = YES;
+            cell.button.userInteractionEnabled = NO;
+        }
         switch (indexPath.row) {
             case 3:
             {
@@ -258,52 +350,122 @@
                 {
                     for (int i=0; i<self.arrayTask2.count; i++) {
                         
-                        NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
+                        NSString *string1;
                         NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal2[i]]];
-                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask2[i] length], string2.length)];
-                        [self.mutAttribute appendAttributedString:string];
                         
+                        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]init];
+                        if (i==0||i==7||i==10||i==17) {
+                            string1 = [NSString stringWithFormat:@"%@\n\n",self.arrayTask2[i]];
+                            string = [[NSMutableAttributedString alloc]initWithString:string1];
+                            [string addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, [self.arrayTask2[i] length])];
+                        }else
+                        {
+                        
+                        string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask2[i],self.dictInfo[self.arrayTotal2[i]]];
+                        string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal2[i]]];
+                        string = [[NSMutableAttributedString alloc]initWithString:string1];
+                        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask2[i] length], string2.length)];
+                        }
+                        [self.mutAttribute appendAttributedString:string];
                     }
                 }
-                
-                
                 cell.labelContent.attributedText = self.mutAttribute;
- 
-            
             }
                 break;
             case 4:
                 if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"ovas"];
+                    if (self.dictInfo[@"ovas"]) {
+                        cell.labelContent.text = self.dictInfo[@"ovas"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"ovas"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }else
                 {
-                    cell.labelContent.text = self.dictInfo[@"jaats"];
+                    if (self.dictInfo[@"jaats"]) {
+                        cell.labelContent.text = self.dictInfo[@"jaats"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"jaats"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }
                 break;
             case 5:
                 if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"important"];
-                    
+                    if (self.dictInfo[@"important"]) {
+                        cell.labelContent.text = self.dictInfo[@"important"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"important"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }else
                 {
-                    cell.labelContent.text = self.dictInfo[@"psp"];
+                    if (self.dictInfo[@"psp"]) {
+                        cell.labelContent.text = self.dictInfo[@"psp"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"psp"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }
                 break;
             case 6:
                 if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"personalProject"];
+                    if (self.dictInfo[@"personalProject"]) {
+                        cell.labelContent.text = self.dictInfo[@"personalProject"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"personalProject"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }else
                 {
-                    cell.labelContent.text = self.dictInfo[@"comments"];
+                    if (self.dictInfo[@"comments"]) {
+                        cell.labelContent.text = self.dictInfo[@"comments"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"comments"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }
                 break;
             case 7:
                 if (self.isSelect) {
-                    cell.labelContent.text = self.dictInfo[@"others"];
+                    if (self.dictInfo[@"others"]) {
+                        cell.labelContent.text = self.dictInfo[@"others"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"others"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }else
                 {
-                    cell.labelContent.text = self.dictInfo[@"others"];
+                    if (self.dictInfo[@"others"]) {
+                        cell.labelContent.text = self.dictInfo[@"others"];
+                    }else
+                    {
+                        cell.labelContent.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"others"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
                 }
                 break;
                 
@@ -313,7 +475,26 @@
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
         return cell;
     }
+    }
     
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.isSelect) {
+        if (self.arraySummary.count!=0) {
+            //跳转页面
+            NSDictionary *dict = self.arraySummary[indexPath.row];
+            VCWeekSummaryDetail *vc = [[VCWeekSummaryDetail alloc]init];
+            vc.departmentId = self.departmentId;
+            vc.remark = self.remark;
+            vc.summaryId = dict[@"id"];
+            vc.isSelect = NO;
+            vc.tableId=  self.tableId;
+            vc.postionName = self.postionName;
+            vc.state = self.state;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
 }
 #pragma -mark alertView
 -(void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex
@@ -393,22 +574,24 @@
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     
-    [self getData];
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUI];
-    
+    [self getData];
     self.dictInfo = [NSMutableDictionary dictionary];
-    
+    self.arraySummary = [NSMutableArray array];
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"审核" style:(UIBarButtonItemStyleDone) target:self action:@selector(checkTable:)];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    if ([self.state isEqualToString:@"0"]) {
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

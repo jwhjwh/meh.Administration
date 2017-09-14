@@ -17,4 +17,5 @@
 @property (nonatomic,strong)NSString *joinType;
 @property (nonatomic,strong)NSString *sort;
 @property (nonatomic,strong)NSString *roleID;
+@property (nonatomic,strong)NSString *num; //1.市场 2.业务 3.财务 4.客服
 @end

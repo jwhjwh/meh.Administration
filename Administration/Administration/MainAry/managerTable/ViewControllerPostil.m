@@ -282,22 +282,22 @@
         NSString *code = [responseObject valueForKey:@"status"];
         NSMutableArray *arraylist = [[responseObject valueForKey:@"list"]mutableCopy];
         NSMutableDictionary *dictInfo = [NSMutableDictionary dictionary];
-        if (arraylist==nil) {
-            arraylist  = [NSMutableArray array];
-            [dictInfo setValue:@"" forKey:@"addTime"];
-            [dictInfo setValue:@"" forKey:@"comment"];
-            [dictInfo setValue:@"" forKey:@"fieldValue"];
-            [dictInfo setValue:@"" forKey:@"id"];
-            [dictInfo setValue:@"" forKey:@"location"];
-            [dictInfo setValue:@"" forKey:@"mid"];
-            [dictInfo setValue:@"" forKey:@"reportId"];
-            [dictInfo setValue:@"" forKey:@"reportRemark"];
-            [dictInfo setValue:@"" forKey:@"roleId"];
-            [array1 addObject:dictInfo];
-            [array2 addObject:dictInfo];
-            [array3 addObject:dictInfo];
-            [array4 addObject:dictInfo];
-        }
+//        if (arraylist==nil) {
+//            arraylist  = [NSMutableArray array];
+//            [dictInfo setValue:@"" forKey:@"addTime"];
+//            [dictInfo setValue:@"" forKey:@"comment"];
+//            [dictInfo setValue:@"" forKey:@"fieldValue"];
+//            [dictInfo setValue:@"" forKey:@"id"];
+//            [dictInfo setValue:@"" forKey:@"location"];
+//            [dictInfo setValue:@"" forKey:@"mid"];
+//            [dictInfo setValue:@"" forKey:@"reportId"];
+//            [dictInfo setValue:@"" forKey:@"reportRemark"];
+//            [dictInfo setValue:@"" forKey:@"roleId"];
+//            [array1 addObject:dictInfo];
+//            [array2 addObject:dictInfo];
+//            [array3 addObject:dictInfo];
+//            [array4 addObject:dictInfo];
+//        }
         self.postiliD = @"";
         for (NSDictionary *dictionary in arraylist) {
             NSString *roleid = [NSString stringWithFormat:@"%@",dictionary[@"roleId"]];
@@ -559,32 +559,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self getData];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.title = @"批注";
     
-    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 40)];
-    textView.attributedText = self.stringName;
+    UITextView *textView = [[UITextView alloc]init];
     textView.editable = NO;
     textView.scrollEnabled = NO;
     textView.backgroundColor = GetColor(255, 249, 230, 1);
     
-    CGSize size = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, MAXFLOAT)];
-    textView.frame = CGRectMake(textView.frame.origin.x, 0, textView.frame.size.width, size.height);
+    CGSize size = [self.stringName boundingRectWithSize:CGSizeMake(Scree_width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size;
+    textView.text = self.stringName;
+    textView.font = [UIFont systemFontOfSize:17];
+    textView.frame = CGRectMake(0, 0, Scree_width, size.height+20);
     [self.view addSubview:textView];
     
-    self.postiliD = @"";
-    
-    array1 = [NSMutableArray array];
-    array2 = [NSMutableArray array];
-    array3 = [NSMutableArray array];
-    array4 = [NSMutableArray array];
-    
-    inter=1;
     tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,Scree_width , Scree_height) style:UITableViewStyleGrouped];
     [tableView1 registerClass:[CellPostil class] forCellReuseIdentifier:@"cell"];
     tableView1.delegate = self;
@@ -594,6 +580,25 @@
     tableView1.tableHeaderView = textView;
     tableView1.estimatedRowHeight = 80;
     [self.view addSubview:tableView1];
+    
+    [self getData];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.title = @"批注";
+    
+    
+    self.postiliD = @"";
+    
+    array1 = [NSMutableArray array];
+    array2 = [NSMutableArray array];
+    array3 = [NSMutableArray array];
+    array4 = [NSMutableArray array];
+    
+    inter=1;
+    
     
     dictPosition = @{@"1":@"老板",
                      @"2":@"美导",

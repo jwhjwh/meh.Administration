@@ -18,7 +18,6 @@
 @property (nonatomic,strong)UIButton *sureButton;
 @property (nonatomic,strong)NSMutableArray *selectArray;
 @property (nonatomic,assign)NSIndexPath *selectIndex;
-@property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic,strong)NSMutableDictionary *openSectionDict;
 @property (nonatomic,strong)NSMutableArray *arrayTitle;
 @property (nonatomic,assign)NSInteger KTAG;
@@ -159,7 +158,7 @@
         [ZXDNetworking GET:urlStr parameters:dictInfo success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"] isEqualToString:@"0000"]) {
                 
-                [self.navigationController popViewControllerAnimated:YES];
+                [self back];
 
                 return ;
             }
@@ -245,6 +244,19 @@
     }
 }
 
+-(void)back
+{
+    UIViewController * viewcontrollerDetail = nil;
+    for (UIViewController * viewController in self.navigationController.viewControllers)
+    {
+        if ([viewController isKindOfClass:NSClassFromString(@"GroupdetailController")])
+        {
+            viewcontrollerDetail = viewController;
+            [self.navigationController popToViewController:viewcontrollerDetail animated:YES];
+            break;
+        }
+    }
+}
 
     
 -(void)buttonLiftItem{
@@ -320,21 +332,23 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     SelectCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
-        cell = [[SelectCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+        cell = [[SelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = _dataArray[indexPath.section][indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];
-    
-    for (NSIndexPath *index in self.indexArray) {
-        if (index==indexPath) {
-            cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-            break;
-        }
+    NSDictionary *dict = self.dataArray[indexPath.section][indexPath.row];
+    if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+        cell.isSelected = YES;
+        cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
+    }else
+    {
+        cell.isSelected = NO;
+        cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
     }
+    
     return cell;
 }
 
@@ -364,14 +378,18 @@
     SelectCell *cell = (SelectCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     cell.isSelected = !cell.isSelected;
+    NSMutableDictionary *dict = [self.dataArray[indexPath.section][indexPath.row]mutableCopy];
     //选中
     if (cell.isSelected)
     {
         //勾选的图标
         cell.selectImage.image  = [UIImage imageNamed:@"xuanzhong"];
         [self.selectArray addObject:self.dataArray[indexPath.section][indexPath.row]];
-        [self.indexArray addObject:indexPath];
         [self.sureButton setTitle:[NSString stringWithFormat:@"确定(%lu)",(unsigned long)[self.selectArray count]] forState:UIControlStateNormal];
+        [dict setValue:@"1" forKey:@"isSelect"];
+        NSMutableArray *arraySecttion = [self.dataArray[indexPath.section]mutableCopy];
+        [arraySecttion replaceObjectAtIndex:indexPath.row withObject:dict];
+        [self.dataArray replaceObjectAtIndex:indexPath.section withObject:arraySecttion];
         cell.isSelected = YES;
     }
     //反选
@@ -380,7 +398,10 @@
         //反选的图标
         cell.selectImage.image  = [UIImage imageNamed:@"weixuanzhong"];
         [self.selectArray removeObject:self.dataArray[indexPath.section][indexPath.row]];
-        [self.indexArray removeObject:indexPath];
+        [dict setValue:@"2" forKey:@"isSelect"];
+        NSMutableArray *arraySecttion = [self.dataArray[indexPath.section]mutableCopy];
+        [arraySecttion replaceObjectAtIndex:indexPath.row withObject:dict];
+        [self.dataArray replaceObjectAtIndex:indexPath.section withObject:arraySecttion];
         if (self.selectArray.count==0) {
             [self.sureButton setTitle:@"确定"forState:UIControlStateNormal];
         }else

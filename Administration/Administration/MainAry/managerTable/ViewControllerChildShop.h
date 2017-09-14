@@ -11,4 +11,5 @@
 @interface ViewControllerChildShop : BaseViewController
 @property (nonatomic,strong)NSString *num;
 @property (nonatomic,strong)NSString *roleId;
+@property (nonatomic,strong)NSString *stringTitle;
 @end
