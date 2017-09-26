@@ -210,10 +210,10 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
-    vc.stringName = cell.labelContent.attributedText;
+    vc.stringName = cell.textView.text;
     
     for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.labelContent.text isEqualToString:self.dictInfo[key]]) {
+        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
             vc.theKey = key;
             break;
         }
@@ -310,7 +310,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
-        cell.labelContent.attributedText = nil;
+        cell.textView.attributedText = nil;
         self.mutAttribute = [[NSMutableAttributedString alloc]init];
         if (self.havePermission) {
             cell.button.hidden = NO;
@@ -350,15 +350,15 @@
                     [self.mutAttribute appendAttributedString:string4];
                     [self.mutAttribute appendAttributedString:string5];
 
-                    cell.labelContent.attributedText = self.mutAttribute;
+                    cell.textView.attributedText = self.mutAttribute;
                 }
                     break;
                 case 4:
                     if (self.dictInfo[@"direction"]) {
-                        cell.labelContent.text = self.dictInfo[@"direction"];
+                        cell.textView.text = self.dictInfo[@"direction"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     
                     if(self.arrayKey.count!=0){
@@ -374,10 +374,10 @@
                     break;
                 case 5:
                     if (self.dictInfo[@"shopsArrange"]) {
-                        cell.labelContent.text = self.dictInfo[@"shopsArrange"];
+                        cell.textView.text = self.dictInfo[@"shopsArrange"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     
                     if(self.arrayKey.count!=0){
@@ -395,10 +395,10 @@
                 case 6:
                     
                     if (self.dictInfo[@"requestForProposal"]) {
-                        cell.labelContent.text = self.dictInfo[@"requestForProposal"];
+                        cell.textView.text = self.dictInfo[@"requestForProposal"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"requestForProposal"]) {
@@ -414,10 +414,10 @@
                 case 7:
                     
                     if (self.dictInfo[@"personalGrowth"]) {
-                        cell.labelContent.text = self.dictInfo[@"personalGrowth"];
+                        cell.textView.text = self.dictInfo[@"personalGrowth"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"personalGrowth"]) {
@@ -433,10 +433,10 @@
                 case 8:
                     
                     if (self.dictInfo[@"others"]) {
-                        cell.labelContent.text = self.dictInfo[@"others"];
+                        cell.textView.text = self.dictInfo[@"others"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"others"]) {
@@ -497,17 +497,17 @@
                     [self.mutAttribute appendAttributedString:string6];
                     [self.mutAttribute appendAttributedString:string7];
                     [self.mutAttribute appendAttributedString:string8];
-                    cell.labelContent.attributedText = self.mutAttribute;
+                    cell.textView.attributedText = self.mutAttribute;
                 }
                     break;
                 case 4:
                     if (self.dictInfo[@"sca"]) {
-                        cell.labelContent.text = self.dictInfo[@"sca"];
+                        cell.textView.text = self.dictInfo[@"sca"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
-                        //cell.labelContent.text = self.dictInfo[@"SCA"];
+                        //cell.textView.text = self.dictInfo[@"SCA"];
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"sca"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -522,10 +522,10 @@
                 case 5:
                     
                     if (self.dictInfo[@"experience"]) {
-                        cell.labelContent.text = self.dictInfo[@"experience"];
+                        cell.textView.text = self.dictInfo[@"experience"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"experience"]) {
@@ -541,10 +541,10 @@
                 case 6:
                     
                     if (self.dictInfo[@"problem"]) {
-                        cell.labelContent.text = self.dictInfo[@"problem"];
+                        cell.textView.text = self.dictInfo[@"problem"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"problem"]) {
@@ -560,10 +560,10 @@
                 case 7:
                     
                     if (self.dictInfo[@"others"]) {
-                        cell.labelContent.text = self.dictInfo[@"others"];
+                        cell.textView.text = self.dictInfo[@"others"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if(self.arrayKey.count!=0){
                         if ([self.arrayKey containsObject:@"others"]) {

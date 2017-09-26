@@ -310,12 +310,10 @@
                 NSArray *arrayIds = [USER_DEFAULTS valueForKey:@"myRole"];
                 if (arrayIds.count>1) {
                     ViewControllerChoosePosition *vc = [[ViewControllerChoosePosition alloc]init];
-                    self.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else
                 {
                 ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
-                self.hidesBottomBarWhenPushed = YES;
                 vc.myRoleid = [USER_DEFAULTS valueForKey:@"roleId"];
                 [self.navigationController pushViewController:vc animated:YES];
                 }

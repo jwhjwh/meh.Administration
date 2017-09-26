@@ -41,7 +41,6 @@
 - (void)removeHUD:(id)hud
 
 {
-    
     //结束刷新
     
     [self.tableView.mj_header endRefreshing];

@@ -32,7 +32,7 @@
     }];
     self.labelTitle = labelTitle;
     
-    UITextView *textView = [[UITextView alloc]init];
+    UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc]init];
     textView.textColor = GetColor(192, 192, 192, 192);
     textView.font = [UIFont systemFontOfSize:17];
     [self.contentView addSubview:textView];
@@ -42,11 +42,8 @@
         make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
         make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-8);
     }];
-    textView.scrollEnabled = NO;
-    textView.userInteractionEnabled = NO;
+    textView.editable = NO;
     self.textView = textView;
-    
-    
 }
 
 - (void)awakeFromNib {

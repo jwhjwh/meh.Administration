@@ -206,7 +206,7 @@ typedef void (^finish)(id result);
     UILabel *labelid=[[UILabel alloc]initWithFrame:CGRectMake(10, 190,160, 20)];
     labelid.textColor=[UIColor whiteColor];
     labelid.text = _chatGroup.groupId;
-    [_background addSubview:labelid];
+  //  [_background addSubview:labelid];
     
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0,_background.bottom,Scree_width ,50)];
     view.backgroundColor=[UIColor whiteColor];

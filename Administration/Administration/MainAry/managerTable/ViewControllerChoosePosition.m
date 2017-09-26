@@ -100,9 +100,16 @@
  
     ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
     NSDictionary *dict = self.arrayData[indexPath.section];
-    vc.myRoleid = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
-    [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@", dict[@"roleId"]];
+    NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
+    vc.myRoleid = roleID;
+    [ShareModel shareModel].roleID = roleID;
+    
+    if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"2"]||[roleID isEqualToString:@"3"]||[roleID isEqualToString:@"4"]||[roleID isEqualToString:@"14"]||[roleID isEqualToString:@"16"]||[roleID isEqualToString:@"17"]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限" andInterval:1];
+    }else
+    {
     [self.navigationController pushViewController:vc animated:YES];
+    }
 
 }
 //每一个分组的上左下右间距
@@ -158,7 +165,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self getAllPosition];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 /*

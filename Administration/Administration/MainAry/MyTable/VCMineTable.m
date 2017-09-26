@@ -10,6 +10,7 @@
 #import "CellMineTable.h"
 #import "VCTableDetail.h"
 #import "VCEditTable.h"
+#import "VCAddPlan.h"
 @interface VCMineTable ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayDate;
@@ -139,7 +140,10 @@
 
 -(void)addPlan
 {
-    
+    VCAddPlan *vc = [[VCAddPlan alloc]init];
+    vc.num = [ShareModel shareModel].num;
+    vc.departmentID = self.departmentID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma -mark tableview

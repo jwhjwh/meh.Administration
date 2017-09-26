@@ -30,6 +30,7 @@
     NSMutableArray *array3;
     NSMutableArray *array4;
     
+    NSUInteger index;
 }
 @property (nonatomic ,strong)NSString *postiliD;
 @end
@@ -141,6 +142,8 @@
     }
     
     if ([cell.buttonComp.titleLabel.text isEqualToString:@"完成"]) {
+        comment = cell.textView2.text;
+        location = cell.textView1.text;
         [self submitPostil];
         isAddPostil = YES;
         [cell.buttonComp setTitle:@"修改" forState:UIControlStateNormal];
@@ -168,7 +171,7 @@
     [dictL setValue:@"" forKey:@"reportRemark"];
     [dictL setValue:@"" forKey:@"roleId"];
     
-    NSUInteger index = sender.tag;
+    index = sender.tag;
     NSIndexSet *set = [NSIndexSet indexSetWithIndex:index -10];
     NSMutableDictionary *dict = [array[index-10]mutableCopy];
     
@@ -197,8 +200,6 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
-    
-    
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
@@ -212,11 +213,12 @@
                            @"id":self.postiliD,
                            @"Num":self.num};
     
-    
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+            [self getData];
+            
             return ;
         }
         if ([code isEqualToString:@"1001"]) {
@@ -279,6 +281,7 @@
         [array2 removeAllObjects];
         [array3 removeAllObjects];
         [array4 removeAllObjects];
+        [array removeAllObjects];
         NSString *code = [responseObject valueForKey:@"status"];
         NSMutableArray *arraylist = [[responseObject valueForKey:@"list"]mutableCopy];
         NSMutableDictionary *dictInfo = [NSMutableDictionary dictionary];
@@ -402,7 +405,7 @@
     cell.textView1.text = dictInfo[@"location"];
     cell.textView2.text = dictInfo[@"comment"];
     if ([dictInfo[@"addTime"] length]!=0) {
-        cell.labelTime.text = [dictInfo[@"addTime"] substringToIndex:15];
+        cell.labelTime.text = [dictInfo[@"addTime"] substringToIndex:16];
     }else
     {
         cell.labelTime.text = @"刚刚";
@@ -461,7 +464,7 @@
     label.text = dict[@"position"];
     [view addSubview:label];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(-8,30, 100, 20)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(-8,40, 100, 20)];
     button.tag = section+10;
     [button setTitle:@"添加批注 +" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:12];

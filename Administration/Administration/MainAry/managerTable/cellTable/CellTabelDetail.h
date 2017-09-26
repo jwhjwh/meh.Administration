@@ -12,4 +12,5 @@
 @property (nonatomic,weak)UILabel *labelTitle;
 @property (nonatomic,weak)UILabel *labelContent;
 @property (nonatomic,weak)UIButton *button;
+@property (nonatomic,weak)UITextView *textView;
 @end
