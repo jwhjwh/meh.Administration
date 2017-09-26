@@ -615,6 +615,20 @@
                     [_bjbtnname replaceObjectAtIndex:i withObject:@"编辑"];
                     
                 }
+                _ZWbutton = _ZWbtnAry[bbttn.tag];
+                _ZWbutton.enabled = NO;
+                NSMutableArray *tagary = _ZWidAry[bbttn.tag];
+                
+                int ivalue = [tagary[0] intValue];
+                _ZWLBbutton = _ZWLBary[bbttn.tag];
+                if (ivalue == 5|| ivalue == 2 || ivalue == 3 || ivalue == 4 || ivalue == 14 || ivalue == 16 || ivalue == 17) {
+                    _ZWLBbutton.enabled = NO;
+                }
+                _SSBMbutt = _BMbtnAry[bbttn.tag];
+                _SSBMbutt.enabled = NO;
+
+                
+                
                 NSArray *scbtnary = _SCbtnAry[bbttn.tag];
                 if (scbtnary.count>0){
                     for (int a = 0; a<scbtnary.count; a++) {
@@ -684,6 +698,20 @@
                     [_bjbtnname replaceObjectAtIndex:i withObject:@"编辑"];
                     [_bjbtn setTitleColor:GetColor(0, 129, 238, 1) forState:UIControlStateNormal];
                 }
+                _ZWbutton = _ZWbtnAry[bbtn.tag];
+                _ZWbutton.enabled = NO;
+                NSMutableArray *tagary = _ZWidAry[bbtn.tag];
+                
+                int ivalue = [tagary[0] intValue];
+                _ZWLBbutton = _ZWLBary[bbtn.tag];
+                if (ivalue == 5|| ivalue == 2 || ivalue == 3 || ivalue == 4 || ivalue == 14 || ivalue == 16 || ivalue == 17) {
+                    _ZWLBbutton.enabled = NO;
+                }
+                _SSBMbutt = _BMbtnAry[bbtn.tag];
+                _SSBMbutt.enabled = NO;
+                
+                
+                
                 NSArray *scbtnary = _SCbtnAry[bbtn.tag];
                 if (scbtnary.count>0){
                     for (int a = 0; a<scbtnary.count; a++) {
@@ -1139,10 +1167,10 @@
                         NSArray* numarray = [_model.departmentID componentsSeparatedByString:@","];
                         [_BMnameAry addObject:array];//部门
                         [_BMidAry addObject:numarray];//部门id
-                        
+                        NSArray* numarray2 = [_model.departmentID componentsSeparatedByString:@","];
                         [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
                         
-                        [_oldBMID addObject:bmnumary];//部门id-----
+                        [_oldBMID addObject:numarray2];//部门id-----
                     }else{
                         [bmary addObject:_model.departmentName];
                         [_BMnameAry addObject:bmary];//部门

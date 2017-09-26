@@ -29,7 +29,6 @@
 
 #import<BaiduMapAPI_Search/BMKPoiSearchType.h>
 @interface FillinfoViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XFDaterViewDelegate>
-
 {
       XFDaterView*dater;
     BMKLocationService *_locService;  //定位
@@ -49,7 +48,7 @@
 @property (nonatomic,retain)NSString *storename;//店名
 @property (nonatomic,retain)NSString *storeaddree;//地址
 @property (nonatomic,retain)NSString *storehead;//负责人
-@property (nonatomic,retain)NSString *storephone;//微信/手机
+@property (nonatomic,retain)NSString *storephone;//手机
 @property (nonatomic,retain)NSString *storewxphone;//微信
 @property (nonatomic,retain)NSString *storebrand;//品牌
 @property (nonatomic,retain)NSString *clascation;//分类
@@ -163,17 +162,7 @@
     _address=result.address;
     _storeaddree=result.address;
     NSLog(@"address:%@",_address);
-    [_infonTableview reloadData];
-    //addressDetail:     层次化地址信息
-    
-    //address:    地址名称
-    
-    //businessCircle:  商圈名称
-    
-    // location:  地址坐标
-    
-    //  poiList:   地址周边POI信息，成员类型为BMKPoiInfo
-    
+    [_infonTableview reloadData];    
 }
 -(void)vSubviews{
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+49) style:UITableViewStylePlain];
@@ -204,17 +193,17 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {     CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-170, 48);
    
-    if(indexPath.row<7){
+    if(indexPath.row<8){
     inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     if (cell ==nil)
     {
        cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
         if (indexPath.section == 0) {
-            UIImageView *SiginImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-15, 10, 30, 30)];
+            UIImageView *SiginImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-30, 10, 30, 30)];
             SiginImage.image = [UIImage imageNamed:@"qd_ico"];
             [cell addSubview:SiginImage];
-            UILabel *SiginLabel = [[UILabel alloc]initWithFrame:CGRectMake(((self.view.frame.size.width/2)-15)+30, 10, 50, 30)];
+            UILabel *SiginLabel = [[UILabel alloc]initWithFrame:CGRectMake(((self.view.frame.size.width/2)-30)+30, 10, 50, 30)];
             SiginLabel.text = @"签到";
             [cell addSubview:SiginLabel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -230,7 +219,7 @@
                 if (indexPath.row==4) {
                     _textField.text=_address;
                 }
-                if(!(indexPath.row==6)){
+                if((!(indexPath.row==6))&&(!(indexPath.row == 7))){
                     _textField.placeholder=@"必填";
                 }
             }else{
@@ -307,12 +296,6 @@
                 } failure:^(NSError *error) {
                     
                 } view:self.view];
-            }else{
-                SiginViewController *siginVC = [[SiginViewController alloc]init];
-                siginVC.shopid =_ShopId;
-                siginVC.Address = _sigincity;
-                siginVC.Types = @"1";
-                [self.navigationController pushViewController:siginVC animated:YES];
             }
             
         }
@@ -349,7 +332,7 @@
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
                 inputVC.blcokStr=^(NSString *content,int num){
-                    if (num==7) {
+                    if (num==8) {
                         _storebrand=content;
                         
                     }
@@ -449,7 +432,10 @@
            
         }
             break;
-            
+        case 7:{
+            _storewxphone = sender.text;
+            NSLog(@"%@",sender.text);
+        } break;
         default:
             break;
     }
@@ -487,8 +473,7 @@
          NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
         NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"1",@"CompanyId":compid};
-        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-            
+        [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
                 _islode=NO;
@@ -511,9 +496,9 @@
                 };
                 [alertView showMKPAlertView];
             }
-        }failure:^(NSError *error) {
+        } failure:^(NSError *error) {
             
-        }view:self.view MBPro:YES];
+        } view:self.view];
     }else{
          [ELNAlerTool showAlertMassgeWithController:self andMessage:@"已提交成功，请勿重复提交" andInterval:1.0];
     }
@@ -528,8 +513,7 @@
         NSString *RoleId=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"roleId"]];
         NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"0",@"CompanyId":compid};
-        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-            
+        [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
                 _islode=NO;
@@ -552,14 +536,32 @@
                 };
                 [alertView showMKPAlertView];
             }
-        }failure:^(NSError *error) {
+        } failure:^(NSError *error) {
             
-        }view:self.view MBPro:YES];
+        } view:self.view];
     }else{
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"已提交成功，请勿重复提交" andInterval:1.0];
     }
 
 
 }
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([_infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_infonTableview setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([_infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
+        [_infonTableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 @end

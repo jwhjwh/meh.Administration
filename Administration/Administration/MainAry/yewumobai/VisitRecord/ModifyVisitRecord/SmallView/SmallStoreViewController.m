@@ -1,20 +1,19 @@
 //
-//  StoreprofileController.m
+//  SmallStoreViewController.m
 //  Administration
 //
-//  Created by zhang on 2017/3/13.
+//  Created by 九尾狐 on 2017/9/12.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "StoreprofileController.h"
+#import "SmallStoreViewController.h"
 #import "inftionTableViewCell.h"
 #import "SelectAlert.h"
 #import "CLZoomPickerView.h"
-@interface StoreprofileController ()<UITableViewDataSource,UITableViewDelegate,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
+@interface SmallStoreViewController ()<UITableViewDataSource,UITableViewDelegate,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
 {
     UITableView *infonTableview;
 }
-
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
 @property (strong,nonatomic) NSArray *InterNameAry;
 @property (strong,nonatomic) NSArray *timeArray;
@@ -24,9 +23,10 @@
 @property (strong,nonatomic)NSString *year;
 @property (strong,nonatomic)NSString *prepen;
 @property (strong,nonatomic)NSString *beds;
+
 @end
 
-@implementation StoreprofileController
+@implementation SmallStoreViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,10 +39,13 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    
+    if (self.modifi ==YES) {
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
     _InterNameAry = @[@"类型",@"经营年限",@"美容师人数",@"床位"];
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0,83,self.view.bounds.size.width,1)];
     view.backgroundColor=GetColor(216, 216, 216, 1);
@@ -61,8 +64,9 @@
     for (int i=1; i<101; i++) {
         [array addObject:[NSString stringWithFormat:@"%d",i]];
     }
-     _timeArray=[NSArray arrayWithArray:array];
-   
+    _timeArray=[NSArray arrayWithArray:array];
+    
+
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -83,10 +87,14 @@
         cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     if (indexPath.row==0) {
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.mingLabel.text = _InterNameAry[indexPath.row];
+    cell.userInteractionEnabled = _modifi;
+    NSString *String = [NSString stringWithFormat:@"%@",_dateAry[indexPath.row]];
+    cell.xingLabel.text = String;
+    
     return cell;
 }
 
@@ -98,12 +106,12 @@
     switch (indexPath.row) {
         case 0:{
             [SelectAlert showWithTitle:@"类型" titles:@[@"美容院",@"综合店",@"前店后院",@"其他"] selectIndex:^(NSInteger selectIndex) {
-                  
-              } selectValue:^(NSString *selectValue) {
-                  inftionTableViewCell *cell = [infonTableview cellForRowAtIndexPath:indexPath];
-                  cell.xingLabel.text=selectValue;
-                  _type=selectValue;
-              } showCloseButton:NO];
+                
+            } selectValue:^(NSString *selectValue) {
+                inftionTableViewCell *cell = [infonTableview cellForRowAtIndexPath:indexPath];
+                cell.xingLabel.text=selectValue;
+                _type=selectValue;
+            } showCloseButton:NO];
         }
             
             break;
@@ -113,10 +121,10 @@
             
             break;
         case 2:
-              [self lodapickerView];
+            [self lodapickerView];
             break;
         case 3:
-              [self lodapickerView];
+            [self lodapickerView];
             break;
         default:
             break;
@@ -149,11 +157,11 @@
             break;
         case 2:
             _prepen=_timeArray[indexPath];
-
+            
             break;
         case 3:
             _beds=_timeArray[indexPath];
-
+            
             break;
         default:
             break;
@@ -199,5 +207,8 @@
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
 }
+
+
+
 
 @end

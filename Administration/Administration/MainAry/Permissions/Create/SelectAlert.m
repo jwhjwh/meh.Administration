@@ -291,6 +291,25 @@
         [self removeFromSuperview];
     }];
 }
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([_selectTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_selectTableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([_selectTableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [_selectTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 
 - (void)dealloc {
 //    NSLog(@"SelectAlert被销毁了");

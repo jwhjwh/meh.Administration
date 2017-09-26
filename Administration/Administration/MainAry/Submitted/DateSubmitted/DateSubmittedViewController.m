@@ -21,6 +21,8 @@
 
 @property (nonatomic,strong) NSString *IMAGESTR;//图片地址
 
+@property (nonatomic,strong) NSString *pusersid;
+
 @end
 
 @implementation DateSubmittedViewController
@@ -53,7 +55,50 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)delemissClick{
-    
+    NSString *urlStr =[NSString stringWithFormat:@"%@picreport/deletePicReport.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pid":_contentid,@"pusersid":_pusersid};
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                NSString *str= [[NSString alloc]init];
+                str = @"1";
+                self.datesubString(str);
+                [self.navigationController popViewControllerAnimated:YES];
+            
+            };
+            [alertView showMKPAlertView];
+
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败，没有删除权限" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]){
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
+        }
+
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+
 }
 -(void)dateViewUi{
     self.tableView = [[UITableView alloc]init];
@@ -160,6 +205,7 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pid":_contentid};
     _dataArray = [[NSMutableArray alloc]init];
+    _pusersid = [[NSString alloc]init];
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSDictionary *loadDic = responseObject[@"picReport"];
@@ -170,7 +216,7 @@
             [_dataArray addObject:loadDic[@"locations"]];
             [_dataArray addObject:loadDic[@"describe"]];
             [_dataArray addObject:loadDic[@"progress"]];
-            
+            _pusersid = loadDic[@"usersId"];
             [self dateViewUi];
         }
     } failure:^(NSError *error) {
