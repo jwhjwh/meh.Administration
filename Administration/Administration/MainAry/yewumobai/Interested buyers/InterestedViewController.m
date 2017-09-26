@@ -1,36 +1,30 @@
 //
-//  VisitRecordViewController.m
+//  InterestedViewController.m
 //  Administration
 //
-//  Created by 九尾狐 on 2017/9/7.
+//  Created by 九尾狐 on 2017/9/21.
 //  Copyright © 2017年 九尾狐. All rights reserved.
-// 摩拜记录
-
-#import "VisitRecordViewController.h"
+//
+//
+#import "InterestedViewController.h"
 #import "RecotdModel.h"
 #import "RecordTableViewCell.h"
-#import "ModifyVisitViewController.h"
 #import "WorshipSearchViewController.h"
-@interface VisitRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "InterestedTabelViewController.h"
+@interface InterestedViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
-
+    
 }
-
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
-
 @end
 
-@implementation VisitRecordViewController
--(void)viewWillAppear:(BOOL)animated{
-    
-    [self Visitnewworking];
-}
+@implementation InterestedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"陌拜记录";
+    self.title = @"意向客户";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -39,13 +33,10 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    
-    [self VisitRecordUI];
+    [self InterestedUI];
     [self Visitnewworking];
-    
 }
--(void)VisitRecordUI{
-    
+-(void)InterestedUI{
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
@@ -71,7 +62,7 @@
         make.height.mas_offset(1);
     }];
     UILabel *zuijinlabel = [[UILabel alloc]init];
-    zuijinlabel.text = @"最近的陌拜记录";
+    zuijinlabel.text = @"最近的意向客户";
     zuijinlabel.font = [UIFont systemFontOfSize:14];
     zuijinlabel.textColor = [UIColor lightGrayColor];
     [self.view addSubview:zuijinlabel];
@@ -91,6 +82,7 @@
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.height.mas_offset(1);
     }];
+    
     infonTableview =[[UITableView alloc]init];
     infonTableview.delegate = self;
     infonTableview.dataSource = self;
@@ -103,13 +95,6 @@
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-
-}
--(void)Touchsearch{
-    //SearchViewController
-    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
-    worseaVC.strId = self.strId;
-    [self.navigationController pushViewController:worseaVC animated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -120,7 +105,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return 120;
+    return 80;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
     
@@ -137,76 +122,70 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-     RecotdModel *model=[[RecotdModel alloc]init];
-     model = _InterNameAry[indexPath.row];
+    RecotdModel *model=[[RecotdModel alloc]init];
+    model = _InterNameAry[indexPath.row];
     cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.storeName];
-    NSString *sj = [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(0, 10)]];
-    cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@\n日期:%@",model.province,model.city,model.county,sj];
-    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.wtime substringWithRange:NSMakeRange(5, 11)]];
+    cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.province,model.city,model.county];
+    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
     cell.shijianLabel.text = xxsj;
     
     return cell;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    RecotdModel *model=[[RecotdModel alloc]init];
-    model = _InterNameAry[indexPath.row];
-    ModifyVisitViewController *modify = [[ModifyVisitViewController alloc]init];
-    modify.ModifyId = model.Id;
-    modify.strId = self.strId;
-    [self.navigationController pushViewController:modify animated:YES];
-    
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)buiftItem{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 -(void)Visitnewworking{
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
     dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-       
-            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                NSArray *array=[responseObject valueForKey:@"recordInfo"];
-                _InterNameAry = [[NSMutableArray alloc]init];
-                for (NSDictionary *dic in array) {
-                    RecotdModel *model=[[RecotdModel alloc]init];
-                    [model setValuesForKeysWithDictionary:dic];
-                    [_InterNameAry addObject:model];
-                }
-                [infonTableview reloadData];
-            } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                alertView.resultIndex = ^(NSInteger index){
-                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                    ViewController *loginVC = [[ViewController alloc] init];
-                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                    [self presentViewController:loginNavC animated:YES completion:nil];
-                };
-                [alertView showMKPAlertView];
-            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                alertView.resultIndex = ^(NSInteger index){
-                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                    ViewController *loginVC = [[ViewController alloc] init];
-                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                    [self presentViewController:loginNavC animated:YES completion:nil];
-                };
-                [alertView showMKPAlertView];
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSArray *array=[responseObject valueForKey:@"list"];
+            _InterNameAry = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in array) {
+                RecotdModel *model=[[RecotdModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_InterNameAry addObject:model];
             }
-      
-
+            [infonTableview reloadData];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+        
+        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
     
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RecotdModel *model=[[RecotdModel alloc]init];
+    model = _InterNameAry[indexPath.row];
+    InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
+    intabel.intentionId = model.Id;
+    intabel.strId = self.strId;
+    [self.navigationController pushViewController:intabel animated:YES];
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
@@ -226,6 +205,16 @@
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
+}
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)Touchsearch{
+    //SearchViewController
+    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
+    worseaVC.strId = self.strId;
+    worseaVC.intere = @"1";
+    [self.navigationController pushViewController:worseaVC animated:YES];
 }
 
 @end

@@ -10,4 +10,7 @@
 
 @interface businessViewController : UIViewController
 
+@property (nonatomic,strong)NSString *strId;
+
 @end
+ 

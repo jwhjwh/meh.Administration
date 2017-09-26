@@ -1,44 +1,38 @@
 //
-//  businessViewController.m
+//  InterestedChooseViewController.m
 //  Administration
 //
-//  Created by zhang on 2017/3/10.
+//  Created by 九尾狐 on 2017/9/22.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "businessViewController.h"
-#import "busableController.h"
-#import "InterestedViewController.h"
-@interface businessViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+#import "InterestedChooseViewController.h"
+#import "VisitRecordViewController.h"
+@interface InterestedChooseViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-   UITableView *infonTableview;
+    UITableView *infonTableview;
+    
 }
+
 @property (strong,nonatomic) NSArray *InterNameAry;
 @end
 
-@implementation businessViewController
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.tabBarController.tabBar.hidden=YES;
-}
+@implementation InterestedChooseViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"业务陌拜";
+    self.title = self.strIdName;
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _InterNameAry = @[@"意向客户表",@"膜拜记录表"];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
+    btn.autoresizesSubviews=NO;
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-   
-    _InterNameAry = @[@"陌拜记录",@"意向客户",@"目标客户",@"确定合作客户"];
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 83,self.view.bounds.size.width,1)];
-    view.backgroundColor=GetColor(216, 216, 216, 1);
-    [self.view addSubview:view];
-    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,84, kScreenWidth, kScreenHeight-64)];
+    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,0, kScreenWidth, kScreenHeight-64)];
     //分割线无
     //    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
     //不让滚动
@@ -49,21 +43,30 @@
     [self.view addSubview: infonTableview];
     [ZXDNetworking setExtraCellLineHidden:infonTableview];
 }
-
-
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return _InterNameAry.count;
+    return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     return 50;
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
+    
+    return _InterNameAry.count;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        return 20;
+    }else{
+        return 0.1;
+    }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -76,43 +79,27 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = _InterNameAry[indexPath.row];
+    cell.textLabel.text = _InterNameAry[indexPath.section];
+    if (indexPath.section == 1) {
+        UIView *view=  [[UIView alloc]initWithFrame:CGRectMake(0, 49, self.view.frame.size.width,1)];
+        view.backgroundColor = [UIColor lightGrayColor];
+        [cell addSubview:view];
+    }
     return cell;
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{//陌拜记录
-            busableController *busableVC = [[busableController alloc]init];
-            busableVC.strId = self.strId;
-            [self.navigationController showViewController:busableVC sender:nil];
-        }
-            
-            break;
-        case 1:{//意向客户
-            InterestedViewController *interestedVC = [[InterestedViewController alloc]init];
-            interestedVC.strId = self.strId;
-            [self.navigationController showViewController:interestedVC sender:nil];
-        }
-            break;
-        case 2:{//目标客户
-            
-        }
-            break;
-        case 3:{//确定合作客户
-            
-        }
-            break;
-        default:
-            break;
+    if (indexPath.section == 1) {
+        VisitRecordViewController *visiVC = [[VisitRecordViewController alloc]init];
+        visiVC.strId = self.strId;
+        [self.navigationController pushViewController:visiVC animated:YES];
+    }else{
+    
     }
     
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
+
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
     if ([infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -132,5 +119,10 @@
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
 }
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 @end

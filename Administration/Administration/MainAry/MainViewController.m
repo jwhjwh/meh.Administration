@@ -23,7 +23,7 @@
 #import "MenuCell.h"
 #import "NoticeView.h"
 #import "SetModel.h"
-
+#import "positionViewController.h"//多职位-业务膜拜
 #define MenuH 270
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
@@ -48,6 +48,9 @@
 @property(nonatomic,strong)NSMutableArray *arrLogo;
 //判断红的消息
 @property(nonatomic,retain)NSString *number;
+
+@property (nonatomic,strong)NSMutableArray *zwid;
+
 @end
 
 @implementation MainViewController
@@ -68,6 +71,7 @@
     [self initData];
    //[self addLoop];
     _menuArray=[NSMutableArray array];
+    
 }
 
 
@@ -324,8 +328,15 @@
                 break;
             case 7:{
                 //业务陌拜
-                businessViewController *busVC = [[businessViewController alloc]init];
-                [self.navigationController pushViewController:busVC animated:YES];
+                NSArray *arrayIds = [USER_DEFAULTS valueForKey:@"myRole"];
+                if (arrayIds.count>1) {
+                    positionViewController *position = [[positionViewController alloc]init];
+                     [self.navigationController pushViewController:position animated:YES];
+                }else{
+                    businessViewController *busVC = [[businessViewController alloc]init];
+                    [self.navigationController pushViewController:busVC animated:YES];
+                }
+                
             }
                 break;
             case 8:

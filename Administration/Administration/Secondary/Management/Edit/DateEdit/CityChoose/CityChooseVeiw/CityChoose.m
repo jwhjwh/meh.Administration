@@ -64,7 +64,7 @@ static CGFloat animationTime = 0.25;
 }
 
 - (void)initBaseData{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"city" ofType:@"plist"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"CCity" ofType:@"plist"];
     self.allCityInfo = [NSDictionary dictionaryWithContentsOfFile:path];
     NSMutableArray *tempArr = [NSMutableArray array];
     for (int i=0; i<self.allCityInfo.count; i++) {
