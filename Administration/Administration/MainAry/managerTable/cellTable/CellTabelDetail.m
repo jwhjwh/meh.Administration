@@ -22,20 +22,36 @@
         }];
         self.labelTitle = lableTitle;
         
-        UILabel *labelContent = [[UILabel alloc]init];
-        labelContent.numberOfLines = 0;
-        labelContent.font = [UIFont systemFontOfSize:17];
-        labelContent.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        labelContent.layer.borderWidth = 1.0f;
-        labelContent.textColor = [UIColor lightGrayColor];
-        [self.contentView addSubview:labelContent];
-        [labelContent mas_makeConstraints:^(MASConstraintMaker *make) {
+//        UILabel *labelContent = [[UILabel alloc]init];
+//        labelContent.numberOfLines = 0;
+//        labelContent.font = [UIFont systemFontOfSize:17];
+//        labelContent.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//        labelContent.layer.borderWidth = 1.0f;
+//        labelContent.textColor = [UIColor lightGrayColor];
+//        [self.contentView addSubview:labelContent];
+//        [labelContent mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+//            make.top.mas_equalTo(lableTitle.mas_bottom).offset(5);
+//            make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
+//            make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-5);
+//        }];
+//        self.labelContent = labelContent;
+        
+        UITextView *textView = [[UITextView alloc]init];
+        textView.font = [UIFont systemFontOfSize:17];
+        textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        textView.layer.borderWidth = 1.0f;
+        textView.textColor = [UIColor lightGrayColor];
+        textView.scrollEnabled = NO;
+        textView.userInteractionEnabled = NO;
+        [self.contentView addSubview:textView];
+        [textView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.contentView.mas_left).offset(8);
             make.top.mas_equalTo(lableTitle.mas_bottom).offset(5);
             make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
             make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-5);
         }];
-        self.labelContent = labelContent;
+        self.textView = textView;
         
         UIButton *button = [[UIButton alloc]init];
         [button setBackgroundImage:[UIImage imageNamed:@"tjpco01"] forState:UIControlStateNormal];

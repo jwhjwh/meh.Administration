@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UIPlaceHolderTextView.h"
 @interface CellEditTable : UITableViewCell
 @property (nonatomic,weak)UILabel *labelTitle;
-@property (nonatomic,weak)UITextView *textView;
+@property (nonatomic,weak)UIPlaceHolderTextView *textView;
 @end

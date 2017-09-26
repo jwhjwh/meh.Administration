@@ -20,22 +20,29 @@
     _mingLabel=[[UILabel alloc]init];
     _mingLabel.font=[UIFont systemFontOfSize:16];
     [self addSubview:_mingLabel];
+    
     _xingLabel=[[UILabel alloc]init];
     _xingLabel.numberOfLines=0;
     _xingLabel.font=[UIFont systemFontOfSize:14];
     [self addSubview:_xingLabel];
+    
     [_mingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.mas_equalTo(self.mas_left).offset(10);
-        make.centerY.mas_equalTo(self.mas_centerY);
-        make.width.offset(90);
-        make.height.offset(30);
+       // make.centerY.mas_equalTo(self.mas_centerY);
+//        make.width.offset(90);
+//        make.height.offset(30);
+        make.top.mas_equalTo(self.mas_top).offset(10);
+        make.bottom.mas_equalTo(self.mas_bottom).offset(-10);
+        make.width.mas_equalTo(90);
     }];
     [_xingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_mingLabel.mas_right).offset(20);
         make.right.mas_equalTo(self.mas_right).offset(-10);
-        make.centerY.mas_equalTo(_mingLabel.mas_centerY);
-        make.height.offset(20);
+        //make.centerY.mas_equalTo(_mingLabel.mas_centerY);
+        make.top.mas_equalTo(self.mas_top).offset(8);
+       // make.height.offset(20);
+        make.bottom.mas_equalTo(self.mas_bottom).offset(-8);
     }];
 }
 - (void)awakeFromNib {

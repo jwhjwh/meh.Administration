@@ -50,13 +50,16 @@
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
+    
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height-49) style:UITableViewStylePlain];
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,Scree_width,self.view.bounds.size.height-49) style:UITableViewStyleGrouped];
     _infonTableview.showsVerticalScrollIndicator = NO;
     _infonTableview.showsHorizontalScrollIndicator = NO;
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
+    _infonTableview.estimatedRowHeight = 100;
+    _infonTableview.rowHeight = UITableViewAutomaticDimension;
     [self.view addSubview:_infonTableview];
     
     [self loadDataFromServer];
@@ -77,13 +80,19 @@
 }
     return 10;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(indexPath.section ==0){
-        return 80;
-    }
-    return 50;
+    return 0.1f;
 }
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if(indexPath.section ==0){
+//        return 80;
+//    }
+//    return 50;
+//}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
@@ -91,13 +100,22 @@
         cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     if (indexPath.section==0) {
-       _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
+       _TXImage = [[UIImageView alloc]init];
         [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         _TXImage.userInteractionEnabled=YES;
         _TXImage.backgroundColor = [UIColor whiteColor];
         _TXImage.layer.masksToBounds = YES;
         _TXImage.layer.cornerRadius = 20.0;//设置圆角
         [cell addSubview:_TXImage];
+        
+        [_TXImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(cell.mas_right).offset(-10);
+            make.bottom.mas_equalTo(cell.mas_bottom).offset(-10);
+            make.top.mas_equalTo(cell.mas_top).offset(10);
+            make.width.mas_equalTo(40);
+            make.height.mas_equalTo(40);
+        }];
+        
         UITapGestureRecognizer *tapSingleGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewGestureAction:)];//添加单击的手势
         tapSingleGR.numberOfTapsRequired = 1; //设置单击几次才触发方法
         [_TXImage addGestureRecognizer:tapSingleGR];
@@ -107,7 +125,7 @@
         UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
         [TXImage setImage:[UIImage imageNamed:@"phone"] forState: UIControlStateNormal];
         [TXImage addTarget:self action:@selector(callIphone:) forControlEvents:UIControlEventTouchUpInside];
-        TXImage.frame=CGRectMake(self.view.bounds.size.width-50,5, 40, 40);
+        TXImage.frame=CGRectMake(cell.frame.size.width-10,3, 40, 40);
         [cell addSubview:TXImage];
 //        UIButton *Image = [UIButton buttonWithType:UIButtonTypeCustom];
 //        [Image setImage:[UIImage imageNamed:@"message"] forState: UIControlStateNormal];

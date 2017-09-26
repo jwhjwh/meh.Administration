@@ -291,6 +291,7 @@
 - (void)didLoginFromOtherDevice
 {
     if ([self.imagePicker.mediaTypes count] > 0 && [[self.imagePicker.mediaTypes objectAtIndex:0] isEqualToString:(NSString *)kUTTypeMovie]) {
+        [[EMClient sharedClient] logout:YES];
         [self.imagePicker stopVideoCapture];
     }
 }

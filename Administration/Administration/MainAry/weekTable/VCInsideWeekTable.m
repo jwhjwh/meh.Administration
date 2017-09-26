@@ -199,7 +199,7 @@
 
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.labelContent.text isEqualToString:self.dictInfo[key]]) {
+        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
             vc.theKey = key;
             break;
         }
@@ -207,7 +207,7 @@
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.tableId;
-    vc.stringName = cell.labelContent.attributedText;
+    vc.stringName = cell.textView.text;
     vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -282,7 +282,7 @@
             cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.labelContent.attributedText = nil;
+        cell.textView.attributedText = nil;
         [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
         if (self.havePermission) {
             cell.button.hidden = NO;
@@ -298,10 +298,10 @@
                 {
                     
                     if (self.dictInfo[@"monday"]) {
-                        cell.labelContent.text = self.dictInfo[@"monday"];
+                        cell.textView.text = self.dictInfo[@"monday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"monday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -312,10 +312,10 @@
                 case 4:
                    
                     if (self.dictInfo[@"tuesday"]) {
-                        cell.labelContent.text = self.dictInfo[@"tuesday"];
+                        cell.textView.text = self.dictInfo[@"tuesday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"tuesday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -325,10 +325,10 @@
                 case 5:
                     
                     if (self.dictInfo[@"wednesday"]) {
-                        cell.labelContent.text = self.dictInfo[@"wednesday"];
+                        cell.textView.text = self.dictInfo[@"wednesday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"wednesday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -337,10 +337,10 @@
                 case 6:
                     
                     if (self.dictInfo[@"thursday"]) {
-                        cell.labelContent.text = self.dictInfo[@"thursday"];
+                        cell.textView.text = self.dictInfo[@"thursday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"thursday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -349,10 +349,10 @@
                     break;
                 case 7:
                     if (self.dictInfo[@"friday"]) {
-                        cell.labelContent.text = self.dictInfo[@"friday"];
+                        cell.textView.text = self.dictInfo[@"friday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"friday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -360,10 +360,10 @@
                     break;
                 case 8:
                     if (self.dictInfo[@"saturday"]) {
-                        cell.labelContent.text = self.dictInfo[@"saturday"];
+                        cell.textView.text = self.dictInfo[@"saturday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"saturday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -371,10 +371,10 @@
                     break;
                 case 9:
                     if (self.dictInfo[@"sunday"]) {
-                        cell.labelContent.text = self.dictInfo[@"sunday"];
+                        cell.textView.text = self.dictInfo[@"sunday"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"Sunday"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -382,10 +382,10 @@
                     break;
                 case 10:
                     if (self.dictInfo[@"important"]) {
-                        cell.labelContent.text = self.dictInfo[@"important"];
+                        cell.textView.text = self.dictInfo[@"important"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"important"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -393,10 +393,10 @@
                     break;
                 case 11:
                     if (self.dictInfo[@"growthPlans"]) {
-                        cell.labelContent.text = self.dictInfo[@"growthPlans"];
+                        cell.textView.text = self.dictInfo[@"growthPlans"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"growthPlans"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -413,10 +413,10 @@
                 {
                     
                     if (self.dictInfo[@"workProgress"]) {
-                        cell.labelContent.text = self.dictInfo[@"workProgress"];
+                        cell.textView.text = self.dictInfo[@"workProgress"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"workProgress"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -426,10 +426,10 @@
                 case 4:
                     
                     if (self.dictInfo[@"progressEvaluation"]) {
-                        cell.labelContent.text = self.dictInfo[@"progressEvaluation"];
+                        cell.textView.text = self.dictInfo[@"progressEvaluation"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"progressEvaluation"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -438,10 +438,10 @@
                 case 5:
                     
                     if (self.dictInfo[@"strategy"]) {
-                        cell.labelContent.text = self.dictInfo[@"strategy"];
+                        cell.textView.text = self.dictInfo[@"strategy"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"strategy"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -450,10 +450,10 @@
                 case 6:
                     
                     if (self.dictInfo[@"experience"]) {
-                        cell.labelContent.text = self.dictInfo[@"experience"];
+                        cell.textView.text = self.dictInfo[@"experience"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"experience"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -461,10 +461,10 @@
                     break;
                 case 7:
                     if (self.dictInfo[@"directionPreset"]) {
-                        cell.labelContent.text = self.dictInfo[@"directionPreset"];
+                        cell.textView.text = self.dictInfo[@"directionPreset"];
                     }else
                     {
-                        cell.labelContent.text = @"  ";
+                        cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"directionPreset"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];

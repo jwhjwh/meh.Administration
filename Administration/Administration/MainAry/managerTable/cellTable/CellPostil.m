@@ -30,7 +30,7 @@
         UIButton *buttonComp = [[UIButton alloc]init];
         [buttonComp setTitle:@"完成" forState:UIControlStateNormal];
         buttonComp.titleLabel.font = [UIFont systemFontOfSize:10];
-        [buttonComp setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [buttonComp setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.contentView addSubview:buttonComp];
         [buttonComp mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(self.contentView.mas_right).offset(-8);

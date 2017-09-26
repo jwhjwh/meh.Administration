@@ -8,6 +8,7 @@
 
 #import "VCMyTable.h"
 #import "VCChooseDepartment.h"
+#import "VCTableState.h"
 @interface VCMyTable ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSArray *array;
 @property (nonatomic,weak)UITableView *tableView;
@@ -39,6 +40,12 @@
         VCChooseDepartment *vc = [[VCChooseDepartment alloc]init];
         vc.roleID = self.roleID;
         [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        VCTableState *vc = [[VCTableState alloc]init];
+        vc.stringTitle = self.array[indexPath.row];
+        [ShareModel shareModel].sort = [NSString stringWithFormat:@"%ld",indexPath.row];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }
@@ -66,7 +73,6 @@
     [ZXDNetworking setExtraCellLineHidden:tabelView];
     [self.view addSubview:tabelView];
     self.tableView = tabelView;
-    
     if ([self.roleID isEqualToString:@"5"]||[self.roleID isEqualToString:@"8"]||[self.roleID isEqualToString:@"9"]) {
         self.array = @[@"日计划",@"店报表",@"周报表"];
     }else

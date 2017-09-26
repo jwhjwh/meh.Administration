@@ -174,6 +174,7 @@ static ChatUIHelper *helper = nil;
 //    [self _clearHelper];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"提示", @"Prompt") message:NSLocalizedString(@"聊天异地登录", @"your login account has been in other places") delegate:self cancelButtonTitle:NSLocalizedString(@"确定",@"OK") otherButtonTitles:nil, nil];
     [alertView show];
+     [[EMClient sharedClient] logout:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -188,6 +189,7 @@ static ChatUIHelper *helper = nil;
 //    [self _clearHelper];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer", @"your account has been removed from the server side") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
+     [[EMClient sharedClient] logout:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
 }
 
@@ -196,6 +198,7 @@ static ChatUIHelper *helper = nil;
 //    [self _clearHelper];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"servingIsBanned", @"Serving is banned") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
+    // [[EMClient sharedClient] logout:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
 }
 

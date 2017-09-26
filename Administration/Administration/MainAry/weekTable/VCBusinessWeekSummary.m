@@ -179,7 +179,7 @@
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.labelContent.text isEqualToString:self.dictInfo[key]]) {
+        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
             vc.theKey = key;
             break;
         }
@@ -187,7 +187,7 @@
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.tableId;
-    vc.stringName = cell.labelContent.attributedText;
+    vc.stringName = cell.textView.text;
     vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -241,7 +241,7 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.button addTarget:self action:@selector(editContent:) forControlEvents:UIControlEventTouchUpInside];
-            cell.labelContent.attributedText = nil;
+            cell.textView.attributedText = nil;
             self.mutAttribute = [[NSMutableAttributedString alloc]init];
             if (self.havePermission) {
                 cell.button.hidden = NO;
@@ -278,10 +278,10 @@
                         break;
                     case 4:
                         if (self.dictInfo[@"strategy"]) {
-                            cell.labelContent.text = self.dictInfo[@"strategy"];
+                            cell.textView.text = self.dictInfo[@"strategy"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"strategy"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -289,10 +289,10 @@
                         break;
                     case 5:
                         if (self.dictInfo[@"preset"]) {
-                            cell.labelContent.text = self.dictInfo[@"preset"];
+                            cell.textView.text = self.dictInfo[@"preset"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"preset"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -300,10 +300,10 @@
                         break;
                     case 6:
                         if (self.dictInfo[@"content"]) {
-                            cell.labelContent.text = self.dictInfo[@"content"];
+                            cell.textView.text = self.dictInfo[@"content"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"content"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -311,10 +311,10 @@
                         break;
                     case 7:
                         if (self.dictInfo[@"presetDirection"]) {
-                            cell.labelContent.text = self.dictInfo[@"presetDirection"];
+                            cell.textView.text = self.dictInfo[@"presetDirection"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"presetDirection"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -322,10 +322,10 @@
                         break;
                     case 8:
                         if (self.dictInfo[@"planningManagement"]) {
-                            cell.labelContent.text = self.dictInfo[@"planningManagement"];
+                            cell.textView.text = self.dictInfo[@"planningManagement"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"planningManagement"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -333,10 +333,10 @@
                         break;
                     case 9:
                         if (self.dictInfo[@"others"]) {
-                            cell.labelContent.text = self.dictInfo[@"others"];
+                            cell.textView.text = self.dictInfo[@"others"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"others"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -383,15 +383,15 @@
                         [self.mutAttribute appendAttributedString:string7];
                         [self.mutAttribute appendAttributedString:string8];
                         
-                        cell.labelContent.attributedText = self.mutAttribute;
+                        cell.textView.attributedText = self.mutAttribute;
                     }
                         break;
                     case 4:
                         if (self.dictInfo[@"workProgress"]) {
-                            cell.labelContent.text = self.dictInfo[@"workProgress"];
+                            cell.textView.text = self.dictInfo[@"workProgress"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"workProgress"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -399,10 +399,10 @@
                         break;
                     case 5:
                         if (self.dictInfo[@"workAnalyzeAssess"]) {
-                            cell.labelContent.text = self.dictInfo[@"workAnalyzeAssess"];
+                            cell.textView.text = self.dictInfo[@"workAnalyzeAssess"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"workAnalyzeAssess"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -410,10 +410,10 @@
                         break;
                     case 6:
                         if (self.dictInfo[@"problemSolution"]) {
-                            cell.labelContent.text = self.dictInfo[@"problemSolution"];
+                            cell.textView.text = self.dictInfo[@"problemSolution"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"problemSolution"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -421,10 +421,10 @@
                         break;
                     case 7:
                         if (self.dictInfo[@"selfSummary"]) {
-                            cell.labelContent.text = self.dictInfo[@"selfSummary"];
+                            cell.textView.text = self.dictInfo[@"selfSummary"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"selfSummary"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -432,10 +432,10 @@
                         break;
                     case 8:
                         if (self.dictInfo[@"caseStrategyShare"]) {
-                            cell.labelContent.text = self.dictInfo[@"caseStrategyShare"];
+                            cell.textView.text = self.dictInfo[@"caseStrategyShare"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"caseStrategyShare"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
@@ -443,10 +443,10 @@
                         break;
                     case 9:
                         if (self.dictInfo[@"others"]) {
-                            cell.labelContent.text = self.dictInfo[@"others"];
+                            cell.textView.text = self.dictInfo[@"others"];
                         }else
                         {
-                            cell.labelContent.text = @"  ";
+                            cell.textView.text = @"  ";
                         }
                         if ([self.arrayKey containsObject:@"others"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];

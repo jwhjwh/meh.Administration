@@ -100,8 +100,10 @@
     NSDictionary *dict = self.arrayData[indexPath.section];
     VCMyTable *vc = [[VCMyTable alloc]init];
     vc.position = dict[@"newName"];
+    [ShareModel shareModel].postionName = dict[@"newName"];
     [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     [ShareModel shareModel].num = [NSString stringWithFormat:@"%@",dict[@"num"]];
+    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"departmentID"]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 //每一个分组的上左下右间距
@@ -157,6 +159,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self getAllPosition];
 }
 
