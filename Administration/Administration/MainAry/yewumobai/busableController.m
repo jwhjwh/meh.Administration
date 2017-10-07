@@ -9,6 +9,7 @@
 #import "busableController.h"
 #import "FillinfoViewController.h"
 #import "VisitRecordViewController.h"
+#import "TheDraftViewController.h"
 @interface busableController ()<UITableViewDataSource,UITableViewDelegate>
 
 {
@@ -85,16 +86,20 @@
     switch (indexPath.row) {
         case 0:{//填写新的
             FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
+            fillVC.points = self.strId;
             [self.navigationController pushViewController:fillVC animated:YES];
         }
             break;
         case 1:{//已填记录
             VisitRecordViewController *visitVC = [[VisitRecordViewController alloc]init];
+            visitVC.strId = self.strId;
             [self.navigationController pushViewController:visitVC animated:YES];
             
         } break;
         case 2:{//草稿箱
-            
+            TheDraftViewController *theDraftVC = [[TheDraftViewController alloc]init];
+            theDraftVC.strId = self.strId;
+            [self.navigationController pushViewController:theDraftVC animated:YES];
         }  break;
 
         default:

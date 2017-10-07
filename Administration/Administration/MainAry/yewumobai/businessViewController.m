@@ -7,8 +7,8 @@
 //
 
 #import "businessViewController.h"
-
 #import "busableController.h"
+#import "InterestedViewController.h"
 @interface businessViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 {
@@ -85,12 +85,15 @@
     switch (indexPath.row) {
         case 0:{//陌拜记录
             busableController *busableVC = [[busableController alloc]init];
+            busableVC.strId = self.strId;
             [self.navigationController showViewController:busableVC sender:nil];
         }
             
             break;
         case 1:{//意向客户
-            
+            InterestedViewController *interestedVC = [[InterestedViewController alloc]init];
+            interestedVC.strId = self.strId;
+            [self.navigationController showViewController:interestedVC sender:nil];
         }
             break;
         case 2:{//目标客户

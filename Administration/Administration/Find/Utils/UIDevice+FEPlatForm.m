@@ -63,7 +63,16 @@
     if ([platform isEqualToString:@"iPad4,6"])   return @"iPad Mini 2G";
     
     if ([platform isEqualToString:@"i386"])      return @"iPhone Simulator";
-    if ([platform isEqualToString:@"x86_64"])    return @"iPhone Simulator";    return platform;
+    if ([platform isEqualToString:@"x86_64"])    return @"iPhone Simulator";
+    
+    if ([platform isEqualToString:@"iPhone10,1"]) return @"iPhone 8";
+    if ([platform isEqualToString:@"iPhone10,4"]) return @"iPhone 8";
+    if ([platform isEqualToString:@"iPhone10,2"]) return @"iPhone 8 Plus";
+    if ([platform isEqualToString:@"iPhone10,5"]) return @"iPhone 8 Plus";
+    if ([platform isEqualToString:@"iPhone10,3"]) return @"iPhone X";
+    if ([platform isEqualToString:@"iPhone10,6"]) return @"iPhone X";
+    
+    return platform;
 }
 
 @end

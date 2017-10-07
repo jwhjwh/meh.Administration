@@ -10,4 +10,5 @@
 
 @interface VisitRecordViewController : UIViewController
 
+@property (nonatomic,strong)NSString *strId;
 @end

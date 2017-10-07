@@ -10,4 +10,6 @@
 
 @interface busableController : UIViewController
 
+@property (nonatomic,strong)NSString *strId;
+
 @end

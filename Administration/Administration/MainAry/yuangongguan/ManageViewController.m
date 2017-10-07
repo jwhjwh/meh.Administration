@@ -48,9 +48,15 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addViewremind{
-
+    
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+    _sousuoBtn.frame=CGRectMake(10, 90, Scree_width-20, 40);
+    }else{
+        _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
+    }
+    
     [_sousuoBtn setBackgroundImage:[UIImage imageNamed:@"ss_ico01"] forState:UIControlStateNormal];
     //防止图片变灰
     _sousuoBtn.adjustsImageWhenHighlighted = NO;
@@ -58,6 +64,8 @@
     _sousuoBtn.layer.cornerRadius = 8.0;
     [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:_sousuoBtn];
+    
+    
     self.tableView= [[UITableView alloc]initWithFrame:CGRectMake(0,_sousuoBtn.bottom+10,self.view.bounds.size.width,self.view.bounds.size.height-50) style:UITableViewStylePlain];
     self.tableView.dataSource=self;
     self.tableView.delegate =self;
