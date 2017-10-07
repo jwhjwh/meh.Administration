@@ -35,7 +35,7 @@
 -(void)setUI
 {
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 600)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 550)];
     [self addSubview:headerView];
     
     UIView *viewT = [[UIView alloc]init];
@@ -63,7 +63,6 @@
     [startDate setTitle:@"选择日期" forState:UIControlStateNormal];
     startDate.titleLabel.textAlignment = NSTextAlignmentLeft;
     startDate.tag = 100;
-    startDate.userInteractionEnabled = self.userIner;
     [startDate addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
     [startDate setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [startDate setBackgroundColor:[UIColor whiteColor]];
@@ -75,7 +74,6 @@
         make.width.mas_equalTo(100);
     }];
     self.startDate = startDate;
-    
     UILabel *label2 = [[UILabel alloc]init];
     label2.text = @"至";
     label2.backgroundColor = [UIColor whiteColor];
@@ -90,7 +88,7 @@
     UIButton *endDate = [[UIButton alloc]init];
     [endDate setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [endDate setTitle:@"选择日期" forState:UIControlStateNormal];
-    endDate.userInteractionEnabled = self.userIner;
+    
     [endDate setBackgroundColor:[UIColor whiteColor]];
     [endDate addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
     endDate.tag = 200;
@@ -188,7 +186,6 @@
     }];
     
     MyTextField *textFiled1 = [[MyTextField alloc]init];
-    textFiled1.userInteractionEnabled = self.userIner;
     textFiled1.font = [UIFont systemFontOfSize:12];
     textFiled1.textAlignment = NSTextAlignmentCenter;
     textFiled1.delegate = self;
@@ -223,7 +220,6 @@
     
     MyTextField *textField2 = [[MyTextField alloc]init];
     textField2.delegate = self;
-    textField2.userInteractionEnabled = self.userIner;
     textField2.font  =[UIFont systemFontOfSize:12];
     textField2.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField2];
@@ -257,7 +253,6 @@
     
     MyTextField *textField3 = [[MyTextField alloc]init];
     textField3.delegate = self;
-    textField3.userInteractionEnabled = self.userIner;
     textField3.font  =[UIFont systemFontOfSize:12];
     textField3.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField3];
@@ -291,7 +286,6 @@
     
     MyTextField *textField4 = [[MyTextField alloc]init];
     textField4.delegate = self;
-    textField4.userInteractionEnabled = self.userIner;
     textField4.font  =[UIFont systemFontOfSize:12];
     textField4.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField4];
@@ -325,7 +319,6 @@
     
     MyTextField *textField5 = [[MyTextField alloc]init];
     textField5.delegate = self;
-    textField5.userInteractionEnabled = self.userIner;
     textField5.font  =[UIFont systemFontOfSize:12];
     textField5.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField5];
@@ -360,7 +353,6 @@
     MyTextField *textField6 = [[MyTextField alloc]init];
     textField6.font = [UIFont systemFontOfSize:12];
     textField6.delegate =self;
-    textField6.userInteractionEnabled = self.userIner;
     [viewB addSubview:textField6];
     [textField6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelleiji.mas_right);
@@ -403,7 +395,6 @@
     MyTextField *textField7 = [[MyTextField alloc]init];
     textField7.font = [UIFont systemFontOfSize:12];
     textField7.delegate = self;
-    textField7.userInteractionEnabled = self.userIner;
     [viewB addSubview:textField7];
     [textField7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelzhouchu.mas_right);
@@ -426,7 +417,6 @@
     MyTextField *textField8 = [[MyTextField alloc]init];
     textField8.font = [UIFont systemFontOfSize:12];
     textField8.delegate = self;
-    textField8.userInteractionEnabled = self.userIner;
     [viewB addSubview:textField8];
     [textField8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldou.mas_right);
@@ -467,7 +457,6 @@
     
     MyTextField *textField9 = [[MyTextField alloc]init];
     textField9.delegate = self;
-    textField9.userInteractionEnabled = self.userIner;
     textField9.font  =[UIFont systemFontOfSize:12];
     textField9.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField9];
@@ -501,7 +490,6 @@
     
     MyTextField *textFieldA = [[MyTextField alloc]init];
     textFieldA.delegate = self;
-    textFieldA.userInteractionEnabled = self.userIner;
     textFieldA.font  =[UIFont systemFontOfSize:12];
     textFieldA.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldA];
@@ -535,7 +523,6 @@
     
     MyTextField *textFieldB = [[MyTextField alloc]init];
     textFieldB.delegate = self;
-    textFieldB.userInteractionEnabled = self.userIner;
     textFieldB.font  =[UIFont systemFontOfSize:12];
     textFieldB.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldB];
@@ -569,7 +556,6 @@
     
     MyTextField *textFieldC = [[MyTextField alloc]init];
     textFieldC.delegate = self;
-    textFieldC.userInteractionEnabled = self.userIner;
     textFieldC.font  =[UIFont systemFontOfSize:12];
     textFieldC.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldC];
@@ -586,7 +572,7 @@
     labele.font = [UIFont systemFontOfSize:12];
     [viewB addSubview:labele];
     [labele mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(textField9.mas_right);
+        make.left.mas_equalTo(textFieldC.mas_right);
         make.top.mas_equalTo(labelG.mas_bottom).offset(8);
         make.height.mas_equalTo(12);
     }];
@@ -603,7 +589,6 @@
     
     MyTextField *textFieldD = [[MyTextField alloc]init];
     textFieldD.delegate = self;
-    textFieldD.userInteractionEnabled = self.userIner;
     textFieldD.font  =[UIFont systemFontOfSize:12];
     textFieldD.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldD];
@@ -638,7 +623,6 @@
     MyTextField *textFieldE = [[MyTextField alloc]init];
     textFieldE.font = [UIFont systemFontOfSize:12];
     textFieldE.delegate =self;
-    textFieldE.userInteractionEnabled = self.userIner;
     [viewB addSubview:textFieldE];
     [textFieldE mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelGleiji.mas_right);
@@ -654,7 +638,7 @@
     [viewB addSubview:labelqkjk];
     [labelqkjk mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldE.mas_right);
-        make.top.mas_equalTo(labelH.mas_bottom).offset(8);
+        make.top.mas_equalTo(labelI.mas_bottom).offset(8);
         make.height.mas_equalTo(12);
     }];
     
@@ -681,7 +665,6 @@
     MyTextField *textFieldF = [[MyTextField alloc]init];
     textFieldF.font = [UIFont systemFontOfSize:12];
     textFieldF.delegate =self;
-    textFieldF.userInteractionEnabled = self.userIner;
     [viewB addSubview:textFieldF];
     [textFieldF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldd.mas_right);
@@ -703,7 +686,6 @@
     MyTextField *textFieldG = [[MyTextField alloc]init];
     textFieldG.font = [UIFont systemFontOfSize:12];
     textFieldG.delegate = self;
-    textFieldG.userInteractionEnabled = self.userIner;
     [viewB addSubview:textFieldG];
     [textFieldG mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelkd.mas_right);

@@ -27,5 +27,4 @@
 @property (nonatomic,weak)MyTextField *textFiledE;
 @property (nonatomic,weak)MyTextField *textFiledF;
 @property (nonatomic,weak)MyTextField *textFiledG;
-@property (nonatomic)BOOL userIner;
 @end

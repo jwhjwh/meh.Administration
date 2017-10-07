@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface VCInsideShopDrafts : BaseViewController
-
+@property (nonatomic,strong)NSString *remark;
+@property (nonatomic,strong)NSString *tableID;
 @end

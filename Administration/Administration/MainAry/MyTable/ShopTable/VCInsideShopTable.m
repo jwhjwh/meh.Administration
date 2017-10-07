@@ -73,8 +73,8 @@
     if (indexPath.row==5) {
         myScore.label.text = @"状态";
        myScore.arrayContent = @[@"很好",@"好",@"一般",@"差",@"很差"];
-    }else
-    {
+    }
+    if (indexPath.row==6) {
         myScore.label.text = @"自我打分";
         myScore.arrayContent = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
     }
@@ -106,23 +106,23 @@
     [dict setValue:@"1" forKey:@"Sort"];
     [dict setValue:@"2" forKey:@"code"];
     if (self.string1.length!=0) {
-        [dict setValue:self.string1 forKey:@"DateLine"];
+        [dict setValue:self.string1 forKey:@"dateLine"];
     }else
     {
-        [dict setValue:@"" forKey:@"DateLine"];
+        [dict setValue:@"" forKey:@"dateLine"];
     }
     
     if (self.string2.length!=0) {
-        [dict setValue:self.string2 forKey:@"Store"];
+        [dict setValue:self.string2 forKey:@"store"];
     }else
     {
-        [dict setValue:@"" forKey:@"Store"];
+        [dict setValue:@"" forKey:@"store"];
     }
     if (self.string3.length!=0) {
-        [dict setValue:self.string3 forKey:@"TargetDetail"];
+        [dict setValue:self.string3 forKey:@"sargetDetail"];
     }else
     {
-        [dict setValue:@"" forKey:@"TargetDetail"];
+        [dict setValue:@"" forKey:@"sargetDetail"];
     }
     if (self.string4.length!=0) {
         [dict setValue:self.string4 forKey:@"evaluation"];
@@ -131,10 +131,10 @@
         [dict setValue:@"" forKey:@"evaluation"];
     }
     if (self.string5.length!=0) {
-        [dict setValue:self.string5 forKey:@"Appraisal"];
+        [dict setValue:self.string5 forKey:@"sppraisal"];
     }else
     {
-        [dict setObject:@"" forKey:@"Appraisal"];
+        [dict setObject:@"" forKey:@"appraisal"];
     }
     if (self.string6.length!=0) {
         [dict setValue:self.string6 forKey:@"reason"];
@@ -149,10 +149,10 @@
         [dict setValue:@"" forKey:@"Sentiment"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string8 forKey:@"TomorrowPlan"];
+        [dict setValue:self.string8 forKey:@"tomorrowPlan"];
     }else
     {
-        [dict setValue:@"" forKey:@"TomorrowPlan"];
+        [dict setValue:@"" forKey:@"tomorrowPlan"];
     }
     
     [dict setValue:hint forKey:@"Hint"];
@@ -237,11 +237,11 @@
     CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
     NSIndexPath *indexPath = [myScore.tableView indexPathForSelectedRow];
     cell.textView.text = myScore.arrayContent[indexPath.row];
-    if (indexPath.row==5) {
-        self.string5 = myScore.arrayContent[indexPath.row];
-    }else
-    {
+    if (indexPathGes.row==5) {
         self.string4 = myScore.arrayContent[indexPath.row];
+    }
+    if (indexPathGes.row==6) {
+        self.string5 = myScore.arrayContent[indexPath.row];
     }
 }
 

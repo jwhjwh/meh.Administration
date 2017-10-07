@@ -190,6 +190,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月任务计划",@"工作主线和方向",@"本月重点服务店家和行程目标安排",@"对公司要求和建议",@"本月个人成长管理",@"其他事项"];
         self.isSelect = YES;
         self.remark = @"7";
+        self.codeS = @"1";
         [self getData];
     }else
     {
@@ -199,6 +200,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月目标完成情况",@"本月出货及回款情况分析",@"工作得失及建议",@"个人问题及规划",@"其他事项"];
         self.isSelect = NO;
         self.remark = @"8";
+        self.codeS = @"2";
         [self getSummary];
     }
     
@@ -644,7 +646,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }else
         {
@@ -656,7 +658,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }
         

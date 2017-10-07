@@ -45,6 +45,30 @@
     }];
     self.textView = textView;
     
+    UILabel *labelNumber = [[UILabel alloc]init];
+    labelNumber.font = [UIFont systemFontOfSize:10];
+    labelNumber.textColor = GetColor(240, 50, 74, 1);
+    labelNumber.hidden = YES;
+    [self.contentView addSubview:labelNumber];
+    [labelNumber mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
+        make.top.mas_equalTo(self.contentView.mas_top).offset(8);
+        make.height.mas_equalTo(10);
+    }];
+    self.labelNumber = labelNumber;
+    
+    UIImageView *imagePostil = [[UIImageView alloc]init];
+    imagePostil.image = [UIImage imageNamed:@"pz_ico01"];
+    imagePostil.hidden = YES;
+    [self.contentView addSubview:imagePostil];
+    [imagePostil mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(labelNumber.mas_right).offset(-1);
+        make.top.mas_equalTo(self.contentView.mas_top).offset(8);
+        make.height.mas_equalTo(20);
+        make.width.mas_equalTo(20);
+    }];
+    self.imagePositil = imagePostil;
+    
     
 }
 

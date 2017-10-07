@@ -73,7 +73,8 @@
     [ZXDNetworking setExtraCellLineHidden:tabelView];
     [self.view addSubview:tabelView];
     self.tableView = tabelView;
-    if ([self.roleID isEqualToString:@"5"]||[self.roleID isEqualToString:@"8"]||[self.roleID isEqualToString:@"9"]) {
+    NSString *roleID = [ShareModel shareModel].roleID;
+    if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
         self.array = @[@"日计划",@"店报表",@"周报表"];
     }else
     {

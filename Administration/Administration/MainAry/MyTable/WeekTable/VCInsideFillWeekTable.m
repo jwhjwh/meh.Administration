@@ -361,6 +361,18 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    if (isBack) {
+        if ([self.startDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
+            return;
+        }
+        if ([self.endDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写服务店家" andInterval:1];
+            return;
+        }
+
+    }else
+    {
     if ([self.string1 isEqualToString:@""]||
         [self.string1 isEqualToString:@""]||
         [self.string1 isEqualToString:@""]||
@@ -376,6 +388,7 @@
     {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
+    }
     }
     
     NSDictionary *dict = @{
@@ -438,15 +451,7 @@
     }else
     {
         if (buttonIndex==1) {
-            if (self.string1.length==0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
-                return;
-            }
-            if (self.string2.length==0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写服务店家" andInterval:1];
-                return;
-            }
-            [self submitData:@"3"];
+                        [self submitData:@"3"];
         }
         if (buttonIndex==2) {
             [self.navigationController popViewControllerAnimated:YES];

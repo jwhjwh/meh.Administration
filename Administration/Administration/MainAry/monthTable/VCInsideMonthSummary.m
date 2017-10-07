@@ -158,7 +158,8 @@
         [self.buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月主要工作规划",@"第一周",@"第二周",@"第三周",@"第四周",@"补充备注"];
         self.isSelect = YES;
-        self.remark = @"5";
+        self.codeS = @"1";
+        self.remark = @"12";
         
     }else
     {
@@ -167,7 +168,8 @@
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月工作完成简述",@"本月工作进度及目标达成的分析与评估",@"当前阶段工作方向。整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
-        self.remark = @"6";
+        self.codeS = @"2";
+        self.remark = @"13";
     }
     [self getData];
     [self.tableView reloadData];
@@ -453,7 +455,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"1",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }else
         {
@@ -465,7 +467,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }
         

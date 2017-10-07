@@ -1,0 +1,457 @@
+//
+//  VCBuessShopNewPostil.m
+//  Administration
+//
+//  Created by zhang on 2017/9/28.
+//  Copyright © 2017年 九尾狐. All rights reserved.
+//
+
+#import "VCBuessShopNewPostil.h"
+#import "CellEditInfo.h"
+#import "CellEditPlan.h"
+#import "ViewDatePick.h"
+#import "ViewChooseScore.h"
+@interface VCBuessShopNewPostil ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UIAlertViewDelegate,ViewChooseScoreDelegate>
+
+{
+    NSArray *arrayTitle;
+    UITableView *tableView1;
+    ViewDatePick *myDatePick;
+    BOOL isBack;
+    ViewChooseScore *myScore;
+    NSIndexPath *indexPathGes;
+}
+
+@property(nonatomic,strong) NSString *string1;
+@property(nonatomic,strong) NSString *string2;
+@property(nonatomic,strong) NSString *string3;
+@property(nonatomic,strong) NSString *string4;
+@property(nonatomic,strong) NSString *string5;
+@property(nonatomic,strong) NSString *string6;
+@property(nonatomic,strong) NSString *string7;
+@property(nonatomic,strong) NSString *string8;
+
+
+@end
+
+@implementation VCBuessShopNewPostil
+
+#pragma -mark custem
+-(void)setUI
+{
+    tableView1 = [[UITableView alloc]init];
+    tableView1.delegate = self;
+    tableView1.dataSource = self;
+    tableView1.separatorStyle = UITableViewCellSelectionStyleNone;
+    tableView1.rowHeight = UITableViewAutomaticDimension;
+    tableView1.estimatedRowHeight = 100;
+    [tableView1 registerClass:[CellEditPlan class] forCellReuseIdentifier:@"cell"];
+    [tableView1 registerClass:[CellEditInfo class] forCellReuseIdentifier:@"cell2"];
+    [self.view addSubview:tableView1];
+    [tableView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view.mas_top);
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
+    }];
+    [self.view addSubview:tableView1];
+}
+
+-(void)showDatePicker:(UITapGestureRecognizer *)ges
+{
+    CGPoint point = [ges locationInView:tableView1];
+    indexPathGes = [tableView1 indexPathForRowAtPoint:point];
+    myDatePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    myDatePick.delegate = self;
+    [self.view addSubview:myDatePick];
+}
+
+-(void)showChooseScore:(UITapGestureRecognizer*)ges
+{
+    myScore  = [[ViewChooseScore alloc]initWithFrame:self.view.frame];
+    myScore.delegate = self;
+    CGPoint point = [ges locationInView:tableView1];
+    NSIndexPath *indexPath = [tableView1 indexPathForRowAtPoint:point];
+    indexPathGes  = indexPath;
+    if (indexPath.row==5) {
+        myScore.label.text = @"状态";
+        myScore.arrayContent = @[@"很好",@"好",@"一般",@"差",@"很差"];
+    }else
+    {
+        myScore.label.text = @"自我打分";
+        myScore.arrayContent = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    }
+    [self.view addSubview:myScore];
+    
+}
+
+-(void)submitData:(NSString *)hint
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    if (isBack==NO) {
+        if (self.string8.length==0||self.string7.length==0||self.string6.length==0||self.string5.length==0||self.string4.length==0||self.string3.length==0||self.string2.length==0||self.string1.length==0) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
+    }
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:appKeyStr forKey:@"appkey"];
+    [dict setValue:[USER_DEFAULTS valueForKey:@"userid"] forKey:@"usersid"];
+    [dict setValue:compid forKey:@"CompanyInfoId"];
+    [dict setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
+    [dict setValue:[ShareModel shareModel].departmentID forKey:@"DepartmentID"];
+    [dict setValue:[ShareModel shareModel].num forKey:@"Num"];
+    [dict setValue:@"1" forKey:@"Sort"];
+    [dict setValue:@"2" forKey:@"code"];
+    if (self.string1.length!=0) {
+        [dict setValue:self.string1 forKey:@"DateLine"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"DateLine"];
+    }
+    
+    if (self.string2.length!=0) {
+        [dict setValue:self.string2 forKey:@"Store"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"Store"];
+    }
+    if (self.string3.length!=0) {
+        [dict setValue:self.string3 forKey:@"TargetDetail"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"TargetDetail"];
+    }
+    if (self.string4.length!=0) {
+        [dict setValue:self.string4 forKey:@"Appraisal"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"Appraisal"];
+    }
+    if (self.string5.length!=0) {
+        [dict setValue:self.string5 forKey:@"evaluation"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"evaluation"];
+    }
+    if (self.string6.length!=0) {
+        [dict setValue:self.string6 forKey:@"reason"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"reason"];
+    }
+    if (self.string7.length!=0) {
+        [dict setValue:self.string7 forKey:@"Sentiment"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"Sentiment"];
+    }
+    if (self.string8.length!=0) {
+        [dict setValue:self.string8 forKey:@"TomorrowPlan"];
+    }else
+    {
+        [dict setValue:@"" forKey:@"TomorrowPlan"];
+    }
+    
+    [dict setValue:hint forKey:@"Hint"];
+    [dict setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];
+    
+    [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view];
+}
+
+-(void)showAlertView
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.tag = 100;
+    [alertView show];
+}
+
+-(void)back
+{
+    isBack = YES;
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存草稿箱",@"确定" ,nil];
+    alertView.tag = 200;
+    [alertView show];
+}
+
+#pragma -mark alertView
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag==100) {
+        if (buttonIndex ==1) {
+            [self submitData:@"1"];
+        }
+    }else
+    {
+        if (buttonIndex==1) {
+            if (self.string1.length==0) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
+                return;
+            }
+            if (self.string2.length==0) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写陌拜地址" andInterval:1];
+                return;
+            }
+            [self submitData:@"3"];
+        }
+        if (buttonIndex==2) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
+#pragma -mark viewDatePickDelegate
+-(void)getDate
+{
+    NSDate *date = myDatePick.datePick.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString *stringDate = [formatter stringFromDate:date];
+    
+    CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
+    cell.textView.text = stringDate;
+    self.string1 = stringDate;
+}
+
+#pragma -mark viewChooseScoreDelegate
+-(void)getIndexPath
+{
+    CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
+    NSIndexPath *indexPath = [myScore.tableView indexPathForSelectedRow];
+    cell.textView.text = myScore.arrayContent[indexPath.row];
+    if (indexPath.row==4) {
+        self.string4 = myScore.arrayContent[indexPath.row];
+    }else
+    {
+        self.string5 = myScore.arrayContent[indexPath.row];
+    }
+}
+
+#pragma -mark tableView
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row<4) {
+        CellEditInfo *cell = [[CellEditInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+        if (cell==nil) {
+            cell = [[CellEditInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+        }
+        cell.labelTitle.text = arrayTitle[indexPath.row];
+        
+        switch (indexPath.row) {
+            case 0:
+            {
+                cell.textView.editable = NO;
+                if (self.string1.length!=0) {
+                    cell.textView.text = self.string1;
+                }else
+                {
+                    cell.textView.placeholder = @"选择日期";
+                }
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showDatePicker:)];
+                [cell.textView addGestureRecognizer:tap];
+            }
+                
+                break;
+            case 1:
+                cell.textView.delegate = self;
+                if (self.string2.length!=0) {
+                    cell.textView.text = self.string2;
+                }else
+                {
+                    cell.textView.placeholder = @"填写陌拜地址";
+                }
+                
+                break;
+            case 2:
+                cell.textView.editable = NO;
+                cell.textView.text = [ShareModel shareModel].postionName;
+                break;
+            case 3:
+                cell.textView.editable = NO;
+                cell.textView.text = [USER_DEFAULTS valueForKey:@"name"];
+                break;
+                
+            default:
+                break;
+        }
+        return cell;
+        
+    }else
+    {
+        CellEditPlan *cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        if (cell==nil) {
+            cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        }
+        cell.LabelTitle.text = arrayTitle[indexPath.row];
+        
+        switch (indexPath.row) {
+                
+            case 4:
+                cell.textView.delegate =self;
+                if (self.string3.length!=0) {
+                    cell.textView.text = self.string3;
+                }else
+                {
+                    cell.textView.placeholder = @"今日目标及工作详细内容";
+                }
+                break;
+            case 5:
+            {
+                cell.textView.editable =  NO;
+                UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChooseScore:)];
+                [cell.textView addGestureRecognizer:ges];
+                if (self.string4.length!=0) {
+                    cell.textView.text = self.string4;
+                }else
+                {
+                    cell.textView.placeholder = @"自我状态评估";
+                }
+            }
+                break;
+                
+            case 6:
+            {
+                cell.textView.editable = NO;
+                UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChooseScore:)];
+                [cell.textView addGestureRecognizer:ges];
+                if (self.string5.length!=0) {
+                    cell.textView.text = self.string5;
+                }else
+                {
+                    cell.textView.placeholder = @"自我打分";
+                }
+            }
+                break;
+            case 7:
+                cell.textView.delegate = self;
+                if (self.string6.length!=0) {
+                    cell.textView.text =self.string6;
+                }else
+                {
+                    cell.textView.placeholder = @"原因";
+                }
+                break;
+            case 8:
+                cell.textView.delegate = self;
+                if (self.string7.length!=0) {
+                    cell.textView.text =self.string7;
+                }else
+                {
+                    cell.textView.placeholder = @"感悟分享及心得";
+                }
+                break;
+            case 9:
+                cell.textView.delegate = self;
+                if (self.string8.length!=0) {
+                    cell.textView.text =self.string8;
+                }else
+                {
+                    cell.textView.placeholder = @"明日计划安排";
+                }
+                break;
+                
+            default:
+                break;
+        }
+        
+        return cell;
+    }
+}
+
+#pragma -mark textView
+-(void)textViewDidChange:(UITextView *)textView
+{
+    CellEditPlan *cell = (CellEditPlan *)[textView superview].superview;
+    NSIndexPath *indexPath = [tableView1 indexPathForCell:cell];
+    switch (indexPath.row) {
+            
+        case 1:
+            self.string2 = textView.text;
+            break;
+            
+        case 4:
+            self.string3 = textView.text;
+            break;
+        case 7:
+            self.string6 = textView.text;
+            break;
+        case 8:
+            self.string7 = textView.text;
+            break;
+        case 9:
+            self.string8 = textView.text;
+            break;
+        default:
+            break;
+    }
+    
+    CGRect frame = textView.frame;
+    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+    CGSize size = [textView sizeThatFits:constraintSize];
+    if (size.height<=frame.size.height) {
+        size.height=frame.size.height;
+    }
+    cell.textView.frame = CGRectMake(frame.origin.x, frame.origin.y,cell.contentView.frame.size.width, size.height);
+    
+    [tableView1 beginUpdates];
+    [tableView1 endUpdates];
+}
+
+#pragma -mark system
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    self.title = @"填写店报表";
+    arrayTitle = @[@"日期",@"陌拜地址",@"职位",@"姓名",@"今日目标及工作详细内容",@"自我状态评估",@"自我打分",@"原因",@"感悟分享及心得",@"明日计划安排"];
+    [self setUI];
+    isBack = NO;
+    UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [submit setImage:[UIImage imageNamed:@"up_ico02"] forState:UIControlStateNormal];
+    [submit addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:submit];
+    self.navigationItem.rightBarButtonItem = item;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

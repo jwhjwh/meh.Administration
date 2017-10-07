@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface VCArtShopDrfts : BaseViewController
-
+@property (nonatomic,strong)NSString *remark;
+@property (nonatomic,strong)NSString *tableID;
 @end

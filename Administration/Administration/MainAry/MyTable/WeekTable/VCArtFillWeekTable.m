@@ -81,7 +81,6 @@
     self.viewSummary = viewSummary;
     
     ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,550)];
-    artWeekSummary.userIner = NO;
     [viewSummary addSubview:artWeekSummary];
     self.artWeekSummary = artWeekSummary;
     

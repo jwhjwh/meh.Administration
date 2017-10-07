@@ -287,7 +287,7 @@
                 return;
             }else
             {
-                [self submitData:@"0"];
+                [self submitData:@"3"];
             }
             
         }

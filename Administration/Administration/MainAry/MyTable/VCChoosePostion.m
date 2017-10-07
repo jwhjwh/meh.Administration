@@ -103,7 +103,7 @@
     [ShareModel shareModel].postionName = dict[@"newName"];
     [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     [ShareModel shareModel].num = [NSString stringWithFormat:@"%@",dict[@"num"]];
-    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"departmentID"]];
+    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 //每一个分组的上左下右间距

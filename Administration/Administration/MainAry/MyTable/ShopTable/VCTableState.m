@@ -16,9 +16,13 @@
 #import "VCArtFillMonthTable.h"
 #import "VCInsideFillMonthTable.h"
 #import "VCDrafts.h"
+#import "VCSubmited.h"
+#import "VCNewPostil.h"
+#import "VCUnPassed.h"
 @interface VCTableState ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSMutableArray *array;
 @property (nonatomic,weak)UITableView *tableView;
+@property (nonatomic,strong)NSMutableArray *arrayData;
 @end
 
 @implementation VCTableState
@@ -50,13 +54,21 @@
             if (![message isEqualToString:@"0"]) {
                 NSString *string = [NSString stringWithFormat:@"新批注（%@）",message];
                 [self.array replaceObjectAtIndex:3 withObject:string];
+                self.arrayData = [[responseObject valueForKey:@"lists"]mutableCopy];
             }
             if (![notPass isEqualToString:@"0"]) {
                 NSString *string = [NSString stringWithFormat:@"未通过（%@）",notPass];
                 [self.array replaceObjectAtIndex:4 withObject:string];
             }
             [self.tableView reloadData];
-            
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
+            return;
         }
         
     } failure:^(NSError *error) {
@@ -147,12 +159,19 @@
     }else if(indexPath.row==2)
     {
         //跳转已提交
+        VCSubmited *vc = [[VCSubmited alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }else if(indexPath.row==3)
     {
         //跳转新批注
+        VCNewPostil *vc = [[VCNewPostil alloc]init];
+        vc.arrayData = self.arrayData;
+        [self.navigationController pushViewController:vc animated:YES];
     }else
     {
         //跳转未通过
+        VCUnPassed *vc = [[VCUnPassed alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }
@@ -184,12 +203,15 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self.arrayData removeAllObjects];
     [self getdate];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = self.stringTitle;
+    
+    self.arrayData = [NSMutableArray array];
     
     [self setUI];
 }
