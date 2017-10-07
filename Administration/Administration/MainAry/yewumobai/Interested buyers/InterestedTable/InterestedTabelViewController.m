@@ -9,17 +9,49 @@
 #import "InterestedTabelViewController.h"
 #import "InterestedModel.h"
 #import "SelectAlert.h"
+#import "InteredAlertView.h"//意向选择器
 #import "inftionTableViewCell.h"
 #import "FillTableViewCell.h"
-@interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "SiginViewController.h"//签到
+#import "XFDaterView.h"//时间选择器
+#import "CityChoose.h"// 地址选择器
+#import "InterestedInputViewController.h"//主要经营品牌-简介-分析
+@interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource,XFDaterViewDelegate>
 {
     UITableView *infonTableview;
     BOOL isof;
+    XFDaterView*dater;//时间选择器
 }
 @property (nonatomic,retain)NSArray *arr;
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (nonatomic,strong) UITextField *textField;
+@property (nonatomic,retain)NSIndexPath *Index;
+@property (nonatomic, strong) CityChoose *cityChoose;/** 城市选择 */
+@property (nonatomic,strong) NSMutableArray *intentary;
+//---------
+@property (nonatomic,strong)NSString *Id; //意向客户id
+@property (nonatomic,strong)NSString *Dates;//日期
+@property (nonatomic,strong)NSString *Iphone;//手机
+@property (nonatomic,strong)NSString *Wcode;//微信
+@property (nonatomic,strong)NSString *BrandBusiness;//经营品牌
+@property (nonatomic,strong)NSString *StoreLevel;//门店档次
+@property (nonatomic,strong)NSString *IntentionId;//意向选择
 
+@property (nonatomic,strong)NSString *StoreSituation;//店名情况简介
+
+@property (nonatomic,strong)NSString *Comprehensive;//店家情况综合分析
+@property (nonatomic,strong)NSString *DepartmentId;//提交的部门
+@property (nonatomic,strong)NSString *UsersId;//创建人(后台赋值)
+@property (nonatomic,strong)NSString *UserId;//共享人(后台赋值)
+@property (nonatomic,strong)NSString *ShopId;//店铺id
+@property (nonatomic,strong)NSString *Province;//省
+@property (nonatomic,strong)NSString *City;//市
+@property (nonatomic,strong)NSString *County;//县
+@property (nonatomic,strong)NSString *StoreName;//店名
+@property (nonatomic,strong)NSString *Address;//门店地址
+@property (nonatomic,strong)NSString *ShopName;//店铺负责人姓名
+@property (nonatomic,strong)NSString *UsersName;//业务人员名称
+//---------
 @end
 
 @implementation InterestedTabelViewController
@@ -56,9 +88,34 @@
     [ZXDNetworking setExtraCellLineHidden:infonTableview];
     [self selectworsh];
 }
+-(void)nsstingalloc{
+    
+    _intentary = [[NSMutableArray alloc]init];
+    
+    _Id = [[NSString alloc]init]; //意向客户id
+    _Dates= [[NSString alloc]init];//日期
+    _Iphone= [[NSString alloc]init];//手机
+    _Wcode= [[NSString alloc]init];//微信
+    _BrandBusiness= [[NSString alloc]init];//经营品牌
+    _StoreLevel= [[NSString alloc]init];//门店档次
+    _IntentionId= [[NSString alloc]init];//意向选择
+    _StoreSituation= [[NSString alloc]init];//店名情况简介
+    _Comprehensive= [[NSString alloc]init];//店家情况综合分析
+    _DepartmentId= [[NSString alloc]init];//提交的部门
+    _UsersId= [[NSString alloc]init];//创建人(后台赋值)
+    _UserId= [[NSString alloc]init];//共享人(后台赋值)
+    _ShopId= [[NSString alloc]init];//店铺id
+    _Province= [[NSString alloc]init];//省
+    _City= [[NSString alloc]init];//市
+    _County= [[NSString alloc]init];//县
+    _StoreName= [[NSString alloc]init];//店名
+    _Address= [[NSString alloc]init];//门店地址
+    _ShopName= [[NSString alloc]init];//店铺负责人姓名
+    _UsersName= [[NSString alloc]init];//业务人员名称
+    
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-170, 48);
      if(indexPath.row<8){
          inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
          if (cell ==nil)
@@ -79,8 +136,33 @@
                  cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
              }else{
                  cell.mingLabel.text = _arr[indexPath.section][indexPath.row];
-                 if (indexPath.row == 2) {
+                 
+                 if (indexPath.row==0) {
+                     if (_InterNameAry.count != 0) {
+                         cell.xingLabel.text = _InterNameAry[indexPath.row];
+                     }
+                 }else if (indexPath.row == 2) {
                      cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+                     cell.userInteractionEnabled = isof;
+                     if (_InterNameAry.count != 0) {
+                         cell.xingLabel.text = _InterNameAry[indexPath.row];
+                     }
+                     
+                 }else{
+                     for(_textField in cell.subviews){
+                         if([_textField isKindOfClass:[UITextField class]])
+                         {
+                             [_textField removeFromSuperview];
+                         }
+                     }
+                     _textField=[[UITextField alloc]initWithFrame: CGRectMake(120, 1, self.view.bounds.size.width-170, 48)];
+                     _textField.font = [UIFont boldSystemFontOfSize:14.0f];
+                     [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                     _textField.tag = indexPath.row;
+                     if (_InterNameAry.count>0) {
+                         _textField.text = _InterNameAry[indexPath.row];
+                     }
+                     [cell addSubview:_textField];
                      cell.userInteractionEnabled = isof;
                      
                  }
@@ -88,11 +170,15 @@
          }else{
              cell.mingLabel.text = _arr[indexPath.row];
              cell.mingLabel.textColor = [UIColor blackColor];
+             if (_InterNameAry.count != 0) {
+                 cell.xingLabel.text = _InterNameAry[indexPath.row];
+             }
              if (indexPath.row == 2) {
                  cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
                  cell.userInteractionEnabled = isof;
                  
              }
+            
          }
          return cell;
      }else
@@ -106,20 +192,178 @@
          }
          if (indexPath.row == 9) {
              if (_InterNameAry.count>0) {
-                
+                 cell.xingLabel.text = _InterNameAry[indexPath.row];
                  cell.userInteractionEnabled = isof;
              }
-             //
+         }else if(indexPath.row ==10){
+             if (_InterNameAry.count != 0) {
+                 cell.xingLabel.text = _InterNameAry[indexPath.row];
+                 cell.userInteractionEnabled = isof;
+             }
          }
-         cell.mingLabel.text=_arr[indexPath.row];
+         if (isof == YES) {
+              cell.mingLabel.text=_arr[indexPath.section][indexPath.row];
+         }else{
+              cell.mingLabel.text=_arr[indexPath.row];
+         }
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
-         
          return cell;
-         
      }
+}
+-(void)FieldText:(UITextField *)textfield{
+    switch (textfield.tag) {
+        case 1:{
+            _UsersName= textfield.text;
+        }
+            break;
+        case 3:{
+            _StoreName=textfield.text;
+        }
+            break;
+        case 4:{
+            _Address=textfield.text;
+        }
+            break;
+        case 5:{
+            _ShopName=textfield.text;
+        }
+            break;
+        case 6:{
+            _Iphone=textfield.text;
+        }
+            break;
+        case 7:{
+            _Wcode = textfield.text;
+            NSLog(@"%@",textfield.text);
+        } break;
+        default:
+            break;
+    }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _Index=indexPath;
+    inftionTableViewCell *cella = [tableView cellForRowAtIndexPath:indexPath];
+
+    
+        if (indexPath.row == 0) {
+            //shopId
+            if (isof == YES) {
+            SiginViewController *siginVC = [[SiginViewController alloc]init];
+            
+            siginVC.shopid =_ShopId;
+            siginVC.Address = [NSString stringWithFormat:@"%@%@%@",_Province,_City,_County];
+            siginVC.Types = @"1";
+            
+            [self.navigationController pushViewController:siginVC animated:YES];
+            }else{
+                dater=[[XFDaterView alloc]initWithFrame:CGRectZero];
+                dater.delegate=self;
+                [dater showInView:self.view animated:YES];
+            }
+        }else{
+            switch (indexPath.row) {
+                case 2:{
+                    [self.view endEditing:YES];
+                    self.cityChoose = [[CityChoose alloc] init];
+                    self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
+                        cella.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                        cella.xingLabel.textColor=[UIColor blackColor];
+                        if (isof == YES) {
+                            _Address=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                        }
+                        //
+                    };
+                    [self.view addSubview:self.cityChoose];
+                }
+                    break;
+                case 8:{
+                    InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
+                    inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    inputVC.dateStr = _InterNameAry[indexPath.row];
+                    inputVC.modifi = isof;
+                    inputVC.blcokStr=^(NSString *content,int num){
+                        if (num==8) {
+                            if (isof == YES) {
+                                _BrandBusiness=content;
+                            }
+                            //主要经营品牌
+                            
+                        }
+                    };
+                    [self.navigationController pushViewController:inputVC animated:YES];
+                }
+                    break;
+                case 9:{
+                    [SelectAlert showWithTitle:@"类型" titles:@[@"A类",@"B类",@"C类"] selectIndex:^(NSInteger selectIndex) {
+                        
+                    } selectValue:^(NSString *selectValue) {
+                        FillTableViewCell *cell = [infonTableview cellForRowAtIndexPath:_Index];
+                        cell.xingLabel.text=selectValue;
+                        if (isof == YES) {
+                            _StoreLevel=selectValue;
+                        }
+                        //
+                    } showCloseButton:NO];
+                }
+                    break;
+                case 10:{
+                   
+                    
+                    
+                    NSMutableArray *nsmuary = [[NSMutableArray alloc]initWithObjects:@"面部",@"身体",@"美白",@"教育",@"管理",@"拓客",@"模式", nil];
+                    [InteredAlertView showWithTitle:@"选择意向" titles:nsmuary isof:_intentary selectIndex:^(NSString *selectIndex) {
+                        NSLog(@"%@",selectIndex);
+                        
+                    }];
+
+                }
+                    
+                    
+                    
+                    break;
+                case 11:{
+                    InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
+                    inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    inputVC.dateStr = _InterNameAry[indexPath.row];
+                    inputVC.modifi = isof;
+                    inputVC.blcokStr=^(NSString *content,int num){
+                        if (num==11) {
+                            if (isof == YES) {
+                                _StoreSituation=content;
+                            }
+                            //店面情况简介
+                            
+                        }
+                    };
+                    [self.navigationController pushViewController:inputVC animated:YES];
+                }
+                    break;
+                case 12:{
+                    InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
+                    inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    inputVC.dateStr = _InterNameAry[indexPath.row];
+                    inputVC.modifi = isof;
+                    inputVC.blcokStr=^(NSString *content,int num){
+                        if (num==12) {
+                            if (isof == YES) {
+                                _Comprehensive=content;
+                            }
+                            //店面情况综合分析
+                            
+                        }
+                    };
+                    [self.navigationController pushViewController:inputVC animated:YES];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+    
+    
+    
+    
     NSLog(@"%ld",indexPath.row);
     
 }
@@ -150,15 +394,34 @@
         zwlbAry = @[@"提交到上级",@"提交到品牌部"];
         [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
             if (selectIndex == 0) {
-                isof = NO;
-                _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"];
-                [infonTableview reloadData];
+                [self updateIntended];
             }
         } selectValue:^(NSString *selectValue) {
             
         } showCloseButton:NO];
         
     }
+}
+-(void)updateIntended{
+    //修改意向客户
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/updateIntended.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"intendedId":self.intentionId,@"Iphone":_Iphone,@"Wcode":_Wcode,@"BrandBuiness":_BrandBusiness,@"StoreLevel":_StoreLevel,@"IntentionId":_intentionId,@"StoreSituation":_StoreSituation,@"Comprehensive":_Comprehensive,@"RoleId":self.strId,@"Provice":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"StoreName":_StoreName,@"Name":_ShopName,@"shopId":_ShopId};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+             alertView.resultIndex = ^(NSInteger index){
+                 isof = NO;
+                 _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"];
+                 [infonTableview reloadData];
+             };
+             [alertView showMKPAlertView];
+         }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 -(void)selectworsh{
 //数据请求
@@ -174,7 +437,103 @@
             for (NSDictionary *dic in arry) {
                 InterestedModel *model=[[InterestedModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-                [_InterNameAry addObject:model];
+                _Id = model.Id;
+                _ShopId = model.shopId;
+                _Dates =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(0, 10)]];
+                [_InterNameAry addObject:_Dates];//
+                if (model.usersName ==nil) {
+                    _UsersName =@"";
+                }else{
+                    _UsersName =model.usersName;
+                }
+                [_InterNameAry addObject:_UsersName];//
+                if (model.province ==nil) {
+                    _Province =@"";
+                }else{
+                    _Province =model.province;
+                }
+                if (model.city ==nil) {
+                    _City =@"";
+                }else{
+                    _City = model.city;
+                }
+                if (model.county ==nil) {
+                    _County = @"";
+                }else{
+                    _County = model.county;
+                }
+                [_InterNameAry addObject:[NSString stringWithFormat:@"%@%@%@",_Province,_City,_County]];//
+                if (model.storeName ==nil) {
+                    _StoreName =@"";
+                }else{
+                    _StoreName = model.storeName;
+                }
+                [_InterNameAry addObject:_StoreName];//店名
+                if (model.address ==nil) {
+                    _Address = @"";
+                }else{
+                    _Address = model.address;
+                }
+                [_InterNameAry addObject:_Address];//店面地址
+                if (model.shopName==nil) {
+                    _ShopName =@"";
+                }else{
+                    _ShopName = model.shopName;
+                }
+                [_InterNameAry addObject:_ShopName];//负责人姓名
+                if (model.iphone ==nil) {
+                    _Iphone =@"";
+                }else{
+                    _Iphone = model.iphone;
+                }
+                [_InterNameAry addObject:_Iphone];//手机
+                if (model.wcode ==nil) {
+                    _Wcode =@"";
+                }else{
+                    _Wcode = model.wcode;
+                }
+                [_InterNameAry addObject:_Wcode];//微信
+                if (model.brandBusiness == nil) {
+                    _BrandBusiness = @"";
+                }else{
+                    _BrandBusiness = model.brandBusiness;
+                }
+                [_InterNameAry addObject:_BrandBusiness];//经营品牌
+                if(model.storeLevel ==nil){
+                    _StoreLevel = @"";
+                }else{
+                    _StoreLevel = model.storeLevel;
+                }
+                [_InterNameAry addObject:_StoreLevel];//档次
+                if (model.intentionName ==nil) {//意向选择
+                    _IntentionId = @"";
+                    [_InterNameAry addObject:_IntentionId];
+                }else{
+                    NSArray *ary = [model.intentionName componentsSeparatedByString:@","];
+                     _intentary = [[NSMutableArray alloc]init];
+                    [_intentary addObjectsFromArray:ary];
+                    
+                    
+                     NSString *inidarray = [model.intentionName stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                    [_InterNameAry addObject:inidarray];
+                }
+                if (model.storeSituation ==nil) {
+                    _StoreSituation = @"";
+                }else{
+                    _StoreSituation = model.storeSituation;
+                }
+                [_InterNameAry addObject:_StoreSituation];//店面情况简介
+                if (model.comprehensive ==nil) {
+                    _Comprehensive = @"";
+                }else{
+                    _Comprehensive = model.comprehensive;
+                }
+                [_InterNameAry addObject:_Comprehensive];//店面情况综合分析
+                
+                
+                
+                
+                
             }
             [infonTableview reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {

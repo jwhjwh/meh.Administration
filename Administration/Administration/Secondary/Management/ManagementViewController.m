@@ -52,13 +52,19 @@
 
 
 -(void)ManafementUI{
+    NSString* phoneModel = [UIDevice devicePlatForm];
     
     _view1 = [[UIView alloc]init];
     _view1.backgroundColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
     [self.view addSubview:_view1];
     [_view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(0);
-        make.top.equalTo(self.view.mas_top).offset(85);
+        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+            make.top.equalTo(self.view.mas_top).offset(113);
+        }else{
+            make.top.equalTo(self.view.mas_top).offset(85);
+        }
+        
         make.right.equalTo(self.view.mas_right).offset(0);
         make.height.mas_equalTo(1);
     }];
@@ -72,7 +78,7 @@
     TXImage.layer.cornerRadius = 20.0;//设置圆角
     [self.view addSubview:TXImage];
     [TXImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(90);
+        make.top.equalTo(_view1.mas_top).offset(5);
         make.left.equalTo (self.view.mas_left).offset (10);
         make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
@@ -121,6 +127,7 @@
     tableview.dataSource=self;
     tableview.delegate =self;
     [self.view addSubview:tableview];
+    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {

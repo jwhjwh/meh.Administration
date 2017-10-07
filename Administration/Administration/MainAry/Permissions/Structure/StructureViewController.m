@@ -7,7 +7,7 @@
 //
 
 #import "StructureViewController.h"
-#import "UIDevice+FEPlatForm.h"
+
 @interface StructureViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSTimer *_timerrrrrrrr;
     int     count;

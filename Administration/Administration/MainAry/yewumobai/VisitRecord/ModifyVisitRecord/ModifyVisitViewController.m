@@ -61,6 +61,7 @@
 @property (nonatomic,retain)NSString *brandBusin;//美容师人数
 @property (nonatomic,retain)NSString *planDur;//经营年限
 @property (nonatomic,retain)NSString *Berths;//床位
+@property (nonatomic,retain)NSString *CreatorId;//记录创建人id
 
 @end
 
@@ -125,6 +126,7 @@
     _brandBusin = [[NSString alloc]init];
     _planDur = [[NSString alloc]init];
     _Berths = [[NSString alloc]init];
+    _CreatorId =[[NSString alloc]init];
 }
 
 
@@ -140,6 +142,7 @@
             for (NSDictionary *dic in arry) {
                 ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
+                _CreatorId = model.UsersId;
                 _shopid = [[NSString alloc]initWithFormat:@"%@",model.ShopId];//店铺id
                 _sigincity = [[NSString alloc]initWithFormat:@"%@%@%@%@",model.Province,model.City,model.County,model.Address];
                 _storeregion= [[NSString alloc]initWithFormat:@"%@ %@ %@ %@",model.Province,model.City,model.County,model.Address];
@@ -748,7 +751,7 @@
         NSArray *array = [_storeregion componentsSeparatedByString:@" "];
         NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     
-        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.strId,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":_shopid};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.strId,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":_shopid,@"CreatorId":_CreatorId};
         [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 

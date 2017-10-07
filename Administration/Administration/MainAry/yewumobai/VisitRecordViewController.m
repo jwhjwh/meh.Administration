@@ -41,7 +41,7 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
     
     [self VisitRecordUI];
-    [self Visitnewworking];
+    //[self Visitnewworking];
     
 }
 -(void)VisitRecordUI{

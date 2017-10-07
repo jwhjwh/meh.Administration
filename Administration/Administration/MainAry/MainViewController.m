@@ -195,6 +195,8 @@
 
 -(void)addLoop {
     
+
+  
     //轮播图
     self.loop = [[XLsn0wLoop alloc] init];
     self.loop.xlsn0wDelegate = self;
@@ -222,12 +224,17 @@
         }
         
     }];
+    NSString* phoneModel = [UIDevice devicePlatForm];
 
-    
     [self.loop mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        
+        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+           make.top.mas_equalTo(self.view.mas_top).offset(88);
+        }else{
+            make.top.mas_equalTo(self.view.mas_top).offset(64);
+        }
         make.height.equalTo(self.view.mas_height).multipliedBy(0.29f);
     }];
     
@@ -246,12 +253,16 @@
         make.left.mas_equalTo(self.view.mas_left).offset(12);
         make.right.mas_equalTo(self.view.mas_right).offset(-12);
         make.top.mas_equalTo(self.tableView.mas_bottom).offset(15);
-           
-           if (_menuArray.count<9) {
-               make.height.mas_offset(kHeight*150);
-           }else if(_menuArray.count>8){
-               make.bottom.mas_equalTo(self.view.mas_bottom).offset(-50);
+           if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+               make.bottom.mas_equalTo(self.view.mas_bottom).offset(-90);
+           }else{
+               if (_menuArray.count<9) {
+                   make.height.mas_offset(kHeight*150);
+               }else if(_menuArray.count>8){
+                   make.bottom.mas_equalTo(self.view.mas_bottom).offset(-50);
+               }
            }
+           
         
     }];
   

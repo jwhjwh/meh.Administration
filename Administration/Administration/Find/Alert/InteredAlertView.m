@@ -1,14 +1,13 @@
 //
-//  SelectAlert.m
-//  SelectAlertDemo
+//  InteredAlertView.m
+//  Administration
 //
-//  Created by apple on 2016/11/24.
-//  Copyright © 2016年 周兴. All rights reserved.
+//  Created by 九尾狐 on 2017/9/30.
+//  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "SelectAlert.h"
-
-@interface SelectAlertCell : UITableViewCell
+#import "InteredAlertView.h"
+@interface InteredAlertCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -17,7 +16,7 @@
 
 @end
 
-@implementation SelectAlertCell
+@implementation InteredAlertCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -32,7 +31,8 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:1 alpha:1];
         _titleLabel.font = [UIFont systemFontOfSize:16];
-        _titleLabel.textAlignment = NSTextAlignmentLeft;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.textColor = [UIColor blueColor];
     }
     return _titleLabel;
 }
@@ -40,7 +40,7 @@
     if (!_imagerView) {
         _imagerView = [[UIImageView alloc] init];
         _imagerView.backgroundColor = [UIColor whiteColor];
-       
+        
         
     }
     return _imagerView;
@@ -48,45 +48,33 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _titleLabel.frame = CGRectMake(self.frame.size.height, 0, self.frame.size.width-self.frame.size.height, self.frame.size.height);
-    _imagerView.frame = CGRectMake(0, 0, self.frame.size.height, self.frame.size.height);
+    _titleLabel.frame = CGRectMake((([UIScreen mainScreen].bounds.size.width-100)/2)-30 , 5, 60, 30);
+    _imagerView.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width-100)-40, 5, 30, 30);
 }
 
 @end
 
 
-@interface SelectAlert ()
+@interface InteredAlertView ()
 
-@property (nonatomic, assign) BOOL showCloseButton;//是否显示关闭按钮
+
 @property (nonatomic, strong) UIView *alertView;//弹框视图
 @property (nonatomic, strong) UITableView *selectTableView;//选择列表
 
 @end
-
-@implementation SelectAlert
+@implementation InteredAlertView
 {
     float alertHeight;//弹框整体高度，默认250
     float buttonHeight;//按钮高度，默认40
 }
-
-+ (SelectAlert *)showWithTitle:(NSString *)title
++ (InteredAlertView *)showWithTitle:(NSString *)title
                         titles:(NSArray *)titles
-                   selectIndex:(SelectIndex)selectIndex
-                   selectValue:(SelectValue)selectValue
-               showCloseButton:(BOOL)showCloseButton {
-    SelectAlert *alert = [[SelectAlert alloc] initWithTitle:title titles:titles selectIndex:selectIndex selectValue:selectValue showCloseButton:showCloseButton];
+                               isof:(NSArray *)isofary
+                   selectIndex:(InteredAlert)selectIndex
+               {
+    InteredAlertView *alert = [[InteredAlertView alloc] initWithTitle:title titles:titles selectIndex:selectIndex isof:isofary ];
     return alert;
 }
-+ (SelectAlert *)showWithTitle:(NSString *)title
-                        titles:(NSArray *)titles
-                    imageViews:(NSArray *)imageee
-                   selectIndex:(SelectIndex)selectIndex
-                   selectValue:(SelectValue)selectValue
-               showCloseButton:(BOOL)showCloseButton{
-    SelectAlert *alert = [[SelectAlert alloc]initWithTitle:title titles:titles imageViews:imageee selectIndex:selectIndex selectValue:selectValue showCloseButton:showCloseButton];
-    return alert;
-}
-
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
@@ -107,30 +95,16 @@
     }
     return _alertView;
 }
-
-- (UIButton *)closeButton {
-    if (!_closeButton) {
-        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _closeButton.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-        [_closeButton setTitle:@"关闭" forState:UIControlStateNormal];
-        [_closeButton setTitleColor:[UIColor colorWithRed:0 green:127/255.0 blue:1 alpha:1] forState:UIControlStateNormal];
-        _closeButton.titleLabel.font = [UIFont systemFontOfSize:17];
-        [_closeButton addTarget:self action:@selector(closeAction) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _closeButton;
-}
-
 - (UITableView *)selectTableView {
     if (!_selectTableView) {
         _selectTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _selectTableView.delegate = self;
         _selectTableView.dataSource = self;
     }
-   // _selectTableView.scrollEnabled = NO;
+     _selectTableView.scrollEnabled = NO;
     return _selectTableView;
 }
-
-- (instancetype)initWithTitle:(NSString *)title titles:(NSArray *)titles selectIndex:(SelectIndex)selectIndex selectValue:(SelectValue)selectValue showCloseButton:(BOOL)showCloseButton {
+- (instancetype)initWithTitle:(NSString *)title titles:(NSArray *)titles selectIndex:(InteredAlert)selectIndex isof:(NSArray *)isofary  {
     if (self = [super init]) {
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.4];
         if (titles.count<6) {
@@ -143,54 +117,23 @@
         
         self.titleLabel.text = title;
         _titles = titles;
+        _isofary = isofary;
         _selectIndex = [selectIndex copy];
-        _selectValue = [selectValue copy];
-        _showCloseButton = showCloseButton;
+       
+        
         [self addSubview:self.alertView];
         if (title == nil) {
             
         }else{
-             [self.alertView addSubview:self.titleLabel];
+            [self.alertView addSubview:self.titleLabel];
         }
         [self.alertView addSubview:self.selectTableView];
-        if (_showCloseButton) {
-            [self.alertView addSubview:self.closeButton];
-        }
+        
         [self initUI];
         
         [self show];
     }
     return self;
-}
--(instancetype)initWithTitle:(NSString *)title titles:(NSArray *)titles imageViews:(NSArray *)imageee  selectIndex:(SelectIndex)selectIndex selectValue:(SelectValue)selectValue showCloseButton:(BOOL)showCloseButton{
-    if (self = [super init]) {
-        self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.4];
-        if (titles.count<7) {
-            alertHeight = 40*(titles.count+1);
-        }else{
-            alertHeight = 320;
-        }
-        
-        buttonHeight = 40;
-        
-        self.titleLabel.text = title;
-        _titles = titles;
-        _imageAry = imageee;
-        _selectIndex = [selectIndex copy];
-        _selectValue = [selectValue copy];
-        _showCloseButton = showCloseButton;
-        [self addSubview:self.alertView];
-        [self.alertView addSubview:self.titleLabel];
-        [self.alertView addSubview:self.selectTableView];
-        if (_showCloseButton) {
-            [self.alertView addSubview:self.closeButton];
-        }
-        [self initUI];
-        
-        [self show];
-    }
-    return self;
-
 }
 - (void)show {
     self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
@@ -201,24 +144,18 @@
         self.alertView.alpha = 1;
     }];
 }
-
 - (void)initUI {
     if (self.titleLabel.text == nil) {
         self.alertView.frame = CGRectMake(50, ([UIScreen mainScreen].bounds.size.height-alertHeight)/2.0, [UIScreen mainScreen].bounds.size.width-100, alertHeight-buttonHeight);
     }else{
-     self.alertView.frame = CGRectMake(50, ([UIScreen mainScreen].bounds.size.height-alertHeight)/2.0, [UIScreen mainScreen].bounds.size.width-100, alertHeight);
+        self.alertView.frame = CGRectMake(50, ([UIScreen mainScreen].bounds.size.height-alertHeight)/2.0, [UIScreen mainScreen].bounds.size.width-100, alertHeight);
     }
-   
+    
     
     self.titleLabel.frame = CGRectMake(0, 0, _alertView.frame.size.width, buttonHeight);
     
-    float reduceHeight = buttonHeight;
-    if (_showCloseButton) {
-        self.closeButton.frame = CGRectMake(0, _alertView.frame.size.height-buttonHeight, _alertView.frame.size.width, buttonHeight);
-        reduceHeight = buttonHeight*2;
-    }
     if (self.titleLabel.text ==nil) {
-       self.selectTableView.frame = CGRectMake(0, 0, _alertView.frame.size.width, _alertView.frame.size.height);
+        self.selectTableView.frame = CGRectMake(0, 0, _alertView.frame.size.width, _alertView.frame.size.height);
         _selectTableView.estimatedRowHeight=0;
         _selectTableView.estimatedSectionFooterHeight=0;
         _selectTableView.estimatedSectionHeaderHeight=0;
@@ -229,9 +166,6 @@
         _selectTableView.estimatedSectionHeaderHeight=0;
     }
 }
-
-
-#pragma UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -241,11 +175,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    float real = (alertHeight - buttonHeight)/(float)_titles.count;
-//    if (_showCloseButton) {
-//        real = (alertHeight - buttonHeight*2)/(float)_titles.count;
-//    }
-//    return real<=40?40:real;
+
     return 40;
 }
 
@@ -256,29 +186,45 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.000001;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SelectAlertCell *cell = [tableView dequeueReusableCellWithIdentifier:@"selectcell"];
+    InteredAlertCell *cell = [tableView dequeueReusableCellWithIdentifier:@"selectcell"];
     if (!cell) {
-        cell = [[SelectAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"selectcell"];
+        cell = [[InteredAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"selectcell"];
     }
-    cell.titleLabel.text = _titles[indexPath.row];
-    NSString *imageurlstr = [NSString stringWithFormat:@"%@%@", KURLHeader,_imageAry[indexPath.row]];
 
-    // UIImage *urlImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageurlstr]]];
     
-    //[cell.imagerView setImage:urlImage];
-    [cell.imagerView sd_setImageWithURL:[NSURL URLWithString:imageurlstr]];
+    cell.titleLabel.text = _titles[indexPath.row];
+    
+    NSLog(@"%@\n%@",_titles,_isofary);
+    for (int i =0; i<_titles.count; i++) {
+        NSString *titstr = [NSString stringWithFormat:@"%@",_titles[i]];
+        for (int y = 0; y<_isofary.count; y++) {
+            NSString *isofstr =[NSString stringWithFormat:@"%@",_isofary[y]];
+            NSString *strUrl = [isofstr stringByReplacingOccurrencesOfString:@" " withString:@""];
+            if ([titstr isEqualToString:strUrl]) {
+                NSInteger index = [_titles indexOfObject:strUrl];
+                NSLog(@"-1---%ld---",index);
+                if (indexPath.row == index) {
+                    
+                  cell.imagerView.image = [UIImage imageNamed:@"xuanzezhanghao"];
+                }
+            }
+        }
+        
+    }
+
+    
+    
+    
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.selectIndex) {
-        self.selectIndex(indexPath.row);
+        self.selectIndex(_titles[indexPath.row]);
     }
-    if (self.selectValue) {
-        self.selectValue(_titles[indexPath.row]);
-    }
+
     
     [self closeAction];
 }
@@ -286,7 +232,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint pt = [touch locationInView:self];
-    if (!CGRectContainsPoint([self.alertView frame], pt) && !_showCloseButton) {
+    if (!CGRectContainsPoint([self.alertView frame], pt)) {
         [self closeAction];
     }
 }
@@ -317,9 +263,5 @@
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
 }
-
-- (void)dealloc {
-//    NSLog(@"SelectAlert被销毁了");
-}
-
 @end
+

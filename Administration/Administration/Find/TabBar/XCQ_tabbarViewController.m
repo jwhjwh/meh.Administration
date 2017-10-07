@@ -8,7 +8,7 @@
 
 #import "XCQ_tabbarViewController.h"
 #import "MainViewController.h" //首页
-
+#import "UIDevice+FEPlatForm.h"//判断机型
 #import "IntercalateController.h"//设置
 #import "ChatViewController.h"
 
@@ -50,9 +50,17 @@ static NSString *kGroupName = @"GroupName";
         
         for (int i=0; i<self.viewControllers.count; i++)
         {
+            //iphone x
+            NSString* phoneModel = [UIDevice devicePlatForm];//方法在下面
+            NSLog(@"%@",phoneModel);
+            CGFloat Xheig;
+            if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+                Xheig = 83;
+            }else{
+                Xheig = 50;
+            }
             UIViewController * vc=[self.viewControllers objectAtIndex:i];
-            
-            XCQ_tabbar *btn =[[XCQ_tabbar alloc]initWithFrame:CGRectMake(i*itemWidth, 0, itemWidth, 50)
+            XCQ_tabbar *btn =[[XCQ_tabbar alloc]initWithFrame:CGRectMake(i*itemWidth, 0, itemWidth, Xheig)
                                             withUnSelectedImg:vc.tabBarItem.image
                                               withSelectedImg:vc.tabBarItem.selectedImage
                                                     withTitle:vc.tabBarItem.title];
@@ -73,8 +81,16 @@ static NSString *kGroupName = @"GroupName";
 {
     self.currentButton = (XCQ_tabbar *)[self.tabBar viewWithTag:self.selectedIndex+99000] ;
     
-    //为侧滑所用
-    self.tabBar.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 49, [UIScreen mainScreen].bounds.size.width, 49);
+    //为侧滑所用-------x
+    CGFloat Xheig;
+    NSString* phoneModel = [UIDevice devicePlatForm];//方法在下面
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        Xheig = 83;
+    }else{
+        Xheig = 50;
+    }
+    self.tabBar.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - Xheig, [UIScreen mainScreen].bounds.size.width, Xheig);
+    
     //    [NSNotificationCenter defaultCenter] postNotificationName:@"KpzTabbarSelectNotification" object:3
     
    
