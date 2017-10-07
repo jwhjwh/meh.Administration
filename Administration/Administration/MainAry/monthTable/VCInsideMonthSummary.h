@@ -19,4 +19,5 @@
 @property (nonatomic,strong)NSString *summaryId;
 @property (nonatomic)BOOL isSelect;
 @property (nonatomic,strong)NSString *state;
+@property (nonatomic,strong)NSString *codeS;
 @end

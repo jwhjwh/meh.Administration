@@ -8,9 +8,23 @@
 
 #import "VCDrafts.h"
 #import "CellDrafts.h"
+#import "VCArtShopDrfts.h"
+#import "VCInsideShopDrafts.h"
+#import "VCBuessShopDrafts.h"
+#import "VCArtWeekDrafts.h"
+#import "VCArtWeekSummaryDrafts.h"
+#import "VCArtMonthDrafts.h"
+#import "VCArtMonthSummaryDrafts.h"
+#import "VCInsideWeekDrafts.h"
+#import "VCInsideWeekSummaryDrafts.h"
+#import "VCInsideMonthDrafts.h"
+#import "VCInsideMonthSummaryDrafts.h"
+#import "VCBuessWeekDrafts.h"
+#import "VCBuessWeekSummaryDrafts.h"
 @interface VCDrafts ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
+@property (nonatomic,strong)NSDictionary *remark;
 @property (nonatomic,assign)NSUInteger _page;//接口page
 //是不是第一次执行请求
 @property (nonatomic)BOOL _isFirstLoadData ;
@@ -148,16 +162,154 @@
     if (cell==nil) {
         cell = [[CellDrafts alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.labelName.text = self.stringTitle;
     NSDictionary *dict = self.arrayData[indexPath.row];
-    cell.dict = dict;
+    [self.remark enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([key isEqualToString:[NSString stringWithFormat:@"%@",dict[@"remark"]]]) {
+            NSString *string = [NSString stringWithFormat:@"%@",obj];
+            cell.labelName.text = [string substringWithRange:NSMakeRange(2, 3)];
+            *stop = YES;
+        }
+    }];
+    if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
+        cell.dict = dict;
+    }else if([[ShareModel shareModel].sort isEqualToString:@"2"])
+    {
+        NSString *startDate;
+        NSString *endDate;
+        if (![dict[@"startDate"] isKindOfClass:[NSNull class]]) {
+            startDate = [dict[@"startDate"] substringToIndex:10];
+        }
+        if (![dict[@"endDate"] isKindOfClass:[NSNull class]]) {
+            endDate = [dict[@"endDate"] substringToIndex:10];
+        }
+        cell.labelTime.text = [NSString stringWithFormat:@"%@至%@",startDate,endDate];
+        cell.labelUpTime.text = [dict[@"dates"] substringWithRange:NSMakeRange(5, 11)];
+    }else
+    {
+        cell.labelTime.text = [dict[@"months"]substringToIndex:7];
+        cell.labelUpTime.text = [dict[@"dates"] substringWithRange:NSMakeRange(5, 11)];
+    }
+   
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
+    NSString *remark = dict[@"remark"];
+    NSString *tableID = dict[@"id"];
+    NSString *roleID = [ShareModel shareModel].roleID;
+    NSString *sort = [ShareModel shareModel].sort;
+    NSString *code = [NSString stringWithFormat:@"%@",dict[@"code"]];
     
+        if ([sort isEqualToString:@"1"]) {
+                if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+                    VCArtShopDrfts  *vc = [[VCArtShopDrfts alloc]init];
+                    vc.remark = remark;
+                    vc.tableID = tableID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+                    //跳转业务界面
+                    VCBuessShopDrafts *vc = [[VCBuessShopDrafts alloc]init];
+                    vc.remark = remark;
+                    vc.tableID = tableID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else
+                {
+                    VCInsideShopDrafts *vc = [[VCInsideShopDrafts alloc]init];
+                    vc.remark = remark;
+                    vc.tableID = tableID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+        }
+        if ([sort isEqualToString:@"2"]) {
+            if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+                if ([code isEqualToString:@"1"]) {
+                    VCArtWeekDrafts *vc = [[VCArtWeekDrafts alloc]init];
+                    vc.remark = remark;
+                    vc.isSelect = YES;
+                    vc.tableID = tableID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else
+                {
+                    VCArtWeekSummaryDrafts *vc = [[VCArtWeekSummaryDrafts alloc]init];
+                    vc.isSelect = NO;
+                    vc.remark = remark;
+                    vc.tableID = tableID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
+            }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+                //跳转业务界面
+                if ([code isEqualToString:@"1"]) {
+                    VCBuessWeekDrafts *vc = [[VCBuessWeekDrafts alloc]init];
+                    vc.isSelect= YES;
+                    vc.tableID = tableID;
+                    vc.remark = remark;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else
+                {
+                    VCBuessWeekSummaryDrafts *vc = [[VCBuessWeekSummaryDrafts alloc]init];
+                    vc.isSelect = NO;
+                    vc.tableID = tableID;
+                    vc.remark = remark;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
+            }else
+            {
+                if ([code isEqualToString:@"1"]) {
+                    VCInsideWeekDrafts *vc = [[VCInsideWeekDrafts alloc]init];
+                    vc.isSelect = YES;
+                    vc.tableID = tableID;
+                    vc.remark = remark;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else
+                {
+                    VCInsideWeekSummaryDrafts *vc = [[VCInsideWeekSummaryDrafts alloc]init];
+                    vc.isSelect = NO;
+                    vc.tableID = tableID;
+                    vc.remark = remark;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+            
+        }
+      if ([sort isEqualToString:@"3"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            
+            if ([code isEqualToString:@"1"]) {
+                VCArtMonthDrafts *vc = [[VCArtMonthDrafts alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtMonthSummaryDrafts *vc = [[VCArtMonthSummaryDrafts alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else  {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideMonthDrafts *vc = [[VCInsideMonthDrafts alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideMonthSummaryDrafts *vc = [[VCInsideMonthSummaryDrafts alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -183,6 +335,21 @@
     self.arrayData = [NSMutableArray array];
     
     [self setUI];
+    
+    self.remark = @{@"1":@"业务日报表",
+                    @"2":@"业务周计划",
+                    @"3":@"业务周总结",
+                    @"4":@"市场店报表",
+                    @"5":@"市场周计划",
+                    @"6":@"市场周总结",
+                    @"7":@"市场月计划",
+                    @"8":@"市场月总结",
+                    @"9":@"内勤日报表",
+                    @"10":@"内勤周计划",
+                    @"11":@"内勤周总结",
+                    @"12":@"内勤月计划",
+                    @"13":@"内勤月总结"};
+
 }
 
 - (void)didReceiveMemoryWarning {

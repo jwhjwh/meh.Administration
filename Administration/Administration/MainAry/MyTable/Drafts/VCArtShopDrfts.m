@@ -8,7 +8,8 @@
 
 #import "VCArtShopDrfts.h"
 #import "CellEditPlan.h"
-@interface VCArtShopDrfts ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UIAlertViewDelegate>
+#import "ViewChooseEdit.h"
+@interface VCArtShopDrfts ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UIAlertViewDelegate,ViewChooseEditDelegate>
 
 {
     UIButton *button;
@@ -16,6 +17,9 @@
     UITableView *tableView1;
     ViewDatePick *myDatePick;
     BOOL isBack;
+    BOOL isEditing;
+    BOOL isSave;
+    ViewChooseEdit *chooseEdit;
 }
 @property(nonatomic,strong) NSString *string1;
 @property(nonatomic,strong) NSString *string2;
@@ -27,10 +31,50 @@
 @property(nonatomic,strong) NSString *string8;
 @property(nonatomic,strong) NSString *string9;
 @property(nonatomic,strong) NSString *summary;
-
+@property(nonatomic,strong) NSMutableDictionary *dict;
 @end
 
 @implementation VCArtShopDrfts
+
+#pragma -mark custem
+-(void)getHttpData
+    {
+        NSString *urlStr =[NSString stringWithFormat:@"%@report/queryReportInfo",KURLHeader];
+        NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+        NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+        NSDictionary *dict = @{@"appkey":appKeyStr,
+                               @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                               @"CompanyInfoId":compid,
+                               @"RoleId":[ShareModel shareModel].roleID,
+                               @"DepartmentID":[ShareModel shareModel].departmentID,
+                               @"remark":self.remark,
+                               @"id":self.tableID};
+        [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+            NSString *code = [responseObject valueForKey:@"status"];
+            if ([code isEqualToString:@"0000"]) {
+                self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
+                NSString *string = [self.dict[@"dateLine"] substringToIndex:10];
+                [button setTitle:string forState:UIControlStateNormal];
+                self.string1 = self.dict[@"store"];
+                self.string2 = self.dict[@"aim"];
+                self.string3 = self.dict[@"achievement"];
+                self.string4 = self.dict[@"shipment"];
+                self.string5 = [NSString stringWithFormat:@"%@",self.dict[@"evaluation"]];
+                self.string6 = self.dict[@"solution"];
+                self.string7 = self.dict[@"apperception"];
+                self.string8 = self.dict[@"morgenPlan"];
+                self.string9 = self.dict[@"MorgenAim"];
+                self.summary = self.dict[@"summery"];
+                [self.dict setValue:@"1" forKey:@"canEdit"];
+                
+                [tableView1 reloadData];
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+    
+}
 
 -(void)setUI
 {
@@ -56,6 +100,7 @@
     }];
     
     button = [[UIButton alloc]init];
+    button.userInteractionEnabled = NO;
     [button setTitle:@"选择日期" forState:UIControlStateNormal];
     [button setTitleColor:GetColor(188, 189, 190, 1) forState:UIControlStateNormal];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -141,9 +186,99 @@
     [self.view addSubview:myDatePick];
 }
 
--(void)submitData
+-(void)showChooseEdit
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    chooseEdit  = [[ViewChooseEdit alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    chooseEdit.delegate = self;
+    chooseEdit.arrayButton = @[@"编辑",@"删除",@"取消"];
+    [self.view addSubview:chooseEdit];
+}
+
+-(void)getState
+{
+    NSIndexPath *indexPath = [chooseEdit.tableView indexPathForSelectedRow];
+    if (indexPath.row==0) {
+        
+        UIToolbar*tools=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 100, 39)];
+        //解决出现的那条线
+        tools.clipsToBounds = YES;
+        //解决tools背景颜色的问题
+        [tools setBackgroundImage:[UIImage new]forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+        [tools setShadowImage:[UIImage new]forToolbarPosition:UIToolbarPositionAny];
+        //添加两个button
+        NSMutableArray*buttons=[[NSMutableArray alloc]initWithCapacity:2];
+        
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+        [button1 setImage:[UIImage imageNamed:@"bc_ico01"] forState:UIControlStateNormal];
+        [button1 addTarget:self action:@selector(showSave) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *item1 = [[UIBarButtonItem alloc]initWithCustomView:button1];
+        UIBarButtonItem *item2 = [[UIBarButtonItem alloc]initWithCustomView:button2];
+        
+        [buttons addObject:item1];
+        [buttons addObject:item2];
+        [tools setItems:buttons animated:NO];
+        UIBarButtonItem *btn=[[UIBarButtonItem  alloc]initWithCustomView:tools];
+        self.navigationItem.rightBarButtonItem=btn;
+        button.userInteractionEnabled = YES;
+        [self.dict setValue:@"2" forKey:@"canEdit"];
+        isEditing = YES;
+        [tableView1 reloadData];
+    }else if(indexPath.row==1)
+    {
+        [self deleteDrafts];
+    }else
+    {
+        [chooseEdit removeFromSuperview];
+    }
+    
+}
+
+//删除草稿
+-(void)deleteDrafts
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/delReport",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"Num":[ShareModel shareModel].num,
+                           @"Sort":[ShareModel shareModel].sort,
+                           @"code":@"2",
+                           @"id":self.tableID,
+                           @"Hint":@"3"};
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+            return ;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return ;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
+-(void)submitData:(NSString *)hint
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -233,7 +368,7 @@
         [dict setValue:button.titleLabel.text forKey:@"DateLine"];
     }
     
-//    [dict setValue:hint forKey:@"Hint"];
+    [dict setValue:hint forKey:@"Hint"];
     [dict setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];
     
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
@@ -254,42 +389,52 @@
         
     } view:self.view];
 }
+-(void)showSave
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要保存此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.tag = 300;
+    isSave = YES;
+    [alertView show];
+}
 
 -(void)showAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.tag = 100;
+    isSave = NO;
     [alertView show];
 }
 
 -(void)back
 {
-    isBack = YES;
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存草稿箱",@"确定" ,nil];
-    alertView.tag = 200;
-    [alertView show];
+    if (isEditing==YES) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+        alertView.tag = 200;
+        [alertView show];
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
+#pragma -mark alertView
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag==100) {
         if (buttonIndex ==1) {
-           // [self submitData:@"1"];
+            [self submitData:@"1"];
+        }
+    }else if(alertView.tag==200)
+    {
+        if (buttonIndex==1) {
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }else
     {
         if (buttonIndex==1) {
-            if ([button.titleLabel.text isEqualToString:@"选择日期"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1.0];
-                return;
-            }else
-            {
-               // [self submitData:@"0"];
-            }
-            
-        }
-        if (buttonIndex==2) {
-            [self.navigationController popViewControllerAnimated:YES];
+            isBack = YES;
+            [self submitData:@"3"];
         }
     }
 }
@@ -318,6 +463,12 @@
     }
     cell.LabelTitle.text = arrayTitle[indexPath.row];
     cell.textView.delegate = self;
+    if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
+        cell.userInteractionEnabled = NO;
+    }else
+    {
+        cell.userInteractionEnabled = YES;
+    }
     switch (indexPath.row) {
         case 0:
             if (self.string1.length!=0) {
@@ -461,18 +612,26 @@
 }
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getHttpData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=  @"店报表";
     [self setUI];
     arrayTitle = @[@"地区店名老板",@"目标",@"业绩",@"出货",@"发现问题",@"解决方案",@"感悟分享",@"明日计划",@"明日目标",@"总结"];
-    isBack = NO;
-    UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [submit setImage:[UIImage imageNamed:@"up_ico02"] forState:UIControlStateNormal];
-    [submit addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:submit];
-    self.navigationItem.rightBarButtonItem = item;
+    
+    self.dict = [NSMutableDictionary dictionary];
+    
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showChooseEdit)];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
 }
 
 - (void)didReceiveMemoryWarning {

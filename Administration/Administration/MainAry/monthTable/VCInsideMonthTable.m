@@ -184,6 +184,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月主要工作规划",@"第一周",@"第二周",@"第三周",@"第四周",@"补充备注"];
         self.isSelect = YES;
         self.remark = @"12";
+        self.codeS = @"1";
         [self getData];
     }else
     {
@@ -193,6 +194,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本月工作完成简述",@"本月工作进度及目标达成的分析与评估",@"当前阶段工作方向。整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
         self.remark = @"13";
+        self.codeS = @"2";
         [self getSummary];
     }
 }
@@ -323,14 +325,15 @@
                             NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
                             
                             NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-                            [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)];
+        
+                               [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)]; 
+                            
                             [self.mutAttribute appendAttributedString:string];
-                            //
                         }
                     }
                     break;
                 case 4:
-                    if (self.dictInfo[@"workPlan"]) {
+                    if (![self.dictInfo[@"workPlan"] isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"workPlan"];
                     }else
                     {
@@ -341,7 +344,7 @@
                     }
                     break;
                 case 5:
-                    if (self.dictInfo[@"firstWeek"]) {
+                    if (![self.dictInfo[@"firstWeek"] isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"firstWeek"];
                     }else
                     {
@@ -352,7 +355,7 @@
                     }
                     break;
                 case 6:
-                    if (self.dictInfo[@"secondWeek"]) {
+                    if (![self.dictInfo[@"secondWeek"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"secondWeek"];
                     }else
                     {
@@ -363,7 +366,7 @@
                     }
                     break;
                 case 7:
-                    if (self.dictInfo[@"fourthWeek"]) {
+                    if (![self.dictInfo[@"fourthWeek"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"fourthWeek"];
                     }else
                     {
@@ -374,7 +377,7 @@
                     }
                     break;
                 case 8:
-                    if (self.dictInfo[@"comment"]) {
+                    if (![self.dictInfo[@"comment"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"comment"];
                     }else
                     {
@@ -405,7 +408,7 @@
                     cell.textView.attributedText = self.mutAttribute;
                     break;
                 case 4:
-                    if (self.dictInfo[@"completeProgressBriefly"]) {
+                    if (![self.dictInfo[@"completeProgressBriefly"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"completeProgressBriefly"];
                     }else
                     {
@@ -416,7 +419,7 @@
                     }
                     break;
                 case 5:
-                    if (self.dictInfo[@"progressEvaluation"]) {
+                    if (![self.dictInfo[@"progressEvaluation"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"progressEvaluation"];
                     }else
                     {
@@ -427,7 +430,7 @@
                     }
                     break;
                 case 6:
-                    if (self.dictInfo[@"strategy"]) {
+                    if (![self.dictInfo[@"strategy"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"strategy"];
                     }else
                     {
@@ -438,7 +441,7 @@
                     }
                     break;
                 case 7:
-                    if (self.dictInfo[@"experience"]) {
+                    if (![self.dictInfo[@"experience"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"experience"];
                     }else
                     {
@@ -449,7 +452,7 @@
                     }
                     break;
                 case 8:
-                    if (self.dictInfo[@"directionPreset"]) {
+                    if (![self.dictInfo[@"directionPreset"]isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"directionPreset"];
                     }else
                     {
@@ -523,7 +526,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"1",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }else
         {
@@ -535,7 +538,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }
         

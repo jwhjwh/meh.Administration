@@ -334,6 +334,8 @@
 		1FCEB94A1F7A049800D8F175 /* CellDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB9491F7A049800D8F175 /* CellDrafts.m */; };
 		1FCEB94D1F7A2CBE00D8F175 /* VCInsideShopDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB94C1F7A2CBE00D8F175 /* VCInsideShopDrafts.m */; };
 		1FCEB9501F7A2CDC00D8F175 /* VCBuessShopDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB94F1F7A2CDC00D8F175 /* VCBuessShopDrafts.m */; };
+		1FCEB9531F7A4E6C00D8F175 /* ViewChooseEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB9521F7A4E6C00D8F175 /* ViewChooseEdit.m */; };
+		1FCEB9551F7A52B800D8F175 /* sj_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCEB9541F7A52B800D8F175 /* sj_ico.png */; };
 		1FD075E51F760BCE003E01EB /* VCBuessFillWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075E41F760BCE003E01EB /* VCBuessFillWeekTable.m */; };
 		1FD075E81F760C03003E01EB /* ViewBuessWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075E71F760C03003E01EB /* ViewBuessWeekTable.m */; };
 		1FD075EB1F7630F9003E01EB /* ViewBuessWeekSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075EA1F7630F9003E01EB /* ViewBuessWeekSummary.m */; };
@@ -349,6 +351,23 @@
 		1FD62BD61F43FA08008871A7 /* CellTabelDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD51F43FA08008871A7 /* CellTabelDetail.m */; };
 		1FD62BD91F442CF8008871A7 /* ViewControllerPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */; };
 		1FD6635F1F0DE7420072AAF0 /* SelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6635E1F0DE7420072AAF0 /* SelectCell.m */; };
+		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
+		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
+		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
+		1FD95F7A1F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F791F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.m */; };
+		1FD95F7D1F7CD09800CB09AD /* VCInsideMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F7C1F7CD09800CB09AD /* VCInsideMonthDrafts.m */; };
+		1FD95F801F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F7F1F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m */; };
+		1FD95F8F1F7CD93100CB09AD /* VCArtShopNewPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F8E1F7CD93100CB09AD /* VCArtShopNewPostil.m */; };
+		1FD95F921F7CD9D400CB09AD /* VCInsideShopNewPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F911F7CD9D400CB09AD /* VCInsideShopNewPostil.m */; };
+		1FD95F951F7CDA5600CB09AD /* VCBuessShopNewPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F941F7CDA5600CB09AD /* VCBuessShopNewPostil.m */; };
+		1FD95F9C1F7CDB5000CB09AD /* VCArtShopSubmited.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F971F7CDB5000CB09AD /* VCArtShopSubmited.m */; };
+		1FD95F9D1F7CDB5000CB09AD /* VCBuessShopSubmited.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F991F7CDB5000CB09AD /* VCBuessShopSubmited.m */; };
+		1FD95F9E1F7CDB5000CB09AD /* VCInsideShopSubmited.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F9B1F7CDB5000CB09AD /* VCInsideShopSubmited.m */; };
+		1FD95FA51F7CDC2000CB09AD /* VCArtShopUnPassed.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95FA01F7CDC2000CB09AD /* VCArtShopUnPassed.m */; };
+		1FD95FA61F7CDC2000CB09AD /* VCBuessShopUnPassed.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95FA21F7CDC2000CB09AD /* VCBuessShopUnPassed.m */; };
+		1FD95FA71F7CDC2000CB09AD /* VCInsideShopUnPassed.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95FA41F7CDC2000CB09AD /* VCInsideShopUnPassed.m */; };
+		1FD95FAA1F7CDE1D00CB09AD /* VCBuessWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95FA91F7CDE1D00CB09AD /* VCBuessWeekDrafts.m */; };
+		1FD95FAD1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95FAC1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m */; };
 		1FD975301F70AF3B00D94B78 /* VCArtShopTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD9752F1F70AF3B00D94B78 /* VCArtShopTable.m */; };
 		1FD995921F1EFB00001C58CC /* CellPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD995911F1EFB00001C58CC /* CellPosition.m */; };
 		1FD995941F1F000A001C58CC /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD995931F1F000A001C58CC /* down.png */; };
@@ -362,6 +381,8 @@
 		1FDB4AD61F4A916E00ED2731 /* sc_icof.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDB4AD51F4A916E00ED2731 /* sc_icof.png */; };
 		1FDB4ADF1F4AC3D700ED2731 /* CollectionViewCellPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB4ADE1F4AC3D700ED2731 /* CollectionViewCellPosition.m */; };
 		1FDB4AE11F4AE13900ED2731 /* zw_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDB4AE01F4AE13900ED2731 /* zw_ico.png */; };
+		1FDC1F571F7F851D001B8CB7 /* VCSubmited.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC1F561F7F851D001B8CB7 /* VCSubmited.m */; };
+		1FDC1F5A1F7F8681001B8CB7 /* CellSummaryList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC1F591F7F8681001B8CB7 /* CellSummaryList.m */; };
 		1FDCBAA41E7A1E2A002C80FB /* seach.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA31E7A1E2A002C80FB /* seach.png */; };
 		1FDCBAA61E7A3247002C80FB /* tjtx_mt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDCBAA51E7A3247002C80FB /* tjtx_mt.png */; };
 		1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDCBAAB1E7A3E16002C80FB /* GroupdetailController.m */; };
@@ -378,6 +399,11 @@
 		1FDCC2EA1E7A8FDA002C80FB /* HyphenateLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDCC0D31E7A8596002C80FB /* HyphenateLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FDD3C731E7398CE00743779 /* FillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C721E7398CE00743779 /* FillTableViewCell.m */; };
 		1FDD3C771E73F52500743779 /* XFDaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD3C761E73F52500743779 /* XFDaterView.m */; };
+		1FDD57041F7B43930082C519 /* bc_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD57021F7B43930082C519 /* bc_ico01.png */; };
+		1FDD57051F7B43930082C519 /* sc_ico2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD57031F7B43930082C519 /* sc_ico2.png */; };
+		1FDD57071F7B45BE0082C519 /* submit_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD57061F7B45BE0082C519 /* submit_ico01.png */; };
+		1FDD570A1F7B57290082C519 /* VCArtWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD57091F7B57290082C519 /* VCArtWeekDrafts.m */; };
+		1FDD57101F7BA6450082C519 /* VCArtWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD570F1F7BA6450082C519 /* VCArtWeekSummaryDrafts.m */; };
 		1FDD93021F427B5F002E834B /* ViewControllerChoosePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD93011F427B5F002E834B /* ViewControllerChoosePosition.m */; };
 		1FDD93051F4293CE002E834B /* ViewControllerShopTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD93041F4293CE002E834B /* ViewControllerShopTable.m */; };
 		1FDD93081F42A837002E834B /* ViewControllerChildShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD93071F42A837002E834B /* ViewControllerChildShop.m */; };
@@ -438,6 +464,10 @@
 		1FF7FB311ECC4B7B00966C58 /* EditotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB301ECC4B7B00966C58 /* EditotherController.m */; };
 		1FF7FB341ECC501900966C58 /* DetaotherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7FB331ECC501900966C58 /* DetaotherController.m */; };
 		1FF9F0D01F5A9AB80062F3EC /* VCBusinessWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F0CF1F5A9AB80062F3EC /* VCBusinessWeekTable.m */; };
+		1FFF59F61F870D9F00FD8ED9 /* pz_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFF59F51F870D9F00FD8ED9 /* pz_ico01.png */; };
+		1FFF59F91F870DFB00FD8ED9 /* VCNewPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF59F81F870DFB00FD8ED9 /* VCNewPostil.m */; };
+		1FFF5A001F871AA400FD8ED9 /* VCUnPassed.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF59FF1F871AA400FD8ED9 /* VCUnPassed.m */; };
+		1FFF5A031F877F0F00FD8ED9 /* VCSearchSubmited.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF5A021F877F0F00FD8ED9 /* VCSearchSubmited.m */; };
 		6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */; };
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
@@ -1266,6 +1296,9 @@
 		1FCEB94C1F7A2CBE00D8F175 /* VCInsideShopDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideShopDrafts.m; sourceTree = "<group>"; };
 		1FCEB94E1F7A2CDC00D8F175 /* VCBuessShopDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessShopDrafts.h; sourceTree = "<group>"; };
 		1FCEB94F1F7A2CDC00D8F175 /* VCBuessShopDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessShopDrafts.m; sourceTree = "<group>"; };
+		1FCEB9511F7A4E6C00D8F175 /* ViewChooseEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewChooseEdit.h; sourceTree = "<group>"; };
+		1FCEB9521F7A4E6C00D8F175 /* ViewChooseEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewChooseEdit.m; sourceTree = "<group>"; };
+		1FCEB9541F7A52B800D8F175 /* sj_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sj_ico.png; sourceTree = "<group>"; };
 		1FD075E31F760BCE003E01EB /* VCBuessFillWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessFillWeekTable.h; sourceTree = "<group>"; };
 		1FD075E41F760BCE003E01EB /* VCBuessFillWeekTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessFillWeekTable.m; sourceTree = "<group>"; };
 		1FD075E61F760C03003E01EB /* ViewBuessWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewBuessWeekTable.h; sourceTree = "<group>"; };
@@ -1296,6 +1329,40 @@
 		1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerPostil.m; sourceTree = "<group>"; };
 		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/chat/SelectCell.h; sourceTree = SOURCE_ROOT; };
 		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/chat/SelectCell.m; sourceTree = SOURCE_ROOT; };
+		1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekDrafts.h; sourceTree = "<group>"; };
+		1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideWeekDrafts.m; sourceTree = "<group>"; };
+		1FD95F721F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekSummaryDrafts.h; sourceTree = "<group>"; };
+		1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideWeekSummaryDrafts.m; sourceTree = "<group>"; };
+		1FD95F751F7CCDB200CB09AD /* VCArtMonthDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtMonthDrafts.h; sourceTree = "<group>"; };
+		1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtMonthDrafts.m; sourceTree = "<group>"; };
+		1FD95F781F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtMonthSummaryDrafts.h; sourceTree = "<group>"; };
+		1FD95F791F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtMonthSummaryDrafts.m; sourceTree = "<group>"; };
+		1FD95F7B1F7CD09800CB09AD /* VCInsideMonthDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideMonthDrafts.h; sourceTree = "<group>"; };
+		1FD95F7C1F7CD09800CB09AD /* VCInsideMonthDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideMonthDrafts.m; sourceTree = "<group>"; };
+		1FD95F7E1F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideMonthSummaryDrafts.h; sourceTree = "<group>"; };
+		1FD95F7F1F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideMonthSummaryDrafts.m; sourceTree = "<group>"; };
+		1FD95F8D1F7CD93100CB09AD /* VCArtShopNewPostil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtShopNewPostil.h; sourceTree = "<group>"; };
+		1FD95F8E1F7CD93100CB09AD /* VCArtShopNewPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtShopNewPostil.m; sourceTree = "<group>"; };
+		1FD95F901F7CD9D400CB09AD /* VCInsideShopNewPostil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideShopNewPostil.h; sourceTree = "<group>"; };
+		1FD95F911F7CD9D400CB09AD /* VCInsideShopNewPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideShopNewPostil.m; sourceTree = "<group>"; };
+		1FD95F931F7CDA5600CB09AD /* VCBuessShopNewPostil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessShopNewPostil.h; sourceTree = "<group>"; };
+		1FD95F941F7CDA5600CB09AD /* VCBuessShopNewPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessShopNewPostil.m; sourceTree = "<group>"; };
+		1FD95F961F7CDB5000CB09AD /* VCArtShopSubmited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtShopSubmited.h; sourceTree = "<group>"; };
+		1FD95F971F7CDB5000CB09AD /* VCArtShopSubmited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtShopSubmited.m; sourceTree = "<group>"; };
+		1FD95F981F7CDB5000CB09AD /* VCBuessShopSubmited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessShopSubmited.h; sourceTree = "<group>"; };
+		1FD95F991F7CDB5000CB09AD /* VCBuessShopSubmited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessShopSubmited.m; sourceTree = "<group>"; };
+		1FD95F9A1F7CDB5000CB09AD /* VCInsideShopSubmited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideShopSubmited.h; sourceTree = "<group>"; };
+		1FD95F9B1F7CDB5000CB09AD /* VCInsideShopSubmited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideShopSubmited.m; sourceTree = "<group>"; };
+		1FD95F9F1F7CDC2000CB09AD /* VCArtShopUnPassed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtShopUnPassed.h; sourceTree = "<group>"; };
+		1FD95FA01F7CDC2000CB09AD /* VCArtShopUnPassed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtShopUnPassed.m; sourceTree = "<group>"; };
+		1FD95FA11F7CDC2000CB09AD /* VCBuessShopUnPassed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessShopUnPassed.h; sourceTree = "<group>"; };
+		1FD95FA21F7CDC2000CB09AD /* VCBuessShopUnPassed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessShopUnPassed.m; sourceTree = "<group>"; };
+		1FD95FA31F7CDC2000CB09AD /* VCInsideShopUnPassed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideShopUnPassed.h; sourceTree = "<group>"; };
+		1FD95FA41F7CDC2000CB09AD /* VCInsideShopUnPassed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideShopUnPassed.m; sourceTree = "<group>"; };
+		1FD95FA81F7CDE1D00CB09AD /* VCBuessWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessWeekDrafts.h; sourceTree = "<group>"; };
+		1FD95FA91F7CDE1D00CB09AD /* VCBuessWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessWeekDrafts.m; sourceTree = "<group>"; };
+		1FD95FAB1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessWeekSummaryDrafts.h; sourceTree = "<group>"; };
+		1FD95FAC1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessWeekSummaryDrafts.m; sourceTree = "<group>"; };
 		1FD9752E1F70AF3B00D94B78 /* VCArtShopTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtShopTable.h; sourceTree = "<group>"; };
 		1FD9752F1F70AF3B00D94B78 /* VCArtShopTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtShopTable.m; sourceTree = "<group>"; };
 		1FD995901F1EFB00001C58CC /* CellPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellPosition.h; path = Administration/Contacts/chat/CellPosition.h; sourceTree = SOURCE_ROOT; };
@@ -1318,6 +1385,10 @@
 		1FDB4ADD1F4AC3D700ED2731 /* CollectionViewCellPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCellPosition.h; sourceTree = "<group>"; };
 		1FDB4ADE1F4AC3D700ED2731 /* CollectionViewCellPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCellPosition.m; sourceTree = "<group>"; };
 		1FDB4AE01F4AE13900ED2731 /* zw_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zw_ico.png; sourceTree = "<group>"; };
+		1FDC1F551F7F851D001B8CB7 /* VCSubmited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSubmited.h; sourceTree = "<group>"; };
+		1FDC1F561F7F851D001B8CB7 /* VCSubmited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSubmited.m; sourceTree = "<group>"; };
+		1FDC1F581F7F8681001B8CB7 /* CellSummaryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSummaryList.h; sourceTree = "<group>"; };
+		1FDC1F591F7F8681001B8CB7 /* CellSummaryList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSummaryList.m; sourceTree = "<group>"; };
 		1FDCBAA31E7A1E2A002C80FB /* seach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seach.png; sourceTree = "<group>"; };
 		1FDCBAA51E7A3247002C80FB /* tjtx_mt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tjtx_mt.png; sourceTree = "<group>"; };
 		1FDCBAAA1E7A3E16002C80FB /* GroupdetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupdetailController.h; sourceTree = "<group>"; };
@@ -1336,6 +1407,13 @@
 		1FDD3C721E7398CE00743779 /* FillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FillTableViewCell.m; path = ../FillTableViewCell.m; sourceTree = "<group>"; };
 		1FDD3C751E73F52500743779 /* XFDaterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFDaterView.h; sourceTree = "<group>"; };
 		1FDD3C761E73F52500743779 /* XFDaterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFDaterView.m; sourceTree = "<group>"; };
+		1FDD57021F7B43930082C519 /* bc_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bc_ico01.png; sourceTree = "<group>"; };
+		1FDD57031F7B43930082C519 /* sc_ico2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sc_ico2.png; sourceTree = "<group>"; };
+		1FDD57061F7B45BE0082C519 /* submit_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = submit_ico01.png; sourceTree = "<group>"; };
+		1FDD57081F7B57290082C519 /* VCArtWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtWeekDrafts.h; sourceTree = "<group>"; };
+		1FDD57091F7B57290082C519 /* VCArtWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtWeekDrafts.m; sourceTree = "<group>"; };
+		1FDD570E1F7BA6450082C519 /* VCArtWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtWeekSummaryDrafts.h; sourceTree = "<group>"; };
+		1FDD570F1F7BA6450082C519 /* VCArtWeekSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtWeekSummaryDrafts.m; sourceTree = "<group>"; };
 		1FDD93001F427B5F002E834B /* ViewControllerChoosePosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerChoosePosition.h; sourceTree = "<group>"; };
 		1FDD93011F427B5F002E834B /* ViewControllerChoosePosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerChoosePosition.m; sourceTree = "<group>"; };
 		1FDD93031F4293CE002E834B /* ViewControllerShopTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerShopTable.h; sourceTree = "<group>"; };
@@ -1453,6 +1531,13 @@
 		1FF7FB331ECC501900966C58 /* DetaotherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetaotherController.m; sourceTree = "<group>"; };
 		1FF9F0CE1F5A9AB80062F3EC /* VCBusinessWeekTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBusinessWeekTable.h; sourceTree = "<group>"; };
 		1FF9F0CF1F5A9AB80062F3EC /* VCBusinessWeekTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBusinessWeekTable.m; sourceTree = "<group>"; };
+		1FFF59F51F870D9F00FD8ED9 /* pz_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pz_ico01.png; sourceTree = "<group>"; };
+		1FFF59F71F870DFB00FD8ED9 /* VCNewPostil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCNewPostil.h; sourceTree = "<group>"; };
+		1FFF59F81F870DFB00FD8ED9 /* VCNewPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCNewPostil.m; sourceTree = "<group>"; };
+		1FFF59FE1F871AA400FD8ED9 /* VCUnPassed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCUnPassed.h; sourceTree = "<group>"; };
+		1FFF59FF1F871AA400FD8ED9 /* VCUnPassed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCUnPassed.m; sourceTree = "<group>"; };
+		1FFF5A011F877F0F00FD8ED9 /* VCSearchSubmited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSearchSubmited.h; sourceTree = "<group>"; };
+		1FFF5A021F877F0F00FD8ED9 /* VCSearchSubmited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSearchSubmited.m; sourceTree = "<group>"; };
 		6200D68E1E5BDA760014F9F3 /* PersonneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonneTableViewCell.h; sourceTree = "<group>"; };
 		6200D68F1E5BDA760014F9F3 /* PersonneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonneTableViewCell.m; sourceTree = "<group>"; };
 		6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonneTableViewCell.xib; sourceTree = "<group>"; };
@@ -2973,6 +3058,26 @@
 				1FCEB94C1F7A2CBE00D8F175 /* VCInsideShopDrafts.m */,
 				1FCEB94E1F7A2CDC00D8F175 /* VCBuessShopDrafts.h */,
 				1FCEB94F1F7A2CDC00D8F175 /* VCBuessShopDrafts.m */,
+				1FDD57081F7B57290082C519 /* VCArtWeekDrafts.h */,
+				1FDD57091F7B57290082C519 /* VCArtWeekDrafts.m */,
+				1FDD570E1F7BA6450082C519 /* VCArtWeekSummaryDrafts.h */,
+				1FDD570F1F7BA6450082C519 /* VCArtWeekSummaryDrafts.m */,
+				1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */,
+				1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */,
+				1FD95F721F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.h */,
+				1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */,
+				1FD95FA81F7CDE1D00CB09AD /* VCBuessWeekDrafts.h */,
+				1FD95FA91F7CDE1D00CB09AD /* VCBuessWeekDrafts.m */,
+				1FD95FAB1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.h */,
+				1FD95FAC1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m */,
+				1FD95F751F7CCDB200CB09AD /* VCArtMonthDrafts.h */,
+				1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */,
+				1FD95F781F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.h */,
+				1FD95F791F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.m */,
+				1FD95F7B1F7CD09800CB09AD /* VCInsideMonthDrafts.h */,
+				1FD95F7C1F7CD09800CB09AD /* VCInsideMonthDrafts.m */,
+				1FD95F7E1F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.h */,
+				1FD95F7F1F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m */,
 				1FCEB9481F7A049800D8F175 /* CellDrafts.h */,
 				1FCEB9491F7A049800D8F175 /* CellDrafts.m */,
 			);
@@ -2982,6 +3087,9 @@
 		1FD184161F67C87200FCB30F /* MyTable */ = {
 			isa = PBXGroup;
 			children = (
+				1FD95F811F7CD71800CB09AD /* NewPostil */,
+				1FD95F821F7CD71800CB09AD /* Submited */,
+				1FD95F831F7CD71800CB09AD /* UnPassed */,
 				1FCEB9411F7A037600D8F175 /* Drafts */,
 				1FE76A041F78F137003E4FA9 /* MonthTable */,
 				1FEDEC091F726BDB00133185 /* WeekTable */,
@@ -3039,6 +3147,53 @@
 				1FD4EF611F6CACC5002CD285 /* VCAddPlan.m */,
 			);
 			path = DayPlan;
+			sourceTree = "<group>";
+		};
+		1FD95F811F7CD71800CB09AD /* NewPostil */ = {
+			isa = PBXGroup;
+			children = (
+				1FFF59F71F870DFB00FD8ED9 /* VCNewPostil.h */,
+				1FFF59F81F870DFB00FD8ED9 /* VCNewPostil.m */,
+				1FD95F8D1F7CD93100CB09AD /* VCArtShopNewPostil.h */,
+				1FD95F8E1F7CD93100CB09AD /* VCArtShopNewPostil.m */,
+				1FD95F901F7CD9D400CB09AD /* VCInsideShopNewPostil.h */,
+				1FD95F911F7CD9D400CB09AD /* VCInsideShopNewPostil.m */,
+				1FD95F931F7CDA5600CB09AD /* VCBuessShopNewPostil.h */,
+				1FD95F941F7CDA5600CB09AD /* VCBuessShopNewPostil.m */,
+			);
+			path = NewPostil;
+			sourceTree = "<group>";
+		};
+		1FD95F821F7CD71800CB09AD /* Submited */ = {
+			isa = PBXGroup;
+			children = (
+				1FDC1F551F7F851D001B8CB7 /* VCSubmited.h */,
+				1FDC1F561F7F851D001B8CB7 /* VCSubmited.m */,
+				1FFF5A011F877F0F00FD8ED9 /* VCSearchSubmited.h */,
+				1FFF5A021F877F0F00FD8ED9 /* VCSearchSubmited.m */,
+				1FD95F961F7CDB5000CB09AD /* VCArtShopSubmited.h */,
+				1FD95F971F7CDB5000CB09AD /* VCArtShopSubmited.m */,
+				1FD95F981F7CDB5000CB09AD /* VCBuessShopSubmited.h */,
+				1FD95F991F7CDB5000CB09AD /* VCBuessShopSubmited.m */,
+				1FD95F9A1F7CDB5000CB09AD /* VCInsideShopSubmited.h */,
+				1FD95F9B1F7CDB5000CB09AD /* VCInsideShopSubmited.m */,
+			);
+			path = Submited;
+			sourceTree = "<group>";
+		};
+		1FD95F831F7CD71800CB09AD /* UnPassed */ = {
+			isa = PBXGroup;
+			children = (
+				1FFF59FE1F871AA400FD8ED9 /* VCUnPassed.h */,
+				1FFF59FF1F871AA400FD8ED9 /* VCUnPassed.m */,
+				1FD95F9F1F7CDC2000CB09AD /* VCArtShopUnPassed.h */,
+				1FD95FA01F7CDC2000CB09AD /* VCArtShopUnPassed.m */,
+				1FD95FA11F7CDC2000CB09AD /* VCBuessShopUnPassed.h */,
+				1FD95FA21F7CDC2000CB09AD /* VCBuessShopUnPassed.m */,
+				1FD95FA31F7CDC2000CB09AD /* VCInsideShopUnPassed.h */,
+				1FD95FA41F7CDC2000CB09AD /* VCInsideShopUnPassed.m */,
+			);
+			path = UnPassed;
 			sourceTree = "<group>";
 		};
 		1FDCBC691E7A7D57002C80FB /* IM_sdk */ = {
@@ -3104,6 +3259,8 @@
 				1FDA16401F6F5BBC0054A322 /* CellEditInfo.m */,
 				1FDA16421F6F5FF60054A322 /* CellEditPlan.h */,
 				1FDA16431F6F5FF60054A322 /* CellEditPlan.m */,
+				1FDC1F581F7F8681001B8CB7 /* CellSummaryList.h */,
+				1FDC1F591F7F8681001B8CB7 /* CellSummaryList.m */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -3506,6 +3663,8 @@
 				1FD4EF641F6CAEBB002CD285 /* ViewDatePick.m */,
 				1FD532981F73444400ED05B2 /* MyTextField.h */,
 				1FD532991F73444400ED05B2 /* MyTextField.m */,
+				1FCEB9511F7A4E6C00D8F175 /* ViewChooseEdit.h */,
+				1FCEB9521F7A4E6C00D8F175 /* ViewChooseEdit.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3947,11 +4106,16 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1FFF59F51F870D9F00FD8ED9 /* pz_ico01.png */,
+				1FDD57061F7B45BE0082C519 /* submit_ico01.png */,
+				1FCEB9541F7A52B800D8F175 /* sj_ico.png */,
 				626DD6761F58048D008F820A /* qdjl_ico.png */,
 				622B2C321F5661C9009929D6 /* qd_ico_cs.png */,
 				622B2C331F5661C9009929D6 /* qd_ico.png */,
 				1FDA163D1F6F58AC0054A322 /* save_ico02.png */,
 				1F0DD2B81F4FA89F00465325 /* up_ico02.png */,
+				1FDD57021F7B43930082C519 /* bc_ico01.png */,
+				1FDD57031F7B43930082C519 /* sc_ico2.png */,
 				1FDB4AE01F4AE13900ED2731 /* zw_ico.png */,
 				1FDB4AD51F4A916E00ED2731 /* sc_icof.png */,
 				62AFB9291F0A1AA2003FCE35 /* sc_ico02.png */,
@@ -4320,7 +4484,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -4382,11 +4546,13 @@
 				1F5745691E56F45A00E4A47C /* tx23.png in Resources */,
 				62656D561E52B5700085A2BD /* yonghuming.png in Resources */,
 				6218D0601E4E95FB00299989 /* LaunchScreen.storyboard in Resources */,
+				1FDD57041F7B43930082C519 /* bc_ico01.png in Resources */,
 				62656D521E52B5700085A2BD /* denglutioao.png in Resources */,
 				1FDA163E1F6F58AC0054A322 /* save_ico02.png in Resources */,
 				1F0B2F581EC016E200E3E891 /* scbut.png in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				1F3B3DE71E8DF93C00E75027 /* icon_035.gif in Resources */,
+				1FDD57071F7B45BE0082C519 /* submit_ico01.png in Resources */,
 				1F3B3DE41E8DF93C00E75027 /* icon_029_cover.png in Resources */,
 				624E71051EC404980026C5E9 /* 职位结构9.jpg in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
@@ -4503,6 +4669,7 @@
 				62656D481E52B5700085A2BD /* weixuanzhong.png in Resources */,
 				1F3B3DD31E8DF93C00E75027 /* icon_013.gif in Resources */,
 				1F35FDC51EB825AA007DC22F /* tj_ico.png in Resources */,
+				1FFF59F61F870D9F00FD8ED9 /* pz_ico01.png in Resources */,
 				62656D611E52B5700085A2BD /* huihome.png in Resources */,
 				6269A5621E6E51E90083160E /* SubmittedTableViewCell.xib in Resources */,
 				1FDB4AD61F4A916E00ED2731 /* sc_icof.png in Resources */,
@@ -4510,6 +4677,7 @@
 				6218D05B1E4E95FB00299989 /* Main.storyboard in Resources */,
 				626DD6771F58048D008F820A /* qdjl_ico.png in Resources */,
 				62035F4C1E9F133200666399 /* bg_mt02.png in Resources */,
+				1FDD57051F7B43930082C519 /* sc_ico2.png in Resources */,
 				1F4DBB4D1E582D7000733CF7 /* mobaijilu.png in Resources */,
 				62AFB9241F0A1A3C003FCE35 /* tj_ico02.png in Resources */,
 				62656D601E52B5700085A2BD /* yuangongguanli.png in Resources */,
@@ -4521,6 +4689,7 @@
 				6269A56E1E6E9A810083160E /* head_icon.png in Resources */,
 				1F5208221E557A4E001DE4C2 /* ss_ico01.png in Resources */,
 				1F3B3DDA1E8DF93C00E75027 /* icon_020_cover.png in Resources */,
+				1FCEB9551F7A52B800D8F175 /* sj_ico.png in Resources */,
 				1F6119F31E66BF2D0044641E /* Arrow.png in Resources */,
 				1F6E31341E5425F6006069ED /* XLsn0wLoop.png in Resources */,
 				1F3B3DDE1E8DF93C00E75027 /* icon_022_cover.png in Resources */,
@@ -4549,6 +4718,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F6211E91E8CFFB000F50851 /* EaseEmojiEmoticons.m in Sources */,
+				1FD95F9E1F7CDB5000CB09AD /* VCInsideShopSubmited.m in Sources */,
 				1FD62BD61F43FA08008871A7 /* CellTabelDetail.m in Sources */,
 				1F6211EE1E8CFFB000F50851 /* EaseLocationViewController.m in Sources */,
 				1F6211AD1E8CFFAF00F50851 /* MJRefreshGifHeader.m in Sources */,
@@ -4567,10 +4737,13 @@
 				1FD62BD31F43D673008871A7 /* ViewControllerPersonTableDetail.m in Sources */,
 				1FE988EE1F4ED0B9001172C1 /* VCInsideMonthTable.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
+				1FD95F7D1F7CD09800CB09AD /* VCInsideMonthDrafts.m in Sources */,
 				1FB0BF771E6FD7E0001CCFAA /* AddBrandViewController.m in Sources */,
 				1F2973961E6E3CD1003F2FD0 /* pinyin.c in Sources */,
 				1F6211991E8CFFAF00F50851 /* EMCDDeviceManager+Remind.m in Sources */,
 				1F803FEA1E52F7CA005F53CE /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				1FD95FAA1F7CDE1D00CB09AD /* VCBuessWeekDrafts.m in Sources */,
+				1FD95F801F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m in Sources */,
 				1F6211C81E8CFFAF00F50851 /* UIImage+EMGIF.m in Sources */,
 				1F6211A91E8CFFAF00F50851 /* MJRefreshAutoStateFooter.m in Sources */,
 				1FCEB9441F7A03CA00D8F175 /* VCDrafts.m in Sources */,
@@ -4585,11 +4758,13 @@
 				1F6E313F1E5439C2006069ED /* YHJBtnView.m in Sources */,
 				1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */,
 				1FD075E51F760BCE003E01EB /* VCBuessFillWeekTable.m in Sources */,
+				1FD95FAD1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m in Sources */,
 				1F6211ED1E8CFFB000F50851 /* EaseConversationListViewController.m in Sources */,
 				1FEEC58A1ED3D47C006C3523 /* JoblistController.m in Sources */,
 				1FDA16411F6F5BBC0054A322 /* CellEditInfo.m in Sources */,
 				1F0952611F3AA34500BCD27E /* CellGroup.m in Sources */,
 				1F6AB7F11E8B979F006CB015 /* WFPhotoAlbum.m in Sources */,
+				1FFF5A031F877F0F00FD8ED9 /* VCSearchSubmited.m in Sources */,
 				62656CE91E52AB490085A2BD /* IntercalateController.m in Sources */,
 				1F6211EB1E8CFFB000F50851 /* EaseEmotionManager.m in Sources */,
 				1F6211D91E8CFFB000F50851 /* PSTGridLayoutRow.m in Sources */,
@@ -4613,13 +4788,16 @@
 				1F6AB7E31E8B978C006CB015 /* UIButton+BBTButton.m in Sources */,
 				1F6212041E8CFFB000F50851 /* EaseFaceView.m in Sources */,
 				1F6211FC1E8CFFB000F50851 /* EaseBubbleView+Text.m in Sources */,
+				1FCEB9531F7A4E6C00D8F175 /* ViewChooseEdit.m in Sources */,
 				1F6211D71E8CFFB000F50851 /* PSTGridLayoutInfo.m in Sources */,
 				1F0952641F3AAEAE00BCD27E /* ShareModel.m in Sources */,
 				1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */,
+				1FDD570A1F7B57290082C519 /* VCArtWeekDrafts.m in Sources */,
 				1F6211B41E8CFFAF00F50851 /* UIView+MJExtension.m in Sources */,
 				F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */,
 				1FE4FE1E1F69085C0045C8D6 /* CellDetail.m in Sources */,
 				1F625BD81E7BB41100AFBAD1 /* ChatViewController.m in Sources */,
+				1FDC1F571F7F851D001B8CB7 /* VCSubmited.m in Sources */,
 				62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */,
 				1F6211951E8CFFAF00F50851 /* EMAudioRecorderUtil.m in Sources */,
 				1F6211EC1E8CFFB000F50851 /* FixFopen.c in Sources */,
@@ -4666,6 +4844,7 @@
 				1F6833BF1E72A08700F74D50 /* busableController.m in Sources */,
 				625B8FFE1F67BCF700E34D8A /* SmallStoreViewController.m in Sources */,
 				1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */,
+				1FD95F8F1F7CD93100CB09AD /* VCArtShopNewPostil.m in Sources */,
 				1FF3F3A91F60D6C60014D89E /* CellSummary.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
 				1FF3F3BB1F6136B40014D89E /* VCBusinessWeekSummary.m in Sources */,
@@ -4675,6 +4854,7 @@
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				1FE4FE211F691DF90045C8D6 /* VCMineTable.m in Sources */,
 				1F6211E11E8CFFB000F50851 /* NSDateFormatter+Category.m in Sources */,
+				1FDD57101F7BA6450082C519 /* VCArtWeekSummaryDrafts.m in Sources */,
 				6218D0851E4E97EA00299989 /* UserGuideViewController.m in Sources */,
 				1F820FEE1E86028F00E11F17 /* AppDelegate+EaseMob.m in Sources */,
 				1F6A05171E9E1BF900F505D5 /* AddbranController.m in Sources */,
@@ -4690,6 +4870,7 @@
 				1F6211AC1E8CFFAF00F50851 /* MJRefreshBackStateFooter.m in Sources */,
 				1F4FD9DF1EC1A187005AB739 /* PJSearchBar.m in Sources */,
 				1F6211E21E8CFFB000F50851 /* NSString+Valid.m in Sources */,
+				1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */,
 				1F803FE51E52F7CA005F53CE /* AFURLResponseSerialization.m in Sources */,
 				62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */,
 				1F6119F41E66BF2D0044641E /* YUFoldingSectionHeader.m in Sources */,
@@ -4716,8 +4897,10 @@
 				6200D6911E5BDA760014F9F3 /* PersonneTableViewCell.m in Sources */,
 				1FE988E21F4EC623001172C1 /* VCWeekTable.m in Sources */,
 				1F6A05141E9E160100F505D5 /* BranTableViewCell.m in Sources */,
+				1FD95F7A1F7CCE5500CB09AD /* VCArtMonthSummaryDrafts.m in Sources */,
 				62EBA2561E56CB8600F657DB /* VersionViewController.m in Sources */,
 				1F0102091E5FC09600802571 /* LVFmdbTool.m in Sources */,
+				1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */,
 				1F6211941E8CFFAF00F50851 /* EMAudioPlayerUtil.m in Sources */,
 				1F6211C71E8CFFAF00F50851 /* UIButton+EMWebCache.m in Sources */,
 				1F6211961E8CFFAF00F50851 /* EMCDDeviceManager+Media.m in Sources */,
@@ -4737,8 +4920,10 @@
 				1F6211EA1E8CFFB000F50851 /* EaseEmotionEscape.m in Sources */,
 				62656C571E529BC10085A2BD /* IQTextView.m in Sources */,
 				1FE4FE181F68BC070045C8D6 /* CellMyTable.m in Sources */,
+				1FD95F9D1F7CDB5000CB09AD /* VCBuessShopSubmited.m in Sources */,
 				62656C5B1E529BC10085A2BD /* IQToolbar.m in Sources */,
 				62656B941E5295D70085A2BD /* MASViewConstraint.m in Sources */,
+				1FD95FA61F7CDC2000CB09AD /* VCBuessShopUnPassed.m in Sources */,
 				62942BFA1E6948F3003F3A84 /* SelectAlert.m in Sources */,
 				6269A55D1E6E511D0083160E /* SubmittedViewController.m in Sources */,
 				1F6211D41E8CFFB000F50851 /* PSTCollectionViewItemKey.m in Sources */,
@@ -4771,6 +4956,7 @@
 				6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */,
 				1FEDEC081F72584A00133185 /* VCBussinessShopTable.m in Sources */,
 				1F4A98EE1E640103003492DF /* GBAlertView.m in Sources */,
+				1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */,
 				1F6211D81E8CFFB000F50851 /* PSTGridLayoutItem.m in Sources */,
 				1F62120B1E8D0A8200F50851 /* EaseMessageViewController.m in Sources */,
 				62656C531E529BC10085A2BD /* IQUIViewController+Additions.m in Sources */,
@@ -4780,6 +4966,7 @@
 				1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */,
 				1FF7453F1E9CC07900BE2F08 /* UserCacheManager.m in Sources */,
 				625355771E67AF8F0041F123 /* CityChoose.m in Sources */,
+				1FFF5A001F871AA400FD8ED9 /* VCUnPassed.m in Sources */,
 				1FE4FE1B1F68CD3F0045C8D6 /* VCTableDetail.m in Sources */,
 				1F6AB7F31E8B979F006CB015 /* WFCacheModel.m in Sources */,
 				1F803FE31E52F7CA005F53CE /* AFSecurityPolicy.m in Sources */,
@@ -4853,6 +5040,7 @@
 				1F6212021E8CFFB000F50851 /* EaseImageView.m in Sources */,
 				1F806EA61E7F82CF00BF57EE /* RobotManager.m in Sources */,
 				620D3A171ED3CA5900D804A7 /* CreaViewController.m in Sources */,
+				1FD95F951F7CDA5600CB09AD /* VCBuessShopNewPostil.m in Sources */,
 				626D96D51E5FCEA2002208D6 /* ModifyViewController.m in Sources */,
 				1F6211AB1E8CFFAF00F50851 /* MJRefreshBackNormalFooter.m in Sources */,
 				F741B3051E76DBB9002A1D55 /* CLZoomPickerView.m in Sources */,
@@ -4881,6 +5069,7 @@
 				1F33F1251E617820000733F8 /* NSDictionary+DeleteNull.m in Sources */,
 				1FF14A321EB2DC4000DE049A /* VTingPromotView.m in Sources */,
 				1F76A6EE1E690F840063B3D7 /* YLDropDownMenu.m in Sources */,
+				1FD95FA71F7CDC2000CB09AD /* VCInsideShopUnPassed.m in Sources */,
 				626480841E9DD73C0090EECB /* ReportPermissionsVC.m in Sources */,
 				1FD975301F70AF3B00D94B78 /* VCArtShopTable.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
@@ -4892,6 +5081,7 @@
 				1F6211B71E8CFFAF00F50851 /* MWGridViewController.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
 				1F6211C21E8CFFAF00F50851 /* EMSDWebImageDownloaderOperation.m in Sources */,
+				1FD95FA51F7CDC2000CB09AD /* VCArtShopUnPassed.m in Sources */,
 				1FEDEC021F723CFF00133185 /* ViewChooseScore.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
@@ -4927,6 +5117,7 @@
 				1F803FE21E52F7CA005F53CE /* AFNetworkReachabilityManager.m in Sources */,
 				1F6211B61E8CFFAF00F50851 /* MWGridCell.m in Sources */,
 				1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */,
+				1FFF59F91F870DFB00FD8ED9 /* VCNewPostil.m in Sources */,
 				1F6211FF1E8CFFB000F50851 /* EaseBubbleView.m in Sources */,
 				1FEEC5871ED3CC42006C3523 /* secdlistController.m in Sources */,
 				1F6211C51E8CFFAF00F50851 /* MKAnnotationView+EMWebCache.m in Sources */,
@@ -4956,10 +5147,12 @@
 				1F6211F01E8CFFB000F50851 /* EaseRefreshTableViewController.m in Sources */,
 				620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */,
 				1F4FD9DC1EC1A177005AB739 /* EmistController.m in Sources */,
+				1FD95F9C1F7CDB5000CB09AD /* VCArtShopSubmited.m in Sources */,
 				1F6211971E8CFFAF00F50851 /* EMCDDeviceManager+Microphone.m in Sources */,
 				62656C521E529BC10085A2BD /* IQUIView+Hierarchy.m in Sources */,
 				1F6211A61E8CFFAF00F50851 /* MJRefreshHeader.m in Sources */,
 				1F28E2401F67CC49006C0BD1 /* VCMyTable.m in Sources */,
+				1FD95F921F7CD9D400CB09AD /* VCInsideShopNewPostil.m in Sources */,
 				62656BE71E5296390085A2BD /* ELNAlerTool.m in Sources */,
 				1F6211CD1E8CFFB000F50851 /* UIView+EMWebCacheOperation.m in Sources */,
 				1FDD93021F427B5F002E834B /* ViewControllerChoosePosition.m in Sources */,
@@ -4970,6 +5163,7 @@
 				1F6211C01E8CFFAF00F50851 /* EMSDWebImageDecoder.m in Sources */,
 				1FD4EF621F6CACC5002CD285 /* VCAddPlan.m in Sources */,
 				1F29739A1E6E82F3003F2FD0 /* BrandSeachController.m in Sources */,
+				1FDC1F5A1F7F8681001B8CB7 /* CellSummaryList.m in Sources */,
 				624B741A1E8F3E6F000D94BD /* ProvinceModel.m in Sources */,
 				1F4587901E5D2DB6001BD9B3 /* MessagexqController.m in Sources */,
 				1F22AAE21EA0710A00CC56BB /* ChooseTableViewCell.m in Sources */,
@@ -5139,7 +5333,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5171,11 +5365,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
-
 				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
-
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5194,7 +5384,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5226,11 +5416,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
-
 				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
-
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

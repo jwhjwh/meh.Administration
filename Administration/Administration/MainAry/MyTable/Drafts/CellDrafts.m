@@ -55,11 +55,11 @@
 -(void)setDict:(NSDictionary *)dict
 {
     if (dict[@"dateLine"]) {
-        self.labelTime.text = [dict[@"dateLine"] substringToIndex:9];
+        self.labelTime.text = [dict[@"dateLine"] substringToIndex:10];
     }
     
     if (dict[@"dates"]) {
-        self.labelUpTime.text = [dict[@"dates"] substringWithRange:NSMakeRange(5, 16)];
+        self.labelUpTime.text = [dict[@"dates"] substringWithRange:NSMakeRange(5, 11)];
     }
     
 }

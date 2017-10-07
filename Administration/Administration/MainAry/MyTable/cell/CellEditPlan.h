@@ -11,4 +11,6 @@
 @interface CellEditPlan : UITableViewCell
 @property (nonatomic,weak)UILabel *LabelTitle;
 @property (nonatomic,weak)UIPlaceHolderTextView *textView;
+@property (nonatomic,weak)UIImageView *imagePositil;
+@property (nonatomic,weak)UILabel *labelNumber;
 @end

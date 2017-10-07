@@ -202,6 +202,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
         self.isSelect = YES;
         self.remark = @"5";
+        self.codeS = @"1";
         [self getData];
     }else
     {
@@ -211,6 +212,7 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"本周任务总结",@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
         self.isSelect = NO;
         self.remark = @"6";
+        self.codeS = @"2";
         [self getSummary];
     }
     
@@ -532,7 +534,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
-                     @"code":@"1",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }else
         {
@@ -544,10 +546,9 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2",
+                     @"code":self.codeS,
                      @"id":self.tableId};
         }
-        
         
         [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
             NSString *string = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];

@@ -171,6 +171,7 @@
             vc.remark = dict[@"remark"];
             vc.state = state;
             vc.num = self.num;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
                 vc.tableId = dict[@"id"];
@@ -191,6 +192,7 @@
             vc.tableId = dict[@"id"];
             vc.num = self.num;
             vc.state = state;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
                 vc.tableId = dict[@"id"];
@@ -212,6 +214,7 @@
             vc.tableId = dict[@"id"];
             vc.num = self.num;
             vc.state = state;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
                 vc.tableId = dict[@"id"];
@@ -235,6 +238,7 @@
             vc.tableId = dict[@"id"];
             vc.num = self.num;
             vc.state = state;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
                 vc.tableId = dict[@"id"];
@@ -255,6 +259,7 @@
             vc.tableId = dict[@"id"];
             vc.num = self.num;
             vc.state = state;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
                 vc.tableId = dict[@"id"];
