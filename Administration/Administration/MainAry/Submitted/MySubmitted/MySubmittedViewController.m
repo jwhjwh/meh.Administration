@@ -148,8 +148,9 @@
         make.bottom.equalTo (self.view.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.right.equalTo(self.view.mas_right).offset(0);
-        make.height.mas_equalTo(kHeight*160);
+        make.height.mas_equalTo(kHeight*140);
     }];
+    NSString* phoneModel = [UIDevice devicePlatForm];
     
     self.tableView = [[UITableView alloc]init];
     self.tableView.delegate = self;
@@ -157,10 +158,19 @@
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        self.tableView.scrollEnabled = NO;
+    }else{
+        self.tableView.scrollEnabled = YES;
+    }
     [self setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo (self.view.mas_top).offset(70);
+        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+            make.top.equalTo (self.view.mas_top).offset(90);
+        }else{
+            make.top.equalTo (self.view.mas_top).offset(70);
+        }
         make.left.equalTo (self.view.mas_left).offset(0);
         make.right.equalTo(self.view.mas_right).offset(0);
         make.bottom.equalTo(_submittedBtn.mas_top).offset(0);
@@ -238,7 +248,17 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-(50*4)-64-80)];
+     NSString* phoneModel = [UIDevice devicePlatForm];
+    
+    UIView *view = [[UIView alloc]init];
+    
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+    view.frame =CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-(50*4)-140-88);
+    
+    }else{
+        view.frame =CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-(50*4)-64-80);
+    }
+    
         _dateImage = [[UIImageView alloc]init];
         _dateImage.image = [UIImage imageNamed:@"ph_mt02"];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTap:)];
@@ -251,7 +271,12 @@
             make.top.equalTo (view.mas_top).offset(0);
             make.left.equalTo(view.mas_left).offset(15);
             make.right.equalTo(view.mas_right).offset(-15);
-            make.height.mas_equalTo(self.view.bounds.size.height-(50*4)-64-80);
+            if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+                make.height.mas_equalTo(self.view.bounds.size.height-(50*4)-140-88);
+            }else{
+               make.height.mas_equalTo(self.view.bounds.size.height-(50*4)-64-80);
+            }
+            
         }];
     
     [tableView addSubview:view];
@@ -286,7 +311,13 @@
 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return self.view.bounds.size.height-(50*4)-64-80;
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        return self.view.bounds.size.height-(50*4)-140-88;
+    }else{
+       return self.view.bounds.size.height-(50*4)-64-80;
+    }
+    
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

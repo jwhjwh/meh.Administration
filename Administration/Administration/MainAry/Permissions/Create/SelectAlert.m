@@ -11,6 +11,7 @@
 @interface SelectAlertCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *titleLabel;
+
 @property (nonatomic,strong) UIImageView *imagerView;
 
 
@@ -101,7 +102,7 @@
     if (!_alertView) {
         _alertView = [[UIView alloc] init];
         _alertView.backgroundColor = [UIColor whiteColor];
-        _alertView.layer.cornerRadius = 8;
+        //_alertView.layer.cornerRadius = 8;
         _alertView.layer.masksToBounds = YES;
     }
     return _alertView;
@@ -218,8 +219,14 @@
     }
     if (self.titleLabel.text ==nil) {
        self.selectTableView.frame = CGRectMake(0, 0, _alertView.frame.size.width, _alertView.frame.size.height);
+        _selectTableView.estimatedRowHeight=0;
+        _selectTableView.estimatedSectionFooterHeight=0;
+        _selectTableView.estimatedSectionHeaderHeight=0;
     }else{
-    self.selectTableView.frame = CGRectMake(0, buttonHeight, _alertView.frame.size.width, _alertView.frame.size.height-reduceHeight);
+        self.selectTableView.frame = CGRectMake(0, 40, _alertView.frame.size.width, _alertView.frame.size.height);
+        _selectTableView.estimatedRowHeight=0;
+        _selectTableView.estimatedSectionFooterHeight=0;
+        _selectTableView.estimatedSectionHeaderHeight=0;
     }
 }
 

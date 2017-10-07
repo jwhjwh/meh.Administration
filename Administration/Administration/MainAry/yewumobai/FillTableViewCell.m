@@ -25,7 +25,6 @@
     _xingLabel.font=[UIFont systemFontOfSize:14];
     [self addSubview:_xingLabel];
     [_mingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.mas_equalTo(self.mas_left).offset(10);
         make.centerY.mas_equalTo(self.mas_centerY);
         make.width.offset(220);
