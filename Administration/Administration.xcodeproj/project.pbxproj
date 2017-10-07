@@ -1346,9 +1346,9 @@
 		1FD62BD71F442CF8008871A7 /* ViewControllerPostil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerPostil.h; sourceTree = "<group>"; };
 		1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerPostil.m; sourceTree = "<group>"; };
 
+
 		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/cell/SelectCell.h; sourceTree = SOURCE_ROOT; };
 		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/cell/SelectCell.m; sourceTree = SOURCE_ROOT; };
-
 		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/chat/SelectCell.h; sourceTree = SOURCE_ROOT; };
 		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/chat/SelectCell.m; sourceTree = SOURCE_ROOT; };
 		1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekDrafts.h; sourceTree = "<group>"; };
@@ -1385,7 +1385,8 @@
 		1FD95FA91F7CDE1D00CB09AD /* VCBuessWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessWeekDrafts.m; sourceTree = "<group>"; };
 		1FD95FAB1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessWeekSummaryDrafts.h; sourceTree = "<group>"; };
 		1FD95FAC1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessWeekSummaryDrafts.m; sourceTree = "<group>"; };
-
+		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/cell/SelectCell.h; sourceTree = SOURCE_ROOT; };
+		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/cell/SelectCell.m; sourceTree = SOURCE_ROOT; };
 		1FD9752E1F70AF3B00D94B78 /* VCArtShopTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtShopTable.h; sourceTree = "<group>"; };
 		1FD9752F1F70AF3B00D94B78 /* VCArtShopTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtShopTable.m; sourceTree = "<group>"; };
 		1FD995901F1EFB00001C58CC /* CellPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellPosition.h; path = Administration/Contacts/cell/CellPosition.h; sourceTree = SOURCE_ROOT; };
@@ -4202,12 +4203,13 @@
 			isa = PBXGroup;
 			children = (
 
+
 				62F02F131F70AE0C00F3A0EF /* ssjl.png */,
 
 				1FFF59F51F870D9F00FD8ED9 /* pz_ico01.png */,
 				1FDD57061F7B45BE0082C519 /* submit_ico01.png */,
 				1FCEB9541F7A52B800D8F175 /* sj_ico.png */,
-
+				62F02F131F70AE0C00F3A0EF /* ssjl.png */,
 				626DD6761F58048D008F820A /* qdjl_ico.png */,
 				622B2C321F5661C9009929D6 /* qd_ico_cs.png */,
 				622B2C331F5661C9009929D6 /* qd_ico.png */,
@@ -4933,10 +4935,13 @@
 				1F6212041E8CFFB000F50851 /* EaseFaceView.m in Sources */,
 				1F6211FC1E8CFFB000F50851 /* EaseBubbleView+Text.m in Sources */,
 
+
 				62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */,
 
 				1FCEB9531F7A4E6C00D8F175 /* ViewChooseEdit.m in Sources */,
 
+
+				62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */,
 				1F6211D71E8CFFB000F50851 /* PSTGridLayoutInfo.m in Sources */,
 				1F0952641F3AAEAE00BCD27E /* ShareModel.m in Sources */,
 				1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */,
@@ -5525,10 +5530,13 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 
+
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 
 				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
 
+
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5580,9 +5588,13 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 
+
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 
 				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
+
+
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
