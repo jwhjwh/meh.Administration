@@ -42,7 +42,13 @@
     // Do any additional setup after loading the view.
     self.dataArray = [NSMutableArray array];
     self.pagenum = 1;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight	)];
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+       self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 88,kScreenWidth,kScreenHeight-88)];
+    }else{
+        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kScreenWidth,kScreenHeight)];
+    }
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -64,7 +70,7 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         //Call this Block When enter the refresh status automatically
         [weakSelf getNetworkData:NO];
-        [self.tableView reloadData];
+        //[self.tableView reloadData];
     }];
 
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -73,7 +79,7 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    
+
 }
 -(void)buttonLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -142,11 +148,17 @@
             
             if (self.dataArray.count>0) {
                  [ELNAlerTool showAlertMassgeWithController:self andMessage:@"这已经是全部的报岗了" andInterval:1.0];
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                
             }else{
                 [_tableView addEmptyViewWithImageName:@"" title:@"暂无报岗" Size:20.0];
                 _tableView.emptyView.hidden = NO;
             }
            
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"这已经是全部的报岗了" andInterval:1.0];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return;
         }
         
         [self endRefresh];

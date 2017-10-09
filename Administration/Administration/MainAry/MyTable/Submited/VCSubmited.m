@@ -187,12 +187,24 @@
         }
     }];
     
-    if (![dict[@"updateTime"] isKindOfClass:[NSNull class]]) {
-        NSString *string = [dict[@"updateTime"]substringWithRange:NSMakeRange(5, 11)];
-        cell.labelState.text = [NSString stringWithFormat:@"未通过%@",string];
-        cell.labelState.textColor = GetColor(240, 53, 68, 1);
+    NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+    
+    NSString *stringDate;
+    if (![dict[@"updateTime"] isKindOfClass:[NSNull class]])
+    {
+        stringDate = [dict[@"updateTime"]substringWithRange:NSMakeRange(5, 11)];
     }
     
+    if ([state isEqualToString:@"0"]) {
+        cell.labelState.text = @"待审核";
+    }else if([state isEqualToString:@"1"])
+    {
+        cell.labelState.text = [NSString stringWithFormat:@"已通过%@",stringDate];
+    }else
+    {
+        cell.labelState.text = [NSString stringWithFormat:@"驳回%@",stringDate];
+        cell.labelState.textColor = GetColor(240, 53, 68, 1);
+    }
     
     if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
         if (dict[@"dateLine"]) {

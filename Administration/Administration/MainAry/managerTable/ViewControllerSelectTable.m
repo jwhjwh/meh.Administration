@@ -318,7 +318,7 @@
                            @"DepartmentID":self.departmentID,
                            @"Num":self.num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"page":@"1",
+                           @"page":[NSString stringWithFormat:@"%ld",self._page],
                            @"StartTime":startDate,
                            @"EndTime":endDate,
                            @"flag":@"2"};

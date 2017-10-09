@@ -59,6 +59,7 @@
         make.top.mas_equalTo(labelUpTime.mas_bottom).offset(8);
         make.height.mas_equalTo(12);
     }];
+    self.labelState = labelState;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

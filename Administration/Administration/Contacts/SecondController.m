@@ -43,8 +43,14 @@
     [self addViewremind];
 }
 -(void)addViewremind{
+    NSString* phoneModel = [UIDevice devicePlatForm];
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        _sousuoBtn.frame=CGRectMake(10, 98, Scree_width-20, 40);
+    }else{
+        _sousuoBtn.frame=CGRectMake(10, 74, Scree_width-20, 40);
+    }
+    
     [_sousuoBtn setBackgroundImage:[UIImage imageNamed:@"ss_ico01"] forState:UIControlStateNormal];
     //防止图片变灰
     _sousuoBtn.adjustsImageWhenHighlighted = NO;

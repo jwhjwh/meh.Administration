@@ -124,8 +124,8 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int a = indexPath.row;
-    switch (a) {
+    
+    switch (indexPath.row) {
         case 0:{
             //账号管理
             ManagementViewController *MageVC = [[ManagementViewController alloc]init];

@@ -65,7 +65,7 @@
     [self.view addSubview:_textField];
     [_imageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(30);
-        make.top.mas_equalTo(self.view.mas_top).offset(80);
+        make.top.mas_equalTo(self.view.mas_top).offset(90);
         make.right.mas_equalTo(self.view.mas_right).offset(-30);
         make.height.offset(Scree_width-60);
     }];

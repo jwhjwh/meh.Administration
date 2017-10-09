@@ -37,8 +37,10 @@ static FMDatabase *_fmdb;
     [SQL appendString:@" ,isCurrent"];
     [SQL appendString:@" ,image TEXT"];
     [SQL appendString:@" )"];
+    
     [_fmdb executeUpdate:SQL];
     
+
 }
 
 

@@ -49,16 +49,11 @@
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             NSString *message = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"message"]];
-            NSString *notPass = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"notPass"]];
            
             if (![message isEqualToString:@"0"]) {
                 NSString *string = [NSString stringWithFormat:@"新批注（%@）",message];
                 [self.array replaceObjectAtIndex:3 withObject:string];
                 self.arrayData = [[responseObject valueForKey:@"lists"]mutableCopy];
-            }
-            if (![notPass isEqualToString:@"0"]) {
-                NSString *string = [NSString stringWithFormat:@"未通过（%@）",notPass];
-                [self.array replaceObjectAtIndex:4 withObject:string];
             }
             [self.tableView reloadData];
         }
@@ -179,7 +174,7 @@
 #pragma -mark custem
 -(void)setUI
 {
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(-1, 64, Scree_width+2, 30)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(-1, kTopHeight, Scree_width+2, 30)];
     label.layer.borderColor = [UIColor lightGrayColor].CGColor;
     label.layer.borderWidth = 1.0f;
     label.textColor = GetColor(59, 148, 243, 1);
@@ -190,11 +185,12 @@
     imageView.image = [UIImage imageNamed:@"zw_ico"];
     [label addSubview:imageView];
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 94, Scree_width, Scree_height)];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+30, Scree_width, Scree_height)];
     tableView.delegate =self;
     tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
+    self.tableView = tableView;
     
     self.array = [NSMutableArray arrayWithObjects:@"填写报表",@"草稿箱",@"已提交",@"新批注",@"未通过", nil];
 }

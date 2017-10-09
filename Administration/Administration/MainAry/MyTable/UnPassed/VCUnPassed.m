@@ -7,6 +7,19 @@
 //
 
 #import "VCUnPassed.h"
+#import "VCArtMonthUnPassed.h"
+#import "VCArtWeekUnPassed.h"
+#import "VCArtShopUnPassed.h"
+#import "VCArtWeekSummaryUnPassed.h"
+#import "VCArtMonthSummaryUnPassed.h"
+#import "VCBuessShopUnPassed.h"
+#import "VCBuessWeekUnPassed.h"
+#import "VCBuessWeekSummaryUnPassed.h"
+#import "VCInsideShopUnPassed.h"
+#import "VCInsideWeekUnPassed.h"
+#import "VCInsideWeekSummaryUnPassed.h"
+#import "VCInsideMonthUnPassed.h"
+#import "VCInsideMonthSummaryUnPassed.h"
 #import "CellSummaryList.h"
 @interface VCUnPassed ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -199,7 +212,122 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict = self.arrayData[indexPath.row];
+    NSString *remark = dict[@"remark"];
+    NSString *tableID = dict[@"id"];
+    NSString *roleID = [ShareModel shareModel].roleID;
+    NSString *sort = [ShareModel shareModel].sort;
+    NSString *code = [NSString stringWithFormat:@"%@",dict[@"code"]];
     
+    if ([sort isEqualToString:@"1"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            VCArtShopUnPassed  *vc = [[VCArtShopUnPassed alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+            //跳转业务界面
+            VCBuessShopUnPassed *vc = [[VCBuessShopUnPassed alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else
+        {
+            VCInsideShopUnPassed *vc = [[VCInsideShopUnPassed alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    if ([sort isEqualToString:@"2"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            if ([code isEqualToString:@"1"]) {
+                VCArtWeekUnPassed *vc = [[VCArtWeekUnPassed alloc]init];
+                vc.remark = remark;
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtWeekSummaryUnPassed *vc = [[VCArtWeekSummaryUnPassed alloc]init];
+                vc.isSelect = NO;
+                vc.remark = remark;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+            //跳转业务界面
+            if ([code isEqualToString:@"1"]) {
+                VCBuessWeekUnPassed *vc = [[VCBuessWeekUnPassed alloc]init];
+                vc.isSelect= YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCBuessWeekSummaryUnPassed *vc = [[VCBuessWeekSummaryUnPassed alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else
+        {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideWeekUnPassed *vc = [[VCInsideWeekUnPassed alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideWeekSummaryUnPassed *vc = [[VCInsideWeekSummaryUnPassed alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        
+    }
+    if ([sort isEqualToString:@"3"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            
+            if ([code isEqualToString:@"1"]) {
+                VCArtMonthUnPassed *vc = [[VCArtMonthUnPassed alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtMonthSummaryUnPassed *vc = [[VCArtMonthSummaryUnPassed alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else  {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideMonthUnPassed *vc = [[VCInsideMonthUnPassed alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideMonthSummaryUnPassed *vc = [[VCInsideMonthSummaryUnPassed alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }
+
 }
 
 #pragma -mark system

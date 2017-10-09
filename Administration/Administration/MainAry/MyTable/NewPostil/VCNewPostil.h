@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface VCNewPostil : BaseViewController
-@property (nonatomic,strong)NSArray *arrayData;
+@property (nonatomic,strong)NSMutableArray *arrayData;
 @end

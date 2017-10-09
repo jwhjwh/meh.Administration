@@ -10,6 +10,7 @@
 #import "RecotdModel.h"
 #import "RecordTableViewCell.h"
 #import "ModifyVisitViewController.h"
+#import "WorshipSearchViewController.h"
 @interface VisitRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
@@ -17,11 +18,16 @@
 }
 
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
-
+@property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 
 @end
 
 @implementation VisitRecordViewController
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [self Visitnewworking];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"陌拜记录";
@@ -33,17 +39,33 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _InterNameAry = [[NSMutableArray alloc]init];
+    
     [self VisitRecordUI];
-    [self Visitnewworking];
+    //[self Visitnewworking];
     
 }
 -(void)VisitRecordUI{
+    
+    _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
+    [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
+    //防止图片变灰
+    _sousuoBtn.adjustsImageWhenHighlighted = NO;
+    _sousuoBtn.layer.masksToBounds = YES;
+    _sousuoBtn.layer.cornerRadius = 8.0;
+    [_sousuoBtn addTarget:self action:@selector(Touchsearch)forControlEvents: UIControlEventTouchUpInside];
+    [self.view addSubview:_sousuoBtn];
+    [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo (self.view.mas_left).offset(10);
+        make.right.mas_equalTo(self.view.mas_right).offset(-10);
+        make.top.mas_equalTo(self.view.mas_top).offset(70);
+        make.height.mas_equalTo(40);
+    }];
     UIView *view1 = [[UIView alloc]init];
     view1.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:view1];
     [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(70);
+        make.top.mas_equalTo(_sousuoBtn.mas_bottom).offset(5);
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.height.mas_offset(1);
@@ -82,6 +104,12 @@
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
 
+}
+-(void)Touchsearch{
+    //SearchViewController
+    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
+    worseaVC.strId = self.strId;
+    [self.navigationController pushViewController:worseaVC animated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -125,6 +153,7 @@
     model = _InterNameAry[indexPath.row];
     ModifyVisitViewController *modify = [[ModifyVisitViewController alloc]init];
     modify.ModifyId = model.Id;
+    modify.strId = self.strId;
     [self.navigationController pushViewController:modify animated:YES];
     
 }
@@ -141,11 +170,12 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"]};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
        
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 NSArray *array=[responseObject valueForKey:@"recordInfo"];
+                _InterNameAry = [[NSMutableArray alloc]init];
                 for (NSDictionary *dic in array) {
                     RecotdModel *model=[[RecotdModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
@@ -197,4 +227,5 @@
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
 }
+
 @end
