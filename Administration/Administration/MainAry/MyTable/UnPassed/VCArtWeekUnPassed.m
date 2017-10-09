@@ -588,7 +588,13 @@
                 {
                     cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
                 }
-                
+            
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"ovas"]) {
+                        cell.imagePositil.hidden = YES;
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(4, string.length-4)];
+                    }
+                }
                 
                 break;
             case 1:
@@ -596,15 +602,23 @@
                     cell.textView.text = self.string2;
                 }else
                 {
-                    cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
+                    cell.textView.placeholder = @"本周重要事项备注";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"ovas"]) {
+                        cell.imagePositil.hidden = YES;
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(4, string.length-4)];
+                    }
+                }
+                
                 break;
             case 2:
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
                 }else
                 {
-                    cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
+                    cell.textView.placeholder = @"个人成长规划安排";
                 }
                 break;
             case 3:
