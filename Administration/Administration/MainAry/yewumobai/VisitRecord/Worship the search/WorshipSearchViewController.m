@@ -120,7 +120,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)worshipSearchUI{
-    _proviceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width/3, 30)];
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    
+    _proviceLabel = [[UILabel alloc]init];
     _proviceLabel.backgroundColor = [UIColor whiteColor];
     _proviceLabel.font = [UIFont systemFontOfSize:14];
     _proviceLabel.text = @"省";
@@ -128,7 +130,7 @@
     _proviceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_proviceLabel];
     
-    _cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/3, 64, self.view.frame.size.width/3, 30)];
+    _cityLabel = [[UILabel alloc]init];
      _cityLabel.backgroundColor = [UIColor whiteColor];
     _cityLabel.font = [UIFont systemFontOfSize:14];
     _cityLabel.text = @"市";
@@ -136,7 +138,7 @@
     _cityLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_cityLabel];
     
-    _areaLabel = [[UILabel alloc]initWithFrame:CGRectMake((self.view.frame.size.width/3)*2, 64, self.view.frame.size.width/3, 30)];
+    _areaLabel = [[UILabel alloc]init];
      _areaLabel.backgroundColor = [UIColor whiteColor];
     _areaLabel.text = @"区";
     _areaLabel.font = [UIFont systemFontOfSize:14];
@@ -144,10 +146,23 @@
     _areaLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_areaLabel];
     
-    YZPPickView *pickView = [[YZPPickView alloc] initWithFrame:CGRectMake(0, 94, [UIScreen mainScreen].bounds.size.width, 200)];
+    YZPPickView *pickView = [[YZPPickView alloc] init];
     pickView.delegate = self;
     pickView.hasDefaul = YES;
     [self.view addSubview:pickView];
+    
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        _proviceLabel.frame = CGRectMake(0, 88, self.view.frame.size.width/3, 30);
+        _cityLabel.frame = CGRectMake(self.view.frame.size.width/3, 88, self.view.frame.size.width/3, 30);
+        _areaLabel.frame = CGRectMake((self.view.frame.size.width/3)*2, 88, self.view.frame.size.width/3, 30);
+        pickView.frame = CGRectMake(0, 128, self.view.frame.size.width, 200);
+        
+    }else{
+        _proviceLabel.frame = CGRectMake(0, 64, self.view.frame.size.width/3, 30);
+        _cityLabel.frame = CGRectMake(self.view.frame.size.width/3, 64, self.view.frame.size.width/3, 30);
+        _areaLabel.frame = CGRectMake((self.view.frame.size.width/3)*2, 64, self.view.frame.size.width/3, 30);
+        pickView.frame = CGRectMake(0, 94, [UIScreen mainScreen].bounds.size.width, 200);
+    }
     
     UILabel *ssjlLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, pickView.bottom+10, [UIScreen mainScreen].bounds.size.width, 30)];
     ssjlLabel.font = [UIFont systemFontOfSize:14];

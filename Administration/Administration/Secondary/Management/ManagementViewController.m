@@ -119,10 +119,14 @@
         make.height.mas_equalTo(1);
     }];
     
-    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 145,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    tableview = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        tableview.frame = CGRectMake(0, 173, self.view.bounds.size.width,self.view.bounds.size.height);
+    }else{
+        tableview.frame =CGRectMake(0,145,self.view.bounds.size.width,self.view.bounds.size.height);
+    }
     tableview.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
     tableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    
     tableview.scrollEnabled =NO;
     tableview.dataSource=self;
     tableview.delegate =self;

@@ -63,6 +63,7 @@
 @property (nonatomic,retain)NSString *Berths;//床位
 @property (nonatomic,retain)NSString *CreatorId;//记录创建人id
 
+
 @end
 
 @implementation ModifyVisitViewController
@@ -127,6 +128,7 @@
     _planDur = [[NSString alloc]init];
     _Berths = [[NSString alloc]init];
     _CreatorId =[[NSString alloc]init];
+    _storepersonnel = [[NSString alloc]init];
 }
 
 
@@ -149,7 +151,7 @@
                 NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Dates substringWithRange:NSMakeRange(0, 10)]];
                 [_InterNameAry addObject:xxsj];//日期
                 _storedate = xxsj;
-                [_InterNameAry addObject:@"业务人员"];
+                [_InterNameAry addObject:model.UsersName];
                 [_InterNameAry addObject:[NSString stringWithFormat:@"%@%@%@",model.Province,model.City,model.County]];//省市县
                 [_InterNameAry addObject:model.StoreName]; //店名
                 [_InterNameAry addObject:model.Address];//门店地址
@@ -321,8 +323,8 @@
             
         }else{
             if(indexPath.row==1){
-                cell.xingLabel.text=[USER_DEFAULTS objectForKey:@"name"];
-                _storepersonnel=[USER_DEFAULTS objectForKey:@"name"];
+                cell.xingLabel.text=_InterNameAry[indexPath.row];
+                _storepersonnel=_InterNameAry[indexPath.row];
                 cell.userInteractionEnabled = Modify;
             }else{
                 cell.userInteractionEnabled = Modify;
@@ -787,7 +789,7 @@
     NSString *uStr =[NSString stringWithFormat:@"%@shop/InsertTargetVisit.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"RoleId":self.strId};
+    NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"RoleId":self.strId,@"UsersName":_storepersonnel};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *yishengji = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级,现在去填写目标客户表" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
@@ -832,7 +834,7 @@
     NSString *uStr =[NSString stringWithFormat:@"%@shop/InsertIntended.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dict = @{@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_brandBusin,@"StoreLevel":_clascation,@"RoleId":self.strId,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths};
+    NSDictionary *dict = @{@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_brandBusin,@"StoreLevel":_clascation,@"RoleId":self.strId,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"UsersName":_storepersonnel};
     NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"record":dict};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

@@ -493,6 +493,7 @@
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
 		620B9C711F79051600B24660 /* InterestedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 620B9C701F79051600B24660 /* InterestedModel.m */; };
+		620BEDED1F8B4D8300B73F04 /* SubmittedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6269A5601E6E51E90083160E /* SubmittedTableViewCell.xib */; };
 		620D3A171ED3CA5900D804A7 /* CreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620D3A161ED3CA5900D804A7 /* CreaViewController.m */; };
 		620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FC39B1ED035E500C4D8B3 /* ManageViewController.m */; };
 		6217BE681F7F2A730039CBCE /* InteredAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6217BE671F7F2A730039CBCE /* InteredAlertView.m */; };
@@ -1402,8 +1403,6 @@
 		1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerPostil.m; sourceTree = "<group>"; };
 		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/cell/SelectCell.h; sourceTree = SOURCE_ROOT; };
 		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/cell/SelectCell.m; sourceTree = SOURCE_ROOT; };
-		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/chat/SelectCell.h; sourceTree = SOURCE_ROOT; };
-		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/chat/SelectCell.m; sourceTree = SOURCE_ROOT; };
 		1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekDrafts.h; sourceTree = "<group>"; };
 		1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideWeekDrafts.m; sourceTree = "<group>"; };
 		1FD95F721F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekSummaryDrafts.h; sourceTree = "<group>"; };
@@ -1420,8 +1419,6 @@
 		1FD95FA91F7CDE1D00CB09AD /* VCBuessWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessWeekDrafts.m; sourceTree = "<group>"; };
 		1FD95FAB1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBuessWeekSummaryDrafts.h; sourceTree = "<group>"; };
 		1FD95FAC1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBuessWeekSummaryDrafts.m; sourceTree = "<group>"; };
-		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/cell/SelectCell.h; sourceTree = SOURCE_ROOT; };
-		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/cell/SelectCell.m; sourceTree = SOURCE_ROOT; };
 		1FD9752E1F70AF3B00D94B78 /* VCArtShopTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtShopTable.h; sourceTree = "<group>"; };
 		1FD9752F1F70AF3B00D94B78 /* VCArtShopTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtShopTable.m; sourceTree = "<group>"; };
 		1FD995901F1EFB00001C58CC /* CellPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellPosition.h; path = Administration/Contacts/cell/CellPosition.h; sourceTree = SOURCE_ROOT; };
@@ -4255,10 +4252,6 @@
 				1F71B8741F886BD600C3638F /* sj_ico.png */,
 				1F71B8761F886C2A00C3638F /* pz_ico01.png */,
 				62F02F131F70AE0C00F3A0EF /* ssjl.png */,
-				1FFF59F51F870D9F00FD8ED9 /* pz_ico01.png */,
-				1FDD57061F7B45BE0082C519 /* submit_ico01.png */,
-				1FCEB9541F7A52B800D8F175 /* sj_ico.png */,
-				62F02F131F70AE0C00F3A0EF /* ssjl.png */,
 				626DD6761F58048D008F820A /* qdjl_ico.png */,
 				622B2C321F5661C9009929D6 /* qd_ico_cs.png */,
 				622B2C331F5661C9009929D6 /* qd_ico.png */,
@@ -4673,7 +4666,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = T786R7PE4N;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -4885,6 +4878,7 @@
 				62F02F141F70AE0C00F3A0EF /* ssjl.png in Resources */,
 				1F6E31341E5425F6006069ED /* XLsn0wLoop.png in Resources */,
 				1F3B3DDE1E8DF93C00E75027 /* icon_022_cover.png in Resources */,
+				620BEDED1F8B4D8300B73F04 /* SubmittedTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4982,7 +4976,6 @@
 				1F71B88C1F887C2A00C3638F /* GroupMenberCell.m in Sources */,
 				1F6211FC1E8CFFB000F50851 /* EaseBubbleView+Text.m in Sources */,
 				62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */,
-				1FCEB9531F7A4E6C00D8F175 /* ViewChooseEdit.m in Sources */,
 				1F6211D71E8CFFB000F50851 /* PSTGridLayoutInfo.m in Sources */,
 				1F0952641F3AAEAE00BCD27E /* ShareModel.m in Sources */,
 				1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */,
@@ -5544,7 +5537,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5573,9 +5566,6 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -5595,7 +5585,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5624,9 +5614,6 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.ddd;
 				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -180,6 +180,7 @@
 {
     SubmittedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE" forIndexPath:indexPath];
     if (self.dataArray.count <=0) {
+
         return cell;
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
