@@ -60,11 +60,11 @@
                 self.string2 = self.dict[@"aim"];
                 self.string3 = self.dict[@"achievement"];
                 self.string4 = self.dict[@"shipment"];
-                self.string5 = [NSString stringWithFormat:@"%@",self.dict[@"evaluation"]];
+                self.string5 = self.dict[@"question"];
                 self.string6 = self.dict[@"solution"];
                 self.string7 = self.dict[@"apperception"];
                 self.string8 = self.dict[@"morgenPlan"];
-                self.string9 = self.dict[@"MorgenAim"];
+                self.string9 = self.dict[@"morgenAim"];
                 self.summary = self.dict[@"summery"];
                 [self.dict setValue:@"1" forKey:@"canEdit"];
                 

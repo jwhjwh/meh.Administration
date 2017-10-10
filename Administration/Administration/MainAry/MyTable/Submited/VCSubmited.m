@@ -9,6 +9,20 @@
 #import "VCSubmited.h"
 #import "VCSearchSubmited.h"
 #import "CellSummaryList.h"
+#import "VCArtShopSubmited.h"
+#import "VCArtWeekSubmited.h"
+#import "VCArtWeekSummarySubmited.h"
+#import "VCArtMonthSubmited.h"
+#import "VCArtMonthSummarySubmited.h"
+#import "VCInsideShopSubmited.h"
+#import "VCInsideWeekSubmited.h"
+#import "VCInsideWeekSummarySubmited.h"
+#import "VCInsideMonthSubmited.h"
+#import "VCInsideMonthSummarySubmited.h"
+#import "VCBuessShopSubmit.h"
+#import "VCBuessWeekSubmited.h"
+#import "VCBuessWeekSummarySubmited.h"
+
 @interface VCSubmited ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,assign)NSUInteger page;
@@ -113,6 +127,8 @@
     UITableView *tableView = [[UITableView alloc]init];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.estimatedRowHeight = 100;
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [tableView registerClass:[CellSummaryList class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:tableView];
@@ -247,57 +263,109 @@
     
     if ([sort isEqualToString:@"1"]) {
         if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
-            
+            VCArtShopSubmited  *vc = [[VCArtShopSubmited alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
         }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
             //跳转业务界面
-           
+            VCBuessShopSubmit *vc = [[VCBuessShopSubmit alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
         }else
         {
-            
+            VCInsideShopSubmited *vc = [[VCInsideShopSubmited alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
     if ([sort isEqualToString:@"2"]) {
         if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
-            
+            if ([code isEqualToString:@"1"]) {
+                VCArtWeekSubmited *vc = [[VCArtWeekSubmited alloc]init];
+                vc.remark = remark;
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
             }else
             {
-                            }
+                VCArtWeekSummarySubmited *vc = [[VCArtWeekSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.remark = remark;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
             
         }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
             //跳转业务界面
             if ([code isEqualToString:@"1"]) {
-                
+                VCBuessWeekSubmited *vc = [[VCBuessWeekSubmited alloc]init];
+                vc.isSelect= YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }else
             {
-                
+                VCBuessWeekSummarySubmited *vc = [[VCBuessWeekSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }
             
         }else
         {
             if ([code isEqualToString:@"1"]) {
-                
+                VCInsideWeekSubmited *vc = [[VCInsideWeekSubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }else
             {
-                
+                VCInsideWeekSummarySubmited *vc = [[VCInsideWeekSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
         
+    }
     if ([sort isEqualToString:@"3"]) {
         if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
             
             if ([code isEqualToString:@"1"]) {
-                
+                VCArtMonthSubmited *vc = [[VCArtMonthSubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }else
             {
-                
+                VCArtMonthSummarySubmited *vc = [[VCArtMonthSummarySubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }
             
         }else  {
             if ([code isEqualToString:@"1"]) {
-                
+                VCInsideMonthSubmited *vc = [[VCInsideMonthSubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }else
             {
-                
+                VCInsideMonthSummarySubmited *vc = [[VCInsideMonthSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }

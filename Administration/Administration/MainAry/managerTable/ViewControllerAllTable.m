@@ -81,14 +81,26 @@
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
-        
-        
             [arrayData removeAllObjects];
+        if ([stringCode isEqualToString:@"0000"]) {
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
                 [arrayData addObject:dict];
             }
             [tableView1 reloadData];
             return ;
+
+        }
+        if ([stringCode isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+        }
         
         
     } failure:^(NSError *error) {

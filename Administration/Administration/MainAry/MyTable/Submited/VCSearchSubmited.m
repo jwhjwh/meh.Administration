@@ -8,6 +8,21 @@
 
 #import "VCSearchSubmited.h"
 #import "CellSummaryList.h"
+
+#import "VCArtShopSubmited.h"
+#import "VCArtWeekSubmited.h"
+#import "VCArtWeekSummarySubmited.h"
+#import "VCArtMonthSubmited.h"
+#import "VCArtMonthSummarySubmited.h"
+#import "VCInsideShopSubmited.h"
+#import "VCInsideWeekSubmited.h"
+#import "VCInsideWeekSummarySubmited.h"
+#import "VCInsideMonthSubmited.h"
+#import "VCInsideMonthSummarySubmited.h"
+#import "VCBuessShopSubmit.h"
+#import "VCBuessWeekSubmited.h"
+#import "VCBuessWeekSummarySubmited.h"
+
 @interface VCSearchSubmited ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UIButton *buttonStart;
 @property (nonatomic,weak)UIButton *buttonEnd;
@@ -421,30 +436,118 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
-    NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]] ;
-    if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
-        
-        
-    }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
-    {
+    NSString *remark = dict[@"remark"];
+    NSString *tableID = dict[@"id"];
+    NSString *roleID = [ShareModel shareModel].roleID;
+    NSString *sort = [ShareModel shareModel].sort;
+    NSString *code = [NSString stringWithFormat:@"%@",dict[@"code"]];
+    
+    if ([sort isEqualToString:@"1"]) {
         if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
-            
-        }else if([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"])
+            VCArtShopSubmited  *vc = [[VCArtShopSubmited alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+            //跳转业务界面
+            VCBuessShopSubmit *vc = [[VCBuessShopSubmit alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else
         {
-            
+            VCInsideShopSubmited *vc = [[VCInsideShopSubmited alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
         }
-        else
-        {
-           
-        }
-    }else
-    {
-        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"])
-        {
+    }
+    if ([sort isEqualToString:@"2"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            if ([code isEqualToString:@"1"]) {
+                VCArtWeekSubmited *vc = [[VCArtWeekSubmited alloc]init];
+                vc.remark = remark;
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtWeekSummarySubmited *vc = [[VCArtWeekSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.remark = remark;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+            //跳转业务界面
+            if ([code isEqualToString:@"1"]) {
+                VCBuessWeekSubmited *vc = [[VCBuessWeekSubmited alloc]init];
+                vc.isSelect= YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCBuessWeekSummarySubmited *vc = [[VCBuessWeekSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
             
         }else
         {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideWeekSubmited *vc = [[VCInsideWeekSubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideWeekSummarySubmited *vc = [[VCInsideWeekSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        
+    }
+    if ([sort isEqualToString:@"3"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
             
+            if ([code isEqualToString:@"1"]) {
+                VCArtMonthSubmited *vc = [[VCArtMonthSubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtMonthSummarySubmited *vc = [[VCArtMonthSummarySubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else  {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideMonthSubmited *vc = [[VCInsideMonthSubmited alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideMonthSummarySubmited *vc = [[VCInsideMonthSummarySubmited alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
     }
 }

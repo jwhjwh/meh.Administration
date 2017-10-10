@@ -57,17 +57,18 @@
     }];
     self.labelNumber = labelNumber;
     
-    UIImageView *imagePostil = [[UIImageView alloc]init];
-    imagePostil.image = [UIImage imageNamed:@"pz_ico01"];
-    imagePostil.hidden = YES;
-    [self.contentView addSubview:imagePostil];
-    [imagePostil mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(labelNumber.mas_right).offset(-1);
+    UIButton *buttonPostil = [[UIButton alloc]init];
+    [buttonPostil setImage:[UIImage imageNamed:@"pz_ico01"] forState:UIControlStateNormal];
+    buttonPostil.userInteractionEnabled = NO;
+    buttonPostil.hidden = YES;
+    [self.contentView addSubview:buttonPostil];
+    [buttonPostil mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(labelNumber.mas_left).offset(-1);
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.height.mas_equalTo(20);
         make.width.mas_equalTo(20);
     }];
-    self.imagePositil = imagePostil;
+    self.buttonPostil = buttonPostil;
     
     
 }

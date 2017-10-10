@@ -45,15 +45,7 @@
                            @"PlanId":self.tableId};
     [ZXDNetworking GET:urlStr parameters:dcit success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
-        if (![[responseObject valueForKey:@"power"] isEqualToString:@""]) {
-            NSArray *permission = [[responseObject valueForKey:@"power"] componentsSeparatedByString:@","];
-            for (NSString *roleid in permission) {
-                if ([roleid isEqualToString:[USER_DEFAULTS valueForKey:@"roleId"]]) {
-                    self.havePermission = YES;
-                    break;
-                }
-            }
-        }
+        
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
             [self.tableView reloadData];
@@ -113,6 +105,17 @@
             }
             NSString *stringKey = [responseObject valueForKey:@"name"];
             self.arrayKey = [stringKey componentsSeparatedByString:@","];
+            
+            if (![[responseObject valueForKey:@"power"] isEqualToString:@""]) {
+                NSArray *permission = [[responseObject valueForKey:@"power"] componentsSeparatedByString:@","];
+                for (NSString *roleid in permission) {
+                    if ([roleid isEqualToString:[USER_DEFAULTS valueForKey:@"roleId"]]) {
+                        self.havePermission = YES;
+                        break;
+                    }
+                }
+            }
+            
             [self.tableView reloadData];
             return ;
         }
@@ -222,15 +225,17 @@
 -(void)editContent:(UIButton *)button
 {
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
+
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
     for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+        if (![self.dictInfo[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
+                vc.theKey = key;
+                break;
+            }
         }
+        
     }
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;

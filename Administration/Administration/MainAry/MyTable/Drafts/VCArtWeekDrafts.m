@@ -583,7 +583,7 @@
                     cell.textView.text = self.string2;
                 }else
                 {
-                    cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
+                    cell.textView.placeholder = @"本周重要事项备注";
                 }
                 break;
             case 2:
@@ -591,7 +591,7 @@
                     cell.textView.text = self.string3;
                 }else
                 {
-                    cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
+                    cell.textView.placeholder = @"个人成长规划安排";
                 }
                 break;
             case 3:
@@ -599,7 +599,7 @@
                     cell.textView.text = self.string4;
                 }else
                 {
-                    cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
+                    cell.textView.placeholder = @"其他事项";
                 }
                 break;
                 

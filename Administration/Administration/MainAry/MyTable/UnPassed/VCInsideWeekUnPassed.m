@@ -10,6 +10,9 @@
 #import "CellEditPlan.h"
 #import "ViewDatePick.h"
 #import "ViewChooseEdit.h"
+#import "VCInsideWeekSummaryUnPassed.h"
+#import "CellSummary.h"
+#import "VCPositil.h"
 @interface VCInsideWeekUnPassed ()<UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UITextViewDelegate,UIAlertViewDelegate,ViewChooseEditDelegate>
 {
     BOOL isBack;
@@ -41,6 +44,7 @@
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)UIBarButtonItem *rightItem;
+@property(nonatomic,strong) NSArray *arrayPostil;
 @end
 
 @implementation VCInsideWeekUnPassed
@@ -69,10 +73,17 @@
         }
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self setSummaryList];
+            }else
+            {
+                [self setSummaryUI];
+            }
+
             [self.tableView reloadData];
         }else
         {
-            
+            [self setSummaryUI];
         }
         
     } failure:^(NSError *error) {
@@ -109,6 +120,15 @@
             self.string7 = self.dict[@"sunday"];
             self.string8 = self.dict[@"important"];
             self.string9 = self.dict[@"growthPlans"];
+            
+            if ([[responseObject valueForKey:@"owner"] length]!=0) {
+                if (![[responseObject valueForKey:@"owner"] isEqualToString:@""]) {
+                    NSString *string = [responseObject valueForKey:@"owner"];
+                    self.arrayPostil = [string componentsSeparatedByString:@","];
+                }
+                
+            }
+            
             [self.tableView reloadData];
             return ;
         }
@@ -126,6 +146,7 @@
         }
 
         
+        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -134,7 +155,7 @@
 
 -(UIView *)chooseDate
 {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 108)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 108)];
     view.backgroundColor = GetColor(192, 192, 192, 1);
     //    [self.view addSubview:view];
     
@@ -369,6 +390,27 @@
     self.tableView = tableView;
 }
 
+-(void)setSummaryList
+{
+    self.viewSummary.hidden = YES;
+    UITableView *tableView = [[UITableView alloc]init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.estimatedRowHeight = 100;
+    [ZXDNetworking setExtraCellLineHidden:tableView];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
+    [self.view addSubview:tableView];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
+    }];
+    self.tableView = tableView;
+}
+
+
 -(void)setUI
 {
     UIButton *buttonPlan = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, Scree_width/2, 40)];
@@ -527,6 +569,26 @@
     } view:self.view MBPro:YES];
 }
 
+-(void)gotoPositil:(UIButton *)button
+{
+    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    
+    VCPositil *vc = [[VCPositil alloc]init];
+    for (NSString *key in [self.dict allKeys]) {
+        if (![self.dict[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+                vc.field = key;
+                break;
+            }
+        }
+        
+    }
+    
+    vc.remark = self.remark;
+    vc.reportID = self.dict[@"id"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
 
 -(void)showSave
 {
@@ -565,13 +627,11 @@
     }else if(alertView.tag==200)
     {
         if (buttonIndex==1) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }else
-    {
-        if (buttonIndex==1) {
             isBack = YES;
             [self submitData:@"3"];
+        }
+        if (buttonIndex==2) {
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -670,6 +730,18 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.arraySummary.count!=0&&!self.isSelect) {
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        if (cell==nil) {
+            cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+        }
+        NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.labelPostion.text = [ShareModel shareModel].postionName;
+        cell.dictInfo = dict;
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        return cell;
+    }else
+    {
     CellEditPlan *cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -680,6 +752,7 @@
     {
         cell.userInteractionEnabled = NO;
     }
+    [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.LabelTitle.text = self.arrayContent[indexPath.row];
     cell.textView.delegate = self;
@@ -690,45 +763,127 @@
                 if (self.string1.length!=0) {
                     cell.textView.text = self.string1;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"monday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"monday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
             case 1:
                 if (self.string2.length!=0) {
                     cell.textView.text = self.string2;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"tuesday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"tuesday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 2:
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"wednesday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"wednesday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 3:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"thursday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"thursday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 4:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"friday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"friday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 5:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"saturday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"saturday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 6:
                 if (self.string7.length!=0) {
                     cell.textView.text = self.string7;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"sunday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"sunday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 7:
                 if (self.string8.length!=0) {
                     cell.textView.text = self.string8;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"important"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"important"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 8:
                 if (self.string9.length!=0) {
                     cell.textView.text = self.string9;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"growthPlans"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"growthPlans"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
                 
@@ -740,7 +895,24 @@
         cell.textView.userInteractionEnabled = NO;
     }
     return cell;
+    }
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.isSelect) {
+        if (self.arraySummary.count!=0) {
+            //跳转页面
+            NSDictionary *dict = self.arraySummary[indexPath.row];
+            VCInsideWeekSummaryUnPassed *vc = [[VCInsideWeekSummaryUnPassed alloc]init];
+            vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];
+            vc.isSelect = NO;
+            vc.tableID =  dict[@"id"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
 #pragma -mark textView
 -(void)textViewDidChange:(UITextView *)textView
 {
@@ -811,6 +983,7 @@
     
     self.arraySummary = [NSArray array];
     self.dict = [NSMutableDictionary dictionary];
+    self.arrayPostil = [NSArray array];
     
     self.isSelect = YES;
     canEdit = NO;

@@ -11,6 +11,9 @@
 #import "ViewArtMonthSummary.h"
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
+#import "CellSummary.h"
+#import "VCArtMonthSummaryUnPassed.h"
+#import "VCPositil.h"
 @interface VCArtMonthUnPassed ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 {
     BOOL isBack;
@@ -36,6 +39,7 @@
 @property (nonatomic,strong)UIBarButtonItem *rightItem;
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)NSArray *arraySummary;
+@property (nonatomic,strong)NSArray *arrayPostil;
 @end
 
 @implementation VCArtMonthUnPassed
@@ -64,10 +68,17 @@
         }
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self setSummaryList];
+            }else
+            {
+                [self setSummaryUI];
+            }
+
             [self.tableView reloadData];
         }else
         {
-            
+            [self setSummaryUI];
         }
         
     } failure:^(NSError *error) {
@@ -102,6 +113,15 @@
             self.string3 = self.dict[@"requestForProposal"];
             self.string4 = self.dict[@"personalGrowth"];
             self.string5 = self.dict[@"others"];
+            
+            if ([[responseObject valueForKey:@"owner"] length]!=0) {
+                if (![[responseObject valueForKey:@"owner"] isEqualToString:@""]) {
+                    NSString *string = [responseObject valueForKey:@"owner"];
+                    self.arrayPostil = [string componentsSeparatedByString:@","];
+                }
+                
+            }
+            
             [self.tableView reloadData];
             return ;
         }
@@ -176,6 +196,24 @@
     }];
     self.viewSummary = viewSummary;
     
+    if (self.arraySummary.count!=0) {
+        UITableView *tableView = [[UITableView alloc]init];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.estimatedRowHeight = 100;
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
+        [viewSummary addSubview:tableView];
+        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view.mas_left);
+            make.right.mas_equalTo(self.view.mas_right);
+            make.top.mas_equalTo(self.view.mas_top).offset(105);
+            make.bottom.mas_equalTo(self.view.mas_bottom);
+        }];
+        self.tableView = tableView;
+    }else
+    {
     ViewArtMonthSummary *artMonthSummary = [[ViewArtMonthSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,420)];
     artMonthSummary.userInteractionEnabled = NO;
     [viewSummary addSubview:artMonthSummary];
@@ -189,6 +227,7 @@
     tableView.rowHeight = UITableViewAutomaticDimension;
     tableView.estimatedRowHeight = 100;
     [tableView registerClass:[CellEditPlan class] forCellReuseIdentifier:@"cell"];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
     [viewSummary addSubview:tableView];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
@@ -197,7 +236,29 @@
         make.bottom.mas_equalTo(self.view.mas_bottom);
     }];
     self.tableView = tableView;
+    }
 }
+
+-(void)setSummaryList
+{
+    self.viewSummary.hidden = YES;
+    UITableView *tableView = [[UITableView alloc]init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.estimatedRowHeight = 100;
+    [ZXDNetworking setExtraCellLineHidden:tableView];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
+    [self.view addSubview:tableView];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
+    }];
+    self.tableView = tableView;
+}
+
 
 -(void)setUI
 {
@@ -264,41 +325,32 @@
     [self.view addSubview:chooseEdit];
 }
 
-
+-(void)gotoPositil:(UIButton *)button
+{
+    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    
+    VCPositil *vc = [[VCPositil alloc]init];
+    for (NSString *key in [self.dict allKeys]) {
+        if (![self.dict[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+                vc.field = key;
+                break;
+            }
+        }
+        
+    }
+    
+    vc.remark = self.remark;
+    vc.reportID = self.dict[@"id"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
 
 -(void)getState
 {
     NSIndexPath *indexPath = [chooseEdit.tableView indexPathForSelectedRow];
     if (indexPath.row==0) {
         
-//        UIToolbar*tools=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 100, 39)];
-//        //解决出现的那条线
-//        tools.clipsToBounds = YES;
-//        //解决tools背景颜色的问题
-//        [tools setBackgroundImage:[UIImage new]forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-//        [tools setShadowImage:[UIImage new]forToolbarPosition:UIToolbarPositionAny];
-//        //添加两个button
-//        NSMutableArray*buttons=[[NSMutableArray alloc]initWithCapacity:2];
-//        
-//        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-//        [button1 setImage:[UIImage imageNamed:@"bc_ico01"] forState:UIControlStateNormal];
-//        [button1 addTarget:self action:@selector(showSave) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        
-//        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
-//        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-//        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        
-//        UIBarButtonItem *item1 = [[UIBarButtonItem alloc]initWithCustomView:button1];
-//        UIBarButtonItem *item2 = [[UIBarButtonItem alloc]initWithCustomView:button2];
-//        
-//        [buttons addObject:item1];
-//        [buttons addObject:item2];
-//        [tools setItems:buttons animated:NO];
-//        UIBarButtonItem *btn=[[UIBarButtonItem  alloc]initWithCustomView:tools];
-//        
-//        self.navigationItem.rightBarButtonItem = btn;
         
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
         self.navigationItem.rightBarButtonItem = rightItem;
@@ -316,15 +368,6 @@
     
 }
 
-
--(void)showSave
-{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要保存此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.tag = 300;
-    isBack = YES;
-    [alertView show];
-}
-
 -(void)showAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -336,7 +379,7 @@
 -(void)back
 {
     if (isEditing==YES) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存到草稿箱",@"确定" ,nil];
         alertView.tag = 200;
         [alertView show];
     }else
@@ -356,13 +399,11 @@
     }else if(alertView.tag==200)
     {
         if (buttonIndex==1) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }else
-    {
-        if (buttonIndex==1) {
             isBack = YES;
             [self submitData:@"3"];
+        }
+        if (buttonIndex==2) {
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -492,6 +533,19 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.arraySummary.count!=0&&!self.isSelect) {
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
+        if (cell==nil) {
+            cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+        }
+        NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.labelPostion.text = [ShareModel shareModel].postionName;
+        cell.dictInfo = dict;
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        return cell;
+    }else
+    {
+    
     CellEditPlan *cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -507,6 +561,7 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.placeholder = self.arrayContent[indexPath.row];
+    [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
     if (self.isSelect==NO) {
         cell.textView.userInteractionEnabled = NO;
     }
@@ -517,24 +572,70 @@
                 if (self.string1.length!=0) {
                     cell.textView.text = self.string1;
                 }
-                break;
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"direction"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"direction"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                 break;
             case 1:
                 if (self.string2.length!=0) {
                     cell.textView.text = self.string2;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"shopsArrange"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"shopsArrange"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 2:
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"requestForProposal"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"requestForProposal"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 3:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"personalGrowth"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"personalGrowth"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
             case 4:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"others"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"others"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
                 
@@ -543,9 +644,24 @@
         }
     }
     return cell;
+    }
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.isSelect) {
+        if (self.arraySummary.count!=0) {
+            //跳转页面
+            NSDictionary *dict = self.arraySummary[indexPath.row];
+            VCArtMonthSummaryUnPassed *vc = [[VCArtMonthSummaryUnPassed alloc]init];
+            
+            vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];
+            vc.tableID = dict[@"id"];
+            vc.isSelect = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
 
 #pragma -mark system
 
@@ -565,6 +681,9 @@
     self.arrayContent = @[@"填写工作主线和方向",@"填写本月重点服务店家和行程目标安排",@"填写对公司要求和建议",@"填写本月个人成长管理",@"填写其他事项"];
     self.isSelect =  YES;
     self.dict = [NSMutableDictionary dictionary];
+    
+    self.arrayPostil = [NSArray array];
+    self.arraySummary = [NSMutableArray array];
     
     self.rightItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showChooseEdit)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];

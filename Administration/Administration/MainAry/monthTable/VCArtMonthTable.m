@@ -209,7 +209,6 @@
 -(void)editContent:(UIButton *)button
 {
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;

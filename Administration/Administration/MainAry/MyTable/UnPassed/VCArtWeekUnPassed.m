@@ -12,7 +12,8 @@
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
 #import "CellSummary.h"
-#import "VCArtWeekSummaryDrafts.h"
+#import "VCArtWeekSummaryUnPassed.h"
+#import "VCPositil.h"
 @interface VCArtWeekUnPassed ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 {
     BOOL isBack;
@@ -37,7 +38,7 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)UIBarButtonItem *rightitem1;
-@property (nonatomic,strong)NSMutableArray *arrayPostil;
+@property (nonatomic,strong)NSArray *arrayPostil;
 @end
 
 @implementation VCArtWeekUnPassed
@@ -66,10 +67,16 @@
         }
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self setSummaryList];
+            }else
+            {
+                [self setSummaryUI];
+            }
             [self.tableView reloadData];
         }else
         {
-            
+            [self setSummaryUI];
         }
         
     } failure:^(NSError *error) {
@@ -113,10 +120,11 @@
             [self.dict setValue:@"1" forKey:@"canEdit"];
             
             if ([[responseObject valueForKey:@"owner"] length]!=0) {
-                NSArray *array1 = [[responseObject valueForKey:@"owner"] componentsSeparatedByString:@","];
-                for (NSString *string1 in array1) {
-                    [self.arrayPostil addObject:string1];
+                if (![[responseObject valueForKey:@"owner"] isEqualToString:@""]) {
+                    NSString *string = [responseObject valueForKey:@"owner"];
+                    self.arrayPostil = [string componentsSeparatedByString:@","];
                 }
+                
             }
             
             [self.tableView reloadData];
@@ -155,7 +163,6 @@
     tableView.rowHeight = UITableViewAutomaticDimension;
     tableView.estimatedRowHeight = 100;
     [tableView registerClass:[CellEditPlan class] forCellReuseIdentifier:@"cell"];
-    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell3"];
     [viewPlan addSubview:tableView];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
@@ -192,7 +199,7 @@
     tableView.rowHeight = UITableViewAutomaticDimension;
     tableView.estimatedRowHeight = 100;
     [tableView registerClass:[CellEditPlan class] forCellReuseIdentifier:@"cell"];
-    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell3"];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
     [viewSummary addSubview:tableView];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
@@ -201,6 +208,27 @@
         make.bottom.mas_equalTo(self.view.mas_bottom);
     }];
     self.tableView = tableView;
+   // }
+}
+
+-(void)setSummaryList
+{
+    self.viewSummary.hidden = YES;
+            UITableView *tableView = [[UITableView alloc]init];
+            tableView.delegate = self;
+            tableView.dataSource = self;
+            tableView.rowHeight = UITableViewAutomaticDimension;
+            tableView.estimatedRowHeight = 100;
+            [ZXDNetworking setExtraCellLineHidden:tableView];
+            [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
+            [self.view addSubview:tableView];
+            [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(self.view.mas_left);
+                make.right.mas_equalTo(self.view.mas_right);
+                make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+                make.bottom.mas_equalTo(self.view.mas_bottom);
+            }];
+            self.tableView = tableView;
 }
 
 -(void)setUI
@@ -260,15 +288,17 @@
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arryaTitle = @[@"工作分析和工作整改建议",@"出现问题及解决方案和建议",@"自我心得体会及总结",@"其他事项"];
         self.isSelect = NO;
+        self.viewPlan.hidden = YES;
         [self getSummary];
-        if (self.arraySummary.count==0) {
-            [self.viewSummary removeFromSuperview];
-            [self setSummaryUI];
-            self.viewPlan.hidden = YES;
-        }else
-        {
-            [self.tableView reloadData];
-        }
+//        if (self.arraySummary.count!=0) {
+//            [self setSummaryList];
+//        }else
+//        {
+//            [self.viewSummary removeFromSuperview];
+//            [self setSummaryUI];
+//        }
+       
+        
     }
     [self.tableView reloadData];
 }
@@ -332,6 +362,8 @@
     
 }
 
+
+
 //删除草稿
 -(void)deleteDrafts
 {
@@ -369,13 +401,6 @@
 }
 
 
--(void)showSave
-{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要保存此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.tag = 300;
-    [alertView show];
-}
-
 -(void)showAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -386,7 +411,7 @@
 -(void)back
 {
     if (isEditing==YES) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"存到草稿箱",@"确定" ,nil];
         alertView.tag = 200;
         [alertView show];
     }else
@@ -406,15 +431,34 @@
     }else if(alertView.tag==200)
     {
         if (buttonIndex==1) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }else
-    {
-        if (buttonIndex==1) {
             isBack = YES;
             [self submitData:@"3"];
         }
+        if (buttonIndex==2) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
+}
+
+-(void)gotoPositil:(UIButton *)button
+{
+    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    
+    VCPositil *vc = [[VCPositil alloc]init];
+    for (NSString *key in [self.dict allKeys]) {
+        if (![self.dict[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+                vc.field = key;
+                break;
+            }
+        }
+        
+    }
+    
+    vc.remark = self.remark;
+    vc.reportID = self.dict[@"id"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 -(void)submitData:(NSString *)hint
@@ -554,7 +598,7 @@
 {
     
     if (self.arraySummary.count!=0&&!self.isSelect) {
-        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         if (cell==nil) {
             cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
         }
@@ -570,6 +614,7 @@
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+        [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
     cell.LabelTitle.text = self.arryaTitle[indexPath.row];
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -590,9 +635,12 @@
                 }
             
                 for (NSString *string in self.arrayPostil) {
-                    if ([string containsString:@"ovas"]) {
-                        cell.imagePositil.hidden = YES;
-                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(4, string.length-4)];
+                    if ([string containsString:@"OVAS"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"OVAS"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
                 
@@ -606,9 +654,12 @@
                 }
                 
                 for (NSString *string in self.arrayPostil) {
-                    if ([string containsString:@"ovas"]) {
-                        cell.imagePositil.hidden = YES;
-                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(4, string.length-4)];
+                    if ([string containsString:@"important"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled = YES;
+                        NSRange rang = [string rangeOfString:@"important"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
                 
@@ -620,14 +671,36 @@
                 {
                     cell.textView.placeholder = @"个人成长规划安排";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"personalProject"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled = YES;
+                        NSRange rang = [string rangeOfString:@"personalProject"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
             case 3:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
                 }else
                 {
-                    cell.textView.placeholder = @"填写本周主要目标与销售分解及策略";
+                    cell.textView.placeholder = @"其他事项";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"others"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled = YES;
+                        NSRange rang = [string rangeOfString:@"others"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
                 
             default:
@@ -644,10 +717,10 @@
         if (self.arraySummary.count!=0) {
             //跳转页面
             NSDictionary *dict = self.arraySummary[indexPath.row];
-            VCArtWeekSummaryDrafts *vc = [[VCArtWeekSummaryDrafts alloc]init];
-            vc.remark = self.remark;
+            VCArtWeekSummaryUnPassed *vc = [[VCArtWeekSummaryUnPassed alloc]init];
+            vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];
             vc.isSelect = NO;
-            vc.tableID =  self.tableID;
+            vc.tableID =  [NSString stringWithFormat:@"%@",dict[@"id"]];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
@@ -681,7 +754,7 @@
     self.string3 = @"";
     self.string4 = @"";
     
-    self.arrayPostil = [NSMutableArray array];
+    self.arrayPostil = [NSArray array];
 }
 
 - (void)didReceiveMemoryWarning {

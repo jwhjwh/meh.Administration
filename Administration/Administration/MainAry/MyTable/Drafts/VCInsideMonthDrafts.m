@@ -91,6 +91,14 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             
+            [self.insideMonth.buttonDate setTitle:[[responseObject valueForKey:@"months"]substringToIndex:7] forState:UIControlStateNormal];
+            self.string1 = self.dict[@"workPlan"];
+            self.string2 = self.dict[@"firstWeek"];
+            self.string3 = self.dict[@"secondWeek"];
+            self.string4 = self.dict[@"thirdWeek"];
+            self.string5 = self.dict[@"fourthWeek"];
+            self.string6 = self.dict[@"comment"];
+            
             [self.tableView reloadData];
         }
         

@@ -10,6 +10,7 @@
 #import "CellEditPlan.h"
 #import "ViewDatePick.h"
 #import "ViewChooseEdit.h"
+#import "VCPositil.h"
 @interface VCInsideWeekSummaryUnPassed ()<UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UITextViewDelegate,UIAlertViewDelegate,ViewChooseEditDelegate>
 {
     BOOL isBack;
@@ -42,6 +43,7 @@
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)UIBarButtonItem *rightItem;
+@property(nonatomic,strong) NSArray *arrayPostil;
 @end
 
 @implementation VCInsideWeekSummaryUnPassed
@@ -97,6 +99,14 @@
                 self.string3 = self.dict[@"strategy"];
                 self.string4 = self.dict[@"experience"];
                 self.string5 = self.dict[@"directionPreset"];
+            }
+            
+            if ([[responseObject valueForKey:@"owner"] length]!=0) {
+                if (![[responseObject valueForKey:@"owner"] isEqualToString:@""]) {
+                    NSString *string = [responseObject valueForKey:@"owner"];
+                    self.arrayPostil = [string componentsSeparatedByString:@","];
+                }
+                
             }
             
             [self.tableView reloadData];
@@ -499,6 +509,26 @@
     } view:self.view MBPro:YES];
 }
 
+-(void)gotoPositil:(UIButton *)button
+{
+    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    
+    VCPositil *vc = [[VCPositil alloc]init];
+    for (NSString *key in [self.dict allKeys]) {
+        if (![self.dict[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+                vc.field = key;
+                break;
+            }
+        }
+        
+    }
+    
+    vc.remark = self.remark;
+    vc.reportID = self.dict[@"id"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
 
 -(void)showSave
 {
@@ -517,7 +547,7 @@
 -(void)back
 {
     if (isEditing==YES) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"存到草稿箱",@"确定" ,nil];
         alertView.tag = 200;
         [alertView show];
     }else
@@ -537,13 +567,11 @@
     }else if(alertView.tag==200)
     {
         if (buttonIndex==1) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }else
-    {
-        if (buttonIndex==1) {
             isBack = YES;
             [self submitData:@"3"];
+        }
+        if (buttonIndex==2) {
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -636,6 +664,7 @@
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.LabelTitle.text = self.arrayContent[indexPath.row];
     cell.textView.placeholder = self.arrayContent[indexPath.row];
@@ -646,45 +675,135 @@
                 if (self.string1.length!=0) {
                     cell.textView.text = self.string1;
                 }
+                
+            self.string1 = self.dict[@"workProgress"];
+            self.string2 = self.dict[@"progressEvaluation"];
+            self.string3 = self.dict[@"strategy"];
+            self.string4 = self.dict[@"experience"];
+            self.string5 = self.dict[@"directionPreset"];
+            
+            
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"monday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"monday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 1:
                 if (self.string2.length!=0) {
                     cell.textView.text = self.string2;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"tuesday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"tuesday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 2:
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"wednesday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"wednesday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
+                
             case 3:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"thursday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"thursday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 4:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"friday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"friday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 5:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"saturday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"saturday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 6:
                 if (self.string7.length!=0) {
                     cell.textView.text = self.string7;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"sunday"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"sunday"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 7:
                 if (self.string8.length!=0) {
                     cell.textView.text = self.string8;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"important"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"important"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 8:
                 if (self.string9.length!=0) {
                     cell.textView.text = self.string9;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"growthPlans"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"growthPlans"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
                 
@@ -704,25 +823,70 @@
                 if (self.string1.length!=0) {
                     cell.textView.text = self.string1;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"workProgress"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"workProgress"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 1:
                 if (self.string2.length!=0) {
                     cell.textView.text = self.string2;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"progressEvaluation"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"progressEvaluation"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 2:
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"strategy"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"strategy"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 3:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
                 }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"experience"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"experience"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 4:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
+                }
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"directionPreset"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"directionPreset"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             default:
@@ -809,6 +973,7 @@
     self.string8=  @"";
     self.string9=  @"";
     
+    self.arrayPostil = [NSArray array];
     
     self.rightItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showChooseEdit)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];

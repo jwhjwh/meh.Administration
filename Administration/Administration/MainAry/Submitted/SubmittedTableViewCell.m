@@ -38,8 +38,7 @@
      describe = 456; -- 时间
      locations = 123; --地点
      progress = 789; --事务概括
-     */
-    
+     */    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

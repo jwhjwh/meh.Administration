@@ -55,6 +55,7 @@
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"SubmittedTableViewCell" bundle:nil] forCellReuseIdentifier:@"BASE"];
     
     [self getNetworkData:YES];
@@ -179,9 +180,18 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SubmittedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE" forIndexPath:indexPath];
+    
+    
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SubmittedTableViewCell" owner:self options:nil] lastObject];
+        
+    }
+    
     if (self.dataArray.count <=0) {
         return cell;
     }
+    
+    
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SubmittedModel *model = _dataArray[indexPath.section];

@@ -672,6 +672,7 @@
         make.height.mas_equalTo(12);
         make.width.mas_equalTo(45);
     }];
+    self.textFiledF = textFieldF;
     
     UILabel *labelkd = [[UILabel alloc]init];
     labelkd.text = @"万元，周末";
@@ -693,7 +694,7 @@
         make.height.mas_equalTo(12);
         make.width.mas_equalTo(45);
     }];
-    self.textFiledF = textFieldF;
+    self.textFiledG = textFieldG;
     
     UILabel *labelkj = [[UILabel alloc]init];
     labelkj.text = @"万元";

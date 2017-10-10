@@ -8,7 +8,19 @@
 
 #import "VCNewPostil.h"
 #import "CellSummaryList.h"
-#import "VCArtWeekUnPassed.h"
+#import "VCArtShopPostil.h"
+#import "VCArtWeekPostil.h"
+#import "VCArtWeekSummaryPostil.h"
+#import "VCArtMonthPostil.h"
+#import "VCArtMonthSummaryPostil.h"
+#import "VCInsideShopPostil.h"
+#import "VCInsideWeekPostil.h"
+#import "VCInsideWeekSummaryPostil.h"
+#import "VCInsideMonthPostil.h"
+#import "VCInsideMonthSummaryPostil.h"
+#import "VCBuessShopPostil.h"
+#import "VCBuessWeekPostil.h"
+#import "VCBuessWeekSummaryPostil.h"
 @interface VCNewPostil ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSDictionary *remark;
@@ -139,11 +151,115 @@
     NSString *roleID = [ShareModel shareModel].roleID;
     NSString *sort = [ShareModel shareModel].sort;
     NSString *code = [NSString stringWithFormat:@"%@",dict[@"code"]];
-    VCArtWeekUnPassed *vc = [[VCArtWeekUnPassed alloc]init];
-    vc.remark = remark;
-    vc.tableID = tableID;
-    vc.isSelect = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if ([sort isEqualToString:@"1"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            VCArtShopPostil  *vc = [[VCArtShopPostil alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+            //跳转业务界面
+            VCBuessShopPostil *vc = [[VCBuessShopPostil alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else
+        {
+            VCInsideShopPostil *vc = [[VCInsideShopPostil alloc]init];
+            vc.remark = remark;
+            vc.tableID = tableID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    if ([sort isEqualToString:@"2"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            if ([code isEqualToString:@"1"]) {
+                VCArtWeekPostil *vc = [[VCArtWeekPostil alloc]init];
+                vc.remark = remark;
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtWeekSummaryPostil *vc = [[VCArtWeekSummaryPostil alloc]init];
+                vc.isSelect = NO;
+                vc.remark = remark;
+                vc.tableID = tableID;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
+            //跳转业务界面
+            if ([code isEqualToString:@"1"]) {
+                VCBuessWeekPostil *vc = [[VCBuessWeekPostil alloc]init];
+                vc.isSelect= YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCBuessWeekSummaryPostil *vc = [[VCBuessWeekSummaryPostil alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else
+        {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideWeekPostil *vc = [[VCInsideWeekPostil alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideWeekSummaryPostil *vc = [[VCInsideWeekSummaryPostil alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        
+    }
+    if ([sort isEqualToString:@"3"]) {
+        if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
+            
+            if ([code isEqualToString:@"1"]) {
+                VCArtMonthPostil *vc = [[VCArtMonthPostil alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCArtMonthSummaryPostil *vc = [[VCArtMonthSummaryPostil alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else  {
+            if ([code isEqualToString:@"1"]) {
+                VCInsideMonthPostil *vc = [[VCInsideMonthPostil alloc]init];
+                vc.isSelect = YES;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else
+            {
+                VCInsideMonthSummaryPostil *vc = [[VCInsideMonthSummaryPostil alloc]init];
+                vc.isSelect = NO;
+                vc.tableID = tableID;
+                vc.remark = remark;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }
 }
 
 #pragma -mark system

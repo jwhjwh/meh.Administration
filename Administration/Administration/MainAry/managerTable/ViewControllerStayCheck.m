@@ -30,21 +30,6 @@
 
 #pragma mark - 添加刷新
 
-- (void)removeHUD:(id)hud
-
-{
-    
-    //结束刷新
-    
-    [self.tableView.mj_header endRefreshing];
-    
-    [self.tableView.mj_footer endRefreshing];
-    
-    [hud removeFromSuperview];
-    
-}
-
-
 -(void)getData
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -66,7 +51,8 @@
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         
         NSString *stringCode = [responseObject valueForKey:@"status"];
-         [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
         if ([stringCode isEqualToString:@"0000"]) {
             [self.arrayData removeAllObjects];
@@ -79,6 +65,19 @@
             
             // label.text = [];
             return ;
+        }
+        
+        if ([stringCode isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            return;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0f];
+            return;
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0f];
+            return;
         }
         
     } failure:^(NSError *error) {

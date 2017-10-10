@@ -11,6 +11,9 @@
 #import "ViewBuessWeekTable.h"
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
+#import "CellSummary.h"
+#import "VCBuessWeekSummaryUnPassed.h"
+#import "VCPositil.h"
 @interface VCBuessWeekUnPassed ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 
 {
@@ -39,6 +42,7 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)UIBarButtonItem *rightitem1;
+@property(nonatomic,strong) NSArray *arrayPostil;
 @end
 
 @implementation VCBuessWeekUnPassed
@@ -56,21 +60,20 @@
                            @"PlanId":self.tableID};
     [ZXDNetworking GET:urlStr parameters:dcit success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
-        if (![[responseObject valueForKey:@"power"] isEqualToString:@""]) {
-            NSArray *permission = [[responseObject valueForKey:@"power"] componentsSeparatedByString:@","];
-            for (NSString *roleid in permission) {
-                if ([roleid isEqualToString:[USER_DEFAULTS valueForKey:@"roleId"]]) {
-                    
-                    break;
-                }
-            }
-        }
+        
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self setSummaryList];
+            }else
+            {
+                [self setSummaryUI];
+            }
+
             [self.tableView reloadData];
         }else
         {
-            
+            [self setSummaryUI];
         }
         
     } failure:^(NSError *error) {
@@ -109,6 +112,15 @@
             self.string5 = self.dict[@"planningManagement"];
             self.string6 = self.dict[@"others"];
             
+            
+            if ([[responseObject valueForKey:@"owner"] length]!=0) {
+                if (![[responseObject valueForKey:@"owner"] isEqualToString:@""]) {
+                    NSString *string = [responseObject valueForKey:@"owner"];
+                    self.arrayPostil = [string componentsSeparatedByString:@","];
+                }
+                
+            }
+            
             [self.tableView reloadData];
         }
         
@@ -143,6 +155,7 @@
     tableView.rowHeight = UITableViewAutomaticDimension;
     tableView.estimatedRowHeight = 100;
     [tableView registerClass:[CellEditPlan class] forCellReuseIdentifier:@"cell"];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
     [viewPlan addSubview:tableView];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
@@ -188,6 +201,27 @@
     }];
     self.tableView = tableView;
 }
+
+-(void)setSummaryList
+{
+    self.viewSummary.hidden = YES;
+    UITableView *tableView = [[UITableView alloc]init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.estimatedRowHeight = 100;
+    [ZXDNetworking setExtraCellLineHidden:tableView];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
+    [self.view addSubview:tableView];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
+    }];
+    self.tableView = tableView;
+}
+
 
 -(void)setUI
 {
@@ -347,6 +381,27 @@
     } view:self.view MBPro:YES];
 }
 
+-(void)gotoPositil:(UIButton *)button
+{
+    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    
+    VCPositil *vc = [[VCPositil alloc]init];
+    for (NSString *key in [self.dict allKeys]) {
+        if (![self.dict[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+                vc.field = key;
+                break;
+            }
+        }
+        
+    }
+    
+    vc.remark = self.remark;
+    vc.reportID = self.dict[@"id"];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
 
 -(void)showSave
 {
@@ -365,7 +420,7 @@
 -(void)back
 {
     if (isEditing==YES) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"存到草稿箱",@"确定" ,nil];
         alertView.tag = 200;
         [alertView show];
     }else
@@ -385,13 +440,11 @@
     }else if(alertView.tag==200)
     {
         if (buttonIndex==1) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }else
-    {
-        if (buttonIndex==1) {
             isBack = YES;
             [self submitData:@"3"];
+        }
+        if (buttonIndex==2) {
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -530,10 +583,25 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (self.arraySummary.count!=0&&!self.isSelect) {
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
+        if (cell==nil) {
+            cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+        }
+        NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.labelPostion.text = [ShareModel shareModel].postionName;
+        cell.dictInfo = dict;
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        return cell;
+    }else
+    {
+    
     CellEditPlan *cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+        [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
     cell.LabelTitle.text = self.arryaTitle[indexPath.row];
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -551,34 +619,100 @@
     else
     {
         switch (indexPath.row) {
+                
             case 0:
                 if (self.string1.length!=0) {
                     cell.textView.text = self.string1;
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"strategy"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"strategy"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
             case 1:
                 if (self.string2.length!=0) {
                     cell.textView.text = self.string2;
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"preset"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"preset"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
             case 2:
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
-                }                break;
+                }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"content"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"content"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+
+                break;
             case 3:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
+                }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"presetDirection"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"presetDirection"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
                 }
                 break;
             case 4:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"planningManagement"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"planningManagement"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 5:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"others"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"others"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
                 
             default:
@@ -586,9 +720,23 @@
         }
     }
     return cell;
+    }
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.isSelect) {
+        if (self.arraySummary.count!=0) {
+            //跳转页面
+            NSDictionary *dict = self.arraySummary[indexPath.row];
+            VCBuessWeekSummaryUnPassed *vc = [[VCBuessWeekSummaryUnPassed alloc]init];
+            vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];;
+            vc.isSelect = NO;
+            vc.tableID =  dict[@"id"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
 
 #pragma -mark system
 
@@ -617,6 +765,8 @@
     self.string4 = @"";
     self.string5 = @"";
     self.string6 = @"";
+    
+    self.arrayPostil = [NSArray array];
     
     self.rightitem1 = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showChooseEdit)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];

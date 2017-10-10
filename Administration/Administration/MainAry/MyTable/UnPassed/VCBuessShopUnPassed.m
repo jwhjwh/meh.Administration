@@ -12,6 +12,7 @@
 #import "ViewDatePick.h"
 #import "ViewChooseScore.h"
 #import "ViewChooseEdit.h"
+#import "VCPositil.h"
 @interface VCBuessShopUnPassed ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UIAlertViewDelegate,ViewChooseScoreDelegate,ViewChooseEditDelegate>
 
 {
@@ -34,7 +35,7 @@
 @property(nonatomic,strong) NSString *string7;
 @property(nonatomic,strong) NSString *string8;
 @property(nonatomic,strong) NSMutableDictionary *dict;
-
+@property(nonatomic,strong) NSArray *arrayPostil;
 @end
 
 @implementation VCBuessShopUnPassed
@@ -71,6 +72,14 @@
             self.string7 = self.dict[@"sentiment"];
             self.string8 = self.dict[@"tomorrowPlan"];
             [self.dict setValue:@"1" forKey:@"canEdit"];
+            
+            if ([[responseObject valueForKey:@"owner"] length]!=0) {
+                if (![[responseObject valueForKey:@"owner"] isEqualToString:@""]) {
+                    NSString *string = [responseObject valueForKey:@"owner"];
+                    self.arrayPostil = [string componentsSeparatedByString:@","];
+                }
+                
+            }
             
             [tableView1 reloadData];
         }
@@ -180,6 +189,27 @@
     {
         [chooseEdit removeFromSuperview];
     }
+    
+}
+
+-(void)gotoPositil:(UIButton *)button
+{
+    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    
+    VCPositil *vc = [[VCPositil alloc]init];
+    for (NSString *key in [self.dict allKeys]) {
+        if (![self.dict[key] isKindOfClass:[NSNull class]]) {
+            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+                vc.field = key;
+                break;
+            }
+        }
+        
+    }
+    
+    vc.remark = self.remark;
+    vc.reportID = self.dict[@"id"];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
@@ -451,9 +481,9 @@
             cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.LabelTitle.text = arrayTitle[indexPath.row];
-        
+        [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
         switch (indexPath.row) {
-                
+              
             case 4:
                 cell.textView.delegate =self;
                 if (self.string3.length!=0) {
@@ -462,6 +492,17 @@
                 {
                     cell.textView.placeholder = @"今日目标及工作详细内容";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"targetDetail"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"targetDetail"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
             case 5:
             {
@@ -474,6 +515,17 @@
                 {
                     cell.textView.placeholder = @"自我状态评估";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"appraisal"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"appraisal"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
             }
                 break;
                 
@@ -488,6 +540,16 @@
                 {
                     cell.textView.placeholder = @"自我打分";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"evaluation"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"evaluation"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
             }
                 break;
             case 7:
@@ -498,6 +560,16 @@
                 {
                     cell.textView.placeholder = @"原因";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"reason"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"reason"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
                 break;
             case 8:
                 cell.textView.delegate = self;
@@ -507,6 +579,17 @@
                 {
                     cell.textView.placeholder = @"感悟分享及心得";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"sentiment"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"sentiment"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
             case 9:
                 cell.textView.delegate = self;
@@ -516,6 +599,17 @@
                 {
                     cell.textView.placeholder = @"明日计划安排";
                 }
+                
+                for (NSString *string in self.arrayPostil) {
+                    if ([string containsString:@"tomorrowPlan"]) {
+                        cell.buttonPostil.hidden = NO;
+                        cell.labelNumber.hidden = NO;
+                        cell.buttonPostil.userInteractionEnabled  =YES;
+                        NSRange rang = [string rangeOfString:@"tomorrowPlan"];
+                        cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    }
+                }
+                
                 break;
                 
             default:
@@ -582,6 +676,8 @@
     [self setUI];
     self.dict = [NSMutableDictionary dictionary];
     isBack = NO;
+    
+    self.arrayPostil = [NSArray array];
     
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showChooseEdit)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
