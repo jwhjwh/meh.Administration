@@ -263,7 +263,7 @@
                }
            }
            
-        
+           
     }];
   
 }
@@ -343,6 +343,7 @@
                      [self.navigationController pushViewController:position animated:YES];
                 }else{
                     businessViewController *busVC = [[businessViewController alloc]init];
+                    busVC.strId=[USER_DEFAULTS valueForKey:@"roleId"];
                     [self.navigationController pushViewController:busVC animated:YES];
                 }
                 

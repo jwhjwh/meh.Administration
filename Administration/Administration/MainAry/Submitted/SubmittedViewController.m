@@ -188,6 +188,7 @@
     }
     
     if (self.dataArray.count <=0) {
+
         return cell;
     }
     

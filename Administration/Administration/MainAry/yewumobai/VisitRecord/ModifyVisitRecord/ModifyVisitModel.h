@@ -13,6 +13,7 @@
 @property (nonatomic,strong)NSString *VisitID;          //意向客户id
 @property (nonatomic,strong)NSString *Dates;            //日期
 @property (nonatomic,strong)NSString *UsersId;          //创建人
+@property (nonatomic,strong)NSString *UsersName;        //创建人姓名
 @property (nonatomic,strong)NSString *Iphone;           //手机
 @property (nonatomic,strong)NSString *Wcode;            //微信
 @property (nonatomic,strong)NSString *BrandBusiness;    //经营品牌

@@ -37,6 +37,7 @@
     [self Visitnewworking];
 }
 -(void)InterestedUI{
+    NSString* phoneModel = [UIDevice devicePlatForm];
     _sousuoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     UIImage *imageBtn = [UIImage imageNamed:@"ss_ico01"];
     [_sousuoBtn setBackgroundImage:imageBtn forState:UIControlStateNormal];
@@ -49,9 +50,17 @@
     [_sousuoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo (self.view.mas_left).offset(10);
         make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(self.view.mas_top).offset(70);
+        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+            make.top.mas_equalTo(self.view.mas_top).offset(94);
+        }else{
+            make.top.mas_equalTo(self.view.mas_top).offset(70);
+        }
+        
         make.height.mas_equalTo(40);
     }];
+    
+    
+    
     UIView *view1 = [[UIView alloc]init];
     view1.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:view1];

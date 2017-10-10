@@ -25,12 +25,22 @@
     self.title = @"选择职位";
     // [self getAllPosition];
     self.view.backgroundColor = [UIColor whiteColor];
+     NSString* phoneModel = [UIDevice devicePlatForm];
     
-    
-    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(8, 74, Scree_width, 14)];
+    UILabel * label = [[UILabel alloc]init];
     label.text = @"请选择您要操作的职位";
     label.textColor = [UIColor lightGrayColor];
     [self.view addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+            make.top.mas_equalTo(self.view.mas_top).offset(94);
+        }else{
+            make.top.mas_equalTo(self.view.mas_top).offset(74);
+        }
+        make.right.mas_equalTo(self.view.mas_right).offset(0);
+        make.left.mas_equalTo(self.view.mas_left).offset(8);
+        make.height.mas_offset(14);
+    }];
     
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];
     
@@ -44,12 +54,18 @@
     
     layout.scrollDirection=UICollectionViewScrollDirectionVertical;
     
-    self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 94, Scree_width, Scree_height)collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.collectionView registerClass:[CollectionViewCellPosition class] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(label.mas_bottom).offset(20);
+        make.left.mas_equalTo(self.view.mas_left).offset(0);
+        make.right.mas_equalTo(self.view.mas_right).offset(0);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
+    }];
     
 }
 -(void)getAllPosition

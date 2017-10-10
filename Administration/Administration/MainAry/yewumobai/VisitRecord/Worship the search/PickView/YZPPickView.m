@@ -31,11 +31,18 @@
         
         _areaArray = [self aeraArray];
         //父类 UIView
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        _pickerView = [[UIPickerView alloc]init];
+        
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
         self.backgroundColor = GetColor(230, 230, 230, 1);
         [self addSubview:_pickerView];
+        [_pickerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.mas_top).offset(0);
+            make.left.mas_equalTo(self.mas_left).offset(0);
+            make.right.mas_equalTo(self.mas_right).offset(0);
+            make.bottom.mas_equalTo(self.mas_bottom).offset(0);
+        }];
     }
     return self;
     

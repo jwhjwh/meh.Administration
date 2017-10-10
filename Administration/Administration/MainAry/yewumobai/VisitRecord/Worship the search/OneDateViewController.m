@@ -41,7 +41,7 @@
 }
 -(void)worshipSearchUI{
     
-    _proviceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width/3, 30)];
+    _proviceLabel = [[UILabel alloc]init];
     _proviceLabel.backgroundColor = [UIColor whiteColor];
     _proviceLabel.font = [UIFont systemFontOfSize:14];
     _proviceLabel.text = self.provice;
@@ -49,7 +49,7 @@
     _proviceLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_proviceLabel];
     
-    _cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/3, 64, self.view.frame.size.width/3, 30)];
+    _cityLabel = [[UILabel alloc]init];
     _cityLabel.backgroundColor = [UIColor whiteColor];
     _cityLabel.font = [UIFont systemFontOfSize:14];
     _cityLabel.text = self.city;
@@ -57,7 +57,7 @@
     _cityLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_cityLabel];
     
-    _areaLabel = [[UILabel alloc]initWithFrame:CGRectMake((self.view.frame.size.width/3)*2, 64, self.view.frame.size.width/3, 30)];
+    _areaLabel = [[UILabel alloc]init];
     _areaLabel.backgroundColor = [UIColor whiteColor];
     _areaLabel.text = self.area;
     _areaLabel.font = [UIFont systemFontOfSize:14];
@@ -65,7 +65,7 @@
     _areaLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_areaLabel];
     
-    _meBtn = [[UIButton alloc]initWithFrame:CGRectMake(-1, 94, self.view.frame.size.width/2, 40)];
+    _meBtn = [[UIButton alloc]init];
     _meBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_meBtn setTitle:@"我的" forState:UIControlStateNormal];
      _meBtn.backgroundColor =GetColor(203, 176, 219, 1);
@@ -79,7 +79,7 @@
     [_meBtn.layer setBorderColor:colorref];//边框颜色
     [self.view addSubview:_meBtn];
     
-    _comBtn = [[UIButton alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-2, 94, (self.view.frame.size.width/2)+3, 40)];
+    _comBtn = [[UIButton alloc]init];
     _comBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_comBtn setTitle:@"公司" forState:UIControlStateNormal];
     [_comBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -90,6 +90,23 @@
     
     [_comBtn.layer setBorderColor:colorref];//边框颜色
     [self.view addSubview:_comBtn];
+    
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        _proviceLabel.frame = CGRectMake(0, 88, self.view.frame.size.width/3, 30);
+        _cityLabel.frame = CGRectMake(self.view.frame.size.width/3, 88, self.view.frame.size.width/3, 30);
+        _areaLabel.frame = CGRectMake((self.view.frame.size.width/3)*2, 88, self.view.frame.size.width/3, 30);
+        _meBtn.frame =CGRectMake(-1, 118, self.view.frame.size.width/2, 40);
+        _comBtn.frame =CGRectMake((self.view.frame.size.width/2)-2, 118, (self.view.frame.size.width/2)+3, 40);
+    }else{
+        _proviceLabel.frame = CGRectMake(0, 64, self.view.frame.size.width/3, 30);
+        _cityLabel.frame = CGRectMake(self.view.frame.size.width/3, 64, self.view.frame.size.width/3, 30);
+        _areaLabel.frame = CGRectMake((self.view.frame.size.width/3)*2, 64, self.view.frame.size.width/3, 30);
+        _meBtn.frame =CGRectMake(-1, 94, self.view.frame.size.width/2, 40);
+        _comBtn.frame =CGRectMake((self.view.frame.size.width/2)-2, 94, (self.view.frame.size.width/2)+3, 40);
+    }
+    
+    
     
     infonTableview =[[UITableView alloc]init];
     infonTableview.delegate = self;
