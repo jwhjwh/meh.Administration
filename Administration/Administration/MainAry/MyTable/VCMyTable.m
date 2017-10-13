@@ -57,7 +57,7 @@
     
     self.title = @"我的报表";
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(-1, 64, Scree_width+1, 30)];
+    UILabel *label = [[UILabel alloc]init];
     label.text = [NSString stringWithFormat:@"         %@",self.position];
     label.layer.borderColor = [UIColor lightGrayColor].CGColor;
     label.layer.borderWidth = 1.0f;
@@ -67,12 +67,24 @@
     imageView.image = [UIImage imageNamed:@"zw_ico"];
     [label addSubview:imageView];
     
-    UITableView *tabelView = [[UITableView alloc]initWithFrame:CGRectMake(0, 95, Scree_width, Scree_height)];
+    UITableView *tabelView = [[UITableView alloc]init];
     tabelView.delegate = self;
     tabelView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:tabelView];
     [self.view addSubview:tabelView];
     self.tableView = tabelView;
+    
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        label.frame =CGRectMake(-1, 88, Scree_width+1, 30);
+        tabelView.frame =CGRectMake(0, 119, Scree_width, Scree_height);
+    }else{
+        label.frame =CGRectMake(-1, 64, Scree_width+1, 30);
+        tabelView.frame =CGRectMake(0, 95, Scree_width, Scree_height);
+    }
+    
+    
+    
     NSString *roleID = [ShareModel shareModel].roleID;
     if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
         self.array = @[@"日计划",@"店报表",@"周报表"];
