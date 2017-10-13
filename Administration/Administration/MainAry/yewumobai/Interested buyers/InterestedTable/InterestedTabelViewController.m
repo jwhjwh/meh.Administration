@@ -16,6 +16,7 @@
 #import "XFDaterView.h"//时间选择器
 #import "CityChoose.h"// 地址选择器
 #import "InterestedInputViewController.h"//主要经营品牌-简介-分析
+#import "UpdateIntendedViewController.h"//意向客户提交到部门
 @interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource,XFDaterViewDelegate>
 {
     UITableView *infonTableview;
@@ -193,7 +194,9 @@
          if (indexPath.row == 9) {
              if (_InterNameAry.count>0) {
                  cell.xingLabel.text = _InterNameAry[indexPath.row];
+                 cell.xingLabel.numberOfLines = 0;
                  cell.userInteractionEnabled = isof;
+                 
              }
          }else if(indexPath.row ==10){
              if (_InterNameAry.count != 0) {
@@ -313,8 +316,21 @@
                     
                     NSMutableArray *nsmuary = [[NSMutableArray alloc]initWithObjects:@"面部",@"身体",@"美白",@"教育",@"管理",@"拓客",@"模式", nil];
                     [InteredAlertView showWithTitle:@"选择意向" titles:nsmuary isof:_intentary selectIndex:^(NSString *selectIndex) {
-                        NSLog(@"%@",selectIndex);
-                        
+                        FillTableViewCell *cell = [infonTableview cellForRowAtIndexPath:_Index];
+//                        cell.xingLabel.text =[_intentary stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                         BOOL isbool = [_intentary containsObject: selectIndex];
+                        if (isbool == 1) {
+                            NSLog(@"删除了");
+                            [_intentary removeObject:selectIndex];
+                            NSString *string = [_intentary componentsJoinedByString:@","];
+                            cell.xingLabel.text =[string stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                        }else{
+                            [_intentary addObject:selectIndex];
+                            NSLog(@"添加了");
+                            NSString *string = [_intentary componentsJoinedByString:@","];
+                            cell.xingLabel.text =[string stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                        }
+                       
                     }];
 
                 }
@@ -382,9 +398,32 @@
         [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
             if (selectIndex == 0) {
                 isof = YES;
-               
                 _arr=@[@[@""],@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"]];
                 [infonTableview reloadData];
+            }else if(selectIndex == 1){
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为目标客户么" sureBtn:@"确认" cancleBtn:@"取消"];
+                alertView.resultIndex = ^(NSInteger index){
+                    NSLog(@"%ld",index);
+                    if(index == 2){
+                        [self InsertTargetVisit];
+                        
+                    }
+                };
+                [alertView showMKPAlertView];
+            }else if(selectIndex == 2){
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定为合作客户" sureBtn:@"确认" cancleBtn:@"取消"];
+                alertView.resultIndex = ^(NSInteger index){
+                    NSLog(@"%ld",index);
+                    if(index == 2){
+                        //跳界面 -----跳界面
+                    }
+                };
+                [alertView showMKPAlertView];
+            }else if(selectIndex == 3){
+                //分享给同事 --------跳界面
+            }else {
+                //删除
+                [self deleteShop];
             }
         } selectValue:^(NSString *selectValue) {
             
@@ -394,7 +433,16 @@
         zwlbAry = @[@"提交到上级",@"提交到品牌部"];
         [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
             if (selectIndex == 0) {
+                //提交到上级
                 [self updateIntended];
+            }else{
+                //提交到品牌部
+                UpdateIntendedViewController *upadateBM = [[UpdateIntendedViewController alloc]init];
+                upadateBM.shopId = self.ShopId;
+                upadateBM.roid=self.strId;
+                upadateBM.number = @"1";
+                upadateBM.intendedId = _Id;
+                [self.navigationController pushViewController:upadateBM animated:YES];
             }
         } selectValue:^(NSString *selectValue) {
             
@@ -402,13 +450,73 @@
         
     }
 }
+-(void)deleteShop{
+    //删除意向客户表
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"id":_Id,@"shopId":_ShopId,@"Types":@"2"};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+-(void)InsertTargetVisit{
+    //升级目标客户
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/InsertTargetVisit.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":_ShopId,@"RoleId":self.strId};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"现在该客户已升级为目标客户,现在去填写目标客户确立表?" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
+            alertView.resultIndex = ^(NSInteger index){
+                NSLog(@"%ld",index);
+                if(index == 1){
+                    //跳界面----------------------填写目标客户
+                    
+                }
+            };
+            [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"升级失败" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"店铺当前级别不能升级为目标客户" andInterval:1.0];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
 -(void)updateIntended{
     //修改意向客户
     NSString *uStr =[NSString stringWithFormat:@"%@shop/updateIntended.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"intendedId":self.intentionId,@"Iphone":_Iphone,@"Wcode":_Wcode,@"BrandBuiness":_BrandBusiness,@"StoreLevel":_StoreLevel,@"IntentionId":_intentionId,@"StoreSituation":_StoreSituation,@"Comprehensive":_Comprehensive,@"RoleId":self.strId,@"Provice":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"StoreName":_StoreName,@"Name":_ShopName,@"shopId":_ShopId};
+    NSString *intentar = [_intentary componentsJoinedByString:@","];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"intendedId":self.intentionId,@"Iphone":_Iphone,@"Wcode":_Wcode,@"BrandBuiness":_BrandBusiness,@"StoreLevel":_StoreLevel,@"intentionName":intentar,@"StoreSituation":_StoreSituation,@"Comprehensive":_Comprehensive,@"RoleId":self.strId,@"Provice":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"StoreName":_StoreName,@"Name":_ShopName,@"shopId":_ShopId};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
          if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
              PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
@@ -506,6 +614,7 @@
                 }
                 [_InterNameAry addObject:_StoreLevel];//档次
                 if (model.intentionName ==nil) {//意向选择
+                    _intentary = [[NSMutableArray alloc]init];
                     _IntentionId = @"";
                     [_InterNameAry addObject:_IntentionId];
                 }else{
@@ -515,6 +624,7 @@
                     
                     
                      NSString *inidarray = [model.intentionName stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                    //NSLog(@"%@",inidarray);
                     [_InterNameAry addObject:inidarray];
                 }
                 if (model.storeSituation ==nil) {
@@ -573,8 +683,10 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+        return 50;
+   
     
-    return 50;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
     if (isof ==NO) {

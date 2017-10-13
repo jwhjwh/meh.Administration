@@ -160,7 +160,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)OneDateNetworking :(UIButton*)btn{
-    NSString *uuStr =[NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
+    NSString *uuStr =[[NSString alloc]init];
+    if ([self.TCVC isEqualToString:@"1"]) {
+        uuStr = [NSString stringWithFormat:@"%@shop/selectTargetVisit.action",KURLHeader];
+    }else{
+        uuStr =[NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
+    }
+   
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];

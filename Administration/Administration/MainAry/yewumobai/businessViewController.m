@@ -9,6 +9,7 @@
 #import "businessViewController.h"
 #import "busableController.h"
 #import "InterestedViewController.h"
+#import  "TargetCustomerViewController.h"
 @interface businessViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 {
@@ -97,7 +98,9 @@
         }
             break;
         case 2:{//目标客户
-            
+            TargetCustomerViewController *TCVC= [[TargetCustomerViewController alloc]init];
+            TCVC.strId = self.strId;
+            [self.navigationController showViewController:TCVC sender:nil];
         }
             break;
         case 3:{//确定合作客户

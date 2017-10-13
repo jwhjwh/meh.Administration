@@ -51,94 +51,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yewumobai/Interested buyers/InterestedTable/InterestedTabelViewController.m"
-            timestampString = "529296955.373621"
+            filePath = "Administration/MainAry/MessageController.m"
+            timestampString = "529559862.124507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "433"
-            endingLineNumber = "433"
-            landmarkName = "-selectworsh"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[InterestedTabelViewController selectworsh]"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/JWH-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/yewumobai/Interested%20buyers/InterestedTable/InterestedTabelViewController.m"
-                  timestampString = "529296955.468927"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "433"
-                  endingLineNumber = "433"
-                  offsetFromSymbolStart = "733">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__44-[InterestedTabelViewController selectworsh]_block_invoke"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/JWH-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/yewumobai/Interested%20buyers/InterestedTable/InterestedTabelViewController.m"
-                  timestampString = "529296955.47267"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "434"
-                  endingLineNumber = "434"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yewumobai/Interested buyers/InterestedViewController.m"
-            timestampString = "529296996.60371"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "-Visitnewworking"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[InterestedViewController Visitnewworking]"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/JWH-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/yewumobai/Interested%20buyers/InterestedViewController.m"
-                  timestampString = "529296996.823724"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "149"
-                  endingLineNumber = "149"
-                  offsetFromSymbolStart = "666">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__43-[InterestedViewController Visitnewworking]_block_invoke"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/JWH-%E6%8A%A5%E8%A1%A8%E7%AE%A1%E7%90%86/Administration/Administration/MainAry/yewumobai/Interested%20buyers/InterestedViewController.m"
-                  timestampString = "529296996.825671"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

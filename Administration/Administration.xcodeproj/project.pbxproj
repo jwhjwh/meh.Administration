@@ -710,6 +710,10 @@
 		62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2711E56D1C300F657DB /* ManagementViewController.m */; };
 		62F02F141F70AE0C00F3A0EF /* ssjl.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F02F131F70AE0C00F3A0EF /* ssjl.png */; };
 		62F19B5E1F7DD90A00025690 /* InterestedInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F19B5D1F7DD90A00025690 /* InterestedInputViewController.m */; };
+		62F2206B1F905AA5004163A4 /* UpdateIntendedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F220691F905AA5004163A4 /* UpdateIntendedViewController.m */; };
+		62F2206F1F905C2E004163A4 /* TargetCustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F2206E1F905C2E004163A4 /* TargetCustomerViewController.m */; };
+		62F220721F905CFC004163A4 /* tcModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F220711F905CFC004163A4 /* tcModel.m */; };
+		62F220761F9087B7004163A4 /* DeterMineTcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F220751F9087B7004163A4 /* DeterMineTcViewController.m */; };
 		62F55C2C1EA6EEA30020BD9D /* ReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F55C2B1EA6EEA30020BD9D /* ReportModel.m */; };
 		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
 		F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AB1E5DB9AE00ABA6EF /* MessageView.m */; };
@@ -2013,6 +2017,14 @@
 		62F02F131F70AE0C00F3A0EF /* ssjl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssjl.png; sourceTree = "<group>"; };
 		62F19B5C1F7DD90A00025690 /* InterestedInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestedInputViewController.h; sourceTree = "<group>"; };
 		62F19B5D1F7DD90A00025690 /* InterestedInputViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestedInputViewController.m; sourceTree = "<group>"; };
+		62F220691F905AA5004163A4 /* UpdateIntendedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateIntendedViewController.m; sourceTree = "<group>"; };
+		62F2206A1F905AA5004163A4 /* UpdateIntendedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateIntendedViewController.h; sourceTree = "<group>"; };
+		62F2206D1F905C2E004163A4 /* TargetCustomerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TargetCustomerViewController.h; sourceTree = "<group>"; };
+		62F2206E1F905C2E004163A4 /* TargetCustomerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TargetCustomerViewController.m; sourceTree = "<group>"; };
+		62F220701F905CFC004163A4 /* tcModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcModel.h; sourceTree = "<group>"; };
+		62F220711F905CFC004163A4 /* tcModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tcModel.m; sourceTree = "<group>"; };
+		62F220741F9087B7004163A4 /* DeterMineTcViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeterMineTcViewController.h; sourceTree = "<group>"; };
+		62F220751F9087B7004163A4 /* DeterMineTcViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeterMineTcViewController.m; sourceTree = "<group>"; };
 		62F55C2A1EA6EEA30020BD9D /* ReportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportModel.h; sourceTree = "<group>"; };
 		62F55C2B1EA6EEA30020BD9D /* ReportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportModel.m; sourceTree = "<group>"; };
 		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
@@ -2939,6 +2951,7 @@
 				62629F421F6A6D920001BA89 /* positionViewController.m */,
 				1F6833BA1E72966700F74D50 /* businessViewController.h */,
 				1F6833BB1E72966700F74D50 /* businessViewController.m */,
+				62F2206C1F905BFE004163A4 /* TargetCustomer */,
 				1F71B88F1F887E8600C3638F /* newVisit */,
 				6266E3401F738ED5002B1303 /* Interested buyers */,
 				1F6833C01E72A3D700F74D50 /* mobao */,
@@ -4067,6 +4080,8 @@
 		6250750F1F75FCC200E92B50 /* InterestedTable */ = {
 			isa = PBXGroup;
 			children = (
+				62F2206A1F905AA5004163A4 /* UpdateIntendedViewController.h */,
+				62F220691F905AA5004163A4 /* UpdateIntendedViewController.m */,
 				625075101F75FCE900E92B50 /* InterestedTabelViewController.h */,
 				625075111F75FCE900E92B50 /* InterestedTabelViewController.m */,
 				62F19B5C1F7DD90A00025690 /* InterestedInputViewController.h */,
@@ -4753,6 +4768,27 @@
 			path = Edit;
 			sourceTree = "<group>";
 		};
+		62F2206C1F905BFE004163A4 /* TargetCustomer */ = {
+			isa = PBXGroup;
+			children = (
+				62F220731F9087A6004163A4 /* DeterMineTc */,
+				62F2206D1F905C2E004163A4 /* TargetCustomerViewController.h */,
+				62F2206E1F905C2E004163A4 /* TargetCustomerViewController.m */,
+				62F220701F905CFC004163A4 /* tcModel.h */,
+				62F220711F905CFC004163A4 /* tcModel.m */,
+			);
+			path = TargetCustomer;
+			sourceTree = "<group>";
+		};
+		62F220731F9087A6004163A4 /* DeterMineTc */ = {
+			isa = PBXGroup;
+			children = (
+				62F220741F9087B7004163A4 /* DeterMineTcViewController.h */,
+				62F220751F9087B7004163A4 /* DeterMineTcViewController.m */,
+			);
+			path = DeterMineTc;
+			sourceTree = "<group>";
+		};
 		F711583B1E548E9D00E0B763 /* UIview+WLFrame */ = {
 			isa = PBXGroup;
 			children = (
@@ -5187,9 +5223,11 @@
 				62656CF91E52AFDE0085A2BD /* MainViewController.m in Sources */,
 				1F6211951E8CFFAF00F50851 /* EMAudioRecorderUtil.m in Sources */,
 				1F6211EC1E8CFFB000F50851 /* FixFopen.c in Sources */,
+				62F220721F905CFC004163A4 /* tcModel.m in Sources */,
 				1F6212011E8CFFB000F50851 /* EaseChatToolbarItem.m in Sources */,
 				1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */,
 				1FF5807C1F8C64D3001C3D40 /* VCArtWeekSummarySubmited.m in Sources */,
+				62F2206F1F905C2E004163A4 /* TargetCustomerViewController.m in Sources */,
 				1FE15DAC1F1C55940063F187 /* TransferGroupViewController.m in Sources */,
 				1FDD930E1F42E49B002E834B /* ViewControllerPerson.m in Sources */,
 				1F6211F71E8CFFB000F50851 /* EaseMessageTimeCell.m in Sources */,
@@ -5197,6 +5235,7 @@
 				1FB247FF1F332C1100EE8367 /* LineLayout.m in Sources */,
 				6266E33F1F735570002B1303 /* TheDraftViewController.m in Sources */,
 				1FDAB34B1F1076A500AB0495 /* BaseViewController.m in Sources */,
+				62F2206B1F905AA5004163A4 /* UpdateIntendedViewController.m in Sources */,
 				1F01020C1E5FC0C300802571 /* LVModel.m in Sources */,
 				1F6212081E8CFFB000F50851 /* EaseConversationCell.m in Sources */,
 				1F6211DD1E8CFFB000F50851 /* EaseConversationModel.m in Sources */,
@@ -5216,6 +5255,7 @@
 				1FF580A71F8C67E0001C3D40 /* VCInsideMonthPostil.m in Sources */,
 				6269A5731E6EA0150083160E /* DateSubmittedViewController.m in Sources */,
 				1FE2379F1F8864E800B2ECA7 /* ViewChooseEdit.m in Sources */,
+				62F220761F9087B7004163A4 /* DeterMineTcViewController.m in Sources */,
 				1FDA16441F6F5FF60054A322 /* CellEditPlan.m in Sources */,
 				1F6AB7E41E8B978C006CB015 /* UIView+EXTENSION.m in Sources */,
 				1F6211F11E8CFFB000F50851 /* EaseUsersListViewController.m in Sources */,

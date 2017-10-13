@@ -1,17 +1,17 @@
 //
-//  InterestedViewController.m
+//  TargetCustomerViewController.m
 //  Administration
 //
-//  Created by 九尾狐 on 2017/9/21.
+//  Created by 九尾狐 on 2017/10/13.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
-//
-#import "InterestedViewController.h"
-#import "RecotdModel.h"
+
+#import "TargetCustomerViewController.h"
+#import "tcModel.h"
 #import "RecordTableViewCell.h"
-#import "WorshipSearchViewController.h"
-#import "InterestedTabelViewController.h"
-@interface InterestedViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "WorshipSearchViewController.h"//搜索
+#import "DeterMineTcViewController.h"
+@interface TargetCustomerViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
     
@@ -20,11 +20,11 @@
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @end
 
-@implementation InterestedViewController
+@implementation TargetCustomerViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"意向客户";
+    self.title = @"目标客户";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -34,7 +34,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self InterestedUI];
-    [self Visitnewworking];
+    [self selectTargetVisit];
 }
 -(void)InterestedUI{
     NSString* phoneModel = [UIDevice devicePlatForm];
@@ -71,7 +71,7 @@
         make.height.mas_offset(1);
     }];
     UILabel *zuijinlabel = [[UILabel alloc]init];
-    zuijinlabel.text = @"最近的意向客户";
+    zuijinlabel.text = @"新增的目标客户";
     zuijinlabel.font = [UIFont systemFontOfSize:14];
     zuijinlabel.textColor = [UIColor lightGrayColor];
     [self.view addSubview:zuijinlabel];
@@ -131,75 +131,35 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    RecotdModel *model=[[RecotdModel alloc]init];
+    tcModel *model=[[tcModel alloc]init];
     model = _InterNameAry[indexPath.row];
-    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.storeName];
-    if (model.province == nil) {
-    cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.city,model.county];
+    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.StoreName];
+    if (model.Province == nil) {
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.City,model.County];
     }else{
-       cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.province,model.city,model.county];
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.Province,model.City,model.County];
     }
     
-    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
+    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Time substringWithRange:NSMakeRange(5, 11)]];
     cell.shijianLabel.text = xxsj;
     
     return cell;
 }
--(void)Visitnewworking{
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            NSArray *array=[responseObject valueForKey:@"list"];
-            _InterNameAry = [[NSMutableArray alloc]init];
-            for (NSDictionary *dic in array) {
-                RecotdModel *model=[[RecotdModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [_InterNameAry addObject:model];
-            }
-            [infonTableview reloadData];
-        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                ViewController *loginVC = [[ViewController alloc] init];
-                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                [self presentViewController:loginNavC animated:YES completion:nil];
-            };
-            [alertView showMKPAlertView];
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-    } view:self.view MBPro:YES];
-    
-}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RecotdModel *model=[[RecotdModel alloc]init];
+    tcModel *model=[[tcModel alloc]init];
     model = _InterNameAry[indexPath.row];
-    InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
-    intabel.intentionId = model.Id;
-    intabel.strId = self.strId;
-    [self.navigationController pushViewController:intabel animated:YES];
-    
+    DeterMineTcViewController *dTcVC = [[DeterMineTcViewController alloc]init];
+    dTcVC.TargetVisitId = model.Id;
+    dTcVC.shopname =model.StoreName;
+    [self.navigationController pushViewController:dTcVC animated:YES];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)Touchsearch{
+    
+    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
+    worseaVC.strId = self.strId;
+    worseaVC.intere = @"2";
+    [self.navigationController pushViewController:worseaVC animated:YES];
 }
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
@@ -223,12 +183,66 @@
 -(void)buiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)Touchsearch{
-    //SearchViewController
-    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
-    worseaVC.strId = self.strId;
-    worseaVC.intere = @"1";
-    [self.navigationController pushViewController:worseaVC animated:YES];
+-(void)selectTargetVisit{
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectTargetVisit.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSArray *array=[responseObject valueForKey:@"list"];
+            _InterNameAry = [[NSMutableArray alloc]init];
+            for (NSDictionary *dic in array) {
+                tcModel *model=[[tcModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_InterNameAry addObject:model];
+            }
+            [infonTableview reloadData];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [infonTableview addEmptyViewWithImageName:@"" title:@"暂无目标客户" Size:20.0];
+            infonTableview.emptyView.hidden = NO;
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        
+        
+    } view:self.view MBPro:YES];
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end
