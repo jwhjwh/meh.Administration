@@ -354,6 +354,11 @@
 		1FC72E3A1F4BCE47000421EC /* ViewControllerStayCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E391F4BCE47000421EC /* ViewControllerStayCheck.m */; };
 		1FC72E3D1F4BD32A000421EC /* ViewControllerAllTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E3C1F4BD32A000421EC /* ViewControllerAllTable.m */; };
 		1FC72E401F4BE1DA000421EC /* ViewControllerSelectTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC72E3F1F4BE1DA000421EC /* ViewControllerSelectTable.m */; };
+		1FC935C41F8DAF4C005AB2A9 /* ViewControllerBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC935C31F8DAF4C005AB2A9 /* ViewControllerBacklog.m */; };
+		1FC935C81F8DBE76005AB2A9 /* CellBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC935C71F8DBE76005AB2A9 /* CellBacklog.m */; };
+		1FC936091F8DCACC005AB2A9 /* zt_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC936081F8DCACC005AB2A9 /* zt_ico01.png */; };
+		1FC9360F1F8DFFE5005AB2A9 /* ViewChooseState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC9360E1F8DFFE5005AB2A9 /* ViewChooseState.m */; };
+		1FC936121F8E19E3005AB2A9 /* ViewControllerStateBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC936111F8E19E3005AB2A9 /* ViewControllerStateBacklog.m */; };
 		1FCEB93D1F79EE0E00D8F175 /* VCInsideFillMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB93C1F79EE0E00D8F175 /* VCInsideFillMonthTable.m */; };
 		1FCEB9401F79EEEB00D8F175 /* ViewInsideMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB93F1F79EEEB00D8F175 /* ViewInsideMonthTable.m */; };
 		1FCEB9441F7A03CA00D8F175 /* VCDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB9431F7A03CA00D8F175 /* VCDrafts.m */; };
@@ -429,6 +434,9 @@
 		1FE4FE181F68BC070045C8D6 /* CellMyTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE4FE171F68BC070045C8D6 /* CellMyTable.m */; };
 		1FE4FE1E1F69085C0045C8D6 /* CellDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE4FE1D1F69085C0045C8D6 /* CellDetail.m */; };
 		1FE4FE241F6922CF0045C8D6 /* CellMineTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE4FE231F6922CF0045C8D6 /* CellMineTable.m */; };
+		1FE5A21E1F90443100C5221A /* VCAddBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A21D1F90443100C5221A /* VCAddBacklog.m */; };
+		1FE5A2231F906B1100C5221A /* CellAddBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2221F906B1100C5221A /* CellAddBacklog.m */; };
+		1FE5A2261F90704D00C5221A /* CellEditBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2251F90704D00C5221A /* CellEditBacklog.m */; };
 		1FE76A071F78F1D5003E4FA9 /* VCArtFillMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A061F78F1D5003E4FA9 /* VCArtFillMonthTable.m */; };
 		1FE76A0A1F78F1F7003E4FA9 /* ViewArtMonthPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A091F78F1F7003E4FA9 /* ViewArtMonthPlan.m */; };
 		1FE76A0D1F78FD51003E4FA9 /* ViewArtMonthSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A0C1F78FD51003E4FA9 /* ViewArtMonthSummary.m */; };
@@ -1386,6 +1394,15 @@
 		1FC72E3C1F4BD32A000421EC /* ViewControllerAllTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerAllTable.m; sourceTree = "<group>"; };
 		1FC72E3E1F4BE1DA000421EC /* ViewControllerSelectTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerSelectTable.h; sourceTree = "<group>"; };
 		1FC72E3F1F4BE1DA000421EC /* ViewControllerSelectTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerSelectTable.m; sourceTree = "<group>"; };
+		1FC935C21F8DAF4C005AB2A9 /* ViewControllerBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerBacklog.h; sourceTree = "<group>"; };
+		1FC935C31F8DAF4C005AB2A9 /* ViewControllerBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerBacklog.m; sourceTree = "<group>"; };
+		1FC935C61F8DBE76005AB2A9 /* CellBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellBacklog.h; sourceTree = "<group>"; };
+		1FC935C71F8DBE76005AB2A9 /* CellBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellBacklog.m; sourceTree = "<group>"; };
+		1FC936081F8DCACC005AB2A9 /* zt_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zt_ico01.png; sourceTree = "<group>"; };
+		1FC9360D1F8DFFE5005AB2A9 /* ViewChooseState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewChooseState.h; sourceTree = "<group>"; };
+		1FC9360E1F8DFFE5005AB2A9 /* ViewChooseState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewChooseState.m; sourceTree = "<group>"; };
+		1FC936101F8E19E3005AB2A9 /* ViewControllerStateBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerStateBacklog.h; sourceTree = "<group>"; };
+		1FC936111F8E19E3005AB2A9 /* ViewControllerStateBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerStateBacklog.m; sourceTree = "<group>"; };
 		1FCEB93B1F79EE0E00D8F175 /* VCInsideFillMonthTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideFillMonthTable.h; sourceTree = "<group>"; };
 		1FCEB93C1F79EE0E00D8F175 /* VCInsideFillMonthTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideFillMonthTable.m; sourceTree = "<group>"; };
 		1FCEB93E1F79EEEB00D8F175 /* ViewInsideMonthTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewInsideMonthTable.h; sourceTree = "<group>"; };
@@ -1521,6 +1538,12 @@
 		1FE4FE1D1F69085C0045C8D6 /* CellDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellDetail.m; sourceTree = "<group>"; };
 		1FE4FE221F6922CF0045C8D6 /* CellMineTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellMineTable.h; sourceTree = "<group>"; };
 		1FE4FE231F6922CF0045C8D6 /* CellMineTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellMineTable.m; sourceTree = "<group>"; };
+		1FE5A21C1F90443100C5221A /* VCAddBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCAddBacklog.h; sourceTree = "<group>"; };
+		1FE5A21D1F90443100C5221A /* VCAddBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddBacklog.m; sourceTree = "<group>"; };
+		1FE5A2211F906B1100C5221A /* CellAddBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellAddBacklog.h; sourceTree = "<group>"; };
+		1FE5A2221F906B1100C5221A /* CellAddBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellAddBacklog.m; sourceTree = "<group>"; };
+		1FE5A2241F90704D00C5221A /* CellEditBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellEditBacklog.h; sourceTree = "<group>"; };
+		1FE5A2251F90704D00C5221A /* CellEditBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellEditBacklog.m; sourceTree = "<group>"; };
 		1FE76A051F78F1D5003E4FA9 /* VCArtFillMonthTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtFillMonthTable.h; sourceTree = "<group>"; };
 		1FE76A061F78F1D5003E4FA9 /* VCArtFillMonthTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtFillMonthTable.m; sourceTree = "<group>"; };
 		1FE76A081F78F1F7003E4FA9 /* ViewArtMonthPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewArtMonthPlan.h; sourceTree = "<group>"; };
@@ -3223,6 +3246,33 @@
 			path = Parse;
 			sourceTree = "<group>";
 		};
+		1FC935C11F8DAF32005AB2A9 /* BackLog */ = {
+			isa = PBXGroup;
+			children = (
+				1FC935C51F8DBA40005AB2A9 /* Cell */,
+				1FC935C21F8DAF4C005AB2A9 /* ViewControllerBacklog.h */,
+				1FC935C31F8DAF4C005AB2A9 /* ViewControllerBacklog.m */,
+				1FC936101F8E19E3005AB2A9 /* ViewControllerStateBacklog.h */,
+				1FC936111F8E19E3005AB2A9 /* ViewControllerStateBacklog.m */,
+				1FE5A21C1F90443100C5221A /* VCAddBacklog.h */,
+				1FE5A21D1F90443100C5221A /* VCAddBacklog.m */,
+			);
+			path = BackLog;
+			sourceTree = "<group>";
+		};
+		1FC935C51F8DBA40005AB2A9 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1FC935C61F8DBE76005AB2A9 /* CellBacklog.h */,
+				1FC935C71F8DBE76005AB2A9 /* CellBacklog.m */,
+				1FE5A2211F906B1100C5221A /* CellAddBacklog.h */,
+				1FE5A2221F906B1100C5221A /* CellAddBacklog.m */,
+				1FE5A2241F90704D00C5221A /* CellEditBacklog.h */,
+				1FE5A2251F90704D00C5221A /* CellEditBacklog.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1FCEB9411F7A037600D8F175 /* Drafts */ = {
 			isa = PBXGroup;
 			children = (
@@ -3812,6 +3862,7 @@
 		6218D08B1E4E99AE00299989 /* MainAry */ = {
 			isa = PBXGroup;
 			children = (
+				1FC935C11F8DAF32005AB2A9 /* BackLog */,
 				1FD184161F67C87200FCB30F /* MyTable */,
 				1FF094B71F41777A006313ED /* managerTable */,
 				625C91FC1E85150800D9011B /* Tracking */,
@@ -3934,6 +3985,8 @@
 				1FD532991F73444400ED05B2 /* MyTextField.m */,
 				1FCEB9511F7A4E6C00D8F175 /* ViewChooseEdit.h */,
 				1FCEB9521F7A4E6C00D8F175 /* ViewChooseEdit.m */,
+				1FC9360D1F8DFFE5005AB2A9 /* ViewChooseState.h */,
+				1FC9360E1F8DFFE5005AB2A9 /* ViewChooseState.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4383,6 +4436,7 @@
 		62656D2C1E52B5700085A2BD /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1FC936081F8DCACC005AB2A9 /* zt_ico01.png */,
 				1F71B8721F88697600C3638F /* submit_ico01.png */,
 				1F71B8741F886BD600C3638F /* sj_ico.png */,
 				1F71B8761F886C2A00C3638F /* pz_ico01.png */,
@@ -4801,7 +4855,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -4869,6 +4923,7 @@
 				1F0B2F581EC016E200E3E891 /* scbut.png in Resources */,
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				1F3B3DE71E8DF93C00E75027 /* icon_035.gif in Resources */,
+				1FC936091F8DCACC005AB2A9 /* zt_ico01.png in Resources */,
 				1F3B3DE41E8DF93C00E75027 /* icon_029_cover.png in Resources */,
 				624E71051EC404980026C5E9 /* 职位结构9.jpg in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
@@ -5084,6 +5139,7 @@
 				1FD075E51F760BCE003E01EB /* VCBuessFillWeekTable.m in Sources */,
 				1FD95FAD1F7CDE3D00CB09AD /* VCBuessWeekSummaryDrafts.m in Sources */,
 				1F6211ED1E8CFFB000F50851 /* EaseConversationListViewController.m in Sources */,
+				1FC936121F8E19E3005AB2A9 /* ViewControllerStateBacklog.m in Sources */,
 				1FEEC58A1ED3D47C006C3523 /* JoblistController.m in Sources */,
 				1FF580AA1F8C67E0001C3D40 /* VCInsideWeekPostil.m in Sources */,
 				1FDA16411F6F5BBC0054A322 /* CellEditInfo.m in Sources */,
@@ -5109,6 +5165,7 @@
 				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,
 				1F6AB7FD1E8B9C8A006CB015 /* WBSPopShareView.m in Sources */,
 				1FDD93151F42F4D5002E834B /* CellTbale.m in Sources */,
+				1FE5A2231F906B1100C5221A /* CellAddBacklog.m in Sources */,
 				620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */,
 				1F820FEF1E86028F00E11F17 /* AppDelegate+EaseMobDebug.m in Sources */,
 				1F6AB7E31E8B978C006CB015 /* UIButton+BBTButton.m in Sources */,
@@ -5151,6 +5208,7 @@
 				1F1D1F9B1E6D4B810021B1AD /* brandTableViewCell.m in Sources */,
 				1F6211C41E8CFFAF00F50851 /* EMSDWebImagePrefetcher.m in Sources */,
 				1F672ED11E82384300856A9C /* CrowdViewController.m in Sources */,
+				1FC9360F1F8DFFE5005AB2A9 /* ViewChooseState.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
 				1F62119B1E8CFFAF00F50851 /* amrFileCodec.mm in Sources */,
 				1FDAB34E1F1077B700AB0495 /* GroupMenberController.m in Sources */,
@@ -5181,6 +5239,7 @@
 				1F6833BF1E72A08700F74D50 /* busableController.m in Sources */,
 				625B8FFE1F67BCF700E34D8A /* SmallStoreViewController.m in Sources */,
 				1F71B8CE1F88A2A700C3638F /* VCArtMonthUnPassed.m in Sources */,
+				1FC935C81F8DBE76005AB2A9 /* CellBacklog.m in Sources */,
 				1FDCBAAC1E7A3E16002C80FB /* GroupdetailController.m in Sources */,
 				1FF3F3A91F60D6C60014D89E /* CellSummary.m in Sources */,
 				1FF580AB1F8C67E0001C3D40 /* VCInsideWeekSummaryPostil.m in Sources */,
@@ -5285,10 +5344,12 @@
 				6252AA271E9CB13E00871377 /* MYPresentAnimationManager.m in Sources */,
 				620B9C711F79051600B24660 /* InterestedModel.m in Sources */,
 				6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */,
+				1FE5A2261F90704D00C5221A /* CellEditBacklog.m in Sources */,
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
 				1F62119D1E8CFFAF00F50851 /* EMVoiceConverter.mm in Sources */,
 				62656C541E529BC10085A2BD /* IQUIWindow+Hierarchy.m in Sources */,
 				1FF5DDA51ED022AE002BE213 /* Userpas.m in Sources */,
+				1FE5A21E1F90443100C5221A /* VCAddBacklog.m in Sources */,
 				1F3FAA001EB9891700162940 /* JobcatController.m in Sources */,
 				1F6211FD1E8CFFB000F50851 /* EaseBubbleView+Video.m in Sources */,
 				62629F431F6A6D920001BA89 /* positionViewController.m in Sources */,
@@ -5338,6 +5399,7 @@
 				626254061E728D99000B8F0F /* RectordViewController.m in Sources */,
 				1F6211F91E8CFFB000F50851 /* EaseBubbleView+Gif.m in Sources */,
 				1F6211AE1E8CFFAF00F50851 /* MJRefreshNormalHeader.m in Sources */,
+				1FC935C41F8DAF4C005AB2A9 /* ViewControllerBacklog.m in Sources */,
 				1FD4EF651F6CAEBC002CD285 /* ViewDatePick.m in Sources */,
 				1F71B8D91F88A2A700C3638F /* VCInsideWeekUnPassed.m in Sources */,
 				1FE8001A1F6A0B55003841E4 /* CellEditTable.m in Sources */,
@@ -5699,7 +5761,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5728,7 +5790,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5747,7 +5809,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5776,7 +5838,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

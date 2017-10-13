@@ -179,6 +179,7 @@
     }];
     self.viewSummary = viewSummary;
     
+    
     ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,550)];
     artWeekSummary.userInteractionEnabled = NO;
     [viewSummary addSubview:artWeekSummary];

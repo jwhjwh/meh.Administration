@@ -63,7 +63,7 @@
     buttonPostil.hidden = YES;
     [self.contentView addSubview:buttonPostil];
     [buttonPostil mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(labelNumber.mas_left).offset(-1);
+        make.right.mas_equalTo(labelNumber.mas_left).offset(-2);
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.height.mas_equalTo(20);
         make.width.mas_equalTo(20);

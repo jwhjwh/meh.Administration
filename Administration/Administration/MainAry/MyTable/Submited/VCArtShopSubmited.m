@@ -189,9 +189,9 @@
     
 }
 
--(void)gotoPositil:(UIButton *)button
+-(void)gotoPositil:(UIButton *)button1
 {
-    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    CellEditPlan *cell = (CellEditPlan *)[button1 superview].superview;
     
     VCPositil *vc = [[VCPositil alloc]init];
     for (NSString *key in [self.dict allKeys]) {
@@ -461,10 +461,10 @@
     cell.LabelTitle.text = arrayTitle[indexPath.row];
     cell.textView.delegate = self;
     if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;
     }else
     {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;
     }
     switch (indexPath.row) {
         case 0:
@@ -490,6 +490,7 @@
                     cell.buttonPostil.userInteractionEnabled  =YES;
                     NSRange rang = [string rangeOfString:@"aim"];
                     cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
+                    break;
                 }
             }
             

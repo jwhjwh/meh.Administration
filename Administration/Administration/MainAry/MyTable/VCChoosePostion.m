@@ -104,7 +104,13 @@
     [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     [ShareModel shareModel].num = [NSString stringWithFormat:@"%@",dict[@"num"]];
     [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
+    if ([dict[@"did"]isKindOfClass:[NSNull class]]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无部门" andInterval:1.0];
+        return;
+    }else
+    {
     [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 //每一个分组的上左下右间距
 

@@ -579,7 +579,7 @@
     
     if (self.isSelect==NO) {
         if (canEdit) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;
             switch (indexPath.row) {
                 case 0:
                     if (self.string1.length!=0) {
@@ -683,12 +683,12 @@
             }
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;
         }
     }
     else
     {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;
         switch (indexPath.row) {
             case 0:
                 if (self.string1.length!=0) {

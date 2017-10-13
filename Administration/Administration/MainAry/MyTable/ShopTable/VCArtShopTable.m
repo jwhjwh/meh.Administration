@@ -193,37 +193,37 @@
         [dict setValue:@"" forKey:@"Shipment"];
     }
     if (self.string5.length!=0) {
-        [dict setValue:self.string4 forKey:@"Question"];
+        [dict setValue:self.string5 forKey:@"Question"];
     }else
     {
         [dict setValue:@"" forKey:@"Question"];
     }
     if (self.string6.length!=0) {
-        [dict setValue:self.string4 forKey:@"Solution"];
+        [dict setValue:self.string6 forKey:@"Solution"];
     }else
     {
         [dict setValue:@"" forKey:@"Solution"];
     }
     if (self.string7.length!=0) {
-        [dict setValue:self.string4 forKey:@"Apperception"];
+        [dict setValue:self.string7 forKey:@"Apperception"];
     }else
     {
         [dict setValue:@"" forKey:@"Apperception"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string4 forKey:@"MorgenPlan"];
+        [dict setValue:self.string8 forKey:@"MorgenPlan"];
     }else
     {
         [dict setValue:@"" forKey:@"MorgenPlan"];
     }
     if (self.string9.length!=0) {
-        [dict setValue:self.string4 forKey:@"MorgenAim"];
+        [dict setValue:self.string9 forKey:@"MorgenAim"];
     }else
     {
         [dict setValue:@"" forKey:@"MorgenAim"];
     }
     if (self.summary.length!=0) {
-        [dict setValue:self.string4 forKey:@"Summery"];
+        [dict setValue:self.summary forKey:@"Summery"];
     }else
     {
         [dict setValue:@"" forKey:@"Summery"];
@@ -319,6 +319,7 @@
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.LabelTitle.text = arrayTitle[indexPath.row];
     cell.textView.delegate = self;
     switch (indexPath.row) {
@@ -470,9 +471,22 @@
     self.title=  @"填写店报表";
     [self setUI];
     arrayTitle = @[@"地区店名老板",@"目标",@"业绩",@"出货",@"发现问题",@"解决方案",@"感悟分享",@"明日计划",@"明日目标",@"总结"];
+    
+    self.string9 = @"";
+    self.string8 = @"";
+    self.string7 = @"";
+    self.string6 = @"";
+    self.string5 = @"";
+    self.string4 = @"";
+    self.string3 = @"";
+    self.string2 = @"";
+    self.string1 = @"";
+    self.summary = @"";
+    
+    
     isBack = NO;
     UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [submit setImage:[UIImage imageNamed:@"up_ico02"] forState:UIControlStateNormal];
+    [submit setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:submit];
     self.navigationItem.rightBarButtonItem = item;

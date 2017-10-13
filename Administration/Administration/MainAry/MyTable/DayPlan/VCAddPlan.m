@@ -33,14 +33,14 @@
     UILabel *labelDate = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
     labelDate.text = @"  日期";
     labelDate.backgroundColor = [UIColor whiteColor];
-    labelDate.textColor = [UIColor lightGrayColor];
+    labelDate.textColor = GetColor(117, 118, 119, 1);
     [viewTop addSubview:labelDate];
     
     UIButton *buttonChooseDate = [[UIButton alloc]initWithFrame:CGRectMake(120, 0, Scree_width-120, 40)];
     buttonChooseDate.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     buttonChooseDate.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [buttonChooseDate setTitle:@"选择日期" forState:UIControlStateNormal];
-    [buttonChooseDate setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+    [buttonChooseDate setTitleColor:GetColor(117, 118, 119, 1) forState:UIControlStateNormal];
     [buttonChooseDate setBackgroundColor:[UIColor whiteColor]];
     [buttonChooseDate addTarget:self action:@selector(showMyDatePick) forControlEvents:UIControlEventTouchUpInside];
     [viewTop addSubview:buttonChooseDate];

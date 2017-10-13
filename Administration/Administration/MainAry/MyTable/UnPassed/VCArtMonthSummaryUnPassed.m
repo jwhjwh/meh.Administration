@@ -261,9 +261,9 @@
     [self.view addSubview:chooseEdit];
 }
 
--(void)gotoPositil:(UIButton *)button
+-(void)gotoPositil:(UIButton *)button1
 {
-    CellEditPlan *cell = (CellEditPlan *)[button superview].superview;
+    CellEditPlan *cell = (CellEditPlan *)[button1 superview].superview;
     
     VCPositil *vc = [[VCPositil alloc]init];
     for (NSString *key in [self.dict allKeys]) {

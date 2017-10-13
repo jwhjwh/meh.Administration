@@ -251,6 +251,7 @@
     if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
         ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
         vc.stringTitle = dict[@"name"];
+        vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
         //  vc.roleId = self.rid;
         vc.departmentId = self.departmentID;
         vc.postionName = self.positionName;
@@ -264,6 +265,7 @@
         if ([roleID isEqualToString:@"2"]||[roleID isEqualToString:@"6"]||[roleID isEqualToString:@"10"]) {
             VCWeekTable *vc = [[VCWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             //  vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = self.positionName;
@@ -283,6 +285,7 @@
         {
             VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             // vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = self.positionName;
@@ -303,6 +306,7 @@
         {
             VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             //  vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = self.positionName;
@@ -325,6 +329,7 @@
         {
             VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             // vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = self.positionName;
@@ -344,6 +349,7 @@
         {
             VCInsideMonthTable *vc = [[VCInsideMonthTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             //  vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = self.positionName;

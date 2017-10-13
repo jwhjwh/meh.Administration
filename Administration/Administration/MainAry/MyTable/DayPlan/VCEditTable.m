@@ -281,7 +281,8 @@
                            @"Helped":self.string4,
                            @"did":did,
                            @"id":planID,
-                           @"RoleId":[ShareModel shareModel].roleID
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {

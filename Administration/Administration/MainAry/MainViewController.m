@@ -18,6 +18,7 @@
 #import "ViewControllerChoosePosition.h"//选择职位
 #import "ManageViewController.h"//员工管理
 #import "VCChoosePostion.h"//我的报表
+#import "ViewControllerBacklog.h"
 #import "MessageController.h"
 #import "XLsn0wLoop.h"
 #import "MenuCell.h"
@@ -303,7 +304,8 @@
                 break;
             case 3:{
                 //待办事项
-                
+                ViewControllerBacklog *vc = [[ViewControllerBacklog alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case 4:{

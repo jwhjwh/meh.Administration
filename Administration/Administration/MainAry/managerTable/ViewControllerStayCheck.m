@@ -32,8 +32,6 @@
 
 -(void)getData
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
     NSString *urlStr =[NSString stringWithFormat:@"%@report/selectDayDayReportState.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -82,7 +80,7 @@
         
     } failure:^(NSError *error) {
         
-    } view:self.view MBPro:NO];
+    } view:self.view MBPro:YES];
     
 }
 #pragma -mark tabelView
@@ -122,6 +120,7 @@
         vc.postionName = dict[@"newName"];
         vc.remark = dict[@"remark"];
         vc.tableId = dict[@"id"];
+        vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
         vc.num = self.num;
         //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -136,6 +135,7 @@
             vc.remark = dict[@"remark"];
             vc.tableId = dict[@"id"];
             vc.num = self.num;
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
                 vc.tableId = dict[@"id"];
@@ -149,6 +149,7 @@
         {
             VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
            // vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
@@ -169,6 +170,7 @@
         {
             VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
            // vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
@@ -191,6 +193,7 @@
         {
             VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
           //  vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
@@ -210,6 +213,7 @@
         {
             VCInsideMonthTable *vc = [[VCInsideMonthTable alloc]init];
             vc.stringTitle = dict[@"name"];
+            vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
           //  vc.roleId = self.rid;
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];

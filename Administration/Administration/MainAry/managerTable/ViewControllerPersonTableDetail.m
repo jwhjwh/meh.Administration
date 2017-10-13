@@ -45,7 +45,6 @@
                 NSString *stringKey = [responseObject valueForKey:@"name"];
                 self.arrayKey = [stringKey componentsSeparatedByString:@","];
                 self.power = [responseObject valueForKey:@"power"];
-                
                [self.tableView reloadData];
             }
             return ;
