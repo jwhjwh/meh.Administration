@@ -42,6 +42,7 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)UIBarButtonItem *rightitem1;
+@property (nonatomic,strong)UIBarButtonItem *rightitem;
 @property(nonatomic,strong) NSArray *arrayPostil;
 @end
 
@@ -68,12 +69,16 @@
             }else
             {
                 [self setSummaryUI];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                return ;
             }
 
             [self.tableView reloadData];
         }else
         {
             [self setSummaryUI];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
@@ -180,7 +185,6 @@
     self.viewSummary = viewSummary;
     
     ViewBuessWeekSummary *buessSummary = [[ViewBuessWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,250)];
-    buessSummary.userInteractionEnabled = NO;
     [viewSummary addSubview:buessSummary];
     self.buessSummary = buessSummary;
     
@@ -273,12 +277,11 @@
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
         self.viewPlan.hidden = YES;
-        self.viewSummary.userInteractionEnabled = NO;
         self.arryaTitle = @[@"工作目标达成进展简述",@"工作进度及目标达成的分析和评估",@"出现的问题及解决方案或建议",@"自我心得体会及总结",@"本周市场手机的案例、模式及市场营销策略分享",@"其他事项"];
         self.arrayContent = @[@"填写工作目标达成进展简述",@"填写工作进度及目标达成的分析和评估",@"填写出现的问题及解决方案或建议",@"填写自我心得体会及总结",@"填写本周市场手机的案例、模式及市场营销策略分享",@"填写其他事项"];
         
         self.title = @"填写周总结";
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.rightitem;
         [self getSummary];
     }
     [self.tableView reloadData];
@@ -329,7 +332,12 @@
 //        
 //        self.navigationItem.rightBarButtonItem = btn;
         
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
+       UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button2];
         self.navigationItem.rightBarButtonItem = rightItem;
        
         self.buessTable.userInteractionEnabled = YES;
@@ -483,6 +491,9 @@
         return;
     }
     }
+    if (self.isSelect) {
+        
+    
     
     NSDictionary *dict = @{
                            @"appkey":appKeyStr,
@@ -534,6 +545,61 @@
     } failure:^(NSError *error) {
         
     } view:self.view];
+    }else
+    {
+        NSDictionary *dict = @{
+                               @"appkey":appKeyStr,
+                               @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                               @"CompanyInfoId":compid,
+                               @"RoleId":[ShareModel shareModel].roleID,
+                               @"DepartmentID":[ShareModel shareModel].departmentID,
+                               @"Num":[ShareModel shareModel].num,
+                               @"Sort":[ShareModel shareModel].sort,
+                               @"code":@"1",
+                               @"Hint":hint,
+                               @"StartDate":self.buessSummary.startDate.titleLabel.text,
+                               @"EndDate":self.buessSummary.endDate.titleLabel.text,
+                               @"PlanStore":self.buessSummary.textFiled1.text,
+                               @"ActualStore":self.buessSummary.textFiled2.text,
+                               @"SpecialtyStore":self.buessSummary.textFiled3.text,
+                               @"FrontBackStore":self.buessSummary.textFiled4.text,
+                               @"ConfirmStore":self.buessSummary.textFiled5.text,
+                               @"CooperationStore":self.buessSummary.textFiled6.text,
+                               @"RealityMoney":self.buessSummary.textFiled7.text,
+                               @"WorkProgress":self.string1,
+                               @"WorkAnalyzeAssess":self.string2,
+                               @"ProblemSolution":self.string3,
+                               @"SelfSummary":self.string4,
+                               @"CaseStrategyShare":self.string5,
+                               @"Name":[USER_DEFAULTS valueForKey:@"name"]
+                               };
+        [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
+            NSString *code = [responseObject valueForKey:@"status"];
+            if ([code isEqualToString:@"0000"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                return ;
+            }
+            if ([code isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"0001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
+                return;
+            }
+            
+        } failure:^(NSError *error) {
+            
+        } view:self.view];
+    }
 }
 
 -(void)textViewDidChange:(UITextView *)textView
@@ -606,18 +672,7 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.placeholder = self.arrayContent[indexPath.row];
-    if (canEdit) {
-        cell.userInteractionEnabled = YES;
-    }else
-    {
-        cell.userInteractionEnabled = NO;
-    }
     
-    if (self.isSelect==NO) {
-        cell.textView.userInteractionEnabled = NO;
-    }
-    else
-    {
         switch (indexPath.row) {
                 
             case 0:
@@ -718,7 +773,6 @@
             default:
                 break;
         }
-    }
     return cell;
     }
 }
@@ -772,6 +826,11 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [self.rightitem1 setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = self.rightitem1;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+    [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+    self.rightitem = [[UIBarButtonItem alloc]initWithCustomView:button2];
 }
 
 - (void)didReceiveMemoryWarning {

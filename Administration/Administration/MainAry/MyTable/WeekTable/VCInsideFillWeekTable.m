@@ -607,7 +607,7 @@
     
     
     UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [submit setImage:[UIImage imageNamed:@"up_ico02"] forState:UIControlStateNormal];
+    [submit setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
     [submit addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
     self.item = [[UIBarButtonItem alloc]initWithCustomView:submit];
     self.navigationItem.rightBarButtonItem = self.item;

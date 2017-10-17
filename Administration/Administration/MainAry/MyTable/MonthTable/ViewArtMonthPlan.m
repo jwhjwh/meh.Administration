@@ -249,12 +249,5 @@
     [self.buttonDate setTitle:stringDate forState:UIControlStateNormal];
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (textField.text.length>=4) {
-        textField.text = [textField.text substringToIndex:3];
-    }
-    return YES;
-}
 
 @end

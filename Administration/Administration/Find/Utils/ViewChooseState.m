@@ -53,6 +53,7 @@
     tableView.dataSource = self;
     tableView.scrollEnabled = NO;
     [view addSubview:tableView];
+    self.tableView = tableView;
     
 }
 

@@ -156,7 +156,7 @@ typedef void (^finish)(id result);
 
     } failure:^(NSError *error) {
         
-    } view:self.view MBPro:YES];
+    } view:self.view.window MBPro:YES];
     
 }
 

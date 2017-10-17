@@ -458,7 +458,12 @@
 //        
 //        self.navigationItem.rightBarButtonItem = btn;
         
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
+       UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button2];
         self.navigationItem.rightBarButtonItem = rightItem;
         
         self.viewSummary.userInteractionEnabled = YES;
@@ -584,14 +589,14 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
     if ([self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
+        [self.string2 isEqualToString:@""]||
+        [self.string3 isEqualToString:@""]||
+        [self.string4 isEqualToString:@""]||
+        [self.string5 isEqualToString:@""]||
+        [self.string6 isEqualToString:@""]||
+        [self.string7 isEqualToString:@""]||
+        [self.string8 isEqualToString:@""]||
+        [self.string9 isEqualToString:@""]||
         [self.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.endDate.titleLabel.text isEqualToString:@"选择日期"]
         )

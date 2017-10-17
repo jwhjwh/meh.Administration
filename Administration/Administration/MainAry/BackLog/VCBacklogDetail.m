@@ -1,17 +1,18 @@
 //
-//  VCAddBacklog.m
+//  VCBacklogDetail.m
 //  Administration
 //
-//  Created by zhang on 2017/10/13.
+//  Created by zhang on 2017/10/16.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "VCAddBacklog.h"
-#import "CellEditInfo.h"
-#import "CellAddBacklog.h"
+#import "VCBacklogDetail.h"
 #import "ViewDatePick.h"
 #import "ViewChooseBacklog.h"
-@interface VCAddBacklog ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewDatePickerDelegate,ViewChooseBacklogDelegate>
+#import "CellAddBacklog.h"
+#import "CellEditInfo.h"
+#import "ViewChooseEdit.h"
+@interface VCBacklogDetail ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewDatePickerDelegate,ViewChooseBacklogDelegate,ViewChooseEditDelegate,UIAlertViewDelegate>
 @property (nonatomic,weak)UILabel *label;
 
 @property (nonatomic,weak)UIButton *warnDate;
@@ -22,6 +23,7 @@
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSArray *arrayPlacehold;
 @property (nonatomic,strong)NSArray *arrayBackTitle;
+@property (nonatomic,strong)NSArray *arrayData;
 
 @property (nonatomic,strong)NSString *string1;
 @property (nonatomic,strong)NSString *string2;
@@ -29,26 +31,77 @@
 @property (nonatomic,strong)NSString *endTime;
 @property (nonatomic,strong)NSString *wornTime;
 @property (nonatomic,strong)NSString *backlogState;
+@property (nonatomic,strong)NSString *state;
+@property (nonatomic,strong)NSDictionary *dictinfo;
 
 @property (nonatomic,assign)NSUInteger buttonTag;
 
 @property (nonatomic,strong)ViewDatePick *myDatePick;
 @property (nonatomic,strong)ViewChooseBacklog *chooseBacklog;
 
+@property (nonatomic,strong)ViewChooseEdit *chooseEdit;
+
 @property (nonatomic,strong)NSIndexPath *indexPath;
+@property (nonatomic) BOOL canEdit;
 
 @end
 
-@implementation VCAddBacklog
+@implementation VCBacklogDetail
 
-#pragma -mark custem
-
+-(void)getHttpData
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@matters/SelectMatters.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"Matterstype":self.matterstype,
+                           @"id":self.backlogID,
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code=  [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            self.arrayData = [responseObject valueForKey:@"list"];
+            self.dictinfo = self.arrayData[0];
+            self.string1 = _dictinfo[@"title"];
+            self.string2 = _dictinfo[@"content"];
+            
+            self.startTime = [_dictinfo[@"starttime"]substringToIndex:10];
+            self.wornTime = self.dictinfo[@"remindertime"];
+            [self.warnDate setTitle:self.wornTime forState:UIControlStateNormal];
+            
+            if ([[NSString stringWithFormat:@"%@",_dictinfo[@"red"]] isEqualToString:@"0"]) {
+                [self.notReady setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateNormal];
+                [self.notReady setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else
+            {
+                [self.allReady setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateNormal];
+                [self.allReady setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }
+            
+            if ([self.matterstype isEqualToString:@"1"]) {
+                if (![self.dictinfo[@"endtime"]isKindOfClass:[NSNull class]]) {
+                    self.endTime = [_dictinfo[@"endtime"]substringToIndex:10];
+                }
+                
+            }
+            
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
 
 -(void)setUI
 {
     CGRect frameView;
-   
-    frameView = CGRectMake(0, 0, Scree_width, 55);
+    
+    frameView = CGRectMake(0, 0, Scree_width, 108);
     
     UIView *viewFooter = [[UIView alloc]initWithFrame:frameView];
     viewFooter.backgroundColor = GetColor(192, 192, 192, 1);
@@ -65,11 +118,10 @@
         make.width.mas_equalTo(100);
         make.height.mas_equalTo(44);
     }];
-    [viewFooter addSubview:labelworn];
     
-//    view1.frame = CGRectMake(0, 0, Scree_width,30);
     
     UIButton *wornDate = [[UIButton alloc]init];
+    wornDate.userInteractionEnabled = NO;
     wornDate.tag = 500;
     wornDate.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     wornDate.contentEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
@@ -91,10 +143,10 @@
     UIButton *notReady = [[UIButton alloc]init];
     notReady.tag = 300;
     [notReady setBackgroundColor:[UIColor whiteColor]];
-    [notReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
+    [notReady setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
     [notReady setTitle:@"未完成" forState:UIControlStateNormal];
     [notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [notReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
+    [notReady addTarget:self action:@selector(buttonNotPresss) forControlEvents:UIControlEventTouchUpInside];
     [viewFooter addSubview:notReady];
     [notReady mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewFooter.mas_left);
@@ -107,10 +159,10 @@
     UIButton *allReady = [[UIButton alloc]init];
     allReady.tag = 400;
     [allReady setBackgroundColor:[UIColor whiteColor]];
-    [allReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
+    [allReady setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
     [allReady setTitle:@"已完成" forState:UIControlStateNormal];
     [allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [allReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
+    [allReady addTarget:self action:@selector(buttonAllpress) forControlEvents:UIControlEventTouchUpInside];
     [viewFooter addSubview:allReady];
     [allReady mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewFooter.mas_centerX);
@@ -161,20 +213,20 @@
     
     NSDictionary *dict;
     
-    if (self.string1.length==0||self.string2.length==0||self.wornTime.length==0) {
+    if (self.string1.length==0||self.string2.length==0||self.wornTime.length==0||self.startTime.length==0) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
         return;
     }
     
-    if (self.indexPath.row==1) {
-        if ([self.wornTime compare:self.startTime] == NSOrderedAscending) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1];
+    if ([self.matterstype isEqualToString:@"1"]) {
+        if ([self.wornTime compare:self.startTime] == NSOrderedDescending) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能大于开始时间" andInterval:1];
             return;
         }
-        if (self.startTime.length==0) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
-            return;
-        }
+//        if (self.startTime.length==0) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
+//            return;
+//        }
         dict = @{@"appkey":appKeyStr,
                  @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                  @"CompanyInfoId":compid,
@@ -186,6 +238,10 @@
                  };
     }else
     {
+        if (self.endTime.length==0) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
+            return;
+        }
         if ([self.startTime isEqualToString:self.endTime]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"开始时间不能等于结束时间" andInterval:1.0];
             return;
@@ -203,10 +259,7 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"开始时间不能大于结束时间" andInterval:1.0];
             return;
         }
-        if (self.endTime.length==0) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
-            return;
-        }
+        
         dict = @{@"appkey":appKeyStr,
                  @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                  @"CompanyInfoId":compid,
@@ -240,17 +293,89 @@
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
-    
-    
-    
-
 }
 
--(void)showShooseEdit
+-(void)deleteBacklog
 {
+    NSString *urlStr =[NSString stringWithFormat:@"%@matters/DeleteToMatters.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"id":self.backlogID
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"1001 "]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001 "]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+
 }
 
+-(void)changeBacklogSate
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@matters/UpdateToMattersRed.action",KURLHeader];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"Matterstype":self.matterstype,
+                           @"id":self.backlogID
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"1001 "]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001 "]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+
+}
+
+-(void)showEditView
+{
+    self.chooseEdit = [[ViewChooseEdit alloc]initWithFrame:self.view.frame];
+    self.chooseEdit.arrayButton = @[@"编辑",@"删除"];
+    self.chooseEdit.delegate = self;
+    [self.view.window addSubview:self.chooseEdit];
+}
 -(void)showDatePick:(UIButton *)button
 {
     CellAddBacklog *cell = (CellAddBacklog *)[button superview].superview;
@@ -264,10 +389,54 @@
     [self.view.window addSubview:self.myDatePick];
 }
 
--(void)changeState:(UIButton *)button
+-(void)buttonAllpress
 {
-    
+    [self.notReady setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+    [self.notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+    [self.allReady setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateNormal];
+    [self.allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+    [self changeBacklogSate];
 }
+
+-(void)buttonNotPresss
+{
+    [self.allReady setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+    [self.allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+    [self.notReady setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateNormal];
+    [self.notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+}
+
+-(void)getState
+{
+    NSIndexPath *indexPath = [self.chooseEdit.tableView indexPathForSelectedRow];
+    if (indexPath.row==0) {
+        self.canEdit = YES;
+        self.warnDate.userInteractionEnabled = YES;
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(saveBacklog)];
+        [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+        [self.tableView reloadData];
+    }else
+    {
+        [self deleteBacklog];
+    }
+}
+
+-(void)showAlertView
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
+#pragma -mark UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self deleteBacklog];
+    }
+}
+
 
 #pragma -mark viewChooseBacklog
 
@@ -325,36 +494,51 @@
         [cell.startDate addTarget:self action:@selector(showDatePick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.endDate addTarget:self action:@selector(showDatePick:) forControlEvents:UIControlEventTouchUpInside];
         
-        if (self.indexPath.row==1) {
+        if ([self.matterstype isEqualToString:@"1"]) {
             cell.labelzhi.hidden = YES;
             cell.endDate.hidden = YES;
             cell.endDate.userInteractionEnabled = NO;
+            [cell.startDate setTitle:self.startTime forState:UIControlStateNormal];
         }else
         {
             cell.labelzhi.hidden = NO;
             cell.endDate.hidden = NO;
             cell.endDate.userInteractionEnabled = YES;
+            [cell.startDate setTitle:self.startTime forState:UIControlStateNormal];
+            [cell.endDate setTitle:self.endTime forState:UIControlStateNormal];
         }
         
         return cell;
     }else
     {
-    CellEditInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell==nil) {
-        cell = [[CellEditInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+        CellEditInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        if (cell==nil) {
+            cell = [[CellEditInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        }
+        cell.userInteractionEnabled = self.canEdit;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textView.delegate = self;
         cell.textView.placeholder = self.arrayPlacehold[indexPath.row];
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
-        if (indexPath.row==0) {
-            cell.textView.editable = NO;
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChooseBacklog:)];
-            [cell.textView addGestureRecognizer:tap];
+        
+        switch (indexPath.row) {
+            case 0:
+                cell.textView.text = self.arrayBackTitle[[self.dictinfo[@"matterstype"]intValue]];
+                cell.userInteractionEnabled = NO;
+                break;
+            case 2:
+                cell.textView.text = self.string1;
+                break;
+            case 3:
+                cell.textView.text = self.string2;
+                break;
+                
+            default:
+                break;
         }
         
         
-    return cell;
+        return cell;
     }
 }
 
@@ -391,6 +575,11 @@
 
 #pragma  -mark system
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getHttpData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -399,20 +588,20 @@
     [self setUI];
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    UIBarButtonItem *rightitem;
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showEditView)];
+    [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
     
+    self.title = @"添加待办事项";
     
-        self.title = @"添加待办事项";
-       rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(saveBacklog)];
-        [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
-    
-    
+    self.canEdit = NO;
+
     self.navigationItem.rightBarButtonItem = rightitem;
     
     self.arrayTitle = @[@"待办事项",@"日期",@"计划标题",@"详细内容"];
     self.arrayPlacehold = @[@"选择待办事项",@"",@"填写计划标题",@"填写详细内容"];
     self.arrayBackTitle = @[@"待办事项",@"日待办事项",@"周待办事项",@"店家待办事项",@"其他待办事项"];
+    self.arrayData = [NSArray array];
     
     self.string1 = @"";
     self.string2 = @"";

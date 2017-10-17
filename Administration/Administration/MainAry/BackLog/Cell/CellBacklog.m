@@ -22,12 +22,18 @@
 
 -(void)setUI
 {
+    UIImageView *imageView1 = [[UIImageView alloc]init];
+    imageView1.image = [UIImage imageNamed:@"weixuanzhong"];
+    [self.contentView addSubview:imageView1];
+    self.imageView1 = imageView1;
+    
+    
     UILabel *labelMode = [[UILabel alloc]init];
     labelMode.textColor = GetColor(72, 74, 75, 1);
     labelMode.font = [UIFont systemFontOfSize:17];
     [self.contentView addSubview:labelMode];
     [labelMode mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageView1.mas_right).offset(8);
         make.top.mas_equalTo(self.contentView.mas_top).offset(10);
         make.height.mas_equalTo(17);
     }];
@@ -38,7 +44,7 @@
     labelDate.textColor = GetColor(127, 128, 120, 1);
     [self.contentView addSubview:labelDate];
     [labelDate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageView1.mas_right).offset(8);
         make.top.mas_equalTo(labelMode.mas_bottom).offset(5);
         make.height.mas_equalTo(15);
     }];
@@ -49,7 +55,7 @@
     labelDetail.textColor = GetColor(192, 192, 192, 1);
     [self.contentView addSubview:labelDetail];
     [labelDetail mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageView1.mas_right).offset(8);
         make.top.mas_equalTo(labelDate.mas_bottom).offset(5);
         make.right.mas_equalTo(self.contentView.mas_centerX);
         make.height.mas_equalTo(14);
@@ -113,6 +119,11 @@
         self.labelState.text = @"已完成";
         self.labelState.textColor = GetColor(51, 172, 59, 1);
         self.imageSelect.hidden = NO;
+    }else
+    {
+        self.labelState.text = @"未完成";
+        self.labelState.textColor = GetColor(192, 192, 192, 1);
+        self.imageSelect.hidden = YES;
     }
     
     if ([matterstype isEqualToString:@"1"]) {
@@ -132,7 +143,6 @@
         self.labelMode.text = @"其他待办事项";
         }
     }
-    
 }
 
 - (void)awakeFromNib {

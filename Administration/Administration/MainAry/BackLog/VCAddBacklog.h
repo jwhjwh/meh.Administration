@@ -9,6 +9,5 @@
 #import "BaseViewController.h"
 
 @interface VCAddBacklog : BaseViewController
-@property (nonatomic) BOOL isCheckDetail;
-@property (nonatomic) BOOL isReady;
+
 @end

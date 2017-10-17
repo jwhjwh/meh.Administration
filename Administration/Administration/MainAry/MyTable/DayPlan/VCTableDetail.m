@@ -32,7 +32,10 @@
             self.stringDate = [[responseObject valueForKey:@"date"] substringToIndex:10];
             self.stringDescribe = [responseObject valueForKey:@"describe"];
             self.arrayDate = [responseObject valueForKey:@"lists"];
-            [self.tableView reloadData];
+            if (self.arrayDate.count!=0) {
+                [self.tableView reloadData];
+            }
+           // [self.tableView reloadData];
         }
         
     } failure:^(NSError *error) {
@@ -42,11 +45,6 @@
 
 -(void)setUI
 {
-//    UIView *viewT = [[UIView alloc]initWithFrame:CGRectMake(-1, 0, Scree_width+1, 44)];
-//    viewT.layer.borderColor = GetColor(192, 192, 192, 192).CGColor;
-//    viewT.layer.borderWidth = 1.0f;
-//    [self.view addSubview:viewT];
-    
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStyleGrouped];
     tableView.delegate = self;
@@ -97,18 +95,30 @@
     }else
     {
         NSDictionary *dict = self.arrayDate[indexPath.section-1];
+        
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
         if (indexPath.row==0) {
-            cell.labelContent.text = dict[@"others"];
+            if (![dict[@"others"]isKindOfClass:[NSNull class]]) {
+                cell.labelContent.text = dict[@"others"];
+            }
+            
         }
         if (indexPath.row==1) {
-            cell.labelContent.text = dict[@"jobAim"];
+            if (![dict[@"jobAim"]isKindOfClass:[NSNull class]]) {
+                cell.labelContent.text = dict[@"jobAim"];
+            }
+            
         }
         if (indexPath.row==2) {
-            cell.labelContent.text = dict[@"detailMethod"];
+            if (![dict[@"detailMethod"]isKindOfClass:[NSNull class]]) {
+                cell.labelContent.text = dict[@"detailMethod"];
+            }
+            
         }
         if (indexPath.row==3) {
-            cell.labelContent.text = dict[@"helped"];
+            if (![dict[@"helped"]isKindOfClass:[NSNull class]]) {
+                cell.labelContent.text = dict[@"helped"];
+            }
         }
     }
     

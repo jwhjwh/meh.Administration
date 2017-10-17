@@ -15,14 +15,7 @@
 
 @implementation ViewArtWeekSummary
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (textField.text.length>=4) {
-        textField.text = [textField.text substringToIndex:3];
-    }
-    return YES;
-}
-
+   
 -(instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -712,7 +705,7 @@
     self.buttonTAag = button.tag;
     ViewDatePick *myDatePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     myDatePick.delegate = self;
-    [self addSubview:myDatePick];
+    [self.window addSubview:myDatePick];
     self.myDatePick = myDatePick;
 }
 

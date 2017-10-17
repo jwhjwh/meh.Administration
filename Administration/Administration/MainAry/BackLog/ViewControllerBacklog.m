@@ -10,6 +10,7 @@
 #import "CellBacklog.h"
 #import "ViewChooseState.h"
 #import "ViewControllerStateBacklog.h"
+#import "VCBacklogDetail.h"
 #import "VCAddBacklog.h"
 @interface ViewControllerBacklog ()<UITableViewDelegate,UITableViewDataSource,ViewChooseStateDelegate>
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -31,10 +32,11 @@
                            @"CompanyInfoId":compid,
                            @"Matterstype":@"0",
                            };
+    
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            self.arrayData = [responseObject valueForKey:@"list"];
+            self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
             
             if (self.arrayData.count==0) {
                 UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, Scree_width, 20)];
@@ -141,7 +143,6 @@
 -(void)gotoAddBacklog
 {
     VCAddBacklog *vc = [[VCAddBacklog alloc]init];
-    vc.isCheckDetail = NO;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -178,6 +179,15 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dict = self.arrayData[indexPath.row];
+    VCBacklogDetail *vc = [[VCBacklogDetail alloc]init];
+    vc.backlogID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+    vc.matterstype = [NSString stringWithFormat:@"%@",dict[@"matterstype"]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma -mark system

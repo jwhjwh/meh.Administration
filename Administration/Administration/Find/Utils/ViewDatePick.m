@@ -88,7 +88,12 @@
    
     UIDatePicker *datepicker = [[UIDatePicker alloc]init];
     [datepicker setBackgroundColor:[UIColor whiteColor]];
+    if (self.mode==UIDatePickerModeDateAndTime) {
+        datepicker.datePickerMode = UIDatePickerModeDateAndTime;
+    }else
+    {
     datepicker.datePickerMode = UIDatePickerModeDate;
+    }
     [datepicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
     [view addSubview:datepicker];
     [datepicker mas_makeConstraints:^(MASConstraintMaker *make) {
