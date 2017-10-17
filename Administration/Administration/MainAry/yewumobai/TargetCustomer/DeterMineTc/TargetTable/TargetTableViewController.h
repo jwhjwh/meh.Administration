@@ -1,5 +1,5 @@
 //
-//  DeterMineTcViewController.h
+//  TargetTableViewController.h
 //  Administration
 //
 //  Created by 九尾狐 on 2017/10/13.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DeterMineTcViewController : UIViewController
+@interface TargetTableViewController : UIViewController
 @property (nonatomic,strong) NSString *TargetVisitId;
-@property (nonatomic,strong) NSString *shopname;
 @property (strong,nonatomic) NSString *strId;
+@property (nonatomic, assign) BOOL isofyou;
+@property (nonatomic, assign) BOOL cellend;
 @end

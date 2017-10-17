@@ -151,6 +151,7 @@
     model = _InterNameAry[indexPath.row];
     DeterMineTcViewController *dTcVC = [[DeterMineTcViewController alloc]init];
     dTcVC.TargetVisitId = model.Id;
+    dTcVC.strId = self.strId;
     dTcVC.shopname =model.StoreName;
     [self.navigationController pushViewController:dTcVC animated:YES];
 }
