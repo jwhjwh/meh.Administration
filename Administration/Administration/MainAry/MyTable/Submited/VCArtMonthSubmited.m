@@ -40,6 +40,7 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)NSArray *arrayPostil;
+@property (nonatomic,strong)UIBarButtonItem *rightitem1;
 @end
 
 @implementation VCArtMonthSubmited
@@ -73,12 +74,16 @@
             }else
             {
                 [self setSummaryUI];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                return ;
             }
 
             [self.tableView reloadData];
         }else
         {
             [self setSummaryUI];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
@@ -311,7 +316,7 @@
         self.arryaTitle = @[@"本月出货及回款情况分析",@"工作得失心得及建议",@"个人问题及规划",@"其他事项"];
         self.arrayContent = @[@"填写本月出货及回款情况分析",@"填写工作得失心得及建议",@"填写个人问题及规划",@"填写其他事项"];
         self.isSelect = NO;
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.rightitem1;
     }
     [self.tableView reloadData];
     
@@ -352,9 +357,13 @@
     if (indexPath.row==0) {
         
         
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button2];
         self.navigationItem.rightBarButtonItem = rightItem;
-        self.artMonthSummary.userInteractionEnabled = YES;
         
         self.artMonthPlan.userInteractionEnabled = YES;
         canEdit = YES;
@@ -551,22 +560,11 @@
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
-    if (canEdit) {
-        cell.userInteractionEnabled = YES;
-    }else
-    {
-        cell.userInteractionEnabled = NO;
-    }
     cell.LabelTitle.text = self.arryaTitle[indexPath.row];
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.placeholder = self.arrayContent[indexPath.row];
     [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
-    if (self.isSelect==NO) {
-        cell.textView.userInteractionEnabled = NO;
-    }
-    else
-    {
         switch (indexPath.row) {
             case 0:
                 if (self.string1.length!=0) {
@@ -642,7 +640,7 @@
             default:
                 break;
         }
-    }
+    
     return cell;
     }
 }
@@ -689,6 +687,13 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [self.rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = self.rightItem;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+    [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    self.rightitem1 = [[UIBarButtonItem alloc]initWithCustomView:button2];
     
     canEdit = NO;
     

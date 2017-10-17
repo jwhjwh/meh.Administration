@@ -38,6 +38,7 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)UIBarButtonItem *rightitem1;
+@property (nonatomic,strong)UIBarButtonItem *rightitem;
 @property (nonatomic,strong)NSArray *arrayPostil;
 @end
 
@@ -72,11 +73,15 @@
             }else
             {
                 [self setSummaryUI];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                return ;
             }
             [self.tableView reloadData];
         }else
         {
             [self setSummaryUI];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
@@ -187,7 +192,6 @@
     self.viewSummary = viewSummary;
     
     ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,550)];
-    artWeekSummary.userInteractionEnabled = NO;
     [viewSummary addSubview:artWeekSummary];
     self.artWeekSummary = artWeekSummary;
     
@@ -278,11 +282,11 @@
         [self.buttopSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         self.arryaTitle = @[@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
         self.isSelect = YES;
-        self.navigationItem.rightBarButtonItem = self.item;
+        self.navigationItem.rightBarButtonItem = self.rightitem1;
     }
     else
     {
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.rightitem;
         self.labelLine.frame = CGRectMake(Scree_width/2, 104, Scree_width/2, 1);
         [button setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
@@ -347,8 +351,15 @@
 //        UIBarButtonItem *btn=[[UIBarButtonItem  alloc]initWithCustomView:tools];
 //        
 //            self.navigationItem.rightBarButtonItem = btn;
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button2];
         self.navigationItem.rightBarButtonItem = rightItem;
+        
+        
             self.artWeekPlan.userInteractionEnabled = YES;
             [self.dict setValue:@"2" forKey:@"canEdit"];
         
@@ -468,6 +479,10 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    
+        
+    
+    
     if ([self.artWeekPlan.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.artWeekPlan.endDate.titleLabel.text isEqualToString:@"选择日期"]||
         self.artWeekPlan.textFiled1.text.length==0||
@@ -488,6 +503,7 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
     }
+    if (self.isSelect) {
     
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
@@ -516,8 +532,6 @@
                            @"Hint":hint,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]};
     
-    
-    
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
@@ -543,6 +557,92 @@
     } failure:^(NSError *error) {
         
     } view:self.view];
+    }else
+    {
+        NSMutableDictionary *dictl = [NSMutableDictionary dictionary];
+        [dictl setValue:appKeyStr forKey:@"appkey"];
+        [dictl setValue:[USER_DEFAULTS valueForKey:@"userid"] forKey:@"usersid"];
+        [dictl setValue:[ShareModel shareModel].num forKey:@"Num"];
+        [dictl setValue:[ShareModel shareModel].departmentID forKey:@"DepartmentID"];
+        [dictl setValue:@"2" forKey:@"code"];
+        [dictl setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
+        [dictl setValue:compid forKey:@"CompanyInfoId"];
+        [dictl setValue:[ShareModel shareModel].sort forKey:@"Sort"];
+        [dictl setValue:hint forKey:@"Hint"];
+        [dictl setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];
+        [dictl setValue:self.artWeekSummary.startDate.titleLabel.text forKey:@"StartDate"];
+        [dictl setValue:self.artWeekSummary.endDate.titleLabel.text forKey:@"EndDate"];
+        [dictl setValue:self.artWeekSummary.textFiled1 forKey:@"managerTask"];
+        [dictl setValue:self.artWeekSummary.textFiled2 forKey:@"managerPredictMoney"];
+        [dictl setValue:self.artWeekSummary.textFiled3 forKey:@"managerPracticalMoney"];
+        [dictl setValue:self.artWeekSummary.textFiled4 forKey:@"managerPredictCargo"];
+        [dictl setValue:self.artWeekSummary.textFiled5 forKey:@"managerPracticalCargo"];
+        [dictl setValue:self.artWeekSummary.textFiled6 forKey:@"managerAccumulateCargo"];
+        [dictl setValue:self.artWeekSummary.textFiled7 forKey:@"managerWeeklyMoney"];
+        [dictl setValue:self.artWeekSummary.textFiled8 forKey:@"managerWeekendMoney"];
+        [dictl setValue:self.artWeekSummary.textFiled9 forKey:@"task"];
+        [dictl setValue:self.artWeekSummary.textFiledA forKey:@"predictMoney"];
+        [dictl setValue:self.artWeekSummary.textFiledB forKey:@"practicalMoney"];
+        [dictl setValue:self.artWeekSummary.textFiledC forKey:@"predictCargo"];
+        [dictl setValue:self.artWeekSummary.textFiledD forKey:@"practicalCargo"];
+        [dictl setValue:self.artWeekSummary.textFiledE forKey:@"accumulateCargo"];
+        [dictl setValue:self.artWeekSummary.textFiledF forKey:@"weeklyMoney"];
+        [dictl setValue:self.artWeekSummary.textFiledG forKey:@"weekendMoney"];
+        
+        if (self.string1.length!=0) {
+            [dictl setValue:self.string1 forKey:@"jaats"];
+        }else
+        {
+            [dictl setValue:@"" forKey:@"jaats"];
+        }
+        
+        if (self.string2.length!=0) {
+            [dictl setValue:self.string2 forKey:@"psp"];
+        }else
+        {
+            [dictl setValue:@"" forKey:@"psp"];
+        }
+        
+        if (self.string3.length!=0) {
+            [dictl setValue:self.string3 forKey:@"comments"];
+        }else
+        {
+            [dictl setValue:@"" forKey:@"comments"];
+        }
+        
+        if (self.string4.length!=0) {
+            [dictl setValue:self.string4 forKey:@"others"];
+        }else
+        {
+            [dictl setValue:@"" forKey:@"others"];
+        }
+        
+        [ZXDNetworking POST:urlStr parameters:dictl success:^(id responseObject) {
+            NSString *code = [responseObject valueForKey:@"status"];
+            if ([code isEqualToString:@"0000"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                return ;
+            }
+            if ([code isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"0001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
+                return;
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view];
+    }
 }
 
 -(void)textViewDidChange:(UITextView *)textView
@@ -620,7 +720,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self.isSelect==NO) {
         cell.textView.placeholder = @"暂无";
-        cell.textView.userInteractionEnabled = NO;
     }
     else
     {
@@ -748,6 +847,13 @@
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
         [self.rightitem1 setTitleTextAttributes:dict forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = self.rightitem1;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+    [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    self.rightitem = [[UIBarButtonItem alloc]initWithCustomView:button2];
     
     self.string1 = @"";
     self.string2 = @"";

@@ -17,6 +17,16 @@
     CGContextFillRect(context, CGRectMake(0, CGRectGetHeight(self.frame) - 0.5, CGRectGetWidth(self.frame), 0.5));
     self.keyboardType = UIKeyboardTypeDecimalPad;
     self.textAlignment = NSTextAlignmentCenter;
+    [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == self) {
+        if (textField.text.length > 4) {
+            textField.text = [textField.text substringToIndex:4];
+        }
+    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

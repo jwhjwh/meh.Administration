@@ -372,6 +372,7 @@
 		1FD1841C1F67C92200FCB30F /* VCChoosePostion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1841B1F67C92200FCB30F /* VCChoosePostion.m */; };
 		1FD215E11F4569940048719A /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD215E01F4569940048719A /* UIPlaceHolderTextView.m */; };
 		1FD320E71F57AE48004643A3 /* CellPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD320E61F57AE48004643A3 /* CellPerson.m */; };
+		1FD3B8281F94A82900DEABCB /* VCBacklogDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD3B8271F94A82900DEABCB /* VCBacklogDetail.m */; };
 		1FD4EF651F6CAEBC002CD285 /* ViewDatePick.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD4EF641F6CAEBB002CD285 /* ViewDatePick.m */; };
 		1FD4EF6A1F6D0CB0002CD285 /* VCTableState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD4EF691F6D0CB0002CD285 /* VCTableState.m */; };
 		1FD5329A1F73444400ED05B2 /* MyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD532991F73444400ED05B2 /* MyTextField.m */; };
@@ -436,7 +437,7 @@
 		1FE4FE241F6922CF0045C8D6 /* CellMineTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE4FE231F6922CF0045C8D6 /* CellMineTable.m */; };
 		1FE5A21E1F90443100C5221A /* VCAddBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A21D1F90443100C5221A /* VCAddBacklog.m */; };
 		1FE5A2231F906B1100C5221A /* CellAddBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2221F906B1100C5221A /* CellAddBacklog.m */; };
-		1FE5A2261F90704D00C5221A /* CellEditBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2251F90704D00C5221A /* CellEditBacklog.m */; };
+		1FE5A2291F90BCC000C5221A /* ViewChooseBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2281F90BCC000C5221A /* ViewChooseBacklog.m */; };
 		1FE76A071F78F1D5003E4FA9 /* VCArtFillMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A061F78F1D5003E4FA9 /* VCArtFillMonthTable.m */; };
 		1FE76A0A1F78F1F7003E4FA9 /* ViewArtMonthPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A091F78F1F7003E4FA9 /* ViewArtMonthPlan.m */; };
 		1FE76A0D1F78FD51003E4FA9 /* ViewArtMonthSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A0C1F78FD51003E4FA9 /* ViewArtMonthSummary.m */; };
@@ -1435,6 +1436,8 @@
 		1FD215E01F4569940048719A /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		1FD320E51F57AE48004643A3 /* CellPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPerson.h; sourceTree = "<group>"; };
 		1FD320E61F57AE48004643A3 /* CellPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellPerson.m; sourceTree = "<group>"; };
+		1FD3B8261F94A82900DEABCB /* VCBacklogDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBacklogDetail.h; sourceTree = "<group>"; };
+		1FD3B8271F94A82900DEABCB /* VCBacklogDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBacklogDetail.m; sourceTree = "<group>"; };
 		1FD4EF631F6CAEBB002CD285 /* ViewDatePick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDatePick.h; sourceTree = "<group>"; };
 		1FD4EF641F6CAEBB002CD285 /* ViewDatePick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDatePick.m; sourceTree = "<group>"; };
 		1FD4EF681F6D0CB0002CD285 /* VCTableState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCTableState.h; path = ShopTable/VCTableState.h; sourceTree = "<group>"; };
@@ -1546,8 +1549,8 @@
 		1FE5A21D1F90443100C5221A /* VCAddBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddBacklog.m; sourceTree = "<group>"; };
 		1FE5A2211F906B1100C5221A /* CellAddBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellAddBacklog.h; sourceTree = "<group>"; };
 		1FE5A2221F906B1100C5221A /* CellAddBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellAddBacklog.m; sourceTree = "<group>"; };
-		1FE5A2241F90704D00C5221A /* CellEditBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellEditBacklog.h; sourceTree = "<group>"; };
-		1FE5A2251F90704D00C5221A /* CellEditBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellEditBacklog.m; sourceTree = "<group>"; };
+		1FE5A2271F90BCC000C5221A /* ViewChooseBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewChooseBacklog.h; sourceTree = "<group>"; };
+		1FE5A2281F90BCC000C5221A /* ViewChooseBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewChooseBacklog.m; sourceTree = "<group>"; };
 		1FE76A051F78F1D5003E4FA9 /* VCArtFillMonthTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtFillMonthTable.h; sourceTree = "<group>"; };
 		1FE76A061F78F1D5003E4FA9 /* VCArtFillMonthTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCArtFillMonthTable.m; sourceTree = "<group>"; };
 		1FE76A081F78F1F7003E4FA9 /* ViewArtMonthPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewArtMonthPlan.h; sourceTree = "<group>"; };
@@ -3269,6 +3272,8 @@
 				1FC936111F8E19E3005AB2A9 /* ViewControllerStateBacklog.m */,
 				1FE5A21C1F90443100C5221A /* VCAddBacklog.h */,
 				1FE5A21D1F90443100C5221A /* VCAddBacklog.m */,
+				1FD3B8261F94A82900DEABCB /* VCBacklogDetail.h */,
+				1FD3B8271F94A82900DEABCB /* VCBacklogDetail.m */,
 			);
 			path = BackLog;
 			sourceTree = "<group>";
@@ -3280,8 +3285,6 @@
 				1FC935C71F8DBE76005AB2A9 /* CellBacklog.m */,
 				1FE5A2211F906B1100C5221A /* CellAddBacklog.h */,
 				1FE5A2221F906B1100C5221A /* CellAddBacklog.m */,
-				1FE5A2241F90704D00C5221A /* CellEditBacklog.h */,
-				1FE5A2251F90704D00C5221A /* CellEditBacklog.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -4000,6 +4003,8 @@
 				1FCEB9521F7A4E6C00D8F175 /* ViewChooseEdit.m */,
 				1FC9360D1F8DFFE5005AB2A9 /* ViewChooseState.h */,
 				1FC9360E1F8DFFE5005AB2A9 /* ViewChooseState.m */,
+				1FE5A2271F90BCC000C5221A /* ViewChooseBacklog.h */,
+				1FE5A2281F90BCC000C5221A /* ViewChooseBacklog.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5148,6 +5153,7 @@
 				6259BC5E1F60D01F003797E1 /* RecordTableViewCell.m in Sources */,
 				1F22AAE51EA0BDBF00CC56BB /* multiController.m in Sources */,
 				1F6211B91E8CFFAF00F50851 /* MWPhotoBrowser.m in Sources */,
+				1FE5A2291F90BCC000C5221A /* ViewChooseBacklog.m in Sources */,
 				1FD62BD31F43D673008871A7 /* ViewControllerPersonTableDetail.m in Sources */,
 				1FE988EE1F4ED0B9001172C1 /* VCInsideMonthTable.m in Sources */,
 				62EBA2591E56CB9B00F657DB /* OpinionViewController.m in Sources */,
@@ -5384,7 +5390,6 @@
 				6252AA271E9CB13E00871377 /* MYPresentAnimationManager.m in Sources */,
 				620B9C711F79051600B24660 /* InterestedModel.m in Sources */,
 				6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */,
-				1FE5A2261F90704D00C5221A /* CellEditBacklog.m in Sources */,
 				6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */,
 				1F62119D1E8CFFAF00F50851 /* EMVoiceConverter.mm in Sources */,
 				62656C541E529BC10085A2BD /* IQUIWindow+Hierarchy.m in Sources */,
@@ -5506,6 +5511,7 @@
 				625B8FFB1F67823200E34D8A /* SmallInputViewController.m in Sources */,
 				F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */,
 				1F4A98F21E6405D0003492DF /* SJABHelper.m in Sources */,
+				1FD3B8281F94A82900DEABCB /* VCBacklogDetail.m in Sources */,
 				1F2486BC1ECEEC6100C1673F /* AddotherController.m in Sources */,
 				1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */,
 				624B741F1E8F3E6F000D94BD /* SpreadTableViewCell.m in Sources */,

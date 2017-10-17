@@ -24,16 +24,18 @@
 {
     UILabel *labelDate = [[UILabel alloc]init];
     labelDate.text = @"日期";
+    labelDate.textColor = GetColor(102, 103, 104, 1);
     [self.contentView addSubview:labelDate];
     [labelDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).offset(8);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo(21);
+        make.width.mas_equalTo(100);
     }];
     self.labelDate = labelDate;
     
     UIButton *startDate = [[UIButton alloc]init];
-    startDate.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+  //  startDate.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     startDate.tag = 100;
     [startDate setBackgroundColor:[UIColor whiteColor]];
     [startDate setTitle:@"选择日期" forState:UIControlStateNormal];
@@ -58,7 +60,7 @@
     self.labelzhi =labelzhi;
     
     UIButton *endDate = [[UIButton alloc]init];
-    endDate.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+  //  endDate.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     endDate.tag = 200;
     [endDate setBackgroundColor:[UIColor whiteColor]];
     [endDate setTitle:@"选择日期" forState:UIControlStateNormal];
@@ -71,6 +73,16 @@
         make.height.mas_equalTo(21);
     }];
     self.endDate = endDate;
+    
+    UILabel *line = [[UILabel alloc]init];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [self.contentView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.mas_left);
+        make.right.mas_equalTo(self.contentView.mas_right);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+        make.height.mas_equalTo(1);
+    }];
     
     
 }

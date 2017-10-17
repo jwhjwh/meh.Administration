@@ -1,18 +1,19 @@
 //
-//  ViewChooseEdit.m
+//  ViewChooseBacklog.m
 //  Administration
 //
-//  Created by zhang on 2017/9/26.
+//  Created by zhang on 2017/10/13.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "ViewChooseEdit.h"
+#import "ViewChooseBacklog.h"
 
-@interface ViewChooseEdit ()<UITableViewDelegate,UITableViewDataSource>
+@interface ViewChooseBacklog ()<UITableViewDelegate,UITableViewDataSource>
+
 
 @end
 
-@implementation ViewChooseEdit
+@implementation ViewChooseBacklog
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
@@ -28,34 +29,19 @@
     UIColor *color = GetColor(126, 127, 128, 1);
     self.backgroundColor = [color colorWithAlphaComponent:0.3];
     
-    UIImageView *imageView = [[UIImageView alloc]init];
-    imageView.image = [UIImage imageNamed:@"sj_ico"];
-    [self addSubview:imageView];
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.mas_right).offset(-20);
-        make.top.mas_equalTo(self.mas_top).offset(64);
-        make.width.mas_equalTo(16);
-        make.height.mas_equalTo(17);
-    }];
-    
-    UITableView *tableView = [[UITableView alloc]init];
-    tableView.delegate = self;
-    tableView.dataSource = self;
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 250, 220)];
+    tableView.center = self.center;
     tableView.scrollEnabled = NO;
-    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.delegate =self;
+    tableView.dataSource = self;
     [self addSubview:tableView];
-    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.mas_right).offset(-15);
-        make.top.mas_equalTo(imageView.mas_bottom).offset(-5);
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(120);
-    }];
     self.tableView = tableView;
+    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arrayButton.count;
+    return self.arrayTitle.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,17 +50,25 @@
     if (cell==nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text = self.arrayButton[indexPath.row];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.textLabel.text = self.arrayTitle[indexPath.row];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.textLabel.textColor = [UIColor blueColor];
-    cell.textLabel.backgroundColor = [UIColor whiteColor];
+    if (indexPath.row==0) {
+        cell.userInteractionEnabled = NO;
+        cell.textLabel.textColor = [UIColor blackColor];
+    }else
+    {
+        cell.userInteractionEnabled = YES;
+        cell.textLabel.textColor = [UIColor blueColor];
+    }
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.delegate respondsToSelector:@selector(getState)]) {
-        [self.delegate getState];
+    if ([self.delegate respondsToSelector:@selector(getChoosed)]) {
+        [self.delegate getChoosed];
     }
     [self removeFromSuperview];
 }

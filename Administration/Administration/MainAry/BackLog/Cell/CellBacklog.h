@@ -15,5 +15,7 @@
 @property (nonatomic,weak)UILabel *labelDate;
 @property (nonatomic,weak)UILabel *labelState;
 @property (nonatomic,weak)UIImageView *imageSelect;
+@property (nonatomic,weak)UIImageView *imageView1;
 @property (nonatomic,strong)NSDictionary *dict;
+@property (nonatomic)BOOL isSelect;
 @end

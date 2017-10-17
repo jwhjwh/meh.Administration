@@ -45,6 +45,7 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property (nonatomic,strong)UIBarButtonItem *rightItem;
 @property(nonatomic,strong) NSArray *arrayPostil;
+@property (nonatomic,strong)UIBarButtonItem *rightItem1;
 @end
 
 @implementation VCInsideWeekSubmited
@@ -78,12 +79,16 @@
             }else
             {
                 [self setSummaryUI];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                return ;
             }
 
             [self.tableView reloadData];
         }else
         {
             [self setSummaryUI];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
@@ -518,7 +523,12 @@
 //        
 //        self.navigationItem.rightBarButtonItem = btn;
         
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
+       UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button2];
         self.navigationItem.rightBarButtonItem = rightItem;
        
         self.startDate.userInteractionEnabled = YES;
@@ -653,14 +663,14 @@
     else
     {
     if ([self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
+        [self.string2 isEqualToString:@""]||
+        [self.string3 isEqualToString:@""]||
+        [self.string4 isEqualToString:@""]||
+        [self.string5 isEqualToString:@""]||
+        [self.string6 isEqualToString:@""]||
+        [self.string7 isEqualToString:@""]||
+        [self.string8 isEqualToString:@""]||
+        [self.string9 isEqualToString:@""]||
         [self.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.endDate.titleLabel.text isEqualToString:@"选择日期"]
         )
@@ -669,6 +679,8 @@
         return;
     }
     }
+    if (self.isSelect) {
+        
     
     NSDictionary *dict = @{
                            @"appkey":appKeyStr,
@@ -719,6 +731,58 @@
     } failure:^(NSError *error) {
         
     } view:self.view];
+    }else
+    {
+        NSDictionary *dict = @{
+                               @"appkey":appKeyStr,
+                               @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                               @"CompanyInfoId":compid,
+                               @"RoleId":[ShareModel shareModel].roleID,
+                               @"DepartmentID":[ShareModel shareModel].departmentID,
+                               @"Num":[ShareModel shareModel].num,
+                               @"Sort":[ShareModel shareModel].sort,
+                               @"code":@"1",
+                               @"Hint":hint,
+                               @"StartDate":self.startDate.titleLabel.text,
+                               @"EndDate":self.endDate.titleLabel.text,
+                               @"Monday":self.string1,
+                               @"Tuesday":self.string2,
+                               @"Wednesday":self.string3,
+                               @"Thursday":self.string4,
+                               @"Friday":self.string5,
+                               @"Saturday":self.string6,
+                               @"Sunday":self.string7,
+                               @"Important":self.string8,
+                               @"GrowthPlans":self.string9,
+                               @"Name":[USER_DEFAULTS valueForKey:@"name"]
+                               };
+        [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
+            NSString *code = [responseObject valueForKey:@"status"];
+            if ([code isEqualToString:@"0000"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                return ;
+            }
+            if ([code isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"0001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
+                return;
+            }
+            
+        } failure:^(NSError *error) {
+            
+        } view:self.view];
+    }
 }
 
 
@@ -992,6 +1056,11 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [self.rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = self.rightItem;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+    [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+    self.rightItem1 = [[UIBarButtonItem alloc]initWithCustomView:button2];
 }
 
 - (void)didReceiveMemoryWarning {

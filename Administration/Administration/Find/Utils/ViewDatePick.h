@@ -21,6 +21,7 @@
 @property (nonatomic,weak)UIButton *buttonSure;
 @property (nonatomic,weak)UILabel *labelTime;
 @property (nonatomic,weak)UIDatePicker *datePick;
+@property (nonatomic)UIDatePickerMode mode;
 @property (nonatomic,assign)id<ViewDatePickerDelegate>delegate;
 
 @end

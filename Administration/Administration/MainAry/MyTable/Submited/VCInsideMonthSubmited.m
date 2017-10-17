@@ -38,6 +38,7 @@
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property(nonatomic,strong) NSArray *arrayPostil;
+@property (nonatomic,strong)UIBarButtonItem *rightItem2;
 @end
 
 @implementation VCInsideMonthSubmited
@@ -72,12 +73,16 @@
             }else
             {
                 [self setSummaryUI];
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                return ;
             }
 
             [self.tableView reloadData];
         }else
         {
               [self setSummaryUI];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
@@ -177,7 +182,6 @@
     self.viewSummary = viewSummary;
     
     ViewInsideMonthTable *insideMonth = [[ViewInsideMonthTable alloc]initWithFrame:CGRectMake(0, 105, Scree_width,120)];
-    insideMonth.userInteractionEnabled = NO;
     [viewSummary addSubview:insideMonth];
     self.insideMonth = insideMonth;
     
@@ -270,7 +274,7 @@
         self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.rightItem2;
     }
     [self.tableView reloadData];
     
@@ -320,7 +324,12 @@
 //        
 //        self.navigationItem.rightBarButtonItem = btn;
         
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"submit_ico01"] style:UIBarButtonItemStyleDone target:self action:@selector(showAlertView)];
+       UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+        [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button2];
         self.navigationItem.rightBarButtonItem = rightItem;
         
         self.viewPlan.userInteractionEnabled = YES;
@@ -460,7 +469,8 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
     }
-    
+    if (self.isSelect) {
+
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
@@ -503,6 +513,51 @@
     } failure:^(NSError *error) {
         
     } view:self.view];
+    }else
+    {
+        NSDictionary *dict = @{@"appkey":appKeyStr,
+                               @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                               @"Num":[ShareModel shareModel].num,
+                               @"DepartmentID":[ShareModel shareModel].departmentID,
+                               @"code":@"1",
+                               @"RoleId":[ShareModel shareModel].roleID,
+                               @"CompanyInfoId":compid,
+                               @"Sort":[ShareModel shareModel].sort,
+                               @"Months":[NSString stringWithFormat:@"%@-15",self.insideMonth.buttonDate.titleLabel.text],
+                               @"completeProgressBriefly":self.string1,
+                               @"progressEvaluation":self.string2,
+                               @"strategy":self.string3,
+                               @"experience":self.string4,
+                               @"directionPreset":self.string5,
+                               @"Hint":hint,
+                               @"Name":[USER_DEFAULTS valueForKey:@"name"]};
+        
+        [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
+            NSString *code = [responseObject valueForKey:@"status"];
+            if ([code isEqualToString:@"0000"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                return ;
+            }
+            if ([code isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"0001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
+                return;
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view];
+    }
 }
 
 #pragma -mark textView
@@ -602,7 +657,6 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self.isSelect==NO) {
-        cell.textView.userInteractionEnabled = NO;
         cell.LabelTitle.text = self.arryaTitle[indexPath.row];
         cell.textView.placeholder = self.arrayContent[indexPath.row];
     }
@@ -787,6 +841,11 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [self.item setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = self.item;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
+    [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
+    self.rightItem2 = [[UIBarButtonItem alloc]initWithCustomView:button2];
     
     self.string1 = @"";
     self.string2 = @"";
