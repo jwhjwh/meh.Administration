@@ -82,6 +82,7 @@
     if (cell==nil) {
         cell = [[CellDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.section==0) {
         if (indexPath.row==0) {

@@ -8,7 +8,7 @@
 
 #import "VCEditTable.h"
 #import "CellEditTable.h"
-@interface VCEditTable ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewDatePickerDelegate>
+@interface VCEditTable ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewDatePickerDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSMutableArray *arrayDate;
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,weak)UITableView *tableView;
@@ -24,6 +24,9 @@
 @property (nonatomic,strong)NSString *string4;
 @property (nonatomic,strong)ViewDatePick *datePick;
 @property (nonatomic,strong)NSIndexPath *indexPath;
+
+@property (nonatomic,strong)NSString *did;
+@property (nonatomic,assign)NSInteger integer;
 @end
 
 @implementation VCEditTable
@@ -113,6 +116,7 @@
     }
     else
     {
+        [self.buttonDel setTitle:@"取消删除" forState:UIControlStateNormal];
         [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
         self.buttonAdd.userInteractionEnabled = NO;
         for (int i=0; i<self.arrayDate.count; i++) {
@@ -228,7 +232,10 @@
         }else
         {
             if (dict[@"did"]) {
-                [self delePlan:dict[@"did"] And:index-11];
+                self.did = [NSString stringWithFormat:@"%@",dict[@"did"]];
+                self.integer = index-11;
+              //  [self delePlan:dict[@"did"] And:index-11];
+                [self showAlertView];
             }else
             {
                 [self.arrayDate removeObjectAtIndex:index-11];
@@ -324,6 +331,12 @@
 
 }
 
+-(void)showAlertView
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
 -(void)showDatePick:(UIGestureRecognizer *)ges
 {
     self.datePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
@@ -331,6 +344,14 @@
     [self.tableView addSubview:self.datePick];
     CGPoint point = [ges locationInView:self.tableView];
     self.indexPath = [self.tableView indexPathForRowAtPoint:point];
+}
+
+#pragma -mark UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self delePlan:self.did And:self.integer];
+    }
 }
 
 #pragma -mark ViewDatePick
@@ -375,11 +396,11 @@
         
         if ([self.dictionary[@"canEdit"]isEqualToString:@"1"]) {
             cell.textView.editable = NO;
-            cell.textView.scrollEnabled = NO;
+            
         }else
         {
             cell.textView.editable = YES;
-            cell.textView.scrollEnabled = YES;
+            
         }
         
         if (indexPath.row==0) {
@@ -402,23 +423,32 @@
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
         if ([dict[@"canEdit"] isEqualToString:@"1"]) {
             cell.textView.editable = NO;
-            cell.textView.scrollEnabled = NO;
+            
         }else
         {
             cell.textView.editable = YES;
-            cell.textView.scrollEnabled = YES;
+            
         }
         if (indexPath.row==0) {
-            cell.textView.text = dict[@"others"];
+            if (![dict[@"others"]isKindOfClass:[NSNull class]]) {
+                cell.textView.text = dict[@"others"];
+            }
+            
         }
         if (indexPath.row==1) {
-            cell.textView.text = dict[@"jobAim"];
+            if (![dict[@"jobAim"]isKindOfClass:[NSNull class]]) {
+                cell.textView.text = dict[@"jobAim"];
+            }
         }
         if (indexPath.row==2) {
-            cell.textView.text = dict[@"detailMethod"];
+            if (![dict[@"detailMethod"]isKindOfClass:[NSNull class]]) {
+                cell.textView.text = dict[@"detailMethod"];
+            }
         }
         if (indexPath.row==3) {
-            cell.textView.text = dict[@"helped"];
+            if (![dict[@"helped"]isKindOfClass:[NSNull class]]) {
+                cell.textView.text = dict[@"helped"];
+            }
         }
     }
     

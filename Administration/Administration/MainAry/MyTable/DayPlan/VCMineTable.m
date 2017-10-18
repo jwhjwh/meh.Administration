@@ -11,10 +11,11 @@
 #import "VCTableDetail.h"
 #import "VCEditTable.h"
 #import "VCAddPlan.h"
-@interface VCMineTable ()<UITableViewDelegate,UITableViewDataSource>
+@interface VCMineTable ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayDate;
 @property (nonatomic,assign)NSUInteger _page;//接口page
+@property (nonatomic,strong)NSIndexPath *indexPath;
 //是不是第一次执行请求
 @property (nonatomic)BOOL _isFirstLoadData ;
 //是不是上拉加载数据（脚视图刷新）
@@ -93,6 +94,8 @@
     } view:self.view MBPro:YES];
 }
 
+
+
 -(void)deletPlan:(NSIndexPath *)indexPath
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@report/delDayPlan",KURLHeader];
@@ -146,6 +149,14 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self deletPlan:self.indexPath];
+    }
+    
+}
+
 #pragma -mark tableview
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -176,17 +187,20 @@
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     //添加一个删除按钮
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:(UITableViewRowActionStyleDestructive) title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        [self deletPlan:indexPath];
+        self.indexPath = indexPath;
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
     }];
     //删除按钮颜色
-    deleteAction.backgroundColor = GetColor(192, 192, 192, 0.5);
+    deleteAction.backgroundColor = GetColor(137,52,167,1);
     
     //添加一个编辑按钮
     UITableViewRowAction *topRowAction =[UITableViewRowAction rowActionWithStyle:(UITableViewRowActionStyleDestructive) title:@"编辑" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         [self gotoEdit:indexPath];
     }];
     //置顶按钮颜色
-    topRowAction.backgroundColor = GetColor(192, 192, 192, 0.5);
+    topRowAction.backgroundColor = GetColor(0, 124, 248, 1);
    
     //将设置好的按钮方到数组中返回
     return @[deleteAction,topRowAction];

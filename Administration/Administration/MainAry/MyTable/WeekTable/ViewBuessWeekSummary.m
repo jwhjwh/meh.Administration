@@ -358,6 +358,7 @@
 
 -(void)showDatePicker:(UIButton *)button
 {
+    [self endEditing:YES];
     self.buttonTAag = button.tag;
     ViewDatePick *myDatePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     myDatePick.delegate = self;

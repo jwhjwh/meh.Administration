@@ -35,6 +35,7 @@
     UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc]init];
     textView.textColor = GetColor(127, 128, 129, 192);
     textView.font = [UIFont systemFontOfSize:17];
+    textView.scrollEnabled = NO;
     [self.contentView addSubview:textView];
     [textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelTitle.mas_right).offset(10);

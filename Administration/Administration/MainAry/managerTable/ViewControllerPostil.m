@@ -472,6 +472,10 @@
     [button addTarget:self action:@selector(addPostil:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     
+    UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(0, 61, tableView1.bounds.size.width, 1)];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [view addSubview:line];
+    
     if ([dict[@"show"] isEqualToString:@"0"]) {
         button.userInteractionEnabled = NO;
         button.hidden = YES;
