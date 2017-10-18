@@ -83,7 +83,7 @@
     
     UILabel *labelTime = [[UILabel alloc]initWithFrame:CGRectMake(0, 31, viewB.frame.size.width, 30)];
     labelTime.backgroundColor = [UIColor whiteColor];
-    labelTime.textAlignment = UITextAlignmentCenter;
+    labelTime.textAlignment = NSTextAlignmentCenter;
     NSDate *theDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"YYYY-MM-dd";
@@ -366,11 +366,11 @@
 
 -(void)selectCheck
 {
-    if ([self.buttonSure.titleLabel.text isEqualToString:@""]) {
+    if ([self.buttonSure.titleLabel.text isEqualToString:@"请选择开始时间"]) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择开始日期" andInterval:1];
         return;
     }
-    if ([self.buttonEnd.titleLabel.text isEqualToString:@""]) {
+    if ([self.buttonEnd.titleLabel.text isEqualToString:@"请选择结束时间"]) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择结束日期" andInterval:1];
         return;
     }
@@ -412,7 +412,7 @@
         }
     }];
     
-    cell.labelTime.text = dict[@"dates"];
+    cell.labelTime.text = [dict[@"dates"]substringToIndex:16];
     NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
     if ([state isEqualToString:@"0"]) {
         cell.labelState.text = @"待审核";

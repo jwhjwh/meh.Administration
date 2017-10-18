@@ -134,6 +134,7 @@
 -(void)showDatePicker
 {
     ViewDatePick *myDatePick=  [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    [self endEditing:YES];
     myDatePick.delegate = self;
     [self.window addSubview:myDatePick];
     self.myDatePick = myDatePick;

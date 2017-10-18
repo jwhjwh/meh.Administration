@@ -10,7 +10,7 @@
 #import "CellEditTable.h"
 #import "UIPlaceHolderTextView.h"
 #import "ViewDatePick.h"
-@interface VCAddPlan ()<UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate>
+@interface VCAddPlan ()<UITableViewDelegate,UITableViewDataSource,ViewDatePickerDelegate,UITextViewDelegate>
 @property (nonatomic,strong)NSMutableArray *arrayList;
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)UIButton *buttonAdd;
@@ -19,6 +19,7 @@
 @property (nonatomic,weak)UIPlaceHolderTextView *textView2;
 @property (nonatomic,weak)ViewDatePick *myDatePick;
 @property (nonatomic,strong)NSArray *arrayTitle;
+@property (nonatomic,strong)NSMutableDictionary *dict;
 @end
 
 @implementation VCAddPlan
@@ -26,7 +27,7 @@
 
 -(void)setUI
 {
-    UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 81)];
+    UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 81)];
     viewTop.backgroundColor = GetColor(192, 192, 192, 1);
     [self.view addSubview:viewTop];
     
@@ -95,7 +96,7 @@
 {
     ViewDatePick *myDatePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     myDatePick.delegate =self;
-    [self.tableView addSubview:myDatePick];
+    [self.view.window addSubview:myDatePick];
     self.myDatePick = myDatePick;
 }
 
@@ -113,14 +114,30 @@
     }
     else
     {
-        [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
-        self.buttonAdd.userInteractionEnabled = NO;
-        for (int i=0; i<self.arrayList.count; i++) {
-            NSMutableDictionary *dict = [self.arrayList[i]mutableCopy];
-            [dict setValue:@"isShow" forKey:@"show"];
-            [dict setValue:@"2" forKey:@"canEdit"];
-            [self.arrayList replaceObjectAtIndex:i withObject:dict];
+        if ([self.buttonDel.titleLabel.text isEqualToString:@"删除一项"]) {
+            [self.buttonDel setTitle:@"取消删除" forState:UIControlStateNormal];
+            [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+            self.buttonAdd.userInteractionEnabled = NO;
+            for (int i=0; i<self.arrayList.count; i++) {
+                NSMutableDictionary *dict = [self.arrayList[i]mutableCopy];
+                [dict setValue:@"notShow" forKey:@"show"];
+                [dict setValue:@"1" forKey:@"canEdit"];
+                [self.arrayList replaceObjectAtIndex:i withObject:dict];
+            }
+        }else
+            
+        {
+            [self.buttonDel setTitle:@"删除一项" forState:UIControlStateNormal];
+            [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
+            self.buttonAdd.userInteractionEnabled = NO;
+            for (int i=0; i<self.arrayList.count; i++) {
+                NSMutableDictionary *dict = [self.arrayList[i]mutableCopy];
+                [dict setValue:@"isShow" forKey:@"show"];
+                [dict setValue:@"2" forKey:@"canEdit"];
+                [self.arrayList replaceObjectAtIndex:i withObject:dict];
+            }
         }
+        
     }
     [self.tableView reloadData];
 }
@@ -129,10 +146,12 @@
 {
     NSUInteger inter = button.tag-10;
     [self.arrayList removeObjectAtIndex:inter];
+    [self.dict setValue:@"1" forKey:@"canEdit"];
     [self.tableView reloadData];
     
     [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
     self.buttonAdd.userInteractionEnabled = YES;
+    
 }
 
 -(void)submit
@@ -217,6 +236,21 @@
     [self.buttonChooseDate setTitle:stringDate forState:UIControlStateNormal];
 }
 
+-(void)textViewDidChange:(UITextView *)textView
+{
+    CellEditTable *cell = (CellEditTable *)[textView superview].superview;
+
+    CGRect frame = textView.frame;
+    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+    CGSize size = [textView sizeThatFits:constraintSize];
+    if (size.height<=frame.size.height) {
+        size.height=frame.size.height;
+    }
+    cell.textView.frame = CGRectMake(frame.origin.x, frame.origin.y,cell.contentView.frame.size.width, size.height);
+    
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
 #pragma -mark tableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -235,16 +269,16 @@
         cell = [[CellEditTable alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    cell.textView.delegate = self;
     NSDictionary *dict = self.arrayList[indexPath.section];
     
     if ([dict[@"canEdit"]isEqualToString:@"1"]) {
         cell.textView.editable = YES;
-        cell.textView.scrollEnabled = YES;
+        
     }else
     {
         cell.textView.editable = NO;
-        cell.textView.scrollEnabled = NO;
+        
     }
     
     cell.labelTitle.text = self.arrayTitle[indexPath.row];
@@ -310,6 +344,7 @@
     self.navigationItem.rightBarButtonItem = rightitem;
     
     self.arrayTitle = @[@"事项",@"工作目标",@"具体方法思路",@"需要协调与帮助"];
+    self.dict = [NSMutableDictionary dictionary];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:@"" forKey:@"others"];

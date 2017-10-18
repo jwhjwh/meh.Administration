@@ -56,6 +56,7 @@
 
 -(void)showDatePicker:(UITapGestureRecognizer *)ges
 {
+    [self.view endEditing:YES];
     CGPoint point = [ges locationInView:tableView1];
     indexPathGes = [tableView1 indexPathForRowAtPoint:point];
     myDatePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];

@@ -156,7 +156,7 @@ typedef void (^finish)(id result);
 
     } failure:^(NSError *error) {
         
-    } view:self.view.window MBPro:YES];
+    } view:self.view MBPro:YES];
     
 }
 
@@ -164,7 +164,7 @@ typedef void (^finish)(id result);
 {
     [super viewWillAppear:YES];
     [self getDetailGroup];
-    [self ui];
+    
 }
 
 
@@ -174,6 +174,8 @@ typedef void (^finish)(id result);
     
     self.groupInformation = [NSDictionary dictionary];
     self.groupMembers = [NSArray array];
+    
+    [self ui];
     
     
 }

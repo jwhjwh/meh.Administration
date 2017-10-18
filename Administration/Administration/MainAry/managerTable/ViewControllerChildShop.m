@@ -17,21 +17,23 @@
 #pragma -mark custem
 -(void)getData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@user/queryBrandDepartment",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserBelongsDepartment",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":self.num};
+    NSDictionary *info=@{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"Num":self.num,
+                         @"RoleId":self.roleId,
+                         @"DepartmentID":[ShareModel shareModel].departmentID
+                         };
     
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
-            if ([self.num isEqualToString:@"1"]) {
-                self.array = [responseObject valueForKey:@"mList"];
-            }else
-            {
-               self.array = [responseObject valueForKey:@"yList"]; 
-            }
+            
+                self.array = [responseObject valueForKey:@"list"];
             
             [self.tableView reloadData];
             return ;

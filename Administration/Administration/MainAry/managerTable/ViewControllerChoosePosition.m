@@ -103,6 +103,7 @@
     NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     vc.myRoleid = roleID;
     [ShareModel shareModel].roleID = roleID;
+    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
     
     if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"2"]||[roleID isEqualToString:@"3"]||[roleID isEqualToString:@"4"]||[roleID isEqualToString:@"14"]||[roleID isEqualToString:@"16"]||[roleID isEqualToString:@"17"]) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限" andInterval:1];

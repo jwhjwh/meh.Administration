@@ -221,7 +221,7 @@
             cell.labelTitle.text = self.arrayTitle[indexPath.row];
             switch (indexPath.row) {
                 case 0:
-                    cell.labelInfo.text = [self.dictContent[@"dateLine"]substringToIndex:9];
+                    cell.labelInfo.text = [self.dictContent[@"dateLine"]substringToIndex:10];
                     break;
                 case 1:
                     cell.labelInfo.text = self.postionName;
