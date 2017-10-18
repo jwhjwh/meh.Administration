@@ -9,7 +9,10 @@
 #import "TargetTableViewController.h"
 #import "TargetModel.h"
 #import "CLZoomPickerView.h"
+#import "inftionTableViewCell.h"
+#import "SelectAlert.h"
 @interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
+
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic ,retain)NSArray *nameArrs;
@@ -66,106 +69,115 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _index=indexPath;
+    
     TargetModel *model=[[TargetModel alloc]init];
     model = _InterNameAry[0];
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-    if (cell ==nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-        
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.section ==0) {
-        UIImageView *qdimage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-30, 10, 30, 30)];
-        qdimage.image = [UIImage imageNamed:@"qd_ico"];
-        [cell addSubview:qdimage];
-        
-        UILabel *qdlabel = [[UILabel alloc]initWithFrame:CGRectMake(((self.view.frame.size.width/2)-30)+30, 10, 50, 30)];
-        qdlabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:qdlabel];
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-    }else if(indexPath.section == 1){
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        if (indexPath.row==0) {
-            UILabel *rqlabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
-            if (model.Time ==nil) {
-                rqlabel.text = _placeholdernameArrs[indexPath.section][indexPath.row];
-                rqlabel.textColor = [UIColor lightGrayColor];
+    if(indexPath.section <4){
+        inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        if (cell ==nil)
+        {
+            cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        }
+        if (indexPath.section ==0) {
+            UIImageView *qdimage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-30, 10, 30, 30)];
+            qdimage.image = [UIImage imageNamed:@"qd_ico"];
+            [cell addSubview:qdimage];
+            
+            UILabel *qdlabel = [[UILabel alloc]initWithFrame:CGRectMake(((self.view.frame.size.width/2)-30)+30, 10, 50, 30)];
+            qdlabel.text = _nameArrs[indexPath.section][indexPath.row];
+            [cell addSubview:qdlabel];
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+        }else if(indexPath.section == 1){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
+            if (indexPath.row==0) {
+                
+                if (model.Time ==nil) {
+                    
+                    cell.xingLabel.textColor = [UIColor lightGrayColor];
+                    cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                }else{
+                    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Time substringWithRange:NSMakeRange(0, 10)]];
+                    cell.xingLabel.text = xxsj;
+                }
+                
+                
+            }else if (indexPath.row == 1){
+                UITextField *sjduan = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
+                [sjduan addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                sjduan.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
+                NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
+                sjduan.tag = k;
+                [cell addSubview:sjduan];
             }else{
-                NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Time substringWithRange:NSMakeRange(0, 10)]];
-                rqlabel.text = xxsj;
+                cell.xingLabel.textColor = [UIColor lightGrayColor];
+                cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
             }
             
-            [cell addSubview:rqlabel];
-        }else if (indexPath.row == 1){
-            UITextField *sjduan = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
-             [sjduan addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-            sjduan.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
+        }else if(indexPath.section == 2){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
+            UITextField *section2 = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
+            section2.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
             NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
-            sjduan.tag = k;
-            [cell addSubview:sjduan];
-        }else{
-            _bfcslabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
-            _bfcslabel.text = _placeholdernameArrs[indexPath.section][indexPath.row];
-            _bfcslabel.textColor = [UIColor lightGrayColor];
-            [cell addSubview:_bfcslabel];
+            section2.tag = k;
+            [cell addSubview:section2];
+            
+            
+        }else if(indexPath.section == 3){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
+            if (indexPath.row<4) {
+                cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                cell.xingLabel.textColor = [UIColor lightGrayColor];
+            }else{
+                UITextField *section3 = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
+                section3.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
+                NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
+                section3.tag = k;
+                [cell addSubview:section3];
+            }
         }
-       
-    }else if(indexPath.section == 2){
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        UITextField *section2 = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
-        section2.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:section2];
-        if (indexPath.row ==0) {
-            section2.enabled=NO;
-        }else if(indexPath.row==1){
-            section2.enabled=NO;
-        }else{
-            section2.enabled=YES;
+         return cell;
+    }else{
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        if (cell ==nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+            
         }
-        
-    }else if(indexPath.section == 3){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        UITextField *section3 = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
-        section3.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:section3];
-        
-    }else if(indexPath.section == 4){
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        
-    }else if(indexPath.section == 5){
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        
-    }else if(indexPath.section == 6){
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        
-    }else if(indexPath.section == 7){
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
-        tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
-        [cell addSubview:tlelabel];
-        
+        if(indexPath.section == 4){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
+            tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
+            [cell addSubview:tlelabel];
+            
+        }else if(indexPath.section == 5){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
+            tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
+            [cell addSubview:tlelabel];
+            
+        }else if(indexPath.section == 6){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
+            tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
+            [cell addSubview:tlelabel];
+            
+        }else if(indexPath.section == 7){
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
+            tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
+            [cell addSubview:tlelabel];
+            
+        }
+         return cell;
     }
-    return cell;
+    
+    
+   
 }
 -(void)FieldText:(UITextField *)textfield{
     
@@ -174,7 +186,28 @@
 {
     if (indexPath.section ==1) {
         if (indexPath.row==2) {
-            [self lodapickerView];
+            _index=indexPath;
+            [self lodapickerView:@"拜访次数"];
+        }
+    }else if(indexPath.section==3){
+        if (indexPath.row==0) {
+                [SelectAlert showWithTitle:@"选择店规模" titles:@[@"高",@"中",@"低"] selectIndex:^(NSInteger selectIndex) {
+                    
+                } selectValue:^(NSString *selectValue) {
+                    
+                    inftionTableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
+                    cell.xingLabel.text=selectValue;
+                    
+                } showCloseButton:NO];
+        }else if (indexPath.row==1){
+            _index = indexPath;
+            [self lodapickerView:@"选择床位"];
+        }else if (indexPath.row==2){
+            _index = indexPath;
+            [self lodapickerView:@"选择美容师人数"];
+        }else if (indexPath.row==3){
+            _index = indexPath;
+            [self lodapickerView:@"选择开店年限"];
         }
     }
     
@@ -229,11 +262,11 @@
         } view:self.view MBPro:YES];
     }
 }
--(void)lodapickerView{
+-(void)lodapickerView:(NSString *)labelstr{
     self.pickerView=[[CLZoomPickerView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     self.pickerView.dataSource = self;
     self.pickerView.delegate = self;
-    self.pickerView.labelStr=@"提示";
+    self.pickerView.labelStr=labelstr;
     self.pickerView.topRowCount = 1;
     self.pickerView.bottomRowCount = 1;
     self.pickerView.selectedRow = 1;
@@ -280,11 +313,14 @@
 - (void)pickerView:(CLZoomPickerView *)pickerView changedIndex:(NSUInteger)indexPath
 {
     
-    UITableViewCell *cell = [_tableView cellForRowAtIndexPath:_index];
-    //cell.xingLabel.text=_timeArray[indexPath];
+     inftionTableViewCell *cell = [_tableView cellForRowAtIndexPath:_index];
+    cell.xingLabel.text=_timeArray[indexPath];
+    NSLog(@"%@,%@",_timeArray[indexPath],cell.xingLabel.text);
+    cell.xingLabel.textColor = [UIColor blackColor];
+   
     switch (_index.section) {
         case 1:
-            _bfcslabel.text=_timeArray[indexPath];
+           // _bfcslabel.text=_timeArray[indexPath];
             break;
         case 3:
            
