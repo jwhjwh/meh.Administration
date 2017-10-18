@@ -7,7 +7,7 @@
 //
 
 #import "DeterMineTcViewController.h"
-
+#import "TargetTableViewController.h"
 @interface DeterMineTcViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic ,retain)NSArray *nameArrs;
@@ -30,7 +30,6 @@
 }
 -(void)addViewremind{
     self.tableView= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    //WithFrame:CGRectMake(0,_sousuoBtn.bottom+10,self.view.bounds.size.width,self.view.bounds.size.height-50) style:UITableViewStylePlain];
     NSString* phoneModel = [UIDevice devicePlatForm];
     if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
         self.tableView.frame =CGRectMake(0,88,self.view.bounds.size.width,self.view.bounds.size.height-50);
@@ -104,6 +103,12 @@
 {
     if (indexPath.section ==0) {
         NSLog(@"目标客户确立表");
+        TargetTableViewController *ttvc = [[TargetTableViewController alloc]init];
+        ttvc.TargetVisitId = self.TargetVisitId;
+        ttvc.isofyou = NO;
+        ttvc.strId = self.strId;
+        ttvc.cellend = NO;
+        [self.navigationController pushViewController:ttvc animated:YES];
     }else if(indexPath.section ==1){
        NSLog(@"意向客户表");
     }else{
