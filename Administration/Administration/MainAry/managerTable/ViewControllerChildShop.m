@@ -26,7 +26,6 @@
                          @"CompanyInfoId":compid,
                          @"Num":self.num,
                          @"RoleId":self.roleId,
-                         @"DepartmentID":[ShareModel shareModel].departmentID
                          };
     
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {

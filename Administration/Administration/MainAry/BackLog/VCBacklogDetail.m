@@ -101,7 +101,7 @@
 {
     CGRect frameView;
     
-    frameView = CGRectMake(0, 0, Scree_width, 108);
+    frameView = CGRectMake(0, kTopHeight, Scree_width, 108);
     
     UIView *viewFooter = [[UIView alloc]initWithFrame:frameView];
     viewFooter.backgroundColor = GetColor(192, 192, 192, 1);

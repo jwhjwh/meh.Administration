@@ -88,7 +88,6 @@
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
-           self.tableId = self.dictInfo[@"planId"];
             if (self.dictInfo.count!=0) {
                 if ([responseObject valueForKey:@"name"]!=nil) {
                     NSString *stringKey = [responseObject valueForKey:@"name"];
@@ -98,15 +97,14 @@
                 if (![[responseObject valueForKey:@"power"] isEqualToString:@""]) {
                     NSArray *permission = [[responseObject valueForKey:@"power"] componentsSeparatedByString:@","];
                     for (NSString *roleid in permission) {
-                        if ([roleid isEqualToString:[USER_DEFAULTS valueForKey:@"roleId"]]) {
+                        if ([roleid isEqualToString:[ShareModel shareModel].roleID]) {
                             self.havePermission = YES;
                             break;
                         }
                     }
                 }
-               
-                [self.tableView reloadData];
             }
+            [self.tableView reloadData];
             
             return ;
         }
@@ -365,11 +363,7 @@
                     if(self.arrayKey.count!=0){
                       if ([self.arrayKey containsObject:@"direction"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
-                    }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
+                       }
                     }
                    
                     break;
@@ -385,10 +379,6 @@
                         if ([self.arrayKey containsObject:@"shopsArrange"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                         
                     
@@ -405,10 +395,6 @@
                         if ([self.arrayKey containsObject:@"requestForProposal"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -424,10 +410,6 @@
                         if ([self.arrayKey containsObject:@"personalGrowth"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -443,10 +425,6 @@
                         if ([self.arrayKey containsObject:@"others"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -513,10 +491,6 @@
                         if ([self.arrayKey containsObject:@"sca"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -532,10 +506,6 @@
                         if ([self.arrayKey containsObject:@"experience"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -551,10 +521,6 @@
                         if ([self.arrayKey containsObject:@"problem"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -570,10 +536,6 @@
                         if ([self.arrayKey containsObject:@"others"]) {
                             [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                         }
-                    }else
-                    {
-                        cell.button.hidden = YES;
-                        cell.button.userInteractionEnabled = NO;
                     }
                     
                     break;
@@ -640,7 +602,7 @@
             dict = @{@"appkey":appKeyStr,
                      @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
-                     @"RoleId":self.roleId,
+                     @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
@@ -652,7 +614,7 @@
             dict = @{@"appkey":appKeyStr,
                      @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
-                     @"RoleId":self.roleId,
+                     @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
@@ -665,7 +627,7 @@
         [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
             NSString *string = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];
             if ([string isEqualToString:@"0000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+                [self.navigationController popViewControllerAnimated:YES];
                 return ;
             }
             if ([string isEqualToString:@"4444"]) {
@@ -686,11 +648,16 @@
 }
 #pragma -mark system
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUI];
-    [self getData];
     self.dictInfo = [NSMutableDictionary dictionary];
     self.arrayKey = [NSArray array];
     self.arraySummary = [NSMutableArray array];

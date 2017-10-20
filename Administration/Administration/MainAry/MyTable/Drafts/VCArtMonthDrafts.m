@@ -403,7 +403,13 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    NSString *urlStr;
+    if ([hint isEqualToString:@"3"]) {
+        urlStr = [NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    }else
+    {
+        urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    }
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];

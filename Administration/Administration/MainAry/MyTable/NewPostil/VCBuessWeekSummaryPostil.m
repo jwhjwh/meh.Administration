@@ -436,7 +436,7 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -580,7 +580,7 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.placeholder = self.arrayContent[indexPath.row];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (self.isSelect==NO) {
         if (canEdit) {

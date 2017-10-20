@@ -39,18 +39,18 @@
             [self.tableView reloadData];
             return ;
         }
-//        if ([stringCode isEqualToString:@"1001"]) {
-//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
-//            return ;
-//        }
-//        if ([stringCode isEqualToString:@"4444"]) {
-//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
-//            return ;
-//        }
-//        if ([stringCode isEqualToString:@"5000"]) {
-//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1];
-//            return ;
-//        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            return ;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return ;
+        }
+        if ([stringCode isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1];
+            return ;
+        }
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];

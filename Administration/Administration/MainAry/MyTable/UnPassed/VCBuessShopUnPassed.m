@@ -256,7 +256,7 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -438,7 +438,7 @@
             cell = [[CellEditInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
         }
         cell.labelTitle.text = arrayTitle[indexPath.row];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         switch (indexPath.row) {
             case 0:
             {

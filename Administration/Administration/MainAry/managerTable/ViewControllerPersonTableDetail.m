@@ -182,7 +182,7 @@
         [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
             NSString *string = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];
             if ([string isEqualToString:@"0000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+                [self.navigationController popViewControllerAnimated: YES];
                 return ;
             }
             if ([string isEqualToString:@"4444"]) {

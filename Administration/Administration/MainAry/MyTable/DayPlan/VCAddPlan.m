@@ -120,8 +120,8 @@
             self.buttonAdd.userInteractionEnabled = NO;
             for (int i=0; i<self.arrayList.count; i++) {
                 NSMutableDictionary *dict = [self.arrayList[i]mutableCopy];
-                [dict setValue:@"notShow" forKey:@"show"];
-                [dict setValue:@"1" forKey:@"canEdit"];
+                [dict setValue:@"isShow" forKey:@"show"];
+                [dict setValue:@"2" forKey:@"canEdit"];
                 [self.arrayList replaceObjectAtIndex:i withObject:dict];
             }
         }else
@@ -129,11 +129,11 @@
         {
             [self.buttonDel setTitle:@"删除一项" forState:UIControlStateNormal];
             [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
-            self.buttonAdd.userInteractionEnabled = NO;
+            self.buttonAdd.userInteractionEnabled = YES;
             for (int i=0; i<self.arrayList.count; i++) {
                 NSMutableDictionary *dict = [self.arrayList[i]mutableCopy];
-                [dict setValue:@"isShow" forKey:@"show"];
-                [dict setValue:@"2" forKey:@"canEdit"];
+                [dict setValue:@"notShow" forKey:@"show"];
+                [dict setValue:@"1" forKey:@"canEdit"];
                 [self.arrayList replaceObjectAtIndex:i withObject:dict];
             }
         }

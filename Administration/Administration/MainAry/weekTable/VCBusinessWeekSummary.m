@@ -493,7 +493,7 @@
             dict = @{@"appkey":appKeyStr,
                      @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
-                     @"RoleId":self.roleId,
+                     @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
@@ -505,7 +505,7 @@
             dict = @{@"appkey":appKeyStr,
                      @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                      @"CompanyInfoId":compid,
-                     @"RoleId":self.roleId,
+                     @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
@@ -518,7 +518,7 @@
         [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
             NSString *string = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"status"]];
             if ([string isEqualToString:@"0000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
+               [self.navigationController popViewControllerAnimated:YES];
                 return ;
             }
             if ([string isEqualToString:@"4444"]) {
@@ -527,6 +527,10 @@
             }
             if ([string isEqualToString:@"1001"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+                return ;
+            }
+            if ([string isEqualToString:@"0001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1];
                 return ;
             }
         } failure:^(NSError *error) {

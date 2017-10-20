@@ -199,6 +199,7 @@
 {
     if (alertView.tag==100) {
         if (buttonIndex ==1) {
+            isBack = NO;
             [self submitData:@"1"];
         }
     }else

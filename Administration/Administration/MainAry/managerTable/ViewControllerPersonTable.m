@@ -69,7 +69,7 @@
         [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
         
         if ([stringCode isEqualToString:@"0000"]) {
-            [self.array removeAllObjects];
+            //[self.array removeAllObjects];
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
                 [self.array addObject:dict];
             }
@@ -286,6 +286,7 @@
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self.array removeAllObjects];
     [self getData];
 }
