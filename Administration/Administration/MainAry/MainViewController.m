@@ -332,6 +332,7 @@
                 {
                 ViewControllerEmployeeTable *vc = [[ViewControllerEmployeeTable alloc]init];
                 vc.myRoleid = [USER_DEFAULTS valueForKey:@"roleId"];
+                    [ShareModel shareModel].roleID = [USER_DEFAULTS valueForKey:@"roleId"];
                 [self.navigationController pushViewController:vc animated:YES];
                 }
             }

@@ -222,7 +222,13 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr;
+    if ([hint isEqualToString:@"3"]) {
+        urlStr = [NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    }else
+    {
+        urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    }
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -347,6 +353,7 @@
 {
     if (alertView.tag==100) {
         if (buttonIndex ==1) {
+            isBack = NO;
             [self submitData:@"1"];
         }
     }else if(alertView.tag==200)
@@ -404,7 +411,7 @@
             cell = [[CellEditInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
         }
         cell.labelTitle.text = arrayTitle[indexPath.row];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         switch (indexPath.row) {
             case 0:
             {

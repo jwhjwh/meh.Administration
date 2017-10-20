@@ -44,7 +44,7 @@
         make.left.mas_equalTo(self.view.mas_left).offset(-1);
         make.right.mas_equalTo (self.view.mas_right).offset(1);
         make.top.mas_equalTo(self.view.mas_top).offset(64);
-        make.height.mas_equalTo(66);
+        make.height.mas_equalTo(135);
     }];
     
     UILabel *labelDate = [[UILabel alloc]init];
@@ -54,7 +54,7 @@
     [labelDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(view1.mas_left);
         make.top.mas_equalTo(view1.mas_top);
-        make.height.mas_equalTo(21);
+        make.height.mas_equalTo(44);
         make.width.mas_equalTo(50);
     }];
     
@@ -70,7 +70,7 @@
         make.left.mas_equalTo(labelDate.mas_right);
         make.top.mas_equalTo(view1.mas_top);
         make.right.mas_equalTo(view1.mas_right);
-        make.height.mas_equalTo(21);
+        make.height.mas_equalTo(44);
     }];
     
     UILabel *labelPistion = [[UILabel alloc]init];
@@ -80,7 +80,7 @@
     [labelPistion mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(view1.mas_left);
         make.top.mas_equalTo(labelDate.mas_bottom).offset(1);
-        make.height.mas_equalTo(21);
+        make.height.mas_equalTo(44);
         make.width.mas_equalTo(50);
     }];
     
@@ -93,7 +93,7 @@
         make.left.mas_equalTo(labelPistion.mas_right);
         make.top.mas_equalTo(button.mas_bottom).offset(1);
         make.right.mas_equalTo(view1.mas_right);
-        make.height.mas_equalTo(21);
+        make.height.mas_equalTo(44);
     }];
     
     UILabel *labelName = [[UILabel alloc]init];
@@ -103,7 +103,7 @@
     [labelName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(view1.mas_left);
         make.top.mas_equalTo(labelPistion.mas_bottom).offset(1);
-        make.height.mas_equalTo(21);
+        make.height.mas_equalTo(44);
         make.width.mas_equalTo(50);
     }];
     
@@ -116,7 +116,7 @@
         make.left.mas_equalTo(labelName.mas_right);
         make.top.mas_equalTo(labelPistionName.mas_bottom).offset(1);
         make.right.mas_equalTo(view1.mas_right);
-        make.height.mas_equalTo(21);
+        make.height.mas_equalTo(44);
     }];
     
     tableView1 = [[UITableView alloc]init];
@@ -278,6 +278,7 @@
 {
     if (alertView.tag==100) {
         if (buttonIndex ==1) {
+            isBack = NO;
             [self submitData:@"1"];
         }
     }else

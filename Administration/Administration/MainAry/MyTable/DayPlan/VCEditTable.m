@@ -105,7 +105,7 @@
     if (button.tag==100) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:@"" forKey:@"did"];
-        [dict setValue:self.dayPlabID forKey:@"id"];
+        [dict setValue:@"" forKey:@"id"];
         [dict setValue:@"" forKey:@"others"];
         [dict setValue:@"" forKey:@"jobAim"];
         [dict setValue:@"" forKey:@"detailMethod"];
@@ -116,13 +116,25 @@
     }
     else
     {
-        [self.buttonDel setTitle:@"取消删除" forState:UIControlStateNormal];
-        [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
-        self.buttonAdd.userInteractionEnabled = NO;
+        if ([self.buttonDel.titleLabel.text isEqualToString:@"删除一项"]) {
+            [self.buttonDel setTitle:@"取消删除" forState:UIControlStateNormal];
+            [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+            self.buttonAdd.userInteractionEnabled = NO;
+            for (int i=0; i<self.arrayDate.count; i++) {
+                NSMutableDictionary *dict = self.arrayDate[i];
+                [dict setValue:@"C" forKey:@"buttonstate"];
+                [self.arrayDate replaceObjectAtIndex:i withObject:dict];
+            }
+        }else
+        {
+        [self.buttonDel setTitle:@"删除一项" forState:UIControlStateNormal];
+        [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
+        self.buttonAdd.userInteractionEnabled = YES;
         for (int i=0; i<self.arrayDate.count; i++) {
             NSMutableDictionary *dict = self.arrayDate[i];
-            [dict setValue:@"C" forKey:@"buttonstate"];
+            [dict setValue:@"A" forKey:@"buttonstate"];
             [self.arrayDate replaceObjectAtIndex:i withObject:dict];
+        }
         }
     }
     [self.tableView reloadData];
@@ -350,7 +362,13 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
+        if ([self.did isEqualToString:@""]) {
+            [self.arrayDate removeObjectAtIndex:self.integer];
+        }else
+        {
         [self delePlan:self.did And:self.integer];
+        }
+        [self.tableView reloadData];
     }
 }
 

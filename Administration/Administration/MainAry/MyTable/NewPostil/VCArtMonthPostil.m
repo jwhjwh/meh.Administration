@@ -545,6 +545,7 @@
         }
         NSDictionary *dict = self.arraySummary[indexPath.row];
         cell.labelPostion.text = [ShareModel shareModel].postionName;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.dictInfo = dict;
         [ZXDNetworking setExtraCellLineHidden:tableView];
         return cell;

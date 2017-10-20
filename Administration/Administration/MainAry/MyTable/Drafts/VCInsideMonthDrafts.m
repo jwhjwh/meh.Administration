@@ -182,14 +182,14 @@
 {
     UIButton *buttonPlan = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, Scree_width/2, 40)];
     [buttonPlan setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
-    [buttonPlan setTitle:@"周计划" forState:UIControlStateNormal];
+    [buttonPlan setTitle:@"月计划" forState:UIControlStateNormal];
     [buttonPlan addTarget:self action:@selector(changeData:) forControlEvents:UIControlEventTouchUpInside];
     buttonPlan.tag = 100;
     [self.view addSubview:buttonPlan];
     self.buttonPlan  = buttonPlan;
     
     UIButton *buttonSummary = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, 64, Scree_width/2, 40)];
-    [buttonSummary setTitle:@"周总结" forState:UIControlStateNormal];
+    [buttonSummary setTitle:@"月总结" forState:UIControlStateNormal];
     [buttonSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [buttonSummary addTarget:self action:@selector(changeData:) forControlEvents:UIControlEventTouchUpInside];
     buttonSummary.tag = 200;
@@ -381,7 +381,13 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr;
+    if ([hint isEqualToString:@"3"]) {
+        urlStr = [NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    }else
+    {
+        urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    }
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];

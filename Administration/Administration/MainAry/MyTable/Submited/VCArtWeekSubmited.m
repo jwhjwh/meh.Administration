@@ -474,14 +474,10 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    
-    
-        
-    
     
     if ([self.artWeekPlan.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.artWeekPlan.endDate.titleLabel.text isEqualToString:@"选择日期"]||
@@ -703,6 +699,7 @@
             cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
         }
         NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelPostion.text = [ShareModel shareModel].postionName;
         cell.dictInfo = dict;
         [ZXDNetworking setExtraCellLineHidden:tableView];

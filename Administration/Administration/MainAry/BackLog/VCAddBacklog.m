@@ -48,7 +48,7 @@
 {
     CGRect frameView;
    
-    frameView = CGRectMake(0, 0, Scree_width, 55);
+    frameView = CGRectMake(0, kTopHeight, Scree_width, 55);
     
     UIView *viewFooter = [[UIView alloc]initWithFrame:frameView];
     viewFooter.backgroundColor = GetColor(192, 192, 192, 1);
@@ -246,10 +246,6 @@
 
 }
 
--(void)showShooseEdit
-{
-    
-}
 
 -(void)showDatePick:(UIButton *)button
 {

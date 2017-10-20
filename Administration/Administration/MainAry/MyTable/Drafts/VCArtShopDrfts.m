@@ -84,7 +84,7 @@
     [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(-1);
         make.right.mas_equalTo (self.view.mas_right).offset(1);
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
         make.height.mas_equalTo(66);
     }];
     
@@ -278,7 +278,13 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr;
+    if ([hint isEqualToString:@"3"]) {
+        urlStr = [NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    }else
+    {
+        urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
+    }
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -385,6 +391,10 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
             return;
         }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1];
+            return;
+        }
     } failure:^(NSError *error) {
         
     } view:self.view];
@@ -423,6 +433,7 @@
 {
     if (alertView.tag==100) {
         if (buttonIndex ==1) {
+            isBack = NO;
             [self submitData:@"1"];
         }
     }else if(alertView.tag==200)
@@ -463,6 +474,7 @@
     }
     cell.LabelTitle.text = arrayTitle[indexPath.row];
     cell.textView.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
         cell.userInteractionEnabled = NO;
     }else

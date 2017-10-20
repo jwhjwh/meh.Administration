@@ -459,7 +459,7 @@
 
 -(void)submitData:(NSString *)hint
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/updateReport",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -658,6 +658,7 @@
         NSDictionary *dict = self.arraySummary[indexPath.row];
         cell.labelPostion.text = [ShareModel shareModel].postionName;
         cell.dictInfo = dict;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [ZXDNetworking setExtraCellLineHidden:tableView];
         return cell;
     }else

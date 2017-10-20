@@ -119,9 +119,10 @@
         vc.departmentId = self.departmentID;
         vc.postionName = dict[@"newName"];
         vc.remark = dict[@"remark"];
-        vc.tableId = dict[@"id"];
+         vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
         vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
         vc.num = self.num;
+    
         //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
@@ -130,19 +131,21 @@
             VCWeekTable *vc = [[VCWeekTable alloc]init];
             vc.stringTitle = dict[@"name"];
          //   vc.roleId = self.rid;
+        
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
             vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
+            vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             vc.num = self.num;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }else
             {
                 vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else if([dict[@"newName"] containsString:@"业务"])
@@ -154,15 +157,16 @@
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
             vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
+             vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             vc.num = self.num;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }else
             {
                 vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -175,15 +179,16 @@
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
             vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
+             vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             vc.num = self.num;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }else
             {
                 vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -198,15 +203,16 @@
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
             vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
+             vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             vc.num = self.num;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }else
             {
                 vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else
@@ -218,15 +224,16 @@
             vc.departmentId = self.departmentID;
             vc.postionName = dict[@"newName"];
             vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
+             vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             vc.num = self.num;
+            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }else
             {
                 vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -241,6 +248,7 @@
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self.arrayData removeAllObjects];
     [self getData];
 }
