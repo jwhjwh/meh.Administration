@@ -700,6 +700,7 @@
 		62AFB9281F0A1A9C003FCE35 /* xx_ico02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB9261F0A1A9C003FCE35 /* xx_ico02.png */; };
 		62AFB92B1F0A1AA2003FCE35 /* sc_ico02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB9291F0A1AA2003FCE35 /* sc_ico02.png */; };
 		62AFB92C1F0A1AA2003FCE35 /* sc_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB92A1F0A1AA2003FCE35 /* sc_ico01.png */; };
+		62D94D9A1F99A55B00D0BEA6 /* targetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D94D991F99A55B00D0BEA6 /* targetTextField.m */; };
 		62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 62DEF9C01E8B492B00BC7D0C /* zx_ico.png */; };
 		62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E873B01F74A3C800335A44 /* InterestedsearchViewController.m */; };
 		62E873B41F74A89300335A44 /* InterestedChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E873B31F74A89300335A44 /* InterestedChooseViewController.m */; };
@@ -2002,6 +2003,8 @@
 		62AFB9261F0A1A9C003FCE35 /* xx_ico02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xx_ico02.png; sourceTree = "<group>"; };
 		62AFB9291F0A1AA2003FCE35 /* sc_ico02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sc_ico02.png; sourceTree = "<group>"; };
 		62AFB92A1F0A1AA2003FCE35 /* sc_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sc_ico01.png; sourceTree = "<group>"; };
+		62D94D981F99A55B00D0BEA6 /* targetTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = targetTextField.h; sourceTree = "<group>"; };
+		62D94D991F99A55B00D0BEA6 /* targetTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = targetTextField.m; sourceTree = "<group>"; };
 		62DEF9C01E8B492B00BC7D0C /* zx_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zx_ico.png; sourceTree = "<group>"; };
 		62E873AF1F74A3C800335A44 /* InterestedsearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestedsearchViewController.h; sourceTree = "<group>"; };
 		62E873B01F74A3C800335A44 /* InterestedsearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterestedsearchViewController.m; sourceTree = "<group>"; };
@@ -4806,6 +4809,8 @@
 			children = (
 				62F220781F90AD86004163A4 /* TargetTableViewController.h */,
 				62F220791F90AD86004163A4 /* TargetTableViewController.m */,
+				62D94D981F99A55B00D0BEA6 /* targetTextField.h */,
+				62D94D991F99A55B00D0BEA6 /* targetTextField.m */,
 				622686C81F94604700FC21FF /* TargetModel.h */,
 				622686C91F94604700FC21FF /* TargetModel.m */,
 			);
@@ -5248,6 +5253,7 @@
 				1F6211951E8CFFAF00F50851 /* EMAudioRecorderUtil.m in Sources */,
 				1F6211EC1E8CFFB000F50851 /* FixFopen.c in Sources */,
 				62F220721F905CFC004163A4 /* tcModel.m in Sources */,
+				62D94D9A1F99A55B00D0BEA6 /* targetTextField.m in Sources */,
 				1F6212011E8CFFB000F50851 /* EaseChatToolbarItem.m in Sources */,
 				1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */,
 				1FF5807C1F8C64D3001C3D40 /* VCArtWeekSummarySubmited.m in Sources */,
