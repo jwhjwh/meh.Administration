@@ -84,7 +84,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
-    _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间",@"执行方案",@"合约金额"],@[@"打款方式"]];
+    _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息:"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间",@"执行方案",@"合约金额"],@[@"打款方式"]];
     _placeholdernameArrs = @[@[],@[@"选择日期",@"如:10:00点-12:30分",@"选择拜访次数"],@[@"填写店名",@"填写店铺地址",@"填写负责人",@"填写职务",@"填写联系方式",@"填写微信号"],@[@"选择店规模",@"选择床位",@"选择美容师人数",@"选择开店年限",@"填写主要经营品牌",@"填写关注品牌"]];
     _tagnameArrs =@[@[],@[@"",@"12",@""],@[@"21",@"22",@"23",@"24",@"25",@"26"],@[@"31",@"32",@"33",@"34",@"35",@"36"]];
     [self targettableui];
@@ -207,7 +207,6 @@
             
             
         }else if(indexPath.section == 3){
-            //_storelevel。规模   _berths 床位  _beautician 美容  _plantingduration 开店
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
             if (indexPath.row==4) {
@@ -243,7 +242,7 @@
                 }
             }else{
                 UITextField *section3 = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
-             [section3 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+              [section3 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 section3.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
                 NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
                 section3.tag = k;
@@ -271,9 +270,125 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.section == 4){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
+            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 120, 30)];
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
+            tlelabel.font = [UIFont systemFontOfSize:14];
             [cell addSubview:tlelabel];
+            
+            UILabel *zdsllabel =[[UILabel alloc]initWithFrame:CGRectMake(10, 40, 120, 30)];
+            zdsllabel.text = @"1.终端顾客总数量：";
+            zdsllabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:zdsllabel];
+            targetTextField *zdsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(130, 40, 40, 30)];
+            zdsltextfield.font= [UIFont systemFontOfSize:13];
+            [zdsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zdsltextfield.tag = 41;
+            [cell addSubview:zdsltextfield];
+            UILabel *renlabel = [[UILabel alloc]initWithFrame:CGRectMake(170, 40, 40, 30)];
+            renlabel.text = @"人,";
+            renlabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel];
+            
+            UILabel *zlsllabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 110, 30)];
+            zlsllabel.text = @"有质量顾客数量:";
+            zlsllabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:zlsllabel];
+            targetTextField *zlsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(120, 70, 40, 30)];
+            zlsltextfield.font= [UIFont systemFontOfSize:13];
+            [zlsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zlsltextfield.tag = 42;
+            [cell addSubview:zlsltextfield];
+            UILabel *renlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(160, 70, 40, 30)];
+            renlabel1.text = @"人,";
+            renlabel1.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel1];
+            
+            UILabel *xqdwlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 110, 110, 30)];
+            xqdwlabel.text = @"2.需求品牌定位:";
+            xqdwlabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:xqdwlabel];
+            targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(120, 110, 40, 30)];
+            xqdwtextfield.font= [UIFont systemFontOfSize:13];
+            [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            xqdwtextfield.tag = 43;
+            [cell addSubview:xqdwtextfield];
+            UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(160, 110, 40, 30)];
+            renlabel2.text = @",";
+            renlabel2.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel2];
+            
+            UILabel *qtlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 150, 110, 30)];
+            qtlabel.text = @"其他:";
+            qtlabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:qtlabel];
+            targetTextField *qttextfield =[[targetTextField alloc]initWithFrame:CGRectMake(10, 180, cell.width-30, 30)];
+            qttextfield.font= [UIFont systemFontOfSize:13];
+            [qttextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            qttextfield.tag = 44;
+            [cell addSubview:qttextfield];
+            
+            UILabel *zdgklabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 210, 150, 30)];
+            zdgklabel.text = @"3.终端顾客消费能力:";
+            zdgklabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:zdgklabel];
+            
+            UILabel *renlabel3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 240, 40, 30)];
+            renlabel3.text = @"单品约";
+            renlabel3.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel3];
+            targetTextField *zdgktextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 240, 40, 30)];
+            zdgktextfield.font= [UIFont systemFontOfSize:13];
+            [zdgktextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zdgktextfield.tag = 44;
+            [cell addSubview:zdgktextfield];
+            UILabel *renlabel4 = [[UILabel alloc]initWithFrame:CGRectMake(90, 240, 60, 30)];
+            renlabel4.text = @"元,套盒约";
+            renlabel4.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel4];
+            targetTextField *thytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(150, 240, 40, 30)];
+            thytextfield.font= [UIFont systemFontOfSize:13];
+            [thytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            thytextfield.tag = 45;
+            [cell addSubview:thytextfield];
+            UILabel *renlabel5 = [[UILabel alloc]initWithFrame:CGRectMake(190, 240,40, 30)];
+            renlabel5.text = @"元,";
+            renlabel5.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel5];
+            
+            UILabel *renlabel6 = [[UILabel alloc]initWithFrame:CGRectMake(10, 270, 40, 30)];
+            renlabel6.text = @"卡项约";
+            renlabel6.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel6];
+            targetTextField *kxytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 270, 40, 30)];
+            kxytextfield.font= [UIFont systemFontOfSize:13];
+            [kxytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            kxytextfield.tag = 46;
+            [cell addSubview:kxytextfield];
+            UILabel *renlabel7 = [[UILabel alloc]initWithFrame:CGRectMake(90, 270, 80, 30)];
+            renlabel7.text = @"元,项目套餐";
+            renlabel7.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel7];
+            targetTextField *xmtctextfield =[[targetTextField alloc]initWithFrame:CGRectMake(170, 270, 40, 30)];
+            xmtctextfield.font= [UIFont systemFontOfSize:13];
+            [xmtctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            xmtctextfield.tag = 47;
+            [cell addSubview:xmtctextfield];
+            UILabel *renlabel8 = [[UILabel alloc]initWithFrame:CGRectMake(210, 270, 40, 30)];
+            renlabel8.text = @"元;";
+            renlabel8.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel8];
+            
+            UILabel *renlabel9 = [[UILabel alloc]initWithFrame:CGRectMake(10, 300, 40, 30)];
+            renlabel9.text = @"本年[";
+            renlabel9.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel9];
+            
+           
+            
+            
+            UIImageView *yesbtn = [[UIImageView alloc]initWithFrame:CGRectMake(50, 300, 50, 30)];
+            yesbtn.image = [UIImage imageNamed:@"asd"];
+            [cell addSubview:yesbtn];
             
         }else if(indexPath.section == 5){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -293,42 +408,81 @@
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
             [cell addSubview:tlelabel];
             
+            UIButton *QKbtn = [[UIButton alloc]init];
+            QKbtn.frame = CGRectMake(10, 50, 50, 30);
+            [QKbtn setTitle:@"全款" forState:UIControlStateNormal];
+            [QKbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [cell addSubview:QKbtn];
+            
+            UIButton *FQbtn = [[UIButton alloc]init];
+            FQbtn.frame = CGRectMake(80, 50, 50, 30);
+            [FQbtn setTitle:@"分期" forState:UIControlStateNormal];
+            [FQbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [cell addSubview:FQbtn];
+            
+            UIButton *QTbtn = [[UIButton alloc]init];
+            QTbtn.frame = CGRectMake(150, 50, 120, 30);
+            [QTbtn setTitle:@"其它方式" forState:UIControlStateNormal];
+            [QTbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [cell addSubview:QTbtn];
+            
+            UILabel *tbrlabel = [[UILabel alloc]init];
+            tbrlabel.frame = CGRectMake(10, 100, 80, 30);
+            tbrlabel.text = @"填表人:";
+            [cell addSubview:tbrlabel];
+            
+            targetTextField *tbrtextfield = [[targetTextField alloc]init];
+            tbrtextfield.frame = CGRectMake(100, 100, cell.width-100, 30);
+            [tbrtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            tbrtextfield.tag = 71;
+            [cell addSubview:tbrtextfield];
+            
+            UILabel *zgjllabel = [[UILabel alloc]init];
+            zgjllabel.frame = CGRectMake(10, 140, 80, 30);
+            zgjllabel.text = @"主管经理:";
+            [cell addSubview:zgjllabel];
+            
+            targetTextField *zgjltextfield = [[targetTextField alloc]init];
+            zgjltextfield.frame = CGRectMake(100, 140, cell.width-100, 30);
+            [zgjltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zgjltextfield.tag = 72;
+            [cell addSubview:zgjltextfield];
+            
         }
          return cell;
     }
+}
+-(void)buttonNotPresss:(UIButton *)btn{
     
-    
-   
 }
 -(void)FieldText:(UITextField *)textfield{
     switch (textfield.tag) {
         case 12:
-            _meettime = textfield.text;
-            
+            _meettime = textfield.text;//拜访时间段
             break;
         case 23:
-            NSLog(@"负责人");
-             _principal=textfield.text;
+             _principal=textfield.text;//负责人
             break;
         case 24:
-            NSLog(@"职务");
-            _post = textfield.text;
+            _post = textfield.text;//职务
             break;
         case 25:
-            NSLog(@"联系方式");
-            _iphone = textfield.text;
+            _iphone = textfield.text;//联系方式
             break;
         case 26:
-            NSLog(@"微信号");
-            _qcode = textfield.text;
+            _qcode = textfield.text;//微信号
             break;
         case 35:
-            NSLog(@"经营品牌");
             _brandbusiness = textfield.text;//主要经营品牌
             break;
         case 36:
-            NSLog(@"关注品牌");
             _followbrand = textfield.text;//关注品牌
+            break;
+        case 71:
+            _written = textfield.text;//填表人
+            break;
+        case 72:
+            _manager = textfield.text;//主管经理
             break;
         default:
             break;
@@ -436,9 +590,11 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==4) {
-        return 180;
+        return 360;
+    }else if(indexPath.section ==7){
+        return 200;
     }else{
-        return 50.0f;
+        return 50;
     }
     
 }
