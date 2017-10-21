@@ -589,6 +589,9 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.placeholder = self.arrayContent[indexPath.row];
     [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.isSelect) {
+            
         switch (indexPath.row) {
             case 0:
                 if (self.string1.length!=0) {
@@ -663,6 +666,10 @@
                 
             default:
                 break;
+        }
+        }else
+        {
+            cell.textView.placeholder = self.arrayContent[indexPath.row];
         }
     
     return cell;

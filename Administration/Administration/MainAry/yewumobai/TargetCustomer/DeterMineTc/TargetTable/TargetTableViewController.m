@@ -384,11 +384,18 @@
             [cell addSubview:renlabel9];
             
            
+            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 60, 30)];
+            [button setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
+            [button setTitle:@"是" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [cell.contentView addSubview:button];
             
+            UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(90, 300, 60, 30)];
+            [button1 setImage:[UIImage imageNamed:@"xk_ico02"] forState:UIControlStateNormal];
+            [button1 setTitle:@"否" forState:UIControlStateNormal];
+            [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [cell.contentView addSubview:button1];
             
-            UIImageView *yesbtn = [[UIImageView alloc]initWithFrame:CGRectMake(50, 300, 50, 30)];
-            yesbtn.image = [UIImage imageNamed:@"asd"];
-            [cell addSubview:yesbtn];
             
         }else if(indexPath.section == 5){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
