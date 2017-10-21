@@ -11,6 +11,7 @@
 #import "CLZoomPickerView.h"
 #import "inftionTableViewCell.h"
 #import "SelectAlert.h"
+#import "targetTextField.h"
 @interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
 
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
@@ -22,8 +23,49 @@
 @property (strong,nonatomic) NSIndexPath *index;
 @property (strong,nonatomic) NSArray *timeArray;
 
-//控件
-@property (strong,nonatomic)UILabel *bfcslabel;
+//数据源
+@property(strong,nonatomic)NSString *time;//拜访日期
+@property(strong,nonatomic)NSString *meettime;//拜访时间段
+@property(strong,nonatomic)NSString *num;//拜访次数
+@property(strong,nonatomic)NSString *principal;//店铺负责人
+@property(strong,nonatomic)NSString *post;//职务
+@property(strong,nonatomic)NSString *iphone;//联系方式
+@property(strong,nonatomic)NSString *qcode;//微信
+@property(strong,nonatomic)NSString *storelevel;//店规模
+@property(strong,nonatomic)NSString *berths;//床位数
+@property(strong,nonatomic)NSString *beautician;//美容师人数
+@property(strong,nonatomic)NSString *plantingduration;//开店年限
+@property(strong,nonatomic)NSString *brandbusiness;//主要经营品牌
+@property(strong,nonatomic)NSString *followbrand;//关注品牌
+@property(strong,nonatomic)NSString *customernum;//终端顾客总数量
+@property(strong,nonatomic)NSString *validnum;//有质量顾客数量
+@property(strong,nonatomic)NSString *brandpos;//品牌定位
+@property(strong,nonatomic)NSString *otherpos;//品牌定位的其他
+@property(strong,nonatomic)NSString *singleprice;// 单品价格
+@property(strong,nonatomic)NSString *boxprice;//套盒价格
+@property(strong,nonatomic)NSString *cardprice;//卡项价格
+@property(strong,nonatomic)NSString *packprice;// 项目套餐
+@property(strong,nonatomic)NSString *flag;//本年是否做过大量收现活动
+@property(strong,nonatomic)NSString *activename;//活动名称
+@property(strong,nonatomic)NSString *dealmoney;//成交金额
+@property(strong,nonatomic)NSString *leastmoney;//下限
+@property(strong,nonatomic)NSString *dealrate;//成交率
+@property(strong,nonatomic)NSString *demand;//运营协助需求
+@property(strong,nonatomic)NSString *shopquestion;//店家问题简述
+@property(strong,nonatomic)NSString *plans;//品牌介入策略及跟进规划
+@property(strong,nonatomic)NSString *requirement;//店家要求事项及解决办法
+@property(strong,nonatomic)NSString *notic;//同事协助须知
+@property(strong,nonatomic)NSString *partnertime;//店家预定合作时间
+@property(strong,nonatomic)NSString *scheme;//执行方案
+@property(strong,nonatomic)NSString *amount;//合约金额
+@property(strong,nonatomic)NSString *payway;//大款方式
+@property(strong,nonatomic)NSString *written;//填表人
+@property(strong,nonatomic)NSString *manager;//经理
+@property(strong,nonatomic)NSString *shopid;//店铺id
+@property(strong,nonatomic)NSString *StoreName;//店名
+@property(strong,nonatomic)NSString *targetVisitId;//目标客户id
+@property(strong,nonatomic)NSString *Address;//店铺地址
+
 @end
 
 @implementation TargetTableViewController
@@ -42,7 +84,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
-    _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间",@"执行方案",@"合约金额"],@[@"打款方式"]];
+    _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息:"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间",@"执行方案",@"合约金额"],@[@"打款方式"]];
     _placeholdernameArrs = @[@[],@[@"选择日期",@"如:10:00点-12:30分",@"选择拜访次数"],@[@"填写店名",@"填写店铺地址",@"填写负责人",@"填写职务",@"填写联系方式",@"填写微信号"],@[@"选择店规模",@"选择床位",@"选择美容师人数",@"选择开店年限",@"填写主要经营品牌",@"填写关注品牌"]];
     _tagnameArrs =@[@[],@[@"",@"12",@""],@[@"21",@"22",@"23",@"24",@"25",@"26"],@[@"31",@"32",@"33",@"34",@"35",@"36"]];
     [self targettableui];
@@ -105,37 +147,115 @@
                 
             }else if (indexPath.row == 1){
                 UITextField *sjduan = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
+                //----------------------------------------------
                 [sjduan addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 sjduan.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
                 NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
                 sjduan.tag = k;
+                if (![_meettime isEqualToString:@""]) {
+                    sjduan.text = _meettime;
+                }
                 [cell addSubview:sjduan];
             }else{
-                cell.xingLabel.textColor = [UIColor lightGrayColor];
-                cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                if ([_num isEqualToString:@""]) {
+                    cell.xingLabel.textColor = [UIColor lightGrayColor];
+                    cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                }else{
+                    cell.xingLabel.textColor = [UIColor blackColor];
+                    cell.xingLabel.text =_num;
+                }
+                
             }
             
         }else if(indexPath.section == 2){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
-            UITextField *section2 = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
+            UITextField *section2 = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
+         [section2 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             section2.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
             NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
             section2.tag = k;
+            if (indexPath.row == 0) {
+                //店名StoreName
+                section2.text = _StoreName;
+            }else if (indexPath.row == 1) {
+                //店铺地址
+                section2.text = _Address;
+            }else if (indexPath.row == 2) {
+                //负责人
+                if (![_principal isEqualToString:@""]) {
+                    section2.text = _principal;
+                }
+            }else if (indexPath.row == 3) {
+                //职务
+                if (![_post isEqualToString:@""]) {
+                    section2.text = _post;
+                }
+            }else if (indexPath.row == 4) {
+                //联系方式
+                if (![_iphone isEqualToString:@""]) {
+                    section2.text = _iphone;
+                }
+            }else if (indexPath.row == 5) {
+                //微信
+                if (![_qcode isEqualToString:@""]) {
+                    section2.text = _qcode;
+                }
+            }
+            
             [cell addSubview:section2];
             
             
         }else if(indexPath.section == 3){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
-            if (indexPath.row<4) {
-                cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
-                cell.xingLabel.textColor = [UIColor lightGrayColor];
+            if (indexPath.row==4) {
+                cell.mingLabel.font = [UIFont systemFontOfSize:14];
+            }
+            if (indexPath.row == 0) {
+                if (![_storelevel isEqualToString:@""]) {
+                    cell.xingLabel.text = _storelevel;
+                }else{
+                    cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                    cell.xingLabel.textColor = [UIColor lightGrayColor];
+                }
+            }else if(indexPath.row==1){
+                if (![_berths isEqualToString:@""]) {
+                    cell.xingLabel.text = _berths;
+                }else{
+                    cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                    cell.xingLabel.textColor = [UIColor lightGrayColor];
+                }
+            }else if(indexPath.row==2){
+                if (![_beautician isEqualToString:@""]) {
+                    cell.xingLabel.text = _beautician;
+                }else{
+                    cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                    cell.xingLabel.textColor = [UIColor lightGrayColor];
+                }
+            }else if(indexPath.row==3){
+                if (![_plantingduration isEqualToString:@""]) {
+                    cell.xingLabel.text = _plantingduration;
+                }else{
+                    cell.xingLabel.text =_placeholdernameArrs[indexPath.section][indexPath.row];
+                    cell.xingLabel.textColor = [UIColor lightGrayColor];
+                }
             }else{
-                UITextField *section3 = [[UITextField alloc]initWithFrame:CGRectMake(130, 10, cell.width-130, 30)];
+                UITextField *section3 = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
+              [section3 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 section3.placeholder = _placeholdernameArrs[indexPath.section][indexPath.row];
                 NSInteger k = [_tagnameArrs[indexPath.section][indexPath.row] integerValue];
                 section3.tag = k;
+                
+                if (indexPath.row ==4) {
+                    if (![_brandbusiness isEqualToString:@""]) {
+                        section3.text = _brandbusiness;
+                    }
+                }else if (indexPath.row ==5){
+                    if (![_followbrand isEqualToString:@""]) {
+                        section3.text = _followbrand;
+                    }
+                }
                 [cell addSubview:section3];
             }
         }
@@ -150,9 +270,125 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.section == 4){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 120, 30)];
+            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 120, 30)];
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
+            tlelabel.font = [UIFont systemFontOfSize:14];
             [cell addSubview:tlelabel];
+            
+            UILabel *zdsllabel =[[UILabel alloc]initWithFrame:CGRectMake(10, 40, 120, 30)];
+            zdsllabel.text = @"1.终端顾客总数量：";
+            zdsllabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:zdsllabel];
+            targetTextField *zdsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(130, 40, 40, 30)];
+            zdsltextfield.font= [UIFont systemFontOfSize:13];
+            [zdsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zdsltextfield.tag = 41;
+            [cell addSubview:zdsltextfield];
+            UILabel *renlabel = [[UILabel alloc]initWithFrame:CGRectMake(170, 40, 40, 30)];
+            renlabel.text = @"人,";
+            renlabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel];
+            
+            UILabel *zlsllabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 110, 30)];
+            zlsllabel.text = @"有质量顾客数量:";
+            zlsllabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:zlsllabel];
+            targetTextField *zlsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(120, 70, 40, 30)];
+            zlsltextfield.font= [UIFont systemFontOfSize:13];
+            [zlsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zlsltextfield.tag = 42;
+            [cell addSubview:zlsltextfield];
+            UILabel *renlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(160, 70, 40, 30)];
+            renlabel1.text = @"人,";
+            renlabel1.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel1];
+            
+            UILabel *xqdwlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 110, 110, 30)];
+            xqdwlabel.text = @"2.需求品牌定位:";
+            xqdwlabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:xqdwlabel];
+            targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(120, 110, 40, 30)];
+            xqdwtextfield.font= [UIFont systemFontOfSize:13];
+            [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            xqdwtextfield.tag = 43;
+            [cell addSubview:xqdwtextfield];
+            UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(160, 110, 40, 30)];
+            renlabel2.text = @",";
+            renlabel2.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel2];
+            
+            UILabel *qtlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 150, 110, 30)];
+            qtlabel.text = @"其他:";
+            qtlabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:qtlabel];
+            targetTextField *qttextfield =[[targetTextField alloc]initWithFrame:CGRectMake(10, 180, cell.width-30, 30)];
+            qttextfield.font= [UIFont systemFontOfSize:13];
+            [qttextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            qttextfield.tag = 44;
+            [cell addSubview:qttextfield];
+            
+            UILabel *zdgklabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 210, 150, 30)];
+            zdgklabel.text = @"3.终端顾客消费能力:";
+            zdgklabel.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:zdgklabel];
+            
+            UILabel *renlabel3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 240, 40, 30)];
+            renlabel3.text = @"单品约";
+            renlabel3.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel3];
+            targetTextField *zdgktextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 240, 40, 30)];
+            zdgktextfield.font= [UIFont systemFontOfSize:13];
+            [zdgktextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zdgktextfield.tag = 44;
+            [cell addSubview:zdgktextfield];
+            UILabel *renlabel4 = [[UILabel alloc]initWithFrame:CGRectMake(90, 240, 60, 30)];
+            renlabel4.text = @"元,套盒约";
+            renlabel4.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel4];
+            targetTextField *thytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(150, 240, 40, 30)];
+            thytextfield.font= [UIFont systemFontOfSize:13];
+            [thytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            thytextfield.tag = 45;
+            [cell addSubview:thytextfield];
+            UILabel *renlabel5 = [[UILabel alloc]initWithFrame:CGRectMake(190, 240,40, 30)];
+            renlabel5.text = @"元,";
+            renlabel5.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel5];
+            
+            UILabel *renlabel6 = [[UILabel alloc]initWithFrame:CGRectMake(10, 270, 40, 30)];
+            renlabel6.text = @"卡项约";
+            renlabel6.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel6];
+            targetTextField *kxytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 270, 40, 30)];
+            kxytextfield.font= [UIFont systemFontOfSize:13];
+            [kxytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            kxytextfield.tag = 46;
+            [cell addSubview:kxytextfield];
+            UILabel *renlabel7 = [[UILabel alloc]initWithFrame:CGRectMake(90, 270, 80, 30)];
+            renlabel7.text = @"元,项目套餐";
+            renlabel7.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel7];
+            targetTextField *xmtctextfield =[[targetTextField alloc]initWithFrame:CGRectMake(170, 270, 40, 30)];
+            xmtctextfield.font= [UIFont systemFontOfSize:13];
+            [xmtctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            xmtctextfield.tag = 47;
+            [cell addSubview:xmtctextfield];
+            UILabel *renlabel8 = [[UILabel alloc]initWithFrame:CGRectMake(210, 270, 40, 30)];
+            renlabel8.text = @"元;";
+            renlabel8.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel8];
+            
+            UILabel *renlabel9 = [[UILabel alloc]initWithFrame:CGRectMake(10, 300, 40, 30)];
+            renlabel9.text = @"本年[";
+            renlabel9.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel9];
+            
+           
+            
+            
+            UIImageView *yesbtn = [[UIImageView alloc]initWithFrame:CGRectMake(50, 300, 50, 30)];
+            yesbtn.image = [UIImage imageNamed:@"asd"];
+            [cell addSubview:yesbtn];
             
         }else if(indexPath.section == 5){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -172,15 +408,85 @@
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
             [cell addSubview:tlelabel];
             
+            UIButton *QKbtn = [[UIButton alloc]init];
+            QKbtn.frame = CGRectMake(10, 50, 50, 30);
+            [QKbtn setTitle:@"全款" forState:UIControlStateNormal];
+            [QKbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [cell addSubview:QKbtn];
+            
+            UIButton *FQbtn = [[UIButton alloc]init];
+            FQbtn.frame = CGRectMake(80, 50, 50, 30);
+            [FQbtn setTitle:@"分期" forState:UIControlStateNormal];
+            [FQbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [cell addSubview:FQbtn];
+            
+            UIButton *QTbtn = [[UIButton alloc]init];
+            QTbtn.frame = CGRectMake(150, 50, 120, 30);
+            [QTbtn setTitle:@"其它方式" forState:UIControlStateNormal];
+            [QTbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [cell addSubview:QTbtn];
+            
+            UILabel *tbrlabel = [[UILabel alloc]init];
+            tbrlabel.frame = CGRectMake(10, 100, 80, 30);
+            tbrlabel.text = @"填表人:";
+            [cell addSubview:tbrlabel];
+            
+            targetTextField *tbrtextfield = [[targetTextField alloc]init];
+            tbrtextfield.frame = CGRectMake(100, 100, cell.width-100, 30);
+            [tbrtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            tbrtextfield.tag = 71;
+            [cell addSubview:tbrtextfield];
+            
+            UILabel *zgjllabel = [[UILabel alloc]init];
+            zgjllabel.frame = CGRectMake(10, 140, 80, 30);
+            zgjllabel.text = @"主管经理:";
+            [cell addSubview:zgjllabel];
+            
+            targetTextField *zgjltextfield = [[targetTextField alloc]init];
+            zgjltextfield.frame = CGRectMake(100, 140, cell.width-100, 30);
+            [zgjltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            zgjltextfield.tag = 72;
+            [cell addSubview:zgjltextfield];
+            
         }
          return cell;
     }
+}
+-(void)buttonNotPresss:(UIButton *)btn{
     
-    
-   
 }
 -(void)FieldText:(UITextField *)textfield{
-    
+    switch (textfield.tag) {
+        case 12:
+            _meettime = textfield.text;//拜访时间段
+            break;
+        case 23:
+             _principal=textfield.text;//负责人
+            break;
+        case 24:
+            _post = textfield.text;//职务
+            break;
+        case 25:
+            _iphone = textfield.text;//联系方式
+            break;
+        case 26:
+            _qcode = textfield.text;//微信号
+            break;
+        case 35:
+            _brandbusiness = textfield.text;//主要经营品牌
+            break;
+        case 36:
+            _followbrand = textfield.text;//关注品牌
+            break;
+        case 71:
+            _written = textfield.text;//填表人
+            break;
+        case 72:
+            _manager = textfield.text;//主管经理
+            break;
+        default:
+            break;
+    }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -197,6 +503,8 @@
                     
                     inftionTableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
                     cell.xingLabel.text=selectValue;
+                    cell.xingLabel.textColor = [UIColor blackColor];
+                    _storelevel = selectValue;
                     
                 } showCloseButton:NO];
         }else if (indexPath.row==1){
@@ -233,6 +541,9 @@
                     TargetModel *model=[[TargetModel alloc]init];
                     [model setValuesForKeysWithDictionary:dic];
                     [_InterNameAry addObject:model];
+                    
+                    [self nstingallocinit:model];
+                    
                 }
                 [_tableView reloadData];
             }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
@@ -278,8 +589,14 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section==4) {
+        return 360;
+    }else if(indexPath.section ==7){
+        return 200;
+    }else{
+        return 50;
+    }
     
-    return 50.0f;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -313,17 +630,40 @@
 - (void)pickerView:(CLZoomPickerView *)pickerView changedIndex:(NSUInteger)indexPath
 {
     
-     inftionTableViewCell *cell = [_tableView cellForRowAtIndexPath:_index];
+    inftionTableViewCell *cell = [_tableView cellForRowAtIndexPath:_index];
     cell.xingLabel.text=_timeArray[indexPath];
     NSLog(@"%@,%@",_timeArray[indexPath],cell.xingLabel.text);
     cell.xingLabel.textColor = [UIColor blackColor];
    
     switch (_index.section) {
         case 1:
-           // _bfcslabel.text=_timeArray[indexPath];
+            switch (_index.row) {
+                case 2:
+                    _num =_timeArray[indexPath];
+                    NSLog(@"%@---%@",_timeArray[indexPath],_num)
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
         case 3:
-           
+            switch (_index.row) {
+                case 1:
+                    _berths = _timeArray[indexPath];
+                    NSLog(@"%@---%@",_timeArray[indexPath],_berths)
+                    break;
+                case 2:
+                    _beautician = _timeArray[indexPath];
+                    NSLog(@"%@---%@",_timeArray[indexPath],_beautician)
+                    break;
+                case 3:
+                    _plantingduration = _timeArray[indexPath];
+                    NSLog(@"%@---%@",_timeArray[indexPath],_plantingduration)
+                    break;
+                default:
+                    break;
+            }
             
             break;
         default:
@@ -372,6 +712,247 @@
         if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
+    }
+}
+-(void)nstingallocinit:(TargetModel*)model{
+    _time= [[NSString alloc]init];//拜访日期
+    _time = model.Time;
+    _Address = [[NSString alloc]init];
+    _Address = model.Address;//店铺地址
+    _meettime= [[NSString alloc]init];//拜访时间段
+    if (model.MeetTime == nil) {
+        _meettime = @"";
+    }else{
+        _meettime = model.MeetTime;
+    }
+    _num= [[NSString alloc]init];//拜访次数
+    if (model.Num == nil) {
+        _num = @"";
+    }else{
+        _num = model.Num;
+    }
+    _principal= [[NSString alloc]init];//店铺负责人
+    if (model.Principal == nil) {
+        _principal = @"";
+    }else{
+        _principal = model.Principal;
+    }
+    _post= [[NSString alloc]init];//职务
+    if (model.Post == nil) {
+        _post = @"";
+        
+    }else{
+        _post = model.Post;
+    }
+    _iphone= [[NSString alloc]init];//联系方式
+    if (model.Iphone == nil) {
+        _iphone = @"";
+    }else{
+        _iphone = model.Iphone;
+    }
+    _qcode= [[NSString alloc]init];//微信
+    if (model.Qcode == nil) {
+        _qcode = @"";
+    }else{
+        _qcode = model.Qcode;
+    }
+    _storelevel= [[NSString alloc]init];//店规模
+    if (model.StoreLevel == nil) {
+        _storelevel = @"";
+    }else{
+        _storelevel = model.StoreLevel;
+    }
+    _berths= [[NSString alloc]init];//床位数
+    if (model.Berths == nil) {
+        _berths = @""; //
+    }else{
+        _berths = model.Berths;
+    }
+    _beautician= [[NSString alloc]init];//美容师人数
+    if (model.Beautician == nil) {
+        _beautician = @"";
+    }else{
+        _beautician = model.Beautician;
+    }
+    _plantingduration= [[NSString alloc]init];//开店年限
+    if (model.PlantingDuration == nil) {
+        _plantingduration = @"";
+    }else{
+        _plantingduration = model.PlantingDuration;
+    }
+    _brandbusiness= [[NSString alloc]init];//主要经营品牌
+    if (model.BrandBusiness == nil) {
+        _brandbusiness = @"";
+    }else{
+        _brandbusiness = model.BrandBusiness;
+    }
+    _followbrand= [[NSString alloc]init];//关注品牌
+    if (model.FollowBrand == nil) {
+        _followbrand = @"";
+    }else{
+        _followbrand = model.FollowBrand;
+    }
+    _customernum= [[NSString alloc]init];//终端顾客总数量
+    if (model.CustomerNum == nil) {
+        _customernum = @"";
+    }else{
+        _customernum = model.CustomerNum;
+    }
+    _validnum= [[NSString alloc]init];//有质量顾客数量
+    if (model.ValidNum == nil) {
+        _validnum = @"";
+    }else{
+        _validnum = model.ValidNum;
+    }
+    _brandpos= [[NSString alloc]init];//品牌定位
+    if (model.BrandPos == nil) {
+        _brandpos = @"";
+    }else{
+        _brandpos = model.BrandPos;
+    }
+    _otherpos= [[NSString alloc]init];//品牌定位的其他
+    if (model.OtherPos == nil) {
+        _otherpos = @"";
+    }else{
+        _otherpos = model.OtherPos;
+    }
+    _singleprice= [[NSString alloc]init];// 单品价格
+    if (model.SinglePrice == nil) {
+        _singleprice = @"";
+    }else{
+        _singleprice = model.SinglePrice;
+    }
+    _boxprice= [[NSString alloc]init];//套盒价格
+    if (model.BoxPrice == nil) {
+        _boxprice = @"";
+    }else{
+        _boxprice = model.BoxPrice;
+    }
+    _cardprice= [[NSString alloc]init];//卡项价格
+    if (model.CardPrice == nil) {
+        _cardprice = @"";
+    }else{
+        _cardprice = model.CardPrice;
+    }
+    _packprice= [[NSString alloc]init];// 项目套餐
+    if (model.PackPrice == nil) {
+        _packprice = @"";
+    }else{
+        _packprice = model.PackPrice;
+    }
+    _flag= [[NSString alloc]init];//本年是否做过大量收现活动
+    if (model.Flag == nil) {
+        _flag = @"";
+    }else{
+        _flag = model.Flag;
+    }
+    _activename= [[NSString alloc]init];//活动名称
+    if (model.ActiveName == nil) {
+        _activename = @"";
+    }else{
+        _activename = model.ActiveName;
+    }
+    _dealmoney= [[NSString alloc]init];//成交金额
+    if (model.DealMoney == nil) {
+        _dealmoney = @"";
+    }else{
+        _dealmoney = model.DealMoney;
+    }
+    _leastmoney= [[NSString alloc]init];//下限
+    if (model.LeastMoney == nil) {
+        _leastmoney = @"";
+    }else{
+        _leastmoney = model.LeastMoney;
+    }
+    _dealrate= [[NSString alloc]init];//成交率
+    if (model.DealRate == nil) {
+        _dealrate = @"";
+    }else{
+        _dealrate = model.DealRate;
+    }
+    _demand= [[NSString alloc]init];//运营协助需求
+    if (model.Demand == nil) {
+        _demand = @"";
+    }else{
+        _demand = model.Demand;
+    }
+    _shopquestion= [[NSString alloc]init];//店家问题简述
+    if (model.ShopQuestion == nil) {
+        _shopquestion = @"";
+    }else{
+        _shopquestion = model.ShopQuestion;
+    }
+    _plans= [[NSString alloc]init];//品牌介入策略及跟进规划
+    if (model.Plans == nil) {
+        _plans = @"";
+    }else{
+        _plans = model.Plans;
+    }
+    _requirement= [[NSString alloc]init];//店家要求事项及解决办法
+    if (model.Requirement == nil) {
+        _requirement = @"";
+    }else{
+        _requirement = model.Requirement;
+    }
+    _notic= [[NSString alloc]init];//同事协助须知
+    if (model.Notic == nil) {
+        _notic = @"";
+    }else{
+        _notic = model.Notic;
+    }
+    _partnertime= [[NSString alloc]init];//店家预定合作时间
+    if (model.PartnerTime == nil) {
+        _partnertime = @"";
+    }else{
+        _partnertime = model.PartnerTime;
+    }
+    _scheme= [[NSString alloc]init];//执行方案
+    if (model.Scheme == nil) {
+        _scheme = @"";
+    }else{
+        _scheme = model.Scheme;
+    }
+    _amount= [[NSString alloc]init];//合约金额
+    if (model.Amount == nil) {
+        _amount = @"";
+    }else{
+        _amount = model.Amount;
+    }
+    _payway= [[NSString alloc]init];//大款方式
+    if (model.PayWay == nil) {
+        _payway = @"";
+    }else{
+        _payway = model.PayWay;
+    }
+    _written= [[NSString alloc]init];//填表人
+    if (model.Written == nil) {
+        _written = @"";
+    }else{
+        _written = model.Written;
+    }
+    _manager= [[NSString alloc]init];//经理
+    if (model.Manager == nil) {
+        _manager = @"";
+    }else{
+        _manager = model.Manager;
+    }
+    _shopid= [[NSString alloc]init];//店铺id
+    if (model.ShopId == nil) {
+        _shopid = @"";
+    }else{
+        _shopid = model.ShopId;
+    }
+    _StoreName= [[NSString alloc]init];//店名
+    if (model.StoreName == nil) {
+        _StoreName = @"";
+    }else{
+        _StoreName = model.StoreName;
+    }
+    _targetVisitId= [[NSString alloc]init];//目标客户id
+    if (model.Id == nil) {
+        _targetVisitId = @"";
+    }else{
+        _targetVisitId = model.Id;
     }
 }
 @end

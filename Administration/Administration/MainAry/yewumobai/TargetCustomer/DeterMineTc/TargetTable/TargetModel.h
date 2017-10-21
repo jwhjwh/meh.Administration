@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface TargetModel : NSObject
-@property (strong,nonatomic) NSString * Id;
+@property (strong,nonatomic) NSString * Id;//目标客户id
 @property (strong,nonatomic) NSString * Time; // 拜访日期
 @property (strong,nonatomic) NSString * MeetTime; // 拜访时间段
 @property (strong,nonatomic) NSString * Num; // 拜访次数
