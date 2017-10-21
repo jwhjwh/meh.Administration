@@ -632,51 +632,51 @@
         
         switch (indexPath.row) {
             case 0:
-                if (self.string1.length!=0) {
+                if (![self.string1 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string1;
                 }
                 
                 for (NSString *string in self.arrayPostil) {
-                    if ([string containsString:@"OVAS"]) {
+                    if ([string containsString:@"jaats"]) {
                         cell.buttonPostil.hidden = NO;
                         cell.labelNumber.hidden = NO;
                         cell.buttonPostil.userInteractionEnabled  =YES;
-                        NSRange rang = [string rangeOfString:@"OVAS"];
+                        NSRange rang = [string rangeOfString:@"jaats"];
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
                 
                 break;
             case 1:
-                if (self.string2.length!=0) {
+                if (![self.string2 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string2;
                 }
                 for (NSString *string in self.arrayPostil) {
-                    if ([string containsString:@"important"]) {
+                    if ([string containsString:@"psp"]) {
                         cell.buttonPostil.hidden = NO;
                         cell.labelNumber.hidden = NO;
                         cell.buttonPostil.userInteractionEnabled  =YES;
-                        NSRange rang = [string rangeOfString:@"important"];
+                        NSRange rang = [string rangeOfString:@"psp"];
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
                 break;
             case 2:
-                if (self.string3.length!=0) {
+                if (![self.string3 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string3;
                 }
                 for (NSString *string in self.arrayPostil) {
-                    if ([string containsString:@"personalProject"]) {
+                    if ([string containsString:@"comments"]) {
                         cell.buttonPostil.hidden = NO;
                         cell.labelNumber.hidden = NO;
                         cell.buttonPostil.userInteractionEnabled  =YES;
-                        NSRange rang = [string rangeOfString:@"personalProject"];
+                        NSRange rang = [string rangeOfString:@"comments"];
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
                 break;
             case 3:
-                if (self.string4.length!=0) {
+                if (![self.string4 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string4;
                 }
                 for (NSString *string in self.arrayPostil) {

@@ -39,6 +39,9 @@
 @property (nonatomic,weak)UIButton *endDate;
 @property (nonatomic,weak)UIButton *startDate;
 
+@property (nonatomic,strong)NSString * stringDateEnd;
+@property (nonatomic,strong)NSString * stringDateStart;
+
 @end
 
 @implementation VCInsideFillWeekTable
@@ -375,14 +378,14 @@
     }else
     {
     if ([self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
+        [self.string2 isEqualToString:@""]||
+        [self.string3 isEqualToString:@""]||
+        [self.string4 isEqualToString:@""]||
+        [self.string5 isEqualToString:@""]||
+        [self.string6 isEqualToString:@""]||
+        [self.string7 isEqualToString:@""]||
+        [self.string8 isEqualToString:@""]||
+        [self.string9 isEqualToString:@""]||
         [self.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.endDate.titleLabel.text isEqualToString:@"选择日期"]
         )
@@ -473,8 +476,9 @@
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.LabelTitle.text = self.arrayContent[indexPath.row];
+    cell.LabelTitle.text = self.arrayTitle[indexPath.row];
     cell.textView.placeholder = self.arrayContent[indexPath.row];
+    cell.textView.delegate = self;
     if (self.isSelect) {
         cell.textView.userInteractionEnabled = YES;
         switch (indexPath.row) {

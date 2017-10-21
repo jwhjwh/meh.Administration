@@ -84,7 +84,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/weekTable/VCInsideWeekTable.m"
-                  timestampString = "530171179.310065"
+                  timestampString = "530264863.933441"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "201"
@@ -99,7 +99,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/weekTable/VCInsideWeekTable.m"
-                  timestampString = "530171179.311998"
+                  timestampString = "530264863.937536"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "201"
@@ -244,7 +244,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Drafts/VCArtWeekDrafts.m"
-                  timestampString = "530171179.342721"
+                  timestampString = "530264863.981893"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
@@ -259,7 +259,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Drafts/VCArtWeekDrafts.m"
-                  timestampString = "530171179.344637"
+                  timestampString = "530264863.985383"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
@@ -292,7 +292,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Drafts/VCArtMonthDrafts.m"
-                  timestampString = "530171179.349158"
+                  timestampString = "530264863.993311"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "91"
@@ -307,7 +307,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Drafts/VCArtMonthDrafts.m"
-                  timestampString = "530171179.351231"
+                  timestampString = "530264863.997346"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
@@ -340,7 +340,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/weekTable/VCBusinessWeekSummary.m"
-                  timestampString = "530171179.355805"
+                  timestampString = "530264864.003866"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "518"
@@ -355,7 +355,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/weekTable/VCBusinessWeekSummary.m"
-                  timestampString = "530171179.357936"
+                  timestampString = "530264864.006444"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "519"
@@ -388,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Administration/MainAry/MyTable/Submited/VCArtWeekSubmited.m"
-            timestampString = "530164125.880122"
+            timestampString = "530261989.240609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "616"
-            endingLineNumber = "616"
+            startingLineNumber = "669"
+            endingLineNumber = "669"
             landmarkName = "-submitData:"
             landmarkType = "7">
             <Locations>
@@ -404,12 +404,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Submited/VCArtWeekSubmited.m"
-                  timestampString = "530171179.36622"
+                  timestampString = "530264864.018088"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "616"
-                  endingLineNumber = "616"
-                  offsetFromSymbolStart = "13230">
+                  startingLineNumber = "669"
+                  endingLineNumber = "669"
+                  offsetFromSymbolStart = "19770">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -419,11 +419,11 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Submited/VCArtWeekSubmited.m"
-                  timestampString = "530171179.368268"
+                  timestampString = "530264864.022231"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "617"
-                  endingLineNumber = "617"
+                  startingLineNumber = "670"
+                  endingLineNumber = "670"
                   offsetFromSymbolStart = "54">
                </Location>
             </Locations>
@@ -435,13 +435,157 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/MyTable/Submited/VCArtWeekSubmited.m"
-            timestampString = "530164149.167837"
+            filePath = "Administration/MainAry/weekTable/VCWeekTable.m"
+            timestampString = "530173763.345032"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "438"
-            endingLineNumber = "438"
-            landmarkName = "-alertView:clickedButtonAtIndex:"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "-getData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[VCWeekTable getData]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/weekTable/VCWeekTable.m"
+                  timestampString = "530264864.029862"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "1937">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__22-[VCWeekTable getData]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/weekTable/VCWeekTable.m"
+                  timestampString = "530264864.034009"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "95">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/managerTable/ViewControllerPersonTableDetail.m"
+            timestampString = "530176669.390973"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "-getData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewControllerPersonTableDetail getData]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/managerTable/ViewControllerPersonTableDetail.m"
+                  timestampString = "530264864.041574"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "1081">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[ViewControllerPersonTableDetail getData]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/managerTable/ViewControllerPersonTableDetail.m"
+                  timestampString = "530264864.0441"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/BackLog/ViewControllerBacklog.m"
+            timestampString = "530182999.710285"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-getHttpData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewControllerBacklog getHttpData]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/BackLog/ViewControllerBacklog.m"
+                  timestampString = "530264864.049795"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "757">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__36-[ViewControllerBacklog getHttpData]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/BackLog/ViewControllerBacklog.m"
+                  timestampString = "530264864.05248"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/BackLog/VCAddBacklog.m"
+            timestampString = "530183276.231176"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-saveBacklog"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -451,14 +595,174 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/MyTable/Submited/VCArtWeekSubmited.m"
-            timestampString = "530164163.241541"
+            filePath = "Administration/MainAry/BackLog/VCAddBacklog.m"
+            timestampString = "530184370.539947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-saveBacklog"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[VCAddBacklog saveBacklog]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/BackLog/VCAddBacklog.m"
+                  timestampString = "530264864.063016"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "4212">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__27-[VCAddBacklog saveBacklog]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/BackLog/VCAddBacklog.m"
+                  timestampString = "530264864.065541"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "230"
+                  endingLineNumber = "230"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/MyTable/WeekTable/VCInsideFillWeekTable.m"
+            timestampString = "530243256.039987"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
             landmarkName = "-submitData:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/managerTable/cellTable/CellSummary.m"
+            timestampString = "530249913.912303"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "-setDictInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/MyTable/WeekTable/VCArtFillWeekTable.m"
+            timestampString = "530259822.245808"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "-submitData:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[VCArtFillWeekTable submitData:]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/WeekTable/VCArtFillWeekTable.m"
+                  timestampString = "530264864.08193"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "249"
+                  endingLineNumber = "249"
+                  offsetFromSymbolStart = "8737">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__33-[VCArtFillWeekTable submitData:]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/WeekTable/VCArtFillWeekTable.m"
+                  timestampString = "530264864.085678"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/MyTable/Submited/VCArtWeekSummarySubmited.m"
+            timestampString = "530262435.00384"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "-getHttpData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[VCArtWeekSummarySubmited getHttpData]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Submited/VCArtWeekSummarySubmited.m"
+                  timestampString = "530264864.093314"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "1891">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[VCArtWeekSummarySubmited getHttpData]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/MyTable/Submited/VCArtWeekSummarySubmited.m"
+                  timestampString = "530264864.09646"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

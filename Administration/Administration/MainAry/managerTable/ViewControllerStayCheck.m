@@ -53,7 +53,7 @@
         [self.tableView.mj_footer endRefreshing];
         
         if ([stringCode isEqualToString:@"0000"]) {
-            [self.arrayData removeAllObjects];
+//            [self.arrayData removeAllObjects];
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
                 [self.arrayData addObject:dict];
             }
@@ -67,14 +67,17 @@
         
         if ([stringCode isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            [self.tableView reloadData];
             return;
         }
         if ([stringCode isEqualToString:@"4444"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0f];
+            [self.tableView reloadData];
             return;
         }
         if ([stringCode isEqualToString:@"1001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0f];
+            [self.tableView reloadData];
             return;
         }
         

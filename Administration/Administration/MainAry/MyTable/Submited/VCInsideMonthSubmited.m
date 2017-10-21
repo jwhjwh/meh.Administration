@@ -39,6 +39,8 @@
 @property (nonatomic,strong)NSMutableDictionary *dict;
 @property(nonatomic,strong) NSArray *arrayPostil;
 @property (nonatomic,strong)UIBarButtonItem *rightItem2;
+
+@property (nonatomic,strong)NSString *stringDate;
 @end
 
 @implementation VCInsideMonthSubmited
@@ -109,6 +111,7 @@
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             
             [self.insideMonth.buttonDate setTitle:[[responseObject valueForKey:@"months"]substringToIndex:7] forState:UIControlStateNormal];
+            self.stringDate = [[responseObject valueForKey:@"months"]substringToIndex:7];
             self.string1 = self.dict[@"workPlan"];
             self.string2 = self.dict[@"firstWeek"];
             self.string3 = self.dict[@"secondWeek"];
@@ -258,6 +261,7 @@
         self.labelLine.frame = CGRectMake(0, 104, Scree_width/2, 1);
         [button setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
         [self.buttopSummary setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+        self.insideMonth.buttonDate.userInteractionEnabled = NO;
         self.arryaTitle = @[@[@"填写本月主要工作规划"],@[@"第一周",@"第二周",@"第三周",@"第四周",@"补充备注"]];
         self.arrayContent = @[@[@"填写本月主要工作规划"],@[@"填写第一周的工作进度安排",@"填写第二周的工作进度安排",@"填写第三周的工作进度安排",@"填写第四周的工作进度安排",@"填写补充备注"]];
         self.isSelect = YES;
@@ -270,6 +274,8 @@
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
+        [self.insideMonth.buttonDate setTitle:self.stringDate forState:UIControlStateNormal];
+        self.insideMonth.buttonDate.userInteractionEnabled = NO;
         self.viewPlan.hidden = YES;
         self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];

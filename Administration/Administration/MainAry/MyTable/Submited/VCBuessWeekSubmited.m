@@ -44,6 +44,9 @@
 @property (nonatomic,strong)UIBarButtonItem *rightitem1;
 @property (nonatomic,strong)UIBarButtonItem *rightitem;
 @property(nonatomic,strong) NSArray *arrayPostil;
+
+@property (nonatomic,strong)NSString *startDate;
+@property (nonatomic,strong)NSString *endDate;
 @end
 
 @implementation VCBuessWeekSubmited
@@ -105,6 +108,10 @@
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             [self.buessTable.startDate setTitle:[self.dict[@"startDate"]substringToIndex:10] forState:UIControlStateNormal];
             [self.buessTable.endDate setTitle:[self.dict[@"endDate"]substringToIndex:10] forState:UIControlStateNormal];
+            
+            self.startDate = [self.dict[@"startDate"]substringToIndex:10];
+            self.endDate = [self.dict[@"startDate"]substringToIndex:10];
+            
             self.buessTable.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"planStore"]];
             self.buessTable.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"callbackStore"]];
             self.buessTable.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateStore"]];
@@ -276,6 +283,10 @@
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
+        [self.buessSummary.startDate setTitle:self.startDate forState:UIControlStateNormal];
+        [self.buessSummary.endDate setTitle:self.endDate forState:UIControlStateNormal];
+        self.buessSummary.startDate.userInteractionEnabled = NO;
+        self.buessSummary.endDate.userInteractionEnabled = NO;
         self.viewPlan.hidden = YES;
         self.arryaTitle = @[@"工作目标达成进展简述",@"工作进度及目标达成的分析和评估",@"出现的问题及解决方案或建议",@"自我心得体会及总结",@"本周市场手机的案例、模式及市场营销策略分享",@"其他事项"];
         self.arrayContent = @[@"填写工作目标达成进展简述",@"填写工作进度及目标达成的分析和评估",@"填写出现的问题及解决方案或建议",@"填写自我心得体会及总结",@"填写本周市场手机的案例、模式及市场营销策略分享",@"填写其他事项"];

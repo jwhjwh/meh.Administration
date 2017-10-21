@@ -35,7 +35,9 @@
 @property (nonatomic,strong)ViewDatePick *myDatePick;
 @property (nonatomic,strong)ViewChooseBacklog *chooseBacklog;
 
-@property (nonatomic,strong)NSIndexPath *indexPath;
+@property (nonatomic,strong)NSIndexPath *indexPath1;
+
+@property (nonatomic,strong)NSString *stringState;
 
 @end
 
@@ -87,38 +89,38 @@
     self.warnDate = wornDate;
     
     
-    
-    UIButton *notReady = [[UIButton alloc]init];
-    notReady.tag = 300;
-    [notReady setBackgroundColor:[UIColor whiteColor]];
-    [notReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
-    [notReady setTitle:@"未完成" forState:UIControlStateNormal];
-    [notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [notReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
-    [viewFooter addSubview:notReady];
-    [notReady mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(viewFooter.mas_left);
-        make.right.mas_equalTo(viewFooter.mas_centerX);
-        make.top.mas_equalTo(labelworn.mas_bottom).offset(10);
-        make.height.mas_equalTo(44);
-    }];
-    self.notReady = notReady;
-    
-    UIButton *allReady = [[UIButton alloc]init];
-    allReady.tag = 400;
-    [allReady setBackgroundColor:[UIColor whiteColor]];
-    [allReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
-    [allReady setTitle:@"已完成" forState:UIControlStateNormal];
-    [allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [allReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
-    [viewFooter addSubview:allReady];
-    [allReady mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(viewFooter.mas_centerX);
-        make.right.mas_equalTo(viewFooter.mas_right);
-        make.top.mas_equalTo(labelworn.mas_bottom).offset(10);
-        make.height.mas_equalTo(44);
-    }];
-    self.allReady = allReady;
+//    
+//    UIButton *notReady = [[UIButton alloc]init];
+//    notReady.tag = 300;
+//    [notReady setBackgroundColor:[UIColor whiteColor]];
+//    [notReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
+//    [notReady setTitle:@"未完成" forState:UIControlStateNormal];
+//    [notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+//    [notReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
+//    [viewFooter addSubview:notReady];
+//    [notReady mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(viewFooter.mas_left);
+//        make.right.mas_equalTo(viewFooter.mas_centerX);
+//        make.top.mas_equalTo(labelworn.mas_bottom).offset(10);
+//        make.height.mas_equalTo(44);
+//    }];
+//    self.notReady = notReady;
+//    
+//    UIButton *allReady = [[UIButton alloc]init];
+//    allReady.tag = 400;
+//    [allReady setBackgroundColor:[UIColor whiteColor]];
+//    [allReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
+//    [allReady setTitle:@"已完成" forState:UIControlStateNormal];
+//    [allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+//    [allReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
+//    [viewFooter addSubview:allReady];
+//    [allReady mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(viewFooter.mas_centerX);
+//        make.right.mas_equalTo(viewFooter.mas_right);
+//        make.top.mas_equalTo(labelworn.mas_bottom).offset(10);
+//        make.height.mas_equalTo(44);
+//    }];
+//    self.allReady = allReady;
     
     
     UITableView *tableView = [[UITableView alloc]init];
@@ -144,7 +146,7 @@
 -(void)showChooseBacklog:(UITapGestureRecognizer *)ges
 {
     CGPoint point = [ges locationInView:self.tableView];
-    self.indexPath = [self.tableView indexPathForRowAtPoint:point];
+    self.indexPath1 = [self.tableView indexPathForRowAtPoint:point];
     
     self.chooseBacklog = [[ViewChooseBacklog alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     self.chooseBacklog.arrayTitle = self.arrayBackTitle;
@@ -161,12 +163,17 @@
     
     NSDictionary *dict;
     
+    if ([self.stringState isEqualToString:@""]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择待办事项类型" andInterval:1.0];
+        return;
+    }
+    
     if (self.string1.length==0||self.string2.length==0||self.wornTime.length==0) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
         return;
     }
     
-    if (self.indexPath.row==1) {
+    if ([self.stringState isEqualToString:@"日待办事项"]) {
         if ([self.wornTime compare:self.startTime] == NSOrderedAscending) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1];
             return;
@@ -182,7 +189,7 @@
                  @"Content":self.string2,
                  @"Title":self.string1,
                  @"Remindertime":self.wornTime,
-                 @"Matterstype":[NSString stringWithFormat:@"%ld",self.indexPath.row]
+                 @"Matterstype":[NSString stringWithFormat:@"%ld",self.indexPath1.row]
                  };
     }else
     {
@@ -215,7 +222,7 @@
                  @"Content":self.string2,
                  @"Title":self.string1,
                  @"Remindertime":self.wornTime,
-                 @"Matterstype":[NSString stringWithFormat:@"%ld",self.indexPath.row]
+                 @"Matterstype":[NSString stringWithFormat:@"%ld",self.indexPath1.row]
                  };
     }
     
@@ -249,8 +256,9 @@
 
 -(void)showDatePick:(UIButton *)button
 {
+    [self.view endEditing:YES];
     CellAddBacklog *cell = (CellAddBacklog *)[button superview].superview;
-    self.indexPath = [self.tableView indexPathForCell:cell];
+    self.indexPath1 = [self.tableView indexPathForCell:cell];
     self.buttonTag = button.tag;
     self.myDatePick = [[ViewDatePick alloc]initWithFrame:self.view.frame];
     self.myDatePick.delegate = self;
@@ -260,19 +268,17 @@
     [self.view.window addSubview:self.myDatePick];
 }
 
--(void)changeState:(UIButton *)button
-{
-    
-}
+
 
 #pragma -mark viewChooseBacklog
 
 -(void)getChoosed
 {
     NSIndexPath *indexPath = [self.chooseBacklog.tableView indexPathForSelectedRow];
-    CellEditInfo *cell = [self.tableView cellForRowAtIndexPath:self.indexPath];
+    CellEditInfo *cell = [self.tableView cellForRowAtIndexPath:self.indexPath1];
     cell.textView.text = self.arrayBackTitle[indexPath.row];
-    self.indexPath = indexPath;
+    self.stringState = self.arrayBackTitle[indexPath.row];
+    self.indexPath1 = indexPath;
     [self.tableView reloadData];
     
 }
@@ -285,7 +291,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *stringDate = [formatter stringFromDate:date];
-    CellAddBacklog *cell = [self.tableView cellForRowAtIndexPath:self.indexPath];
+    CellAddBacklog *cell = [self.tableView cellForRowAtIndexPath:self.indexPath1];
     if (self.buttonTag==100) {
         [cell.startDate setTitle:stringDate forState:UIControlStateNormal];
         self.startTime = stringDate;
@@ -295,7 +301,7 @@
         self.endTime = stringDate;
     }else
     {
-        formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+        formatter.dateFormat = @"yyyy年MM月dd日 HH:mm";
         stringDate = [formatter stringFromDate:date];
         [self.warnDate setTitle:stringDate forState:UIControlStateNormal];
         self.wornTime = stringDate;
@@ -321,7 +327,7 @@
         [cell.startDate addTarget:self action:@selector(showDatePick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.endDate addTarget:self action:@selector(showDatePick:) forControlEvents:UIControlEventTouchUpInside];
         
-        if (self.indexPath.row==1) {
+        if (self.indexPath1.row==1) {
             cell.labelzhi.hidden = YES;
             cell.endDate.hidden = YES;
             cell.endDate.userInteractionEnabled = NO;
@@ -415,6 +421,8 @@
     self.startTime = @"";
     self.endTime = @"";
     self.wornTime = @"";
+    
+    self.stringState = @"";
 }
 
 - (void)didReceiveMemoryWarning {

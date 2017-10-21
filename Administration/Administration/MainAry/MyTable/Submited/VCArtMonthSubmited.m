@@ -41,6 +41,7 @@
 @property (nonatomic,strong)NSArray *arraySummary;
 @property (nonatomic,strong)NSArray *arrayPostil;
 @property (nonatomic,strong)UIBarButtonItem *rightitem1;
+@property (nonatomic,strong)NSString *stringDate;
 @end
 
 @implementation VCArtMonthSubmited
@@ -71,9 +72,11 @@
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
             if (self.arraySummary.count!=0) {
                 [self setSummaryList];
+                self.navigationItem.rightBarButtonItem = nil;
             }else
             {
                 [self setSummaryUI];
+                [self.artMonthSummary.buttonDate setTitle:self.stringDate forState:UIControlStateNormal];
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
                 return ;
             }
@@ -82,6 +85,7 @@
         }else
         {
             [self setSummaryUI];
+            [self.artMonthSummary.buttonDate setTitle:self.stringDate forState:UIControlStateNormal];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
             return ;
         }
@@ -109,6 +113,7 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             [self.artMonthPlan.buttonDate setTitle:[self.dict[@"dates"]substringToIndex:7] forState:UIControlStateNormal];
+            self.stringDate = [self.dict[@"dates"]substringToIndex:7];
             self.artMonthPlan.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"taskPlanMoney"]];
             self.artMonthPlan.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"taskSprintMoney"]];
             self.artMonthPlan.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"personPlanMoney"]];
@@ -219,8 +224,8 @@
         self.tableView = tableView;
     }else
     {
-    ViewArtMonthSummary *artMonthSummary = [[ViewArtMonthSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,420)];
-    artMonthSummary.userInteractionEnabled = NO;
+    ViewArtMonthSummary *artMonthSummary = [[ViewArtMonthSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,450)];
+    artMonthSummary.buttonDate.userInteractionEnabled = NO;
     [viewSummary addSubview:artMonthSummary];
     self.artMonthSummary = artMonthSummary;
     
@@ -294,6 +299,7 @@
 }
 -(void)changeData:(UIButton *)button
 {
+    [self.dict removeAllObjects];
     if (button.tag==100) {
         self.viewPlan.hidden=  NO;
         self.viewSummary.hidden = YES;
@@ -304,6 +310,7 @@
         self.arrayContent = @[@"填写工作主线和方向",@"填写本月重点服务店家和行程目标安排",@"填写对公司要求和建议",@"填写本月个人成长管理",@"填写其他事项"];
         self.isSelect = YES;
         self.navigationItem.rightBarButtonItem = self.rightItem;
+        [self getHttpData];
     }
     else
     {
@@ -311,12 +318,15 @@
         [button setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         [self.viewSummary removeFromSuperview];
-        [self setSummaryUI];
+        [self getSummary];
+        
+        self.artMonthSummary.buttonDate.userInteractionEnabled = NO;
         self.viewPlan.hidden = YES;
         self.arryaTitle = @[@"本月出货及回款情况分析",@"工作得失心得及建议",@"个人问题及规划",@"其他事项"];
         self.arrayContent = @[@"填写本月出货及回款情况分析",@"填写工作得失心得及建议",@"填写个人问题及规划",@"填写其他事项"];
         self.isSelect = NO;
         self.navigationItem.rightBarButtonItem = self.rightitem1;
+        
     }
     [self.tableView reloadData];
     
@@ -537,7 +547,18 @@
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arryaTitle.count;
+    if (self.isSelect) {
+        return self.arryaTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arryaTitle.count;
+        }
+        
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -548,8 +569,11 @@
             cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
         }
         NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelPostion.text = [ShareModel shareModel].postionName;
-        cell.dictInfo = dict;
+        cell.labelFilledTime.text = [dict[@"months"] substringToIndex:7];
+        cell.labelUpTime.text = [dict[@"dates"] substringToIndex:16];
+        cell.labelState = dict[@"updateTime"];
         [ZXDNetworking setExtraCellLineHidden:tableView];
         return cell;
     }else

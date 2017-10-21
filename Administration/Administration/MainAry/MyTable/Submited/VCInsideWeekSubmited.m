@@ -46,6 +46,10 @@
 @property (nonatomic,strong)UIBarButtonItem *rightItem;
 @property(nonatomic,strong) NSArray *arrayPostil;
 @property (nonatomic,strong)UIBarButtonItem *rightItem1;
+
+@property (nonatomic,strong)NSString *stringEndDate;
+@property (nonatomic,strong)NSString *stringStartDate;
+
 @end
 
 @implementation VCInsideWeekSubmited
@@ -114,8 +118,12 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [responseObject valueForKey:@"tableInfo"];
             
-            self.startDate.titleLabel.text = [self.dict[@"startDate"] substringToIndex:10];
-            self.endDate.titleLabel.text = [self.dict[@"endDate"] substringToIndex:10];
+            self.stringStartDate = [self.dict[@"startDate"] substringToIndex:10];
+            self.stringEndDate = [self.dict[@"endDate"] substringToIndex:10];
+            
+            [self.startDate setTitle:self.stringStartDate forState:UIControlStateNormal];
+            [self.endDate setTitle:self.stringEndDate forState:UIControlStateNormal];
+            
             self.string1 = self.dict[@"monday"];
             self.string2 = self.dict[@"tuesday"];
             self.string3 = self.dict[@"wednesday"];
@@ -222,6 +230,7 @@
         make.height.mas_equalTo(35);
         make.width.mas_equalTo(130);
     }];
+    startDate.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     self.startDate = startDate;
     //
     UILabel *label2 = [[UILabel alloc]init];
@@ -340,6 +349,8 @@
     [viewPlan addSubview:viewChooseDate];
     
     self.isSelect = YES;
+    canEdit = NO;
+    isEditing = NO;
     
     UITableView *tableView = [[UITableView alloc]init];
     tableView.tableHeaderView = viewChooseDate;
@@ -468,12 +479,14 @@
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
+        [self.startDate setTitle:self.stringStartDate forState:UIControlStateNormal];
+        [self.endDate setTitle:self.stringEndDate forState:UIControlStateNormal];
         self.viewPlan.hidden = YES;
         self.arrayTitle = @[@"本周工作落实进展简述",@"本周工作进展及目标达成的分析与评估",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"个人成长目标及方向预设"];
         self.arrayContent = @[@"填写本周工作落实进展简述",@"填写本周工作进展及目标达成的分析与评估",@"填写当前阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写个人成长目标及方向预设"];
         self.isSelect = NO;
         self.title = @"填写周总结";
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.rightItem1;
     }
     [self.tableView reloadData];
     
@@ -638,11 +651,9 @@
     {
         if (buttonIndex==1) {
             isBack = YES;
-            [self submitData:@"3"];
-        }
-        if (buttonIndex==2) {
             [self.navigationController popViewControllerAnimated:YES];
         }
+        
     }
 }
 

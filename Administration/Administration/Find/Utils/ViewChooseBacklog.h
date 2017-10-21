@@ -18,7 +18,7 @@
 
 @interface ViewChooseBacklog : UIView
 
-@property (nonatomic,strong)UITableView *tableView;
+@property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,assign)id<ViewChooseBacklogDelegate> delegate;
 @property (nonatomic,strong)NSArray *arrayTitle;
 @end

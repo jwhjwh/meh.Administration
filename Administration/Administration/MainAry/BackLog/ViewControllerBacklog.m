@@ -51,16 +51,20 @@
             return ;
             
         }
+        
         if ([code isEqualToString:@"4444"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            [self.tableView reloadData];
             return;
         }
-        if ([code isEqualToString:@"1001 "]) {
+        if ([code isEqualToString:@"1001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            [self.tableView reloadData];
             return;
         }
-        if ([code isEqualToString:@"5000 "]) {
+        if ([code isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            [self.tableView reloadData];
             return;
         }
         
