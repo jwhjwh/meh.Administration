@@ -12,6 +12,7 @@
 #import "inftionTableViewCell.h"
 #import "SelectAlert.h"
 #import "targetTextField.h"
+#import "TargetViewController.h"
 @interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
 
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
@@ -279,40 +280,40 @@
             zdsllabel.text = @"1.终端顾客总数量：";
             zdsllabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:zdsllabel];
-            targetTextField *zdsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(130, 40, 40, 30)];
+            targetTextField *zdsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(130, 40, 70, 30)];
             zdsltextfield.font= [UIFont systemFontOfSize:13];
             [zdsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zdsltextfield.tag = 41;
             [cell addSubview:zdsltextfield];
-            UILabel *renlabel = [[UILabel alloc]initWithFrame:CGRectMake(170, 40, 40, 30)];
+            UILabel *renlabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 40, 40, 30)];
             renlabel.text = @"人,";
             renlabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel];
             
-            UILabel *zlsllabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 110, 30)];
+            UILabel *zlsllabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 100, 30)];
             zlsllabel.text = @"有质量顾客数量:";
             zlsllabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:zlsllabel];
-            targetTextField *zlsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(120, 70, 40, 30)];
+            targetTextField *zlsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(110, 70, 70, 30)];
             zlsltextfield.font= [UIFont systemFontOfSize:13];
             [zlsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zlsltextfield.tag = 42;
             [cell addSubview:zlsltextfield];
-            UILabel *renlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(160, 70, 40, 30)];
+            UILabel *renlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(180, 70, 40, 30)];
             renlabel1.text = @"人,";
             renlabel1.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel1];
             
-            UILabel *xqdwlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 110, 110, 30)];
+            UILabel *xqdwlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 110, 100, 30)];
             xqdwlabel.text = @"2.需求品牌定位:";
             xqdwlabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:xqdwlabel];
-            targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(120, 110, 40, 30)];
+            targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(110, 110, 70, 30)];
             xqdwtextfield.font= [UIFont systemFontOfSize:13];
             [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             xqdwtextfield.tag = 43;
             [cell addSubview:xqdwtextfield];
-            UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(160, 110, 40, 30)];
+            UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(180, 110, 40, 30)];
             renlabel2.text = @",";
             renlabel2.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel2];
@@ -336,21 +337,21 @@
             renlabel3.text = @"单品约";
             renlabel3.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel3];
-            targetTextField *zdgktextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 240, 40, 30)];
+            targetTextField *zdgktextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 240, 70, 30)];
             zdgktextfield.font= [UIFont systemFontOfSize:13];
             [zdgktextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-            zdgktextfield.tag = 44;
+            zdgktextfield.tag = 45;
             [cell addSubview:zdgktextfield];
-            UILabel *renlabel4 = [[UILabel alloc]initWithFrame:CGRectMake(90, 240, 60, 30)];
+            UILabel *renlabel4 = [[UILabel alloc]initWithFrame:CGRectMake(120, 240, 60, 30)];
             renlabel4.text = @"元,套盒约";
             renlabel4.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel4];
-            targetTextField *thytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(150, 240, 40, 30)];
+            targetTextField *thytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(180, 240, 70, 30)];
             thytextfield.font= [UIFont systemFontOfSize:13];
             [thytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-            thytextfield.tag = 45;
+            thytextfield.tag = 46;
             [cell addSubview:thytextfield];
-            UILabel *renlabel5 = [[UILabel alloc]initWithFrame:CGRectMake(190, 240,40, 30)];
+            UILabel *renlabel5 = [[UILabel alloc]initWithFrame:CGRectMake(250, 240,40, 30)];
             renlabel5.text = @"元,";
             renlabel5.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel5];
@@ -359,42 +360,126 @@
             renlabel6.text = @"卡项约";
             renlabel6.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel6];
-            targetTextField *kxytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 270, 40, 30)];
+            targetTextField *kxytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 270, 70, 30)];
             kxytextfield.font= [UIFont systemFontOfSize:13];
             [kxytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-            kxytextfield.tag = 46;
+            kxytextfield.tag = 47;
             [cell addSubview:kxytextfield];
-            UILabel *renlabel7 = [[UILabel alloc]initWithFrame:CGRectMake(90, 270, 80, 30)];
+            UILabel *renlabel7 = [[UILabel alloc]initWithFrame:CGRectMake(120, 270, 80, 30)];
             renlabel7.text = @"元,项目套餐";
             renlabel7.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel7];
-            targetTextField *xmtctextfield =[[targetTextField alloc]initWithFrame:CGRectMake(170, 270, 40, 30)];
+            targetTextField *xmtctextfield =[[targetTextField alloc]initWithFrame:CGRectMake(200, 270, 70, 30)];
             xmtctextfield.font= [UIFont systemFontOfSize:13];
             [xmtctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-            xmtctextfield.tag = 47;
+            xmtctextfield.tag = 48;
             [cell addSubview:xmtctextfield];
-            UILabel *renlabel8 = [[UILabel alloc]initWithFrame:CGRectMake(210, 270, 40, 30)];
+            UILabel *renlabel8 = [[UILabel alloc]initWithFrame:CGRectMake(270, 270, 40, 30)];
             renlabel8.text = @"元;";
             renlabel8.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel8];
             
-            UILabel *renlabel9 = [[UILabel alloc]initWithFrame:CGRectMake(10, 300, 40, 30)];
-            renlabel9.text = @"本年[";
+            UILabel *renlabel9 = [[UILabel alloc]initWithFrame:CGRectMake(10, 300, 50, 30)];
+            renlabel9.text = @"4.本年[";
             renlabel9.font = [UIFont systemFontOfSize:13];
             [cell addSubview:renlabel9];
             
            
-            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 60, 30)];
+            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(60, 300, 40, 30)];
             [button setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
             [button setTitle:@"是" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.tag = 49;
+            button.titleLabel.font = [UIFont systemFontOfSize:13];
+            [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             [cell.contentView addSubview:button];
             
-            UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(90, 300, 60, 30)];
-            [button1 setImage:[UIImage imageNamed:@"xk_ico02"] forState:UIControlStateNormal];
+            UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(100, 300, 40, 30)];
+            [button1 setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
             [button1 setTitle:@"否" forState:UIControlStateNormal];
-            [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button1.tag = 50;
+            button1.titleLabel.font = [UIFont systemFontOfSize:13];
+            [button1 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             [cell.contentView addSubview:button1];
+            
+            UILabel *renlabel10 = [[UILabel alloc]initWithFrame:CGRectMake(140, 300, 120, 30)];
+            renlabel10.text = @"]做过大量收现活动,";
+            renlabel10.font = [UIFont systemFontOfSize:13];
+            [cell addSubview:renlabel10];
+            
+            UILabel *yyxzlabel = [[UILabel alloc]init];
+            targetTextField *yyxztextfield =[[targetTextField alloc]init];
+            yyxzlabel.text = @"5.运营协助需求:";
+            yyxzlabel.font = [UIFont systemFontOfSize:13];
+            yyxztextfield.font = [UIFont systemFontOfSize:13];
+            [yyxztextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            yyxztextfield.tag = 55;
+            
+            if ([_flag isEqualToString:@"1"]) {
+                //是
+                UILabel *hdmclabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 330, 75, 30)];
+                hdmclabel.text = @"活动名称为:";
+                hdmclabel.font = [UIFont systemFontOfSize:13];
+                [cell addSubview:hdmclabel];
+                
+                targetTextField *hdmctextfield = [[targetTextField alloc]initWithFrame:CGRectMake(80, 330, 110, 30)];
+                hdmctextfield.font = [UIFont systemFontOfSize:13];
+                [hdmctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                hdmctextfield.tag = 51;
+                [cell addSubview:hdmctextfield];
+                
+                UILabel *hdmclabel1 = [[UILabel alloc]initWithFrame:CGRectMake(190, 330, 35, 30)];
+                hdmclabel1.text = @",成交";
+                hdmclabel1.font = [UIFont systemFontOfSize:13];
+                [cell addSubview:hdmclabel1];
+                
+                targetTextField *hdmctextfield1 = [[targetTextField alloc]initWithFrame:CGRectMake(225, 330, 70, 30)];
+                hdmctextfield1.font = [UIFont systemFontOfSize:13];
+                [hdmctextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                hdmctextfield1.tag = 52;
+                [cell addSubview:hdmctextfield1];
+                
+                UILabel *wylabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 360, 90, 30)];
+                wylabel.text = @"万元,套餐下限";
+                wylabel.font = [UIFont systemFontOfSize:13];
+                [cell addSubview:wylabel];
+                
+                targetTextField *tcxxtextfield1 = [[targetTextField alloc]initWithFrame:CGRectMake(100, 360, 70, 30)];
+                tcxxtextfield1.font = [UIFont systemFontOfSize:13];
+                [tcxxtextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                tcxxtextfield1.tag = 53;
+                [cell addSubview:tcxxtextfield1];
+                
+                UILabel *wylabel1 = [[UILabel alloc]initWithFrame:CGRectMake(170, 360, 30, 30)];
+                wylabel1.text = @"元,";
+                wylabel1.font = [UIFont systemFontOfSize:13];
+                [cell addSubview:wylabel1];
+                
+                UILabel *cjllabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 390, 60, 30)];
+                cjllabel.text = @"成交率约";
+                cjllabel.font = [UIFont systemFontOfSize:13];
+                [cell addSubview:cjllabel];
+                
+                targetTextField *cjltextfield1 = [[targetTextField alloc]initWithFrame:CGRectMake(70, 390, 70, 30)];
+                cjltextfield1.font = [UIFont systemFontOfSize:13];
+                [cjltextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                cjltextfield1.tag = 54;
+                [cell addSubview:cjltextfield1];
+                
+                UILabel *bfblabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 390, 30, 30)];
+                bfblabel.text = @"%;";
+                bfblabel.font = [UIFont systemFontOfSize:13];
+                [cell addSubview:bfblabel];
+                
+                yyxzlabel.frame = CGRectMake(10, 420, 120, 30);
+                yyxztextfield.frame = CGRectMake(10, 450, cell.width-20, 30);
+                
+            }else{
+                //否
+                yyxzlabel.frame = CGRectMake(10, 330, 120, 30);
+                yyxztextfield.frame = CGRectMake(10, 360, cell.width-20, 30);
+            }
+            [cell addSubview:yyxzlabel];
+            [cell addSubview:yyxztextfield];
             
             
         }else if(indexPath.section == 5){
@@ -485,6 +570,45 @@
         case 36:
             _followbrand = textfield.text;//关注品牌
             break;
+        case 41:
+            _customernum = textfield.text;//终端顾客总数量
+            break;
+        case 42:
+           _validnum = textfield.text;//有质量顾客数量
+            break;
+        case 43:
+            _brandpos = textfield.text;//品牌定位
+            break;
+        case 44:
+           _otherpos = textfield.text;//品牌定位的其他
+            break;
+        case 45:
+            _singleprice = textfield.text;// 单品价格
+            break;
+        case 46:
+            _boxprice = textfield.text;//套盒价格
+            break;
+        case 47:
+            _cardprice = textfield.text;//卡项价格
+            break;
+        case 48:
+            _packprice = textfield.text;// 项目套餐
+            break;
+        case 51:
+            _activename = textfield.text;//活动名称
+            break;
+        case 52:
+            _dealmoney = textfield.text;//成交金额
+            break;
+        case 53:
+            _leastmoney = textfield.text;//下限
+            break;
+        case 54:
+            _dealrate = textfield.text;//成交率
+            break;
+        case 55:
+            _demand = textfield.text;//运营协助需求
+            break;
         case 71:
             _written = textfield.text;//填表人
             break;
@@ -524,14 +648,77 @@
             _index = indexPath;
             [self lodapickerView:@"选择开店年限"];
         }
+    }else if (indexPath.section == 5){
+        if (indexPath.row ==0) {
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _shopquestion;
+            targetVC.modifi = _cellend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==0) {
+                    if (_cellend == YES) {
+                        _shopquestion = content;
+                    }
+                    //店家问题简述
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+        }else if (indexPath.row == 1){
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _plans;
+            targetVC.modifi = _cellend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==1) {
+                    if (_cellend == YES) {
+                        _plans = content;
+                    }
+                    //品牌介入策略及跟进规划
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+            
+        }else if (indexPath.row == 2){
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _requirement;
+            targetVC.modifi = _cellend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==2) {
+                      if (_cellend == YES) {
+                          _requirement = content;
+                      }
+                    //店家要求事项及解决办法
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+            
+        }else if (indexPath.row == 3){
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _notic;
+            targetVC.modifi = _cellend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==3) {
+                    if (_cellend == YES) {
+                   _notic = content;
+                             }
+                    //同事协助须知
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+            
+        }
     }
     
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     //点击右上角
 }
-
-
 -(void)selectTargetVisit{
     //数据请求
     if (self.isofyou ==NO) {
@@ -597,7 +784,12 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==4) {
-        return 360;
+        if ([_flag isEqualToString:@"1"]) {
+             return 500;
+        }else{
+            return 400;
+        }
+       
     }else if(indexPath.section ==7){
         return 200;
     }else{
