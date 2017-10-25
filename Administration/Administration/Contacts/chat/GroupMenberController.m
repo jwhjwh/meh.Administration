@@ -509,12 +509,7 @@
                 cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
                 cell.isSelected = NO;
             }
-            //            for (NSIndexPath *index in _selectIndexs) {
-            //                if (indexPath == index) {
-            //                    cell.isSelected = YES;
-            //                    cell.selectImage.image = [UIImage imageNamed:@"xuanzhong"];
-            //                }
-            //            }
+            
             return cell;
         }else
         {
@@ -531,6 +526,7 @@
             NSMutableString *name = [dict[@"name"] mutableCopy];
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:name];
             [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(0, self.searchBar.text.length)];
+            cell.nameLabel.attributedText = attributedString;
             
             cell.locationButton.hidden = YES;
             cell.labelDivision.hidden = YES;
@@ -539,7 +535,7 @@
                 cell.zhiLabel.hidden = NO;
             }else
             {
-                cell.zhiLabel.height = YES;
+                cell.zhiLabel.hidden = YES;
                 if ([self.index isEqualToString:@"0"]) {
                     cell.labelDivision.hidden = NO;
                     cell.locationButton.hidden = NO;
@@ -767,50 +763,18 @@
         if ([self.searchBar isFirstResponder]) {
             controller.model = self.arraySearch[indexPath.row];
             dict = self.arraySearch[indexPath.row];
-        }else
+        }
+        else
         {
             controller.model = self.resultArr[indexPath.section][indexPath.row];
             dict = self.resultArr[indexPath.section][indexPath.row];
         }
         controller.IDStr = dict[@"userId"];
+
         [self.navigationController pushViewController:controller animated:YES];
     }
     
     
-    //        NSDictionary *dict = self.arraySearch[indexPath.row];
-    //        inftionxqController *controller = [[inftionxqController alloc]init];
-    //        controller.IDStr = dict[@"userId"];
-    //        [self.navigationController pushViewController:controller animated:YES];
-    //    }else
-    //    {
-    //        NSMutableDictionary *dict = [self.resultArr[indexPath.section][indexPath.row] mutableCopy];
-    //        if ([self.index isEqualToString:@"2"]) {
-    //
-    //            GroupMenberCell *cell = [self.tableViewMenber cellForRowAtIndexPath:indexPath];
-    //            cell.isSelected = !cell.isSelected;
-    //
-    //            if (cell.isSelected) { //如果为选中状态
-    //                cell.isSelected = YES; //切换为选中
-    //                cell.selectImage.image=  [UIImage imageNamed:@"xuanzhong"];
-    //                [_selectIndexs addObject:indexPath]; //添加索引到数组
-    //                [[self.modelArray mutableArrayValueForKey:@"selected"]addObject:dict];
-    //
-    //            }else { //未选中
-    //                cell.isSelected = NO; //切换为未选中
-    //                cell.selectImage.image=  [UIImage imageNamed:@"weixuanzhong"];
-    //                [_selectIndexs removeObject:indexPath]; //移除索引
-    //                [[self.modelArray mutableArrayValueForKey:@"selected"]removeObject:dict];
-    //            }
-    //
-    //        }
-    //        else
-    //        {
-    //            inftionxqController *controller = [[inftionxqController alloc]init];
-    //            controller.model = self.resultArr[indexPath.section][indexPath.row];
-    //            controller.IDStr = dict[@"userId"];
-    //            [self.navigationController pushViewController:controller animated:YES];
-    //        }
-    //    }
     
     if (self.arraySelect.count!=0) {
         [self.buttonDelet setTitle:[NSString stringWithFormat:@"确定（%lu）",(unsigned long)self.arraySelect.count] forState:UIControlStateNormal];
@@ -861,7 +825,7 @@
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [self.searchBar isFirstResponder] ;
+    [self.searchBar isFirstResponder];
     self.buttonCancel.hidden = YES;
     self.searchBar.showsCancelButton = YES;
     self.navigationController.navigationBar.hidden = YES;
@@ -872,34 +836,42 @@
     return YES;
 }
 
--(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+//-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+//{
+//   // [self.searchBar resignFirstResponder];
+//    self.buttonCancel.hidden = NO;
+//    self.searchBar.showsCancelButton = NO;
+//    self.viewSearch.frame = CGRectMake(0, 64, Scree_width, 50);
+//    self.tableViewMenber.frame = CGRectMake(0, 120, Scree_width,Scree_height);
+//    self.searchBar.text = @"";
+//    self.navigationController.navigationBar.hidden = NO;
+//    [self.arraySearch removeAllObjects];
+//    [self.tableViewMenber reloadData];
+//}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-   // [self.searchBar resignFirstResponder];
+    [searchBar resignFirstResponder];
     self.buttonCancel.hidden = NO;
     self.searchBar.showsCancelButton = NO;
     self.viewSearch.frame = CGRectMake(0, 64, Scree_width, 50);
-    self.tableViewMenber.frame = CGRectMake(0, 130, Scree_width,Scree_height-40);
+    self.tableViewMenber.frame = CGRectMake(0, 120, Scree_width,Scree_height-120);
     self.searchBar.text = @"";
     self.navigationController.navigationBar.hidden = NO;
     [self.arraySearch removeAllObjects];
     [self.tableViewMenber reloadData];
-}
-
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [self searchBarTextDidEndEditing:searchBar];
     
    // [self.tableViewMenber reloadData];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    
-
-        [self.tableViewMenber  reloadData];
-       // [self upDataSearchSpecialOffe];
-    [searchBar resignFirstResponder];
-}
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+//{
+//    
+//
+//        [self.tableViewMenber  reloadData];
+//       // [self upDataSearchSpecialOffe];
+//    [searchBar resignFirstResponder];
+//}
 
 - (void)commentTableViewTouchInSide{
     [self.searchBar resignFirstResponder];

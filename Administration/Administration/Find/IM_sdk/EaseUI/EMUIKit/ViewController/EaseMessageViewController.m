@@ -1626,6 +1626,7 @@
             
             [self _sendHasReadResponseForMessages:@[message]
                                            isRead:NO];
+            self.title = message.ext[@"username"];
             
             if ([self _shouldMarkMessageAsRead])
             {

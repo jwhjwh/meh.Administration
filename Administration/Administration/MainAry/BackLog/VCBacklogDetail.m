@@ -83,7 +83,7 @@
                 [self.allReady setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
             
-            if ([self.matterstype isEqualToString:@"1"]) {
+            if (![self.matterstype isEqualToString:@"1"]) {
                 if (![self.dictinfo[@"endtime"]isKindOfClass:[NSNull class]]) {
                     self.endTime = [_dictinfo[@"endtime"]substringToIndex:10];
                 }
@@ -379,6 +379,7 @@
 -(void)showDatePick:(UIButton *)button
 {
     CellAddBacklog *cell = (CellAddBacklog *)[button superview].superview;
+    [self.view endEditing:YES];
     self.indexPath = [self.tableView indexPathForCell:cell];
     self.buttonTag = button.tag;
     self.myDatePick = [[ViewDatePick alloc]initWithFrame:self.view.frame];

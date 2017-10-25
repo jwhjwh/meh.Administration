@@ -178,7 +178,7 @@
         make.left.mas_equalTo(viewTop.mas_left).offset(10);
         make.right.mas_equalTo(label2.mas_left);
         make.centerY.mas_equalTo(viewTop.mas_centerY);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     
     [label2 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -198,7 +198,7 @@
         make.left.mas_equalTo(label1.mas_right);
         make.right.mas_equalTo(viewTop.mas_centerX);
         make.bottom.mas_equalTo(label2.mas_top);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     self.buttonStart = buttonStart;
     
@@ -215,7 +215,7 @@
         make.left.mas_equalTo(viewTop.mas_centerX);
         make.right.mas_equalTo(label4.mas_left);
         make.centerY.mas_equalTo(viewTop.mas_centerY);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     
     [label4 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -234,7 +234,7 @@
         make.left.mas_equalTo(label3.mas_right);
         make.right.mas_equalTo(viewTop.mas_right).offset(-10);
         make.bottom.mas_equalTo(label4.mas_top);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     self.buttonEnd = buttonEnd;
     
@@ -308,18 +308,19 @@
     if (self.buttonStart.titleLabel.text!=nil) {
         startDate = self.buttonStart.titleLabel.text;
     }
-    else
-    {
-        return;
-    }
     
     if (self.buttonEnd.titleLabel.text!=nil) {
         endDate = self.buttonEnd.titleLabel.text;
     }
-    else
-    {
-        return;
+    
+    
+    if ([[ShareModel shareModel].sort isEqualToString:@"3"]) {
+        startDate = [startDate substringToIndex:8];
+        startDate = [startDate stringByAppendingString:@"15"];
+        endDate = [startDate substringToIndex:8];
+        endDate = [endDate stringByAppendingString:@"15"];
     }
+    
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
@@ -527,7 +528,7 @@
             }else
             {
                 VCArtMonthSummarySubmited *vc = [[VCArtMonthSummarySubmited alloc]init];
-                vc.isSelect = YES;
+                vc.isSelect = NO;
                 vc.tableID = tableID;
                 vc.remark = remark;
                 [self.navigationController pushViewController:vc animated:YES];

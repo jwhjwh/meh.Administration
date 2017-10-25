@@ -67,7 +67,7 @@
         make.bottom.mas_equalTo(self.view.mas_bottom);
     }];
     self.tableView = tableView;
-    
+
 }
 
 -(void)setSummaryUI

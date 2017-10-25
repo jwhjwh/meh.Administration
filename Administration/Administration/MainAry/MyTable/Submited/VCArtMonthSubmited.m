@@ -112,7 +112,7 @@
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
-            [self.artMonthPlan.buttonDate setTitle:[self.dict[@"dates"]substringToIndex:7] forState:UIControlStateNormal];
+            [self.artMonthPlan.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
             self.stringDate = [self.dict[@"dates"]substringToIndex:7];
             self.artMonthPlan.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"taskPlanMoney"]];
             self.artMonthPlan.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"taskSprintMoney"]];

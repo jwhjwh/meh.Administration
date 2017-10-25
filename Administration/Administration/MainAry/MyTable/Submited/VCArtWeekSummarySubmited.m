@@ -75,7 +75,6 @@
                     NSString *string = [responseObject valueForKey:@"owner"];
                     self.arrayPostil = [string componentsSeparatedByString:@","];
                 }
-                
             }
             
             if (self.isSelect) {
@@ -96,6 +95,7 @@
                 self.string2 = self.dict[@"important"];
                 self.string3 = self.dict[@"personalProject"];
                 self.string4 = self.dict[@"others"];
+                
             }else
             {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
@@ -121,7 +121,9 @@
             self.string2 = self.dict[@"psp"];
             self.string3 = self.dict[@"comments"];
             self.string4 = self.dict[@"others"];
+            self.planID = [NSString stringWithFormat:@"%@",self.dict[@"planId"]];
             [self.dict setValue:@"1" forKey:@"canEdit"];
+            
             }
             [self.tableView reloadData];
             return ;
@@ -143,7 +145,7 @@
     }];
     self.viewPlan = viewPlan;
     
-    ViewArtWeekPlan *artWeekPlan = [[ViewArtWeekPlan alloc]initWithFrame:CGRectMake(0, 0, Scree_width,450)];
+    ViewArtWeekPlan *artWeekPlan = [[ViewArtWeekPlan alloc]initWithFrame:CGRectMake(0, 0, Scree_width,530)];
     [viewPlan addSubview:artWeekPlan];
     artWeekPlan.userInteractionEnabled = NO;
     self.artWeekPlan = artWeekPlan;
@@ -179,7 +181,7 @@
     }];
     self.viewSummary = viewSummary;
     
-    ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,550)];
+    ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,700)];
     artWeekSummary.userInteractionEnabled = NO;
     [viewSummary addSubview:artWeekSummary];
     self.artWeekSummary = artWeekSummary;
@@ -253,7 +255,7 @@
         self.navigationItem.rightBarButtonItem = nil;
         self.isSelect = YES;
         self.remark = @"5";
-        self.planID = [NSString stringWithFormat:@"%@",self.dict[@"planId"]];
+        
     }
     else
     {
@@ -465,16 +467,22 @@
         
     if ([self.artWeekPlan.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.artWeekPlan.endDate.titleLabel.text isEqualToString:@"选择日期"]||
-        self.artWeekPlan.textFiled1.text.length==0||
-        self.artWeekPlan.textFiled2.text.length==0||
-        self.artWeekPlan.textFiled3.text.length==0||
-        self.artWeekPlan.textFiled4.text.length==0||
-        self.artWeekPlan.textFiled5.text.length==0||
-        self.artWeekPlan.textFiled6.text.length==0||
-        self.artWeekPlan.textFiled7.text.length==0||
-        self.artWeekPlan.textFiled8.text.length==0||
-        self.artWeekPlan.textFiled9.text.length==0||
-        self.artWeekPlan.textFiledL.text.length==0||
+        self.artWeekSummary.textFiled1.text.length==0||
+        self.artWeekSummary.textFiled2.text.length==0||
+        self.artWeekSummary.textFiled3.text.length==0||
+        self.artWeekSummary.textFiled4.text.length==0||
+        self.artWeekSummary.textFiled5.text.length==0||
+        self.artWeekSummary.textFiled6.text.length==0||
+        self.artWeekSummary.textFiled7.text.length==0||
+        self.artWeekSummary.textFiled8.text.length==0||
+        self.artWeekSummary.textFiled9.text.length==0||
+        self.artWeekSummary.textFiledA.text.length==0||
+        self.artWeekSummary.textFiledB.text.length==0||
+        self.artWeekSummary.textFiledC.text.length==0||
+        self.artWeekSummary.textFiledD.text.length==0||
+        self.artWeekSummary.textFiledE.text.length==0||
+        self.artWeekSummary.textFiledF.text.length==0||
+        self.artWeekSummary.textFiledG.text.length==0||
         [self.string1 isEqualToString:@""]||
         [self.string2 isEqualToString:@""]||
         [self.string3 isEqualToString:@""]||
@@ -495,38 +503,39 @@
     [dictl setValue:compid forKey:@"CompanyInfoId"];
     [dictl setValue:[ShareModel shareModel].sort forKey:@"Sort"];
     [dictl setValue:hint forKey:@"Hint"];
+    [dictl setValue:self.tableID forKey:@"planId"];
     [dictl setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];
     [dictl setValue:self.artWeekSummary.startDate.titleLabel.text forKey:@"StartDate"];
     [dictl setValue:self.artWeekSummary.endDate.titleLabel.text forKey:@"EndDate"];
-    [dictl setValue:self.artWeekSummary.textFiled1 forKey:@"managerTask"];
-    [dictl setValue:self.artWeekSummary.textFiled2 forKey:@"managerPredictMoney"];
-    [dictl setValue:self.artWeekSummary.textFiled3 forKey:@"managerPracticalMoney"];
-    [dictl setValue:self.artWeekSummary.textFiled4 forKey:@"managerPredictCargo"];
-    [dictl setValue:self.artWeekSummary.textFiled5 forKey:@"managerPracticalCargo"];
-    [dictl setValue:self.artWeekSummary.textFiled6 forKey:@"managerAccumulateCargo"];
-    [dictl setValue:self.artWeekSummary.textFiled7 forKey:@"managerWeeklyMoney"];
-    [dictl setValue:self.artWeekSummary.textFiled8 forKey:@"managerWeekendMoney"];
-    [dictl setValue:self.artWeekSummary.textFiled9 forKey:@"task"];
-    [dictl setValue:self.artWeekSummary.textFiledA forKey:@"predictMoney"];
-    [dictl setValue:self.artWeekSummary.textFiledB forKey:@"practicalMoney"];
-    [dictl setValue:self.artWeekSummary.textFiledC forKey:@"predictCargo"];
-    [dictl setValue:self.artWeekSummary.textFiledD forKey:@"practicalCargo"];
-    [dictl setValue:self.artWeekSummary.textFiledE forKey:@"accumulateCargo"];
-    [dictl setValue:self.artWeekSummary.textFiledF forKey:@"weeklyMoney"];
-    [dictl setValue:self.artWeekSummary.textFiledG forKey:@"weekendMoney"];
+    [dictl setValue:self.artWeekSummary.textFiled1.text forKey:@"managerTask"];
+    [dictl setValue:self.artWeekSummary.textFiled2.text forKey:@"managerPredictMoney"];
+    [dictl setValue:self.artWeekSummary.textFiled3.text forKey:@"managerPracticalMoney"];
+    [dictl setValue:self.artWeekSummary.textFiled4.text forKey:@"managerPredictCargo"];
+    [dictl setValue:self.artWeekSummary.textFiled5.text forKey:@"managerPracticalCargo"];
+    [dictl setValue:self.artWeekSummary.textFiled6.text forKey:@"managerAccumulateCargo"];
+    [dictl setValue:self.artWeekSummary.textFiled7.text forKey:@"managerWeeklyMoney"];
+    [dictl setValue:self.artWeekSummary.textFiled8.text forKey:@"managerWeekendMoney"];
+    [dictl setValue:self.artWeekSummary.textFiled9.text forKey:@"task"];
+    [dictl setValue:self.artWeekSummary.textFiledA.text forKey:@"predictMoney"];
+    [dictl setValue:self.artWeekSummary.textFiledB.text forKey:@"practicalMoney"];
+    [dictl setValue:self.artWeekSummary.textFiledC.text forKey:@"predictCargo"];
+    [dictl setValue:self.artWeekSummary.textFiledD.text forKey:@"practicalCargo"];
+    [dictl setValue:self.artWeekSummary.textFiledE.text forKey:@"accumulateCargo"];
+    [dictl setValue:self.artWeekSummary.textFiledF.text forKey:@"weeklyMoney"];
+    [dictl setValue:self.artWeekSummary.textFiledG.text forKey:@"weekendMoney"];
     
     if (self.string1.length!=0) {
-        [dictl setValue:self.string1 forKey:@"jaats"];
+        [dictl setValue:self.string1 forKey:@"JAATS"];
     }else
     {
-        [dictl setValue:@"" forKey:@"jaats"];
+        [dictl setValue:@"" forKey:@"JAATS"];
     }
     
     if (self.string2.length!=0) {
-        [dictl setValue:self.string2 forKey:@"psp"];
+        [dictl setValue:self.string2 forKey:@"PSP"];
     }else
     {
-        [dictl setValue:@"" forKey:@"psp"];
+        [dictl setValue:@"" forKey:@"PSP"];
     }
     
     if (self.string3.length!=0) {
@@ -698,7 +707,7 @@
     {
         switch (indexPath.row) {
             case 0:
-                if (self.string1.length!=0) {
+                if (![self.string1 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string1;
                 }else
                 {
@@ -715,7 +724,7 @@
                 }
                 break;
             case 1:
-                if (self.string2.length!=0) {
+                if (![self.string2 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string2;
                 }else
                 {
@@ -732,7 +741,7 @@
                 }
                 break;
             case 2:
-                if (self.string3.length!=0) {
+                if (![self.string3 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string3;
                 }else
                 {
@@ -749,7 +758,7 @@
                 }
                 break;
             case 3:
-                if (self.string4.length!=0) {
+                if (![self.string4 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string4;
                 }else
                 {
@@ -772,8 +781,6 @@
     }
     return cell;
 }
-
-
 
 #pragma -mark system
 
