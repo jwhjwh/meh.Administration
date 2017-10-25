@@ -13,7 +13,7 @@
 #import "SelectAlert.h"
 #import "targetTextField.h"
 #import "TargetViewController.h"
-@interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource>
+@interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
 @property (nonatomic,retain)UITableView *tableView;
@@ -23,6 +23,14 @@
 @property (nonatomic ,retain)NSMutableArray* InterNameAry;
 @property (strong,nonatomic) NSIndexPath *index;
 @property (strong,nonatomic) NSArray *timeArray;
+
+@property (strong,nonatomic) UIButton *yesbtn;
+@property (strong,nonatomic) UIButton *nobtn;
+@property (strong,nonatomic) UIButton *QKbtn;
+@property (strong,nonatomic) UIButton *FQbtn;
+@property (strong,nonatomic) UIButton *QTbtn;
+
+
 
 //数据源
 @property(strong,nonatomic)NSString *time;//拜访日期
@@ -85,7 +93,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
-    _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息:"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间",@"执行方案",@"合约金额"],@[@"打款方式"]];
+    _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息:"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间:",@"执行方案:",@"合约金额:"],@[@"打款方式"]];
     _placeholdernameArrs = @[@[],@[@"选择日期",@"如:10:00点-12:30分",@"选择拜访次数"],@[@"填写店名",@"填写店铺地址",@"填写负责人",@"填写职务",@"填写联系方式",@"填写微信号"],@[@"选择店规模",@"选择床位",@"选择美容师人数",@"选择开店年限",@"填写主要经营品牌",@"填写关注品牌"]];
     _tagnameArrs =@[@[],@[@"",@"12",@""],@[@"21",@"22",@"23",@"24",@"25",@"26"],@[@"31",@"32",@"33",@"34",@"35",@"36"]];
     [self targettableui];
@@ -97,7 +105,7 @@
     _timeArray=[NSArray arrayWithArray:array];
 }
 -(void)targettableui{
-    self.tableView= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     NSString* phoneModel = [UIDevice devicePlatForm];
     if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
         self.tableView.frame =CGRectMake(0,88,self.view.bounds.size.width,self.view.bounds.size.height-50);
@@ -117,6 +125,8 @@
     model = _InterNameAry[0];
     if(indexPath.section <4){
         inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+      
+        
         if (cell ==nil)
         {
             cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
@@ -132,10 +142,9 @@
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
         }else if(indexPath.section == 1){
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
             cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
             if (indexPath.row==0) {
-                
+                 cell.userInteractionEnabled = _cellend;
                 if (model.Time ==nil) {
                     
                     cell.xingLabel.textColor = [UIColor lightGrayColor];
@@ -157,6 +166,7 @@
                     sjduan.text = _meettime;
                 }
                 [cell addSubview:sjduan];
+                 cell.userInteractionEnabled = _cellend;
             }else{
                 if ([_num isEqualToString:@""]) {
                     cell.xingLabel.textColor = [UIColor lightGrayColor];
@@ -165,10 +175,11 @@
                     cell.xingLabel.textColor = [UIColor blackColor];
                     cell.xingLabel.text =_num;
                 }
-                
+                 cell.userInteractionEnabled = _cellend;
             }
             
         }else if(indexPath.section == 2){
+             cell.userInteractionEnabled = _cellend;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
             UITextField *section2 = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
@@ -208,6 +219,7 @@
             
             
         }else if(indexPath.section == 3){
+             cell.userInteractionEnabled = _cellend;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mingLabel.text =_nameArrs[indexPath.section][indexPath.row];
             if (indexPath.row==4) {
@@ -270,6 +282,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.section == 4){
+             cell.userInteractionEnabled = _cellend;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 120, 30)];
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
@@ -284,6 +297,10 @@
             zdsltextfield.font= [UIFont systemFontOfSize:13];
             [zdsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zdsltextfield.tag = 41;
+            zdsltextfield.delegate = self;
+            if (_customernum.length>0) {
+                zdsltextfield.text = _customernum;
+            }
             [cell addSubview:zdsltextfield];
             UILabel *renlabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 40, 40, 30)];
             renlabel.text = @"人,";
@@ -298,6 +315,10 @@
             zlsltextfield.font= [UIFont systemFontOfSize:13];
             [zlsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zlsltextfield.tag = 42;
+            zlsltextfield.delegate = self;
+            if (_validnum.length>0) {
+                zlsltextfield.text = _validnum;
+            }
             [cell addSubview:zlsltextfield];
             UILabel *renlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(180, 70, 40, 30)];
             renlabel1.text = @"人,";
@@ -310,8 +331,13 @@
             [cell addSubview:xqdwlabel];
             targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(110, 110, 70, 30)];
             xqdwtextfield.font= [UIFont systemFontOfSize:13];
-            [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             xqdwtextfield.tag = 43;
+            xqdwtextfield.delegate = self;
+            
+             [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            if (_brandpos.length>0) {
+                xqdwtextfield.text = _brandpos;
+            }
             [cell addSubview:xqdwtextfield];
             UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(180, 110, 40, 30)];
             renlabel2.text = @",";
@@ -326,6 +352,9 @@
             qttextfield.font= [UIFont systemFontOfSize:13];
             [qttextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             qttextfield.tag = 44;
+            if (_otherpos.length>0) {
+                qttextfield.text = _otherpos;
+            }
             [cell addSubview:qttextfield];
             
             UILabel *zdgklabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 210, 150, 30)];
@@ -341,6 +370,9 @@
             zdgktextfield.font= [UIFont systemFontOfSize:13];
             [zdgktextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zdgktextfield.tag = 45;
+            if (_singleprice.length>0) {
+                zdgktextfield.text = _singleprice;
+            }
             [cell addSubview:zdgktextfield];
             UILabel *renlabel4 = [[UILabel alloc]initWithFrame:CGRectMake(120, 240, 60, 30)];
             renlabel4.text = @"元,套盒约";
@@ -350,6 +382,9 @@
             thytextfield.font= [UIFont systemFontOfSize:13];
             [thytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             thytextfield.tag = 46;
+            if (_boxprice.length>0) {
+                thytextfield.text = _boxprice;
+            }
             [cell addSubview:thytextfield];
             UILabel *renlabel5 = [[UILabel alloc]initWithFrame:CGRectMake(250, 240,40, 30)];
             renlabel5.text = @"元,";
@@ -364,6 +399,9 @@
             kxytextfield.font= [UIFont systemFontOfSize:13];
             [kxytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             kxytextfield.tag = 47;
+            if (_cardprice.length>0) {
+                kxytextfield.text = _cardprice;
+            }
             [cell addSubview:kxytextfield];
             UILabel *renlabel7 = [[UILabel alloc]initWithFrame:CGRectMake(120, 270, 80, 30)];
             renlabel7.text = @"元,项目套餐";
@@ -373,6 +411,9 @@
             xmtctextfield.font= [UIFont systemFontOfSize:13];
             [xmtctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             xmtctextfield.tag = 48;
+            if (_packprice.length>0) {
+                xmtctextfield.text = _packprice;
+            }
             [cell addSubview:xmtctextfield];
             UILabel *renlabel8 = [[UILabel alloc]initWithFrame:CGRectMake(270, 270, 40, 30)];
             renlabel8.text = @"元;";
@@ -385,21 +426,37 @@
             [cell addSubview:renlabel9];
             
            
-            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(60, 300, 40, 30)];
-            [button setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
-            [button setTitle:@"是" forState:UIControlStateNormal];
-            button.tag = 49;
-            button.titleLabel.font = [UIFont systemFontOfSize:13];
-            [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [cell.contentView addSubview:button];
+            _yesbtn = [[UIButton alloc]initWithFrame:CGRectMake(60, 300, 40, 30)];
+            if ([_flag isEqualToString:@"1"]) {
+                [_yesbtn setImage:[UIImage imageNamed:@"xk_ico02"] forState:UIControlStateNormal];
+                [_yesbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else{
+                 [_yesbtn setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
+                [_yesbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
+           
+            [_yesbtn setTitle:@"是" forState:UIControlStateNormal];
+            _yesbtn.tag = 49;
+            _yesbtn.titleLabel.font = [UIFont systemFontOfSize:13];
             
-            UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(100, 300, 40, 30)];
-            [button1 setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
-            [button1 setTitle:@"否" forState:UIControlStateNormal];
-            button1.tag = 50;
-            button1.titleLabel.font = [UIFont systemFontOfSize:13];
-            [button1 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [cell.contentView addSubview:button1];
+            [_yesbtn addTarget:self action:@selector(buttonNotPresss:)forControlEvents: UIControlEventTouchUpInside];
+            [cell.contentView addSubview:_yesbtn];
+            
+            _nobtn = [[UIButton alloc]initWithFrame:CGRectMake(100, 300, 40, 30)];
+            if ([_flag isEqualToString:@"2"]) {
+                [_nobtn setImage:[UIImage imageNamed:@"xk_ico02"] forState:UIControlStateNormal];
+                [_nobtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else{
+                [_nobtn setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
+                [_nobtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
+            
+            [_nobtn setTitle:@"否" forState:UIControlStateNormal];
+            _nobtn.tag = 50;
+            _nobtn.titleLabel.font = [UIFont systemFontOfSize:13];
+            
+            [_nobtn addTarget:self action:@selector(buttonNotPresss:)forControlEvents: UIControlEventTouchUpInside];
+            [cell.contentView addSubview:_nobtn];
             
             UILabel *renlabel10 = [[UILabel alloc]initWithFrame:CGRectMake(140, 300, 120, 30)];
             renlabel10.text = @"]做过大量收现活动,";
@@ -413,6 +470,9 @@
             yyxztextfield.font = [UIFont systemFontOfSize:13];
             [yyxztextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             yyxztextfield.tag = 55;
+            if (_demand.length>0) {
+                yyxztextfield.text = _demand;
+            }
             
             if ([_flag isEqualToString:@"1"]) {
                 //是
@@ -425,6 +485,9 @@
                 hdmctextfield.font = [UIFont systemFontOfSize:13];
                 [hdmctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 hdmctextfield.tag = 51;
+                if (_activename.length>0) {
+                    hdmctextfield.text = _activename;
+                }
                 [cell addSubview:hdmctextfield];
                 
                 UILabel *hdmclabel1 = [[UILabel alloc]initWithFrame:CGRectMake(190, 330, 35, 30)];
@@ -436,6 +499,9 @@
                 hdmctextfield1.font = [UIFont systemFontOfSize:13];
                 [hdmctextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 hdmctextfield1.tag = 52;
+                if (_dealmoney.length>0) {
+                    hdmctextfield1.text = _dealmoney;
+                }
                 [cell addSubview:hdmctextfield1];
                 
                 UILabel *wylabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 360, 90, 30)];
@@ -447,6 +513,9 @@
                 tcxxtextfield1.font = [UIFont systemFontOfSize:13];
                 [tcxxtextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 tcxxtextfield1.tag = 53;
+                if (_leastmoney.length>0) {
+                    tcxxtextfield1.text = _leastmoney;
+                }
                 [cell addSubview:tcxxtextfield1];
                 
                 UILabel *wylabel1 = [[UILabel alloc]initWithFrame:CGRectMake(170, 360, 30, 30)];
@@ -463,6 +532,9 @@
                 cjltextfield1.font = [UIFont systemFontOfSize:13];
                 [cjltextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 cjltextfield1.tag = 54;
+                if (_dealrate.length>0) {
+                    cjltextfield1.text = _dealrate;
+                }
                 [cell addSubview:cjltextfield1];
                 
                 UILabel *bfblabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 390, 30, 30)];
@@ -483,40 +555,94 @@
             
             
         }else if(indexPath.section == 5){
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
             [cell addSubview:tlelabel];
             
         }else if(indexPath.section == 6){
+             cell.userInteractionEnabled = _cellend;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
+            UILabel *tlelabel = [[UILabel alloc]init];
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
             [cell addSubview:tlelabel];
+            
+            targetTextField *djhztextfield = [[targetTextField alloc]init];
+            djhztextfield.font = [UIFont systemFontOfSize:13];
+            [djhztextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+            [cell addSubview:djhztextfield];
+            if (indexPath.row == 0) {
+                tlelabel.frame =CGRectMake(10, 10, 140, 30);
+                djhztextfield.frame =CGRectMake(140, 10, cell.width-140, 30);
+                djhztextfield.tag = 61;
+                if (_partnertime.length>0) {
+                    djhztextfield.text = _partnertime;
+                }
+            }else if(indexPath.row == 1){
+                tlelabel.frame =CGRectMake(10, 10, 100, 30);
+                djhztextfield.frame =CGRectMake(100, 10, cell.width-100, 30);
+                djhztextfield.tag = 62;
+                if (_scheme.length>0) {
+                    djhztextfield.text = _scheme;
+                }
+            }else if(indexPath.row == 2){
+                tlelabel.frame =CGRectMake(10, 10, 100, 30);
+                djhztextfield.frame =CGRectMake(100, 10, cell.width-100, 30);
+                djhztextfield.tag = 63;
+                if (_amount.length>0) {
+                    djhztextfield.text = _amount;
+                }
+            }
+            
             
         }else if(indexPath.section == 7){
+             cell.userInteractionEnabled = _cellend;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
             tlelabel.text = _nameArrs[indexPath.section][indexPath.row];
             [cell addSubview:tlelabel];
             
-            UIButton *QKbtn = [[UIButton alloc]init];
-            QKbtn.frame = CGRectMake(10, 50, 50, 30);
-            [QKbtn setTitle:@"全款" forState:UIControlStateNormal];
-            [QKbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [cell addSubview:QKbtn];
+            _QKbtn = [[UIButton alloc]init];
+            _QKbtn.frame = CGRectMake(10, 50, 50, 30);
+            [_QKbtn setTitle:@"全款" forState:UIControlStateNormal];
+            _QKbtn.tag = 73;
+            _QKbtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            [_QKbtn addTarget:self action:@selector(buttonNotPresss:)forControlEvents: UIControlEventTouchUpInside];
+            if ([_payway isEqualToString:@"1"]) {
+                [_QKbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else{
+                [_QKbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
             
-            UIButton *FQbtn = [[UIButton alloc]init];
-            FQbtn.frame = CGRectMake(80, 50, 50, 30);
-            [FQbtn setTitle:@"分期" forState:UIControlStateNormal];
-            [FQbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [cell addSubview:FQbtn];
+            [cell addSubview:_QKbtn];
             
-            UIButton *QTbtn = [[UIButton alloc]init];
-            QTbtn.frame = CGRectMake(150, 50, 120, 30);
-            [QTbtn setTitle:@"其它方式" forState:UIControlStateNormal];
-            [QTbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [cell addSubview:QTbtn];
+            _FQbtn = [[UIButton alloc]init];
+            _FQbtn.frame = CGRectMake(80, 50, 50, 30);
+            _FQbtn.tag = 74;
+            [_FQbtn setTitle:@"分期" forState:UIControlStateNormal];
+            _FQbtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            [_FQbtn addTarget:self action:@selector(buttonNotPresss:)forControlEvents: UIControlEventTouchUpInside];
+            if ([_payway isEqualToString:@"2"]) {
+                [_FQbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else{
+                [_FQbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
+            [cell addSubview:_FQbtn];
+           
+            _QTbtn = [[UIButton alloc]init];
+            _QTbtn.frame = CGRectMake(150, 50, 120, 30);
+            _QTbtn.tag = 75;
+            [_QTbtn setTitle:@"其它方式" forState:UIControlStateNormal];
+            _QTbtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            [_QTbtn addTarget:self action:@selector(buttonNotPresss:)forControlEvents: UIControlEventTouchUpInside];
+            if ([_payway isEqualToString:@"3"]) {
+                [_QTbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else{
+                [_QTbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
+            
+            [cell addSubview:_QTbtn];
             
             UILabel *tbrlabel = [[UILabel alloc]init];
             tbrlabel.frame = CGRectMake(10, 100, 80, 30);
@@ -527,6 +653,9 @@
             tbrtextfield.frame = CGRectMake(100, 100, cell.width-100, 30);
             [tbrtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             tbrtextfield.tag = 71;
+            if (_written.length>0) {
+                tbrtextfield.text = _written;
+            }
             [cell addSubview:tbrtextfield];
             
             UILabel *zgjllabel = [[UILabel alloc]init];
@@ -538,13 +667,66 @@
             zgjltextfield.frame = CGRectMake(100, 140, cell.width-100, 30);
             [zgjltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zgjltextfield.tag = 72;
+            if (_manager.length>0) {
+                zgjltextfield.text = _manager;
+            }
             [cell addSubview:zgjltextfield];
             
         }
          return cell;
     }
 }
+-(void)xqdwtextField:(UITextField *)textfield{
+    NSArray *zwlbAry = [[NSArray alloc]init];
+    zwlbAry = @[@"保养",@"功效",@"修复",@"美容"];
+    [SelectAlert showWithTitle:@"选择类型" titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
+        
+    } selectValue:^(NSString *selectValue) {
+        textfield.text = selectValue;
+        _brandpos = textfield.text;
+        
+    } showCloseButton:NO];
+}
 -(void)buttonNotPresss:(UIButton *)btn{
+    // 全款 分期 其他方式
+    //是否做过大量收现活动
+    if (btn.tag == 49) {
+        if ([_flag isEqualToString:@"2"]) {
+            _flag = @"1";
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:@"xk_ico02"] forState:UIControlStateNormal];
+            [_nobtn setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
+            [_nobtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
+            [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }else if (btn.tag == 50){
+        if ([_flag isEqualToString:@"1"]) {
+            [_yesbtn setImage:[UIImage imageNamed:@"xk_ico01"] forState:UIControlStateNormal];
+            [_yesbtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            _flag = @"2";
+            [btn setImage:[UIImage imageNamed:@"xk_ico02"] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:4];
+            [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }else if (btn.tag == 73){
+        _payway = @"1";
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_FQbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_QTbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }else if (btn.tag == 74){
+        _payway = @"2";
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_QKbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_QTbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }else if (btn.tag == 75){
+        _payway = @"3";
+        [_QKbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_FQbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+    }
     
 }
 -(void)FieldText:(UITextField *)textfield{
@@ -577,7 +759,8 @@
            _validnum = textfield.text;//有质量顾客数量
             break;
         case 43:
-            _brandpos = textfield.text;//品牌定位
+            //_brandpos = textfield.text;//品牌定位
+            
             break;
         case 44:
            _otherpos = textfield.text;//品牌定位的其他
@@ -609,6 +792,15 @@
         case 55:
             _demand = textfield.text;//运营协助需求
             break;
+        case 61:
+            _partnertime = textfield.text;//店家预定合作时间
+            break;
+        case 62:
+            _scheme =textfield.text;//执行方案
+            break;
+        case 63:
+            _amount = textfield.text; //合约金额
+            break;
         case 71:
             _written = textfield.text;//填表人
             break;
@@ -619,6 +811,23 @@
             break;
     }
 }
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if(textField.tag == 43){
+        [self xqdwtextField:textField];
+        return NO;
+    }else{
+        return YES;
+    }
+}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    if(textField.tag == 43){
+//        [textField resignFirstResponder];
+//        return YES;
+//    }
+//    return NO;
+//}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==1) {
@@ -718,6 +927,62 @@
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     //点击右上角
+    if (_cellend == NO) {
+        NSArray *zwlbAry = [[NSArray alloc]init];
+        zwlbAry = @[@"编辑",@"确定合作",@"分享给同事",@"删除"];
+        //[SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
+        [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
+            if (selectIndex == 0) {
+                _cellend = YES;
+                [self.tableView reloadData];
+                
+            }else if(selectIndex == 1){
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定为合作用户" sureBtn:@"确认" cancleBtn:@"取消"];
+                alertView.resultIndex = ^(NSInteger index){
+                    NSLog(@"%ld",index);
+                    if(index == 2){
+                       //跳界面
+                        
+                    }
+                };
+                [alertView showMKPAlertView];
+            }else if(selectIndex == 2){
+                //分享给同事
+            }else{
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];
+                alertView.resultIndex = ^(NSInteger index){
+                    NSLog(@"%ld",index);
+                    if(index == 2){
+                        
+                        
+                    }
+                };
+                [alertView showMKPAlertView];
+            }
+        } selectValue:^(NSString *selectValue) {
+            
+        } showCloseButton:NO];
+    }else{
+        NSArray *zwlbAry = [[NSArray alloc]init];
+        zwlbAry = @[@"提交到上级",@"提交到品牌部"];
+        [SelectAlert showWithTitle:nil titles:zwlbAry  selectIndex:^(NSInteger selectIndex) {
+            if (selectIndex == 0) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];
+                alertView.resultIndex = ^(NSInteger index){
+                    NSLog(@"%ld",index);
+                    if(index == 2){
+                        
+                        
+                    }
+                };
+                [alertView showMKPAlertView];
+            }else{
+                //提交到品牌部---- 跳界面
+            }
+        } selectValue:^(NSString *selectValue) {
+            
+        } showCloseButton:NO];
+    }
 }
 -(void)selectTargetVisit{
     //数据请求
@@ -726,7 +991,7 @@
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
         NSDictionary *dic = [[NSDictionary alloc]init];
-        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":self.TargetVisitId,@"RoleId":self.strId};
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":self.OldTargetVisitId,@"RoleId":self.strId};
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 NSArray *array=[responseObject valueForKey:@"list"];
@@ -791,7 +1056,7 @@
         }
        
     }else if(indexPath.section ==7){
-        return 200;
+        return 250;
     }else{
         return 50;
     }
@@ -808,10 +1073,13 @@
     return _nameArrs.count;
 }
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    view.tintColor = GetColor(230,230,230,1);
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    header.textLabel.textColor = [UIColor grayColor];
-    header.textLabel.font = [UIFont systemFontOfSize:14.0f];
+    
+        view.tintColor = GetColor(230,230,230,1);
+        UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+        header.textLabel.textColor = [UIColor grayColor];
+        header.textLabel.font = [UIFont systemFontOfSize:14.0f];
+    
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section==0) {
@@ -1041,7 +1309,7 @@
     }
     _flag= [[NSString alloc]init];//本年是否做过大量收现活动
     if (model.Flag == nil) {
-        _flag = @"";
+        _flag = @"2";
     }else{
         _flag = model.Flag;
     }
@@ -1153,5 +1421,18 @@
     }else{
         _targetVisitId = model.Id;
     }
+}
+//修改目标客户
+-(void)upadatetarget{
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/UpdateTargetVisit.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"id":_targetVisitId,@"Time":_time,@"MeeTime":_meettime,@"Num":_num,@"Principal":_partnertime};
+    [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view];
 }
 @end

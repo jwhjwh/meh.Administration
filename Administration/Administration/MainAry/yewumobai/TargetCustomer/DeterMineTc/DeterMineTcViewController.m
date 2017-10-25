@@ -104,7 +104,7 @@
     if (indexPath.section ==0) {
         NSLog(@"目标客户确立表");
         TargetTableViewController *ttvc = [[TargetTableViewController alloc]init];
-        ttvc.TargetVisitId = self.TargetVisitId;
+        ttvc.OldTargetVisitId = self.TargetVisitId;
         ttvc.isofyou = NO;
         ttvc.strId = self.strId;
         ttvc.cellend = NO;

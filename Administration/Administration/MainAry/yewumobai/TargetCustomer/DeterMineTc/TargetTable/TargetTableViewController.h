@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TargetTableViewController : UIViewController
-@property (nonatomic,strong) NSString *TargetVisitId;
+@property (nonatomic,strong) NSString *OldTargetVisitId;
 @property (strong,nonatomic) NSString *strId;
 @property (nonatomic, assign) BOOL isofyou;
 @property (nonatomic, assign) BOOL cellend;

@@ -92,7 +92,7 @@
     // 添加到视图上
     [_scrollView addSubview:_textView];
     [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(80);
+        make.top.mas_equalTo(self.view.mas_top).offset(92);
         make.left.mas_equalTo(self.view.mas_left).offset(20);
         make.right.mas_equalTo(self.view.mas_right).offset(-20);
         make.height.mas_equalTo(@180);
