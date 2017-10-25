@@ -554,6 +554,7 @@
 		621D70121ED2C57400B3DD2E /* yggl_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700F1ED2C57400B3DD2E /* yggl_02.png */; };
 		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6220B6E61E641806007017BA /* PW_DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E51E641806007017BA /* PW_DatePickerView.m */; };
+		6223F8261F9DC011005FD217 /* TargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6223F8251F9DC011005FD217 /* TargetViewController.m */; };
 		622686CA1F94604700FC21FF /* TargetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 622686C91F94604700FC21FF /* TargetModel.m */; };
 		6226E6601E77773C00767EBD /* UIDevice+FEPlatForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6226E65F1E77773C00767EBD /* UIDevice+FEPlatForm.m */; };
 		622B2C341F5661C9009929D6 /* qd_ico_cs.png in Resources */ = {isa = PBXBuildFile; fileRef = 622B2C321F5661C9009929D6 /* qd_ico_cs.png */; };
@@ -1775,6 +1776,8 @@
 		6220B6E11E63C2A7007017BA /* EmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailViewController.m; sourceTree = "<group>"; };
 		6220B6E41E641806007017BA /* PW_DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PW_DatePickerView.h; sourceTree = "<group>"; };
 		6220B6E51E641806007017BA /* PW_DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PW_DatePickerView.m; sourceTree = "<group>"; };
+		6223F8241F9DC011005FD217 /* TargetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TargetViewController.h; sourceTree = "<group>"; };
+		6223F8251F9DC011005FD217 /* TargetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TargetViewController.m; sourceTree = "<group>"; };
 		622686C81F94604700FC21FF /* TargetModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TargetModel.h; sourceTree = "<group>"; };
 		622686C91F94604700FC21FF /* TargetModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TargetModel.m; sourceTree = "<group>"; };
 		6226E65E1E77773C00767EBD /* UIDevice+FEPlatForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+FEPlatForm.h"; sourceTree = "<group>"; };
@@ -4829,6 +4832,8 @@
 			children = (
 				62F220781F90AD86004163A4 /* TargetTableViewController.h */,
 				62F220791F90AD86004163A4 /* TargetTableViewController.m */,
+				6223F8241F9DC011005FD217 /* TargetViewController.h */,
+				6223F8251F9DC011005FD217 /* TargetViewController.m */,
 				62D94D981F99A55B00D0BEA6 /* targetTextField.h */,
 				62D94D991F99A55B00D0BEA6 /* targetTextField.m */,
 				622686C81F94604700FC21FF /* TargetModel.h */,
@@ -4939,7 +4944,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = T786R7PE4N;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5594,6 +5599,7 @@
 				1F6211B71E8CFFAF00F50851 /* MWGridViewController.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
 				1F6211C21E8CFFAF00F50851 /* EMSDWebImageDownloaderOperation.m in Sources */,
+				6223F8261F9DC011005FD217 /* TargetViewController.m in Sources */,
 				1FEDEC021F723CFF00133185 /* ViewChooseScore.m in Sources */,
 				621A5C1F1E5843190051C6CC /* WJTextView.m in Sources */,
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
@@ -5857,7 +5863,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5886,7 +5892,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5905,7 +5911,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5934,7 +5940,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

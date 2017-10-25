@@ -118,8 +118,7 @@ NSUInteger rsw;
     _XZZWArry = [[NSMutableArray alloc]init];
     _XGXZZWArry = [[NSMutableArray alloc]init];
     _ZWNumAry = [[NSMutableArray alloc]init];
-    _lqzwnameAry = [[NSMutableArray alloc]init];
-    _lqzwnumAry = [[NSMutableArray alloc]init];
+    
     _ywmdAry = [[NSMutableArray alloc]init];
     _kfwlcwAry = [[NSMutableArray alloc]init];
     _buttonAry = [[NSMutableArray alloc]init];
@@ -320,8 +319,19 @@ NSUInteger rsw;
     }
     _xgtextFie = [[UITextField alloc]initWithFrame:CGRectMake(240, 1, self.view.bounds.size.width-242, 28)];
     _xgtextFie.textColor = [UIColor orangeColor];
+    
     if (_lqzwnameAry.count>0) {
-        _xgtextFie.text = _lqzwnameAry[indexPath.row];
+        
+        if ([_lqzwnameAry[indexPath.row] isEqualToString:@""]) {
+            
+        }else{
+            _xgtextFie.text = _lqzwnameAry[indexPath.row];
+        }
+        
+        
+        
+        
+        
     }
     
     _xgtextFie.placeholder =_XZZWArry[indexPath.row];
@@ -889,6 +899,8 @@ NSUInteger rsw;
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
+    _lqzwnameAry = [[NSMutableArray alloc]init];
+    _lqzwnumAry = [[NSMutableArray alloc]init];
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid};
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -1058,11 +1070,13 @@ NSUInteger rsw;
             if (WLJLBOOL == YES) {
                 WLJLBOOL = NO;
                 [_kfwlcwAry addObject:@"物流经理"];
+                [_lqzwnameAry addObject:@"物流经理"];
                 
             }else{
                 WLJLBOOL = YES;
                
                 [_kfwlcwAry removeObject:@"物流经理"];
+                 [_lqzwnameAry removeObject:@"物流经理"];
             }
             break;
         case 14:
@@ -1143,6 +1157,7 @@ NSUInteger rsw;
             for (int i = 0;i<_XZZWArry.count;i++)
             {
                 if ([_XZZWArry[i]isEqualToString:btn.titleLabel.text]){
+                    
                     rw = i;
                     break;//一定要有break，否则会出错的。
                 }
