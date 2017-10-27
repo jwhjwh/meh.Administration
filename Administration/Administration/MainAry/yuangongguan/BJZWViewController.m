@@ -543,7 +543,11 @@
             NSMutableDictionary *updateDic = [[NSMutableDictionary alloc]init];
             [updateDic setValue:[NSString stringWithFormat:@"%@",_oldZWID[btn.tag]] forKey:@"oRoleId"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldBMID[btn.tag] componentsJoinedByString:@","]]forKey:@"oDepartmentID"];
-            [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldJBID[btn.tag] componentsJoinedByString:@","]]   forKey:@"oLevelID"];
+            
+            
+            NSString *string1 = [NSString stringWithFormat:@"%@",_oldJBID[btn.tag]];
+            NSLog(@"%@",string1);
+            [updateDic setValue:string1  forKey:@"oLevelID"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_ZWidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nRoleId"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_BMidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nDepartmentID"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_ZWLBidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nLevelID"];
@@ -562,24 +566,27 @@
     }else if ([btn.titleLabel.text isEqualToString:@"删除"]){
         //删除职位
         if (_ZWidAry.count==1) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该员工不能没有职位" andInterval:1.0];
-        }
-        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
-        alertView.resultIndex = ^(NSInteger index){
-            if (index == 2) {
-                NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
-                for (int u = 0; u<_bjBtnAry.count; u++) {
-                    if ([stt isEqualToString: _bjBtnAry[u]]) {
-                        //删除职位  RoleId  DepartmentID
-                        NSLog(@"%@",_ZWidAry[u]);
-                        [self dimissZW:_ZWidAry[u] departid:_BMidAry[u] uuid:_uuidary[0] rowsect:u];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"员工必须要保留一个职位" andInterval:1.0];
+        }else{
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
+            alertView.resultIndex = ^(NSInteger index){
+                if (index == 2) {
+                    NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];
+                    for (int u = 0; u<_bjBtnAry.count; u++) {
+                        if ([stt isEqualToString: _bjBtnAry[u]]) {
+                            //删除职位  RoleId  DepartmentID
+                            NSLog(@"%@",_ZWidAry[u]);
+                            
+                            [self dimissZW:_ZWidAry[u] departid:_BMidAry[u] uuid:_uuidary[0] rowsect:u];
+                        }
                     }
+                    
                 }
                 
-            }
-            
-        };
-        [alertView showMKPAlertView];
+            };
+            [alertView showMKPAlertView];
+        }
+        
         
     }
     
@@ -1145,6 +1152,9 @@
                         
                         [_ZWnameAry addObject:zwary];
                         [_ZWidAry addObject:zwnumary];
+                        
+                        [zwlbary addObject:_model.LevelName];
+                        [zwlbnumary addObject:_model.levelID];
                         
                         [_ZWLBnameAry addObject:zwlbary];
                         [_ZWLBidAry addObject:zwlbnumary];

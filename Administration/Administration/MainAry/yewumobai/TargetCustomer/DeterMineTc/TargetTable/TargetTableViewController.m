@@ -333,7 +333,7 @@
             xqdwtextfield.font= [UIFont systemFontOfSize:13];
             xqdwtextfield.tag = 43;
             xqdwtextfield.delegate = self;
-            
+
              [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             if (_brandpos.length>0) {
                 xqdwtextfield.text = _brandpos;

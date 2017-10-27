@@ -84,7 +84,7 @@
             return ;
         }
         if ([code isEqualToString:@"1001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"token请求超时" andInterval:1];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
             return ;
         }
         if ([code isEqualToString:@"0001"]) {

@@ -74,9 +74,8 @@ static float ToolbarH = 44;
     NSDate *select = self.datePicker.date;
     NSDateFormatter *dateFormmater = [[NSDateFormatter alloc]init];
     [dateFormmater setDateFormat:@"yyyy-MM-dd"];
-    //NSString *resultString = [NSString stringWithFormat:@"%@",select];
-    //NSLog(@":datestr%@",datestr);
-    NSString *resultString = [dateFormmater stringFromDate:select];
+    NSString *resultString = [NSString stringWithFormat:@"%@",select];
+    
     
     if (self.delegate &&[self.delegate respondsToSelector:@selector(pickerView:didSelectDateString:type:)])
     {
@@ -199,7 +198,7 @@ static float ToolbarH = 44;
         
         UIBarButtonItem *centerSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         // 确定按钮
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"确定   "
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"确定"
                                                                       style:UIBarButtonItemStyleDone
                                                                      target:self
                                                                      action:@selector(doneClick)];
