@@ -172,7 +172,7 @@
     }];
     self.viewPlan = viewPlan;
     
-    ViewArtWeekPlan *artWeekPlan = [[ViewArtWeekPlan alloc]initWithFrame:CGRectMake(0, 0, Scree_width,450)];
+    ViewArtWeekPlan *artWeekPlan = [[ViewArtWeekPlan alloc]initWithFrame:CGRectMake(0, 0, Scree_width,530)];
     [viewPlan addSubview:artWeekPlan];
     artWeekPlan.userInteractionEnabled = NO;
     self.artWeekPlan = artWeekPlan;
@@ -212,7 +212,7 @@
     }];
     self.viewSummary = viewSummary;
     
-    ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,550)];
+    ViewArtWeekSummary *artWeekSummary  = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,700)];
     [viewSummary addSubview:artWeekSummary];
     self.artWeekSummary = artWeekSummary;
     
@@ -616,7 +616,7 @@
         [dictl setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
         [dictl setValue:compid forKey:@"CompanyInfoId"];
         [dictl setValue:[ShareModel shareModel].sort forKey:@"Sort"];
-        [dictl setValue:self.tableID forKey:@"planId"];
+        [dictl setValue:self.tableID forKey:@"PlanId"];
         [dictl setValue:hint forKey:@"Hint"];
         [dictl setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];
         [dictl setValue:self.artWeekSummary.startDate.titleLabel.text forKey:@"StartDate"];

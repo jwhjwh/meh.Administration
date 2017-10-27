@@ -127,6 +127,8 @@
         }else
             
         {
+            
+            
             [self.buttonDel setTitle:@"删除一项" forState:UIControlStateNormal];
             [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
             self.buttonAdd.userInteractionEnabled = YES;

@@ -38,6 +38,7 @@
                            @"Matterstype":self.state,
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        [self.arrayData removeAllObjects];
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
@@ -56,14 +57,17 @@
             
         }
         if ([code isEqualToString:@"4444"]) {
+            [self.tableView reloadData];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
             return;
         }
-        if ([code isEqualToString:@"1001 "]) {
+        if ([code isEqualToString:@"1001"]) {
+            [self.tableView reloadData];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
             return;
         }
-        if ([code isEqualToString:@"5000 "]) {
+        if ([code isEqualToString:@"5000"]) {
+            [self.tableView reloadData];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
             return;
         }
@@ -78,7 +82,7 @@
 
 -(void)setUI
 {
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, Scree_height) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate =self;
     tableView.dataSource = self;
     [tableView registerClass:[CellBacklog class] forCellReuseIdentifier:@"cell"];
@@ -121,6 +125,7 @@
 
 -(void)allChoose
 {
+    [self.arraySelect removeAllObjects];
     for (int i=0; i<self.arrayData.count; i++) {
         NSMutableDictionary *dict = [self.arrayData[i] mutableCopy];
         NSString *backlogID = [NSString stringWithFormat:@"%@",dict[@"id"]];
@@ -153,9 +158,13 @@
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         
+        self.viewBottom.frame = CGRectMake(-1, Scree_height, Scree_width+2, 40);
+        self.tableView.frame = CGRectMake(0, 0, Scree_width, Scree_height);
+        self.isDelete = NO;
+        
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除成功" andInterval:1.0];
+            [self getHttpData];
             return ;
         }
         if ([code isEqualToString:@"1001"]) {
@@ -190,6 +199,7 @@
         self.isDelete = YES;
         self.tableView.frame = CGRectMake(0, 0, Scree_width, Scree_height-40);
         self.viewBottom.frame = CGRectMake(0, Scree_height-40, Scree_width, 40);
+        self.buttonDel.userInteractionEnabled = YES;
         [self.tableView reloadData];
     }
 }
@@ -247,9 +257,12 @@
         }
         if (self.arraySelect.count!=0) {
             [self.buttonDel setTitle:[NSString stringWithFormat:@"确定（%ld）",self.arraySelect.count] forState:UIControlStateNormal];
+            [self.buttonDel setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         }else
         {
             [self.buttonDel setTitle:@"确定" forState:UIControlStateNormal];
+            [self.buttonDel setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+            self.buttonDel.userInteractionEnabled = NO;
         }
         [self.arrayData replaceObjectAtIndex:indexPath.row withObject:dict];
         [self.tableView reloadData];

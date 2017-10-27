@@ -45,7 +45,7 @@
     }];
     self.viewPlan = viewPlan;
     
-    ViewArtWeekPlan *artWeekPlan = [[ViewArtWeekPlan alloc]initWithFrame:CGRectMake(0, 0, Scree_width,450)];
+    ViewArtWeekPlan *artWeekPlan = [[ViewArtWeekPlan alloc]initWithFrame:CGRectMake(0, 0, Scree_width,530)];
     [viewPlan addSubview:artWeekPlan];
     self.artWeekPlan = artWeekPlan;
     
@@ -80,7 +80,7 @@
     }];
     self.viewSummary = viewSummary;
     
-    ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,550)];
+    ViewArtWeekSummary *artWeekSummary =  [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,700)];
     [viewSummary addSubview:artWeekSummary];
     self.artWeekSummary = artWeekSummary;
     
@@ -243,8 +243,6 @@
                            @"Others":self.string4,
                            @"Hint":hint,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]};
-    
-    
     
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];

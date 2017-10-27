@@ -52,9 +52,15 @@
                            @"flag":@"1",
                            @"Num":[ShareModel shareModel].num
                            };
+    
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
+        
+        if (self.isRefreshFooter==NO) {
+            [self.arrayData removeAllObjects];
+        }
+        
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             for (NSDictionary *dictL in [responseObject valueForKey:@"lists"]) {
@@ -143,7 +149,6 @@
     
     tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-        [self.arrayData removeAllObjects];
         self.page = 1;
         
         self.isRefreshFooter = NO;

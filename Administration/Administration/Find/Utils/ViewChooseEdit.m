@@ -67,6 +67,7 @@
     cell.textLabel.text = self.arrayButton[indexPath.row];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.textColor = [UIColor blueColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:12];
     cell.textLabel.backgroundColor = [UIColor whiteColor];
     return cell;
 }

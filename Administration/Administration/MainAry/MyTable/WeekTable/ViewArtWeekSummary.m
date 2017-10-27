@@ -28,7 +28,7 @@
 -(void)setUI
 {
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 550)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 700)];
     [self addSubview:headerView];
     
     UIView *viewT = [[UIView alloc]init];
@@ -140,6 +140,7 @@
     
     UILabel *labelPlan = [[UILabel alloc]init];
     labelPlan.text = @"本周任务总结";
+    labelPlan.font = [UIFont systemFontOfSize:13];
     [headerView addSubview:labelPlan];
     [labelPlan mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(headerView.mas_left).offset(10);
@@ -156,7 +157,7 @@
         make.left.mas_equalTo(headerView.mas_left).offset(10);
         make.right.mas_equalTo(headerView.mas_right).offset(-10);
         make.top.mas_equalTo(labelPlan.mas_bottom).offset(8);
-        make.height.mas_equalTo(400);
+        make.height.mas_equalTo(550);
     }];
     
     UILabel *labelBrand = [[UILabel alloc]init];
@@ -170,263 +171,261 @@
     
     UILabel *label5 = [[UILabel alloc]init];
     label5.text = @"本周任务";
-    label5.font = [UIFont systemFontOfSize:12];
+    label5.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:label5];
     [label5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelBrand.mas_bottom).offset(16);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFiled1 = [[MyTextField alloc]init];
-    textFiled1.font = [UIFont systemFontOfSize:12];
     textFiled1.textAlignment = NSTextAlignmentCenter;
+    textFiled1.font = [UIFont systemFontOfSize:13];
     textFiled1.delegate = self;
     [viewB addSubview:textFiled1];
     [textFiled1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(label5.mas_right);
         make.top.mas_equalTo(labelBrand.mas_bottom).offset(16);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled1=  textFiled1;
     
     UILabel *label6 = [[UILabel alloc]init];
     label6.text = @"万元";
-    label6.font = [UIFont systemFontOfSize:12];
+    label6.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:label6];
     [label6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFiled1.mas_right);
         make.top.mas_equalTo(labelBrand.mas_bottom).offset(16);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelA = [[UILabel alloc]init];
     labelA.text = @"本周原预计回款";
-    labelA.font = [UIFont systemFontOfSize:12];
+    labelA.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:labelA];
     [labelA mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(label5.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField2 = [[MyTextField alloc]init];
     textField2.delegate = self;
-    textField2.font  =[UIFont systemFontOfSize:12];
+    textField2.font = [UIFont systemFontOfSize:13];
     textField2.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField2];
     [textField2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelA.mas_right);
         make.top.mas_equalTo(label5.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
         make.width.mas_equalTo(45);
     }];
     self.textFiled2 = textField2;
     
     UILabel *label7 = [[UILabel alloc]init];
     label7.text = @"万元";
-    label7.font = [UIFont systemFontOfSize:12];
+    label7.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:label7];
     [label7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField2.mas_right);
         make.top.mas_equalTo(label5.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelB = [[UILabel alloc]init];
     labelB.text = @"实际回款";
-    labelB.font = [UIFont systemFontOfSize:12];
+    labelB.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:labelB];
     [labelB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelA.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField3 = [[MyTextField alloc]init];
     textField3.delegate = self;
-    textField3.font  =[UIFont systemFontOfSize:12];
+    textField3.font = [UIFont systemFontOfSize:13];
     textField3.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField3];
     [textField3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelB.mas_right);
         make.top.mas_equalTo(labelA.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled3 = textField3;
     
     UILabel *label8 = [[UILabel alloc]init];
     label8.text = @"万";
-    label8.font = [UIFont systemFontOfSize:12];
+    label8.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:label8];
     [label8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField3.mas_right);
         make.top.mas_equalTo(labelA.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelC = [[UILabel alloc]init];
     labelC.text = @"原预计出货";
-    labelC.font = [UIFont systemFontOfSize:12];
+    labelC.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:labelC];
     [labelC mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelB.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField4 = [[MyTextField alloc]init];
     textField4.delegate = self;
-    textField4.font  =[UIFont systemFontOfSize:12];
+    textField4.font = [UIFont systemFontOfSize:13];
     textField4.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField4];
     [textField4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelC.mas_right);
         make.top.mas_equalTo(labelB.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
         make.width.mas_equalTo(45);
     }];
     self.textFiled4 = textField4;
     
     UILabel *label9 = [[UILabel alloc]init];
     label9.text = @"万";
-    label9.font = [UIFont systemFontOfSize:12];
+    label9.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:label9];
     [label9 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField4.mas_right);
         make.top.mas_equalTo(labelB.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelD = [[UILabel alloc]init];
     labelD.text = @"实际出货";
-    labelD.font = [UIFont systemFontOfSize:12];
+    labelD.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:labelD];
     [labelD mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelC.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField5 = [[MyTextField alloc]init];
     textField5.delegate = self;
-    textField5.font  =[UIFont systemFontOfSize:12];
+    textField5.font = [UIFont systemFontOfSize:13];
     textField5.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField5];
     [textField5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelD.mas_right);
         make.top.mas_equalTo(labelC.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled5 = textField5;
     
     UILabel *labela = [[UILabel alloc]init];
     labela.text = @"万元";
-    labela.font = [UIFont systemFontOfSize:12];
+    labela.font  =[UIFont systemFontOfSize:13];
     [viewB addSubview:labela];
     [labela mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField5.mas_right);
-        make.top.mas_equalTo(textField4.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.top.mas_equalTo(labelC.mas_bottom).offset(8);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelleiji = [[UILabel alloc]init];
     labelleiji.text = @"现累计出货";
-    labelleiji.font = [UIFont systemFontOfSize:12];
+    labelleiji.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:labelleiji];
     [labelleiji mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelD.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField6 = [[MyTextField alloc]init];
-    textField6.font = [UIFont systemFontOfSize:12];
+    textField6.font =   [UIFont systemFontOfSize:13];
     textField6.delegate =self;
     [viewB addSubview:textField6];
     [textField6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelleiji.mas_right);
         make.top.mas_equalTo(labelD.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled6 = textField6;
     
     UILabel *labelwan = [[UILabel alloc]init];
     labelwan.text = @"万元";
-    labelwan.font = [UIFont systemFontOfSize:12];
+    labelwan.font = [UIFont systemFontOfSize:13];
     [viewB addSubview:labelwan];
     [labelwan mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField6.mas_right);
         make.top.mas_equalTo(labelD.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelkehu = [[UILabel alloc]init];
     labelkehu.text = @"客户账面余额：";
-    labelkehu.font = [UIFont systemFontOfSize:12];
+    labelkehu.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelkehu];
     [labelkehu mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelleiji.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelzhouchu = [[UILabel alloc]init];
     labelzhouchu.text = @"周初约计";
-    labelzhouchu.font = [UIFont systemFontOfSize:12];
+    labelzhouchu.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelzhouchu];
     [labelzhouchu mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelkehu.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField7 = [[MyTextField alloc]init];
-    textField7.font = [UIFont systemFontOfSize:12];
+    textField7.font =   [UIFont systemFontOfSize:13];
     textField7.delegate = self;
     [viewB addSubview:textField7];
     [textField7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelzhouchu.mas_right);
         make.top.mas_equalTo(labelkehu.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled7 = textField7;
     
     UILabel *labeldou = [[UILabel alloc]init];
     labeldou.text = @"万元，周末";
-    labeldou.font = [UIFont systemFontOfSize:12];
+    labeldou.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labeldou];
     [labeldou mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField7.mas_right);
         make.top.mas_equalTo(labelkehu.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField8 = [[MyTextField alloc]init];
-    textField8.font = [UIFont systemFontOfSize:12];
+    textField8.font =   [UIFont systemFontOfSize:13];
     textField8.delegate = self;
     [viewB addSubview:textField8];
     [textField8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldou.mas_right);
         make.top.mas_equalTo(labelkehu.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled8 = textField8;
     
     UILabel *labelyuan = [[UILabel alloc]init];
     labelyuan.text = @"万元";
-    labelyuan.font = [UIFont systemFontOfSize:12];
+    labelyuan.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelyuan];
     [labelyuan mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField8.mas_right);
         make.top.mas_equalTo(labelkehu.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelPerson = [[UILabel alloc]init];
@@ -435,268 +434,268 @@
     [labelPerson mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelzhouchu.mas_bottom).offset(16);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelE = [[UILabel alloc]init];
     labelE.text = @"本周任务";
-    labelE.font = [UIFont systemFontOfSize:12];
+    labelE.font  =[UIFont systemFontOfSize:13];
     [viewB addSubview:labelE];
     [labelE mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelPerson.mas_bottom).offset(16);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textField9 = [[MyTextField alloc]init];
+    textField9.font = [UIFont systemFontOfSize:13];
     textField9.delegate = self;
-    textField9.font  =[UIFont systemFontOfSize:12];
     textField9.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField9];
     [textField9 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelE.mas_right);
         make.top.mas_equalTo(labelPerson.mas_bottom).offset(16);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiled9 = textField9;
     
     UILabel *labelb = [[UILabel alloc]init];
     labelb.text = @"万";
-    labelb.font = [UIFont systemFontOfSize:12];
+    labelb.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelb];
     [labelb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textField9.mas_right);
         make.top.mas_equalTo(labelPerson.mas_bottom).offset(16);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelF = [[UILabel alloc]init];
     labelF.text = @"本周原预计回款";
-    labelF.font = [UIFont systemFontOfSize:12];
+    labelF.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelF];
     [labelF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelE.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldA = [[MyTextField alloc]init];
     textFieldA.delegate = self;
-    textFieldA.font  =[UIFont systemFontOfSize:12];
+    textFieldA.font  =  [UIFont systemFontOfSize:13];
     textFieldA.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldA];
     [textFieldA mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelF.mas_right);
         make.top.mas_equalTo(labelE.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledA = textFieldA;
     
     UILabel *labelc = [[UILabel alloc]init];
     labelc.text = @"万";
-    labelc.font = [UIFont systemFontOfSize:12];
+    labelc.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelc];
     [labelc mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldA.mas_right);
         make.top.mas_equalTo(labelE.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelG = [[UILabel alloc]init];
     labelG.text = @"实际回款";
-    labelG.font = [UIFont systemFontOfSize:12];
+    labelG.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelG];
     [labelG mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelF.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldB = [[MyTextField alloc]init];
     textFieldB.delegate = self;
-    textFieldB.font  =[UIFont systemFontOfSize:12];
+    textFieldB.font  =  [UIFont systemFontOfSize:13];
     textFieldB.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldB];
     [textFieldB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelG.mas_right);
         make.top.mas_equalTo(labelF.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledB = textFieldB;
     
     UILabel *labeld = [[UILabel alloc]init];
     labeld.text = @"万";
-    labeld.font = [UIFont systemFontOfSize:12];
+    labeld.font =  [UIFont systemFontOfSize:13];
     [viewB addSubview:labeld];
     [labeld mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldB.mas_right);
         make.top.mas_equalTo(labelF.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelH = [[UILabel alloc]init];
     labelH.text = @"原预计出货";
-    labelH.font = [UIFont systemFontOfSize:12];
+    labelH.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelH];
     [labelH mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelG.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldC = [[MyTextField alloc]init];
     textFieldC.delegate = self;
-    textFieldC.font  =[UIFont systemFontOfSize:12];
+    textFieldC.font  =  [UIFont systemFontOfSize:13];
     textFieldC.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldC];
     [textFieldC mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelH.mas_right);
         make.top.mas_equalTo(labelG.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledC = textFieldC;
     
     UILabel *labele = [[UILabel alloc]init];
     labele.text = @"万";
-    labele.font = [UIFont systemFontOfSize:12];
+    labele.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labele];
     [labele mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldC.mas_right);
         make.top.mas_equalTo(labelG.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelI = [[UILabel alloc]init];
     labelI.text = @"实际出货";
-    labelI.font = [UIFont systemFontOfSize:12];
+    labelI.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelI];
     [labelI mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelH.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldD = [[MyTextField alloc]init];
     textFieldD.delegate = self;
-    textFieldD.font  =[UIFont systemFontOfSize:12];
+    textFieldD.font  =  [UIFont systemFontOfSize:13];
     textFieldD.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textFieldD];
     [textFieldD mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelI.mas_right);
         make.top.mas_equalTo(labelH.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledD = textFieldD;
     
     UILabel *labelf = [[UILabel alloc]init];
     labelf.text = @"万";
-    labelf.font = [UIFont systemFontOfSize:12];
+    labelf.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelf];
     [labelf mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldD.mas_right);
         make.top.mas_equalTo(labelH.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelGleiji =[[UILabel alloc]init];
-    labelGleiji.font = [UIFont systemFontOfSize:12];
+    labelGleiji.font =   [UIFont systemFontOfSize:13];
     labelGleiji.text = @"现累计出货";
     [viewB addSubview:labelGleiji];
     [labelGleiji mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(labelI.mas_bottom).offset(8);
         make.left.mas_equalTo(viewB.mas_left).offset(5);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldE = [[MyTextField alloc]init];
-    textFieldE.font = [UIFont systemFontOfSize:12];
+    textFieldE.font =   [UIFont systemFontOfSize:13];
     textFieldE.delegate =self;
     [viewB addSubview:textFieldE];
     [textFieldE mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelGleiji.mas_right);
         make.top.mas_equalTo(labelI.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledE = textFieldE;
     
     UILabel *labelqkjk = [[UILabel alloc]init];
     labelqkjk.text = @"万元";
-    labelqkjk.font = [UIFont systemFontOfSize:12];
+    labelqkjk.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelqkjk];
     [labelqkjk mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldE.mas_right);
         make.top.mas_equalTo(labelI.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labelyue = [[UILabel alloc]init];
     labelyue.text = @"客户账面余额：";
-    labelyue.font = [UIFont systemFontOfSize:12];
+    labelyue.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelyue];
     [labelyue mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelGleiji.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     UILabel *labeldd = [[UILabel alloc]init];
     labeldd.text = @"周初约计";
-    labeldd.font = [UIFont systemFontOfSize:12];
+    labeldd.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labeldd];
     [labeldd mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labelyue.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldF = [[MyTextField alloc]init];
-    textFieldF.font = [UIFont systemFontOfSize:12];
+    textFieldF.font =   [UIFont systemFontOfSize:13];
     textFieldF.delegate =self;
     [viewB addSubview:textFieldF];
     [textFieldF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldd.mas_right);
         make.top.mas_equalTo(labelyue.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledF = textFieldF;
     
     UILabel *labelkd = [[UILabel alloc]init];
     labelkd.text = @"万元，周末";
-    labelkd.font = [UIFont systemFontOfSize:12];
+    labelkd.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelkd];
     [labelkd mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldF.mas_right);
         make.top.mas_equalTo(labelyue.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
     
     MyTextField *textFieldG = [[MyTextField alloc]init];
-    textFieldG.font = [UIFont systemFontOfSize:12];
+    textFieldG.font =   [UIFont systemFontOfSize:13];
     textFieldG.delegate = self;
     [viewB addSubview:textFieldG];
     [textFieldG mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelkd.mas_right);
         make.top.mas_equalTo(labelyue.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
         make.width.mas_equalTo(45);
     }];
     self.textFiledG = textFieldG;
     
     UILabel *labelkj = [[UILabel alloc]init];
     labelkj.text = @"万元";
-    labelkj.font = [UIFont systemFontOfSize:12];
+    labelkj.font =   [UIFont systemFontOfSize:13];
     [viewB addSubview:labelkj];
     [labelkj mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textFieldG.mas_right);
         make.top.mas_equalTo(labelyue.mas_bottom).offset(8);
-        make.height.mas_equalTo(12);
+        make.height.mas_equalTo(21);
     }];
 }
 

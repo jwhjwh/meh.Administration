@@ -39,20 +39,22 @@
 @implementation inftionxqController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self loadDataFromServer];
     self.tabBarController.tabBar.hidden=YES;
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"信息";
+
     self.dicinfo = [[NSDictionary alloc]init];
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
-    
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,Scree_width,self.view.bounds.size.height-49) style:UITableViewStyleGrouped];
     _infonTableview.showsVerticalScrollIndicator = NO;
     _infonTableview.showsHorizontalScrollIndicator = NO;
@@ -62,7 +64,7 @@
     _infonTableview.rowHeight = UITableViewAutomaticDimension;
     [self.view addSubview:_infonTableview];
     
-    [self loadDataFromServer];
+    
   
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView

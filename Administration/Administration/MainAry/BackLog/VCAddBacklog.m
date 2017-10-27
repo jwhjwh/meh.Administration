@@ -28,6 +28,7 @@
 @property (nonatomic,strong)NSString *startTime;
 @property (nonatomic,strong)NSString *endTime;
 @property (nonatomic,strong)NSString *wornTime;
+@property (nonatomic,strong)NSString *wornDate;
 @property (nonatomic,strong)NSString *backlogState;
 
 @property (nonatomic,assign)NSUInteger buttonTag;
@@ -36,6 +37,7 @@
 @property (nonatomic,strong)ViewChooseBacklog *chooseBacklog;
 
 @property (nonatomic,strong)NSIndexPath *indexPath1;
+@property (nonatomic,strong)NSIndexPath *indexPath2;
 
 @property (nonatomic,strong)NSString *stringState;
 
@@ -174,10 +176,10 @@
     }
     
     if ([self.stringState isEqualToString:@"日待办事项"]) {
-        if ([self.wornTime compare:self.startTime] == NSOrderedAscending) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1];
-            return;
-        }
+//        if ([self.wornTime compare:self.startTime] == NSOrderedAscending) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1];
+//            return;
+//        }
         if (self.startTime.length==0) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
             return;
@@ -198,14 +200,14 @@
             return;
         }
         
-        if ([self.wornTime compare:self.startTime]==NSOrderedAscending) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1.0];
-            return;
-        }
-        if ([self.wornTime compare:self.endTime]==NSOrderedDescending) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能大于结束时间" andInterval:1.0];
-            return;
-        }
+//        if ([self.wornDate compare:self.startTime]==NSOrderedAscending) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1.0];
+//            return;
+//        }
+//        if ([self.wornDate compare:self.endTime]==NSOrderedDescending) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能大于结束时间" andInterval:1.0];
+//            return;
+//        }
         if ([self.startTime compare:self.endTime]==NSOrderedDescending) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"开始时间不能大于结束时间" andInterval:1.0];
             return;
@@ -229,7 +231,7 @@
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1.0];
+            [self.navigationController popViewControllerAnimated:YES];
             return ;
         }
         if ([code isEqualToString:@"4444"]) {
@@ -258,7 +260,7 @@
 {
     [self.view endEditing:YES];
     CellAddBacklog *cell = (CellAddBacklog *)[button superview].superview;
-    self.indexPath1 = [self.tableView indexPathForCell:cell];
+    self.indexPath2 = [self.tableView indexPathForCell:cell];
     self.buttonTag = button.tag;
     self.myDatePick = [[ViewDatePick alloc]initWithFrame:self.view.frame];
     self.myDatePick.delegate = self;
@@ -291,8 +293,12 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *stringDate = [formatter stringFromDate:date];
+
     
-    CellAddBacklog *cell = [self.tableView cellForRowAtIndexPath:self.indexPath1];
+   
+
+    CellAddBacklog *cell = [self.tableView cellForRowAtIndexPath:self.indexPath2];
+
     if (self.buttonTag==100) {
         [cell.startDate setTitle:stringDate forState:UIControlStateNormal];
         self.startTime = stringDate;
@@ -305,6 +311,10 @@
         formatter.dateFormat = @"yyyy年MM月dd日 HH:mm";
         stringDate = [formatter stringFromDate:date];
         [self.warnDate setTitle:stringDate forState:UIControlStateNormal];
+        
+        formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+        self.wornDate = [formatter stringFromDate:date];
+        
         self.wornTime = stringDate;
     }
 }

@@ -74,7 +74,7 @@
                 self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
                 
                 if (self.isSelect) {
-                    [self.artMonthPlan.buttonDate setTitle:[self.dict[@"dates"]substringToIndex:7] forState:UIControlStateNormal];
+                    [self.artMonthPlan.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
                     self.artMonthPlan.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"taskPlanMoney"]];
                     self.artMonthPlan.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"taskSprintMoney"]];
                     self.artMonthPlan.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"personPlanMoney"]];
@@ -86,14 +86,14 @@
                     self.string5 = self.dict[@"others"];
                 }else
                 {
-                    [self.artMonthSummary.buttonDate setTitle:[self.dict[@"dates"] substringToIndex:7] forState:UIControlStateNormal];
-                    self.artMonthSummary.textFiled1 = self.dict[@"managerBrandMission"];
-                    self.artMonthSummary.textFiled2 = self.dict[@"managerPracticalCargo"];
-                    self.artMonthSummary.textFiled3 = self.dict[@"managerFinishRatio"];
-                    self.artMonthSummary.textFiled4 = self.dict[@"brandMission"];
-                    self.artMonthSummary.textFiled5 = self.dict[@"practicalCargo"];
-                    self.artMonthSummary.textFiled6 = self.dict[@"finishRatio"];
-                    self.artMonthSummary.textFiled7 = self.dict[@"performRatio"];
+                    [self.artMonthSummary.buttonDate setTitle:[self.dict[@"months"] substringToIndex:7] forState:UIControlStateNormal];
+                    self.artMonthSummary.textFiled1.text = self.dict[@"managerBrandMission"];
+                    self.artMonthSummary.textFiled2.text = self.dict[@"managerPracticalCargo"];
+                    self.artMonthSummary.textFiled3.text = self.dict[@"managerFinishRatio"];
+                    self.artMonthSummary.textFiled4.text = self.dict[@"brandMission"];
+                    self.artMonthSummary.textFiled5.text = self.dict[@"practicalCargo"];
+                    self.artMonthSummary.textFiled6.text = self.dict[@"finishRatio"];
+                    self.artMonthSummary.textFiled7.text = self.dict[@"performRatio"];
                     self.string1 = self.dict[@"sca"];
                     self.string2 = self.dict[@"experience"];
                     self.string3 = self.dict[@"problem"];
@@ -425,6 +425,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"code":@"1",
+                           @"planId":self.tableID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,
@@ -695,6 +696,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUI];
+    
+    self.title = @"月总结";
     
     self.arryaTitle = @[@"本月出货及回款情况分析",@"工作得失心得及建议",@"个人问题及规划",@"其他事项"];
     self.arrayContent = @[@"填写本月出货及回款情况分析",@"填写工作得失心得及建议",@"填写个人问题及规划",@"填写其他事项"];

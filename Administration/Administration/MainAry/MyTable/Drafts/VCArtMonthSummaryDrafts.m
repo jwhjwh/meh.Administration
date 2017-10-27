@@ -86,13 +86,13 @@
                 }else
                 {
                     [self.artMonthSummary.buttonDate setTitle:[self.dict[@"dates"] substringToIndex:7] forState:UIControlStateNormal];
-                    self.artMonthSummary.textFiled1 = self.dict[@"managerBrandMission"];
-                    self.artMonthSummary.textFiled2 = self.dict[@"managerPracticalCargo"];
-                    self.artMonthSummary.textFiled3 = self.dict[@"managerFinishRatio"];
-                    self.artMonthSummary.textFiled4 = self.dict[@"brandMission"];
-                    self.artMonthSummary.textFiled5 = self.dict[@"practicalCargo"];
-                    self.artMonthSummary.textFiled6 = self.dict[@"finishRatio"];
-                    self.artMonthSummary.textFiled7 = self.dict[@"performRatio"];
+                    self.artMonthSummary.textFiled1.text = self.dict[@"managerBrandMission"];
+                    self.artMonthSummary.textFiled2.text = self.dict[@"managerPracticalCargo"];
+                    self.artMonthSummary.textFiled3.text = self.dict[@"managerFinishRatio"];
+                    self.artMonthSummary.textFiled4.text = self.dict[@"brandMission"];
+                    self.artMonthSummary.textFiled5.text = self.dict[@"practicalCargo"];
+                    self.artMonthSummary.textFiled6.text = self.dict[@"finishRatio"];
+                    self.artMonthSummary.textFiled7.text = self.dict[@"performRatio"];
                     self.string1 = self.dict[@"sca"];
                     self.string2 = self.dict[@"experience"];
                     self.string3 = self.dict[@"problem"];

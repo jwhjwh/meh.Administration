@@ -67,10 +67,12 @@
                            @"code":@"2",
                            @"page":[NSString stringWithFormat:@"%ld",self._page]
                            };
-    [self.arrayDate removeAllObjects];
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
+        if (self._isFooterFresh==NO) {
+            [self.arrayDate removeAllObjects];
+        }
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
@@ -87,8 +89,8 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
             return ;
         }
-        if ([code isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1];
+        if ([code isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1];
             return ;
         }
     } failure:^(NSError *error) {

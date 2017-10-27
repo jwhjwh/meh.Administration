@@ -210,6 +210,7 @@
         if (userInfo) {
             model.avatarURLPath = userInfo.AvatarUrl;
             model.nickname = userInfo.NickName;
+          //  self.title = userInfo.NickName;
         }
     }
     model.failImageName = @"imageDownloadFail";
