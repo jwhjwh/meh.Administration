@@ -10,7 +10,7 @@
 #import "GuideTableViewCell.h"
 #import "VTingPromotView.h"
 #import "branModel.h"
-@interface guideController ()<UITableViewDelegate,UITableViewDataSource>
+@interface guideController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic ,strong)NSMutableArray *gameArrs;
@@ -52,20 +52,41 @@
      [self.view addSubview:buttn];
 }
 -(void)addrenid{
-    VTingPromotView *view = [[VTingPromotView alloc] initWithFrame:self.view.bounds  testStr:@"添加类别名称"];
-   __weak typeof(self) weakself = self;
-    view.blockname = ^(NSString *pwd){
-        if(pwd.length==0){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入内容不能为空" andInterval:1.0];
-            
-        }else{
-            _nameStr =pwd;
-            [weakself addGetNetworkData];
-        }
-    };
-    [view showPopViewAnimate:YES];
+//    VTingPromotView *view = [[VTingPromotView alloc] initWithFrame:self.view.bounds  testStr:@"添加类别名称"];
+//   __weak typeof(self) weakself = self;
+//    view.blockname = ^(NSString *pwd){
+//        if(pwd.length==0){
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入内容不能为空" andInterval:1.0];
+//            
+//        }else{
+//            _nameStr =pwd;
+//            _nameStr =pwd;
+//        }
+//    };
+//    [view showPopViewAnimate:YES];
+    UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"添加类别名称" message:nil
+delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alerView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alerView show];
     
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        UITextField *textF = [alertView textFieldAtIndex:0];
+        if (textF.text.length==0) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入内容不能为空" andInterval:1.0];
+            return;
+        }else
+        {
+            _nameStr =textF.text;
+            [self addGetNetworkData];
+            
+        }
+    }
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return   self.gameArrs.count;

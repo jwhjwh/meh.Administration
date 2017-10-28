@@ -70,6 +70,9 @@
         
         if ([stringCode isEqualToString:@"0000"]) {
             //[self.array removeAllObjects];
+            if (self._isFooterFresh==NO) {
+                [self.array removeAllObjects];
+            }
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
                 [self.array addObject:dict];
             }

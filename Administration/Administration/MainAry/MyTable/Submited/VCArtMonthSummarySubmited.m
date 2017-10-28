@@ -403,16 +403,19 @@
     }else
     {
     
-    if ([self.artMonthPlan.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
-        self.artMonthPlan.textFiled1.text.length==0||
-        self.artMonthPlan.textFiled2.text.length==0||
-        self.artMonthPlan.textFiled3.text.length==0||
-        self.artMonthPlan.textFiled4.text.length==0||
+    if ([self.artMonthSummary.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
+        self.artMonthSummary.textFiled1.text.length==0||
+        self.artMonthSummary.textFiled2.text.length==0||
+        self.artMonthSummary.textFiled3.text.length==0||
+        self.artMonthSummary.textFiled4.text.length==0||
+        self.artMonthSummary.textFiled5.text.length==0||
+        self.artMonthSummary.textFiled6.text.length==0||
+        self.artMonthSummary.textFiled7.text.length==0||
         [self.string1 isEqualToString:@""]||
         [self.string2 isEqualToString:@""]||
         [self.string3 isEqualToString:@""]||
-        [self.string4 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]
+        [self.string4 isEqualToString:@""]
+        
         )
     {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
@@ -424,21 +427,23 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
-                           @"code":@"1",
+                           @"code":@"2",
                            @"planId":self.tableID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,
                            @"Months":[NSString stringWithFormat:@"%@-15",self.artMonthPlan.buttonDate.titleLabel.text],
-                           @"TaskPlanMoney":self.artMonthPlan.textFiled1.text,
-                           @"TaskSprintMoney":self.artMonthPlan.textFiled2.text,
-                           @"PersonPlanMoney":self.artMonthPlan.textFiled3.text,
-                           @"PersonSprintMoney":self.artMonthPlan.textFiled4.text,
-                           @"Direction":self.string1,
-                           @"ShopsArrange":self.string2,
-                           @"RequestForProposal":self.string3,
-                           @"PersonalGrowth":self.string4,
-                           @"Others":self.string5,
+                           @"ManagerBrandMission":self.artMonthSummary.textFiled1.text,
+                           @"ManagerPracticalCargo":self.artMonthSummary.textFiled2.text,
+                           @"ManagerFinishRatio":self.artMonthSummary.textFiled3.text,
+                           @"BrandMission":self.artMonthSummary.textFiled4.text,
+                           @"PracticalCargo":self.artMonthSummary.textFiled5.text,
+                           @"FinishRatio":self.artMonthSummary.textFiled6.text,
+                           @"PerformRatio":self.artMonthSummary.textFiled7.text,
+                           @"SCA":self.string1,
+                           @"Experience":self.string2,
+                           @"Problem":self.string3,
+                           @"Others":self.string4,
                            @"Hint":hint,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]};
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {

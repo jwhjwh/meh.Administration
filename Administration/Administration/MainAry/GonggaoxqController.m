@@ -10,20 +10,28 @@
 #import "AmentxqController.h"
 #import "GongTableViewCell.h"
 #import "GongModel.h"
+#import "VCAddGonggao.h"
 @interface GonggaoxqController ()<UITableViewDataSource,UITableViewDelegate>
-{
-    int page;
-    int totalPage;//总页数
-}
+
 @property(nonatomic,strong)UITableView *tableView;
 
+@property (nonnull,strong)NSMutableArray *arrayData;
+
 @property(nonatomic,strong)NSMutableArray *dataArray;
+
+@property (nonatomic,assign)NSUInteger _page;//接口page
+//是不是第一次执行请求
+@property (nonatomic)BOOL _isFirstLoadData ;
+//是不是上拉加载数据（脚视图刷新）
+@property (nonatomic)BOOL _isFooterFresh ;
 @end
 
 @implementation GonggaoxqController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    [self.dataArray removeAllObjects];
+    [self getNetworkData];
     self.tabBarController.tabBar.hidden=YES;
 }
 
@@ -39,59 +47,74 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30,30)];
+    button.titleLabel.font = [UIFont systemFontOfSize:20];
+    [button setTitle:@"+" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(gotoAdd) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = nil;
+    NSString *roleID = [USER_DEFAULTS valueForKey:@"roleId"];
+    if ([roleID isEqualToString:@"1"]||[roleID isEqualToString:@"7"]) {
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
+    
     self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     self.tableView .delegate = self;
     self.tableView .dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview: self.tableView ];
+    
     self.dataArray = [NSMutableArray array];
-    [self getNetworkData:NO];
-    page = 1;
-    __weak typeof(self) weakSelf = self;
-    //默认【下拉刷新】
+    self.arrayData = [NSMutableArray array];
+    
+    self._page = 1;
+    self._isFirstLoadData = NO;
+    self._isFooterFresh = NO;
+    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _dataArray = [NSMutableArray array];
-        [weakSelf getNetworkData:YES];
-       
+        self._page=1;
+        self._isFooterFresh = NO;
+        [self getNetworkData];
     }];
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
     
-    //默认【上拉加载】
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-       
-        [weakSelf getNetworkData:NO];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self._page++;
+        self._isFooterFresh = YES;
+        [self getNetworkData];
     }];
-    
+    self.tableView.mj_footer.automaticallyChangeAlpha = YES;
+}
 
+-(void)gotoAdd
+{
+    VCAddGonggao *vc = [[VCAddGonggao alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
-/**
- *  停止刷新
- */
--(void)endRefresh{
+
+
+
+-(void)getNetworkData{
     
-    if (page == 1) {
-        [self.tableView.mj_header endRefreshing];
-    }
-    [self.tableView.mj_footer endRefreshing];
-}
--(void)getNetworkData:(BOOL)isRefresh{
-    if (isRefresh) {
-        page = 1;
-    }else{
-        page++;
-    }
-    NSString *pageStr=[NSString stringWithFormat:@"%d",page];
+    NSString *pageStr=[NSString stringWithFormat:@"%ld",self._page];
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/queryNotice.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pageNo":pageStr,@"comId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        if (self._isFooterFresh==NO) {
+            [self.dataArray removeAllObjects];
+        }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"nlist"];
-                [self endRefresh];
             for (NSDictionary *dic in array) {
                 GongModel *model=[[GongModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
                 [self.dataArray addObject:model];
+                [self.arrayData addObject:dic];
             }
             [self.tableView reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
@@ -130,9 +153,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.dataArray.count;
-    
-    
-    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -155,8 +175,10 @@
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict = self.arrayData[indexPath.row];
     AmentxqController *amentVC=[[AmentxqController alloc]init];
     amentVC.gonModel=self.dataArray[indexPath.row];
+    amentVC.noticeID = [NSString stringWithFormat:@"%@",dict[@"id"]];
     [self.navigationController pushViewController:amentVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {

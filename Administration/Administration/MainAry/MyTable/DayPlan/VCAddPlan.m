@@ -20,6 +20,7 @@
 @property (nonatomic,weak)ViewDatePick *myDatePick;
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSMutableDictionary *dict;
+@property (nonatomic,weak) UIView *viewTop;
 @end
 
 @implementation VCAddPlan
@@ -30,6 +31,7 @@
     UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 81)];
     viewTop.backgroundColor = GetColor(192, 192, 192, 1);
     [self.view addSubview:viewTop];
+    self.viewTop = viewTop;
     
     UILabel *labelDate = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
     labelDate.text = @"  日期";
@@ -54,6 +56,7 @@
     [viewTop addSubview:labelDescribe];
     
     UIPlaceHolderTextView *textView2 = [[UIPlaceHolderTextView alloc]initWithFrame:CGRectMake(120, 41, Scree_width-120, 40)];
+    textView2.scrollEnabled = NO;
     textView2.font = [UIFont systemFontOfSize:18];
     textView2.textColor = GetColor(192, 192, 192, 1);
     textView2.placeholder = @"填写概要描述";
@@ -240,6 +243,7 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
+    
     CellEditTable *cell = (CellEditTable *)[textView superview].superview;
 
     CGRect frame = textView.frame;
@@ -252,6 +256,7 @@
     
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    
 }
 #pragma -mark tableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

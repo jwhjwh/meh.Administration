@@ -368,6 +368,8 @@
 		1FD075E51F760BCE003E01EB /* VCBuessFillWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075E41F760BCE003E01EB /* VCBuessFillWeekTable.m */; };
 		1FD075E81F760C03003E01EB /* ViewBuessWeekTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075E71F760C03003E01EB /* ViewBuessWeekTable.m */; };
 		1FD075EB1F7630F9003E01EB /* ViewBuessWeekSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075EA1F7630F9003E01EB /* ViewBuessWeekSummary.m */; };
+		1FD154C31FA18D51008F49FA /* VCAddGonggao.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD154C21FA18D51008F49FA /* VCAddGonggao.m */; };
+		1FD154C61FA1907E008F49FA /* CellGonggao.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD154C51FA1907E008F49FA /* CellGonggao.m */; };
 		1FD1841C1F67C92200FCB30F /* VCChoosePostion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1841B1F67C92200FCB30F /* VCChoosePostion.m */; };
 		1FD215E11F4569940048719A /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD215E01F4569940048719A /* UIPlaceHolderTextView.m */; };
 		1FD320E71F57AE48004643A3 /* CellPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD320E61F57AE48004643A3 /* CellPerson.m */; };
@@ -379,6 +381,7 @@
 		1FD62BD31F43D673008871A7 /* ViewControllerPersonTableDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD21F43D673008871A7 /* ViewControllerPersonTableDetail.m */; };
 		1FD62BD61F43FA08008871A7 /* CellTabelDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD51F43FA08008871A7 /* CellTabelDetail.m */; };
 		1FD62BD91F442CF8008871A7 /* ViewControllerPostil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */; };
+		1FD682A81FA30A4800D4A52E /* CellPersonN.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD682A71FA30A4800D4A52E /* CellPersonN.m */; };
 		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
 		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
 		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
@@ -1437,6 +1440,10 @@
 		1FD075E71F760C03003E01EB /* ViewBuessWeekTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewBuessWeekTable.m; sourceTree = "<group>"; };
 		1FD075E91F7630F9003E01EB /* ViewBuessWeekSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewBuessWeekSummary.h; sourceTree = "<group>"; };
 		1FD075EA1F7630F9003E01EB /* ViewBuessWeekSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewBuessWeekSummary.m; sourceTree = "<group>"; };
+		1FD154C11FA18D51008F49FA /* VCAddGonggao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCAddGonggao.h; sourceTree = "<group>"; };
+		1FD154C21FA18D51008F49FA /* VCAddGonggao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddGonggao.m; sourceTree = "<group>"; };
+		1FD154C41FA1907E008F49FA /* CellGonggao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellGonggao.h; sourceTree = "<group>"; };
+		1FD154C51FA1907E008F49FA /* CellGonggao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellGonggao.m; sourceTree = "<group>"; };
 		1FD1841A1F67C92200FCB30F /* VCChoosePostion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChoosePostion.h; sourceTree = "<group>"; };
 		1FD1841B1F67C92200FCB30F /* VCChoosePostion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChoosePostion.m; sourceTree = "<group>"; };
 		1FD215DF1F4569940048719A /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
@@ -1461,6 +1468,8 @@
 		1FD62BD81F442CF8008871A7 /* ViewControllerPostil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerPostil.m; sourceTree = "<group>"; };
 		1FD6635D1F0DE7420072AAF0 /* SelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectCell.h; path = Administration/Contacts/cell/SelectCell.h; sourceTree = SOURCE_ROOT; };
 		1FD6635E1F0DE7420072AAF0 /* SelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectCell.m; path = Administration/Contacts/cell/SelectCell.m; sourceTree = SOURCE_ROOT; };
+		1FD682A61FA30A4800D4A52E /* CellPersonN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPersonN.h; sourceTree = "<group>"; };
+		1FD682A71FA30A4800D4A52E /* CellPersonN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellPersonN.m; sourceTree = "<group>"; };
 		1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekDrafts.h; sourceTree = "<group>"; };
 		1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCInsideWeekDrafts.m; sourceTree = "<group>"; };
 		1FD95F721F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekSummaryDrafts.h; sourceTree = "<group>"; };
@@ -3917,6 +3926,8 @@
 				62656CF81E52AFDE0085A2BD /* MainViewController.m */,
 				1F4DBB4E1E583BB200733CF7 /* GonggaoxqController.h */,
 				1F4DBB4F1E583BB200733CF7 /* GonggaoxqController.m */,
+				1FD154C11FA18D51008F49FA /* VCAddGonggao.h */,
+				1FD154C21FA18D51008F49FA /* VCAddGonggao.m */,
 				1F4DBB531E58426700733CF7 /* MessageController.h */,
 				1F4DBB541E58426700733CF7 /* MessageController.m */,
 				1F3E7BC51E5BED7F005E5A45 /* AmentxqController.h */,
@@ -3925,6 +3936,10 @@
 				1F45878F1E5D2DB6001BD9B3 /* MessagexqController.m */,
 				F73320AA1E5DB9AE00ABA6EF /* MessageView.h */,
 				F73320AB1E5DB9AE00ABA6EF /* MessageView.m */,
+				1FD154C41FA1907E008F49FA /* CellGonggao.h */,
+				1FD154C51FA1907E008F49FA /* CellGonggao.m */,
+				1FD682A61FA30A4800D4A52E /* CellPersonN.h */,
+				1FD682A71FA30A4800D4A52E /* CellPersonN.m */,
 				1F1D1F8E1E6D31C10021B1AD /* pingpaijingying可能被删除内容 */,
 				1F76A6F21E6965040063B3D7 /* yuangongguan */,
 				F736D1621E5891EE003A1A39 /* TableViewCell */,
@@ -4944,7 +4959,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5219,6 +5234,7 @@
 				1FD95F801F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m in Sources */,
 				1F6211C81E8CFFAF00F50851 /* UIImage+EMGIF.m in Sources */,
 				1F6211A91E8CFFAF00F50851 /* MJRefreshAutoStateFooter.m in Sources */,
+				1FD154C31FA18D51008F49FA /* VCAddGonggao.m in Sources */,
 				1FCEB9441F7A03CA00D8F175 /* VCDrafts.m in Sources */,
 				1FD1841C1F67C92200FCB30F /* VCChoosePostion.m in Sources */,
 				1F6211DA1E8CFFB000F50851 /* PSTGridLayoutSection.m in Sources */,
@@ -5343,6 +5359,7 @@
 				1FF3F3A91F60D6C60014D89E /* CellSummary.m in Sources */,
 				1FF580AB1F8C67E0001C3D40 /* VCInsideWeekSummaryPostil.m in Sources */,
 				62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */,
+				1FD682A81FA30A4800D4A52E /* CellPersonN.m in Sources */,
 				1FF3F3BB1F6136B40014D89E /* VCBusinessWeekSummary.m in Sources */,
 				1F6211A01E8CFFAF00F50851 /* MBProgressHUD+Add.m in Sources */,
 				1F6211D61E8CFFB000F50851 /* PSTCollectionViewUpdateItem.m in Sources */,
@@ -5532,6 +5549,7 @@
 				624B741D1E8F3E6F000D94BD /* SpreadDropMenu.m in Sources */,
 				1F62119A1E8CFFAF00F50851 /* EMCDDeviceManagerBase.m in Sources */,
 				1F6211C61E8CFFAF00F50851 /* NSData+EMImageContentType.m in Sources */,
+				1FD154C61FA1907E008F49FA /* CellGonggao.m in Sources */,
 				F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */,
 				1F71B89C1F887E8600C3638F /* InputboxController.m in Sources */,
 				1F5FF0161E8510450053C8AE /* ChatUIHelper.m in Sources */,
@@ -5863,7 +5881,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5892,7 +5910,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhagde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5911,7 +5929,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5940,7 +5958,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhagde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

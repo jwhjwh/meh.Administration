@@ -329,16 +329,21 @@
             xqdwlabel.text = @"2.需求品牌定位:";
             xqdwlabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:xqdwlabel];
+            
             targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(110, 110, 70, 30)];
             xqdwtextfield.font= [UIFont systemFontOfSize:13];
             xqdwtextfield.tag = 43;
             xqdwtextfield.delegate = self;
 
+            
+//             [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+
+
              [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             if (_brandpos.length>0) {
                 xqdwtextfield.text = _brandpos;
             }
-            [cell addSubview:xqdwtextfield];
+            [cell.contentView addSubview:xqdwtextfield];
             UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(180, 110, 40, 30)];
             renlabel2.text = @",";
             renlabel2.font = [UIFont systemFontOfSize:13];
