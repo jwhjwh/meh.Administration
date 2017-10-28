@@ -382,6 +382,25 @@
     cell.textView.text = [formatter stringFromDate:date];
 }
 
+#pragma -mark textView
+-(void)textViewDidChange:(UITextView *)textView
+{
+    
+    CellEditTable *cell = (CellEditTable *)[textView superview].superview;
+    
+    CGRect frame = textView.frame;
+    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+    CGSize size = [textView sizeThatFits:constraintSize];
+    if (size.height<=frame.size.height) {
+        size.height=frame.size.height;
+    }
+    cell.textView.frame = CGRectMake(frame.origin.x, frame.origin.y,cell.contentView.frame.size.width, size.height);
+    
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
+}
+
 #pragma -mark tableviw
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

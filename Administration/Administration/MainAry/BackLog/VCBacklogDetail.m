@@ -219,14 +219,14 @@
     }
     
     if ([self.matterstype isEqualToString:@"1"]) {
-        if ([self.wornTime compare:self.startTime] == NSOrderedDescending) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能大于开始时间" andInterval:1];
-            return;
-        }
-//        if (self.startTime.length==0) {
-//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
+//        if ([self.wornTime compare:self.startTime] == NSOrderedDescending) {
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能大于开始时间" andInterval:1];
 //            return;
 //        }
+        if (self.startTime.length==0) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
+            return;
+        }
         dict = @{@"appkey":appKeyStr,
                  @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                  @"CompanyInfoId":compid,

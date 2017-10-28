@@ -81,7 +81,11 @@
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
         [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
+    
+        if (_isFooterFresh==NO) {
             [arrayData removeAllObjects];
+        }
+        
         if ([stringCode isEqualToString:@"0000"]) {
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
                 [arrayData addObject:dict];
@@ -116,7 +120,7 @@
     view.layer.borderWidth = 0.5f;
     [self.view addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
         make.left.mas_equalTo(self.view.mas_left).offset(-1);
         make.right.mas_equalTo(self.view.mas_right).offset(-1);
         make.height.mas_equalTo(50);
@@ -279,7 +283,7 @@
             }else
             {
                 vc.isSelect = NO;
-                 vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                 vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else if([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"])
@@ -300,7 +304,7 @@
             }else
             {
                 vc.isSelect = NO;
-                 vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                 vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -322,7 +326,7 @@
             }else
             {
                 vc.isSelect = NO;
-                 vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                 vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -346,7 +350,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else
@@ -367,7 +371,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }

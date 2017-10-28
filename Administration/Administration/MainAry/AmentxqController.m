@@ -7,106 +7,227 @@
 //
 
 #import "AmentxqController.h"
-@interface AmentxqController ()
-@property (nonatomic,strong)UIScrollView *scrollView;
-@property (nonatomic,strong)UILabel *tileLabel;
-///头像
-@property (nonatomic,retain)UIImageView *logoImage;
-///标题
-@property (nonatomic,retain)UILabel *titleLabel;
-///时间
-@property (nonatomic,retain)UILabel *timeLabel;
-///发送人
-@property (nonatomic,retain)UILabel *whoLabel;
-///内容
-@property (nonatomic,retain)UILabel *contLabel;
-@property (nonatomic,assign)CGFloat Heigh;
+#import "CellPersonN.h"
+@interface AmentxqController ()<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic,strong)NSMutableArray  *arrayData;
+@property (nonatomic,weak)UITableView *tableView;
+@property (nonatomic)CGSize size;
 @end
 
 @implementation AmentxqController
 
+-(void)getHttpData
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/getById.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"id":self.self.noticeID
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            for (NSDictionary *dict in [responseObject valueForKey:@"list"] ) {
+                [self.arrayData addObject:dict];
+            }
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
+-(void)setUI
+{
+    self.size = [self.gonModel.content boundingRectWithSize:CGSizeMake(Scree_width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size;
+    
+    UIView *viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, self.size.height+50)];
+    [self.view addSubview:viewHeader];
+    
+    
+    UIImageView *imageView = [[UIImageView alloc]init];
+    imageView.layer.cornerRadius = 25;
+    imageView.layer.masksToBounds = YES;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.gonModel.url]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    [viewHeader addSubview:imageView];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(viewHeader.mas_left).offset(10);
+        make.top.mas_equalTo(viewHeader.mas_top).offset(8);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+    }];
+    
+    UILabel *labelTime = [[UILabel alloc]init];
+    labelTime.font = [UIFont systemFontOfSize:12];
+    labelTime.text = [self.gonModel.time substringWithRange:NSMakeRange(5, 11)];
+    labelTime.textColor = GetColor(167, 168, 169, 1);
+    [viewHeader addSubview:labelTime];
+    [labelTime mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(viewHeader.mas_top).offset(15);
+        make.right.mas_equalTo(viewHeader.mas_right).offset(-8);
+        make.height.mas_equalTo(12);
+    }];
+    
+    UILabel *labelTitle = [[UILabel alloc]init];
+    labelTitle.numberOfLines = 0;
+    labelTitle.text = self.gonModel.title;
+    labelTitle.font = [UIFont systemFontOfSize:13];
+    labelTitle.textColor = GetColor(78, 79, 80, 1);
+    [viewHeader addSubview:labelTitle];
+    [labelTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(imageView.mas_right).offset(5);
+        make.top.mas_equalTo(viewHeader.mas_top).offset(8);
+        make.right.mas_equalTo(viewHeader.mas_right).offset(-100);
+    }];
+    
+    UILabel *labelFrom = [[UILabel alloc]init];
+    labelFrom.font = [UIFont systemFontOfSize:12];
+    labelFrom.textColor = GetColor(167, 168, 169, 1);
+    labelFrom.text = @"来自老板";
+    if (self.gonModel.roleId==7) {
+        labelFrom.text = @"来自行政";
+    }
+    [viewHeader addSubview:labelFrom];
+    [labelFrom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(labelTitle.mas_bottom).offset(5);
+        make.left.mas_equalTo(imageView.mas_right).offset(5);
+        make.height.mas_equalTo(12);
+    }];
+    
+    UITextView *textView = [[UITextView alloc]init];
+    textView.backgroundColor = GetColor(237, 238, 239, 1);
+    textView.scrollEnabled = NO;
+    textView.editable = NO;
+    CGSize size = [self.gonModel.content boundingRectWithSize:CGSizeMake(Scree_width-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size;
+    textView.text = self.gonModel.content;
+    textView.font = [UIFont systemFontOfSize:17];
+    textView.textColor = [UIColor blackColor];
+    [viewHeader addSubview:textView];
+    [textView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(viewHeader.mas_left).offset(10);
+        make.top.mas_equalTo(labelFrom.mas_bottom).offset(20);
+        make.right.mas_equalTo(viewHeader.mas_right).offset(-8);
+        make.height.mas_equalTo(size.height+20);
+    }];
+    
+    UILabel *label = [[UILabel alloc]init];
+    label.layer.borderColor = GetColor(192, 192, 192, 1).CGColor;
+    label.layer.borderWidth = 1.0f;
+    label.text = @"    最近查看";
+    label.hidden = YES;
+    [viewHeader addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(viewHeader.mas_left).offset(-1);
+        make.top.mas_equalTo(textView.mas_bottom).offset(30);
+        make.height.mas_equalTo(21);
+        make.right.mas_equalTo(viewHeader.mas_right).offset(1);
+    }];
+    
+    NSString *roleID = [USER_DEFAULTS valueForKey:@"roleId"];
+    if ([roleID isEqualToString:@"1"]||[roleID isEqualToString:@"7"]) {
+        label.hidden = NO;
+    }
+    
+    viewHeader.frame = CGRectMake(0, 0, Scree_width, size.height+150);
+    
+    
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)style:UITableViewStylePlain];
+    [tableView registerClass:[CellPersonN class] forCellReuseIdentifier:@"cell"];
+    
+//    if (self.gonModel.roleId!=7||self.gonModel.roleId==1) {
+//        label.hidden = NO;
+        tableView.tableHeaderView = viewHeader;
+//    }
+    [ZXDNetworking setExtraCellLineHidden:tableView];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    
+    
+}
+-(void)deleteGongao
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/deleteNotice.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
+    
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"id":self.self.noticeID
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+            return ;
+        }
+        if ([code isEqualToString:@"0001 "]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return ;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
+
+#pragma -mark tableView
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.arrayData.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CellPersonN *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[CellPersonN alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.dict = self.arrayData[indexPath.row];
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+#pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getHttpData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-   _Heigh = [ELNAlerTool heighOfString:_gonModel.content font:[UIFont systemFontOfSize:16] width:self.view.frame.size.width-20];
-    self.title=@"公告";
-    self.view.backgroundColor=[UIColor whiteColor];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame =CGRectMake(0, 0, 28,28);
-    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
-    [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem=buttonItem;
-    _scrollView=[[UIScrollView alloc]init];
-    _scrollView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:_scrollView];
-    _logoImage=[[UIImageView alloc]init];
-    _logoImage.layer.masksToBounds = YES;
-    // 设置圆角半径
-    _logoImage.layer.cornerRadius =24.0f;
-    [self.scrollView addSubview:_logoImage];
-    _timeLabel=[[UILabel alloc]init];
+   
+    self.title = @"公告";
+    [self setUI];
+    self.arrayData  = [NSMutableArray array];
     
-    _timeLabel.textAlignment=NSTextAlignmentRight;
-    _timeLabel.font=[UIFont systemFontOfSize:14];
-    _timeLabel.textColor=[UIColor lightGrayColor];
-    [self.scrollView addSubview:_timeLabel];
-    
-    _titleLabel=[[UILabel alloc]init];
-    
-    [self.scrollView addSubview:_titleLabel];
-    _whoLabel=[[UILabel alloc]init];
-    _whoLabel.textColor=[UIColor lightGrayColor];
-    _whoLabel.font=[UIFont systemFontOfSize:14];
-  
-    [self.scrollView addSubview:_whoLabel];
-    _contLabel=[[UILabel alloc]init];
-    _contLabel.numberOfLines=0;
-    _contLabel.backgroundColor=[UIColor colorWithRed:(243/255.0) green:(243/255.0) blue:(243/255.0) alpha:1];
-    [self.scrollView addSubview:_contLabel];
- 
-    [_logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.top.mas_equalTo(self.scrollView.mas_top).offset(10);
-        make.width.offset(48);
-        make.height.offset(48);
-    }];
-    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_logoImage.mas_right).offset(5);
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(_logoImage.mas_top);
-        make.height.offset(20);
-    }];
-    [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(_titleLabel.mas_bottom);
-        make.width.offset(130);
-        make.height.offset(16);
-    }];
-    [_whoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(_timeLabel.mas_bottom);
-        make.left.mas_equalTo(_logoImage.mas_right).offset(5);
-        make.height.offset(16);
-    }];
-    
-    [_contLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.top.mas_equalTo(_whoLabel.mas_bottom).offset(2);
-        make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.height.offset(_Heigh+20);
-    }];
-    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));;
-    }];
-    _titleLabel.text=_gonModel.title;
-    NSString *timeStr = [_gonModel.time substringWithRange:NSMakeRange(5,11)];
-    _timeLabel.text=timeStr;
-    _contLabel.text=_gonModel.content;
-    [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_gonModel.url]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
-    if (_gonModel.roleId ==1) {
-        _whoLabel.text=@"来自老板";
-    } else if (_gonModel.roleId == 7){
-        _whoLabel.text=@"来自行政";
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"删除" style:UIBarButtonItemStyleDone target:self action:@selector(deleteGongao)];
+    [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = nil;
+    NSString *roleID = [USER_DEFAULTS valueForKey:@"roleId"];
+    if ([roleID isEqualToString:@"1"]||[roleID isEqualToString:@"7"]) {
+        self.navigationItem.rightBarButtonItem = rightItem;
     }
  
 }

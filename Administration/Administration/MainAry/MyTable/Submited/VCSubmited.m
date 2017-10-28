@@ -99,7 +99,7 @@
     [viewT mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
         make.height.mas_equalTo(50);
     }];
     

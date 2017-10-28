@@ -212,13 +212,12 @@
         }
     };
     [alertView showMKPAlertView];
-    
 }
 -(void)xiugaishiyonzhuangtaicodeStr:(NSString*)codeStr{
     NSString *uStr =[NSString stringWithFormat:@"%@user/upstate.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID,@"code":codeStr};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"userid":_uresID,@"code":codeStr,@"CompanyInfoId":[USER_DEFAULTS valueForKey:@"companyinfoid"]};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {

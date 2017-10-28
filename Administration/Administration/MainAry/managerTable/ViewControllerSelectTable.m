@@ -74,7 +74,7 @@
     
     UILabel *labelTime = [[UILabel alloc]initWithFrame:CGRectMake(0, 31, viewB.frame.size.width, 30)];
     labelTime.backgroundColor = [UIColor whiteColor];
-    labelTime.textAlignment = UITextAlignmentCenter;
+    labelTime.textAlignment = NSTextAlignmentCenter;
     NSDate *theDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"YYYY-MM-dd";
@@ -189,7 +189,7 @@
         make.left.mas_equalTo(label1.mas_right);
         make.right.mas_equalTo(viewTop.mas_centerX);
         make.bottom.mas_equalTo(label2.mas_top);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     self.buttonStart = buttonStart;
     
@@ -225,7 +225,7 @@
         make.left.mas_equalTo(label3.mas_right);
         make.right.mas_equalTo(viewTop.mas_right).offset(-10);
         make.bottom.mas_equalTo(label4.mas_top);
-        make.height.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     self.buttonEnd = buttonEnd;
     
@@ -329,8 +329,11 @@
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         [self performSelector:@selector(removeHUD:) withObject:hud afterDelay:0.5];
         NSString *code = [responseObject valueForKey:@"status"];
-        if ([code isEqualToString:@"0000"]) {
+        if (self._isFooterFresh==NO) {
             [self.arrayData removeAllObjects];
+        }
+        if ([code isEqualToString:@"0000"]) {
+            
             for (NSDictionary *dict in [responseObject valueForKey:@"lists"]) {
                 [self.arrayData addObject:dict];
             }

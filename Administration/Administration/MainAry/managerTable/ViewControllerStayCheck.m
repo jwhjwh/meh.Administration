@@ -52,6 +52,10 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         
+        if (self._isFooterFresh==NO) {
+            [self.arrayData removeAllObjects];
+        }
+        
         if ([stringCode isEqualToString:@"0000"]) {
 //            [self.arrayData removeAllObjects];
             for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
@@ -148,7 +152,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else if([dict[@"newName"] containsString:@"业务"])
@@ -169,7 +173,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -191,7 +195,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -215,7 +219,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }else
@@ -236,7 +240,7 @@
             }else
             {
                 vc.isSelect = NO;
-                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
             }
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -270,7 +274,7 @@
     
     self._page=1;
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(-1, 64, Scree_width+1, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(-1, kTopHeight, Scree_width+1, 20)];
     label.font = [UIFont systemFontOfSize:14];
     label.text = @"  最近报表";
     label.textColor = GetColor(192, 192, 192, 1);
@@ -278,7 +282,7 @@
     label.layer.borderWidth = 1.0f;
     [self.view addSubview:label];
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 84, Scree_width, Scree_height) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+20, Scree_width, Scree_height-kTopHeight-20) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[CellTbale class] forCellReuseIdentifier:@"cell"];

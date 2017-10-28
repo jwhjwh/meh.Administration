@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GongModel.h"
-@interface AmentxqController : UIViewController
-@property (nonatomic,retain)GongModel *gonModel;
+@interface AmentxqController : BaseViewController
+@property (nonatomic,strong)GongModel *gonModel;
+@property (nonatomic,strong)NSString *noticeID;
 @end
