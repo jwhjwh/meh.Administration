@@ -17,7 +17,7 @@
 
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
-@property (nonatomic,retain)NSArray *arr;
+@property (nonatomic,retain)NSMutableArray *arr;
 @property (nonatomic,retain)NSString *logImage;//头像
 @property (nonatomic,assign) BOOL hide;
 @property (nonatomic,assign) BOOL Open;
@@ -76,25 +76,25 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return _arr.count;
+    return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [_arr[section]count];
+    return _arr.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{ if (section == 0 ){
+{
     return 10;
-}
-    return 10;
+
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section ==0){
+    if (indexPath.row ==0) {
         return 80;
+    }else{
+        return 50;
     }
-    return 50;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -102,22 +102,23 @@
     if (cell == nil) {
         cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
-    if (indexPath.section==0) {
+    if (indexPath.row==0) {
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
         [TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         TXImage.backgroundColor = [UIColor whiteColor];
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角
         [cell addSubview:TXImage];
+    }else{
+      
+        cell.xingLabel.text=[NSString stringWithFormat:@"%@",_infoArray[indexPath.row]];
     }
     
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     
-    cell.mingLabel.text=_arr[indexPath.section][indexPath.row];
+    cell.mingLabel.text=_arr[indexPath.row];
     
-    if (indexPath.section>0) {
-        cell.xingLabel.text=[NSString stringWithFormat:@"%@",_infoArray[indexPath.section-1][indexPath.row]];
-    }
+    
     
     return cell;
 }
@@ -135,43 +136,108 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
+            _infoArray = [[NSMutableArray alloc]init];
+            _arr  =[[NSMutableArray alloc]init];
             if (model.birthday.length>0) {
-                 model.birthday = [model.birthday substringToIndex:10];
+                model.birthday = [model.birthday substringToIndex:10];
             }
-            _logImage=model.icon;
-            if ([model.roleId isEqual:@"6"]||[model.roleId isEqual:@"2"]) {
-                _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属品牌"],@[@"真实姓名",@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
-                
-                NSArray *arr=@[model.account,model.NewName,model.departmentName,];
-                NSArray *arr1=@[model.name,model.birthday,model.age,model.address];
-                NSArray *arr2 = [[NSArray alloc]init];
-                if (model.phone.length>1) {
-                    arr2=@[model.phone,model.wcode,model.qcode];
-                }else{
-                    arr2=@[model.account,model.wcode,model.qcode];
+             _logImage=model.icon;
+            
+            [_arr addObject:@"头像"];
+            [_infoArray addObject:@""];
+            [_arr addObject:@"账号"];
+            [_infoArray addObject:model.account];
+            [_arr addObject:@"职位"];
+            NSArray  *newnamearray = [model.NewName componentsSeparatedByString:@","];
+            if (newnamearray.count>0) {
+                for (int i = 0; i<newnamearray.count; i++) {
+                    
+                    [_infoArray addObject:newnamearray[i]];
+                }
+                for (int y = 0; y<newnamearray.count-1; y++) {
+                    [_arr addObject:@""];
+                    
+                }
+            }
+            
+            NSArray  *levelnamearray = [model.LevelName componentsSeparatedByString:@","];
+            if (levelnamearray.count>0) {
+               
+                if (levelnamearray.count==1) {
+                    if ([levelnamearray[0]isEqualToString:@""]) {
+                        
+                    }else{
+                         [_arr addObject:@"类别"];
+                        for (int i = 0; i<levelnamearray.count; i++) {
+                            
+                            [_infoArray addObject:levelnamearray[i]];
+                        }
+                        for (int y = 0; y<levelnamearray.count-1; y++) {
+                            [_arr addObject:@""];
+                            
+                        }
+                    }
                 }
                 
-                NSArray *arr3=@[model.interests,model.sdasd];
-                NSArray *arr4 =@[model.birthday,model.age,model.address];
-                _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
-                _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
+                
+            }
+            [_arr addObject:@"真实姓名"];
+            [_infoArray addObject:model.name];
+            NSArray  *ssbmnamearray = [model.suDepartment componentsSeparatedByString:@","];
+            if (ssbmnamearray.count>0) {
+                [_arr addObject:@"所属部门"];
+                for (int i = 0; i<ssbmnamearray.count; i++) {
+                    
+                    [_infoArray addObject:ssbmnamearray[i]];
+                }
+                for (int y = 0; y<ssbmnamearray.count-1; y++) {
+                    [_arr addObject:@""];
+                    
+                }
+            }
+            
+            NSArray  *glbmnamearray = [model.glDepartment componentsSeparatedByString:@","];
+            if (glbmnamearray.count>0) {
+                [_arr addObject:@"管理部门"];
+                for (int i = 0; i<glbmnamearray.count; i++) {
+                   
+                    [_infoArray addObject:glbmnamearray[i]];
+                }
+                for (int y = 0; y<glbmnamearray.count-1; y++) {
+                    [_arr addObject:@""];
+                    
+                }
+            }
+            [_arr addObject:@"出生日期"];
+            [_infoArray addObject:model.birthday];
+            [_arr addObject:@"年龄"];
+             [_infoArray addObject:model.age];
+            [_arr addObject:@"现住地址"];
+             [_infoArray addObject:model.address];
+            [_arr addObject:@"手机号"];
+            [_infoArray addObject:model.phone];
+            [_arr addObject:@"微信号"];
+            [_infoArray addObject:model.wcode];
+            [_arr addObject:@"QQ号"];
+            [_infoArray addObject:model.qcode];
+            [_arr addObject:@"兴趣爱好"];
+            [_infoArray addObject:model.interests];
+            [_arr addObject:@"个人签名"];
+            [_infoArray addObject:model.sdasd];
+            
+            NSArray *arr3=@[model.interests,model.sdasd];
+            NSArray *arr4 =@[model.birthday,model.age,model.address];
+            NSArray *arr2 = [[NSArray alloc]init];
+            if (model.phone.length>1) {
+                arr2=@[model.phone,model.wcode,model.qcode];
             }else{
-                _arr=@[@[@"头像"],@[@"账号",@"职位"],@[@"真实姓名",@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
-                NSArray *arr=@[model.account,model.NewName];
-                NSArray *arr1=@[model.name,model.birthday,model.age,model.address];
-                NSArray *arr2 = [[NSArray alloc]init];
-                if (model.phone.length>1) {
-                    arr2=@[model.phone,model.wcode,model.qcode];
-                }else{
-                    arr2=@[model.account,model.wcode,model.qcode];
-                }
-                NSArray *arr3=@[model.interests,model.sdasd];
-                NSArray *arr4 =@[model.birthday,model.age,model.address];
-                _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
-                _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
-                
+                arr2=@[model.account,model.wcode,model.qcode];
             }
+            _theValueAry = [[NSMutableArray alloc]initWithObjects:arr4,arr2,arr3, nil];
+
+            
             [_infonTableview reloadData];
+            
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

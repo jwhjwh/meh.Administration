@@ -152,7 +152,7 @@
         [cell addSubview:_dateImage];
     }else{
         cell.textLabel.text = _dataLabel[indexPath.row-1];
-        cell.textLabel.textColor = [UIColor lightGrayColor];
+        cell.textLabel.textColor = [UIColor blackColor];
         NSString * labelStr = _dataArray[indexPath.row-1];
         
         CGSize labelSize = {0, 0};
@@ -163,11 +163,11 @@
         
        
         
-        UILabel* NRtextLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 0, self.view.bounds.size.width-130, labelSize.height)];
+        UILabel* NRtextLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 15, self.view.bounds.size.width-130, labelSize.height)];
         
         NRtextLabel.text =_dataArray[indexPath.row-1];
         NRtextLabel.font = [UIFont systemFontOfSize:14.0f];
-        NRtextLabel.textColor = [UIColor lightGrayColor];
+        NRtextLabel.textColor = [UIColor blackColor];
        // NRtextLabel.textAlignment = NSTextAlignmentCenter;
         NRtextLabel.numberOfLines = 0;
         
