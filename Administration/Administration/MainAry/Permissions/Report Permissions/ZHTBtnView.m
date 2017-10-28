@@ -90,77 +90,77 @@
         _NSkjAry = [[NSMutableArray alloc]init];
         
         
-        _NSywoldAry = [[NSArray alloc]init];
-        _NSmdoldAry = [[NSArray alloc]init];
-        _NSwloldAry = [[NSArray alloc]init];
-        _NSkfoldAry = [[NSArray alloc]init];
-        _NSckoldAry = [[NSArray alloc]init];
-        _NScnoldAry = [[NSArray alloc]init];
-        _NScwjloldAry = [[NSArray alloc]init];
-        _NSwljloldAry = [[NSArray alloc]init];
-        _NSkfjloldAry = [[NSArray alloc]init];
-        _NSscjloldAry = [[NSArray alloc]init];
-        _NSywjloldAry = [[NSArray alloc]init];
-        _NSkjoldAry = [[NSArray alloc]init];
+        _NSywoldAry = [[NSMutableArray alloc]init];
+        _NSmdoldAry = [[NSMutableArray alloc]init];
+        _NSwloldAry = [[NSMutableArray alloc]init];
+        _NSkfoldAry = [[NSMutableArray alloc]init];
+        _NSckoldAry = [[NSMutableArray alloc]init];
+        _NScnoldAry = [[NSMutableArray alloc]init];
+        _NScwjloldAry = [[NSMutableArray alloc]init];
+        _NSwljloldAry = [[NSMutableArray alloc]init];
+        _NSkfjloldAry = [[NSMutableArray alloc]init];
+        _NSscjloldAry = [[NSMutableArray alloc]init];
+        _NSywjloldAry = [[NSMutableArray alloc]init];
+        _NSkjoldAry = [[NSMutableArray alloc]init];
         
         switch (_copde) {
             case 5:
                 [_NSywAry addObjectsFromArray: powerAry];
-                _NSywoldAry = powerAry;
+                [_NSywoldAry addObjectsFromArray: powerAry];
                 break;
             case 2:
                 
                 [_NSmdAry addObjectsFromArray: powerAry];
-                _NSmdoldAry = powerAry;
+                [_NSmdoldAry addObjectsFromArray:  powerAry];
                 break;
             case 4:
                 
                 [_NSwlAry addObjectsFromArray:powerAry];
-                _NSwloldAry = powerAry;
+                [_NSwloldAry addObjectsFromArray:  powerAry];
                 break;
             case 3:
                 [_NSkfAry addObjectsFromArray:powerAry];
-                _NSkfoldAry = powerAry;
+                [_NSkfoldAry addObjectsFromArray:  powerAry];
                 break;
             case 14:
     
                 [_NSckAry addObjectsFromArray:powerAry];
-                _NSckoldAry = powerAry;
+                [_NSckoldAry addObjectsFromArray:  powerAry];
                 break;
             case 16:
                
                 [_NSkjAry addObjectsFromArray:powerAry];
-                _NSkjoldAry = powerAry;
+                [_NSkjoldAry addObjectsFromArray:  powerAry];
                 break;
             case 17:
                 
                 [_NScnAry addObjectsFromArray:powerAry];
-                _NScnoldAry = powerAry;
+                [_NScnoldAry addObjectsFromArray:  powerAry];
                 break;
             case 15:
                
                 [_NScwjlAry addObjectsFromArray:powerAry];
-                _NScwjloldAry = powerAry;
+                [_NScwjloldAry addObjectsFromArray:  powerAry];
                 break;
             case 13:
                
                 [_NSwljlAry addObjectsFromArray:powerAry];
-                _NSwljloldAry = powerAry;
+                [_NSwljloldAry addObjectsFromArray:  powerAry];
                 break;
             case 12:
                 
                 [_NSkfjlAry addObjectsFromArray:powerAry];
-                _NSkfjloldAry = powerAry;
+                [_NSkfjloldAry addObjectsFromArray:  powerAry];
                 break;
             case 6:
                 
                 [_NSscjlAry addObjectsFromArray:powerAry];
-                _NSscjloldAry = powerAry;
+                [_NSscjloldAry addObjectsFromArray:  powerAry];
                 break;
             case 8:
                 
                 [_NSywjlAry addObjectsFromArray:powerAry];
-                _NSywjloldAry = powerAry;
+                [_NSywjloldAry addObjectsFromArray:powerAry];
                 break;
                 
             default:
@@ -378,14 +378,17 @@
         NSString *namele = _ywAry[i];
         if (_copde == 3) {
            _buttonname.frame = CGRectMake(((Scree_width-80)/(_ywAry.count-1))*i+40-namele.length*(kWidth*40)/2, 0, namele.length*(kWidth*35), 25);
-            
-            _buttonname.font = [UIFont systemFontOfSize:kWidth*25];
+    
+            _buttonname.titleLabel.font = [UIFont systemFontOfSize:kWidth*25];
         }else if (_ywAry.count == 1){
-            _buttonname.frame = CGRectMake((Scree_width/2)-namele.length*(kWidth*40)/2, 0, namele.length*(kWidth*40), 25);
-            _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
+            _buttonname.frame = CGRectMake((Scree_width/2)-namele.length*(kWidth*35)/2, 0, namele.length*(kWidth*35), 25);
+            _buttonname.titleLabel.font = [UIFont systemFontOfSize:kWidth*25];
+        }else if(namele.length>5){
+            _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-namele.length*(kWidth*30)/2, 0, namele.length*(kWidth*30), 25);
+            _buttonname.titleLabel.font = [UIFont systemFontOfSize:kWidth*25];
         }else{
-         _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-namele.length*(kWidth*40)/2, 0, namele.length*(kWidth*40), 25);
-            _buttonname.font = [UIFont systemFontOfSize:kWidth*30];
+         _buttonname.frame = CGRectMake((Scree_width-100)/(_ywAry.count-1)*i+xx-namele.length*(kWidth*35)/2, 0, namele.length*(kWidth*35), 25);
+               _buttonname.titleLabel.font = [UIFont systemFontOfSize:kWidth*25];
         }
         _buttonname.tag = i;
         
@@ -400,9 +403,11 @@
        _gouimage1 = [[UIImageView alloc]init];
         if (_copde == 3) {
             _gouimage1.frame = CGRectMake(namele.length*(kWidth*40)-20, 15, 10, 10);
-        }else
-        {
-        _gouimage1.frame = CGRectMake(namele.length*(kWidth*40)-10, 15, 10, 10);
+        }else if(namele.length>5){
+            _gouimage1.frame = CGRectMake(namele.length*(kWidth*30)-10, 15, 10, 10);
+        }
+        else{
+        _gouimage1.frame = CGRectMake(namele.length*(kWidth*35)-10, 15, 10, 10);
         }
         
         _gouimage1.tag= i;
@@ -466,7 +471,7 @@
         make.height.mas_equalTo(25);
     }];
 }
--(void)updatenetworkingNumarr:(int )power numarr:(NSMutableArray*)numarr{
+-(void)updatenetworkingNumarr:(int )power numarr:(NSMutableArray*)numarr newold:(NSMutableArray *)newold{
     
     NSString *urlStr = [NSString stringWithFormat:@"%@manager/updateReportPermission.action", KURLHeader];
     NSString *companyinfoid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -474,24 +479,67 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    NSString*sttt;
     [numarr removeObject:@""""];
-//    if (numarr.count>0) {
-//        NSError *error = nil;
-//        
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:numarr options:NSJSONWritingPrettyPrinted error:&error];
-//      sttt = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//    }else{
-//        sttt = @"";
-//    }
     [numarr removeObject:@"0"];
     dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"Num":poower,@"Power":[NSString stringWithFormat:@"%@",numarr]};
 
-    //dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":companyinfoid,@"Num":poower,@"Power":sttt};
+
     NSLog(@"---%@",numarr);
     [ZXDNetworking GET:urlStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+            switch (power) {
+                case 5:
+                    [_NSywoldAry removeAllObjects];
+                    [_NSywoldAry addObject:numarr];
+                    break;
+                case 2:
+                    [_NSmdoldAry removeAllObjects];
+                    [_NSmdoldAry addObject:numarr];
+                    break;
+                case 4:
+                    [_NSwloldAry removeAllObjects];
+                    [_NSwloldAry addObject:numarr];
+                    break;
+                case 3:
+                    [_NSkfoldAry removeAllObjects];
+                    [_NSkfoldAry addObject:numarr];
+                    break;
+                case 14:
+                    [_NSckoldAry removeAllObjects];
+                    [_NSckoldAry addObject:numarr];
+                    break;
+                case 16:
+                    [_NSkjoldAry removeAllObjects];
+                    [_NSkjoldAry addObject:numarr];
+                    break;
+                case 17:
+                    [_NScnoldAry removeAllObjects];
+                    [_NScnoldAry addObject:numarr];
+                    break;
+                case 15:
+                    [_NScwjloldAry removeAllObjects];
+                    [_NScwjloldAry addObject:numarr];
+                    break;
+                case 13:
+                    [_NSwljloldAry removeAllObjects];
+                    [_NSwljloldAry addObject:numarr];
+                    break;
+                case 12:
+                    [_NSkfjloldAry removeAllObjects];
+                    [_NSkfjloldAry addObject:numarr];
+                    break;
+                case 6:
+                    [_NSscjloldAry removeAllObjects];
+                    [_NSscjloldAry addObject:numarr];
+                    break;
+                case 8:
+                    [_NSywjloldAry removeAllObjects];
+                    [_NSywjloldAry addObject:numarr];
+                    break;
+                default:
+                    break;
+            }
             [alertView showMKPAlertView];
         }else{
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改失败" sureBtn:@"确认" cancleBtn:nil];
@@ -506,62 +554,62 @@
     switch (_viewbuton.tag) {
         case 5:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                 [self updatenetworkingNumarr:5 numarr:_NSywAry];
+                 [self updatenetworkingNumarr:5 numarr:_NSywAry newold:_NSywoldAry];
             }
             break;
         case 2:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:2 numarr:_NSmdAry];
+                [self updatenetworkingNumarr:2 numarr:_NSmdAry newold:_NSmdoldAry];
             }
             break;
         case 4:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:4 numarr:_NSwlAry];
+                [self updatenetworkingNumarr:4 numarr:_NSwlAry newold:_NSwloldAry];
             }
             break;
         case 3:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:3 numarr:_NSkfAry];
+                [self updatenetworkingNumarr:3 numarr:_NSkfAry newold:_NSkfoldAry];
             }
             break;
         case 14:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:14 numarr:_NSckAry];
+                [self updatenetworkingNumarr:14 numarr:_NSckAry newold:_NSckoldAry];
             }
             break;
         case 16:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                 [self updatenetworkingNumarr:16 numarr:_NSkjAry];
+                 [self updatenetworkingNumarr:16 numarr:_NSkjAry newold:_NSkjoldAry];
             }
             break;
         case 17:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:17 numarr:_NScnAry];
+                [self updatenetworkingNumarr:17 numarr:_NScnAry newold:_NScnoldAry];
             }
             break;
         case 15:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:15 numarr:_NScwjlAry];
+                [self updatenetworkingNumarr:15 numarr:_NScwjlAry newold:_NScwjloldAry];
             }
             break;
         case 13:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:13 numarr:_NSwljlAry];
+                [self updatenetworkingNumarr:13 numarr:_NSwljlAry newold:_NSwljloldAry];
             }
             break;
         case 12:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:12 numarr:_NSkfjlAry];
+                [self updatenetworkingNumarr:12 numarr:_NSkfjlAry newold:_NSkfjloldAry];
             }
             break;
         case 6:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:6 numarr:_NSscjlAry];
+                [self updatenetworkingNumarr:6 numarr:_NSscjlAry newold:_NSscjloldAry];
             }
             break;
         case 8:
             if (btn.layer.borderColor == [[UIColor blueColor] CGColor]) {
-                [self updatenetworkingNumarr:8 numarr:_NSywjlAry];
+                [self updatenetworkingNumarr:8 numarr:_NSywjlAry newold:_NSywjloldAry];
             }
             break;
         default:

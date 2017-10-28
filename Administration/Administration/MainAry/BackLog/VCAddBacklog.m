@@ -293,7 +293,12 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *stringDate = [formatter stringFromDate:date];
+
+    
+   
+
     CellAddBacklog *cell = [self.tableView cellForRowAtIndexPath:self.indexPath2];
+
     if (self.buttonTag==100) {
         [cell.startDate setTitle:stringDate forState:UIControlStateNormal];
         self.startTime = stringDate;

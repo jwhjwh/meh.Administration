@@ -474,11 +474,9 @@ NSUInteger rsw;
 -(void)idNoFieldText:(UITextField *)textField{
     switch (textField.tag) {
         case 0:
-            if (textField.text.length==0) {
-                _XGZJLStr = @"总经理";
-            }else{
-                _XGZJLStr = textField.text;
-            }
+           
+            _XGZJLStr = textField.text;
+            
             break;
         case 1:
             [self idNofield:textField];
@@ -912,6 +910,7 @@ NSUInteger rsw;
                 [_lqzwnumAry addObject:model.num];
                 
             }
+            _XGZJLStr = _lqzwnameAry[0];
             [self ui];
         }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"1111"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常，操作失败" andInterval:1.0];
@@ -1168,6 +1167,7 @@ NSUInteger rsw;
             
         }
 }
+
 -(void)footerButtonClick:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"预览"]) {
         [btn setTitle:@"编辑" forState:UIControlStateNormal];
@@ -1189,7 +1189,7 @@ NSUInteger rsw;
          [infonTableview addSubview:_popFootCellView];
          [_popFootCellView mas_makeConstraints:^(MASConstraintMaker *make) {
              make.left.mas_equalTo(self.view.mas_left).offset(0);
-             make.top.mas_equalTo(infonTableview.tableHeaderView.mas_bottom).offset(20);
+             make.top.mas_equalTo(infonTableview.tableHeaderView.mas_bottom).offset(0);
              make.right.mas_equalTo(self.view.mas_right).offset(0);
              make.bottom.mas_equalTo(infonTableview.tableFooterView.mas_top).offset(0);
 
@@ -1204,7 +1204,7 @@ NSUInteger rsw;
              
              make.width.mas_equalTo(kWidth*45);
              if (_XGZJLStr.length>3) {
-                 make.height.mas_offset(_XGZJLStr.length *(kHeight*50));
+                 make.height.mas_offset(_XGZJLStr.length *(kHeight*40));
              }else{
                  make.height.mas_equalTo(kHeight*120);
              }
@@ -1303,7 +1303,7 @@ NSUInteger rsw;
                      make.width.mas_equalTo(kWidth*45);
                  
                  if (_YWZJStr.length>4) {
-                     make.height.mas_equalTo(_YWZJStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_YWZJStr.length *(kHeight*40));
                  }else{
                      make.height.mas_equalTo(kHeight*210);
                  }
@@ -1332,7 +1332,7 @@ NSUInteger rsw;
                  make.width.mas_offset(kWidth*45);
                 
                  if (_YWJLStr.length>4) {
-                     make.height.mas_equalTo(_YWJLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_YWJLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_equalTo(kHeight*210);
                  }
@@ -1352,7 +1352,7 @@ NSUInteger rsw;
                  make.right.mas_equalTo(ywjlbutton.mas_right).offset(0);
                  
                  if (_YWStr.length>2) {
-                     make.height.mas_equalTo(_YWStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_YWStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*180);
                  }
@@ -1367,10 +1367,10 @@ NSUInteger rsw;
          if (SCZJBOOL == NO) {
              [sczjButton mas_makeConstraints:^(MASConstraintMaker *make) {
                  make.top.mas_equalTo(attView.mas_bottom).offset(0);
-                 make.height.mas_offset(_SCZJStr.length *(kHeight*50));
+                 make.height.mas_offset(_SCZJStr.length *(kHeight*40));
                  
                  if (_SCZJStr.length>4) {
-                     make.height.mas_equalTo(_SCZJStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_SCZJStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*210);
                  }
@@ -1409,7 +1409,7 @@ NSUInteger rsw;
                  
                  make.width.mas_offset(kWidth*45);
                  if (_SCJLStr.length>4) {
-                     make.height.mas_equalTo(_SCJLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_SCJLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*210);
                  }
@@ -1428,8 +1428,8 @@ NSUInteger rsw;
                  make.left.mas_equalTo(scjlButton.mas_left).offset(0);
                  
                  make.width.mas_equalTo(kWidth*45);
-                 if (_MDStr.length>2) {
-                     make.height.mas_equalTo(_MDStr.length *(kHeight*50));
+                 if (_MDStr.length>4) {
+                     make.height.mas_equalTo(_MDStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*180);
                  }
@@ -1447,7 +1447,7 @@ NSUInteger rsw;
                  make.width.mas_offset(kWidth*45);
                  
                  if (_CWZJStr.length>4) {
-                     make.height.mas_equalTo(_CWZJStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_CWZJStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*160);
                  }
@@ -1499,7 +1499,7 @@ NSUInteger rsw;
                  
                  make.width.mas_offset(kWidth*45);
                  if (_XZGLLStr.length>4) {
-                     make.height.mas_equalTo(_XZGLLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_XZGLLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*160);
                  }
@@ -1586,7 +1586,7 @@ NSUInteger rsw;
                 
                  make.width.mas_equalTo(kWidth*45);
                  if (_KFJLStr.length>4) {
-                     make.height.mas_equalTo(_KFJLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_KFJLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_equalTo(kHeight*185);
                  }
@@ -1612,7 +1612,7 @@ NSUInteger rsw;
                  make.width.mas_offset(kWidth*45);
                  
                  if (_KFStr.length>2) {
-                     make.height.mas_equalTo(_KFStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_KFStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*180);
                  }
@@ -1640,7 +1640,7 @@ NSUInteger rsw;
                  make.width.mas_offset(kWidth*45);
                  
                  if (_WLJLStr.length>4) {
-                     make.height.mas_equalTo(_WLJLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_WLJLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*185);
                  }
@@ -1694,7 +1694,7 @@ NSUInteger rsw;
                  make.width.mas_offset(kWidth*45);
                  
                  if (_WLStr.length>2) {
-                     make.height.mas_equalTo(_WLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_WLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*155);
                  }
@@ -1717,7 +1717,7 @@ NSUInteger rsw;
                  }
                  make.width.mas_offset(kWidth*45);
                  if (_CKStr.length>2) {
-                     make.height.mas_equalTo(_CKStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_CKStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*155);
                  }
@@ -1740,7 +1740,7 @@ NSUInteger rsw;
                  }
                  make.width.mas_offset(kWidth*45);
                  if (_CWJLStr.length>4) {
-                     make.height.mas_equalTo(_CWJLStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_CWJLStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*185);
                  }
@@ -1784,7 +1784,7 @@ NSUInteger rsw;
                  }
                  make.width.mas_offset(kWidth*45);
                  if (_KJStr.length>2) {
-                     make.height.mas_equalTo(_KJStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_KJStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*155);
                  }
@@ -1806,7 +1806,7 @@ NSUInteger rsw;
                  }
                  make.width.mas_offset(kWidth*45);
                  if (_CNStr.length>2) {
-                     make.height.mas_equalTo(_CNStr.length *(kHeight*50));
+                     make.height.mas_equalTo(_CNStr.length *(kHeight*40));
                  }else{
                      make.height.mas_offset(kHeight*155);
                  }

@@ -36,18 +36,18 @@
 @property (strong,nonatomic) NSMutableArray *NSywjlAry;//业务经理。。。。
 
 
-@property (strong,nonatomic) NSArray *NSywoldAry;//业务权限数组
-@property (strong,nonatomic) NSArray *NSmdoldAry;//美导权限数组
-@property (strong,nonatomic) NSArray *NSwloldAry;//物流。。。。
-@property (strong,nonatomic) NSArray *NSckoldAry;//仓库。。。。
-@property (strong,nonatomic) NSArray *NSkfoldAry;//客服。。。。
-@property (strong,nonatomic) NSArray *NSkjoldAry;//会计。。。。
-@property (strong,nonatomic) NSArray *NScnoldAry;//出纳。。。。
-@property (strong,nonatomic) NSArray *NScwjloldAry;//财务经理。。。。
-@property (strong,nonatomic) NSArray *NSwljloldAry;//物流经理。。。。
-@property (strong,nonatomic) NSArray *NSkfjloldAry;//客服经理。。。。
-@property (strong,nonatomic) NSArray *NSscjloldAry;//市场经理。。。。
-@property (strong,nonatomic) NSArray *NSywjloldAry;//业务经理。。。。
+@property (strong,nonatomic) NSMutableArray *NSywoldAry;//业务权限数组
+@property (strong,nonatomic) NSMutableArray *NSmdoldAry;//美导权限数组
+@property (strong,nonatomic) NSMutableArray *NSwloldAry;//物流。。。。
+@property (strong,nonatomic) NSMutableArray *NSckoldAry;//仓库。。。。
+@property (strong,nonatomic) NSMutableArray *NSkfoldAry;//客服。。。。
+@property (strong,nonatomic) NSMutableArray *NSkjoldAry;//会计。。。。
+@property (strong,nonatomic) NSMutableArray *NScnoldAry;//出纳。。。。
+@property (strong,nonatomic) NSMutableArray *NScwjloldAry;//财务经理。。。。
+@property (strong,nonatomic) NSMutableArray *NSwljloldAry;//物流经理。。。。
+@property (strong,nonatomic) NSMutableArray *NSkfjloldAry;//客服经理。。。。
+@property (strong,nonatomic) NSMutableArray *NSscjloldAry;//市场经理。。。。
+@property (strong,nonatomic) NSMutableArray *NSywjloldAry;//业务经理。。。。
 
 
 
