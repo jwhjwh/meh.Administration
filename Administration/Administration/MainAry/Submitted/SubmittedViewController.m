@@ -32,13 +32,18 @@
     self.title=@"图片报岗";
     self.edgesForExtendedLayout = UIRectEdgeTop;
     self.view.backgroundColor = [UIColor whiteColor];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"我的"
-                                    style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(masgegeClick)];
-    rightButton.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButton;
+    NSString *usie = [NSString stringWithFormat:@"%@",[USER_DEFAULTS  objectForKey:@"roleId"]];
+    if ([usie isEqualToString:@"1"]) {
+        
+    }else{
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                        initWithTitle:@"我的"
+                                        style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(masgegeClick)];
+        rightButton.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightButton;
+    }
     // Do any additional setup after loading the view.
     self.dataArray = [NSMutableArray array];
     self.pagenum = 1;
@@ -73,7 +78,7 @@
         [weakSelf getNetworkData:NO];
         //[self.tableView reloadData];
     }];
-
+   
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -87,6 +92,8 @@
 }
 
 -(void)masgegeClick{
+    
+    
     MySubmittedViewController *mySubmittedVC= [[MySubmittedViewController alloc]init];
     
     [self.navigationController pushViewController:mySubmittedVC animated:YES];
