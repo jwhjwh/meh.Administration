@@ -142,7 +142,12 @@
         self.cityChoose = [[CityChoose alloc] init];
         __weak typeof(self) weakSelf = self;
         self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
-            weakSelf.CityLabel.text = [NSString stringWithFormat:@"%@-%@-%@",province,city,town];
+            if ([province isEqualToString:city]) {
+                weakSelf.CityLabel.text = [NSString stringWithFormat:@"%@-%@",city,town];
+            }else{
+                weakSelf.CityLabel.text = [NSString stringWithFormat:@"%@-%@-%@",province,city,town];
+            }
+            
         };
         [self.view addSubview:self.cityChoose];
     }
