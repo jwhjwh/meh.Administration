@@ -439,10 +439,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelTitle.text = arrayTitle[indexPath.row];
         if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }else
         {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }
         
         switch (indexPath.row) {
@@ -485,7 +485,7 @@
         cell.LabelTitle.text = arrayTitle[indexPath.row];
         cell.textView.delegate =self;
         if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
         
         switch (indexPath.row) {

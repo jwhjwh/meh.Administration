@@ -501,7 +501,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"2",
+                           @"code":self.code,
                            @"id":self.tableID,
                            @"Hint":@"3"};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -621,6 +621,7 @@
                            @"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
+                           @"id":[NSString stringWithFormat:@"%@",self.dict[@"id"]],
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"Num":[ShareModel shareModel].num,
@@ -682,10 +683,10 @@
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     if (canEdit) {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;;
     }else
     {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.LabelTitle.text = self.arrayContent[indexPath.row];

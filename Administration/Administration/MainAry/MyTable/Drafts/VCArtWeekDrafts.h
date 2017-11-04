@@ -12,4 +12,5 @@
 @property (nonatomic,strong)NSString *tableID;
 @property (nonatomic,strong)NSString *remark;
 @property (nonatomic)BOOL isSelect;
+@property (nonatomic,strong)NSString *code;
 @end

@@ -213,7 +213,7 @@
 {
     if ([self.postionName containsString:@"美导"]||[self.postionName containsString:@"市场"]) {
         if (indexPath.row<3) {
-            CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+            CellInfo *cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
             if (cell==nil) {
                 cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
             }
@@ -236,7 +236,7 @@
              return cell;
         }else
         {
-            CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            CellTabelDetail *cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             if (cell==nil) {
                 cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             }
@@ -271,6 +271,7 @@
                     
                     if ([self.arrayKey containsObject:@"aim"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 5:
@@ -283,6 +284,7 @@
                     }
                    if ([self.arrayKey containsObject:@"achievement"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                     }
                     break;
                 case 6:
@@ -295,6 +297,7 @@
                     }
                     if ([self.arrayKey containsObject:@"shipment"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 7:
@@ -307,6 +310,7 @@
                     }
                     if ([self.arrayKey containsObject:@"question"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 8:
@@ -319,6 +323,7 @@
                     }
                     if ([self.arrayKey containsObject:@"solution"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 9:
@@ -331,6 +336,7 @@
                     }
                     if ([self.arrayKey containsObject:@"apperception"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 10:
@@ -343,6 +349,7 @@
                     }
                     if ([self.arrayKey containsObject:@"morgenPlan"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 11:
@@ -355,6 +362,7 @@
                     }
                     if ([self.arrayKey containsObject:@"morgenAim"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 case 12:
@@ -367,6 +375,7 @@
                     }
                     if ([self.arrayKey containsObject:@"summery"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                        cell.button.hidden = NO;
                     }
                     break;
                 default:
@@ -406,7 +415,7 @@
            return cell;
        }else
        {
-           CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+           CellTabelDetail *cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
            if (cell==nil) {
                cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
            }
@@ -448,6 +457,7 @@
                    }
                    if ([self.arrayKey containsObject:@"appraisal"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 6:
@@ -461,6 +471,7 @@
                    
                    if ([self.arrayKey containsObject:@"evaluation"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 7:
@@ -485,6 +496,7 @@
                    }
                    if ([self.arrayKey containsObject:@"feelingToShare"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 9:
@@ -497,6 +509,7 @@
                    }
                    if ([self.arrayKey containsObject:@"plans"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                default:
@@ -507,7 +520,7 @@
    }else
    {
        if (indexPath.row<4) {
-           CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+           CellInfo *cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
            if (cell==nil) {
                cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
            }
@@ -532,7 +545,7 @@
            return cell;
        }else
        {
-           CellTabelDetail *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+           CellTabelDetail *cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
            if (cell==nil) {
                cell = [[CellTabelDetail alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
            }
@@ -562,6 +575,7 @@
                    }
                    if ([self.arrayKey containsObject:@"targetDetail"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 5:
@@ -574,6 +588,7 @@
                    }
                    if ([self.arrayKey containsObject:@"appraisal"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 6:
@@ -587,6 +602,7 @@
                    
                    if ([self.arrayKey containsObject:@"evaluation"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 7:
@@ -599,6 +615,7 @@
                    }
                    if ([self.arrayKey containsObject:@"reason"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 8:
@@ -611,6 +628,7 @@
                    }
                    if ([self.arrayKey containsObject:@"sentiment"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                case 9:
@@ -623,6 +641,7 @@
                    }
                    if ([self.arrayKey containsObject:@"tomorrowPlan"]) {
                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                       cell.button.hidden = NO;
                    }
                    break;
                default:

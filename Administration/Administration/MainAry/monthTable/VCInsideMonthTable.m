@@ -96,6 +96,11 @@
                 }
             }
         }
+        
+        if ([[ShareModel shareModel].roleID isEqualToString:@"1"]) {
+            self.havePermission = YES;
+        }
+        
         if ([stringCode isEqualToString:@"0000"]) {
             self.tableId = self.dictInfo[@"planId"];
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];

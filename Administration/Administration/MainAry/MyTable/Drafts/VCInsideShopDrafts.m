@@ -241,6 +241,7 @@
     [dict setValue:appKeyStr forKey:@"appkey"];
     [dict setValue:[USER_DEFAULTS valueForKey:@"userid"] forKey:@"usersid"];
     [dict setValue:compid forKey:@"CompanyInfoId"];
+    [dict setValue:[NSString stringWithFormat:@"%@",self.dict[@"id"]] forKey:@"id"];
     [dict setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
     [dict setValue:[ShareModel shareModel].departmentID forKey:@"DepartmentID"];
     [dict setValue:[ShareModel shareModel].num forKey:@"Num"];
@@ -410,10 +411,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelTitle.text = arrayTitle[indexPath.row];
         if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }else
         {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }
         
         switch (indexPath.row) {
@@ -452,13 +453,13 @@
             cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }else
         {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.LabelTitle.text = arrayTitle[indexPath.row];
         cell.textView.delegate =self;
         if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
         switch (indexPath.row) {
                 

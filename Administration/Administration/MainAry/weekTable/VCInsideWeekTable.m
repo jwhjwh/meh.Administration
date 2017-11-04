@@ -92,6 +92,11 @@
                 }
             }
         }
+        
+        if ([[ShareModel shareModel].roleID isEqualToString:@"1"]) {
+            self.havePermission = YES;
+        }
+        
         NSString *stringKey = [responseObject valueForKey:@"name"];
         self.arrayKey = [stringKey componentsSeparatedByString:@","];
         if ([stringCode isEqualToString:@"0000"]) {

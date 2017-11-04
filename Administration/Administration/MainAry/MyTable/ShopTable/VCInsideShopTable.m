@@ -107,35 +107,35 @@
     [dict setValue:@"1" forKey:@"Sort"];
     [dict setValue:@"2" forKey:@"code"];
     if (self.string1.length!=0) {
-        [dict setValue:self.string1 forKey:@"dateLine"];
+        [dict setValue:self.string1 forKey:@"DateLine"];
     }else
     {
-        [dict setValue:@"" forKey:@"dateLine"];
+        [dict setValue:@"" forKey:@"DateLine"];
     }
     
     if (self.string2.length!=0) {
-        [dict setValue:self.string2 forKey:@"store"];
+        [dict setValue:self.string2 forKey:@"Store"];
     }else
     {
-        [dict setValue:@"" forKey:@"store"];
+        [dict setValue:@"" forKey:@"Store"];
     }
     if (self.string3.length!=0) {
-        [dict setValue:self.string3 forKey:@"sargetDetail"];
+        [dict setValue:self.string3 forKey:@"TargetDetail"];
     }else
     {
-        [dict setValue:@"" forKey:@"sargetDetail"];
+        [dict setValue:@"" forKey:@"TargetDetail"];
     }
     if (self.string4.length!=0) {
-        [dict setValue:self.string4 forKey:@"evaluation"];
+        [dict setValue:self.string4 forKey:@"Appraisal"];
     }else
     {
-        [dict setValue:@"" forKey:@"evaluation"];
+        [dict setValue:@"" forKey:@"Appraisal"];
     }
     if (self.string5.length!=0) {
-        [dict setValue:self.string5 forKey:@"sppraisal"];
+        [dict setValue:self.string5 forKey:@"evaluation"];
     }else
     {
-        [dict setObject:@"" forKey:@"appraisal"];
+        [dict setObject:@"" forKey:@"evaluation"];
     }
     if (self.string6.length!=0) {
         [dict setValue:self.string6 forKey:@"reason"];
@@ -150,10 +150,10 @@
         [dict setValue:@"" forKey:@"Sentiment"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string8 forKey:@"tomorrowPlan"];
+        [dict setValue:self.string8 forKey:@"TomorrowPlan"];
     }else
     {
-        [dict setValue:@"" forKey:@"tomorrowPlan"];
+        [dict setValue:@"" forKey:@"TomorrowPlan"];
     }
     
     [dict setValue:hint forKey:@"Hint"];

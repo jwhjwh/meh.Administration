@@ -612,7 +612,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.placeholder = self.arrayContent[indexPath.row];
     if (canEdit) {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;
     }else
     {
         cell.userInteractionEnabled = NO;

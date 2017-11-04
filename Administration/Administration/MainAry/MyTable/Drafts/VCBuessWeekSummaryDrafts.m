@@ -321,7 +321,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"2",
+                           @"code":self.code,
                            @"id":self.tableID,
                            @"Hint":@"3"};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -448,6 +448,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"Hint":hint,
                            @"StartDate":self.buessSummary.startDate.titleLabel.text,
                            @"EndDate":self.buessSummary.endDate.titleLabel.text,
@@ -551,15 +552,49 @@
     cell.textView.placeholder = self.arrayContent[indexPath.row];
     if (self.isSelect==NO) {
         if (canEdit) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
+        }
+        switch (indexPath.row) {
+            case 0:
+                if (self.string1.length!=0) {
+                    cell.textView.text = self.string1;
+                }
+                break;
+            case 1:
+                if (self.string2.length!=0) {
+                    cell.textView.text = self.string2;
+                }
+                break;
+            case 2:
+                if (self.string3.length!=0) {
+                    cell.textView.text = self.string3;
+                }                break;
+            case 3:
+                if (self.string4.length!=0) {
+                    cell.textView.text = self.string4;
+                }
+                break;
+            case 4:
+                if (self.string5.length!=0) {
+                    cell.textView.text = self.string5;
+                }
+                break;
+            case 5:
+                if (self.string6.length!=0) {
+                    cell.textView.text = self.string6;
+                }
+                break;
+                
+            default:
+                break;
         }
     }
     else
     {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
         switch (indexPath.row) {
             case 0:
                 if (self.string1.length!=0) {

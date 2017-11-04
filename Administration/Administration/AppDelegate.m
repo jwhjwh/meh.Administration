@@ -86,6 +86,8 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
     return YES;
 }
 
+
+
 -(void)didReceiveMessages:(NSArray *)aMessages{
     
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];

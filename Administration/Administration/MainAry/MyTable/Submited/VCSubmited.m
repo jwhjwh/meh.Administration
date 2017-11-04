@@ -351,7 +351,7 @@
             }else
             {
                 VCArtMonthSummarySubmited *vc = [[VCArtMonthSummarySubmited alloc]init];
-                vc.isSelect = YES;
+                vc.isSelect = NO;
                 vc.tableID = tableID;
                 vc.remark = remark;
                 [self.navigationController pushViewController:vc animated:YES];

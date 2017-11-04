@@ -86,17 +86,18 @@
                 }else
                 {
                     [self.artMonthSummary.buttonDate setTitle:[self.dict[@"dates"] substringToIndex:7] forState:UIControlStateNormal];
-                    self.artMonthSummary.textFiled1.text = self.dict[@"managerBrandMission"];
-                    self.artMonthSummary.textFiled2.text = self.dict[@"managerPracticalCargo"];
-                    self.artMonthSummary.textFiled3.text = self.dict[@"managerFinishRatio"];
-                    self.artMonthSummary.textFiled4.text = self.dict[@"brandMission"];
-                    self.artMonthSummary.textFiled5.text = self.dict[@"practicalCargo"];
-                    self.artMonthSummary.textFiled6.text = self.dict[@"finishRatio"];
-                    self.artMonthSummary.textFiled7.text = self.dict[@"performRatio"];
+                    self.artMonthSummary.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"managerBrandMission"]];
+                    self.artMonthSummary.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"managerPracticalCargo"]];
+                    self.artMonthSummary.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"managerFinishRatio"]];
+                    self.artMonthSummary.textFiled4.text = [NSString stringWithFormat:@"%@",self.dict[@"brandMission"]];
+                    self.artMonthSummary.textFiled5.text = [NSString stringWithFormat:@"%@",self.dict[@"practicalCargo"]];
+                    self.artMonthSummary.textFiled6.text = [NSString stringWithFormat:@"%@",self.dict[@"finishRatio"]];
+                    self.artMonthSummary.textFiled7.text = [NSString stringWithFormat:@"%@",self.dict[@"performRatio"]];
                     self.string1 = self.dict[@"sca"];
                     self.string2 = self.dict[@"experience"];
                     self.string3 = self.dict[@"problem"];
                     self.string4 = self.dict[@"others"];
+                    self.planID = [NSString stringWithFormat:@"%@",self.dict[@"planId"]];
                 }
                 
                 [self.tableView reloadData];
@@ -312,7 +313,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"2",
+                           @"code":self.code,
                            @"id":self.tableID,
                            @"Hint":@"3"};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -438,7 +439,8 @@
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"code":@"2",
-                           @"planId":self.tableID,
+                           @"id":[NSString stringWithFormat:@"%@",self.dict[@"id"]],
+                           @"PlanId":self.planID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,
@@ -540,14 +542,14 @@
     cell.textView.placeholder = self.arrayContent[indexPath.row];
     
     if (self.isSelect) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }else
     {
         if (canEdit) {
             cell.userInteractionEnabled =  YES;
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
     }
     

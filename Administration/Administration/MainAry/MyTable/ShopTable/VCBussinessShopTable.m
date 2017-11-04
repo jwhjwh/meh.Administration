@@ -115,16 +115,16 @@
     }
     
     if (self.string2.length!=0) {
-        [dict setValue:self.string2 forKey:@"Store"];
+        [dict setValue:self.string2 forKey:@"Worship"];
     }else
     {
-        [dict setValue:@"" forKey:@"Store"];
+        [dict setValue:@"" forKey:@"Worship"];
     }
     if (self.string3.length!=0) {
-        [dict setValue:self.string3 forKey:@"TargetDetail"];
+        [dict setValue:self.string3 forKey:@"TheTargetJob"];
     }else
     {
-        [dict setValue:@"" forKey:@"TargetDetail"];
+        [dict setValue:@"" forKey:@"TheTargetJob"];
     }
     if (self.string4.length!=0) {
         [dict setValue:self.string4 forKey:@"Appraisal"];
@@ -145,16 +145,16 @@
         [dict setValue:@"" forKey:@"reason"];
     }
     if (self.string7.length!=0) {
-        [dict setValue:self.string7 forKey:@"Sentiment"];
+        [dict setValue:self.string7 forKey:@"FeelingToShare"];
     }else
     {
-        [dict setValue:@"" forKey:@"Sentiment"];
+        [dict setValue:@"" forKey:@"FeelingToShare"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string8 forKey:@"TomorrowPlan"];
+        [dict setValue:self.string8 forKey:@"Plans"];
     }else
     {
-        [dict setValue:@"" forKey:@"TomorrowPlan"];
+        [dict setValue:@"" forKey:@"Plans"];
     }
     
     [dict setValue:hint forKey:@"Hint"];
@@ -240,7 +240,7 @@
     CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
     NSIndexPath *indexPath = [myScore.tableView indexPathForSelectedRow];
     cell.textView.text = myScore.arrayContent[indexPath.row];
-    if (indexPath.row==4) {
+    if (indexPathGes.row==5) {
         self.string4 = myScore.arrayContent[indexPath.row];
     }else
     {

@@ -9,6 +9,7 @@
 #import "VCMyTable.h"
 #import "VCChooseDepartment.h"
 #import "VCTableState.h"
+#import "VCDepartmentDayPlan.h"
 @interface VCMyTable ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSArray *array;
 @property (nonatomic,weak)UITableView *tableView;
@@ -37,8 +38,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-        VCChooseDepartment *vc = [[VCChooseDepartment alloc]init];
-        vc.roleID = self.roleID;
+        VCDepartmentDayPlan *vc = [[VCDepartmentDayPlan alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else
     {
@@ -58,7 +58,7 @@
     self.title = @"我的报表";
     
     UILabel *label = [[UILabel alloc]init];
-    label.text = [NSString stringWithFormat:@"         %@",self.position];
+    label.text = [NSString stringWithFormat:@"         %@",[ShareModel shareModel].postionName];
     label.layer.borderColor = [UIColor lightGrayColor].CGColor;
     label.layer.borderWidth = 1.0f;
     [self.view addSubview:label];

@@ -206,7 +206,7 @@
 
 -(void)saveBacklog
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@matters/InsertMatters.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@matters/UpdateToMatters.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -525,7 +525,7 @@
         switch (indexPath.row) {
             case 0:
                 cell.textView.text = self.arrayBackTitle[[self.dictinfo[@"matterstype"]intValue]];
-                cell.userInteractionEnabled = NO;
+                cell.textView.userInteractionEnabled = NO;;
                 break;
             case 2:
                 cell.textView.text = self.string1;

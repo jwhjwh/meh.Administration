@@ -213,7 +213,7 @@
                                @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                                @"CompanyInfoId":compid,
                                @"RoleId":[ShareModel shareModel].roleID,
-                               @"DepartmentID":self.departmentID,
+                               @"DepartmentID":[ShareModel shareModel].departmentID,
                                @"time":self.buttonChooseDate.titleLabel.text,
                                @"Describe":self.textView2.text,
                                @"Num":[ShareModel shareModel].num,
@@ -252,6 +252,37 @@
     if (size.height<=frame.size.height) {
         size.height=frame.size.height;
     }
+    
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    NSDictionary *dict = self.arrayList[indexPath.section];
+    [dict setValue:@"1" forKey:@"canEdit"];
+    [dict setValue:@"notShow" forKey:@"show"];
+    
+    switch (indexPath.row) {
+        case 0:
+            [dict setValue:textView.text forKey:@"others"];
+            
+            break;
+        case 1:
+            [dict setValue:textView.text forKey:@"jobAim"];
+            
+            break;
+        case 2:
+            [dict setValue:textView.text forKey:@"detailMethod"];
+            
+            break;
+        case 3:
+            [dict setValue:textView.text forKey:@"helped"];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self.arrayList replaceObjectAtIndex:indexPath.section withObject:dict];
+    
     cell.textView.frame = CGRectMake(frame.origin.x, frame.origin.y,cell.contentView.frame.size.width, size.height);
     
     [self.tableView beginUpdates];
@@ -286,6 +317,25 @@
     {
         cell.textView.editable = NO;
         
+    }
+    
+    
+    switch (indexPath.row) {
+        case 0:
+            cell.textView.text = dict[@"others"];
+            break;
+        case 1:
+            cell.textView.text = dict[@"jobAim"];
+            break;
+        case 2:
+            cell.textView.text = dict[@"detailMethod"];
+            break;
+        case 3 :
+            cell.textView.text = dict[@"helped"];
+            break;
+            
+        default:
+            break;
     }
     
     cell.labelTitle.text = self.arrayTitle[indexPath.row];

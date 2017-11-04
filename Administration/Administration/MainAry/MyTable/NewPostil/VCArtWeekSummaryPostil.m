@@ -491,6 +491,7 @@
     [dictl setValue:[ShareModel shareModel].num forKey:@"Num"];
     [dictl setValue:[ShareModel shareModel].departmentID forKey:@"DepartmentID"];
     [dictl setValue:@"2" forKey:@"code"];
+    [dictl setValue:self.planID forKey:@"PlanId"];
     [dictl setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
     [dictl setValue:compid forKey:@"CompanyInfoId"];
     [dictl setValue:[ShareModel shareModel].sort forKey:@"Sort"];
@@ -622,10 +623,10 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }else
     {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;;
     }
     if (self.isSelect==NO) {
         cell.textView.placeholder = @"暂无";

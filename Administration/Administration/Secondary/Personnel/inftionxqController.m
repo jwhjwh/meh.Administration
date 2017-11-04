@@ -18,6 +18,7 @@
 #import "LVFmdbTool.h"
 #import "SJABHelper.h"
 #import "DongImage.h"
+#import "VCAddBrithday.h"
 #define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
 @interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate,ABNewPersonViewControllerDelegate>
 {
@@ -67,6 +68,14 @@
     
   
 }
+
+-(void)addBrithday
+{
+    VCAddBrithday *vc = [[VCAddBrithday alloc]init];
+    vc.dictInfo = self.dicinfo;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     return _arr.count;
@@ -123,6 +132,15 @@
         [_TXImage addGestureRecognizer:tapSingleGR];
         
     }
+    
+    if (indexPath.section==2&&indexPath.row==1) {
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(tableView.frame.size.width-50, 5, 40, 30)];
+        [button setTitle:@"提醒" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(addBrithday) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:button];
+    }
+    
     if (indexPath.section==3&&indexPath.row==0) {
         UIButton *TXImage = [UIButton buttonWithType:UIButtonTypeCustom];
         [TXImage setImage:[UIImage imageNamed:@"phone"] forState: UIControlStateNormal];

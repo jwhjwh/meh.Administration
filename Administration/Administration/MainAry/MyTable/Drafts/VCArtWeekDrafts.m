@@ -332,7 +332,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"2",
+                           @"code":self.code,
                            @"id":self.tableID,
                            @"Hint":@"3"};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -421,6 +421,14 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    if (isBack) {
+        if ([self.artWeekPlan.startDate.titleLabel.text isEqualToString:@"选择日期"]||
+            [self.artWeekPlan.endDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
+    }else
+    {
     if ([self.artWeekPlan.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.artWeekPlan.endDate.titleLabel.text isEqualToString:@"选择日期"]||
         self.artWeekPlan.textFiled1.text.length==0||
@@ -441,27 +449,29 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
     }
+    }
     
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"code":@"1",
+                           @"id":[NSString stringWithFormat:@"%@",self.dict[@"id"]],
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,
                            @"StartDate":self.artWeekPlan.startDate.titleLabel.text,
                            @"EndDate":self.artWeekPlan.endDate.titleLabel.text,
-                           @"managerTask":self.artWeekPlan.textFiled1.text,
-                           @"managerBalance":self.artWeekPlan.textFiled2.text,
-                           @"managerAccumulateGoods":self.artWeekPlan.textFiled3.text,
-                           @"managerReturnedMoney":self.artWeekPlan.textFiled4.text,
-                           @"managerPredictGoods":self.artWeekPlan.textFiled5.text,
-                           @"personTask":self.artWeekPlan.textFiled6.text,
-                           @"personBalance":self.artWeekPlan.textFiled7.text,
-                           @"personAccumulateGoods":self.artWeekPlan.textFiled8.text,
-                           @"personReturnedMoney":self.artWeekPlan.textFiled9.text,
-                           @"personPredictGoods":self.artWeekPlan.textFiledL.text,
+                           @"ManagerTask":self.artWeekPlan.textFiled1.text,
+                           @"ManagerBalance":self.artWeekPlan.textFiled2.text,
+                           @"ManagerAccumulateGoods":self.artWeekPlan.textFiled3.text,
+                           @"ManagerReturnedMoney":self.artWeekPlan.textFiled4.text,
+                           @"ManagerPredictGoods":self.artWeekPlan.textFiled5.text,
+                           @"PersonTask":self.artWeekPlan.textFiled6.text,
+                           @"PersonBalance":self.artWeekPlan.textFiled7.text,
+                           @"PersonAccumulateGoods":self.artWeekPlan.textFiled8.text,
+                           @"PersonReturnedMoney":self.artWeekPlan.textFiled9.text,
+                           @"PersonPredictGoods":self.artWeekPlan.textFiledL.text,
                            @"OVAS":self.string1,
                            @"Important":self.string2,
                            @"PersonalProject":self.string3,

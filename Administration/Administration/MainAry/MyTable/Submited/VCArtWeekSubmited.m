@@ -12,7 +12,7 @@
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
 #import "CellSummary.h"
-#import "VCArtWeekSummaryUnPassed.h"
+#import "VCArtWeekSummarySubmited.h"
 #import "VCPositil.h"
 @interface VCArtWeekSubmited ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 {
@@ -73,11 +73,14 @@
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
             if (self.arraySummary.count!=0) {
                 [self setSummaryList];
+                self.navigationItem.rightBarButtonItem = nil;
             }else
             {
                 [self setSummaryUI];
                 [self.artWeekSummary.startDate setTitle:self.startDate forState:UIControlStateNormal];
                 [self.artWeekSummary.endDate setTitle:self.startDate forState:UIControlStateNormal];
+                [self.artWeekSummary.startDate setTitle:self.startDate forState:UIControlStateNormal];
+                [self.artWeekSummary.endDate setTitle:self.endDate forState:UIControlStateNormal];
                 self.artWeekSummary.startDate.userInteractionEnabled = NO;
                 self.artWeekSummary.endDate.userInteractionEnabled = NO;
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
@@ -88,7 +91,7 @@
         {
             [self setSummaryUI];
             [self.artWeekSummary.startDate setTitle:self.startDate forState:UIControlStateNormal];
-            [self.artWeekSummary.endDate setTitle:self.startDate forState:UIControlStateNormal];
+            [self.artWeekSummary.endDate setTitle:self.endDate forState:UIControlStateNormal];
             self.artWeekSummary.startDate.userInteractionEnabled = NO;
             self.artWeekSummary.endDate.userInteractionEnabled = NO;
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
@@ -942,7 +945,7 @@
         if (self.arraySummary.count!=0) {
             //跳转页面
             NSDictionary *dict = self.arraySummary[indexPath.row];
-            VCArtWeekSummaryUnPassed *vc = [[VCArtWeekSummaryUnPassed alloc]init];
+            VCArtWeekSummarySubmited *vc = [[VCArtWeekSummarySubmited alloc]init];
             vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];
             vc.isSelect = NO;
             vc.tableID =  [NSString stringWithFormat:@"%@",dict[@"id"]];
@@ -957,13 +960,15 @@
 {
     [super viewWillAppear:YES];
     //self.edgesForExtendedLayout = UIRectEdgeNone;
-    [self getHttpData];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUI];
+    
+    [self getHttpData];
     
     self.arryaTitle = @[@"本周主要目标与销售分解及策略",@"本周重要事项备注",@"个人成长规划安排",@"其他事项"];
     self.dict = [NSMutableDictionary dictionary];

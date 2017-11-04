@@ -165,10 +165,23 @@
     
     NSDictionary *dict;
     
-    if ([self.stringState isEqualToString:@""]) {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择待办事项类型" andInterval:1.0];
-        return;
+    NSString *matterstype = @"";
+    
+    
+    if (self.isSelect) {
+        if ([self.stringState isEqualToString:@""]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择待办事项类型" andInterval:1.0];
+            return;
+        }else
+        {
+            matterstype = [NSString stringWithFormat:@"%ld",self.indexPath1.row];
+        }
+    }else
+    {
+        self.stringState = self.arrayBackTitle[self.state.intValue];
+        matterstype = self.state;
     }
+    
     
     if (self.string1.length==0||self.string2.length==0||self.wornTime.length==0) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
@@ -184,6 +197,8 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
             return;
         }
+        
+        
         dict = @{@"appkey":appKeyStr,
                  @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                  @"CompanyInfoId":compid,
@@ -191,7 +206,7 @@
                  @"Content":self.string2,
                  @"Title":self.string1,
                  @"Remindertime":self.wornTime,
-                 @"Matterstype":[NSString stringWithFormat:@"%ld",self.indexPath1.row]
+                 @"Matterstype":matterstype
                  };
     }else
     {
@@ -224,7 +239,7 @@
                  @"Content":self.string2,
                  @"Title":self.string1,
                  @"Remindertime":self.wornTime,
-                 @"Matterstype":[NSString stringWithFormat:@"%ld",self.indexPath1.row]
+                 @"Matterstype":matterstype
                  };
     }
     
@@ -294,9 +309,6 @@
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *stringDate = [formatter stringFromDate:date];
 
-    
-   
-
     CellAddBacklog *cell = [self.tableView cellForRowAtIndexPath:self.indexPath2];
 
     if (self.buttonTag==100) {
@@ -338,15 +350,30 @@
         [cell.startDate addTarget:self action:@selector(showDatePick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.endDate addTarget:self action:@selector(showDatePick:) forControlEvents:UIControlEventTouchUpInside];
         
-        if (self.indexPath1.row==1) {
-            cell.labelzhi.hidden = YES;
-            cell.endDate.hidden = YES;
-            cell.endDate.userInteractionEnabled = NO;
+        
+        if (self.isSelect) {
+            if (self.indexPath1.row==1) {
+                cell.labelzhi.hidden = YES;
+                cell.endDate.hidden = YES;
+                cell.endDate.userInteractionEnabled = NO;
+            }else
+            {
+                cell.labelzhi.hidden = NO;
+                cell.endDate.hidden = NO;
+                cell.endDate.userInteractionEnabled = YES;
+            }
         }else
         {
-            cell.labelzhi.hidden = NO;
-            cell.endDate.hidden = NO;
-            cell.endDate.userInteractionEnabled = YES;
+            if ([self.state isEqualToString:@"1"]) {
+                cell.labelzhi.hidden = YES;
+                cell.endDate.hidden = YES;
+                cell.endDate.userInteractionEnabled = NO;
+            }else
+            {
+                cell.labelzhi.hidden = NO;
+                cell.endDate.hidden = NO;
+                cell.endDate.userInteractionEnabled = YES;
+            }
         }
         
         return cell;
@@ -364,6 +391,20 @@
             cell.textView.editable = NO;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChooseBacklog:)];
             [cell.textView addGestureRecognizer:tap];
+            
+            if (self.isSelect) {
+                
+                cell.userInteractionEnabled = YES;
+                
+                
+            }else
+            {
+                cell.userInteractionEnabled = NO;
+                cell.textView.text = self.arrayBackTitle[self.state.intValue];
+                
+            }
+
+            
         }
         
         
@@ -422,6 +463,8 @@
     
     
     self.navigationItem.rightBarButtonItem = rightitem;
+    
+    
     
     self.arrayTitle = @[@"待办事项",@"日期",@"计划标题",@"详细内容"];
     self.arrayPlacehold = @[@"选择待办事项",@"",@"填写计划标题",@"填写详细内容"];

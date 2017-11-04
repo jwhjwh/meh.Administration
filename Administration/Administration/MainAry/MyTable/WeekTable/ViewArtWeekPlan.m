@@ -224,6 +224,7 @@
     
     MyTextField *textField2 = [[MyTextField alloc]init];
     textField2.delegate = self;
+    textField2.font = [UIFont systemFontOfSize:13];
     textField2.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField2];
     [textField2 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -256,7 +257,7 @@
     
     MyTextField *textField3 = [[MyTextField alloc]init];
     textField3.delegate = self;
-    textField3.font  =  [UIFont systemFontOfSize:13];
+    textField3.font = [UIFont systemFontOfSize:13];
     textField3.textAlignment = NSTextAlignmentCenter;
     [viewB addSubview:textField3];
     [textField3 mas_makeConstraints:^(MASConstraintMaker *make) {

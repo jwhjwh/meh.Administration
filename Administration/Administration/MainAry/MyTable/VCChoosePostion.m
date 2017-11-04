@@ -9,10 +9,12 @@
 #import "VCChoosePostion.h"
 #import "CollectionViewCellPosition.h"
 #import "VCMyTable.h"
+#import "VCDepartment.h"
 @interface VCChoosePostion ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong)UICollectionView *collectionView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
 @property (nonatomic,strong)NSMutableArray *arrayId;
+@property (nonatomic,strong)NSArray *arrayDid;
 @end
 
 @implementation VCChoosePostion
@@ -98,12 +100,12 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.section];
-    VCMyTable *vc = [[VCMyTable alloc]init];
-    vc.position = dict[@"newName"];
+    VCDepartment *vc = [[VCDepartment alloc]init];
     [ShareModel shareModel].postionName = dict[@"newName"];
     [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     [ShareModel shareModel].num = [NSString stringWithFormat:@"%@",dict[@"num"]];
-    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
+    self.arrayDid = [dict[@"did"]componentsSeparatedByString:@","];
+    [ShareModel shareModel].departmentID = self.arrayDid[indexPath.row];
     if ([dict[@"did"]isKindOfClass:[NSNull class]]) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无部门" andInterval:1.0];
         return;

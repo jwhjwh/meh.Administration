@@ -478,6 +478,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"Hint":hint,
                            @"StartDate":self.buessSummary.startDate.titleLabel.text,
                            @"EndDate":self.buessSummary.endDate.titleLabel.text,
@@ -584,7 +585,7 @@
     
     if (self.isSelect==NO) {
         if (canEdit) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
             switch (indexPath.row) {
                 case 0:
                     if (self.string1.length!=0) {
@@ -688,12 +689,12 @@
             }
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
     }
     else
     {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
         switch (indexPath.row) {
             case 0:
                 if (self.string1.length!=0) {

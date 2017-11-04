@@ -58,8 +58,8 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             self.string1 = [self.dict[@"dateLine"] substringToIndex:10];
-            self.string2 = self.dict[@"store"];
-            self.string3 = self.dict[@"targetDetail"];
+            self.string2 = self.dict[@"worship"];
+            self.string3 = self.dict[@"theTargetJob"];
             self.string4 = self.dict[@"appraisal"];
             if (![self.dict[@"evaluation"] isKindOfClass:[NSNull class]]) {
                 self.string5 = [NSString stringWithFormat:@"%@",self.dict[@"evaluation"]];
@@ -69,8 +69,8 @@
             }
             
             self.string6 = self.dict[@"reason"];
-            self.string7 = self.dict[@"sentiment"];
-            self.string8 = self.dict[@"tomorrowPlan"];
+            self.string7 = self.dict[@"feelingToShare"];
+            self.string8 = self.dict[@"plans"];
             [self.dict setValue:@"1" forKey:@"canEdit"];
             
             if ([[responseObject valueForKey:@"owner"] length]!=0) {
@@ -285,16 +285,16 @@
     }
     
     if (self.string2.length!=0) {
-        [dict setValue:self.string2 forKey:@"Store"];
+        [dict setValue:self.string2 forKey:@"Worship"];
     }else
     {
-        [dict setValue:@"" forKey:@"Store"];
+        [dict setValue:@"" forKey:@"Worship"];
     }
     if (self.string3.length!=0) {
-        [dict setValue:self.string3 forKey:@"TargetDetail"];
+        [dict setValue:self.string3 forKey:@"TheTargetJob"];
     }else
     {
-        [dict setValue:@"" forKey:@"TargetDetail"];
+        [dict setValue:@"" forKey:@"TheTargetJob"];
     }
     if (self.string4.length!=0) {
         [dict setValue:self.string4 forKey:@"Appraisal"];
@@ -315,16 +315,16 @@
         [dict setValue:@"" forKey:@"reason"];
     }
     if (self.string7.length!=0) {
-        [dict setValue:self.string7 forKey:@"Sentiment"];
+        [dict setValue:self.string7 forKey:@"FeelingToShare"];
     }else
     {
-        [dict setValue:@"" forKey:@"Sentiment"];
+        [dict setValue:@"" forKey:@"FeelingToShare"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string8 forKey:@"TomorrowPlan"];
+        [dict setValue:self.string8 forKey:@"Plans"];
     }else
     {
-        [dict setValue:@"" forKey:@"TomorrowPlan"];
+        [dict setValue:@"" forKey:@"Plans"];
     }
     
     [dict setValue:hint forKey:@"Hint"];

@@ -54,7 +54,7 @@
         make.top.mas_equalTo(labelName.mas_bottom).offset(5);
         make.height.mas_equalTo(13);
     }];
-    self.labelName = labelName;
+    self.labelAcccount = labelAccount;
     
     UILabel *labelTime = [[UILabel alloc]init];
     labelTime.font = [UIFont systemFontOfSize:12];
@@ -62,7 +62,7 @@
     [self.contentView addSubview:labelTime];
     [labelTime mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
-        make.top.mas_equalTo(self.contentView.mas_top).offset(8);
+        make.top.mas_equalTo(self.contentView.mas_top).offset(6);
         make.height.mas_equalTo(12);
     }];
     self.labelTime = labelTime;

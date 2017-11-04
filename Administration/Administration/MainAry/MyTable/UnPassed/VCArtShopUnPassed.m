@@ -467,10 +467,10 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;
     }else
     {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;
     }
     switch (indexPath.row) {
         case 0:

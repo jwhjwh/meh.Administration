@@ -88,6 +88,7 @@
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self getData];
 }
 

@@ -61,7 +61,7 @@
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
-                           @"DepartmentID":self.departmentID,
+                           @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"Num":[ShareModel shareModel].num,
                            @"code":@"2",
@@ -144,7 +144,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = self.stringTitle;
+    self.title = @"日计划";
     self.arrayDate = [NSMutableArray array];
     [self createFresh];
     self._page = 1;

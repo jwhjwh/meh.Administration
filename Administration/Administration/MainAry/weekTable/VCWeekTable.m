@@ -116,6 +116,10 @@
                 }
             }
             
+            if ([[ShareModel shareModel].roleID isEqualToString:@"1"]) {
+                self.havePermission = YES;
+            }
+            
             [self.tableView reloadData];
             return ;
         }
@@ -230,12 +234,11 @@
     vc.stringName = cell.textView.text;
     for (NSString *key in [self.dictInfo allKeys]) {
         if (![self.dictInfo[key] isKindOfClass:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
+            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dictInfo[key]]]) {
                 vc.theKey = key;
                 break;
             }
         }
-        
     }
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;

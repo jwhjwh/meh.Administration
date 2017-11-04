@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface VCAddBacklog : BaseViewController
-
+@property (nonatomic)BOOL isSelect;
+@property (nonatomic,strong)NSString *state;
 @end

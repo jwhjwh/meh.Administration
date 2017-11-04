@@ -25,6 +25,7 @@
 #import "NoticeView.h"
 #import "SetModel.h"
 #import "positionViewController.h"//多职位-业务膜拜
+#import "VCBrithday.h" //生日提醒
 #define MenuH 270
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
@@ -364,6 +365,10 @@
                 break;
             case 10:
                 //生日提醒
+            {
+                VCBrithday *vc = [[VCBrithday alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
                 break;
             case 11:{
                 //公司公告

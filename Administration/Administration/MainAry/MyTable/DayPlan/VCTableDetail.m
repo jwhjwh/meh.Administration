@@ -32,9 +32,9 @@
             self.stringDate = [[responseObject valueForKey:@"date"] substringToIndex:10];
             self.stringDescribe = [responseObject valueForKey:@"describe"];
             self.arrayDate = [responseObject valueForKey:@"lists"];
-            if (self.arrayDate.count!=0) {
+            
                 [self.tableView reloadData];
-            }
+            
            // [self.tableView reloadData];
         }
         

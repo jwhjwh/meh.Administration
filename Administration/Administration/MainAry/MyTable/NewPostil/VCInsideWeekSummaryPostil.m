@@ -614,6 +614,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"Hint":hint,
                            @"StartDate":self.startDate.titleLabel.text,
                            @"EndDate":self.endDate.titleLabel.text,
@@ -819,10 +820,10 @@
     }else
     {
         if (canEdit) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
         switch (indexPath.row) {
             case 0:

@@ -34,7 +34,7 @@
 //        make.height.offset(30);
         make.top.mas_equalTo(self.mas_top).offset(10);
         make.bottom.mas_equalTo(self.mas_bottom).offset(-10);
-        make.width.mas_equalTo(90);
+        make.width.mas_equalTo(140);
     }];
     [_xingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_mingLabel.mas_right).offset(20);

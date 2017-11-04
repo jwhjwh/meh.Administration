@@ -244,7 +244,7 @@
     chooseEdit  = [[ViewChooseEdit alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     chooseEdit.delegate = self;
     chooseEdit.arrayButton = @[@"编辑",@"取消"];
-    [self.view addSubview:chooseEdit];
+    [self.view.window addSubview:chooseEdit];
 }
 
 
@@ -363,6 +363,7 @@
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要保存此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.tag = 300;
+    isBack = YES;
     [alertView show];
 }
 
@@ -370,6 +371,7 @@
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.tag = 100;
+    isBack = NO;
     [alertView show];
 }
 
@@ -411,6 +413,14 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    if (isBack) {
+        if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
+    }else
+    {
+    
     if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.string1 isEqualToString:@""]||
         [self.string2 isEqualToString:@""]||
@@ -424,11 +434,13 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
     }
+    }
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,
@@ -551,14 +563,14 @@
     }
     
     if (self.isSelect) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }else
     {
         if (canEdit==YES) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
     }
     [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];

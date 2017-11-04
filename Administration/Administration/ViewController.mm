@@ -101,13 +101,13 @@
     
     if(flag){
         
-        NSLog(@"反geo检索发送成功");
+       // NSLog(@"反geo检索发送成功");
         
         [_locService stopUserLocationService];
         
     }else{
         
-        NSLog(@"反geo检索发送失败");
+       // NSLog(@"反geo检索发送失败");
     }
 }
 -(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error

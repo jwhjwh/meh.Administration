@@ -24,13 +24,14 @@
 @property (nonatomic)BOOL _isFirstLoadData ;
 //是不是上拉加载数据（脚视图刷新）
 @property (nonatomic)BOOL _isFooterFresh ;
+
 @end
 
 @implementation GonggaoxqController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self.dataArray removeAllObjects];
+    [self.arrayData removeAllObjects];
     [self getNetworkData];
     self.tabBarController.tabBar.hidden=YES;
 }
@@ -58,6 +59,7 @@
     if ([roleID isEqualToString:@"1"]||[roleID isEqualToString:@"7"]) {
         self.navigationItem.rightBarButtonItem = rightItem;
     }
+    
     
     self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     self.tableView .delegate = self;
@@ -101,24 +103,30 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/queryNotice.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"pageNo":pageStr,@"comId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
+    NSDictionary *info=@{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                         @"pageNo":pageStr,
+                         @"comId":[USER_DEFAULTS objectForKey:@"companyinfoid"]
+                         };
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         if (self._isFooterFresh==NO) {
-            [self.dataArray removeAllObjects];
+            [self.arrayData removeAllObjects];
         }
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"nlist"];
             for (NSDictionary *dic in array) {
-                GongModel *model=[[GongModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [self.dataArray addObject:model];
+                
+//                GongModel *model=[[GongModel alloc]init];
+//                
+//                [model setValuesForKeysWithDictionary:dic];
+//                [self.dataArray addObject:model];
                 [self.arrayData addObject:dic];
             }
             [self.tableView reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
         return;
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -138,6 +146,10 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"] isEqualToString:@"50000"])
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            return;
         }
         
     } failure:^(NSError *error) {
@@ -152,7 +164,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArray.count;
+    return self.arrayData.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -164,9 +176,9 @@
     if (cell == nil) {
         cell = [[GongTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
-    if (self.dataArray.count > 0) {
+    if (self.arrayData.count > 0) {
         cell = [[GongTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
-            cell.gongModel = self.dataArray[indexPath.row];
+            cell.dict = self.arrayData[indexPath.row];
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -177,7 +189,8 @@
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
     AmentxqController *amentVC=[[AmentxqController alloc]init];
-    amentVC.gonModel=self.dataArray[indexPath.row];
+    
+    amentVC.dict = dict;
     amentVC.noticeID = [NSString stringWithFormat:@"%@",dict[@"id"]];
     [self.navigationController pushViewController:amentVC animated:YES];
 }

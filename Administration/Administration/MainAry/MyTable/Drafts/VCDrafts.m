@@ -207,6 +207,7 @@
                     VCArtShopDrfts  *vc = [[VCArtShopDrfts alloc]init];
                     vc.remark = remark;
                     vc.tableID = tableID;
+                    
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"8"]||[roleID isEqualToString:@"9"]) {
                     //跳转业务界面
@@ -228,13 +229,16 @@
                     VCArtWeekDrafts *vc = [[VCArtWeekDrafts alloc]init];
                     vc.remark = remark;
                     vc.isSelect = YES;
+                    vc.code = code;
                     vc.tableID = tableID;
+                    
                     [self.navigationController pushViewController:vc animated:YES];
                 }else
                 {
                     VCArtWeekSummaryDrafts *vc = [[VCArtWeekSummaryDrafts alloc]init];
                     vc.isSelect = NO;
                     vc.remark = remark;
+                    vc.code = code;
                     vc.tableID = tableID;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -245,6 +249,7 @@
                     VCBuessWeekDrafts *vc = [[VCBuessWeekDrafts alloc]init];
                     vc.isSelect= YES;
                     vc.tableID = tableID;
+                    vc.code = code;
                     vc.remark = remark;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else
@@ -252,6 +257,7 @@
                     VCBuessWeekSummaryDrafts *vc = [[VCBuessWeekSummaryDrafts alloc]init];
                     vc.isSelect = NO;
                     vc.tableID = tableID;
+                    vc.code = code;
                     vc.remark = remark;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -262,6 +268,7 @@
                     VCInsideWeekDrafts *vc = [[VCInsideWeekDrafts alloc]init];
                     vc.isSelect = YES;
                     vc.tableID = tableID;
+                    vc.code = code;
                     vc.remark = remark;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else
@@ -269,6 +276,7 @@
                     VCInsideWeekSummaryDrafts *vc = [[VCInsideWeekSummaryDrafts alloc]init];
                     vc.isSelect = NO;
                     vc.tableID = tableID;
+                    vc.code = code;
                     vc.remark = remark;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -282,6 +290,7 @@
                 VCArtMonthDrafts *vc = [[VCArtMonthDrafts alloc]init];
                 vc.isSelect = YES;
                 vc.tableID = tableID;
+                vc.code = code;
                 vc.remark = remark;
                 [self.navigationController pushViewController:vc animated:YES];
             }else
@@ -289,6 +298,7 @@
                 VCArtMonthSummaryDrafts *vc = [[VCArtMonthSummaryDrafts alloc]init];
                 vc.isSelect = YES;
                 vc.tableID = tableID;
+                vc.code = code;
                 vc.remark = remark;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -298,6 +308,7 @@
                 VCInsideMonthDrafts *vc = [[VCInsideMonthDrafts alloc]init];
                 vc.isSelect = YES;
                 vc.tableID = tableID;
+                vc.code = code;
                 vc.remark = remark;
                 [self.navigationController pushViewController:vc animated:YES];
             }else
@@ -305,6 +316,7 @@
                 VCInsideMonthSummaryDrafts *vc = [[VCInsideMonthSummaryDrafts alloc]init];
                 vc.isSelect = NO;
                 vc.tableID = tableID;
+                vc.code = code;
                 vc.remark = remark;
                 [self.navigationController pushViewController:vc animated:YES];
             }

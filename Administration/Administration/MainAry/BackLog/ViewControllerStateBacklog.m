@@ -193,6 +193,8 @@
     NSIndexPath *indexPath = [self.chooseEdit.tableView indexPathForSelectedRow];
     if (indexPath.row==0) {
         VCAddBacklog *vc = [[VCAddBacklog alloc]init];
+        vc.isSelect = NO;
+        vc.state = self.state;
         [self.navigationController pushViewController:vc animated:YES];
     }else
     {

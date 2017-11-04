@@ -30,7 +30,7 @@
 -(void)setUI
 {
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 180)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 200)];
     [self addSubview:headerView];
     
     UIView *viewT = [[UIView alloc]init];
@@ -158,7 +158,7 @@
         make.left.mas_equalTo(headerView.mas_left).offset(10);
         make.right.mas_equalTo(headerView.mas_right).offset(-10);
         make.top.mas_equalTo(labelPlan.mas_bottom).offset(8);
-        make.height.mas_equalTo(90);
+        make.height.mas_equalTo(60);
     }];
     
     UILabel *labeljihua = [[UILabel alloc]init];
@@ -168,7 +168,7 @@
     [labeljihua mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(viewB.mas_top).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
     }];
     
     MyTextField *textF1 = [[MyTextField alloc]init];
@@ -177,7 +177,7 @@
     [textF1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeljihua.mas_right);
         make.top.mas_equalTo(viewB.mas_top).offset(8);
-          [UIFont systemFontOfSize:21];
+        make.height.mas_equalTo(13);
         make.width.mas_equalTo(45);
     }];
     self.textFiled1 = textF1;
@@ -189,7 +189,7 @@
     [labeldou mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textF1.mas_right);
         make.top.mas_equalTo(viewB.mas_top).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
     }];
     
     MyTextField *textF2 = [[MyTextField alloc]init];
@@ -198,7 +198,7 @@
     [textF2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldou.mas_right);
         make.top.mas_equalTo(viewB.mas_top).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
         make.width.mas_equalTo(45);
     }];
     self.textFiled2 = textF2;
@@ -210,7 +210,7 @@
     [labelwan mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textF2.mas_right);
         make.top.mas_equalTo(viewB.top).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
     }];
     
     UILabel *labelyuji = [[UILabel alloc]init];
@@ -220,7 +220,7 @@
     [labelyuji mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewB.mas_left).offset(5);
         make.top.mas_equalTo(labeljihua.mas_bottom).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
     }];
     
     MyTextField *textF3 = [[MyTextField alloc]init];
@@ -229,7 +229,7 @@
     [textF3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelyuji.mas_right);
         make.top.mas_equalTo(labeljihua.mas_bottom).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
         make.width.mas_equalTo(45);
     }];
     self.textFiled3 = textF3;
@@ -241,7 +241,7 @@
     [labeldou1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textF3.mas_right);
         make.top.mas_equalTo(labeljihua.mas_bottom).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
     }];
     
     MyTextField *textF4 = [[MyTextField alloc]init];
@@ -250,7 +250,7 @@
     [textF4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldou1.mas_right);
         make.top.mas_equalTo(labeljihua.mas_bottom).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
         make.width.mas_equalTo(45);
     }];
     self.textFiled4 = textF4;
@@ -262,7 +262,7 @@
     [labelyuan mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(textF4.mas_right);
         make.top.mas_equalTo(labeljihua.mas_bottom).offset(8);
-          [UIFont systemFontOfSize:21];
+          make.height.mas_equalTo(13);
     }];
 }
 

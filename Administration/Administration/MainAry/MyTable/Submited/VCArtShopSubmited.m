@@ -330,37 +330,37 @@
         [dict setValue:@"" forKey:@"Shipment"];
     }
     if (self.string5.length!=0) {
-        [dict setValue:self.string4 forKey:@"Question"];
+        [dict setValue:self.string5 forKey:@"Question"];
     }else
     {
         [dict setValue:@"" forKey:@"Question"];
     }
     if (self.string6.length!=0) {
-        [dict setValue:self.string4 forKey:@"Solution"];
+        [dict setValue:self.string6 forKey:@"Solution"];
     }else
     {
         [dict setValue:@"" forKey:@"Solution"];
     }
     if (self.string7.length!=0) {
-        [dict setValue:self.string4 forKey:@"Apperception"];
+        [dict setValue:self.string7 forKey:@"Apperception"];
     }else
     {
         [dict setValue:@"" forKey:@"Apperception"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string4 forKey:@"MorgenPlan"];
+        [dict setValue:self.string8 forKey:@"MorgenPlan"];
     }else
     {
         [dict setValue:@"" forKey:@"MorgenPlan"];
     }
     if (self.string9.length!=0) {
-        [dict setValue:self.string4 forKey:@"MorgenAim"];
+        [dict setValue:self.string9 forKey:@"MorgenAim"];
     }else
     {
         [dict setValue:@"" forKey:@"MorgenAim"];
     }
     if (self.summary.length!=0) {
-        [dict setValue:self.string4 forKey:@"Summery"];
+        [dict setValue:self.summary forKey:@"Summery"];
     }else
     {
         [dict setValue:@"" forKey:@"Summery"];

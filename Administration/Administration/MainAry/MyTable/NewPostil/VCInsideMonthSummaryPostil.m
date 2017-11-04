@@ -429,6 +429,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,
@@ -551,14 +552,14 @@
     }
     
     if (self.isSelect) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }else
     {
         if (canEdit==YES) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
     }
     [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];

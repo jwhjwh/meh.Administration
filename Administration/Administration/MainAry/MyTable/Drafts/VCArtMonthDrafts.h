@@ -11,5 +11,6 @@
 @interface VCArtMonthDrafts : BaseViewController
 @property (nonatomic,strong)NSString *tableID;
 @property (nonatomic,strong)NSString *remark;
+@property (nonatomic,strong)NSString *code;
 @property (nonatomic)BOOL isSelect;
 @end

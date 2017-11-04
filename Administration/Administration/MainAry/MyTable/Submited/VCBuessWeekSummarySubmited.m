@@ -249,7 +249,7 @@
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
         self.viewPlan.hidden = YES;
-        self.viewSummary.userInteractionEnabled = NO;
+        self.buessSummary.userInteractionEnabled = NO;
         self.arryaTitle = @[@"工作目标达成进展简述",@"工作进度及目标达成的分析和评估",@"出现的问题及解决方案或建议",@"自我心得体会及总结",@"本周市场手机的案例、模式及市场营销策略分享",@"其他事项"];
         self.arrayContent = @[@"填写工作目标达成进展简述",@"填写工作进度及目标达成的分析和评估",@"填写出现的问题及解决方案或建议",@"填写自我心得体会及总结",@"填写本周市场手机的案例、模式及市场营销策略分享",@"填写其他事项"];
         
@@ -478,6 +478,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"Hint":hint,
                            @"StartDate":self.buessSummary.startDate.titleLabel.text,
                            @"EndDate":self.buessSummary.endDate.titleLabel.text,
@@ -584,7 +585,11 @@
     
     if (self.isSelect==NO) {
         if (canEdit) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
+        }else
+        {
+            cell.textView.userInteractionEnabled = NO;;
+        }
             switch (indexPath.row) {
                 case 0:
                     if (self.string1.length!=0) {
@@ -686,14 +691,12 @@
                 default:
                     break;
             }
-        }else
-        {
-            cell.userInteractionEnabled = NO;
-        }
+        
     }
+
     else
     {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
         switch (indexPath.row) {
             case 0:
                 if (self.string1.length!=0) {

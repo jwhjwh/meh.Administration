@@ -478,6 +478,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
+                           @"PlanId":self.planID,
                            @"Hint":hint,
                            @"StartDate":self.buessSummary.startDate.titleLabel.text,
                            @"EndDate":self.buessSummary.endDate.titleLabel.text,

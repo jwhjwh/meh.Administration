@@ -94,4 +94,21 @@
     }
     
 }
+
+-(void)setDict:(NSDictionary *)dict
+{
+    _titleLabel.text=dict[@"title"];
+    NSString *timeStr = [dict[@"time"] substringWithRange:NSMakeRange(5,11)];
+    _timeLabel.text=timeStr;
+    _contLabel.text=dict[@"content"];
+    
+    if (dict[@"url"]) {
+       [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"url"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]]; 
+    }
+    
+    
+        _whoLabel.text=[NSString stringWithFormat:@"来自%@",dict[@"newName"]];
+    
+}
+
 @end

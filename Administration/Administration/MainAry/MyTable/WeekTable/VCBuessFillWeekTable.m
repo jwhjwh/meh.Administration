@@ -48,7 +48,7 @@
     }];
     self.viewPlan = viewPlan;
     
-    ViewBuessWeekTable *buessTable = [[ViewBuessWeekTable alloc]initWithFrame:CGRectMake(0, 105, Scree_width,200)];
+    ViewBuessWeekTable *buessTable = [[ViewBuessWeekTable alloc]initWithFrame:CGRectMake(0, 105, Scree_width,220)];
     [viewPlan addSubview:buessTable];
     self.buessTable = buessTable;
     
@@ -214,18 +214,18 @@
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
                            @"Hint":hint,
-                           @"startDate":self.buessTable.startDate.titleLabel.text,
-                           @"endDate":self.buessTable.startDate.titleLabel.text,
-                           @"planStore":self.buessTable.textFiled1.text,
-                           @"callbackStore":self.buessTable.textFiled2.text,
-                           @"estimateStore":self.buessTable.textFiled3.text,
-                           @"estimateMoneyStore":self.buessTable.textFiled4.text,
-                           @"strategy":self.string1,
-                           @"preset":self.string2,
-                           @"content":self.string3,
-                           @"presetDirection":self.string4,
-                           @"planningManager":self.string5,
-                           @"others":self.string6,
+                           @"StartDate":self.buessTable.startDate.titleLabel.text,
+                           @"EndDate":self.buessTable.endDate.titleLabel.text,
+                           @"PlanStore":self.buessTable.textFiled1.text,
+                           @"CallbackStore":self.buessTable.textFiled2.text,
+                           @"EstimateStore":self.buessTable.textFiled3.text,
+                           @"EstimateMoneyStore":self.buessTable.textFiled4.text,
+                           @"Strategy":self.string1,
+                           @"Preset":self.string2,
+                           @"Content":self.string3,
+                           @"PresetDirection":self.string4,
+                           @"PlanningManager":self.string5,
+                           @"Others":self.string6,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {

@@ -59,7 +59,7 @@
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
-                           @"DepartmentID":self.departmentID,
+                           @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"Num":[ShareModel shareModel].num,
                            @"code":@"1",

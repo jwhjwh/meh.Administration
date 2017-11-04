@@ -57,7 +57,7 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             self.string1 = [self.dict[@"dateLine"] substringToIndex:10];
-            self.string2 = self.dict[@"store"];
+            self.string2 = self.dict[@"worship"];
             self.string3 = self.dict[@"targetDetail"];
             self.string4 = self.dict[@"appraisal"];
             if (![self.dict[@"evaluation"] isKindOfClass:[NSNull class]]) {
@@ -68,8 +68,8 @@
             }
             
             self.string6 = self.dict[@"reason"];
-            self.string7 = self.dict[@"sentiment"];
-            self.string8 = self.dict[@"tomorrowPlan"];
+            self.string7 = self.dict[@"feelingToShare"];
+            self.string8 = self.dict[@"plans"];
             [self.dict setValue:@"1" forKey:@"canEdit"];
             
             [tableView1 reloadData];
@@ -244,6 +244,7 @@
     [dict setValue:appKeyStr forKey:@"appkey"];
     [dict setValue:[USER_DEFAULTS valueForKey:@"userid"] forKey:@"usersid"];
     [dict setValue:compid forKey:@"CompanyInfoId"];
+    [dict setValue:[NSString stringWithFormat:@"%@",self.dict[@"id"]] forKey:@"id"];
     [dict setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
     [dict setValue:[ShareModel shareModel].departmentID forKey:@"DepartmentID"];
     [dict setValue:[ShareModel shareModel].num forKey:@"Num"];
@@ -287,17 +288,18 @@
         [dict setValue:@"" forKey:@"reason"];
     }
     if (self.string7.length!=0) {
-        [dict setValue:self.string7 forKey:@"Sentiment"];
+        [dict setValue:self.string7 forKey:@"FeelingToShare"];
     }else
     {
-        [dict setValue:@"" forKey:@"Sentiment"];
+        [dict setValue:@"" forKey:@"FeelingToShare"];
     }
     if (self.string8.length!=0) {
-        [dict setValue:self.string8 forKey:@"TomorrowPlan"];
+        [dict setValue:self.string8 forKey:@"Plans"];
     }else
     {
-        [dict setValue:@"" forKey:@"TomorrowPlan"];
+        [dict setValue:@"" forKey:@"Plans"];
     }
+
     
     [dict setValue:hint forKey:@"Hint"];
     [dict setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];

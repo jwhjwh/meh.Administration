@@ -11,4 +11,5 @@
 @interface AmentxqController : BaseViewController
 @property (nonatomic,strong)GongModel *gonModel;
 @property (nonatomic,strong)NSString *noticeID;
+@property (nonatomic,strong)NSDictionary *dict;
 @end

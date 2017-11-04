@@ -503,7 +503,7 @@
     [dictl setValue:compid forKey:@"CompanyInfoId"];
     [dictl setValue:[ShareModel shareModel].sort forKey:@"Sort"];
     [dictl setValue:hint forKey:@"Hint"];
-    [dictl setValue:self.tableID forKey:@"planId"];
+    [dictl setValue:self.planID forKey:@"PlanId"];
     [dictl setValue:[USER_DEFAULTS valueForKey:@"name"] forKey:@"Name"];
     [dictl setValue:self.artWeekSummary.startDate.titleLabel.text forKey:@"StartDate"];
     [dictl setValue:self.artWeekSummary.endDate.titleLabel.text forKey:@"EndDate"];
@@ -631,10 +631,10 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }else
     {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;;
     }
     if (self.isSelect==NO) {
         cell.textView.placeholder = @"暂无";

@@ -23,7 +23,11 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"RoleId":[ShareModel shareModel].roleID,@"Num":[ShareModel shareModel].num};
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"Num":[ShareModel shareModel].num};
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];

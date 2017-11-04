@@ -113,7 +113,7 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             [self.artMonthPlan.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
-            self.stringDate = [self.dict[@"dates"]substringToIndex:7];
+            self.stringDate = [self.dict[@"months"]substringToIndex:7];
             self.artMonthPlan.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"taskPlanMoney"]];
             self.artMonthPlan.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"taskSprintMoney"]];
             self.artMonthPlan.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"personPlanMoney"]];
@@ -468,7 +468,7 @@
                                    @"Num":[ShareModel shareModel].num,
                                    @"DepartmentID":[ShareModel shareModel].departmentID,
                                    @"code":@"2",
-                                   @"planId":self.tableID,
+                                   @"PlanId":self.tableID,
                                    @"RoleId":[ShareModel shareModel].roleID,
                                    @"CompanyInfoId":compid,
                                    @"Sort":[ShareModel shareModel].sort,
@@ -529,53 +529,54 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
     }
+            NSDictionary *dict = @{@"appkey":appKeyStr,
+                                   @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                                   @"Num":[ShareModel shareModel].num,
+                                   @"DepartmentID":[ShareModel shareModel].departmentID,
+                                   @"code":@"1",
+                                   @"RoleId":[ShareModel shareModel].roleID,
+                                   @"CompanyInfoId":compid,
+                                   @"Sort":[ShareModel shareModel].sort,
+                                   @"Months":[NSString stringWithFormat:@"%@-15",self.artMonthPlan.buttonDate.titleLabel.text],
+                                   @"TaskPlanMoney":self.artMonthPlan.textFiled1.text,
+                                   @"TaskSprintMoney":self.artMonthPlan.textFiled2.text,
+                                   @"PersonPlanMoney":self.artMonthPlan.textFiled3.text,
+                                   @"PersonSprintMoney":self.artMonthPlan.textFiled4.text,
+                                   @"Direction":self.string1,
+                                   @"ShopsArrange":self.string2,
+                                   @"RequestForProposal":self.string3,
+                                   @"PersonalGrowth":self.string4,
+                                   @"Others":self.string5,
+                                   @"Hint":hint,
+                                   @"Name":[USER_DEFAULTS valueForKey:@"name"]};
+            [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
+                NSString *code = [responseObject valueForKey:@"status"];
+                if ([code isEqualToString:@"0000"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                    return ;
+                }
+                if ([code isEqualToString:@"1001"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+                    return;
+                }
+                if ([code isEqualToString:@"4444"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+                    return;
+                }
+                if ([code isEqualToString:@"0001"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+                    return;
+                }
+                if ([code isEqualToString:@"5000"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
+                    return;
+                }
+            } failure:^(NSError *error) {
+                
+            } view:self.view];
     }
     
-    NSDictionary *dict = @{@"appkey":appKeyStr,
-                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"Num":[ShareModel shareModel].num,
-                           @"DepartmentID":[ShareModel shareModel].departmentID,
-                           @"code":@"1",
-                           @"RoleId":[ShareModel shareModel].roleID,
-                           @"CompanyInfoId":compid,
-                           @"Sort":[ShareModel shareModel].sort,
-                           @"Months":[NSString stringWithFormat:@"%@-15",self.artMonthPlan.buttonDate.titleLabel.text],
-                           @"TaskPlanMoney":self.artMonthPlan.textFiled1.text,
-                           @"TaskSprintMoney":self.artMonthPlan.textFiled2.text,
-                           @"PersonPlanMoney":self.artMonthPlan.textFiled3.text,
-                           @"PersonSprintMoney":self.artMonthPlan.textFiled4.text,
-                           @"Direction":self.string1,
-                           @"ShopsArrange":self.string2,
-                           @"RequestForProposal":self.string3,
-                           @"PersonalGrowth":self.string4,
-                           @"Others":self.string5,
-                           @"Hint":hint,
-                           @"Name":[USER_DEFAULTS valueForKey:@"name"]};
-    [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
-        NSString *code = [responseObject valueForKey:@"status"];
-        if ([code isEqualToString:@"0000"]) {
-            [self.navigationController popViewControllerAnimated:YES];
-            return ;
-        }
-        if ([code isEqualToString:@"1001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
-            return;
-        }
-        if ([code isEqualToString:@"4444"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
-            return;
-        }
-        if ([code isEqualToString:@"0001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
-            return;
-        }
-        if ([code isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
-            return;
-        }
-    } failure:^(NSError *error) {
-        
-    } view:self.view];
+    
     }
 }
 

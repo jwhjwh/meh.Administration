@@ -304,7 +304,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"2",
+                           @"code":self.code,
                            @"id":self.tableID,
                            @"Hint":@"3"};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -411,6 +411,7 @@
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"code":@"1",
+                           @"id":[NSString stringWithFormat:@"%@",self.dict[@"id"]],
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"CompanyInfoId":compid,
                            @"Sort":[ShareModel shareModel].sort,

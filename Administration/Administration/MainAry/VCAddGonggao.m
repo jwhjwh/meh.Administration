@@ -32,17 +32,26 @@
 
 -(void)submitData
 {
-    NSLog(@"string1 = %@,string2 = %@",self.string1,self.string2);
+    
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/addNotice",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSString *companyID = [USER_DEFAULTS valueForKey:@"companyinfoid"];
     
+    NSArray *array = [USER_DEFAULTS valueForKey:@"myRole"];
+    NSString *string  = [array componentsJoinedByString:@","];
+    
+    if (self.string1.length==0||self.string2.length==0) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0];
+        return;
+    }
+    
     NSDictionary *info=@{@"appkey":appKeyStr,
                          @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
                          @"comId":companyID,
                          @"title":self.string1,
-                         @"content":self.string2};
+                         @"content":self.string2,
+                         @"RoleId":string};
     
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];

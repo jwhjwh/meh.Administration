@@ -22,11 +22,12 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/getById.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    
+    NSString *companyID = [USER_DEFAULTS valueForKey:@"companyinfoid"];
     
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"id":self.self.noticeID
+                           @"id":self.self.noticeID,
+                           @"comId":companyID
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
@@ -52,7 +53,7 @@
     UIImageView *imageView = [[UIImageView alloc]init];
     imageView.layer.cornerRadius = 25;
     imageView.layer.masksToBounds = YES;
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.gonModel.url]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.dict[@"url"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
     [viewHeader addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewHeader.mas_left).offset(10);
@@ -63,18 +64,18 @@
     
     UILabel *labelTime = [[UILabel alloc]init];
     labelTime.font = [UIFont systemFontOfSize:12];
-    labelTime.text = [self.gonModel.time substringWithRange:NSMakeRange(5, 11)];
+    labelTime.text = [self.dict[@"time"] substringWithRange:NSMakeRange(5, 11)];
     labelTime.textColor = GetColor(167, 168, 169, 1);
     [viewHeader addSubview:labelTime];
     [labelTime mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(viewHeader.mas_top).offset(15);
+        make.top.mas_equalTo(viewHeader.mas_top).offset(8);
         make.right.mas_equalTo(viewHeader.mas_right).offset(-8);
         make.height.mas_equalTo(12);
     }];
     
     UILabel *labelTitle = [[UILabel alloc]init];
     labelTitle.numberOfLines = 0;
-    labelTitle.text = self.gonModel.title;
+    labelTitle.text = self.dict[@"title"];
     labelTitle.font = [UIFont systemFontOfSize:13];
     labelTitle.textColor = GetColor(78, 79, 80, 1);
     [viewHeader addSubview:labelTitle];
@@ -87,10 +88,7 @@
     UILabel *labelFrom = [[UILabel alloc]init];
     labelFrom.font = [UIFont systemFontOfSize:12];
     labelFrom.textColor = GetColor(167, 168, 169, 1);
-    labelFrom.text = @"来自老板";
-    if (self.gonModel.roleId==7) {
-        labelFrom.text = @"来自行政";
-    }
+    labelFrom.text = self.dict[@"newName"];
     [viewHeader addSubview:labelFrom];
     [labelFrom mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(labelTitle.mas_bottom).offset(5);
@@ -102,8 +100,8 @@
     textView.backgroundColor = GetColor(237, 238, 239, 1);
     textView.scrollEnabled = NO;
     textView.editable = NO;
-    CGSize size = [self.gonModel.content boundingRectWithSize:CGSizeMake(Scree_width-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size;
-    textView.text = self.gonModel.content;
+    CGSize size = [self.dict[@"content"] boundingRectWithSize:CGSizeMake(Scree_width-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} context:nil].size;
+    textView.text = self.dict[@"content"];
     textView.font = [UIFont systemFontOfSize:17];
     textView.textColor = [UIColor blackColor];
     [viewHeader addSubview:textView];

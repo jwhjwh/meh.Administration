@@ -612,6 +612,7 @@
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"Num":[ShareModel shareModel].num,
+                           @"PlanId":self.planID,
                            @"Sort":[ShareModel shareModel].sort,
                            @"code":@"1",
                            @"Hint":hint,
@@ -818,10 +819,10 @@
     }else
     {
         if (canEdit) {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }else
         {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
         switch (indexPath.row) {
             case 0:

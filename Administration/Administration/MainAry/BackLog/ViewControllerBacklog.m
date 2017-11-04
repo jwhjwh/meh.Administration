@@ -147,6 +147,7 @@
 -(void)gotoAddBacklog
 {
     VCAddBacklog *vc = [[VCAddBacklog alloc]init];
+    vc.isSelect = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

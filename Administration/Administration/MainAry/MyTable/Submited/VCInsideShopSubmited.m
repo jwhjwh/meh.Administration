@@ -100,7 +100,7 @@
     [tableView1 registerClass:[CellEditInfo class] forCellReuseIdentifier:@"cell2"];
     [self.view addSubview:tableView1];
     [tableView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+        make.top.mas_equalTo(self.view.mas_top);
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
         make.bottom.mas_equalTo(self.view.mas_bottom);
@@ -296,16 +296,16 @@
         [dict setValue:@"" forKey:@"TargetDetail"];
     }
     if (self.string4.length!=0) {
-        [dict setValue:self.string4 forKey:@"evaluation"];
+        [dict setValue:self.string4 forKey:@"Appraisal"];
     }else
     {
-        [dict setValue:@"" forKey:@"evaluation"];
+        [dict setValue:@"" forKey:@"Appraisal"];
     }
     if (self.string5.length!=0) {
-        [dict setValue:self.string5 forKey:@"Appraisal"];
+        [dict setValue:self.string5 forKey:@"evaluation"];
     }else
     {
-        [dict setObject:@"" forKey:@"Appraisal"];
+        [dict setObject:@"" forKey:@"evaluation"];
     }
     if (self.string6.length!=0) {
         [dict setValue:self.string6 forKey:@"reason"];
@@ -439,10 +439,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labelTitle.text = arrayTitle[indexPath.row];
         if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }else
         {
-            cell.userInteractionEnabled = YES;
+            cell.textView.userInteractionEnabled = YES;;
         }
         
         switch (indexPath.row) {
@@ -485,7 +485,7 @@
         cell.LabelTitle.text = arrayTitle[indexPath.row];
         cell.textView.delegate =self;
         if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-            cell.userInteractionEnabled = NO;
+            cell.textView.userInteractionEnabled = NO;;
         }
         
         switch (indexPath.row) {

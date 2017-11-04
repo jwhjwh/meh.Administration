@@ -358,6 +358,7 @@
     }
     
 }
+
 -(void)submitData:(NSString *)hint
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@report/insert",KURLHeader];

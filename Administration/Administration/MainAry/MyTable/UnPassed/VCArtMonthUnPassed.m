@@ -557,10 +557,10 @@
     }
     
     if (canEdit) {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;
     }else
     {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;
     }
     cell.LabelTitle.text = self.arryaTitle[indexPath.row];
     cell.textView.delegate = self;

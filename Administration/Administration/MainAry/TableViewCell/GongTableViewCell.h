@@ -21,4 +21,6 @@
 @property (nonatomic,retain)UILabel *contLabel;
 @property (nonatomic,retain)GongModel *gongModel;
 
+@property (nonatomic,strong)NSDictionary *dict;
+
 @end

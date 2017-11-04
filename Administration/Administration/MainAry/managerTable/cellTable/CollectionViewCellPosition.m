@@ -33,7 +33,7 @@
     UILabel *label = [[UILabel alloc]init];
     label.font = [UIFont systemFontOfSize:18];
     label.textColor = [UIColor blueColor];
-    label.textAlignment = UITextAlignmentCenter;
+    label.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(18);

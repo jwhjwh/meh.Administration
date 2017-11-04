@@ -15,6 +15,7 @@
 #import "EditModel.h"
 #import "DongImage.h"
 #import "BJZWViewController.h"
+#import "VCSetPermission.h"
 @interface GuanglixqVController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,retain)UITableView *infonTableview;
 @property (nonatomic,retain)NSMutableArray *infoArray;
@@ -32,6 +33,9 @@
 
 @property (nonatomic,strong)NSMutableArray *uuidAry;
 
+@property (nonatomic,strong)NSString *usersid;
+@property (nonatomic,strong)NSMutableArray *roleIDs;
+
 @end
 
 @implementation GuanglixqVController
@@ -48,6 +52,8 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    
+    self.roleIDs = [NSMutableArray array];
     
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+25) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
@@ -77,7 +83,10 @@
                 [_uuidAry addObject:model.uuid];
                 NSString *isper = [[NSString alloc]initWithFormat:@"%@",model.isPermission];
                 NSString *string = [[NSString alloc] initWithFormat:@"%@",model.roleId];
-               
+                
+                self.usersid = [NSString stringWithFormat:@"%@",dic[@"usersid"]];
+                NSString *roleid = [NSString stringWithFormat:@"%@",dic[@"roleId"]];
+                [self.roleIDs addObject:roleid];
                 
                 if ([string isEqualToString:@"2"]||[string isEqualToString:@"5"]) {
                     if ([isper isEqualToString:@"0"]) {
@@ -149,12 +158,12 @@
                 _state=@"被冻结";
             }
             if ((_departarr.count >0)&&(_copedepar.count>0)) {
-                _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,array2,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
+                _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,array2,@[@"冻结账户",@"重置密码",@"管理下属账号权限",@"删除账号"],@[@"查看位置"]];
                 _chuancan = array2;
             }else if((_copedepar.count == 0)&&(_departarr.count>0)){
-                _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
+                _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array,@[@"冻结账户",@"重置密码",@"管理下属账号权限",@"删除账号"],@[@"查看位置"]];
             }else if((_copedepar.count>0)&&(_departarr.count == 0)){
-                _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array2,@[@"冻结账户",@"重置密码",@"删除账号"],@[@"查看位置"]];
+                _arr=@[@[@"头像"],@[@"账号",@"真实姓名"],array2,@[@"冻结账户",@"重置密码",@"管理下属账号权限",@"删除账号"],@[@"查看位置"]];
                 _chuancan = array2;
             }
             NSLog(@"标题：%@\n 可编辑职位:%@\n 不可编辑职位:%@",_arr,_departarr,_copedepar);
@@ -436,7 +445,7 @@
     return 50;
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(_copedepar.count>0 && _departarr>0){
+    if(_copedepar.count>0 && _departarr.count>0){
         if (indexPath.section==4) {
             switch (indexPath.row) {
                 case 0:{
@@ -501,7 +510,17 @@
                     [self.navigationController pushViewController:xiugaiVC animated:YES];
                 }
                     break;
-                case 2:{
+                case 2:
+                    //跳转界面
+                {
+                    VCSetPermission *vc = [[VCSetPermission alloc]init];
+                    NSString *string = [self.roleIDs componentsJoinedByString:@","];
+                    vc.roleIDs = string;
+                    vc.usersid = self.usersid;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                    break;
+                case 3:{
                     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"删除员工" message:@"删除后所有信息都被删除，不可恢复.确定要删除该员工吗?" sureBtn:@"确认" cancleBtn:@"取消"];
                     alertView.resultIndex = ^(NSInteger index){
                         if (index == 2) {

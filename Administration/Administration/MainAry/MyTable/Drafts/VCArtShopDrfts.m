@@ -300,6 +300,7 @@
     [dict setValue:appKeyStr forKey:@"appkey"];
     [dict setValue:[USER_DEFAULTS valueForKey:@"userid"] forKey:@"usersid"];
     [dict setValue:compid forKey:@"CompanyInfoId"];
+    [dict setValue:[NSString stringWithFormat:@"%@",self.dict[@"id"]] forKey:@"id"];
     [dict setValue:[ShareModel shareModel].roleID forKey:@"RoleId"];
     [dict setValue:[ShareModel shareModel].departmentID forKey:@"DepartmentID"];
     [dict setValue:[ShareModel shareModel].num forKey:@"Num"];
@@ -476,10 +477,10 @@
     cell.textView.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([self.dict[@"canEdit"]isEqualToString:@"1"]) {
-        cell.userInteractionEnabled = NO;
+        cell.textView.userInteractionEnabled = NO;;
     }else
     {
-        cell.userInteractionEnabled = YES;
+        cell.textView.userInteractionEnabled = YES;;
     }
     switch (indexPath.row) {
         case 0:

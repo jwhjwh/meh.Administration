@@ -78,6 +78,11 @@
                     }
                 }
             }
+            
+            if ([[ShareModel shareModel].roleID isEqualToString:@"1"]) {
+                self.havePermission = YES;
+            }
+            
             [self.tableView reloadData];
             return ;
         }

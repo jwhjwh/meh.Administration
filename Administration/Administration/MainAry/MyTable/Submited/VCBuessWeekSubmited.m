@@ -504,8 +504,6 @@
     }
     if (self.isSelect) {
         
-    
-    
     NSDictionary *dict = @{
                            @"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
