@@ -7,11 +7,11 @@
 //
 
 #import "TrackingViewController.h"
-#import "PW_DatePickerView.h"
+#import "GSPickerView.h"
 #import "CItyViewController.h"
 
 int str;
-@interface TrackingViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate,UITextFieldDelegate>
+@interface TrackingViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
     UITableView *infonTableview;
     
@@ -22,7 +22,7 @@ int str;
 @property (strong,nonatomic) UIButton *qishiBtn;
 @property (strong,nonatomic) UIButton *jieshuBtn;
 @property (strong,nonatomic) UILabel* zhiLabel;
-@property (nonatomic,strong) PW_DatePickerView *PWpickerView;
+@property (nonatomic,strong) GSPickerView *pickerView;
 @property (nonatomic,strong) NSString *qishiStr;
 @property (nonatomic,strong) NSString *jieshuStr;
 @property (strong,nonatomic) UILabel* dateLabel;
@@ -48,6 +48,12 @@ int str;
     [super viewWillAppear:animated];
     
     self.tabBarController.tabBar.hidden=YES;
+}
+- (GSPickerView *)pickerView{
+    if (!_pickerView) {
+        _pickerView = [[GSPickerView alloc]initWithFrame:self.view.bounds];
+    }
+    return _pickerView;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -121,38 +127,30 @@ int str;
 }
 -(void)qishiBtnClick:(UIButton *)btn
 {
-    [self setupDateView:DateTypeOfStart];
+    NSString *str = @"2017年01月01日";
+    if ([btn.titleLabel.text containsString:@"年"]) {
+        str = btn.titleLabel.text;
+    }
+    [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
+        
+        [btn setTitle:pathStr forState:UIControlStateNormal];
+    } cancleAction:^{
+        
+    }];
     
 }
 -(void)jieshuBtnClick:(UIButton *)btn
 {
-    [self setupDateView:DateTypeOfEnd];
-}
-- (void)setupDateView:(DateType)type {
-    
-    self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
-    self.PWpickerView.type = type;
-    self.PWpickerView.delegate = self;
-    [self.PWpickerView show];
-}
-- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString type:(DateType)type
-{
-    switch (type) {
-        case DateTypeOfStart:
-            _qishiStr = dateString;
-             [_qishiBtn setTitle:dateString forState:UIControlStateNormal];
-            break;
-        case DateTypeOfEnd:
-            if ([_qishiStr compare:dateString options:NSNumericSearch] == NSOrderedDescending){
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择正确的时间" andInterval:1.0];
-            }else
-            {
-                 [_jieshuBtn setTitle:dateString forState:UIControlStateNormal];
-            }
-            break;
-        default:
-            break;
+    NSString *str = @"2017年01月01日";
+    if ([btn.titleLabel.text containsString:@"年"]) {
+        str = btn.titleLabel.text;
     }
+    [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
+        
+        [btn setTitle:pathStr forState:UIControlStateNormal];
+    } cancleAction:^{
+        
+    }];
 }
 
 

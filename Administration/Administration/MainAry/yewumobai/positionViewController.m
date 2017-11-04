@@ -24,6 +24,13 @@
     // Do any additional setup after loading the view.
     self.title = @"选择职位";
     // [self getAllPosition];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    btn.autoresizesSubviews=NO;
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
     self.view.backgroundColor = [UIColor whiteColor];
      NSString* phoneModel = [UIDevice devicePlatForm];
     
@@ -80,9 +87,6 @@
         NSString *stringCode = [responseObject valueForKey:@"status"];
         if ([stringCode isEqualToString:@"0000"]) {
             //显示自己担任的所有职位
-            
-            
-            
             NSArray *array=[responseObject valueForKey:@"list"];
             self.arrayId = [[NSMutableArray alloc]init];
             self.arrayData = [[NSMutableArray alloc]init];
@@ -94,10 +98,10 @@
                 NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
                 [self.arrayData addObject:namestring];
                 NSString *departmentID = [[NSString alloc]init];
-                if (dict[@"departmentID"] == nil) {
+                if (dic[@"departmentIDs"] == nil) {
                     departmentID = @"";
                 }else{
-                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentID"]];
+                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentIDs"]];
 
                 }
                 [self.departmentID addObject:departmentID];
@@ -168,6 +172,7 @@
 {
     businessViewController *businVC = [[businessViewController alloc]init];
     businVC.strId = _arrayId[indexPath.section];
+    [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentIDs"];
     NSLog(@"%@",self.arrayId);
     NSLog(@"%@",businVC.strId);
     [self.navigationController showViewController:businVC sender:nil];
@@ -191,7 +196,9 @@
     [self getAllPosition];
     self.tabBarController.tabBar.hidden=YES;
 }
-
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 @end

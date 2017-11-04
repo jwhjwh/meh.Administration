@@ -19,6 +19,11 @@
 @property (nonatomic, strong) CityChoose *cityChoose;/** 城市选择 */
 @property (nonatomic, strong) UITextField *cityField;
 
+@property(nonatomic, copy) NSString * provinceStr;
+@property(nonatomic, copy) NSString * cityStr;
+@property(nonatomic, copy) NSString * areaStr;
+@property (nonatomic,copy) NSString *cityyyyyy;
+
 @end
 
 @implementation CityChooseViewController
@@ -52,7 +57,11 @@
 }
 
 - (void)returnText:(ReturnTextBlock)block {
-    self.returnTextBlock = block;
+    
+    
+    
+        self.returnTextBlock = block;
+    
 }
 
 
@@ -70,15 +79,24 @@
 -(void)masgegeClick{
     NSMutableString  *CityStr = [NSMutableString stringWithFormat:@"%@%@",_CityLabel.text,_cityField.text];
     NSString *newStr = [CityStr stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    DateEditViewController *DateEditVC = [[DateEditViewController alloc]init];
+    _cityyyyyy = [[NSString alloc]init];
     if ([_CityLabel.text isEqualToString:@"所在区域"]) {
         if (_cityField.text !=nil) {
             NSString *nnewStr = [newStr stringByReplacingOccurrencesOfString:@"所在区域" withString:@""];
+            if([_isfoyou isEqualToString:@"1"]){
+                self.selectedBlock(_provinceStr, _cityStr, _areaStr, nnewStr);
+            }else{
                 self.returnTextBlock(nnewStr);
-         
+            }
         }
     }else{
+        if([_isfoyou isEqualToString:@"1"]){
+            self.selectedBlock(_provinceStr, _cityStr, _areaStr, newStr);
+        }else{
             self.returnTextBlock(newStr);
+        }
+        
+//        _cityyyyyy = newStr;
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -142,7 +160,16 @@
         self.cityChoose = [[CityChoose alloc] init];
         __weak typeof(self) weakSelf = self;
         self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
-            weakSelf.CityLabel.text = [NSString stringWithFormat:@"%@-%@-%@",province,city,town];
+            _provinceStr = province;
+            _cityStr = city;
+            _areaStr = town;
+            if ([province isEqualToString:city]) {
+                weakSelf.CityLabel.text = [NSString stringWithFormat:@"%@-%@",city,town];
+            }else{
+                weakSelf.CityLabel.text = [NSString stringWithFormat:@"%@-%@-%@",province,city,town];
+                
+            }
+            
         };
         [self.view addSubview:self.cityChoose];
     }

@@ -7,7 +7,7 @@
 //
 
 #import "MySubmittedViewController.h"
-#import "PW_DatePickerView.h"
+#import "GSPickerView.h"
 #import "SubmittedViewController.h"
 #import "RectordViewController.h"
 #import<BaiduMapAPI_Map/BMKMapView.h>
@@ -19,7 +19,7 @@
 #import<BaiduMapAPI_Map/BMKMapComponent.h>
 
 #import<BaiduMapAPI_Search/BMKPoiSearchType.h>
-@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,PW_DatePickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
 {
    
     BMKLocationService *_locService;  //定位
@@ -40,7 +40,7 @@
 @property (strong,nonatomic) UILabel *subDayLabel; // 时间
 @property (strong,nonatomic) UITextField *DiDTextView;//地点
 
-@property (nonatomic,strong) PW_DatePickerView *PWpickerView;
+@property (nonatomic,strong) GSPickerView *pickerView;
 @property (nonatomic, strong)UIImage *goodPicture;
 
 @property (nonatomic,strong) NSString *Age;
@@ -56,7 +56,12 @@
 @end
 
 @implementation MySubmittedViewController
-
+- (GSPickerView *)pickerView{
+    if (!_pickerView) {
+        _pickerView = [[GSPickerView alloc]initWithFrame:self.view.bounds];
+    }
+    return _pickerView;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self startLocation];
@@ -337,17 +342,20 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
-        self.PWpickerView.delegate = self;
-        [self.PWpickerView show];
+        NSString *str = @"2017年01月01日";
+        if ([_subDayLabel.text containsString:@"年"]) {
+            str = _subDayLabel.text;
+        }
+        [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
+            _subDayLabel.text  = pathStr;
+            _DateTimes = [[NSString alloc]init];
+            _DateTimes = _subDayLabel.text;
+        } cancleAction:^{
+            
+        }];
     }
 }
-- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString type:(DateType)type;
-{
-    _subDayLabel.text  = dateString;
-    _DateTimes = [[NSString alloc]init];
-    _DateTimes = _subDayLabel.text;
-}
+
 
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {

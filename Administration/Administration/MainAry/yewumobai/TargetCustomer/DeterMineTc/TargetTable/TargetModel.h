@@ -56,4 +56,5 @@
 @property (strong,nonatomic) NSString * Address;// 门店详细地址
 @property (strong,nonatomic) NSString * StoreName;// 店名
 
+
 @end

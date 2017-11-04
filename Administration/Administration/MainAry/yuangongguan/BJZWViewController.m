@@ -544,10 +544,7 @@
             [updateDic setValue:[NSString stringWithFormat:@"%@",_oldZWID[btn.tag]] forKey:@"oRoleId"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldBMID[btn.tag] componentsJoinedByString:@","]]forKey:@"oDepartmentID"];
             
-            
-            NSString *string1 = [NSString stringWithFormat:@"%@",_oldJBID[btn.tag]];
-            NSLog(@"%@",string1);
-            [updateDic setValue:string1  forKey:@"oLevelID"];
+            [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldJBID[btn.tag] componentsJoinedByString:@","]] forKey:@"oLevelID"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_ZWidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nRoleId"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_BMidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nDepartmentID"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_ZWLBidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nLevelID"];
@@ -868,7 +865,7 @@
             _ZWbutton.frame = CGRectMake(120, 1, (self.view.bounds.size.width-120)/2, 38);
             [_ZWbutton setTitle:_ZWnameAry[indexPath.section][indexPath.row] forState:UIControlStateNormal];
             _ZWbutton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-            _ZWbutton.font = [UIFont boldSystemFontOfSize:kWidth*25];
+            _ZWbutton.titleLabel.font = [UIFont boldSystemFontOfSize:kWidth*25];
             [_ZWbutton addTarget:self action:@selector(JsButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
             [_ZWbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             NSString *bjname =_bjbtnname[indexPath.section];
@@ -885,7 +882,7 @@
             _ZWLBbutton = [[UIButton alloc]init];
             _ZWLBbutton = _ZWLBary[indexPath.section];
             _ZWLBbutton.frame =CGRectMake(121+(self.view.bounds.size.width-120)/2, 1, self.view.bounds.size.width-(self.view.bounds.size.width/2+31), 38);
-            _ZWLBbutton.font = [UIFont boldSystemFontOfSize:kWidth*30];
+            _ZWLBbutton.titleLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
             
             [_ZWLBbutton addTarget:self action:@selector(JsLBButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
             int tag = 0;
@@ -918,7 +915,7 @@
             _SSBMbutt.frame = CGRectMake(120, 1, self.view.bounds.size.width-100, 38);
             [_SSBMbutt setTitle:[NSString stringWithFormat:@"添加%@",_infoncell.textLabel.text] forState:UIControlStateNormal];
             _SSBMbutt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-            _SSBMbutt.font = [UIFont boldSystemFontOfSize:kWidth*30];
+            _SSBMbutt.titleLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
             [_SSBMbutt addTarget:self action:@selector(SSButtonbtn:) forControlEvents:UIControlEventTouchUpInside];
             [_SSBMbutt setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             //NSInteger section  = indexPath.section;
@@ -975,6 +972,7 @@
         
         return _infoncell;
     }else{
+       // self.tableView.scrollEnabled =NO; //设置tableview 不能滚动
         UITableViewCell*   ccell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"bcCelll"];
         ccell.selectionStyle = UITableViewCellSelectionStyleNone;
         ccell.textLabel.textColor = [UIColor lightGrayColor];
@@ -1016,7 +1014,7 @@
         make.height.mas_equalTo(1);
     }];
     
-    UIView *fotView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 80+(_noEditAry.count*50))];
+    UIView *fotView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 150+(_noEditAry.count*50))];
     fotView.backgroundColor = [UIColor whiteColor];
     infonTableview.tableFooterView=fotView;
     
@@ -1080,6 +1078,7 @@
     _noEdit= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _noEdit.dataSource=self;
     _noEdit.delegate =self;
+    _noEdit.scrollEnabled =NO; //设置tableview 不能滚动
     [fotView addSubview:_noEdit];
     [_noEdit mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_scBtn.mas_bottom).offset(5);
@@ -1112,6 +1111,8 @@
                 NSMutableArray *zwnumary = [NSMutableArray array];//职位id
                 NSMutableArray *bmnumary = [NSMutableArray array];//部门id
                 NSMutableArray *bmary = [NSMutableArray array];//部门
+                
+                NSMutableArray *oldddbmid = [NSMutableArray array];
                 
                 [array2 addObject:@"职位"];
                 [_bjbtnname addObject:@"编辑"];
@@ -1168,15 +1169,16 @@
                         [_BMnameAry addObject:bmary];//部门
                         [bmnumary addObject:@"0"];
                         [_BMidAry addObject:bmnumary];//部门id
-                        
                         [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
                         
+                        [oldddbmid addObject:@"0"];
                         [_oldBMID addObject:bmnumary];//部门id-----
                     }else if([_model.departmentName containsString:@","]){
                         NSArray* array = [_model.departmentName componentsSeparatedByString:@","];
                         NSArray* numarray = [_model.departmentID componentsSeparatedByString:@","];
                         [_BMnameAry addObject:array];//部门
                         [_BMidAry addObject:numarray];//部门id
+                        
                         NSArray* numarray2 = [_model.departmentID componentsSeparatedByString:@","];
                         [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
                         
@@ -1189,7 +1191,9 @@
                         
                         [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
                         
-                        [_oldBMID addObject:bmnumary];//部门id-----
+        
+                        [oldddbmid addObject:_model.departmentID];
+                        [_oldBMID addObject:oldddbmid];//部门id-----
                     }
                     [_codeAry addObject:array2];
                 }else{//没权限修改职位
@@ -1255,7 +1259,7 @@
         
         
         
-        _bjbtn.font = [UIFont boldSystemFontOfSize:kWidth*30];
+        _bjbtn.titleLabel.font = [UIFont boldSystemFontOfSize:kWidth*30];
         _bjbtn.tag = section;
         [headV addSubview:_bjbtn];
         NSString *sttt = [NSString stringWithFormat:@"%ld",(long)_bjbtn.tag];

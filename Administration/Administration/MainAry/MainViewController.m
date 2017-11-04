@@ -341,16 +341,8 @@
                 break;
             case 7:{
                 //业务陌拜
-                NSArray *arrayIds = [USER_DEFAULTS valueForKey:@"myRole"];
-                if (arrayIds.count>1) {
-                    positionViewController *position = [[positionViewController alloc]init];
-                     [self.navigationController pushViewController:position animated:YES];
-                }else{
-                    businessViewController *busVC = [[businessViewController alloc]init];
-                    busVC.strId=[USER_DEFAULTS valueForKey:@"roleId"];
-                    [self.navigationController pushViewController:busVC animated:YES];
-                }
                 
+                [self yemobaicome];
             }
                 break;
             case 8:
@@ -386,6 +378,67 @@
     
     };
     return cell;
+}
+-(void)yemobaicome{
+    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectDepartmentId.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid};
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *stringCode = [responseObject valueForKey:@"status"];
+        if ([stringCode isEqualToString:@"0000"]) {
+            //显示自己担任的所有职位
+            NSArray *array=[responseObject valueForKey:@"list"];
+            NSMutableArray* arrayId = [[NSMutableArray alloc]init];
+            NSMutableArray*arrayData = [[NSMutableArray alloc]init];
+            NSMutableArray*departmenntID  =[[NSMutableArray alloc]init];
+            for (NSDictionary *dic in array) {
+                NSString *string = [NSString stringWithFormat:@"%@",dic[@"roleId"]];
+                [arrayId addObject:string];
+                
+                NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
+                [arrayData addObject:namestring];
+                NSString *departmentID = [[NSString alloc]init];
+                if (dic[@"departmentIDs"] == nil) {
+                    departmentID = @"";
+                    
+                }else{
+                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentIDs"]];
+                    
+                }
+                [departmenntID addObject:departmentID];
+                
+            }
+           
+            if (arrayId.count>1) {
+                
+                positionViewController *position = [[positionViewController alloc]init];
+                
+                [self.navigationController pushViewController:position animated:YES];
+            }else{
+                [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentIDs"];
+                businessViewController *busVC = [[businessViewController alloc]init];
+                busVC.strId=[USER_DEFAULTS valueForKey:@"roleId"];
+                [self.navigationController pushViewController:busVC animated:YES];
+            }
+        }
+        if ([stringCode isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+            return;
+        }
+        if ([stringCode isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
+            return;
+        }
+            
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 #pragma mark XRCarouselViewDelegate
 - (void)loopView:(XLsn0wLoop *)loopView clickImageAtIndex:(NSInteger)index {

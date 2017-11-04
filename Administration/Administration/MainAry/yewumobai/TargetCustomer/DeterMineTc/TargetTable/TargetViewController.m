@@ -37,6 +37,9 @@
         case 3:
             self.title = @"同事协助须知";
             break;
+        case 10:
+            self.title= @"存在优势及问题";
+            break;
         default:
             break;
     }

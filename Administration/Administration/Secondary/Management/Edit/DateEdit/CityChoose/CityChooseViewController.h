@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 typedef void (^ReturnTextBlock)(NSString *showText);
+typedef void(^SelectedHandle)(NSString * province, NSString * city, NSString * area,NSString*zhadd);
 @interface CityChooseViewController : UIViewController
-
+@property(nonatomic, copy) SelectedHandle selectedBlock;
 @property (nonatomic, copy) ReturnTextBlock returnTextBlock;
 
 - (void)returnText:(ReturnTextBlock)block;
 
+@property (nonatomic,copy) NSString *isfoyou;
 @end
