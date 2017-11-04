@@ -100,7 +100,7 @@
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
     [self selectworsh];
-    _InterNameAry = [[NSMutableArray alloc]init];
+    
     _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
@@ -141,6 +141,7 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
              NSArray *arry=[responseObject valueForKey:@"recordInfo"];
+            _InterNameAry = [[NSMutableArray alloc]init];
             for (NSDictionary *dic in arry) {
                 ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
@@ -588,7 +589,7 @@
         //草稿箱
         if (Modify == YES) {
             NSArray *zwlbAry = [[NSArray alloc]init];
-            zwlbAry = @[@"编辑膜拜记录",@"填写记录",@"删除"];
+            zwlbAry = @[@"编辑陌拜记录",@"填写记录",@"删除"];
             [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
                 NSLog(@"选择了第%ld个",(long)selectIndex);
                 if (selectIndex == 0) {
@@ -834,8 +835,7 @@
     NSString *uStr =[NSString stringWithFormat:@"%@shop/InsertIntended.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dict = @{@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_brandBusin,@"StoreLevel":_clascation,@"RoleId":self.strId,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"UsersName":_storepersonnel};
-    NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"record":dict};
+    NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"BrandBusiness":_brandBusin,@"StoreLevel":_clascation,@"RoleId":self.strId,@"UsersName":_storepersonnel};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *yishengji = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级,现在去填写意向客户表" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
@@ -868,8 +868,8 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1111"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"升级失败" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"店铺当前级别不能升级为目标客户" andInterval:1.0];
-        }
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"店铺当前级别不能升级为意向客户" andInterval:1.0];
+        }  
 
         
     } failure:^(NSError *error) {

@@ -17,6 +17,7 @@
 #import "CityChoose.h"// 地址选择器
 #import "InterestedInputViewController.h"//主要经营品牌-简介-分析
 #import "UpdateIntendedViewController.h"//意向客户提交到部门
+#import "ShareColleagues.h"//分享同事
 @interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource,XFDaterViewDelegate>
 {
     UITableView *infonTableview;
@@ -421,6 +422,11 @@
                 [alertView showMKPAlertView];
             }else if(selectIndex == 3){
                 //分享给同事 --------跳界面
+                ShareColleagues *SCVC = [[ShareColleagues alloc]init];
+                SCVC.shopip = _ShopId;
+                SCVC.yiandmu = @"2";
+                SCVC.targetvisitid = _Id;
+                  [self.navigationController pushViewController:SCVC animated:YES];
             }else {
                 //删除
                 [self deleteShop];
@@ -468,8 +474,9 @@
     NSString *uStr =[NSString stringWithFormat:@"%@shop/InsertTargetVisit.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSString *username = [NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"name"]];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":_ShopId,@"RoleId":self.strId};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":_ShopId,@"RoleId":self.strId,@"UsersName":username};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"现在该客户已升级为目标客户,现在去填写目标客户确立表?" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
@@ -508,11 +515,11 @@
         
     } view:self.view MBPro:YES];
 }
-
 -(void)updateIntended{
     //修改意向客户
     NSString *uStr =[NSString stringWithFormat:@"%@shop/updateIntended.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
     NSString *intentar = [_intentary componentsJoinedByString:@","];

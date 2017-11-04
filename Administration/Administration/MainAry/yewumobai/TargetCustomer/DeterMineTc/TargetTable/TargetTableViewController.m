@@ -13,6 +13,8 @@
 #import "SelectAlert.h"
 #import "targetTextField.h"
 #import "TargetViewController.h"
+#import "StoreinforViewController.h"
+#import "ShareColleagues.h"
 @interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
@@ -33,6 +35,9 @@
 
 
 //数据源
+@property(strong,nonatomic)NSString *Province;//省
+@property(strong,nonatomic)NSString *City;//市
+@property(strong,nonatomic)NSString *County;//区
 @property(strong,nonatomic)NSString *time;//拜访日期
 @property(strong,nonatomic)NSString *meettime;//拜访时间段
 @property(strong,nonatomic)NSString *num;//拜访次数
@@ -336,10 +341,10 @@
             xqdwtextfield.delegate = self;
 
             
-//             [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+//         [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
 
 
-             [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+             [xqdwtextfield addTarget:self action:@selector(xqdwtextField:) forControlEvents:UIControlEventEditingChanged];
             if (_brandpos.length>0) {
                 xqdwtextfield.text = _brandpos;
             }
@@ -739,6 +744,12 @@
         case 12:
             _meettime = textfield.text;//拜访时间段
             break;
+        case 21:
+            _StoreName=textfield.text;//店名
+            break;
+        case 22:
+            _Address=textfield.text;//店铺地址
+            break;
         case 23:
              _principal=textfield.text;//负责人
             break;
@@ -765,7 +776,7 @@
             break;
         case 43:
             //_brandpos = textfield.text;//品牌定位
-            
+             [self xqdwtextField:textfield];
             break;
         case 44:
            _otherpos = textfield.text;//品牌定位的其他
@@ -819,7 +830,7 @@
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     if(textField.tag == 43){
-        [self xqdwtextField:textField];
+       
         return NO;
     }else{
         return YES;
@@ -942,17 +953,26 @@
                 [self.tableView reloadData];
                 
             }else if(selectIndex == 1){
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定为合作用户" sureBtn:@"确认" cancleBtn:@"取消"];
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否升级为合作用户" sureBtn:@"确认" cancleBtn:@"取消"];
                 alertView.resultIndex = ^(NSInteger index){
                     NSLog(@"%ld",index);
                     if(index == 2){
                        //跳界面
-                        
+                        StoreinforViewController *storeinforVC = [[StoreinforViewController  alloc]init];
+                         storeinforVC.titleName = _StoreName;
+                        storeinforVC.isend = YES;
+                        [self.navigationController pushViewController:storeinforVC animated:YES];
                     }
                 };
                 [alertView showMKPAlertView];
             }else if(selectIndex == 2){
                 //分享给同事
+                ShareColleagues *SCVC = [[ShareColleagues alloc]init];
+                SCVC.shopip = _shopid;
+                SCVC.yiandmu = @"1";
+                SCVC.targetvisitid = _targetVisitId;
+                [self.navigationController pushViewController:SCVC animated:YES];
+                
             }else{
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];
                 alertView.resultIndex = ^(NSInteger index){
@@ -977,7 +997,7 @@
                     NSLog(@"%ld",index);
                     if(index == 2){
                         
-                        
+                        [self upadatetarget];
                     }
                 };
                 [alertView showMKPAlertView];
@@ -1191,6 +1211,16 @@
     _time = model.Time;
     _Address = [[NSString alloc]init];
     _Address = model.Address;//店铺地址
+    _Province = [[NSString alloc]init];
+    _Province = model.Province;//省
+    _City = [[NSString alloc]init];
+    _City= model.City;//市
+    _County = [[NSString alloc]init];
+    _County = model.County;//区
+    _Address = [[NSString alloc]init];
+    _Address = model.Address;//详细地址
+    _StoreName = [[NSString alloc]init];
+    _StoreName = model.StoreName;//店名
     _meettime= [[NSString alloc]init];//拜访时间段
     if (model.MeetTime == nil) {
         _meettime = @"";
@@ -1433,9 +1463,35 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"id":_targetVisitId,@"Time":_time,@"MeeTime":_meettime,@"Num":_num,@"Principal":_partnertime};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":_targetVisitId,@"Time":_time,@"MeeTime":_meettime,@"Num":_num,@"Principal":_principal,@"Post":_post,@"Iphone":_iphone,@"Qcode":_qcode,@"StoreLevel":_storelevel,@"Berths":_berths,@"Beautician":_beautician,@"PlantingDuration":_plantingduration,@"BarndBusiness":_brandbusiness,@"FollowBrand":_followbrand,@"CustomerNum":_customernum,@"ValidNum":_validnum,@"BrandPos":_brandpos,@"OtherPos":_otherpos,@"SinglePrice":_singleprice,@"BoxPrice":_boxprice,@"CardPrice":_cardprice,@"PackPrice":_packprice,@"Flag":_flag,@"ActiveName":_activename,@"DealMoney":_dealmoney,@"LeastMoney":_leastmoney,@"DealRate":_dealmoney,@"Demand":_demand,@"ShopQuestion":_shopquestion,@"Plans":_plans,@"Requirement":_requirement,@"Notic":_notic,@"PartnerTime":_partnertime,@"Schene":_scheme,@"Amount":_amount,@"PayWay":_payway,@"written":_written,@"Manager":_manager,@"ShopId":_shopid,@"UsersID":[USER_DEFAULTS objectForKey:@"userid"],@"Province":_Province,@"City":_City,@"County":_County,@"StoreName":_StoreName,@"Address":_Address};
     [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
-        
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"提交成功!" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                _cellend = YES;
+                //
+                [self.tableView reloadData];
+            };
+            [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
     } failure:^(NSError *error) {
         
     } view:self.view];

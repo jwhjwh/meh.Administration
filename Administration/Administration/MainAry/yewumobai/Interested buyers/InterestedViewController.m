@@ -136,6 +136,8 @@
     cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.storeName];
     if (model.province == nil) {
     cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.city,model.county];
+    }else if([model.province isEqualToString:model.city]){
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.city,model.county];
     }else{
        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.province,model.city,model.county];
     }

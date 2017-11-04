@@ -24,7 +24,7 @@
     self.title = self.strIdName;
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _InterNameAry = @[@"意向客户表",@"膜拜记录表"];
+    _InterNameAry = @[@"意向客户表",@"陌拜记录表"];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     btn.autoresizesSubviews=NO;

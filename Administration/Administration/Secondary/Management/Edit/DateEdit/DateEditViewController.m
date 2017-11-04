@@ -7,15 +7,15 @@
 //
 
 #import "DateEditViewController.h"
-#import "PW_DatePickerView.h"
+#import "GSPickerView.h"
 #import "CityChooseViewController.h"
 #import "ZZYPhotoHelper.h"
-@interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate,PW_DatePickerViewDelegate>
+@interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *infonTableview;
     NSDictionary *dic;
 }
-@property (nonatomic,strong) PW_DatePickerView *PWpickerView;
+@property (nonatomic,strong) GSPickerView *pickerView;
 
 @property (nonatomic,retain)NSArray *arr;
 @property (nonatomic,strong) UITextField *text1;//编辑
@@ -47,7 +47,12 @@
     _arr=@[@[@"头像"],@[@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
     // Do any additional setup after loading the view.
 }
-
+- (GSPickerView *)pickerView{
+    if (!_pickerView) {
+        _pickerView = [[GSPickerView alloc]initWithFrame:self.view.bounds];
+    }
+    return _pickerView;
+}
 -(void)InterTableUI
 {
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
@@ -284,9 +289,17 @@
     }
     if (indexPath.section == 1) {
         if (indexPath.row <1) {
-            self.PWpickerView = [[PW_DatePickerView alloc] initDatePickerWithDefaultDate:nil andDatePickerMode:UIDatePickerModeDate];
-            self.PWpickerView.delegate = self;
-            [self.PWpickerView show];
+            NSString *str = @"2017年01月01日";
+            
+            if ([_DayLabel.text containsString:@"年"]) {
+                str = _DayLabel.text;
+            }
+            [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
+                _DayLabel.text = pathStr;
+               
+            } cancleAction:^{
+                
+            }];
             
         }else if (indexPath.row == 2){
 
@@ -302,10 +315,7 @@
         }
     }
 }
-- (void)pickerView:(PW_DatePickerView *)pickerView didSelectDateString:(NSString *)dateString type:(DateType)type;
-{
-    _DayLabel.text  = dateString;
-}
+
 - (void)ageFieldText:(UITextField *)textField{
     self.Age = textField.text;
 }

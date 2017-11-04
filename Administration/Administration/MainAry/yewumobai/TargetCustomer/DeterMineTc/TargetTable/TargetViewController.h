@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 typedef void  (^BAELOCKck)(NSString *content,int num);
+
 @interface TargetViewController : UIViewController
 @property(nonatomic,strong)NSString *number;
 @property (nonatomic,copy)BAELOCKck blcokStr;
