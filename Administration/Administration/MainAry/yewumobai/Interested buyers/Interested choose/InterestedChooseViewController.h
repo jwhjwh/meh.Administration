@@ -11,4 +11,6 @@
 @interface InterestedChooseViewController : UIViewController
 @property (strong,nonatomic) NSString *strId;
 @property (strong,nonatomic) NSString *strIdName;
+@property (strong,nonatomic) NSString *intentionId;
+@property (strong,nonatomic) NSString *shopId;
 @end

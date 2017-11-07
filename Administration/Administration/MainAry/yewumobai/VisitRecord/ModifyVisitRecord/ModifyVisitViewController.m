@@ -16,9 +16,9 @@
 #import "SelectAlert.h"
 #import "ModifyVisitModel.h"
 #import "SiginViewController.h"
-
+#import "InterestedTabelViewController.h"
 #import "FillinfoViewController.h"//填写新的纪录
-
+#import "TargetTableViewController.h"
 @interface ModifyVisitViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,XFDaterViewDelegate>
 {
     
@@ -63,6 +63,7 @@
 @property (nonatomic,retain)NSString *Berths;//床位
 @property (nonatomic,retain)NSString *CreatorId;//记录创建人id
 
+@property (nonatomic,strong)NSString *visiId;
 
 @end
 
@@ -95,13 +96,19 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    if ([self.andisofyou isEqualToString:@"1"]) {
+        
+    }else{
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+        
+    }
+    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
     [self selectworsh];
     
-    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
+   
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
@@ -133,19 +140,30 @@
 
 
 -(void)selectworsh{
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
+   
+    NSString *uStr = [[NSString alloc]init];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"WorshipRecordId":self.ModifyId,@"RoleId":self.strId};
+    if ([self.andisofyou isEqualToString:@"1"]) {
+        uStr = [NSString stringWithFormat:@"%@shop/getShop.action",KURLHeader];
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":self.shopId,@"Types":@"1"};
+    }else{
+        uStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"WorshipRecordId":self.ModifyId,@"RoleId":self.strId};
+    }
+    
+    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
              NSArray *arry=[responseObject valueForKey:@"recordInfo"];
             _InterNameAry = [[NSMutableArray alloc]init];
+            
             for (NSDictionary *dic in arry) {
                 ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
                 _CreatorId = model.UsersId;
+                
                 _shopid = [[NSString alloc]initWithFormat:@"%@",model.ShopId];//店铺id
                 _sigincity = [[NSString alloc]initWithFormat:@"%@%@%@%@",model.Province,model.City,model.County,model.Address];
                 _storeregion= [[NSString alloc]initWithFormat:@"%@ %@ %@ %@",model.Province,model.City,model.County,model.Address];
@@ -793,11 +811,19 @@
     NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"RoleId":self.strId,@"UsersName":_storepersonnel};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            _visiId = [[NSString alloc]init];
+            _visiId =[responseObject valueForKey:@"TargetVisitId"];
             PWAlertView *yishengji = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级,现在去填写目标客户表" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
             yishengji.resultIndex = ^(NSInteger index) {
                 if (index == 1) {
-                    //现在就去
-//----------------------------------------------------------------------------------------
+                 
+                    TargetTableViewController *ttvc = [[TargetTableViewController alloc]init];
+                    ttvc.OldTargetVisitId = _visiId;
+                    ttvc.isofyou = NO;
+                    ttvc.strId = self.strId;
+                    ttvc.cellend = NO;
+                    [self.navigationController pushViewController:ttvc animated:YES];
+
                 }
             };
             [yishengji showMKPAlertView];
@@ -838,11 +864,18 @@
     NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"shopId":_shopid,@"BrandBusiness":_brandBusin,@"StoreLevel":_clascation,@"RoleId":self.strId,@"UsersName":_storepersonnel};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            _visiId = [[NSString alloc]init];
+            _visiId =[responseObject valueForKey:@"IntendedId"];
             PWAlertView *yishengji = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级,现在去填写意向客户表" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
             yishengji.resultIndex = ^(NSInteger index) {
                 if (index == 1) {
-                    //现在就去
-//--------------------------------------------------------------------------------------------
+                   
+                    InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
+                    intabel.intentionId =_visiId;
+                    intabel.strId = _strId;
+                    NSLog(@"%@,%@",_visiId,_strId);
+                    [self.navigationController pushViewController:intabel animated:YES];
+
                 }
             };
             [yishengji showMKPAlertView];

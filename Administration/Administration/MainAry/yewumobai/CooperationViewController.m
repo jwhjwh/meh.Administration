@@ -1,17 +1,14 @@
 //
-//  TargetCustomerViewController.m
+//  CooperationViewController.m
 //  Administration
 //
-//  Created by 九尾狐 on 2017/10/13.
+//  Created by 九尾狐 on 2017/11/6.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "TargetCustomerViewController.h"
-#import "tcModel.h"
+#import "CooperationViewController.h"
 #import "RecordTableViewCell.h"
-#import "WorshipSearchViewController.h"//搜索
-#import "DeterMineTcViewController.h"
-@interface TargetCustomerViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface CooperationViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
     
@@ -21,11 +18,11 @@
 @property (strong,nonatomic) NSMutableArray *shopidAry;
 @end
 
-@implementation TargetCustomerViewController
+@implementation CooperationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"目标客户";
+    self.title = @"确定合作客户";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -59,9 +56,6 @@
         
         make.height.mas_equalTo(40);
     }];
-    
-    
-    
     UIView *view1 = [[UIView alloc]init];
     view1.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:view1];
@@ -72,7 +66,7 @@
         make.height.mas_offset(1);
     }];
     UILabel *zuijinlabel = [[UILabel alloc]init];
-    zuijinlabel.text = @"新增的目标客户";
+    zuijinlabel.text = @"最近确定合作的客户";
     zuijinlabel.font = [UIFont systemFontOfSize:14];
     zuijinlabel.textColor = [UIColor lightGrayColor];
     [self.view addSubview:zuijinlabel];
@@ -106,102 +100,25 @@
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
 }
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
-    return _InterNameAry.count;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return 80;
-}
--(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
-    
-    return 1;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier =@"Cell";
-    //定义cell的复用性当处理大量数据时减少内存开销
-    RecordTableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell ==nil)
-    {
-        cell = [[RecordTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
-    }
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    tcModel *model=[[tcModel alloc]init];
-    model = _InterNameAry[indexPath.row];
-    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.StoreName];
-    if (model.Province == nil) {
-        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.City,model.County];
-    }else{
-        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.Province,model.City,model.County];
-    }
-    
-    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Time substringWithRange:NSMakeRange(5, 11)]];
-    cell.shijianLabel.text = xxsj;
-    
-    return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    tcModel *model=[[tcModel alloc]init];
-    model = _InterNameAry[indexPath.row];
-    DeterMineTcViewController *dTcVC = [[DeterMineTcViewController alloc]init];
-    dTcVC.TargetVisitId = model.Id;
-    dTcVC.strId = self.strId;
-    dTcVC.shopname =model.StoreName;
-    dTcVC.shopId = _shopidAry[indexPath.row];
-    [self.navigationController pushViewController:dTcVC animated:YES];
-}
 -(void)Touchsearch{
-    
-    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
-    worseaVC.strId = self.strId;
-    worseaVC.intere = @"2";
-    [self.navigationController pushViewController:worseaVC animated:YES];
-}
-#pragma mark - 补全分隔线左侧缺失
-- (void)viewDidLayoutSubviews {
-    if ([infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
-        [infonTableview setSeparatorInset:UIEdgeInsetsZero];
-        
-    }
-    if ([infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
-        [infonTableview setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-}
--(void)buiftItem{
-    [self.navigationController popViewControllerAnimated:YES];
+//搜索
 }
 -(void)selectTargetVisit{
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectTargetVisit.action",KURLHeader];
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectStoreState.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"nu":@"1",@"types":@"1"};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"list"];
             _InterNameAry = [[NSMutableArray alloc]init];
             _shopidAry= [[NSMutableArray alloc]init];
             for (NSDictionary *dic in array) {
-                tcModel *model=[[tcModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [_shopidAry addObject:[dic valueForKey:@"shopId"]];
-                [_InterNameAry addObject:model];
+//                tcModel *model=[[tcModel alloc]init];
+//                [model setValuesForKeysWithDictionary:dic];
+//                [_shopidAry addObject:[dic valueForKey:@"shopId"]];
+//                [_InterNameAry addObject:model];
             }
             [infonTableview reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
@@ -234,20 +151,71 @@
         
     } view:self.view MBPro:YES];
 }
-
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier =@"Cell";
+    //定义cell的复用性当处理大量数据时减少内存开销
+    RecordTableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell ==nil)
+    {
+        cell = [[RecordTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+    }
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    tcModel *model=[[tcModel alloc]init];
+//    model = _InterNameAry[indexPath.row];
+//    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.StoreName];
+//    if (model.Province == nil) {
+//        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.City,model.County];
+//    }else{
+//        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.Province,model.City,model.County];
+//    }
+//
+//    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Time substringWithRange:NSMakeRange(5, 11)]];
+//    cell.shijianLabel.text = xxsj;
+    
+    return cell;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     
+    return _InterNameAry.count;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 80;
 }
-*/
+-(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView{
+    
+    return 1;
+}
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [infonTableview setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
+        [infonTableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

@@ -15,6 +15,7 @@
 #import "TargetViewController.h"
 #import "StoreinforViewController.h"
 #import "ShareColleagues.h"
+#import "SiginViewController.h"//签到
 @interface TargetTableViewController ()<UITableViewDelegate,UITableViewDataSource,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic,strong)CLZoomPickerView *pickerView;
@@ -137,6 +138,7 @@
             cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
         }
         if (indexPath.section ==0) {
+             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             UIImageView *qdimage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width/2)-30, 10, 30, 30)];
             qdimage.image = [UIImage imageNamed:@"qd_ico"];
             [cell addSubview:qdimage];
@@ -300,10 +302,11 @@
             [cell addSubview:zdsllabel];
             targetTextField *zdsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(130, 40, 70, 30)];
             zdsltextfield.font= [UIFont systemFontOfSize:13];
+            zdsltextfield.keyboardType = UIKeyboardTypeNumberPad;
             [zdsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zdsltextfield.tag = 41;
             zdsltextfield.delegate = self;
-            if (_customernum.length>0) {
+            if (![_customernum isEqualToString:@""]) {
                 zdsltextfield.text = _customernum;
             }
             [cell addSubview:zdsltextfield];
@@ -318,10 +321,11 @@
             [cell addSubview:zlsllabel];
             targetTextField *zlsltextfield =[[targetTextField alloc]initWithFrame:CGRectMake(110, 70, 70, 30)];
             zlsltextfield.font= [UIFont systemFontOfSize:13];
+            zlsltextfield.keyboardType = UIKeyboardTypeNumberPad;
             [zlsltextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zlsltextfield.tag = 42;
             zlsltextfield.delegate = self;
-            if (_validnum.length>0) {
+            if (![_validnum isEqualToString:@""]) {
                 zlsltextfield.text = _validnum;
             }
             [cell addSubview:zlsltextfield];
@@ -335,20 +339,18 @@
             xqdwlabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:xqdwlabel];
             
-            targetTextField *xqdwtextfield =[[targetTextField alloc]initWithFrame:CGRectMake(110, 110, 70, 30)];
-            xqdwtextfield.font= [UIFont systemFontOfSize:13];
-            xqdwtextfield.tag = 43;
-            xqdwtextfield.delegate = self;
+            UIButton *xqdwbtn = [[UIButton alloc]initWithFrame:CGRectMake(110, 110, 70, 28)];
+            xqdwbtn.titleLabel.font = [UIFont systemFontOfSize:13];
+            [xqdwbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [xqdwbtn addTarget:self action:@selector(xqdwtextField:)forControlEvents: UIControlEventTouchUpInside];
+            [cell.contentView addSubview:xqdwbtn];
+            UIView *btnview = [[UIView alloc]initWithFrame:CGRectMake(110, 138, 70, 1)];
+            btnview.backgroundColor = [UIColor blackColor];
+            [cell addSubview:btnview];
+            
 
             
-//         [xqdwtextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
-
-
-             [xqdwtextfield addTarget:self action:@selector(xqdwtextField:) forControlEvents:UIControlEventEditingChanged];
-            if (_brandpos.length>0) {
-                xqdwtextfield.text = _brandpos;
-            }
-            [cell.contentView addSubview:xqdwtextfield];
+            
             UILabel *renlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(180, 110, 40, 30)];
             renlabel2.text = @",";
             renlabel2.font = [UIFont systemFontOfSize:13];
@@ -359,6 +361,8 @@
             qtlabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:qtlabel];
             targetTextField *qttextfield =[[targetTextField alloc]initWithFrame:CGRectMake(10, 180, cell.width-30, 30)];
+            //UIKeyboardTypeDefault
+           
             qttextfield.font= [UIFont systemFontOfSize:13];
             [qttextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             qttextfield.tag = 44;
@@ -378,6 +382,7 @@
             [cell addSubview:renlabel3];
             targetTextField *zdgktextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 240, 70, 30)];
             zdgktextfield.font= [UIFont systemFontOfSize:13];
+            zdgktextfield.keyboardType = UIKeyboardTypeNumberPad;
             [zdgktextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             zdgktextfield.tag = 45;
             if (_singleprice.length>0) {
@@ -390,6 +395,7 @@
             [cell addSubview:renlabel4];
             targetTextField *thytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(180, 240, 70, 30)];
             thytextfield.font= [UIFont systemFontOfSize:13];
+            thytextfield.keyboardType = UIKeyboardTypeNumberPad;
             [thytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             thytextfield.tag = 46;
             if (_boxprice.length>0) {
@@ -407,6 +413,7 @@
             [cell addSubview:renlabel6];
             targetTextField *kxytextfield =[[targetTextField alloc]initWithFrame:CGRectMake(50, 270, 70, 30)];
             kxytextfield.font= [UIFont systemFontOfSize:13];
+             kxytextfield.keyboardType = UIKeyboardTypeNumberPad;
             [kxytextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             kxytextfield.tag = 47;
             if (_cardprice.length>0) {
@@ -419,6 +426,7 @@
             [cell addSubview:renlabel7];
             targetTextField *xmtctextfield =[[targetTextField alloc]initWithFrame:CGRectMake(200, 270, 70, 30)];
             xmtctextfield.font= [UIFont systemFontOfSize:13];
+             xmtctextfield.keyboardType = UIKeyboardTypeNumberPad;
             [xmtctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
             xmtctextfield.tag = 48;
             if (_packprice.length>0) {
@@ -493,6 +501,7 @@
                 
                 targetTextField *hdmctextfield = [[targetTextField alloc]initWithFrame:CGRectMake(80, 330, 110, 30)];
                 hdmctextfield.font = [UIFont systemFontOfSize:13];
+                
                 [hdmctextfield addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 hdmctextfield.tag = 51;
                 if (_activename.length>0) {
@@ -507,6 +516,7 @@
                 
                 targetTextField *hdmctextfield1 = [[targetTextField alloc]initWithFrame:CGRectMake(225, 330, 70, 30)];
                 hdmctextfield1.font = [UIFont systemFontOfSize:13];
+                hdmctextfield1.keyboardType = UIKeyboardTypeNumberPad;
                 [hdmctextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 hdmctextfield1.tag = 52;
                 if (_dealmoney.length>0) {
@@ -521,6 +531,7 @@
                 
                 targetTextField *tcxxtextfield1 = [[targetTextField alloc]initWithFrame:CGRectMake(100, 360, 70, 30)];
                 tcxxtextfield1.font = [UIFont systemFontOfSize:13];
+                  tcxxtextfield1.keyboardType = UIKeyboardTypeNumberPad;
                 [tcxxtextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 tcxxtextfield1.tag = 53;
                 if (_leastmoney.length>0) {
@@ -540,6 +551,7 @@
                 
                 targetTextField *cjltextfield1 = [[targetTextField alloc]initWithFrame:CGRectMake(70, 390, 70, 30)];
                 cjltextfield1.font = [UIFont systemFontOfSize:13];
+                cjltextfield1.keyboardType = UIKeyboardTypeNumberPad;
                 [cjltextfield1 addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 cjltextfield1.tag = 54;
                 if (_dealrate.length>0) {
@@ -686,14 +698,14 @@
          return cell;
     }
 }
--(void)xqdwtextField:(UITextField *)textfield{
+-(void)xqdwtextField:(UIButton *)textfield{
     NSArray *zwlbAry = [[NSArray alloc]init];
     zwlbAry = @[@"保养",@"功效",@"修复",@"美容"];
     [SelectAlert showWithTitle:@"选择类型" titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
         
     } selectValue:^(NSString *selectValue) {
-        textfield.text = selectValue;
-        _brandpos = textfield.text;
+        [textfield setTitle:selectValue forState:UIControlStateNormal];
+        _brandpos = selectValue;
         
     } showCloseButton:NO];
 }
@@ -774,10 +786,7 @@
         case 42:
            _validnum = textfield.text;//有质量顾客数量
             break;
-        case 43:
-            //_brandpos = textfield.text;//品牌定位
-             [self xqdwtextField:textfield];
-            break;
+        
         case 44:
            _otherpos = textfield.text;//品牌定位的其他
             break;
@@ -828,24 +837,21 @@
     }
 }
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    if(textField.tag == 43){
-       
-        return NO;
-    }else{
-        return YES;
-    }
-}
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//    if(textField.tag == 43){
-//        [textField resignFirstResponder];
-//        return YES;
-//    }
-//    return NO;
-//}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (indexPath.section == 0) {
+        SiginViewController *siginVC = [[SiginViewController alloc]init];
+        
+        siginVC.shopid =_shopid;
+        siginVC.Address = [NSString stringWithFormat:@"%@%@%@",_Province,_City,_County];
+        siginVC.Types = @"3";
+        
+        [self.navigationController pushViewController:siginVC animated:YES];
+    }
+    
+    
     if (indexPath.section ==1) {
         if (indexPath.row==2) {
             _index=indexPath;
@@ -1231,7 +1237,8 @@
     if (model.Num == nil) {
         _num = @"";
     }else{
-        _num = model.Num;
+        
+        _num = [[NSString alloc] initWithFormat:@"%@",model.Num];
     }
     _principal= [[NSString alloc]init];//店铺负责人
     if (model.Principal == nil) {
@@ -1268,19 +1275,19 @@
     if (model.Berths == nil) {
         _berths = @""; //
     }else{
-        _berths = model.Berths;
+        _berths =[[NSString alloc] initWithFormat:@"%@",model.Berths];
     }
     _beautician= [[NSString alloc]init];//美容师人数
     if (model.Beautician == nil) {
         _beautician = @"";
     }else{
-        _beautician = model.Beautician;
+        _beautician =[[NSString alloc] initWithFormat:@"%@",model.Beautician];
     }
     _plantingduration= [[NSString alloc]init];//开店年限
     if (model.PlantingDuration == nil) {
         _plantingduration = @"";
     }else{
-        _plantingduration = model.PlantingDuration;
+        _plantingduration =[[NSString alloc] initWithFormat:@"%@",model.PlantingDuration];
     }
     _brandbusiness= [[NSString alloc]init];//主要经营品牌
     if (model.BrandBusiness == nil) {
@@ -1298,19 +1305,19 @@
     if (model.CustomerNum == nil) {
         _customernum = @"";
     }else{
-        _customernum = model.CustomerNum;
+        _customernum = [[NSString alloc] initWithFormat:@"%@",model.CustomerNum];
     }
     _validnum= [[NSString alloc]init];//有质量顾客数量
     if (model.ValidNum == nil) {
         _validnum = @"";
     }else{
-        _validnum = model.ValidNum;
+        _validnum = [[NSString alloc] initWithFormat:@"%@",model.ValidNum];
     }
     _brandpos= [[NSString alloc]init];//品牌定位
     if (model.BrandPos == nil) {
         _brandpos = @"";
     }else{
-        _brandpos = model.BrandPos;
+        _brandpos = [[NSString alloc] initWithFormat:@"%@",model.BrandPos];
     }
     _otherpos= [[NSString alloc]init];//品牌定位的其他
     if (model.OtherPos == nil) {
@@ -1322,25 +1329,25 @@
     if (model.SinglePrice == nil) {
         _singleprice = @"";
     }else{
-        _singleprice = model.SinglePrice;
+        _singleprice = [[NSString alloc] initWithFormat:@"%@",model.SinglePrice];
     }
     _boxprice= [[NSString alloc]init];//套盒价格
     if (model.BoxPrice == nil) {
         _boxprice = @"";
     }else{
-        _boxprice = model.BoxPrice;
+        _boxprice = [[NSString alloc] initWithFormat:@"%@",model.BoxPrice];
     }
     _cardprice= [[NSString alloc]init];//卡项价格
     if (model.CardPrice == nil) {
         _cardprice = @"";
     }else{
-        _cardprice = model.CardPrice;
+        _cardprice = [[NSString alloc] initWithFormat:@"%@",model.CardPrice];
     }
     _packprice= [[NSString alloc]init];// 项目套餐
     if (model.PackPrice == nil) {
         _packprice = @"";
     }else{
-        _packprice = model.PackPrice;
+        _packprice = [[NSString alloc] initWithFormat:@"%@",model.PackPrice];
     }
     _flag= [[NSString alloc]init];//本年是否做过大量收现活动
     if (model.Flag == nil) {
@@ -1358,19 +1365,19 @@
     if (model.DealMoney == nil) {
         _dealmoney = @"";
     }else{
-        _dealmoney = model.DealMoney;
+        _dealmoney = [[NSString alloc] initWithFormat:@"%@",model.DealMoney];
     }
     _leastmoney= [[NSString alloc]init];//下限
     if (model.LeastMoney == nil) {
         _leastmoney = @"";
     }else{
-        _leastmoney = model.LeastMoney;
+        _leastmoney = [[NSString alloc] initWithFormat:@"%@",model.LeastMoney];
     }
     _dealrate= [[NSString alloc]init];//成交率
     if (model.DealRate == nil) {
         _dealrate = @"";
     }else{
-        _dealrate = model.DealRate;
+        _dealrate = [[NSString alloc] initWithFormat:@"%@",model.DealRate];
     }
     _demand= [[NSString alloc]init];//运营协助需求
     if (model.Demand == nil) {

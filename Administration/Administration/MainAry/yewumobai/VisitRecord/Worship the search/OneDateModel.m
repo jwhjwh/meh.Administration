@@ -17,6 +17,7 @@
         self.ShopId = value;
         
     }
+
     
 }
 //kvc取值操作  取值误操作

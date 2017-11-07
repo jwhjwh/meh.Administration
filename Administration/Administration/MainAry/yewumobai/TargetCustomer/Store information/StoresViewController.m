@@ -301,6 +301,20 @@
 }
 -(void)rightItemAction{
     storesDepartment *storesVC = [[storesDepartment alloc]init];
+    storesVC.storeName = _StoreName;
+    storesVC.province = _Province;
+    storesVC.city =_City;
+    storesVC.county = _County;
+    storesVC.address = _Address;
+    storesVC.rideinfo = _RideInfo;
+    storesVC.area = _Area;
+    storesVC.brandbusiness = _BrandBusiness;
+    storesVC.intentionbrand = _IntentionBrand;
+    storesVC.berths = _Berths;
+    storesVC.valinumber = _ValidNumber;
+    storesVC.staffnumber = _StaffNumber;
+    storesVC.jobexpires = _JobExpires;
+    storesVC.problems = _Problems;
     
     [self.navigationController pushViewController:storesVC animated:YES];
     

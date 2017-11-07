@@ -8,6 +8,8 @@
 
 #import "DeterMineTcViewController.h"
 #import "TargetTableViewController.h"
+#import "ModifyVisitViewController.h"
+#import "InterestedTabelViewController.h"
 @interface DeterMineTcViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic ,retain)NSArray *nameArrs;
@@ -111,8 +113,19 @@
         [self.navigationController pushViewController:ttvc animated:YES];
     }else if(indexPath.section ==1){
        NSLog(@"意向客户表");
+        InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
+        intabel.shopId = self.shopId;
+        intabel.strId = self.strId;
+        intabel.isofyou = @"1";
+        [self.navigationController pushViewController:intabel animated:YES];
     }else{
         NSLog(@"陌拜记录表");
+        
+        ModifyVisitViewController *visiVC = [[ModifyVisitViewController alloc]init];
+        visiVC.strId = self.strId;
+        visiVC.shopId = self.shopId;
+        visiVC.andisofyou = @"1";
+        [self.navigationController pushViewController:visiVC animated:YES];
     }
     
 }

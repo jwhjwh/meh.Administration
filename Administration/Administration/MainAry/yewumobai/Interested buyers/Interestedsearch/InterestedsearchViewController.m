@@ -10,6 +10,8 @@
 #import "OneDateModel.h"
 #import "RecordTableViewCell.h"
 #import "InterestedChooseViewController.h"
+#import "tcModel.h"
+#import "DeterMineTcViewController.h"
 @interface InterestedsearchViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
@@ -21,6 +23,7 @@
 @property (nonatomic,strong)UIButton*comBtn;
 @property (nonatomic,strong)UIButton*meBtn;
 @property (nonatomic,strong)NSMutableArray* InterNameAry;
+@property (nonatomic,strong)NSMutableArray* shopidAry;
 
 
 @end
@@ -133,13 +136,26 @@
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     OneDateModel *model=[[OneDateModel alloc]init];
-    model = _InterNameAry[indexPath.row];
-    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.StoreName];
-    cell.RectordLabel.text = [NSString stringWithFormat:@"地址:%@%@%@",model.Province,model.City,model.County];
+    
+    tcModel *tcmodel=[[tcModel alloc]init];
+   
+    if ([self.TCVC isEqualToString:@"1"]) {
+        tcmodel = _InterNameAry[indexPath.row];
+        cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",tcmodel.StoreName];
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地址:%@%@%@",tcmodel.Province,tcmodel.City,tcmodel.County];
+        NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [tcmodel.Time substringWithRange:NSMakeRange(5, 11)]];
+        cell.shijianLabel.text = xxsj;
+    }else{
+         model = _InterNameAry[indexPath.row];
+        cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.StoreName];
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地址:%@%@%@",model.Province,model.City,model.County];
+        NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
+        cell.shijianLabel.text = xxsj;
+    }
+    
     cell.RectordLabel.adjustsFontSizeToFitWidth = YES;
     cell.RectordLabel.textAlignment = NSTextAlignmentLeft;
-    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
-    cell.shijianLabel.text = xxsj;
+    
     
     return cell;
 }
@@ -180,11 +196,25 @@
             //recordInfo
             NSArray *array=[responseObject valueForKey:@"list"];
             _InterNameAry = [[NSMutableArray alloc]init];
-            for (NSDictionary *dic in array) {
-                OneDateModel *model=[[OneDateModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [_InterNameAry addObject:model];
+            if ([self.TCVC isEqualToString:@"1"]) {
+                  for (NSDictionary *dict in array) {
+                      _shopidAry= [[NSMutableArray alloc]init];
+                      tcModel *model=[[tcModel alloc]init];
+                      [model setValuesForKeysWithDictionary:dict];
+                      [_shopidAry addObject:[dict valueForKey:@"shopId"]];
+                      [_InterNameAry addObject:model];
+                  }
+                
+            }else{
+                for (NSDictionary *dict in array) {
+                    _shopidAry= [[NSMutableArray alloc]init];
+                    OneDateModel *model=[[OneDateModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dict];
+                    [_shopidAry addObject:[dict valueForKey:@"shopId"]];
+                    [_InterNameAry addObject:model];
+                }
             }
+            
             [infonTableview reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -212,6 +242,7 @@
         
     } failure:^(NSError *error) {
         
+        
     } view:self.view MBPro:YES];
     
 }
@@ -232,13 +263,31 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OneDateModel *model=[[OneDateModel alloc]init];
-    model = _InterNameAry[indexPath.row];
-    InterestedChooseViewController *intereVC = [[InterestedChooseViewController alloc]init];
-    intereVC.strIdName = model.StoreName;
-    intereVC.strId = self.strId;
+    if ([self.TCVC isEqualToString:@"1"]) {
+        //目标客户
+        
+        tcModel *model=[[tcModel alloc]init];
+        model = _InterNameAry[indexPath.row];
+        DeterMineTcViewController *dTcVC = [[DeterMineTcViewController alloc]init];
+        dTcVC.TargetVisitId = model.Id;
+        dTcVC.strId = self.strId;
+        dTcVC.shopname =model.StoreName;
+        dTcVC.shopId = _shopidAry[indexPath.row];
+        [self.navigationController pushViewController:dTcVC animated:YES];
+        
+    }else{
+        //意向客户
+        OneDateModel *model=[[OneDateModel alloc]init];
+        model = _InterNameAry[indexPath.row];
+        InterestedChooseViewController *intereVC = [[InterestedChooseViewController alloc]init];
+        intereVC.strIdName = model.StoreName;
+        intereVC.strId = self.strId;
+        intereVC.shopId =_shopidAry[indexPath.row];
+        intereVC.intentionId = model.ShopId;
+        [self.navigationController pushViewController:intereVC animated:YES];
+    }
     
-    [self.navigationController pushViewController:intereVC animated:YES];
+    
 
     
 }

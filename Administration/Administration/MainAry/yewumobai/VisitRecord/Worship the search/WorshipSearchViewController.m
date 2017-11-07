@@ -246,16 +246,24 @@
     
     if ([self.intere isEqualToString:@"1"]) {
         InterestedsearchViewController * intereVC = [[InterestedsearchViewController alloc]init];
-        intereVC.provice =_proviceLabel.text;
-        intereVC.city =_cityLabel.text;
-        intereVC.area =_areaLabel.text;
+        intereVC.provice =_proviceNameAry[ssbbtn.tag];
+        intereVC.city =_cityNameAry[ssbbtn.tag];
+        intereVC.area =_areaNameAry[ssbbtn.tag];
         intereVC.strId = self.strId;
+        [self.navigationController pushViewController:intereVC animated:YES];
+    }else if ([self.intere isEqualToString:@"2"]){
+        InterestedsearchViewController * intereVC = [[InterestedsearchViewController alloc]init];
+        intereVC.provice =_proviceNameAry[ssbbtn.tag];
+        intereVC.city =_cityNameAry[ssbbtn.tag];
+        intereVC.area =_areaNameAry[ssbbtn.tag];
+        intereVC.strId = self.strId;
+        intereVC.TCVC =@"1";
         [self.navigationController pushViewController:intereVC animated:YES];
     }else{
         OneDateViewController *OneDate = [[OneDateViewController alloc]init];
-        OneDate.provice =_proviceLabel.text;
-        OneDate.city =_cityLabel.text;
-        OneDate.area =_areaLabel.text;
+        OneDate.provice =_proviceNameAry[ssbbtn.tag];
+        OneDate.city =_cityNameAry[ssbbtn.tag];
+        OneDate.area =_areaNameAry[ssbbtn.tag];
         OneDate.strId = self.strId;
         [self.navigationController pushViewController:OneDate animated:YES];
     }

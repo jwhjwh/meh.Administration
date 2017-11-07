@@ -93,7 +93,7 @@ static CGRect oldframe;
     //设置请求参数的类型:HTTP (AFJSONRequestSerializer,AFHTTPRequestSerializer)
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     //设置请求的超时时间
-    manager.requestSerializer.timeoutInterval = 30.f;
+    manager.requestSerializer.timeoutInterval = 180.f;
     //设置服务器返回结果的类型:JSON (AFJSONResponseSerializer,AFHTTPResponseSerializer)
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];

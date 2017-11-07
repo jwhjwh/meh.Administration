@@ -14,7 +14,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
     CGContextFillRect(context, CGRectMake(0, CGRectGetHeight(self.frame) - 0.5, CGRectGetWidth(self.frame), 0.5));
-    self.keyboardType = UIKeyboardTypeDecimalPad;
+   
     self.textAlignment = NSTextAlignmentCenter;
     
 }

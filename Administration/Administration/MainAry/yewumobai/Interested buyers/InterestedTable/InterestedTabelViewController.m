@@ -18,6 +18,7 @@
 #import "InterestedInputViewController.h"//主要经营品牌-简介-分析
 #import "UpdateIntendedViewController.h"//意向客户提交到部门
 #import "ShareColleagues.h"//分享同事
+#import "TargetTableViewController.h"
 @interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource,XFDaterViewDelegate>
 {
     UITableView *infonTableview;
@@ -53,6 +54,8 @@
 @property (nonatomic,strong)NSString *Address;//门店地址
 @property (nonatomic,strong)NSString *ShopName;//店铺负责人姓名
 @property (nonatomic,strong)NSString *UsersName;//业务人员名称
+
+@property (nonatomic,strong)NSString *visiId;
 //---------
 @end
 
@@ -70,10 +73,15 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    if ([_isofyou isEqualToString:@"1"]) {
+        
+    }else{
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
+    
     _InterNameAry = [[NSMutableArray alloc]init];
     _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"];
     infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -257,7 +265,7 @@
             
             siginVC.shopid =_ShopId;
             siginVC.Address = [NSString stringWithFormat:@"%@%@%@",_Province,_City,_County];
-            siginVC.Types = @"1";
+            siginVC.Types = @"2";
             
             [self.navigationController pushViewController:siginVC animated:YES];
             }else{
@@ -335,8 +343,6 @@
                     }];
 
                 }
-                    
-                    
                     
                     break;
                 case 11:{
@@ -421,7 +427,7 @@
                 };
                 [alertView showMKPAlertView];
             }else if(selectIndex == 3){
-                //分享给同事 --------跳界面
+                
                 ShareColleagues *SCVC = [[ShareColleagues alloc]init];
                 SCVC.shopip = _ShopId;
                 SCVC.yiandmu = @"2";
@@ -479,11 +485,19 @@
     dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":_ShopId,@"RoleId":self.strId,@"UsersName":username};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            _visiId = [[NSString alloc]init];
+            _visiId =[responseObject valueForKey:@"TargetVisitId"];
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"现在该客户已升级为目标客户,现在去填写目标客户确立表?" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
             alertView.resultIndex = ^(NSInteger index){
                 NSLog(@"%ld",index);
                 if(index == 1){
                     //跳界面----------------------填写目标客户
+                    TargetTableViewController *ttvc = [[TargetTableViewController alloc]init];
+                    ttvc.OldTargetVisitId = _visiId;
+                    ttvc.isofyou = NO;
+                    ttvc.strId = self.strId;
+                    ttvc.cellend = NO;
+                    [self.navigationController pushViewController:ttvc animated:YES];
                     
                 }
             };
@@ -544,7 +558,14 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"IntendedId":self.intentionId,@"RoleId":self.strId};
+    if ([_isofyou isEqualToString:@"1"]) {
+        uStr = [NSString stringWithFormat:@"%@shop/getShop.action",KURLHeader];
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":self.shopId,@"Types":@"2"};
+    }else{
+   uStr = [NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"IntendedId":self.intentionId,@"RoleId":self.strId};
+    }
+    
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *arry=[responseObject valueForKey:@"list"];

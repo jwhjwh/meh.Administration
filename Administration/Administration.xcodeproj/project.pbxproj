@@ -557,6 +557,7 @@
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
 		620B9C711F79051600B24660 /* InterestedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 620B9C701F79051600B24660 /* InterestedModel.m */; };
 		620D3A171ED3CA5900D804A7 /* CreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620D3A161ED3CA5900D804A7 /* CreaViewController.m */; };
+		620E2F991FB0593A002DE6A5 /* CooperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620E2F981FB0593A002DE6A5 /* CooperationViewController.m */; };
 		620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FC39B1ED035E500C4D8B3 /* ManageViewController.m */; };
 		6217BE681F7F2A730039CBCE /* InteredAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6217BE671F7F2A730039CBCE /* InteredAlertView.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
@@ -1806,6 +1807,8 @@
 		620B9C701F79051600B24660 /* InterestedModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestedModel.m; sourceTree = "<group>"; };
 		620D3A151ED3CA5900D804A7 /* CreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreaViewController.h; sourceTree = "<group>"; };
 		620D3A161ED3CA5900D804A7 /* CreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreaViewController.m; sourceTree = "<group>"; };
+		620E2F971FB0593A002DE6A5 /* CooperationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CooperationViewController.h; sourceTree = "<group>"; };
+		620E2F981FB0593A002DE6A5 /* CooperationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CooperationViewController.m; sourceTree = "<group>"; };
 		620FC39A1ED035E500C4D8B3 /* ManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageViewController.h; sourceTree = "<group>"; };
 		620FC39B1ED035E500C4D8B3 /* ManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageViewController.m; sourceTree = "<group>"; };
 		6217BE661F7F2A730039CBCE /* InteredAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteredAlertView.h; sourceTree = "<group>"; };
@@ -3047,6 +3050,8 @@
 				62629F421F6A6D920001BA89 /* positionViewController.m */,
 				1F6833BA1E72966700F74D50 /* businessViewController.h */,
 				1F6833BB1E72966700F74D50 /* businessViewController.m */,
+				620E2F971FB0593A002DE6A5 /* CooperationViewController.h */,
+				620E2F981FB0593A002DE6A5 /* CooperationViewController.m */,
 				62F2206C1F905BFE004163A4 /* TargetCustomer */,
 				1F71B88F1F887E8600C3638F /* newVisit */,
 				6266E3401F738ED5002B1303 /* Interested buyers */,
@@ -5805,6 +5810,7 @@
 				1F6126F01EBDC4ED0031E4C4 /* SearchViewController.m in Sources */,
 				1FF580781F8C64D3001C3D40 /* VCArtMonthSubmited.m in Sources */,
 				1F35C1D71E7FC3D00041EF5A /* ContactsController.m in Sources */,
+				620E2F991FB0593A002DE6A5 /* CooperationViewController.m in Sources */,
 				1F6211BB1E8CFFAF00F50851 /* MWTapDetectingView.m in Sources */,
 				1F6211931E8CFFAF00F50851 /* EaseUI.m in Sources */,
 				1FF580A01F8C67E0001C3D40 /* VCArtMonthSummaryPostil.m in Sources */,

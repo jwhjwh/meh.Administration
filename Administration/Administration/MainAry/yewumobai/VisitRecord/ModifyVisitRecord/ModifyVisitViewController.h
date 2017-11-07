@@ -15,4 +15,10 @@
 @property (nonatomic,strong)NSString *strId;//职位id
 
 @property (nonatomic,strong)NSString *moandthe;//区别
+
+
+@property (nonatomic,strong)NSString *andisofyou;
+
+@property (nonatomic,strong)NSString *shopId;
+
 @end
