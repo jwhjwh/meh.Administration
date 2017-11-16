@@ -173,6 +173,7 @@
     
     MyTextField *textF1 = [[MyTextField alloc]init];
     textF1.font =   [UIFont systemFontOfSize:13];
+    textF1.keyboardType = UIKeyboardTypeNumberPad;
     [viewB addSubview:textF1];
     [textF1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeljihua.mas_right);
@@ -194,6 +195,7 @@
     
     MyTextField *textF2 = [[MyTextField alloc]init];
     textF2.font =   [UIFont systemFontOfSize:13];
+    textF2.keyboardType = UIKeyboardTypeNumberPad;
     [viewB addSubview:textF2];
     [textF2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldou.mas_right);
@@ -225,6 +227,7 @@
     
     MyTextField *textF3 = [[MyTextField alloc]init];
     textF3.font =   [UIFont systemFontOfSize:13];
+    textF3.keyboardType = UIKeyboardTypeNumberPad;
     [viewB addSubview:textF3];
     [textF3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labelyuji.mas_right);
@@ -246,6 +249,7 @@
     
     MyTextField *textF4 = [[MyTextField alloc]init];
     textF4.font =   [UIFont systemFontOfSize:13];
+    textF4.keyboardType = UIKeyboardTypeNumberPad;
     [viewB addSubview:textF4];
     [textF4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(labeldou1.mas_right);

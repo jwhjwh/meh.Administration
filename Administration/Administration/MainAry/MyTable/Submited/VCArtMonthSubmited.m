@@ -336,7 +336,7 @@
 {
     chooseEdit  = [[ViewChooseEdit alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     chooseEdit.delegate = self;
-    chooseEdit.arrayButton = @[@"编辑",@"取消"];
+    chooseEdit.arrayButton = [NSArray arrayWithObjects:@"编辑",@"取消", nil];
     [self.view addSubview:chooseEdit];
 }
 

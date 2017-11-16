@@ -79,8 +79,8 @@
         if ([code isEqualToString:@"0000"]) {
             
             if (self.isSelect) {
-                [self.startDate setTitle:[self.dict[@""]substringToIndex:10] forState:UIControlStateNormal];
-                [self.endDate setTitle:[self.dict[@""]substringToIndex:10] forState:UIControlStateNormal];
+                [self.startDate setTitle:[self.dict[@"startDate"]substringToIndex:10] forState:UIControlStateNormal];
+                [self.endDate setTitle:[self.dict[@"endDate"]substringToIndex:10] forState:UIControlStateNormal];
                 self.string1 = self.dict[@"monday"];
                 self.string2 = self.dict[@"tuesday"];
                 self.string3 = self.dict[@"wednesday"];
@@ -99,6 +99,7 @@
                 self.string3 = self.dict[@"strategy"];
                 self.string4 = self.dict[@"experience"];
                 self.string5 = self.dict[@"directionPreset"];
+                self.planID = [NSString stringWithFormat:@"%@",self.dict[@"planId"]];
             }
             
             if ([[responseObject valueForKey:@"owner"] length]!=0) {
@@ -167,6 +168,7 @@
     }];
     
     UIButton *startDate = [[UIButton alloc]init];
+    startDate.userInteractionEnabled = NO;
     [startDate setTitle:@"选择日期" forState:UIControlStateNormal];
     startDate.titleLabel.textAlignment = NSTextAlignmentLeft;
     startDate.tag = 400;
@@ -194,6 +196,7 @@
     }];
     //
     UIButton *endDate = [[UIButton alloc]init];
+    endDate.userInteractionEnabled = NO;
     [endDate setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [endDate setTitle:@"选择日期" forState:UIControlStateNormal];
     [endDate setBackgroundColor:[UIColor whiteColor]];
@@ -353,14 +356,14 @@
 {
     UIButton *buttonPlan = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, Scree_width/2, 40)];
     [buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [buttonPlan setTitle:@"月计划" forState:UIControlStateNormal];
+    [buttonPlan setTitle:@"周计划" forState:UIControlStateNormal];
     [buttonPlan addTarget:self action:@selector(changeData:) forControlEvents:UIControlEventTouchUpInside];
     buttonPlan.tag = 100;
     [self.view addSubview:buttonPlan];
     self.buttonPlan  = buttonPlan;
     
     UIButton *buttonSummary = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, 64, Scree_width/2, 40)];
-    [buttonSummary setTitle:@"月总结" forState:UIControlStateNormal];
+    [buttonSummary setTitle:@"周总结" forState:UIControlStateNormal];
     [buttonSummary setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
     [buttonSummary addTarget:self action:@selector(changeData:) forControlEvents:UIControlEventTouchUpInside];
     buttonSummary.tag = 200;
@@ -406,7 +409,7 @@
         self.arrayContent = @[@"填写本周工作落实进展简述",@"填写本周工作进展及目标达成的分析与评估",@"填写当前阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写个人成长目标及方向预设"];
         self.isSelect = NO;
         self.title = @"填写周总结";
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.rightItem;
         self.remark = @"11";
         [self getHttpData];
     }
@@ -588,21 +591,31 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    if (isBack) {
+        if (
+            self.startDate.titleLabel.text.length == 0||
+            self.endDate.titleLabel.text.length == 0
+            )
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
+            return;
+        }
+    }else
+    {
+    
     if ([self.string1 isEqualToString:@""]||
         [self.string2 isEqualToString:@""]||
         [self.string3 isEqualToString:@""]||
         [self.string4 isEqualToString:@""]||
         [self.string5 isEqualToString:@""]||
-        [self.string6 isEqualToString:@""]||
-        [self.string7 isEqualToString:@""]||
-        [self.string8 isEqualToString:@""]||
-        [self.string9 isEqualToString:@""]||
+        
         [self.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.endDate.titleLabel.text isEqualToString:@"选择日期"]
         )
     {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
+    }
     }
     
     NSDictionary *dict = @{
@@ -614,19 +627,15 @@
                            @"Num":[ShareModel shareModel].num,
                            @"PlanId":self.planID,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"1",
+                           @"code":@"2",
                            @"Hint":hint,
                            @"StartDate":self.startDate.titleLabel.text,
                            @"EndDate":self.endDate.titleLabel.text,
-                           @"Monday":self.string1,
-                           @"Tuesday":self.string2,
-                           @"Wednesday":self.string3,
-                           @"Thursday":self.string4,
-                           @"Friday":self.string5,
-                           @"Saturday":self.string6,
-                           @"Sunday":self.string7,
-                           @"Important":self.string8,
-                           @"GrowthPlans":self.string9,
+                           @"WorkProgress":self.string1,
+                           @"ProgressEvaluation":self.string2,
+                           @"Strategy":self.string3,
+                           @"Experience":self.string4,
+                           @"DirectionPreset":self.string5,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
@@ -682,13 +691,6 @@
                     cell.textView.text = self.string1;
                 }
                 
-            self.string1 = self.dict[@"workProgress"];
-            self.string2 = self.dict[@"progressEvaluation"];
-            self.string3 = self.dict[@"strategy"];
-            self.string4 = self.dict[@"experience"];
-            self.string5 = self.dict[@"directionPreset"];
-            
-            
                 for (NSString *string in self.arrayPostil) {
                     if ([string containsString:@"monday"]) {
                         cell.buttonPostil.hidden = NO;
@@ -952,6 +954,13 @@
 
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getHttpData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -965,8 +974,7 @@
     self.title = @"填写周计划";
     
     self.arraySummary = [NSArray array];
-    
-    self.isSelect = YES;
+
     canEdit = NO;
     
     self.string1=  @"";

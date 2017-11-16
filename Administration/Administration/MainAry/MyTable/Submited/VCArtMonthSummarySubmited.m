@@ -167,6 +167,7 @@
     self.viewSummary = viewSummary;
     
     ViewArtMonthSummary *artMonthSummary = [[ViewArtMonthSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,450)];
+    artMonthSummary.buttonDate.userInteractionEnabled = NO;
     [viewSummary addSubview:artMonthSummary];
     self.artMonthSummary = artMonthSummary;
     

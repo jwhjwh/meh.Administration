@@ -73,6 +73,7 @@
     vc.num =[NSString stringWithFormat:@"%d",[dict[@"Num"]intValue]];
     vc.roleId = self.roleId;
     vc.stringTitle = self.stringTitle;
+    [ShareModel shareModel].num = [NSString stringWithFormat:@"%d",[dict[@"Num"]intValue]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma -mark system

@@ -7,10 +7,10 @@
 //
 
 #import "ViewInsideMonthTable.h"
-#import "ViewDatePick.h"
 
-@interface ViewInsideMonthTable ()<ViewDatePickerDelegate>
-@property (nonatomic,weak)ViewDatePick *myDatePick;
+
+@interface ViewInsideMonthTable ()
+
 @end
 
 @implementation ViewInsideMonthTable
@@ -76,7 +76,6 @@
     [startDate setTitle:@"选择日期" forState:UIControlStateNormal];
     startDate.titleLabel.textAlignment = NSTextAlignmentLeft;
     startDate.tag = 400;
-    [startDate addTarget:self action:@selector(showDatePicker) forControlEvents:UIControlEventTouchUpInside];
     [startDate setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [startDate setBackgroundColor:[UIColor whiteColor]];
     [view1 addSubview:startDate];
@@ -131,23 +130,7 @@
     }];
 }
 
--(void)showDatePicker
-{
-    ViewDatePick *myDatePick=  [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
-    [self endEditing:YES];
-    myDatePick.delegate = self;
-    [self.window addSubview:myDatePick];
-    self.myDatePick = myDatePick;
-}
 
--(void)getDate
-{
-    NSDate *date = self.myDatePick.datePick.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd";
-    NSString *stringDate = [[formatter stringFromDate:date] substringToIndex:7];
-    [self.buttonDate setTitle:stringDate forState:UIControlStateNormal];
-}
 
 /*
 // Only override drawRect: if you perform custom drawing.

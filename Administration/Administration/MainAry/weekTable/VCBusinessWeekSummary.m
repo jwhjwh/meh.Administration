@@ -63,8 +63,10 @@
         if ([stringCode isEqualToString:@"0000"]) {
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             
+            
             self.arrayTask2 = [NSMutableArray arrayWithObjects:@"原计划陌拜",@"实际陌拜",@"其中专业美容院",@"前店后院",@"确定意向",@"实际达成合作",@"实际回款", nil];
             self.arrayTotal2 = [NSMutableArray arrayWithObjects:@"planStore",@"actualStore",@"specialtyStore",@"frontBackStore",@"confirmStore",@"CooperationStore",@"RealityMoney", nil];
+            
             if (self.dictInfo.count!=0) {
                 NSString *stringKey = [responseObject valueForKey:@"name"];
                 self.arrayKey = [stringKey componentsSeparatedByString:@","];
@@ -165,7 +167,8 @@
         self.arrayTitle =  @[@"日期",@"职位",@"姓名",@"本周任务计划",@"本周行程安排、目标与销售分级以及策略",@"本周其他工作跟进目标预设以及善后工作",@"本周重要事项备注及补充说明",@"下阶段工作预设及方向",@"个人成长会话安排及自我奖惩管理",@"其他事项"];
         self.isSelect = YES;
         self.remark = @"2";
-        [self getData];
+        
+        self.tableId = [NSString stringWithFormat:@"%@",self.dictInfo[@"planId"]];
         
     }else
     {
@@ -176,6 +179,7 @@
         self.isSelect = NO;
         self.remark = @"3";
     }
+    [self getData];
 }
 
 -(void)editContent:(UIButton *)button
@@ -183,17 +187,77 @@
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
-        }
-    }
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.tableId;
     vc.stringName = cell.textView.text;
     vc.num = self.num;
+    if (self.isSelect) {
+        vc.tableID= self.tableId;
+        switch (indexPath.row) {
+            case 4:
+                
+                vc.theKey = @"strategy";
+                
+                break;
+            case 5:
+                vc.theKey = @"preset";
+                
+                break;
+            case 6:
+                vc.theKey = @"content";
+                
+                break;
+            case 7:
+                vc.theKey = @"presetDirection";
+                
+                break;
+            case 8:
+                vc.theKey = @"planningManagement";
+                
+                break;
+            case 9:
+                vc.theKey = @"others";
+                
+                break;
+                
+            default:
+                break;
+        }
+    }else{
+        vc.tableID = self.summaryId;
+        switch (indexPath.row) {
+            case 4:
+                vc.theKey = @"workProgress";
+                
+                break;
+            case 5:
+                vc.theKey = @"workAnalyzeAssess";
+                
+                break;
+            case 6:
+                vc.theKey = @"problemSolution";
+                
+                break;
+            case 7:
+                vc.theKey = @"selfSummary";
+                
+                break;
+            case 8:
+                vc.theKey = @"caseStrategyShare";
+                
+                break;
+            case 9:
+                vc.theKey = @"others";
+                
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -216,7 +280,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
         if (indexPath.row<3) {
-            tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
             if (cell==nil) {
                 cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
@@ -224,7 +287,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             switch (indexPath.row) {
                 case 0:
-                    cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:9],[self.dictInfo[@"endDate"] substringToIndex:9]];
+                    cell.labelInfo.text = [NSString stringWithFormat:@"%@至%@",[self.dictInfo[@"startDate"] substringToIndex:9],[self.dictInfo[@"endDate"] substringToIndex:10]];
                     break;
                 case 1:
                     cell.labelInfo.text = self.postionName;
@@ -262,22 +325,23 @@
                     {
                         cell.button.hidden = YES;
                         cell.button.userInteractionEnabled = NO;
-                        NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"计划陌拜 %@ 家店,",self.dictInfo[@"planStore"]]];
+                        NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"计划陌拜 %@ 家店,",[NSString stringWithFormat:@"%@",self.dictInfo[@"planStore"]]]];
                         [string1 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(3,[NSString stringWithFormat:@"%@",self.dictInfo[@"planStore"]].length+2)];
                         
-                        NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"回访 %@ 家意向店\n",self.dictInfo[@"callbackStore"]]];
+                        NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"回访 %@ 家意向店\n",[NSString stringWithFormat:@"%@",self.dictInfo[@"callbackStore"]]]];
                         [string2 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(2, [NSString stringWithFormat:@"%@",self.dictInfo[@"callbackStore"]].length+2)];
                         
-                        NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"预计达成合作 %@ 家,",self.dictInfo[@"estimateStore"]]];
+                        NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"预计达成合作 %@ 家,",[NSString stringWithFormat:@"%@",self.dictInfo[@"estimateStore"]]]];
                         [string3 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(6, [NSString stringWithFormat:@"%@",self.dictInfo[@"estimateStore"]].length+2)];
                         
-                        NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"预计回款 %@ 万元,",self.dictInfo[@"EstimateMoneyStore"]]];
+                        NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"预计回款 %@ 万元,",[NSString stringWithFormat:@"%@",self.dictInfo[@"estimateMoneyStore"]]]];
                         [string5 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(3, [NSString stringWithFormat:@"%@",self.dictInfo[@"EstimateMoneyStore"]].length+2)];
                         
                         [self.mutAttribute appendAttributedString:string1];
                         [self.mutAttribute appendAttributedString:string2];
                         [self.mutAttribute appendAttributedString:string3];
                         [self.mutAttribute appendAttributedString:string5];
+                        cell.textView.attributedText= self.mutAttribute;
                         
                     }
                         break;
@@ -358,26 +422,26 @@
                     {
                         cell.button.hidden = YES;
                         cell.button.userInteractionEnabled = NO;
-                        NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"原计划陌拜 %@ 家店,",self.dictInfo[@"planStore"]]];
+                        NSMutableAttributedString *string1 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"原计划陌拜 %@ 家店,",[NSString stringWithFormat:@"%@",self.dictInfo[@"planStore"]]]];
                         [string1 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(5,[NSString stringWithFormat:@"%@",self.dictInfo[@"planStore"]].length+2)];
                         
-                        NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际陌拜 %@ 家\n",self.dictInfo[@"actualStore"]]];
+                        NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际陌拜 %@ 家\n",[NSString stringWithFormat:@"%@",self.dictInfo[@"actualStore"]]]];
                         [string2 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"actualStore"]].length+2)];
                         
-                        NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"其中专业美容院 %@ 家，",self.dictInfo[@"specialtyStore"]]];
+                        NSMutableAttributedString *string3 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"其中专业美容院 %@ 家，",[NSString stringWithFormat:@"%@",self.dictInfo[@"specialtyStore"]]]];
                         [string3 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, [NSString stringWithFormat:@"%@",self.dictInfo[@"specialtyStore"]].length+2)];
                         
                         
-                        NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"前店后院 %@ 家\n",self.dictInfo[@"frontBackStore"]]];
+                        NSMutableAttributedString *string5 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"前店后院 %@ 家\n",[NSString stringWithFormat:@"%@",self.dictInfo[@"frontBackStore"]]]];
                         [string5 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4, [NSString stringWithFormat:@"%@",self.dictInfo[@"frontBackStore"]].length+2)];
                         
-                        NSMutableAttributedString *string6 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"确定意向 %@ 家，",self.dictInfo[@"confirmStore"]]];
+                        NSMutableAttributedString *string6 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"确定意向 %@ 家，",[NSString stringWithFormat:@"%@",self.dictInfo[@"confirmStore"]]]];
                         [string6 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4,[NSString stringWithFormat:@"%@",self.dictInfo[@"confirmStore"]].length+2)];
                         
-                        NSMutableAttributedString *string7 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际达成合作 %@ 家\n",self.dictInfo[@"cooperationStore"]]];
+                        NSMutableAttributedString *string7 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际达成合作 %@ 家\n",[NSString stringWithFormat:@"%@",self.dictInfo[@"cooperationStore"]]]];
                         [string7 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(5,[NSString stringWithFormat:@"%@",self.dictInfo[@"cooperationStore"]].length+2)];
                         
-                        NSMutableAttributedString *string8 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际回款 %@ 万\n",self.dictInfo[@"realityMoney"]]];
+                        NSMutableAttributedString *string8 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"实际回款 %@ 万\n",[NSString stringWithFormat:@"%@",self.dictInfo[@"realityMoney"]]]];
                         [string8 addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(4,[NSString stringWithFormat:@"%@",self.dictInfo[@"realityMoney"]].length+2)];
                         
                         [self.mutAttribute appendAttributedString:string1];
@@ -495,28 +559,57 @@
     if (buttonIndex==1) {
         //审核接口
         if (alertView.tag == 200) {
-            dict = @{@"appkey":appKeyStr,
-                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                     @"CompanyInfoId":compid,
-                     @"RoleId":[ShareModel shareModel].roleID,
-                     @"DepartmentID":self.departmentId,
-                     @"Num":self.num,
-                     @"Sort":[ShareModel shareModel].sort,
-                     @"State":@"1",
-                     @"code":@"1",
-                     @"id":self.tableId};
+            if (self.isSelect) {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"1",
+                         @"code":@"1",
+                         @"id":self.tableId};
+            }else
+            {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"1",
+                         @"code":@"2",
+                         @"id":self.summaryId};
+            }
+            
         }else
         {
-            dict = @{@"appkey":appKeyStr,
-                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                     @"CompanyInfoId":compid,
-                     @"RoleId":[ShareModel shareModel].roleID,
-                     @"DepartmentID":self.departmentId,
-                     @"Num":self.num,
-                     @"Sort":[ShareModel shareModel].sort,
-                     @"State":@"2",
-                     @"code":@"2",
-                     @"id":self.tableId};
+            if (self.isSelect) {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"1",
+                         @"code":@"1",
+                         @"id":self.tableId};
+            }else
+            {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"1",
+                         @"code":@"2",
+                         @"id":self.summaryId};
+            }
         }
         
         

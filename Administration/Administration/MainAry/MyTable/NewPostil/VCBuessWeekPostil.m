@@ -12,7 +12,7 @@
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
 #import "CellSummary.h"
-#import "VCBuessWeekSummaryUnPassed.h"
+#import "VCBuessWeekSummaryPostil.h"
 #import "VCPositil.h"
 @interface VCBuessWeekPostil ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 
@@ -511,7 +511,7 @@
                            @"PresetDirection":self.string4,
                            @"PlanningManagement":self.string5,
                            @"others":self.string6,
-                           @"Others":[USER_DEFAULTS valueForKey:@"name"]
+                           @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
@@ -583,7 +583,17 @@
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arryaTitle.count;
+    if (self.isSelect) {
+        return self.arryaTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arryaTitle.count;
+        }
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -734,7 +744,7 @@
         if (self.arraySummary.count!=0) {
             //跳转页面
             NSDictionary *dict = self.arraySummary[indexPath.row];
-            VCBuessWeekSummaryUnPassed *vc = [[VCBuessWeekSummaryUnPassed alloc]init];
+            VCBuessWeekSummaryPostil *vc = [[VCBuessWeekSummaryPostil alloc]init];
             vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];;
             vc.isSelect = NO;
             vc.tableID =  dict[@"id"];

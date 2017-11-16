@@ -158,7 +158,8 @@
         self.arrayTitle = @[@"日期",@"职位",@"姓名",@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日",@"重要事项及补充说明",@"本周个人成长规划及自我奖罚管理"];
         self.isSelect = YES;
         self.remark = @"10";
-        [self getData];
+        self.tableId = [NSString stringWithFormat:@"%@",self.dictInfo[@"planId"]];
+        
     }else
     {
         self.line.frame = CGRectMake(Scree_width/2, 94, Scree_width/2, 1);
@@ -169,6 +170,7 @@
         self.remark = @"11";
         
     }
+    [self getData];
 }
 
 -(void)editContent:(UIButton *)button
@@ -176,10 +178,80 @@
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    if (self.isSelect) {
+        switch (indexPath.row) {
+            case 3:
+            {
+                vc.theKey = @"monday";
+            }
+                break;
+            case 4:
+                vc.theKey = @"tuesday";
+                
+                break;
+            case 5:
+                vc.theKey = @"wednesday";
+                
+                break;
+            case 6:
+                vc.theKey = @"thursday";
+                
+                
+                break;
+            case 7:
+                vc.theKey = @"friday";
+                
+                break;
+            case 8:
+                vc.theKey = @"saturday";
+                
+                break;
+            case 9:
+                vc.theKey = @"sunday";
+                
+                break;
+            case 10:
+                vc.theKey = @"important";
+                
+                break;
+            case 11:
+                vc.theKey = @"growthPlans";
+                
+                break;
+                
+            default:
+                break;
+        }
+    }else
+    {
+        switch (indexPath.row) {
+            case 3:
+            {
+                vc.theKey = @"workProgress";
+                
+            }
+                break;
+            case 4:
+                vc.theKey = @"progressEvaluation";
+                
+                break;
+            case 5:
+                vc.theKey = @"strategy";
+                
+                break;
+            case 6:
+                vc.theKey = @"experience";
+                
+                break;
+            case 7:
+                vc.theKey = @"directionPreset";
+                
+                break;
+                
+            default:
+                break;
         }
     }
     vc.departmentID = self.departmentId;
@@ -466,28 +538,59 @@
     if (buttonIndex==1) {
         //审核接口
         if (alertView.tag == 200) {
-            dict = @{@"appkey":appKeyStr,
-                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                     @"CompanyInfoId":compid,
-                     @"RoleId":[ShareModel shareModel].roleID,
-                     @"DepartmentID":self.departmentId,
-                     @"Num":self.num,
-                     @"Sort":[ShareModel shareModel].sort,
-                     @"State":@"1",
-                     @"code":@"1",
-                     @"id":self.tableId};
-        }else
-        {
-            dict = @{@"appkey":appKeyStr,
-                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                     @"CompanyInfoId":compid,
-                     @"RoleId":[ShareModel shareModel].roleID,
-                     @"DepartmentID":self.departmentId,
-                     @"Num":self.num,
-                     @"Sort":[ShareModel shareModel].sort,
-                     @"State":@"2",
-                     @"code":@"2",
-                     @"id":self.tableId};
+            if (alertView.tag == 200) {
+                if (self.isSelect) {
+                    dict = @{@"appkey":appKeyStr,
+                             @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                             @"CompanyInfoId":compid,
+                             @"RoleId":[ShareModel shareModel].roleID,
+                             @"DepartmentID":self.departmentId,
+                             @"Num":[ShareModel shareModel].num,
+                             @"Sort":[ShareModel shareModel].sort,
+                             @"State":@"1",
+                             @"code":@"1",
+                             @"id":self.tableId};
+                }else
+                {
+                    dict = @{@"appkey":appKeyStr,
+                             @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                             @"CompanyInfoId":compid,
+                             @"RoleId":[ShareModel shareModel].roleID,
+                             @"DepartmentID":self.departmentId,
+                             @"Num":[ShareModel shareModel].num,
+                             @"Sort":[ShareModel shareModel].sort,
+                             @"State":@"1",
+                             @"code":@"2",
+                             @"id":self.summaryId};
+                }
+                
+            }else
+            {
+                if (self.isSelect) {
+                    dict = @{@"appkey":appKeyStr,
+                             @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                             @"CompanyInfoId":compid,
+                             @"RoleId":[ShareModel shareModel].roleID,
+                             @"DepartmentID":self.departmentId,
+                             @"Num":[ShareModel shareModel].num,
+                             @"Sort":[ShareModel shareModel].sort,
+                             @"State":@"1",
+                             @"code":@"1",
+                             @"id":self.tableId};
+                }else
+                {
+                    dict = @{@"appkey":appKeyStr,
+                             @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                             @"CompanyInfoId":compid,
+                             @"RoleId":[ShareModel shareModel].roleID,
+                             @"DepartmentID":self.departmentId,
+                             @"Num":[ShareModel shareModel].num,
+                             @"Sort":[ShareModel shareModel].sort,
+                             @"State":@"1",
+                             @"code":@"2",
+                             @"id":self.summaryId};
+                }
+            }
         }
         
         

@@ -185,6 +185,61 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    if (isBack) {
+        NSDictionary *dict = @{
+                               @"appkey":appKeyStr,
+                               @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                               @"CompanyInfoId":compid,
+                               @"RoleId":[ShareModel shareModel].roleID,
+                               @"DepartmentID":[ShareModel shareModel].departmentID,
+                               @"Num":[ShareModel shareModel].num,
+                               @"Sort":[ShareModel shareModel].sort,
+                               @"code":@"1",
+                               @"Hint":hint,
+                               @"StartDate":self.buessTable.startDate.titleLabel.text,
+                               @"EndDate":self.buessTable.endDate.titleLabel.text,
+                               @"PlanStore":self.buessTable.textFiled1.text,
+                               @"CallbackStore":self.buessTable.textFiled2.text,
+                               @"EstimateStore":self.buessTable.textFiled3.text,
+                               @"EstimateMoneyStore":self.buessTable.textFiled4.text,
+                               @"Strategy":self.string1,
+                               @"Preset":self.string2,
+                               @"Content":self.string3,
+                               @"PresetDirection":self.string4,
+                               @"PlanningManagement":self.string5,
+                               @"Others":self.string6,
+                               @"Name":[USER_DEFAULTS valueForKey:@"name"]
+                               };
+        [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
+            NSString *code = [responseObject valueForKey:@"status"];
+            if ([code isEqualToString:@"0000"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                return ;
+            }
+            if ([code isEqualToString:@"1001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"4444"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"0001"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据异常" andInterval:1.0];
+                return;
+            }
+            if ([code isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1.0];
+                return;
+            }
+            
+        } failure:^(NSError *error) {
+            
+        } view:self.view];
+    }else
+        
+    {
+    
     if (
         self.buessTable.textFiled1.text.length ==0||
         self.buessTable.textFiled2.text.length ==0||
@@ -224,8 +279,8 @@
                            @"Preset":self.string2,
                            @"Content":self.string3,
                            @"PresetDirection":self.string4,
-                           @"PlanningManager":self.string5,
-                           @"Others":self.string6,
+                           @"PlanningManagement":self.string5,
+                           @"others":self.string6,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
@@ -254,6 +309,7 @@
     } failure:^(NSError *error) {
         
     } view:self.view];
+    }
 }
 
 -(void)textViewDidChange:(UITextView *)textView
@@ -300,17 +356,19 @@
 {
     if (alertView.tag==100) {
         if (buttonIndex ==1) {
+            isBack = NO;
             [self submitData:@"1"];
         }
     }else
     {
         if (buttonIndex==1) {
-            if (self.string1.length==0) {
+            isBack = YES;
+            if ([self.buessTable.startDate.titleLabel.text isEqualToString:@"选择日期"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
                 return;
             }
-            if (self.string2.length==0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写服务店家" andInterval:1];
+            if ([self.buessTable.endDate.titleLabel.text isEqualToString:@"选择日期"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
                 return;
             }
             [self submitData:@"3"];
@@ -399,6 +457,13 @@
     self.arrayContent = @[@"填写本周行程安排、目标与销售分解及策略",@"填写本周其他工作跟进目标预设以及善后工作",@"填写本周重要事项备注及补充说明",@"填写下阶段工作预设及方向",@"填写个人成长规划安排及自我奖惩管理",@"填写其他事项"];
     
     self.isSelect = YES;
+    
+    self.string1 = @"";
+    self.string2 = @"";
+    self.string3 = @"";
+    self.string4 = @"";
+    self.string5 = @"";
+    self.string6 = @"";
     
     UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
     [submit setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];

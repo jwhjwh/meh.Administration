@@ -77,8 +77,8 @@
         if ([code isEqualToString:@"0000"]) {
             
             if (self.isSelect) {
-                [self.startDate setTitle:[self.dict[@""]substringToIndex:10] forState:UIControlStateNormal];
-                [self.endDate setTitle:[self.dict[@""]substringToIndex:10] forState:UIControlStateNormal];
+                [self.startDate setTitle:[self.dict[@"startDate"]substringToIndex:10] forState:UIControlStateNormal];
+                [self.endDate setTitle:[self.dict[@"endDate"]substringToIndex:10] forState:UIControlStateNormal];
                 self.string1 = self.dict[@"monday"];
                 self.string2 = self.dict[@"tuesday"];
                 self.string3 = self.dict[@"wednesday"];
@@ -344,14 +344,14 @@
 {
     UIButton *buttonPlan = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, Scree_width/2, 40)];
     [buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [buttonPlan setTitle:@"月计划" forState:UIControlStateNormal];
+    [buttonPlan setTitle:@"周计划" forState:UIControlStateNormal];
     [buttonPlan addTarget:self action:@selector(changeData:) forControlEvents:UIControlEventTouchUpInside];
     buttonPlan.tag = 100;
     [self.view addSubview:buttonPlan];
     self.buttonPlan  = buttonPlan;
     
     UIButton *buttonSummary = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, 64, Scree_width/2, 40)];
-    [buttonSummary setTitle:@"月总结" forState:UIControlStateNormal];
+    [buttonSummary setTitle:@"周总结" forState:UIControlStateNormal];
     [buttonSummary setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
     [buttonSummary addTarget:self action:@selector(changeData:) forControlEvents:UIControlEventTouchUpInside];
     buttonSummary.tag = 200;
@@ -562,14 +562,10 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
     if ([self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
+        [self.string2 isEqualToString:@""]||
+        [self.string3 isEqualToString:@""]||
+        [self.string4 isEqualToString:@""]||
+        [self.string5 isEqualToString:@""]||
         [self.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.endDate.titleLabel.text isEqualToString:@"选择日期"]
         )
@@ -585,21 +581,17 @@
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"Num":[ShareModel shareModel].num,
-                           @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"1",
                            @"PlanId":self.planID,
+                           @"Sort":[ShareModel shareModel].sort,
+                           @"code":@"2",
                            @"Hint":hint,
                            @"StartDate":self.startDate.titleLabel.text,
                            @"EndDate":self.endDate.titleLabel.text,
-                           @"Monday":self.string1,
-                           @"Tuesday":self.string2,
-                           @"Wednesday":self.string3,
-                           @"Thursday":self.string4,
-                           @"Friday":self.string5,
-                           @"Saturday":self.string6,
-                           @"Sunday":self.string7,
-                           @"Important":self.string8,
-                           @"GrowthPlans":self.string9,
+                           @"WorkProgress":self.string1,
+                           @"ProgressEvaluation":self.string2,
+                           @"Strategy":self.string3,
+                           @"Experience":self.string4,
+                           @"DirectionPreset":self.string5,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
@@ -789,10 +781,17 @@
 
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getHttpData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     self.arrayTitle = @[@"本周工作落实进展简述",@"本周工作进展及目标达成的分析与评估",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"个人成长目标及方向预设"];
     self.arrayContent = @[@"填写本周工作落实进展简述",@"填写本周工作进展及目标达成的分析与评估",@"填写当前阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写个人成长目标及方向预设"];
     self.isSelect = NO;
@@ -803,7 +802,6 @@
     
     self.arraySummary = [NSArray array];
     
-    self.isSelect = YES;
     canEdit = NO;
     
     self.string1=  @"";

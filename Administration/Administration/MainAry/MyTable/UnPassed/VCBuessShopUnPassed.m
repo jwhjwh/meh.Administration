@@ -59,7 +59,7 @@
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             self.string1 = [self.dict[@"dateLine"] substringToIndex:10];
             self.string2 = self.dict[@"worship"];
-            self.string3 = self.dict[@"targetDetail"];
+            self.string3 = self.dict[@"theTargetJob"];
             self.string4 = self.dict[@"appraisal"];
             if (![self.dict[@"evaluation"] isKindOfClass:[NSNull class]]) {
                 self.string5 = [NSString stringWithFormat:@"%@",self.dict[@"evaluation"]];
@@ -204,7 +204,7 @@
     VCPositil *vc = [[VCPositil alloc]init];
     for (NSString *key in [self.dict allKeys]) {
         if (![self.dict[key] isKindOfClass:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dict[key]]]) {
                 vc.field = key;
                 break;
             }

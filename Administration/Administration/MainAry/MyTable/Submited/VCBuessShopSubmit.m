@@ -57,10 +57,33 @@
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
-            self.string1 = [self.dict[@"dateLine"] substringToIndex:10];
-            self.string2 = self.dict[@"worship"];
-            self.string3 = self.dict[@"theTargetJob"];
-            self.string4 = self.dict[@"appraisal"];
+            if (![self.dict[@"dateLine"] isKindOfClass:[NSNull class]]) {
+                self.string1 = [NSString stringWithFormat:@"%@",[self.dict[@"dateLine"]substringToIndex:10]];
+            }else
+            {
+                self.string1 = @"";
+            }
+            
+            if (![self.dict[@"worship"] isKindOfClass:[NSNull class]]) {
+                self.string2 = [NSString stringWithFormat:@"%@",self.dict[@"worship"]];
+            }else
+            {
+                self.string2 = @"";
+            }
+            if (![self.dict[@"theTargetJob"] isKindOfClass:[NSNull class]]) {
+                self.string3 = [NSString stringWithFormat:@"%@",self.dict[@"theTargetJob"]];
+            }else
+            {
+                self.string3 = @"";
+            }
+            
+            if (![self.dict[@"appraisal"] isKindOfClass:[NSNull class]]) {
+                self.string4 = [NSString stringWithFormat:@"%@",self.dict[@"appraisal"]];
+            }else
+            {
+                self.string4 = @"";
+            }
+            
             if (![self.dict[@"evaluation"] isKindOfClass:[NSNull class]]) {
                 self.string5 = [NSString stringWithFormat:@"%@",self.dict[@"evaluation"]];
             }else
@@ -68,9 +91,25 @@
                 self.string5 = @"";
             }
             
-            self.string6 = self.dict[@"reason"];
-            self.string7 = self.dict[@"feelingToShare"];
-            self.string8 = self.dict[@"plans"];
+            if (![self.dict[@"reason"] isKindOfClass:[NSNull class]]) {
+                self.string6 = [NSString stringWithFormat:@"%@",self.dict[@"reason"]];
+            }else
+            {
+                self.string6 = @"";
+            }
+            if (![self.dict[@"feelingToShare"] isKindOfClass:[NSNull class]]) {
+                self.string7 = [NSString stringWithFormat:@"%@",self.dict[@"feelingToShare"]];
+            }else
+            {
+                self.string7 = @"";
+            }
+            if (![self.dict[@"plans"] isKindOfClass:[NSNull class]]) {
+                self.string8 = [NSString stringWithFormat:@"%@",self.dict[@"plans"]];
+            }else
+            {
+                self.string8 = @"";
+            }
+            
             [self.dict setValue:@"1" forKey:@"canEdit"];
             
             if ([[responseObject valueForKey:@"owner"] length]!=0) {
@@ -204,7 +243,7 @@
     VCPositil *vc = [[VCPositil alloc]init];
     for (NSString *key in [self.dict allKeys]) {
         if (![self.dict[key] isKindOfClass:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dict[key]]]) {
                 vc.field = key;
                 break;
             }
@@ -416,7 +455,7 @@
     CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
     NSIndexPath *indexPath = [myScore.tableView indexPathForSelectedRow];
     cell.textView.text = myScore.arrayContent[indexPath.row];
-    if (indexPath.row==4) {
+    if (indexPathGes.row==4) {
         self.string4 = myScore.arrayContent[indexPath.row];
     }else
     {

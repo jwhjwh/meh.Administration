@@ -267,16 +267,16 @@
         [dict setValue:@"" forKey:@"TargetDetail"];
     }
     if (self.string4.length!=0) {
-        [dict setValue:self.string4 forKey:@"evaluation"];
+        [dict setValue:self.string4 forKey:@"Appraisal"];
     }else
     {
-        [dict setValue:@"" forKey:@"evaluation"];
+        [dict setValue:@"" forKey:@"Appraisal"];
     }
     if (self.string5.length!=0) {
-        [dict setValue:self.string5 forKey:@"Appraisal"];
+        [dict setValue:self.string5 forKey:@"evaluation"];
     }else
     {
-        [dict setObject:@"" forKey:@"Appraisal"];
+        [dict setObject:@"" forKey:@"evaluation"];
     }
     if (self.string6.length!=0) {
         [dict setValue:self.string6 forKey:@"reason"];
@@ -323,6 +323,7 @@
 -(void)showSave
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要保存此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    isBack = YES;
     alertView.tag = 300;
     [alertView show];
 }
@@ -330,6 +331,7 @@
 -(void)showAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    isBack = NO;
     alertView.tag = 100;
     [alertView show];
 }
@@ -387,11 +389,11 @@
     CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
     NSIndexPath *indexPath = [myScore.tableView indexPathForSelectedRow];
     cell.textView.text = myScore.arrayContent[indexPath.row];
-    if (indexPath.row==5) {
-        self.string5 = myScore.arrayContent[indexPath.row];
+    if (indexPathGes.row==5) {
+        self.string4 = myScore.arrayContent[indexPath.row];
     }else
     {
-        self.string4 = myScore.arrayContent[indexPath.row];
+        self.string5 = myScore.arrayContent[indexPath.row];
     }
 }
 

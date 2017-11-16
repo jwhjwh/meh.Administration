@@ -211,14 +211,13 @@
                            @"reportId":self.tableID,
                            @"remark":self.remark,
                            @"id":self.postiliD,
-                           @"Num":self.num};
+                           @"Num":[ShareModel shareModel].num};
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"成功" andInterval:1];
             [self getData];
-            
             return ;
         }
         if ([code isEqualToString:@"1001"]) {

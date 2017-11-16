@@ -48,8 +48,25 @@
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self.tableView reloadData];
+            }else
+            {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+                self.navigationItem.rightBarButtonItem = nil;
+                self.havePermission = NO;
+                [self.tableView reloadData];
+                
+            }
+            
+        }else
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            self.navigationItem.rightBarButtonItem = nil;
+            self.havePermission = NO;
             [self.tableView reloadData];
         }
+
         
     } failure:^(NSError *error) {
         
@@ -102,7 +119,6 @@
         }
         
         if ([stringCode isEqualToString:@"0000"]) {
-            self.tableId = self.dictInfo[@"planId"];
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             NSString *stringkey = [responseObject valueForKey:@"name"];
             self.arrayKey = [stringkey componentsSeparatedByString:@","];
@@ -182,6 +198,8 @@
 {
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
     [self.arraySummary removeAllObjects];
+    [self.dictInfo removeAllObjects];
+    self.mutAttribute = [[NSMutableAttributedString alloc]init];
     if (button.tag==200) {
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
@@ -210,10 +228,61 @@
         
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (self.isSelect) {
+        switch (indexPath.row) {
+            
+            case 4:
+                vc.theKey = @"workPlan";
+                
+                break;
+            case 5:
+                vc.theKey = @"firstWeek";
+                
+                break;
+            case 6:
+                vc.theKey = @"secondWeek";
+                
+                break;
+            case 7:
+                vc.theKey = @"fourthWeek";
+                
+                break;
+            case 8:
+                vc.theKey = @"comment";
+                
+                break;
+            default:
+                break;
+        }
+        
+    }else
+    {
+        switch (indexPath.row) {
+                
+            case 4:
+                vc.theKey = @"completeProgressBriefly";
+                
+                break;
+            case 5:
+                vc.theKey = @"progressEvaluation";
+                
+                break;
+            case 6:
+                vc.theKey = @"strategy";
+                
+                break;
+            case 7:
+                vc.theKey = @"experience";
+                
+                break;
+            case 8:
+                vc.theKey = @"directionPreset";
+                
+                break;
+            default:
+                break;
         }
     }
     vc.departmentID = self.departmentId;

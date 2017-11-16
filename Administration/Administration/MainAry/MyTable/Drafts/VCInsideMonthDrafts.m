@@ -10,6 +10,7 @@
 #import "ViewInsideMonthTable.h"
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
+#import "CellSummary.h"
 @interface VCInsideMonthDrafts ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 {
     BOOL isBack;
@@ -62,16 +63,54 @@
         }
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self setSummaryUI];
+                
+                self.navigationItem.rightBarButtonItem = nil;
+            }else
+            {
+                [self setSummaryUI];
+                [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
+                self.insideMonth.buttonDate.userInteractionEnabled = NO;
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容" andInterval:1.0];
+                return ;
+            }
+            
             [self.tableView reloadData];
         }else
         {
-            
+            [self setSummaryUI];
+            [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
+            self.insideMonth.buttonDate.userInteractionEnabled = NO;
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
 }
+
+-(void)setSummaryList
+{
+    self.viewSummary.hidden = YES;
+    UITableView *tableView = [[UITableView alloc]init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.estimatedRowHeight = 100;
+    [ZXDNetworking setExtraCellLineHidden:tableView];
+    [tableView registerClass:[CellSummary class] forCellReuseIdentifier:@"cell1"];
+    [self.view addSubview:tableView];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.view.mas_left);
+        make.right.mas_equalTo(self.view.mas_right);
+        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
+    }];
+    self.tableView = tableView;
+}
+
 
 -(void)getHttpData
 {
@@ -91,7 +130,7 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             
-            [self.insideMonth.buttonDate setTitle:[[responseObject valueForKey:@"months"]substringToIndex:7] forState:UIControlStateNormal];
+            [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
             self.string1 = self.dict[@"workPlan"];
             self.string2 = self.dict[@"firstWeek"];
             self.string3 = self.dict[@"secondWeek"];
@@ -217,6 +256,7 @@
         self.arrayContent = @[@[@"填写本月主要工作规划"],@[@"填写第一周的工作进度安排",@"填写第二周的工作进度安排",@"填写第三周的工作进度安排",@"填写第四周的工作进度安排",@"填写补充备注"]];
         self.isSelect = YES;
         self.navigationItem.rightBarButtonItem = self.item;
+        [self getHttpData];
     }
     else
     {
@@ -230,6 +270,7 @@
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
         self.navigationItem.rightBarButtonItem = nil;
+        [self getSummary];
     }
     [self.tableView reloadData];
     
@@ -392,18 +433,26 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
-    if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
-        [self.string1 isEqualToString:@""]||
-        [self.string2 isEqualToString:@""]||
-        [self.string3 isEqualToString:@""]||
-        [self.string4 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]
-        )
+    if (isBack) {
+        if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
+            return;
+        }
+    }else
     {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
-        return;
+        
+        if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
+            [self.string1 isEqualToString:@""]||
+            [self.string2 isEqualToString:@""]||
+            [self.string3 isEqualToString:@""]||
+            [self.string4 isEqualToString:@""]||
+            [self.string5 isEqualToString:@""]||
+            [self.string6 isEqualToString:@""]
+            )
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
     }
     
     NSDictionary *dict = @{@"appkey":appKeyStr,
@@ -521,13 +570,33 @@
         }
     }else
     {
-        return self.arryaTitle.count;
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arryaTitle.count;
+        }
     }
     
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.arraySummary.count!=0&&!self.isSelect) {
+        CellSummary *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        if (cell==nil) {
+            cell = [[CellSummary alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+        }
+        NSDictionary *dict = self.arraySummary[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.labelPostion.text = [ShareModel shareModel].postionName;
+        // cell.dictInfo = dict;
+        cell.labelFilledTime.text = [dict[@"months"]substringToIndex:7];
+        cell.labelUpTime.text = [dict[@"dates"] substringWithRange:NSMakeRange(5, 11)];
+        [ZXDNetworking setExtraCellLineHidden:tableView];
+        return cell;
+    }else
+    {
     CellEditPlan *cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -551,7 +620,8 @@
                     cell.textView.text = self.string1;
                 }
             }
-        }
+        }else
+        {
         switch (indexPath.row) {
             case 0:
                 if (self.string2.length!=0) {
@@ -562,15 +632,18 @@
                 if (self.string3.length!=0) {
                     cell.textView.text = self.string3;
                 }
+                
                 break;
             case 2:
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
                 }
+                break;
             case 3:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
                 }
+                break;
             case 4:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
@@ -580,8 +653,10 @@
             default:
                 break;
         }
+        }
     }
     return cell;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -632,6 +707,7 @@
 {
     [super viewWillAppear:YES];
     //self.edgesForExtendedLayout = UIRectEdgeNone;
+    [self getHttpData];
 }
 
 - (void)viewDidLoad {
@@ -655,6 +731,8 @@
     self.string2 = @"";
     self.string3 = @"";
     self.string4 = @"";
+    self.string5 = @"";
+    self.string6 = @"";
 }
 
 - (void)didReceiveMemoryWarning {

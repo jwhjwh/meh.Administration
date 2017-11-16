@@ -175,6 +175,8 @@
     
     ViewBuessWeekSummary *buessSummary = [[ViewBuessWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,250)];
     buessSummary.userInteractionEnabled = NO;
+    buessSummary.startDate.userInteractionEnabled = NO;
+    buessSummary.endDate.userInteractionEnabled = NO;
     [viewSummary addSubview:buessSummary];
     self.buessSummary = buessSummary;
     
@@ -442,18 +444,21 @@
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
     if (isSave) {
-        if ([self.buessTable.startDate.titleLabel.text isEqualToString:@"选择日期"]||
-            [self.buessTable.endDate.titleLabel.text isEqualToString:@"选择日期"]) {
+        if ([self.buessSummary.startDate.titleLabel.text isEqualToString:@"选择日期"]||
+            [self.buessSummary.endDate.titleLabel.text isEqualToString:@"选择日期"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
             return;
         }
     }else
     {
     if (
-        self.buessTable.textFiled1.text.length ==0||
-        self.buessTable.textFiled2.text.length ==0||
-        self.buessTable.textFiled3.text.length ==0||
-        self.buessTable.textFiled4.text.length ==0||
+        self.buessSummary.textFiled1.text.length ==0||
+        self.buessSummary.textFiled2.text.length ==0||
+        self.buessSummary.textFiled3.text.length ==0||
+        self.buessSummary.textFiled4.text.length ==0||
+        self.buessSummary.textFiled5.text.length ==0||
+        self.buessSummary.textFiled6.text.length ==0||
+        self.buessSummary.textFiled7.text.length ==0||
         [self.string1 isEqualToString:@""]||
         [self.string2 isEqualToString:@""]||
         [self.string3 isEqualToString:@""]||
@@ -477,7 +482,7 @@
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"Num":[ShareModel shareModel].num,
                            @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"1",
+                           @"code":@"2",
                            @"PlanId":self.planID,
                            @"Hint":hint,
                            @"StartDate":self.buessSummary.startDate.titleLabel.text,
@@ -494,6 +499,7 @@
                            @"ProblemSolution":self.string3,
                            @"SelfSummary":self.string4,
                            @"CaseStrategyShare":self.string5,
+                           @"others":self.string6,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {

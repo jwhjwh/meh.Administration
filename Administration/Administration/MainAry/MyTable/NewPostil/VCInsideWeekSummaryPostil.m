@@ -79,8 +79,8 @@
         if ([code isEqualToString:@"0000"]) {
             
             if (self.isSelect) {
-                [self.startDate setTitle:[self.dict[@""]substringToIndex:10] forState:UIControlStateNormal];
-                [self.endDate setTitle:[self.dict[@""]substringToIndex:10] forState:UIControlStateNormal];
+                [self.startDate setTitle:[self.dict[@"startDate"]substringToIndex:10] forState:UIControlStateNormal];
+                [self.endDate setTitle:[self.dict[@"endDate"]substringToIndex:10] forState:UIControlStateNormal];
                 self.string1 = self.dict[@"monday"];
                 self.string2 = self.dict[@"tuesday"];
                 self.string3 = self.dict[@"wednesday"];
@@ -167,6 +167,7 @@
     }];
     
     UIButton *startDate = [[UIButton alloc]init];
+    startDate.userInteractionEnabled = NO;
     [startDate setTitle:@"选择日期" forState:UIControlStateNormal];
     startDate.titleLabel.textAlignment = NSTextAlignmentLeft;
     startDate.tag = 400;
@@ -194,6 +195,7 @@
     }];
     //
     UIButton *endDate = [[UIButton alloc]init];
+    endDate.userInteractionEnabled = NO;
     [endDate setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [endDate setTitle:@"选择日期" forState:UIControlStateNormal];
     [endDate setBackgroundColor:[UIColor whiteColor]];
@@ -612,21 +614,17 @@
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
                            @"Num":[ShareModel shareModel].num,
-                           @"Sort":[ShareModel shareModel].sort,
-                           @"code":@"1",
                            @"PlanId":self.planID,
+                           @"Sort":[ShareModel shareModel].sort,
+                           @"code":@"2",
                            @"Hint":hint,
                            @"StartDate":self.startDate.titleLabel.text,
                            @"EndDate":self.endDate.titleLabel.text,
-                           @"Monday":self.string1,
-                           @"Tuesday":self.string2,
-                           @"Wednesday":self.string3,
-                           @"Thursday":self.string4,
-                           @"Friday":self.string5,
-                           @"Saturday":self.string6,
-                           @"Sunday":self.string7,
-                           @"Important":self.string8,
-                           @"GrowthPlans":self.string9,
+                           @"WorkProgress":self.string1,
+                           @"ProgressEvaluation":self.string2,
+                           @"Strategy":self.string3,
+                           @"Experience":self.string4,
+                           @"DirectionPreset":self.string5,
                            @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
@@ -683,13 +681,6 @@
                     cell.textView.text = self.string1;
                 }
                 
-            self.string1 = self.dict[@"workProgress"];
-            self.string2 = self.dict[@"progressEvaluation"];
-            self.string3 = self.dict[@"strategy"];
-            self.string4 = self.dict[@"experience"];
-            self.string5 = self.dict[@"directionPreset"];
-            
-            
                 for (NSString *string in self.arrayPostil) {
                     if ([string containsString:@"monday"]) {
                         cell.buttonPostil.hidden = NO;

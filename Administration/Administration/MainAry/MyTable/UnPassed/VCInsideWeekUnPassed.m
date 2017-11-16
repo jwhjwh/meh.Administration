@@ -469,6 +469,7 @@
         self.isSelect = NO;
         self.title = @"填写周总结";
         self.navigationItem.rightBarButtonItem = nil;
+        [self getSummary];
     }
     [self.tableView reloadData];
     
@@ -658,14 +659,14 @@
     else
     {
     if ([self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
-        [self.string1 isEqualToString:@""]||
+        [self.string2 isEqualToString:@""]||
+        [self.string3 isEqualToString:@""]||
+        [self.string4 isEqualToString:@""]||
+        [self.string5 isEqualToString:@""]||
+        [self.string6 isEqualToString:@""]||
+        [self.string7 isEqualToString:@""]||
+        [self.string8 isEqualToString:@""]||
+        [self.string9 isEqualToString:@""]||
         [self.startDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.endDate.titleLabel.text isEqualToString:@"选择日期"]
         )
@@ -730,7 +731,17 @@
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arrayTitle.count;
+    if (self.isSelect) {
+        return self.arrayTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arrayTitle.count;
+        }
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

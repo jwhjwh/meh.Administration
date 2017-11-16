@@ -69,7 +69,7 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             if (self.isSelect) {
-                self.insideMonth.buttonDate.titleLabel.text = [self.dict[@"dates"]substringToIndex:10];
+                [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
                 self.string1 = self.dict[@"workPlan"];
                 self.string2 = self.dict[@"firstWeek"];
                 self.string3 = self.dict[@"secondWeek"];
@@ -79,7 +79,7 @@
             }else
             {
             self.planID = self.dict[@"planId"];
-            self.insideMonth.buttonDate.titleLabel.text = [self.dict[@"dates"]substringToIndex:10];
+            [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
             self.string1 = self.dict[@"completeProgressBriefly"];
             self.string2 = self.dict[@"progressEvaluation"];
             self.string3 = self.dict[@"strategy"];
@@ -387,8 +387,6 @@
         [self.string2 isEqualToString:@""]||
         [self.string3 isEqualToString:@""]||
         [self.string4 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
         [self.string5 isEqualToString:@""]
         )
     {
@@ -399,7 +397,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Num":[ShareModel shareModel].num,
                            @"DepartmentID":[ShareModel shareModel].departmentID,
-                           @"code":@"1",
+                           @"code":@"2",
                            @"id":[NSString stringWithFormat:@"%@",self.dict[@"id"]],
                            @"PlanId":self.planID,
                            @"RoleId":[ShareModel shareModel].roleID,

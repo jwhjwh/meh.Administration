@@ -48,11 +48,25 @@
         
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
-            [self.tableView reloadData];
+            if (self.arraySummary.count!=0) {
+                [self.tableView reloadData];
+            }else
+            {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+                self.navigationItem.rightBarButtonItem = nil;
+                self.havePermission = NO;
+                [self.tableView reloadData];
+                
+            }
+            
         }else
         {
-            
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            self.navigationItem.rightBarButtonItem = nil;
+            self.havePermission = NO;
+            [self.tableView reloadData];
         }
+
         
     } failure:^(NSError *error) {
         
@@ -201,6 +215,8 @@
     [self.arrayTotal removeAllObjects];
     [self.arrayTotal2 removeAllObjects];
     [self.arraySummary removeAllObjects];
+    [self.dictInfo removeAllObjects];
+    self.mutAttribute = [[NSMutableAttributedString alloc]init];
     [self.tableView reloadData];
     if (button.tag==200) {
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
@@ -229,17 +245,66 @@
 -(void)editContent:(UIButton *)button
 {
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if (![self.dictInfo[key] isKindOfClass:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dictInfo[key]]]) {
-                vc.theKey = key;
-                break;
+//    for (NSString *key in [self.dictInfo allKeys]) {
+//        if (![self.dictInfo[key] isKindOfClass:[NSNull class]]) {
+//            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dictInfo[key]]]) {
+//                vc.theKey = key;
+//                break;
+//            }
+//        }
+//    }
+    
+    switch (indexPath.row) {
+        case 4:
+            if (self.isSelect) {
+                
+                    vc.theKey = @"ovas";
+            
+            }else
+            {
+                vc.theKey = @"jaats";
+                
             }
-        }
+            break;
+        case 5:
+            if (self.isSelect) {
+                vc.theKey = @"important";
+                
+            }else
+            {
+                vc.theKey = @"psp";
+                
+            }
+            break;
+        case 6:
+            if (self.isSelect) {
+                vc.theKey = @"personalProject";
+                
+            }else
+            {
+                 vc.theKey = @"comments";
+                
+            }
+            break;
+        case 7:
+            if (self.isSelect) {
+                vc.theKey = @"others";
+                
+            }else
+            {
+                vc.theKey = @"others";
+                
+            }
+            break;
+            
+        default:
+            break;
     }
+    
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.dictInfo[@"id"];

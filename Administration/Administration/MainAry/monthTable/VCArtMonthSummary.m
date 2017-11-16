@@ -164,7 +164,7 @@
         self.isSelect = YES;
         self.codeS = @"1";
         self.remark = @"7";
-        
+        self.tableId = [NSString stringWithFormat:@"%@",self.dictInfo[@"planId"]];
         
     }else
     {
@@ -189,11 +189,62 @@
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+    
+    if (self.isSelect) {
+        switch (indexPath.row) {
+            case 3:
+            {
+            case 4:
+                vc.theKey = @"direction";
+                
+                break;
+            case 5:
+                vc.theKey = @"shopsArrange";
+                
+                break;
+            case 6:
+                vc.theKey = @"requestForProposal";
+                
+                break;
+            case 7:
+                vc.theKey = @"personalGrowth";
+                
+                break;
+            case 8:
+                vc.theKey = @"others";
+                
+                break;
+                
+            default:
+                break;
+            }
+                
         }
+    }else
+    {
+        switch (indexPath.row) {
+                
+            case 4:
+                vc.theKey = @"sca";
+                
+                break;
+            case 5:
+                vc.theKey = @"experience";
+                
+                break;
+            case 6:
+                vc.theKey = @"problem";
+                
+                break;
+            case 7:
+                vc.theKey = @"others";
+                
+                break;
+                
+            default:
+                break;
+        }
+        
     }
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
@@ -519,7 +570,7 @@
                      @"CompanyInfoId":compid,
                      @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.num,
+                     @"Num":[ShareModel shareModel].num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"1",
                      @"code":self.codeS,
@@ -531,7 +582,7 @@
                      @"CompanyInfoId":compid,
                      @"RoleId":[ShareModel shareModel].roleID,
                      @"DepartmentID":self.departmentId,
-                     @"Num":self.num,
+                     @"Num":[ShareModel shareModel].num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
                      @"code":self.codeS,

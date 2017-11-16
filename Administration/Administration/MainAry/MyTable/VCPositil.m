@@ -128,10 +128,12 @@
     if (cell==nil) {
         cell = [[CellPostil alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *dict = self.arrayData[indexPath.section][indexPath.row];
     cell.textView1.text = dict[@"location"];
+    cell.textView1.userInteractionEnabled = NO;
     cell.textView2.text = dict[@"comment"];
+    cell.textView2.userInteractionEnabled = NO;
     cell.buttonComp.hidden = YES;
     cell.labelTime.hidden = YES;
     return cell;

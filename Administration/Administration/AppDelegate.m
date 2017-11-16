@@ -13,10 +13,11 @@
 #import "AppDelegate+EaseMob.h"
 #import "ChatUIHelper.h"
 #import "IQKeyboardManager.h"
+#import "ViewController.h"
 //两次提示的默认间隔//两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
-@interface AppDelegate ()<EMChatManagerDelegate>
+@interface AppDelegate ()<EMChatManagerDelegate,EMClientDelegate>
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
@@ -71,6 +72,7 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
    
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
 //创建并初始化一个引擎对象
     BMKMapManager *manager = [[BMKMapManager alloc] init];
     //启动地图引擎
@@ -110,7 +112,22 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
         }  
 }
 
-
+- (void)userAccountDidLoginFromOtherDevice
+{
+    // [self _clearHelper];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"提示", @"Prompt") message:NSLocalizedString(@"聊天异地登录", @"your login account has been in other places") delegate:self cancelButtonTitle:NSLocalizedString(@"确定",@"OK") otherButtonTitles:nil, nil];
+    [alertView show];
+    [[EMClient sharedClient] logout:YES];
+    
+    
+    ViewController *vc = [[ViewController alloc]init];
+    
+    [self.window.rootViewController presentViewController:vc animated:YES completion:^{
+    
+}];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
    

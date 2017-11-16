@@ -218,13 +218,15 @@
     
     if ([state isEqualToString:@"0"]) {
         cell.labelState.text = @"待审核";
-    }else if([state isEqualToString:@"1"])
+        cell.labelState.textColor = GetColor(192, 192, 192, 1);
+    }else if ([state isEqualToString:@"1"])
     {
-        cell.labelState.text = [NSString stringWithFormat:@"已通过%@",stringDate];
+        cell.labelState.text = [NSString stringWithFormat:@"通过:%@",dict[@"updateTime"]];
+        cell.labelState.textColor = GetColor(246, 0, 49, 1);
     }else
     {
-        cell.labelState.text = [NSString stringWithFormat:@"驳回%@",stringDate];
-        cell.labelState.textColor = GetColor(240, 53, 68, 1);
+        cell.labelState.text = [NSString stringWithFormat:@"驳回:%@",dict[@"updateTime"]];
+        cell.labelState.textColor = GetColor(206, 157, 86, 1);
     }
     
     if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
@@ -382,6 +384,9 @@
 {
     [super viewWillAppear:YES];
     [self.arrayData removeAllObjects];
+    self.page=1;
+    self.isFirstLoadData = NO;
+    self.isRefreshFooter = NO;
     [self getData];
     
 }

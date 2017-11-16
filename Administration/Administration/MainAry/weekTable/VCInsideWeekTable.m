@@ -42,12 +42,26 @@
     [ZXDNetworking GET:urlStr parameters:dcit success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            self.arraySummary = [responseObject valueForKey:@"lists"];
-            [self.tableView reloadData];
+            self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
+            if (self.arraySummary.count!=0) {
+                [self.tableView reloadData];
+            }else
+            {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+                self.navigationItem.rightBarButtonItem = nil;
+                self.havePermission = NO;
+                [self.tableView reloadData];
+                
+            }
+            
         }else
         {
-            
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            self.navigationItem.rightBarButtonItem = nil;
+            self.havePermission = NO;
+            [self.tableView reloadData];
         }
+
         
     } failure:^(NSError *error) {
         
@@ -100,7 +114,6 @@
         NSString *stringKey = [responseObject valueForKey:@"name"];
         self.arrayKey = [stringKey componentsSeparatedByString:@","];
         if ([stringCode isEqualToString:@"0000"]) {
-            self.tableId = self.dictInfo[@"planId"];
             self.dictInfo = [[responseObject valueForKey:@"tableInfo"]mutableCopy];            
             [self.tableView reloadData];
             return ;
@@ -178,6 +191,8 @@
 {
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
     [self.arraySummary removeAllObjects];
+    [self.dictInfo removeAllObjects];
+    self.mutAttribute = [[NSMutableAttributedString alloc]init];
     if (button.tag==200) {
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
@@ -203,10 +218,81 @@
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
 
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    if (self.isSelect) {
+        switch (indexPath.row) {
+            case 3:
+            {
+                vc.theKey = @"monday";
+            }
+                break;
+            case 4:
+                vc.theKey = @"tuesday";
+                
+                break;
+            case 5:
+                vc.theKey = @"wednesday";
+                
+                break;
+            case 6:
+                vc.theKey = @"thursday";
+                
+                
+                break;
+            case 7:
+                vc.theKey = @"friday";
+                
+                break;
+            case 8:
+                vc.theKey = @"saturday";
+                
+                break;
+            case 9:
+                vc.theKey = @"sunday";
+                
+                break;
+            case 10:
+                vc.theKey = @"important";
+                
+                break;
+            case 11:
+                vc.theKey = @"growthPlans";
+                
+                break;
+                
+            default:
+                break;
+        }
+    }else
+    {
+        switch (indexPath.row) {
+            case 3:
+            {
+                vc.theKey = @"workProgress";
+                
+            }
+                break;
+            case 4:
+                vc.theKey = @"progressEvaluation";
+                
+                break;
+            case 5:
+                vc.theKey = @"strategy";
+                
+                break;
+            case 6:
+                vc.theKey = @"experience";
+                
+                break;
+            case 7:
+                vc.theKey = @"directionPreset";
+                
+                break;
+                
+            default:
+                break;
         }
     }
     vc.departmentID = self.departmentId;

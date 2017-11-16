@@ -337,7 +337,11 @@
         [self.tableView.mj_footer endRefreshing];
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            [self.arrayData removeAllObjects];
+            
+            if (self._isFooterFresh==NO) {
+                [self.arrayData removeAllObjects];
+            }
+            
             for (NSDictionary *dict in [responseObject valueForKey:@"lists"]) {
                 [self.arrayData addObject:dict];
             }
@@ -558,7 +562,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
     [self.arrayData removeAllObjects];
+    
+    self._isFirstLoadData = NO;
+    self._isFooterFresh = NO;
+    self._page = 1;
     [self.tableView reloadData];
 }
 

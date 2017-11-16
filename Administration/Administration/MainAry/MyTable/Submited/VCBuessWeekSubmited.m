@@ -12,7 +12,7 @@
 #import "CellEditPlan.h"
 #import "ViewChooseEdit.h"
 #import "CellSummary.h"
-#import "VCBuessWeekSummaryUnPassed.h"
+#import "VCBuessWeekSummarySubmited.h"
 #import "VCPositil.h"
 @interface VCBuessWeekSubmited ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewChooseEditDelegate>
 
@@ -68,11 +68,15 @@
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
             if (self.arraySummary.count!=0) {
+                self.navigationItem.rightBarButtonItem = nil;
                 [self setSummaryList];
             }else
             {
                 [self setSummaryUI];
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                self.navigationItem.rightBarButtonItem = self.rightitem;
+                [self.buessSummary.startDate setTitle:self.startDate forState:UIControlStateNormal];
+                [self.buessSummary.endDate setTitle:self.endDate forState:UIControlStateNormal];
                 return ;
             }
 
@@ -81,6 +85,9 @@
         {
             [self setSummaryUI];
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            self.navigationItem.rightBarButtonItem = self.rightitem;
+            [self.buessSummary.startDate setTitle:self.startDate forState:UIControlStateNormal];
+             [self.buessSummary.endDate setTitle:self.endDate forState:UIControlStateNormal];
             return ;
         }
         
@@ -112,10 +119,34 @@
             self.startDate = [self.dict[@"startDate"]substringToIndex:10];
             self.endDate = [self.dict[@"startDate"]substringToIndex:10];
             
-            self.buessTable.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"planStore"]];
-            self.buessTable.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"callbackStore"]];
-            self.buessTable.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateStore"]];
-            self.buessTable.textFiled4.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateMoneyStore"]];
+            if (![self.dict[@"planStore"] isKindOfClass:[NSNull class]]) {
+               self.buessTable.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"planStore"]];
+            }else
+            {
+                self.buessTable.textFiled1.text = @"";
+            }
+            
+            if (![self.dict[@"callbackStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"callbackStore"]];
+            }else
+            {
+                self.buessTable.textFiled2.text = @"";
+            }
+            
+            if (![self.dict[@"estimateStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateStore"]];
+            }else
+            {
+                self.buessTable.textFiled3.text = @"";
+            }
+            
+            if (![self.dict[@"estimateMoneyStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled4.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateMoneyStore"]];
+            }else
+            {
+                self.buessTable.textFiled4.text = @"";
+            }
+            
             
             self.string1 = self.dict[@"strategy"];
             self.string2 = self.dict[@"preset"];
@@ -181,6 +212,14 @@
 
 -(void)setSummaryUI
 {
+    
+    self.string1 = @"";
+    self.string2 = @"";
+    self.string3 = @"";
+    self.string4 = @"";
+    self.string5 = @"";
+    self.string6 = @"";
+    
     UIView *viewSummary = [[UIView alloc]init];
     [self.view addSubview:viewSummary];
     [viewSummary mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -483,26 +522,28 @@
     }else
     {
     
-    if (
-        self.buessTable.textFiled1.text.length ==0||
-        self.buessTable.textFiled2.text.length ==0||
-        self.buessTable.textFiled3.text.length ==0||
-        self.buessTable.textFiled4.text.length ==0||
-        [self.string1 isEqualToString:@""]||
-        [self.string2 isEqualToString:@""]||
-        [self.string3 isEqualToString:@""]||
-        [self.string4 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string6 isEqualToString:@""]||
-        [self.buessTable.startDate.titleLabel.text isEqualToString:@"选择日期"]||
-        [self.buessTable.endDate.titleLabel.text isEqualToString:@"选择日期"]
-        )
-    {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
-        return;
-    }
-    }
+    
+    
     if (self.isSelect) {
+        
+        if (
+            self.buessTable.textFiled1.text.length ==0||
+            self.buessTable.textFiled2.text.length ==0||
+            self.buessTable.textFiled3.text.length ==0||
+            self.buessTable.textFiled4.text.length ==0||
+            [self.string1 isEqualToString:@""]||
+            [self.string2 isEqualToString:@""]||
+            [self.string3 isEqualToString:@""]||
+            [self.string4 isEqualToString:@""]||
+            [self.string5 isEqualToString:@""]||
+            [self.string6 isEqualToString:@""]||
+            [self.buessTable.startDate.titleLabel.text isEqualToString:@"选择日期"]||
+            [self.buessTable.endDate.titleLabel.text isEqualToString:@"选择日期"]
+            )
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
         
     NSDictionary *dict = @{
                            @"appkey":appKeyStr,
@@ -526,7 +567,7 @@
                            @"PresetDirection":self.string4,
                            @"PlanningManagement":self.string5,
                            @"others":self.string6,
-                           @"Others":[USER_DEFAULTS valueForKey:@"name"]
+                           @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
@@ -556,6 +597,29 @@
     } view:self.view];
     }else
     {
+        
+        if (
+            self.buessSummary.textFiled1.text.length ==0||
+            self.buessSummary.textFiled2.text.length ==0||
+            self.buessSummary.textFiled3.text.length ==0||
+            self.buessSummary.textFiled4.text.length ==0||
+            self.buessSummary.textFiled5.text.length ==0||
+            self.buessSummary.textFiled6.text.length ==0||
+            self.buessSummary.textFiled7.text.length ==0||
+            [self.string1 isEqualToString:@""]||
+            [self.string2 isEqualToString:@""]||
+            [self.string3 isEqualToString:@""]||
+            [self.string4 isEqualToString:@""]||
+            [self.string5 isEqualToString:@""]||
+            [self.string6 isEqualToString:@""]||
+            [self.buessTable.startDate.titleLabel.text isEqualToString:@"选择日期"]||
+            [self.buessTable.endDate.titleLabel.text isEqualToString:@"选择日期"]
+            )
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
+        
         NSDictionary *dict = @{
                                @"appkey":appKeyStr,
                                @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
@@ -566,6 +630,7 @@
                                @"Sort":[ShareModel shareModel].sort,
                                @"code":@"1",
                                @"Hint":hint,
+                               @"PlanId":self.tableID,
                                @"StartDate":self.buessSummary.startDate.titleLabel.text,
                                @"EndDate":self.buessSummary.endDate.titleLabel.text,
                                @"PlanStore":self.buessSummary.textFiled1.text,
@@ -580,6 +645,7 @@
                                @"ProblemSolution":self.string3,
                                @"SelfSummary":self.string4,
                                @"CaseStrategyShare":self.string5,
+                               @"others":self.string6,
                                @"Name":[USER_DEFAULTS valueForKey:@"name"]
                                };
         [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
@@ -608,6 +674,7 @@
         } failure:^(NSError *error) {
             
         } view:self.view];
+    }
     }
 }
 
@@ -653,7 +720,17 @@
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arryaTitle.count;
+    if (self.isSelect) {
+        return self.arryaTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arryaTitle.count;
+        }
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -686,7 +763,7 @@
         switch (indexPath.row) {
                 
             case 0:
-                if (self.string1.length!=0) {
+                if (![self.string1 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string1;
                 }
                 
@@ -702,7 +779,7 @@
                 
                 break;
             case 1:
-                if (self.string2.length!=0) {
+                if (![self.string2 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string2;
                 }
                 
@@ -718,7 +795,7 @@
                 
                 break;
             case 2:
-                if (self.string3.length!=0) {
+                if (![self.string3 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string3;
                 }
                 
@@ -734,7 +811,7 @@
 
                 break;
             case 3:
-                if (self.string4.length!=0) {
+                if (![self.string4 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string4;
                 }
                 
@@ -749,7 +826,7 @@
                 }
                 break;
             case 4:
-                if (self.string5.length!=0) {
+                if (![self.string5 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string5;
                 }
                 
@@ -764,7 +841,7 @@
                 }
                 break;
             case 5:
-                if (self.string6.length!=0) {
+                if (![self.string6 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string6;
                 }
                 
@@ -793,7 +870,7 @@
         if (self.arraySummary.count!=0) {
             //跳转页面
             NSDictionary *dict = self.arraySummary[indexPath.row];
-            VCBuessWeekSummaryUnPassed *vc = [[VCBuessWeekSummaryUnPassed alloc]init];
+            VCBuessWeekSummarySubmited *vc = [[VCBuessWeekSummarySubmited alloc]init];
             vc.remark = [NSString stringWithFormat:@"%@",dict[@"remark"]];;
             vc.isSelect = NO;
             vc.tableID =  dict[@"id"];

@@ -23,6 +23,7 @@
     NSIndexPath *indexPathGes;
     ViewChooseEdit *chooseEdit;
     BOOL isEditing;
+    BOOL canEditl;
 }
 
 @property(nonatomic,strong) NSString *string1;
@@ -58,7 +59,7 @@
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             self.string1 = [self.dict[@"dateLine"] substringToIndex:10];
             self.string2 = self.dict[@"worship"];
-            self.string3 = self.dict[@"targetDetail"];
+            self.string3 = self.dict[@"theTargetJob"];
             self.string4 = self.dict[@"appraisal"];
             if (![self.dict[@"evaluation"] isKindOfClass:[NSNull class]]) {
                 self.string5 = [NSString stringWithFormat:@"%@",self.dict[@"evaluation"]];
@@ -173,6 +174,7 @@
         
         [self.dict setValue:@"2" forKey:@"canEdit"];
         isEditing = YES;
+        canEditl = YES;
         [tableView1 reloadData];
     }else if(indexPath.row==1)
     {
@@ -258,16 +260,16 @@
     }
     
     if (self.string2.length!=0) {
-        [dict setValue:self.string2 forKey:@"Store"];
+        [dict setValue:self.string2 forKey:@"Worship"];
     }else
     {
-        [dict setValue:@"" forKey:@"Store"];
+        [dict setValue:@"" forKey:@"Worship"];
     }
     if (self.string3.length!=0) {
-        [dict setValue:self.string3 forKey:@"TargetDetail"];
+        [dict setValue:self.string3 forKey:@"TheTargetJob"];
     }else
     {
-        [dict setValue:@"" forKey:@"TargetDetail"];
+        [dict setValue:@"" forKey:@"TheTargetJob"];
     }
     if (self.string4.length!=0) {
         [dict setValue:self.string4 forKey:@"Appraisal"];
@@ -391,7 +393,7 @@
     CellEditInfo *cell = [tableView1 cellForRowAtIndexPath:indexPathGes];
     NSIndexPath *indexPath = [myScore.tableView indexPathForSelectedRow];
     cell.textView.text = myScore.arrayContent[indexPath.row];
-    if (indexPath.row==4) {
+    if (indexPathGes.row==5) {
         self.string4 = myScore.arrayContent[indexPath.row];
     }else
     {
@@ -414,6 +416,14 @@
         }
         cell.labelTitle.text = arrayTitle[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if (canEditl) {
+            cell.textView.userInteractionEnabled = YES;
+        }else
+        {
+            canEditl = NO;
+        }
+        
         switch (indexPath.row) {
             case 0:
             {
@@ -461,12 +471,19 @@
             cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.LabelTitle.text = arrayTitle[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (canEditl) {
+            cell.textView.userInteractionEnabled = YES;
+        }else
+        {
+            canEditl = NO;
+        }
         
         switch (indexPath.row) {
                 
             case 4:
                 cell.textView.delegate =self;
-                if (self.string3.length!=0) {
+                if (![self.string3 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string3;
                 }else
                 {
@@ -478,7 +495,7 @@
                 cell.textView.editable =  NO;
                 UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChooseScore:)];
                 [cell.textView addGestureRecognizer:ges];
-                if (self.string4.length!=0) {
+                if (![self.string4 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string4;
                 }else
                 {
@@ -492,7 +509,7 @@
                 cell.textView.editable = NO;
                 UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showChooseScore:)];
                 [cell.textView addGestureRecognizer:ges];
-                if (self.string5.length!=0) {
+                if (![self.string5 isKindOfClass:[NSNull class]]) {
                     cell.textView.text = self.string5;
                 }else
                 {
@@ -502,7 +519,7 @@
                 break;
             case 7:
                 cell.textView.delegate = self;
-                if (self.string6.length!=0) {
+                if (![self.string6 isKindOfClass:[NSNull class]]) {
                     cell.textView.text =self.string6;
                 }else
                 {
@@ -511,7 +528,7 @@
                 break;
             case 8:
                 cell.textView.delegate = self;
-                if (self.string7.length!=0) {
+                if (![self.string7 isKindOfClass:[NSNull class]]) {
                     cell.textView.text =self.string7;
                 }else
                 {
@@ -520,7 +537,7 @@
                 break;
             case 9:
                 cell.textView.delegate = self;
-                if (self.string8.length!=0) {
+                if (![self.string8 isKindOfClass:[NSNull class]]) {
                     cell.textView.text =self.string8;
                 }else
                 {
@@ -592,6 +609,7 @@
     [self setUI];
     self.dict = [NSMutableDictionary dictionary];
     isBack = NO;
+    canEditl = NO;
     
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showChooseEdit)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];

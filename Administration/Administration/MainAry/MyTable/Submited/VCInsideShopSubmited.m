@@ -144,7 +144,7 @@
     VCPositil *vc = [[VCPositil alloc]init];
     for (NSString *key in [self.dict allKeys]) {
         if (![self.dict[key] isKindOfClass:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dict[key]]]) {
                 vc.field = key;
                 break;
             }
@@ -353,6 +353,7 @@
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要保存此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.tag = 300;
+    [self.view endEditing:YES];
     [alertView show];
 }
 
@@ -360,6 +361,7 @@
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.tag = 100;
+     [self.view endEditing:YES];
     [alertView show];
 }
 
@@ -368,6 +370,7 @@
     if (isEditing==YES) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"离开后编辑的内容将要消失" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"存到草稿箱",@"确定" ,nil];
         alertView.tag = 200;
+         [self.view endEditing:YES];
         [alertView show];
     }else
     {
@@ -385,7 +388,7 @@
         }
     }else if(alertView.tag==200)
     {
-        if (buttonIndex==1) {
+        if (buttonIndex==2) {
             [self.navigationController popViewControllerAnimated:YES];
         }
     }else

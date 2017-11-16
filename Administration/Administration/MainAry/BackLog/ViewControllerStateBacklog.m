@@ -50,6 +50,7 @@
                 [self.view addSubview:label];
             }else
             {
+                self.isDelete = NO;
                 [self.tableView reloadData];
             }
             
@@ -224,6 +225,7 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.dict = dict;
     if (self.isDelete) {
+        cell.imageView1.hidden = NO;
         [cell.imageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(cell.contentView.mas_left).offset(8);
             make.centerY.mas_equalTo(cell.contentView.mas_centerY);
@@ -234,6 +236,11 @@
             cell.imageView1.image = [UIImage imageNamed:@"xuanzhong"];
             cell.isSelect = YES;
         }
+        
+    }else
+    {
+        cell.imageView1.frame = CGRectMake(0, 0, 0, 0);
+        cell.imageView1.hidden = YES;
         
     }
     return cell;

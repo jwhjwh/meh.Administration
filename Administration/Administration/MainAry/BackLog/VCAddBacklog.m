@@ -210,10 +210,6 @@
                  };
     }else
     {
-        if ([self.startTime isEqualToString:self.endTime]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"开始时间不能等于结束时间" andInterval:1.0];
-            return;
-        }
         
 //        if ([self.wornDate compare:self.startTime]==NSOrderedAscending) {
 //            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提醒时间不能小于开始时间" andInterval:1.0];

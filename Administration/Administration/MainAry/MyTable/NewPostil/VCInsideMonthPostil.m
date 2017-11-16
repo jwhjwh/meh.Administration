@@ -69,15 +69,25 @@
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
             if (self.arraySummary.count!=0) {
                 [self setSummaryList];
+                
+                self.navigationItem.rightBarButtonItem = nil;
             }else
             {
                 [self setSummaryUI];
+                [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
+                self.insideMonth.buttonDate.userInteractionEnabled = NO;
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+                return ;
             }
-
+            
             [self.tableView reloadData];
         }else
         {
-              [self setSummaryUI];
+            [self setSummaryUI];
+            [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
+            self.insideMonth.buttonDate.userInteractionEnabled = NO;
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无内容,可以填写" andInterval:1.0];
+            return ;
         }
         
     } failure:^(NSError *error) {
@@ -248,6 +258,12 @@
 
 -(void)changeData:(UIButton *)button
 {
+    self.string1 = @"";
+    self.string2 = @"";
+    self.string3 = @"";
+    self.string4 = @"";
+    self.string5 = @"";
+    self.string6 = @"";
     if (button.tag==100) {
         self.viewPlan.hidden=  NO;
         self.viewSummary.hidden = YES;
@@ -452,18 +468,26 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
-    if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
-        [self.string1 isEqualToString:@""]||
-        [self.string2 isEqualToString:@""]||
-        [self.string3 isEqualToString:@""]||
-        [self.string4 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]
-        )
+    if (isBack) {
+        if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
+            return;
+        }
+    }else
     {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
-        return;
+        
+        if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
+            [self.string1 isEqualToString:@""]||
+            [self.string2 isEqualToString:@""]||
+            [self.string3 isEqualToString:@""]||
+            [self.string4 isEqualToString:@""]||
+            [self.string5 isEqualToString:@""]||
+            [self.string6 isEqualToString:@""]
+            )
+        {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
+            return;
+        }
     }
     
     NSDictionary *dict = @{@"appkey":appKeyStr,
@@ -580,7 +604,12 @@
         }
     }else
     {
-        return self.arryaTitle.count;
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arryaTitle.count;
+        }
     }
     
 }
@@ -594,7 +623,9 @@
         }
         NSDictionary *dict = self.arraySummary[indexPath.row];
         cell.labelPostion.text = [ShareModel shareModel].postionName;
-        cell.dictInfo = dict;
+        //cell.dictInfo = dict;
+        cell.labelFilledTime.text = [dict[@"months"]substringToIndex:7];
+        cell.labelUpTime.text = [dict[@"dates"] substringWithRange:NSMakeRange(5, 11)];
         [ZXDNetworking setExtraCellLineHidden:tableView];
         return cell;
     }else
@@ -675,6 +706,7 @@
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
+                break;
             case 3:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
@@ -688,6 +720,7 @@
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
+                break;
             case 4:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
@@ -797,6 +830,8 @@
     self.string2 = @"";
     self.string3 = @"";
     self.string4 = @"";
+    self.string5 = @"";
+    self.string6 = @"";
     
     self.arrayPostil = [NSArray array];
 }

@@ -330,7 +330,7 @@
 
 }
 
--(void)changeBacklogSate
+-(void)changeBacklogSate:(NSString *)state
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@matters/UpdateToMattersRed.action",KURLHeader];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
@@ -342,7 +342,8 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
                            @"Matterstype":self.matterstype,
-                           @"id":self.backlogID
+                           @"id":self.backlogID,
+                           @"Red":state
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
@@ -396,7 +397,7 @@
     [self.notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [self.allReady setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateNormal];
     [self.allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-    [self changeBacklogSate];
+    [self changeBacklogSate:@"1"];
 }
 
 -(void)buttonNotPresss
@@ -405,6 +406,7 @@
     [self.allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
     [self.notReady setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateNormal];
     [self.notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
+    [self changeBacklogSate:@"0"];
 }
 
 -(void)getState
@@ -413,6 +415,7 @@
     if (indexPath.row==0) {
         self.canEdit = YES;
         self.warnDate.userInteractionEnabled = YES;
+        self.view.userInteractionEnabled = YES;
         NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
         UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(saveBacklog)];
         [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
@@ -596,6 +599,7 @@
     self.title = @"添加待办事项";
     
     self.canEdit = NO;
+    self.view.userInteractionEnabled = NO;
 
     self.navigationItem.rightBarButtonItem = rightitem;
     

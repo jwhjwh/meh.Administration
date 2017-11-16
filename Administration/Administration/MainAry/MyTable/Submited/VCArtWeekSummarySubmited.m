@@ -183,6 +183,8 @@
     
     ViewArtWeekSummary *artWeekSummary = [[ViewArtWeekSummary alloc]initWithFrame:CGRectMake(0, 105, Scree_width,700)];
     artWeekSummary.userInteractionEnabled = NO;
+    artWeekSummary.startDate.userInteractionEnabled = NO;
+    artWeekSummary.endDate.userInteractionEnabled = NO;
     [viewSummary addSubview:artWeekSummary];
     self.artWeekSummary = artWeekSummary;
     

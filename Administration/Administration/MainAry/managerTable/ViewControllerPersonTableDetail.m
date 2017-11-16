@@ -80,23 +80,115 @@
 {
     CellTabelDetail *cell = (CellTabelDetail *)[[button superview] superview];
     
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
-    
-    NSMutableArray *array = [[self.dictContent allKeys]mutableCopy];
-    if ([array containsObject:@"store"]) {
-        [array removeObject:@"store"];
-    }
-    
-    for (NSString *key in array) {
-        if (![self.dictContent[key] isEqual:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dictContent[key]]]) {
-                vc.theKey = key;
-                break;
-            } 
+    if ([self.postionName containsString:@"美导"]||[self.postionName containsString:@"市场"]) {
+            switch (indexPath.row) {
+                case 4:
+                    vc.theKey = @"aim";
+                    
+                    break;
+                case 5:
+                    vc.theKey = @"achievement";
+                    
+                    break;
+                case 6:
+                    vc.theKey = @"shipment";
+                    
+                    break;
+                case 7:
+                    vc.theKey = @"question";
+                    
+                    break;
+                case 8:
+                    vc.theKey = @"solution";
+                    
+                    break;
+                case 9:
+                    vc.theKey = @"apperception";
+                    
+                    break;
+                case 10:
+                    vc.theKey = @"morgenPlan";
+                    
+                    break;
+                case 11:
+                    vc.theKey = @"morgenAim";
+                    
+                    break;
+                case 12:
+                    vc.theKey = @"summery";
+                    
+                    break;
+                default:
+                    break;
+            }
+            
         }
-        
+    else if([self.postionName containsString:@"业务"])
+    {
+            switch (indexPath.row) {
+                case 4:
+                    vc.theKey = @"theTargetJob";
+                    
+                    break;
+                case 5:
+                    vc.theKey = @"appraisal";
+                    
+                    break;
+                case 6:
+                    vc.theKey = @"evaluation";
+                    
+                    break;
+                case 7:
+                    vc.theKey = @"reason";
+                    
+                    break;
+                case 8:
+                    vc.theKey = @"feelingToShare";
+                    
+                    break;
+                case 9:
+                    vc.theKey = @"plans";
+                    
+                    break;
+                default:
+                    break;
+            }
+    }else
+    {
+            switch (indexPath.row) {
+                case 4:
+                    vc.theKey = @"targetDetail";
+                    
+                    break;
+                case 5:
+                    vc.theKey = @"appraisal";
+                    
+                    break;
+                case 6:
+                    vc.theKey = @"evaluation";
+                    
+                    break;
+                case 7:
+                    vc.theKey = @"reason";
+                    
+                    break;
+                case 8:
+                    vc.theKey = @"sentiment";
+                    
+                    break;
+                case 9:
+                    vc.theKey = @"tomorrowPlan";
+                   
+                    break;
+                default:
+                    break;
+            }
     }
+    
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.dictContent[@"id"];
@@ -398,7 +490,7 @@
            cell.labelTitle.text = self.arrayTitle[indexPath.row];
            switch (indexPath.row) {
                case 0:
-                   cell.labelInfo.text = [self.dictContent[@"dates"] substringToIndex:15];
+                   cell.labelInfo.text = [self.dictContent[@"dates"] substringToIndex:10];
                    break;
                case 1:
                    cell.labelInfo.text = self.dictContent[@"worship"];

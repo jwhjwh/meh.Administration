@@ -372,7 +372,7 @@
             return;
         }
         if ([self.endDate.titleLabel.text isEqualToString:@"选择日期"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写服务店家" andInterval:1];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
             return;
         }
 

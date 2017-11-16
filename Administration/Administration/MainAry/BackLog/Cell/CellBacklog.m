@@ -84,19 +84,6 @@
         make.height.mas_equalTo(12);
     }];
     self.labelState = labelState;
-    
-    
-    UIImageView *imageSelect = [[UIImageView alloc]init];
-    imageSelect.hidden = YES;
-    imageSelect.image = [UIImage imageNamed:@"zt_ico01"];
-    [self.contentView addSubview:imageSelect];
-    [imageSelect mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(labelState.mas_left).offset(-2);
-        make.top.mas_equalTo(labelTime.mas_bottom).offset(8);
-        make.width.mas_equalTo(10);
-        make.height.mas_equalTo(10);
-    }];
-    self.imageSelect = imageSelect;
 }
 
 -(void)setDict:(NSDictionary *)dict
@@ -118,12 +105,12 @@
     if ([read isEqualToString:@"1"]) {
         self.labelState.text = @"已完成";
         self.labelState.textColor = GetColor(51, 172, 59, 1);
-        self.imageSelect.hidden = NO;
+      //  self.imageSelect.hidden = NO;
     }else
     {
         self.labelState.text = @"未完成";
         self.labelState.textColor = GetColor(192, 192, 192, 1);
-        self.imageSelect.hidden = YES;
+       // self.imageSelect.hidden = YES;
     }
     
     if ([matterstype isEqualToString:@"1"]) {

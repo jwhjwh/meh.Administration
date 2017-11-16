@@ -44,11 +44,25 @@
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             self.arraySummary = [[responseObject valueForKey:@"lists"]mutableCopy];
-            [self.tableView reloadData];
+            if (self.arraySummary.count!=0) {
+                [self.tableView reloadData];
+            }else
+            {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+                self.navigationItem.rightBarButtonItem = nil;
+                self.havePermission = NO;
+                [self.tableView reloadData];
+                
+            }
+            
         }else
         {
-            
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            self.navigationItem.rightBarButtonItem = nil;
+            self.havePermission = NO;
+            [self.tableView reloadData];
         }
+
         
     } failure:^(NSError *error) {
         
@@ -186,6 +200,8 @@
 {
     self.mutAttribute = [[NSMutableAttributedString alloc]init];
     [self.arraySummary removeAllObjects];
+    [self.dictInfo removeAllObjects];
+    self.mutAttribute = [[NSMutableAttributedString alloc]init];
     if (button.tag==200) {
         self.line.frame = CGRectMake(0, 94, Scree_width/2, 1);
         [self.buttonPlan setTitleColor:GetColor(186, 153, 203, 1) forState:UIControlStateNormal];
@@ -216,12 +232,65 @@
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
     
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    if (self.isSelect) {
+        switch (indexPath.row) {
+            case 3:
+            {
+            case 4:
+                vc.theKey = @"direction";
+                
+                break;
+            case 5:
+                vc.theKey = @"shopsArrange";
+                
+                break;
+            case 6:
+                vc.theKey = @"requestForProposal";
+                
+                break;
+            case 7:
+                vc.theKey = @"personalGrowth";
+                
+                break;
+            case 8:
+                vc.theKey = @"others";
+                
+                break;
+                
+            default:
+                break;
         }
+        
     }
+    }else
+    {
+        switch (indexPath.row) {
+           
+            case 4:
+                vc.theKey = @"sca";
+                
+                break;
+            case 5:
+                vc.theKey = @"experience";
+                
+                break;
+            case 6:
+                vc.theKey = @"problem";
+                
+                break;
+            case 7:
+                vc.theKey = @"others";
+                
+                break;
+                
+            default:
+                break;
+        }
+        
+    }
+    
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
     vc.tableID = self.tableId;

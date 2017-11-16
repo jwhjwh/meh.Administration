@@ -144,7 +144,7 @@
     VCPositil *vc = [[VCPositil alloc]init];
     for (NSString *key in [self.dict allKeys]) {
         if (![self.dict[key] isKindOfClass:[NSNull class]]) {
-            if ([cell.textView.text isEqualToString:self.dict[key]]) {
+            if ([cell.textView.text isEqualToString:[NSString stringWithFormat:@"%@",self.dict[key]]]) {
                 vc.field = key;
                 break;
             }

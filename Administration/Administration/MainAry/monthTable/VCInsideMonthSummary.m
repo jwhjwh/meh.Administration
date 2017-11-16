@@ -165,6 +165,7 @@
         self.isSelect = YES;
         self.codeS = @"1";
         self.remark = @"12";
+        self.tableId = [NSString stringWithFormat:@"%@",self.dictInfo[@"planId"]];
         
     }else
     {
@@ -188,10 +189,60 @@
     
     ViewControllerPostil *vc = [[ViewControllerPostil alloc]init];
     vc.stringName = cell.textView.text;
-    for (NSString *key in [self.dictInfo allKeys]) {
-        if ([cell.textView.text isEqualToString:self.dictInfo[key]]) {
-            vc.theKey = key;
-            break;
+
+    if (self.isSelect) {
+        switch (indexPath.row) {
+                
+            case 4:
+                vc.theKey = @"workPlan";
+                
+                break;
+            case 5:
+                vc.theKey = @"firstWeek";
+                
+                break;
+            case 6:
+                vc.theKey = @"secondWeek";
+                
+                break;
+            case 7:
+                vc.theKey = @"fourthWeek";
+                
+                break;
+            case 8:
+                vc.theKey = @"comment";
+                
+                break;
+            default:
+                break;
+        }
+        
+    }else
+    {
+        switch (indexPath.row) {
+                
+            case 4:
+                vc.theKey = @"completeProgressBriefly";
+                
+                break;
+            case 5:
+                vc.theKey = @"progressEvaluation";
+                
+                break;
+            case 6:
+                vc.theKey = @"strategy";
+                
+                break;
+            case 7:
+                vc.theKey = @"experience";
+                
+                break;
+            case 8:
+                vc.theKey = @"directionPreset";
+                
+                break;
+            default:
+                break;
         }
     }
     vc.departmentID = self.departmentId;

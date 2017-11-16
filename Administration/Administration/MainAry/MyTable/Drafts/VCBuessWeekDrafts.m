@@ -97,10 +97,35 @@
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             [self.buessTable.startDate setTitle:[self.dict[@"startDate"]substringToIndex:10] forState:UIControlStateNormal];
             [self.buessTable.endDate setTitle:[self.dict[@"endDate"]substringToIndex:10] forState:UIControlStateNormal];
-            self.buessTable.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"planStore"]];
-            self.buessTable.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"callbackStore"]];
-            self.buessTable.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateStore"]];
-            self.buessTable.textFiled4.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateMoneyStore"]];
+            
+            
+            if (![self.dict[@"planStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled1.text = [NSString stringWithFormat:@"%@",self.dict[@"planStore"]];
+            }else
+            {
+                self.buessTable.textFiled1.text = @"";
+            }
+            
+            if (![self.dict[@"callbackStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled2.text = [NSString stringWithFormat:@"%@",self.dict[@"callbackStore"]];
+            }else
+            {
+                self.buessTable.textFiled2.text = @"";
+            }
+            
+            if (![self.dict[@"estimateStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled3.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateStore"]];
+            }else
+            {
+                self.buessTable.textFiled3.text = @"";
+            }
+            
+            if (![self.dict[@"estimateMoneyStore"] isKindOfClass:[NSNull class]]) {
+                self.buessTable.textFiled4.text = [NSString stringWithFormat:@"%@",self.dict[@"estimateMoneyStore"]];
+            }else
+            {
+                self.buessTable.textFiled4.text = @"";
+            }
             
             self.string1 = self.dict[@"strategy"];
             self.string2 = self.dict[@"preset"];
@@ -458,7 +483,7 @@
                            @"PresetDirection":self.string4,
                            @"PlanningManagement":self.string5,
                            @"others":self.string6,
-                           @"Others":[USER_DEFAULTS valueForKey:@"name"]
+                           @"Name":[USER_DEFAULTS valueForKey:@"name"]
                            };
     [ZXDNetworking POST:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
@@ -530,7 +555,17 @@
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arryaTitle.count;
+    if (self.isSelect) {
+        return self.arryaTitle.count;
+    }else
+    {
+        if (self.arraySummary.count!=0) {
+            return self.arraySummary.count;
+        }else
+        {
+            return self.arryaTitle.count;
+        }
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -9,7 +9,8 @@
 #import "VCInsideFillMonthTable.h"
 #import "ViewInsideMonthTable.h"
 #import "CellEditPlan.h"
-@interface VCInsideFillMonthTable ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>
+#import "ViewDatePick.h"
+@interface VCInsideFillMonthTable ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,ViewDatePickerDelegate>
 {
     BOOL isBack;
 }
@@ -17,6 +18,8 @@
 @property (nonatomic,weak)UIButton *buttopSummary;
 @property (nonatomic,weak)UILabel *labelLine;
 @property (nonatomic,weak)ViewInsideMonthTable *insideMonth;
+@property (nonatomic,weak)ViewInsideMonthTable *insideMonth1;
+@property (nonatomic,weak)ViewDatePick *myDatePick;
 @property (nonatomic,strong)NSString *string1;
 @property (nonatomic,strong)NSString *string2;
 @property (nonatomic,strong)NSString *string3;
@@ -48,6 +51,7 @@
     self.viewPlan = viewPlan;
     
     ViewInsideMonthTable *insideMonth = [[ViewInsideMonthTable alloc]initWithFrame:CGRectMake(0, 105, Scree_width,120)];
+    [insideMonth.buttonDate addTarget:self action:@selector(showDatePicker) forControlEvents:UIControlEventTouchUpInside];
     [viewPlan addSubview:insideMonth];
     self.insideMonth = insideMonth;
     
@@ -82,13 +86,14 @@
     }];
     self.viewSummary = viewSummary;
     
-    ViewInsideMonthTable *insideMonth = [[ViewInsideMonthTable alloc]initWithFrame:CGRectMake(0, 105, Scree_width,120)];
-    insideMonth.userInteractionEnabled = NO;
-    [viewSummary addSubview:insideMonth];
-    self.insideMonth = insideMonth;
+    ViewInsideMonthTable *insideMonth1 = [[ViewInsideMonthTable alloc]initWithFrame:CGRectMake(0, 105, Scree_width,120)];
+    [insideMonth1.buttonDate addTarget:self action:@selector(showDatePicker) forControlEvents:UIControlEventTouchUpInside];
+    insideMonth1.userInteractionEnabled = NO;
+    [viewSummary addSubview:insideMonth1];
+    self.insideMonth1 = insideMonth1;
     
     UITableView *tableView = [[UITableView alloc]init];
-    tableView.tableHeaderView = insideMonth;
+    tableView.tableHeaderView = insideMonth1;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -134,6 +139,7 @@
 }
 -(void)changeData:(UIButton *)button
 {
+    
     if (button.tag==100) {
         self.viewPlan.hidden=  NO;
         self.viewSummary.hidden = YES;
@@ -165,6 +171,7 @@
 -(void)showAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    isBack = NO;
     alertView.tag = 100;
     [alertView show];
 }
@@ -190,18 +197,26 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    if (isBack) {
+        if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
+            return;
+        }
+    }else
+    {
+    
     if ([self.insideMonth.buttonDate.titleLabel.text isEqualToString:@"选择日期"]||
         [self.string1 isEqualToString:@""]||
         [self.string2 isEqualToString:@""]||
         [self.string3 isEqualToString:@""]||
         [self.string4 isEqualToString:@""]||
         [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]||
-        [self.string5 isEqualToString:@""]
+        [self.string6 isEqualToString:@""]
         )
     {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
         return;
+    }
     }
     
     NSDictionary *dict = @{@"appkey":appKeyStr,
@@ -248,6 +263,24 @@
     } view:self.view];
 }
 
+-(void)showDatePicker
+{
+    ViewDatePick *myDatePick=  [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    [self.view endEditing:YES];
+    myDatePick.delegate = self;
+    [self.view.window addSubview:myDatePick];
+    self.myDatePick = myDatePick;
+}
+
+-(void)getDate
+{
+    NSDate *date = self.myDatePick.datePick.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString *stringDate = [[formatter stringFromDate:date] substringToIndex:7];
+    [self.insideMonth.buttonDate setTitle:stringDate forState:UIControlStateNormal];
+}
+
 #pragma -mark alertView
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -258,14 +291,6 @@
     }else
     {
         if (buttonIndex==1) {
-            if (self.string1.length==0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择日期" andInterval:1];
-                return;
-            }
-            if (self.string2.length==0) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写服务店家" andInterval:1];
-                return;
-            }
             [self submitData:@"3"];
         }
         if (buttonIndex==2) {
@@ -286,6 +311,29 @@
         }
     }else
     {
+        if (self.isSelect) {
+            switch (indexPath.row) {
+                case 0:
+                    self.string2 = textView.text;
+                    break;
+                case 1:
+                    self.string3 = textView.text;
+                    break;
+                case 2:
+                    self.string4 = textView.text;
+                    break;
+                case 3:
+                    self.string5 = textView.text;
+                    break;
+                case 4:
+                    self.string6 = textView.text;
+                    break;
+                    
+                default:
+                    break;
+            }
+        }else
+        {
     switch (indexPath.row) {
         case 0:
             self.string2 = textView.text;
@@ -305,6 +353,7 @@
         
         default:
             break;
+    }
     }
     }
     
@@ -476,6 +525,8 @@
     self.string2 = @"";
     self.string3 = @"";
     self.string4 = @"";
+    self.string5 = @"";
+    self.string6 = @"";
 }
 
 - (void)didReceiveMemoryWarning {
