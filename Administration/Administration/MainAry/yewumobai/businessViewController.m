@@ -10,6 +10,7 @@
 #import "busableController.h"
 #import "InterestedViewController.h"
 #import  "TargetCustomerViewController.h"
+#import "CooperationViewController.h"
 @interface businessViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 {
@@ -104,7 +105,9 @@
         }
             break;
         case 3:{//确定合作客户
-            
+            CooperationViewController *ctvc= [[CooperationViewController alloc]init];
+            ctvc.strId = self.strId;
+            [self.navigationController showViewController:ctvc sender:nil];
         }
             break;
         default:

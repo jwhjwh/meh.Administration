@@ -16,4 +16,12 @@ typedef void(^SelectedHandle)(NSString * province, NSString * city, NSString * a
 - (void)returnText:(ReturnTextBlock)block;
 
 @property (nonatomic,copy) NSString *isfoyou;
+
+@property (nonatomic,copy) NSString *storesssss;
+@property (nonatomic,copy) NSString *storescity;
+@property (nonatomic,copy) NSString *storesCount;
+@property (nonatomic,copy) NSString *storespoince;
+@property (nonatomic,copy) NSString *storesaddes;
+
+
 @end

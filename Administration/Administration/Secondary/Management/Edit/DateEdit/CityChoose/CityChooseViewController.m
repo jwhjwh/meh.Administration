@@ -135,10 +135,15 @@
     if (indexPath.row == 0) {
         CGRect labelRect2 = CGRectMake(20, 0, self.view.bounds.size.width-170, 50);
         _CityLabel = [[UILabel alloc]initWithFrame:labelRect2];
-        _CityLabel.text = @"所在区域";
+        
         _CityLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-       
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+        if ([_storesssss isEqualToString:@"1"]) {
+            _CityLabel.text = [NSString stringWithFormat:@"%@-%@-%@",_storespoince,_storescity,_storesCount];
+        }else{
+             _CityLabel.text = @"所在区域";
+        }
+       
          [cell addSubview:_CityLabel];
     }else if(indexPath.row == 1) {
         CGRect labelRect2 = CGRectMake(20, 0, self.view.bounds.size.width, 50);
@@ -147,7 +152,14 @@
         _cityField.font = [UIFont boldSystemFontOfSize:13.0f];
         _cityField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _cityField.adjustsFontSizeToFitWidth = YES;
-        _cityField.placeholder =@"详细地址";
+       
+        if ([_storesssss isEqualToString:@"1"]) {
+            _cityField.text = [NSString stringWithFormat:@"%@",_storesaddes];
+        }else{
+             _cityField.placeholder =@"详细地址";
+        }
+        
+        
          placeholder(_cityField);
         [cell addSubview:_cityField];
 

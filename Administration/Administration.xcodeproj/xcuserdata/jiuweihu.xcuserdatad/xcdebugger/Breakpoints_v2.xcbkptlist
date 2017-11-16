@@ -35,22 +35,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/MessageController.m"
-            timestampString = "529559862.124507"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Administration/Secondary/Management/DatePicker/PW_DatePickerView.m"
             timestampString = "530615699.204398"
             startingColumnNumber = "9223372036854775807"
@@ -100,12 +84,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yuangongguan/BJZWViewController.m"
-                  timestampString = "531456440.84282"
+                  timestampString = "532507640.104677"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "693"
                   endingLineNumber = "693"
-                  offsetFromSymbolStart = "1048">
+                  offsetFromSymbolStart = "1036">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -115,12 +99,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yuangongguan/BJZWViewController.m"
-                  timestampString = "531456440.844901"
+                  timestampString = "532507640.109528"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "694"
                   endingLineNumber = "694"
-                  offsetFromSymbolStart = "68">
+                  offsetFromSymbolStart = "60">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -164,12 +148,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/TargetCustomer/DeterMineTc/TargetTable/ShareColleagues.m"
-                  timestampString = "531456440.853019"
+                  timestampString = "532507640.129585"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "167"
                   endingLineNumber = "167"
-                  offsetFromSymbolStart = "1696">
+                  offsetFromSymbolStart = "1688">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -179,12 +163,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/TargetCustomer/DeterMineTc/TargetTable/ShareColleagues.m"
-                  timestampString = "531456440.855015"
+                  timestampString = "532507640.1331"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "168"
                   endingLineNumber = "168"
-                  offsetFromSymbolStart = "68">
+                  offsetFromSymbolStart = "60">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -195,12 +179,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yewumobai/Interested buyers/InterestedViewController.m"
-            timestampString = "531456522.829429"
+            filePath = "Administration/MainAry/yewumobai/VisitRecord/Worship the search/OneDateViewController.m"
+            timestampString = "531627212.257799"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>

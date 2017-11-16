@@ -10,13 +10,15 @@
 #import "RecotdModel.h"
 #import "RecordTableViewCell.h"
 #import "WorshipSearchViewController.h"
-#import "InterestedTabelViewController.h"
+//
+#import "InterestedChooseViewController.h"
 @interface InterestedViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
     
 }
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
+@property (strong,nonatomic) NSMutableArray *shopidAry;
 @property (strong,nonatomic) UIButton *sousuoBtn;//搜索框
 @end
 
@@ -157,9 +159,11 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"list"];
             _InterNameAry = [[NSMutableArray alloc]init];
+            _shopidAry = [[NSMutableArray alloc]init];
             for (NSDictionary *dic in array) {
                 RecotdModel *model=[[RecotdModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
+                [_shopidAry addObject:[dic valueForKey:@"shopId"]];
                 [_InterNameAry addObject:model];
             }
             [infonTableview reloadData];
@@ -193,11 +197,16 @@
 {
     RecotdModel *model=[[RecotdModel alloc]init];
     model = _InterNameAry[indexPath.row];
-    InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
-    intabel.intentionId = model.Id;
+//    InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
+//    intabel.intentionId = model.Id;
+//    intabel.strId = self.strId;
+//    [self.navigationController pushViewController:intabel animated:YES];
+    InterestedChooseViewController *intabel = [[InterestedChooseViewController alloc]init];
+    intabel.strIdName = model.storeName;
     intabel.strId = self.strId;
-    [self.navigationController pushViewController:intabel animated:YES];
-    
+    intabel.intentionId= model.Id;
+    intabel.shopId = _shopidAry[indexPath.row];
+ [self.navigationController pushViewController:intabel animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

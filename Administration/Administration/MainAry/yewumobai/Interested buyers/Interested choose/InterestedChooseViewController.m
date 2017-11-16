@@ -7,7 +7,8 @@
 //
 
 #import "InterestedChooseViewController.h"
-#import "VisitRecordViewController.h"
+#import "ModifyVisitViewController.h"
+#import "InterestedTabelViewController.h"
 @interface InterestedChooseViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
@@ -90,11 +91,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 1) {
-        VisitRecordViewController *visiVC = [[VisitRecordViewController alloc]init];
+        
+        ModifyVisitViewController *visiVC = [[ModifyVisitViewController alloc]init];
         visiVC.strId = self.strId;
+        visiVC.shopId = self.shopId;
+        visiVC.andisofyou = @"1";
         [self.navigationController pushViewController:visiVC animated:YES];
     }else{
-    
+            InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
+            intabel.intentionId = self.intentionId;
+            intabel.strId = self.strId;
+            [self.navigationController pushViewController:intabel animated:YES];
     }
     
 }

@@ -12,4 +12,5 @@
 @property (nonatomic,strong) NSString *TargetVisitId;
 @property (nonatomic,strong) NSString *shopname;
 @property (strong,nonatomic) NSString *strId;
+@property (strong,nonatomic) NSString * shopId;
 @end

@@ -11,4 +11,8 @@
 @interface InterestedTabelViewController : UIViewController
 @property (strong,nonatomic) NSString *intentionId;
 @property (strong,nonatomic) NSString *strId;
+
+@property (strong,nonatomic) NSString *isofyou;
+@property (strong,nonatomic) NSString *shopId;
+
 @end

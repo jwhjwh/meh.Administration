@@ -21,9 +21,13 @@
 @property (nonatomic,strong)NSString *postionName;//职位名称
 @property (nonatomic,strong)NSString *departmentID;
 
+
 @property (nonatomic,strong)NSMutableArray *arrayData;
 
 @property (nonatomic,strong)NSString *stringProvince;
 @property (nonatomic,strong)NSString *stringCity;
 @property (nonatomic,strong)NSString *stringCountry;
+
+@property (nonatomic,strong)NSString *StoreId;//门店信息id
+
 @end

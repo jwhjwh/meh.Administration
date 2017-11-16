@@ -10,4 +10,10 @@
 
 @interface StoresViewController : UIViewController
 @property (nonatomic, assign) BOOL isend;
+@property (nonatomic,strong)NSString *shopId;
+@property (strong,nonatomic) NSString *strId;
+@property (nonatomic,strong)NSString *StoreId;
+
+@property (nonatomic,strong)NSString*isofyou;
+
 @end
