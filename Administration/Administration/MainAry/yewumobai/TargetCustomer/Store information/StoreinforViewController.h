@@ -11,7 +11,8 @@
 @interface StoreinforViewController : UIViewController
 
 @property (nonatomic,strong)NSString *titleName;
-
+@property (nonatomic,strong)NSString *shopId;
 @property (nonatomic, assign) BOOL isend;
+@property (strong,nonatomic) NSString *strId;
 
 @end

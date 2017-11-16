@@ -20,4 +20,6 @@
 @property (nonatomic,strong)NSString *num; //1.市场 2.业务 3.财务 4.客服
 @property (nonatomic,strong)NSString *postionName;//职位名称
 @property (nonatomic,strong)NSString *departmentID;
+
+@property (nonatomic,strong)NSString *StoreId;//门店信息id
 @end

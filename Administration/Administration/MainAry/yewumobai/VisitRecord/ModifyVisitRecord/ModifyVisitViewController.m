@@ -626,7 +626,7 @@
                             NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
                             NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                             NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-                            NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid};
+                            NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid,@"Draft":@"2"};
                             [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
                                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                                     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];
@@ -724,7 +724,7 @@
                             NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
                             NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                             NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-                            NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid};
+                            NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid,@"Draft":@"2"};
                             [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
                                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                                     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];

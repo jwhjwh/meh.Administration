@@ -19,6 +19,8 @@
 #import "UpdateIntendedViewController.h"//意向客户提交到部门
 #import "ShareColleagues.h"//分享同事
 #import "TargetTableViewController.h"
+#import "StoreinforViewController.h"
+#import "businessViewController.h"
 @interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource,XFDaterViewDelegate>
 {
     UITableView *infonTableview;
@@ -422,7 +424,12 @@
                 alertView.resultIndex = ^(NSInteger index){
                     NSLog(@"%ld",index);
                     if(index == 2){
-                        //跳界面 -----跳界面
+                       
+                        StoreinforViewController *storeinforVC = [[StoreinforViewController  alloc]init];
+                        storeinforVC.titleName = _StoreName;
+                        storeinforVC.isend = YES;
+                        storeinforVC.shopId = _ShopId;
+                        [self.navigationController pushViewController:storeinforVC animated:YES];
                     }
                 };
                 [alertView showMKPAlertView];
@@ -468,9 +475,29 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"id":_Id,@"shopId":_ShopId,@"Types":@"2"};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"id":_Id,@"shopId":_ShopId,@"Types":@"2",@"Draft":@"2"};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-        
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [self.navigationController popViewControllerAnimated:YES];
+            };
+            [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+            
+        }
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];

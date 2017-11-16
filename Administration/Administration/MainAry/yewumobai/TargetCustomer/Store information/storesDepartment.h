@@ -24,7 +24,7 @@
 @property (nonatomic,strong)NSString *staffnumber;
 @property (nonatomic,strong)NSString *jobexpires;
 @property (nonatomic,strong)NSString *problems;
-
-
+@property (nonatomic,strong)NSString *shopId;
+@property (nonatomic,strong)NSString *strId;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "CooperationViewController.h"
 #import "RecordTableViewCell.h"
+#import "CoperationModel.h"
+#import "StoreinforViewController.h"
 @interface CooperationViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
@@ -114,11 +116,11 @@
             NSArray *array=[responseObject valueForKey:@"list"];
             _InterNameAry = [[NSMutableArray alloc]init];
             _shopidAry= [[NSMutableArray alloc]init];
-            for (NSDictionary *dic in array) {
-//                tcModel *model=[[tcModel alloc]init];
-//                [model setValuesForKeysWithDictionary:dic];
-//                [_shopidAry addObject:[dic valueForKey:@"shopId"]];
-//                [_InterNameAry addObject:model];
+            for (NSDictionary *dict in array) {
+                CoperationModel *model=[[CoperationModel alloc]init];
+               [model setValuesForKeysWithDictionary:dict];
+       //        [_shopidAry addObject:[dic valueForKey:@"shopId"]];
+             [_InterNameAry addObject:model];
             }
             [infonTableview reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
@@ -140,7 +142,7 @@
             };
             [alertView showMKPAlertView];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
-            [infonTableview addEmptyViewWithImageName:@"" title:@"暂无目标客户" Size:20.0];
+            [infonTableview addEmptyViewWithImageName:@"" title:@"暂无合作客户" Size:20.0];
             infonTableview.emptyView.hidden = NO;
         }
         
@@ -162,19 +164,30 @@
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    tcModel *model=[[tcModel alloc]init];
-//    model = _InterNameAry[indexPath.row];
-//    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.StoreName];
-//    if (model.Province == nil) {
-//        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.City,model.County];
-//    }else{
-//        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.Province,model.City,model.County];
-//    }
-//
-//    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Time substringWithRange:NSMakeRange(5, 11)]];
-//    cell.shijianLabel.text = xxsj;
+    CoperationModel *model=[[CoperationModel alloc]init];
+    model = _InterNameAry[indexPath.row];
+    cell.dianmingLabel.text = [NSString stringWithFormat:@"店名:%@",model.storeName];
+    if (model.province == nil) {
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@\n地址:%@",model.city,model.county];
+    }else{
+        cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.province,model.city,model.county];
+    }
+
+    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
+    cell.shijianLabel.text = xxsj;
     
     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CoperationModel *model=[[CoperationModel alloc]init];
+    model = _InterNameAry[indexPath.row];
+    StoreinforViewController *storeVC = [[StoreinforViewController alloc]init];
+    storeVC.shopId =model.shId;
+    storeVC.strId = self.strId;
+    storeVC.isend = NO;
+    storeVC.titleName = model.storeName;
+    [self.navigationController pushViewController:storeVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

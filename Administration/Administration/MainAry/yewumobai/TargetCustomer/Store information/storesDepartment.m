@@ -16,7 +16,7 @@
 @property (nonatomic,strong)NSMutableArray *indexArray;
 @property (nonatomic,strong)NSArray *natureArr;
 @property(nonatomic,strong)NSMutableArray *ArrID;
-
+@property (nonatomic,strong)NSString *StoreId;
 @property(nonatomic,strong)NSMutableArray *groupNumber;
 @end
 
@@ -146,16 +146,61 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //detailVC.nameStr = _daArr[indexPath.row];
-    //detailVC.BarandID=[NSString stringWithFormat:@"%@",_ArrID[indexPath.row]];
-    NSLog(@"name:%@--id:%@",_daArr[indexPath.row],_ArrID[indexPath.row]);
     NSString *messagestr = [[NSString alloc]initWithFormat:@"是否将此内容提交到%@",_daArr[indexPath.row]];
     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:messagestr sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index){
-        
+        if (index == 2) {
+            NSString *uStr =[NSString stringWithFormat:@"%@shop/insertStore.action",KURLHeader];
+            NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+            NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+            NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+            NSDictionary *dic = [[NSDictionary alloc]init];
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"StoreName":self.storeName,@"Province":self.province,@"City":self.city,@"County":self.county,@"Address":self.address,@"RideInfo":self.rideinfo,@"Area":self.area,@"BrandBusiness":self.brandbusiness,@"IntentionBrand":self.intentionbrand,@"Berths":self.berths,@"ValidNumber":self.valinumber,@"StaffNumber":self.staffnumber,@"JobExpires":self.jobexpires,@"Problems":self.problems,@"DepartmentId":_ArrID[indexPath.row],@"shopId":self.shopId,@"CompanyInfoId":compid,@"RoleId":self.strId};
+            [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"提交成功" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [ShareModel shareModel].StoreId =[responseObject valueForKey:@"id"];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    };
+                    [alertView showMKPAlertView];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                        ViewController *loginVC = [[ViewController alloc] init];
+                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                        [self presentViewController:loginNavC animated:YES completion:nil];
+                    };
+                    [alertView showMKPAlertView];
+                }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                        ViewController *loginVC = [[ViewController alloc] init];
+                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                        [self presentViewController:loginNavC animated:YES completion:nil];
+                    };
+                    [alertView showMKPAlertView];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"已经升级为合作客户" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        
+                    };
+                    [alertView showMKPAlertView];
+                }
+                if (self.dataArray.count==0) {
+                    [_tableView addEmptyViewWithImageName:@"" title:@"暂无部门" Size:20.0];
+                    _tableView.emptyView.hidden = NO;
+                }
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:YES];
+        }
     };
     [alertView showMKPAlertView];
 }
+
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {

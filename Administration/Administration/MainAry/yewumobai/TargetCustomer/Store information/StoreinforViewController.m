@@ -8,7 +8,7 @@
 
 #import "StoreinforViewController.h"
 #import "StoresViewController.h"
-
+#import "BossViewController.h"
 @interface StoreinforViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 
@@ -18,7 +18,6 @@
 @end
 
 @implementation StoreinforViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = _titleName;
@@ -83,33 +82,90 @@
     UILabel *tlelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, cell.width, 30)];
     tlelabel.text = _nameArrs[indexPath.row];
     [cell addSubview:tlelabel];
-    
+
     cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{
-            //门店信息
-            StoresViewController *storesVC = [[StoresViewController alloc]init];
-            storesVC.isend = self.isend;
-            [self.navigationController pushViewController:storesVC animated:YES];
+    if (indexPath.row>0) {
+        NSString *storeid = [ShareModel shareModel].StoreId;
+        if (_isend ==NO) {
+            //合作客户---->可以进
+             NSLog(@"asdsa1");
+            switch (indexPath.row) {
+                case 1:{
+                    //老板信息
+                    BossViewController *bossVC = [[BossViewController alloc]init];
+                    bossVC.strId = self.strId;
+                    bossVC.Storeid = self.shopId;
+                    [self.navigationController pushViewController:bossVC animated:YES];
+                }
+                    break;
+                case 2:
+                    //店员信息
+                    break;
+                case 3:
+                    //顾客信息
+                    break;
+                default:
+                    break;
+            }
+        }else {
+            //目标升级合作--->未提交不可进
+            if (storeid ==nil){
+                // 提示先提交门店信息
+            }else{
+                NSLog(@"asdsa3");
+                switch (indexPath.row) {
+                    case 1:{
+                        //老板信息
+                        BossViewController *bossVC = [[BossViewController alloc]init];
+                        bossVC.strId = self.strId;
+                        bossVC.Storeid = self.shopId;
+                        [self.navigationController pushViewController:bossVC animated:YES];
+                    }
+                        break;
+                    case 2:
+                        //店员信息
+                        break;
+                    case 3:
+                        //顾客信息
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
-            break;
-        case 1:
-            //老板信息
-            break;
-        case 2:
-            //店员信息
-            break;
-        case 3:
-            //顾客信息
-            break;
-            
-        default:
-            break;
+    }else{
+        switch (indexPath.row) {
+            case 0:{
+                //门店信息
+                 NSString *storeid = [ShareModel shareModel].StoreId;
+                StoresViewController *storesVC = [[StoresViewController alloc]init];
+                storesVC.isend = self.isend;
+                storesVC.shopId = self.shopId;
+                storesVC.strId = self.strId;
+                if (_isend == NO) {
+                    storesVC.isofyou = @"1";
+                }else{
+                    if (storeid==nil) {
+                         storesVC.isofyou = @"1";
+                    }else{
+                         storesVC.isofyou = @"2";
+                    }
+                   
+                }
+                
+                [self.navigationController pushViewController:storesVC animated:YES];
+            }
+                break;
+            default:
+                break;
+        }
     }
+    
+    
 }
 
 

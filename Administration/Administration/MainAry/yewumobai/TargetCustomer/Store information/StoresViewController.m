@@ -22,6 +22,7 @@
 @property (nonatomic ,retain)NSArray *ligtextArrs;
 @property (nonatomic ,retain)NSArray *TexttagArrs;
 @property (strong,nonatomic) NSArray *timeArray;
+@property (strong,nonatomic) NSMutableArray *InterNameAry;
 
 @property (nonatomic,strong)NSString *StoreName;//店名称
 @property (nonatomic,strong)NSString *Province;//省
@@ -69,11 +70,58 @@
         [array addObject:[NSString stringWithFormat:@"%d",i]];
     }
     _timeArray=[NSArray arrayWithArray:array];
-    
+    if ([_isofyou isEqualToString:@"1"]) {
+         [self networking];
+        //说明已提交店铺
+    }
+   
+}
+-(void)networking{
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectstore.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopId,@"store":@"1",@"RoleId":self.strId};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            NSArray *array=[responseObject valueForKey:@"list"];
+            _InterNameAry = [[NSMutableArray alloc]init];
+            StoresModel *model=[[StoresModel alloc]init];
+            NSMutableArray *nsaty = [[NSMutableArray alloc]init];
+            [nsaty addObject:array];
+            for (NSDictionary *dict in nsaty) {
+                
+                [model setValuesForKeysWithDictionary:dict];
+                [self nstingallocinit:model];
+                
+            }
+            [self.tableView reloadData];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 -(void)nsstingalloc{
     
-    _StoreName = [[NSString alloc]init];//点名称
+   _StoreName = [[NSString alloc]init];//点名称
    _Province= [[NSString alloc]init];//省
    _City= [[NSString alloc]init];//市
    _County= [[NSString alloc]init];//县
@@ -84,7 +132,7 @@
    _IntentionBrand= [[NSString alloc]init];//意向品牌
    _Berths= [[NSString alloc]init];//床位数
    _ValidNumber= [[NSString alloc]init];//有效顾客信息
-  _StaffNumber= [[NSString alloc]init];//员工人数
+   _StaffNumber= [[NSString alloc]init];//员工人数
    _JobExpires= [[NSString alloc]init];//员工从业年限
    _Problems= [[NSString alloc]init];//存在的优势问题
     
@@ -145,15 +193,48 @@
                  cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
             }else{
                 UITextField *inforTextField = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, self.view.frame.size.width-120, 30)];
-                inforTextField.placeholder = _ligtextArrs[indexPath.row];
+               
                 inforTextField.font = [UIFont systemFontOfSize:14];
                 NSInteger k = [_TexttagArrs[indexPath.row] integerValue];
                 inforTextField.tag = k;
                 [cell addSubview:inforTextField];
                 [inforTextField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
+                if ([self.isofyou isEqualToString:@"1"]) {
+                    if ([_InterNameAry[indexPath.row] isEqualToString:@""]) {
+                         inforTextField.placeholder = _ligtextArrs[indexPath.row];
+                    }else{
+                        if (indexPath.row>1) {
+                            inforTextField.text = _InterNameAry[indexPath.row+3];
+                        }else{
+                            inforTextField.text = _InterNameAry[indexPath.row];
+                        }
+                        
+                    }
+                    
+                }else{
+                     inforTextField.placeholder = _ligtextArrs[indexPath.row];
+                }
             }
         }else{
-            cell.xingLabel.text =_ligtextArrs[indexPath.row];
+            if([self.isofyou isEqualToString:@"1"]){
+                NSString *stringInt = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.row+3]];
+                if ([stringInt isEqualToString:@""]) {
+                    cell.xingLabel.text =_ligtextArrs[indexPath.row];
+                }else{
+                    if (_InterNameAry.count==0) {
+                         cell.xingLabel.text =_ligtextArrs[indexPath.row];
+                    }else{
+                        cell.xingLabel.text =stringInt;
+                    }
+                    
+                }
+                
+            }else{
+                cell.xingLabel.text =_ligtextArrs[indexPath.row];
+            }
+                
+            
+            
             cell.xingLabel.textColor =[UIColor lightGrayColor];
             
         }
@@ -195,12 +276,14 @@
     switch (indexPath.row) {
         case 1:{
             CityChooseViewController *CityVC = [[CityChooseViewController alloc]init];
-//            [CityVC returnText:^(NSString *showText) {
-//                NSLog(@"showtext:%@",showText);
-//                _Address = showText;
-//                //代码块中没有第二个视图控制器，所以不会造成循环引用
-//            }];
             CityVC.isfoyou = @"1";
+            if ([self.isofyou isEqualToString:@"1"]) {
+                CityVC.storespoince = _Province;
+                CityVC.storescity = _City;
+                CityVC.storesCount = _County;
+                CityVC.storesaddes = _Address;
+                CityVC.storesssss = @"1";
+            }
             CityVC.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *zhadd) {
                 _Address = zhadd;
                 _Province= province;//省
@@ -246,7 +329,26 @@
             break;
         case 11:{
             //活动概要
-            //storesActivity *storeAVC = [[storesActivity alloc]init];
+            NSString *storeid = [ShareModel shareModel].StoreId;
+            if ([self.isofyou isEqualToString:@"1"]) {
+                //合作客户---->可以进
+                storesActivity *storesyear = [[storesActivity alloc]init];
+                storesyear.shopId = self.shopId;
+                storesyear.strId = self.strId;
+                [self.navigationController pushViewController:storesyear animated:YES];
+            }else {
+                //目标升级合作--->未提交不可进
+                if (storeid ==nil){
+                    //提示未提交店铺
+                }else{
+                    storesActivity *storesyear = [[storesActivity alloc]init];
+                    storesyear.shopId = self.shopId;
+                    storesyear.strId = self.strId;
+                    [self.navigationController pushViewController:storesyear animated:YES];
+                }
+            }
+            
+            
             
         }
             break;
@@ -300,24 +402,101 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)rightItemAction{
-    storesDepartment *storesVC = [[storesDepartment alloc]init];
-    storesVC.storeName = _StoreName;
-    storesVC.province = _Province;
-    storesVC.city =_City;
-    storesVC.county = _County;
-    storesVC.address = _Address;
-    storesVC.rideinfo = _RideInfo;
-    storesVC.area = _Area;
-    storesVC.brandbusiness = _BrandBusiness;
-    storesVC.intentionbrand = _IntentionBrand;
-    storesVC.berths = _Berths;
-    storesVC.valinumber = _ValidNumber;
-    storesVC.staffnumber = _StaffNumber;
-    storesVC.jobexpires = _JobExpires;
-    storesVC.problems = _Problems;
+    if ([self.isofyou isEqualToString:@"1"]) {
+        NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStore1.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dic = [[NSDictionary alloc]init];
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopId,@"RoleId":self.strId,@"StoreName":_StoreName,@"Province":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"RideInfo":_RideInfo,@"Area":_Area,@"BrandBusiness":_BrandBusiness,@"IntentionBrand":_IntentionBrand,@"Berths":_Berths,@"ValidNumber":_ValidNumber,@"StaffNumber":_StaffNumber,@"JobExpires":_JobExpires,@"Problems":_Problems};
+        [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+            if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    
+                };
+                [alertView showMKPAlertView];
+            } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                    ViewController *loginVC = [[ViewController alloc] init];
+                    UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                    [self presentViewController:loginNavC animated:YES completion:nil];
+                };
+                [alertView showMKPAlertView];
+            }
+        } failure:^(NSError *error) {
+            
+        } view:self.view MBPro:YES];
+    }else{
+        storesDepartment *storesVC = [[storesDepartment alloc]init];
+        storesVC.storeName = _StoreName;
+        storesVC.province = _Province;
+        storesVC.city =_City;
+        storesVC.county = _County;
+        storesVC.address = _Address;
+        storesVC.rideinfo = _RideInfo;
+        storesVC.area = _Area;
+        storesVC.brandbusiness = _BrandBusiness;
+        storesVC.intentionbrand = _IntentionBrand;
+        storesVC.berths = _Berths;
+        storesVC.valinumber = _ValidNumber;
+        storesVC.staffnumber = _StaffNumber;
+        storesVC.jobexpires = _JobExpires;
+        storesVC.problems = _Problems;
+        storesVC.shopId = self.shopId;
+        storesVC.strId = self.strId;
+        [self.navigationController pushViewController:storesVC animated:YES];
+    }
     
-    [self.navigationController pushViewController:storesVC animated:YES];
     
+}
+-(void)nstingallocinit:(StoresModel*)model{
+    _StoreName = model.storeName;
+    [self nsmuary:_StoreName mostr:model.storeName];
+    _Province = model.province;
+    [self nsmuary:_Province mostr:model.province];
+_City = model.city;
+    [self nsmuary:_City mostr:model.city];
+    _County = model.county;
+    [self nsmuary:_County mostr:model.county];
+_Address = model.address;
+    [self nsmuary:_Address mostr:model.address];
+_RideInfo = model.rideInfo;
+    [self nsmuary:_RideInfo mostr:model.rideInfo];
+_Area = model.area;
+    [self nsmuary:_Area mostr:model.area];
+_BrandBusiness = model.brandBusiness;
+    [self nsmuary:_BrandBusiness mostr:model.brandBusiness];
+_IntentionBrand = model.intentionBrand;
+    [self nsmuary:_IntentionBrand mostr:model.intentionBrand];
+_Berths = model.berths;
+    [self nsmuary:_Berths mostr:model.berths];
+_ValidNumber = model.validNumber;
+    [self nsmuary:_ValidNumber mostr:model.validNumber];
+_StaffNumber = model.staffNumber;
+    [self nsmuary:_StaffNumber mostr:model.staffNumber];
+_JobExpires = model.jobExpires;
+    [self nsmuary:_JobExpires mostr:model.jobExpires];
+_Problems = model.problems;
+    [self nsmuary:_Problems mostr:model.problems];
+}
+-(void)nsmuary:(NSString *)str mostr:(NSString *)mostr{
+    if (mostr == nil) {
+        str=@"";
+    }else{
+        str=mostr;
+    }
+    [_InterNameAry addObject:str];
 }
 - (NSInteger)pickerView:(CLZoomPickerView *)pickerView
 {
