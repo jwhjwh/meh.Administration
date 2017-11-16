@@ -14,6 +14,7 @@
 
 @implementation VCPostionPerson
 
+#pragma -mark custem
 -(void)getHttpData
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@shop/selelctDRusers.action",KURLHeader];
@@ -33,9 +34,15 @@
     
 }
 
+-(void)setUI
+{
+    
+}
+#pragma -mark system
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = self.stringTitle;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -87,7 +87,7 @@
     if (indexPath.section == 0) {
         _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(120, 15, 50, 50)];
         if (_logImage.length<1) {
-            _TXImage.image = [UIImage imageNamed:@"hp_ico"];
+            _TXImage.image = [UIImage imageNamed:@"tjtx"];
         }else{
             [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
         }
@@ -120,19 +120,27 @@
                     UIView *whiview =[[UIView alloc]initWithFrame:CGRectMake(120, 5+((i-1)*19), cell.width-120-80, 1)];
                     whiview.backgroundColor = [UIColor lightGrayColor];
                     [cell addSubview:whiview];
+                    
+                    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width-80, 5+(i*20), 30, 30)];
+                    [button setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateNormal];
+                    [cell.contentView addSubview:button];
                 }
             }else{
                     UILabel *iphonelabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 10, cell.width-120-80, 30)];
                     iphonelabel.text = [NSString stringWithFormat:@"电话 %@",_iphoneAry[0]];
                     iphonelabel.font = [UIFont systemFontOfSize:14];
                     [cell addSubview:iphonelabel];
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width-100, 10, 30, 30)];
+                [button setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateNormal];
+                [cell.contentView addSubview:button];
             }
             UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width-40, (cell.height/2)-15, 30, 30)];
-            [btn setImage:[UIImage imageNamed:@"lb_dh"] forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:@"tjdh"] forState:UIControlStateNormal];
             
             [btn addTarget: self action: @selector(addiphone) forControlEvents: UIControlEventTouchUpInside];
             [cell addSubview:btn];
         }else if(indexPath.row<7){
+            
             UITextField *bossname = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, cell.width-120, 30)];
             bossname.placeholder = _ligary[indexPath.section][indexPath.row];
             bossname.font = [UIFont systemFontOfSize:14.0f];
