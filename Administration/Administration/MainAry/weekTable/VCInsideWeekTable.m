@@ -344,7 +344,6 @@
         return cell;
     }else{
     if (indexPath.row<3) {
-        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if (cell==nil) {
             cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
@@ -639,7 +638,7 @@
                      @"Num":self.num,
                      @"Sort":[ShareModel shareModel].sort,
                      @"State":@"2",
-                     @"code":@"2",
+                     @"code":@"1",
                      @"id":self.tableId};
         }
         

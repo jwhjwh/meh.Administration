@@ -33,6 +33,7 @@
     self.imageViewSelect = imageViewSelect;
     
     UILabel *labelName = [[UILabel alloc]init];
+    labelName.numberOfLines = 0;
     [self.contentView addSubview:labelName];
     [labelName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(imageViewSelect.mas_right).offset(5);

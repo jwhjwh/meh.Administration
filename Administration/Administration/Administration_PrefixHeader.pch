@@ -14,8 +14,8 @@
 //环信引用报错原因
 #import <HyphenateLite/HyphenateLite.h>
 #import "EaseUI-Prefix.pch"
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
+//#import <UIKit/UIKit.h>
+//#import <Foundation/Foundation.h>
 #import "ShareModel.h"
 #import "EaseUI.h"
 #define DDLog(xx, ...)  NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
@@ -25,6 +25,12 @@
  *  完美解决Xcode NSLog打印不全的宏 亲测目前支持到8.2bate版
  
  */
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+
 #ifdef DEBUG
 
 //#define NSLog(format, ...) printf("class: <%p %s:(%d) > method: %s \n%s\n", self, [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __PRETTY_FUNCTION__, [[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String] )

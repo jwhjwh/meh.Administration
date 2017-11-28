@@ -138,9 +138,18 @@
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
             _infoArray = [[NSMutableArray alloc]init];
             _arr  =[[NSMutableArray alloc]init];
-            if (model.birthday.length>0) {
-                model.birthday = [model.birthday substringToIndex:10];
-            }
+//            
+//            if ([model.flag isEqualToString:@"2"]) {
+//                if (model.solarBirthday.length>0) {
+//                    model.solarBirthday = [model.solarBirthday substringToIndex:10];
+//                }
+//            }else
+//            {
+//                if (model.lunarBirthday.length>0) {
+//                    
+//                }
+//            }
+            
              _logImage=model.icon;
             
             [_arr addObject:@"头像"];
@@ -208,8 +217,23 @@
                     
                 }
             }
+            
+            
+            
             [_arr addObject:@"出生日期"];
-            [_infoArray addObject:model.birthday];
+            
+            
+            NSString *brithday = @"";
+            
+            
+            if ([[NSString stringWithFormat:@"%@",model.flag] isEqualToString:@"2"]) {
+                brithday = model.lunarBirthday;
+            }else
+            {
+                brithday = model.solarBirthday;
+            }
+            [_infoArray addObject:brithday];
+            
             [_arr addObject:@"年龄"];
              [_infoArray addObject:model.age];
             [_arr addObject:@"现住地址"];
@@ -226,7 +250,7 @@
             [_infoArray addObject:model.sdasd];
             
             NSArray *arr3=@[model.interests,model.sdasd];
-            NSArray *arr4 =@[model.birthday,model.age,model.address];
+            NSArray *arr4 =@[brithday,model.age,model.address];
             NSArray *arr2 = [[NSArray alloc]init];
             if (model.phone.length>1) {
                 arr2=@[model.phone,model.wcode,model.qcode];

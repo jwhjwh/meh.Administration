@@ -494,7 +494,7 @@
     if (buttonIndex==1) {
         //审核接口
         if (alertView.tag == 200) {
-            if (alertView.tag == 200) {
+            
                 if (self.isSelect) {
                     dict = @{@"appkey":appKeyStr,
                              @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
@@ -530,7 +530,7 @@
                              @"DepartmentID":self.departmentId,
                              @"Num":[ShareModel shareModel].num,
                              @"Sort":[ShareModel shareModel].sort,
-                             @"State":@"1",
+                             @"State":@"2",
                              @"code":@"1",
                              @"id":self.tableId};
                 }else
@@ -542,12 +542,11 @@
                              @"DepartmentID":self.departmentId,
                              @"Num":[ShareModel shareModel].num,
                              @"Sort":[ShareModel shareModel].sort,
-                             @"State":@"1",
+                             @"State":@"2",
                              @"code":@"2",
                              @"id":self.summaryId};
                 }
             }
-        }
         
         
         [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {

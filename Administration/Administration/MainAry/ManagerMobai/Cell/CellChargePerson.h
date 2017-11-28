@@ -11,7 +11,7 @@
 @interface CellChargePerson : UITableViewCell
 
 @property (nonatomic,weak)UILabel *labelTitle;
-@property (nonatomic,weak)UIButton *buttonAdd;
+@property (nonatomic,weak)UIImageView *imageViewAdd;
 @property (nonatomic,weak)UIButton *buttonDel;
 @property (nonatomic,weak)UIButton *buttonRed;
 @property (nonatomic,weak)UILabel *labelName;

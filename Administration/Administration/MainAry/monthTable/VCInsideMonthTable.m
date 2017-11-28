@@ -233,16 +233,20 @@
     if (self.isSelect) {
         switch (indexPath.row) {
             
-            case 4:
+            case 3:
                 vc.theKey = @"workPlan";
                 
                 break;
-            case 5:
+            case 4:
                 vc.theKey = @"firstWeek";
                 
                 break;
-            case 6:
+            case 5:
                 vc.theKey = @"secondWeek";
+                
+                break;
+            case 6:
+                vc.theKey = @"thirdWeek";
                 
                 break;
             case 7:
@@ -389,22 +393,6 @@
             switch (indexPath.row) {
                 case 3:
                 {
-                    cell.button.hidden = YES;
-                    cell.button.userInteractionEnabled = NO;
-                        for (int i=0; i<self.arrayTask.count; i++) {
-                            
-                            NSString *string1 = [NSString stringWithFormat:@"%@ %@ 万\n",self.arrayTask[i],self.dictInfo[self.arrayTotal[i]]];
-                            NSString *string2 = [NSString stringWithFormat:@" %@ ",self.dictInfo[self.arrayTotal[i]]];
-                            
-                            NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:string1];
-        
-                               [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange([self.arrayTask[i] length], string2.length)]; 
-                            
-                            [self.mutAttribute appendAttributedString:string];
-                        }
-                    }
-                    break;
-                case 4:
                     if (![self.dictInfo[@"workPlan"] isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"workPlan"];
                     }else
@@ -414,8 +402,9 @@
                     if ([self.arrayKey containsObject:@"workPlan"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                     }
+                }
                     break;
-                case 5:
+                case 4:
                     if (![self.dictInfo[@"firstWeek"] isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"firstWeek"];
                     }else
@@ -426,14 +415,25 @@
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                     }
                     break;
-                case 6:
-                    if (![self.dictInfo[@"secondWeek"]isKindOfClass:[NSNull class]]) {
+                case 5:
+                    if (![self.dictInfo[@"secondWeek"] isKindOfClass:[NSNull class]]) {
                         cell.textView.text = self.dictInfo[@"secondWeek"];
                     }else
                     {
                         cell.textView.text = @"  ";
                     }
                     if ([self.arrayKey containsObject:@"secondWeek"]) {
+                        [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
+                    }
+                    break;
+                case 6:
+                    if (![self.dictInfo[@"thirdWeek"]isKindOfClass:[NSNull class]]) {
+                        cell.textView.text = self.dictInfo[@"thirdWeek"];
+                    }else
+                    {
+                        cell.textView.text = @"  ";
+                    }
+                    if ([self.arrayKey containsObject:@"thirdWeek"]) {
                         [cell.button setBackgroundImage:[UIImage imageNamed:@"tjpco02"] forState:UIControlStateNormal];
                     }
                     break;

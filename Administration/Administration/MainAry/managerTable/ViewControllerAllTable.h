@@ -14,4 +14,5 @@
 @property (nonatomic,strong)NSString *rid;
 @property (nonatomic,strong)NSString *power;
 @property (nonatomic,strong)NSString *positionName;
+@property (nonatomic,strong)NSString *choseRoleid;
 @end

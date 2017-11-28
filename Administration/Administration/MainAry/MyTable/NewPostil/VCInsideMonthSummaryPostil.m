@@ -228,7 +228,7 @@
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
         self.viewPlan.hidden = YES;
-        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
+        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
         canEdit = NO;
@@ -700,6 +700,7 @@
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
+                break;
             case 3:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
@@ -713,6 +714,7 @@
                         cell.labelNumber.text = [string substringWithRange:NSMakeRange(rang.length+1, string.length-rang.length-1)];
                     }
                 }
+                break;
             case 4:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
@@ -791,7 +793,7 @@
     // Do any additional setup after loading the view.
     [self setUI];
     
-    self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
+    self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
     self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
     
     self.dict = [NSMutableDictionary dictionary];

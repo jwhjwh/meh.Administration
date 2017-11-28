@@ -8,7 +8,7 @@
 
 #import "CellSetBrithday.h"
 
-@interface CellSetBrithday ()
+@interface CellSetBrithday ()<UITextViewDelegate>
 
 @end
 
@@ -38,7 +38,7 @@
     
     
     UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc]init];
-   // textView.delegate = self;
+    textView.delegate = self;
     textView.font = [UIFont systemFontOfSize:17];
     textView.placeholder = @"填写描述";
     textView.scrollEnabled = NO;
@@ -53,28 +53,29 @@
     self.textView = textView;
 }
 
-//- (void)textViewDidChange:(UITextView *)textView
-//{
-//    CGRect frame = textView.frame;
-//    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
-//    CGSize size = [textView sizeThatFits:constraintSize];
-//    if (size.height<=frame.size.height) {
-//        size.height=frame.size.height;
-//    }
-//    textView.frame = CGRectMake(frame.origin.x, frame.origin.y,self.contentView.frame.size.width, size.height);
-//
-//    UITableView *tableView = [self tableView];
-//    [tableView beginUpdates];
-//    [tableView endUpdates];
-//}
-//- (UITableView *)tableView
-//{
-//    UIView *tableView = self.superview;
-//    while (![tableView isKindOfClass:[UITableView class]] && tableView) {
-//        tableView = tableView.superview;
-//    }
-//    return (UITableView *)tableView;
-//}
+- (void)textViewDidChange:(UITextView *)textView
+{
+    CGRect frame = textView.frame;
+    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+    CGSize size = [textView sizeThatFits:constraintSize];
+    if (size.height<=frame.size.height) {
+        size.height=frame.size.height;
+    }
+    textView.frame = CGRectMake(frame.origin.x, frame.origin.y,self.contentView.frame.size.width, size.height);
+
+    UITableView *tableView = [self tableView];
+    
+    [tableView beginUpdates];
+    [tableView endUpdates];
+}
+- (UITableView *)tableView
+{
+    UIView *tableView = self.superview;
+    while (![tableView isKindOfClass:[UITableView class]] && tableView) {
+        tableView = tableView.superview;
+    }
+    return (UITableView *)tableView;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

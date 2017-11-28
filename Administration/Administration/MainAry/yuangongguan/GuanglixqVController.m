@@ -148,7 +148,15 @@
             }
             
             
-            model.birthday = [model.birthday substringToIndex:10];
+            NSString *brithday = @"";
+            
+            
+            if ([[NSString stringWithFormat:@"%@",model.flag] isEqualToString:@"2"]) {
+                brithday = model.solarBirthday;
+            }else
+            {
+                brithday = model.lunarBirthday;
+            }
             _logImage=model.icon;
             _callNum=[NSString stringWithFormat:@"%@",model.account];
             _callName=model.name;

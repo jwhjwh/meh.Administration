@@ -391,6 +391,7 @@
 //                                [UserWebManager createUser:userOpenId nickName:nickName avatarUrl:avatarUrl];
                                 //设置是否自动登录
                                                         NSLog(@"登录成功");
+                                                        [self.view endEditing:YES];
                                                         
                                 [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                     } else {

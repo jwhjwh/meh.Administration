@@ -955,7 +955,7 @@
     
     self.arraySummary = [NSArray array];
     
-    self.isSelect = YES;
+    
     canEdit = NO;
     
     self.string1=  @"";

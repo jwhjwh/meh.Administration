@@ -40,7 +40,9 @@ address = "\U6cb3\U5317\U7701\U77f3\U5bb6\U5e84\U5e02\U8f9b\U96c6\U5e02\U738b\U5
 
 @property (strong,nonatomic) NSString *name;      //真实姓名
 
-@property (strong,nonatomic) NSString *birthday;  //出生年月
+@property (strong,nonatomic) NSString *flag;  //阴历阳历生日的标识
+@property (strong,nonatomic) NSString *solarBirthday;  //出生年月
+@property (strong,nonatomic) NSString *lunarBirthday;//阴历生日
 
 @property (strong,nonatomic) NSString *age;       //年龄
 

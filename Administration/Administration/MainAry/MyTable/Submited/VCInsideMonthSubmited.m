@@ -299,7 +299,7 @@
         [self.insideMonth.buttonDate setTitle:self.stringDate forState:UIControlStateNormal];
         self.insideMonth.buttonDate.userInteractionEnabled = NO;
         self.viewPlan.hidden = YES;
-        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
+        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
         self.navigationItem.rightBarButtonItem = self.rightItem2;

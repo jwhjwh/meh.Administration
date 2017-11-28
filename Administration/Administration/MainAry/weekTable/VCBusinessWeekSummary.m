@@ -594,7 +594,7 @@
                          @"DepartmentID":self.departmentId,
                          @"Num":[ShareModel shareModel].num,
                          @"Sort":[ShareModel shareModel].sort,
-                         @"State":@"1",
+                         @"State":@"2",
                          @"code":@"1",
                          @"id":self.tableId};
             }else
@@ -606,7 +606,7 @@
                          @"DepartmentID":self.departmentId,
                          @"Num":[ShareModel shareModel].num,
                          @"Sort":[ShareModel shareModel].sort,
-                         @"State":@"1",
+                         @"State":@"2",
                          @"code":@"2",
                          @"id":self.summaryId};
             }

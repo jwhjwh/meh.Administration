@@ -27,7 +27,12 @@
 @property (nonatomic,strong)NSString *stringProvince;
 @property (nonatomic,strong)NSString *stringCity;
 @property (nonatomic,strong)NSString *stringCountry;
+@property (nonatomic,strong)NSIndexPath *indexPath;
 
 @property (nonatomic,strong)NSString *StoreId;//门店信息id
+
+@property (nonatomic,strong)NSString *flag;//阴历阳历标记
+@property (nonatomic,strong)NSString *stringGregorian; //阳历生日
+@property (nonatomic,strong)NSString *stringChinese;  //阴历生日
 
 @end

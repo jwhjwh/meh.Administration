@@ -565,28 +565,56 @@
     if (buttonIndex==1) {
         //审核接口
         if (alertView.tag == 200) {
-            dict = @{@"appkey":appKeyStr,
-                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                     @"CompanyInfoId":compid,
-                     @"RoleId":[ShareModel shareModel].roleID,
-                     @"DepartmentID":self.departmentId,
-                     @"Num":[ShareModel shareModel].num,
-                     @"Sort":[ShareModel shareModel].sort,
-                     @"State":@"1",
-                     @"code":self.codeS,
-                     @"id":self.tableId};
+            if (self.isSelect) {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"1",
+                         @"code":@"1",
+                         @"id":self.tableId};
+            }else
+            {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"1",
+                         @"code":@"2",
+                         @"id":self.summaryId};
+            }
         }else
         {
-            dict = @{@"appkey":appKeyStr,
-                     @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                     @"CompanyInfoId":compid,
-                     @"RoleId":[ShareModel shareModel].roleID,
-                     @"DepartmentID":self.departmentId,
-                     @"Num":[ShareModel shareModel].num,
-                     @"Sort":[ShareModel shareModel].sort,
-                     @"State":@"2",
-                     @"code":self.codeS,
-                     @"id":self.tableId};
+            if (self.isSelect) {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"2",
+                         @"code":@"1",
+                         @"id":self.tableId};
+            }else
+            {
+                dict = @{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"RoleId":[ShareModel shareModel].roleID,
+                         @"DepartmentID":self.departmentId,
+                         @"Num":[ShareModel shareModel].num,
+                         @"Sort":[ShareModel shareModel].sort,
+                         @"State":@"2",
+                         @"code":@"2",
+                         @"id":self.summaryId};
+            }
         }
         
         

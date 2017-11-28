@@ -12,4 +12,5 @@
 @property (nonatomic,strong)NSString *departmentID;
 @property (nonatomic,strong)NSString *num;
 @property (nonatomic,strong)NSString *positionName;
+@property (nonatomic,strong)NSString *choseRoleid;
 @end

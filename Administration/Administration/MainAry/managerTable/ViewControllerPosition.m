@@ -77,6 +77,8 @@
     vc.departmentID = self.departmentID;
     vc.power = self.power;
     vc.positionName = dict[@"newName"];
+    vc.choseRoleid = [NSString stringWithFormat:@"%@",dict[@"num"]];
+    [ShareModel shareModel].postionName = dict[@"newName"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma -mark systrm

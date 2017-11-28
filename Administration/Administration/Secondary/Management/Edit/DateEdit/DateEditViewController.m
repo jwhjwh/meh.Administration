@@ -10,7 +10,8 @@
 #import "GSPickerView.h"
 #import "CityChooseViewController.h"
 #import "ZZYPhotoHelper.h"
-@interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "UIViewDatePicker.h"
+@interface DateEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIViewDatePickerDelegate>
 {
     UITableView *infonTableview;
     NSDictionary *dic;
@@ -31,6 +32,8 @@
 @property (nonatomic,strong) NSString *Qcode;
 @property (nonatomic,strong) NSString *Interests;
 @property (nonatomic,strong) NSString *SDASD;
+
+@property (nonatomic,strong)NSIndexPath *indexPath;
 @end
 
 @implementation DateEditViewController
@@ -59,7 +62,7 @@
                                     initWithTitle:@"完成"
                                     style:UIBarButtonItemStylePlain
                                     target:self
-                                    action:@selector(masgegeClick)];
+                                    action:@selector(masgegeClick:)];
     rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     
@@ -86,14 +89,40 @@
     
 }
 
--(void)masgegeClick{
+-(void)showDatePicker
+{
+    UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    datePick.delegate = self;
+    [self.view endEditing:YES];
+    [self.view.window addSubview:datePick];
+}
 
+-(void)getChooseDate
+{
+    [infonTableview reloadData];
+    
+}
+
+-(void)masgegeClick:(NSString *)flag{
+
+    flag = [ShareModel shareModel].flag;
     NSString *uStr =[NSString stringWithFormat:@"%@user/addUserInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSLog(@"%@%@%@%@",_DayLabel.text,_Age,_IdNo,_AddLabel.text);
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Birthday":_DayLabel.text,@"Age":_Age,@"Address":_AddLabel.text,@"Wcode":_Wcode,@"Qcode":_Qcode,@"Interests":_Interests,@"SDASD":_SDASD,@"phone":self.phone};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+    NSDictionary *dict=@{@"appkey":apKeyStr,
+                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                         @"flag":[ShareModel shareModel].flag,
+                         @"SolarBirthday":[ShareModel shareModel].stringChinese,
+                         @"LunarBirthday":[ShareModel shareModel].stringGregorian,
+                         @"Age":_Age,
+                         @"Address":_AddLabel.text,
+                         @"Wcode":_Wcode,
+                         @"Qcode":_Qcode,
+                         @"Interests":_Interests,
+                         @"SDASD":_SDASD,
+                         @"phone":self.phone};
+    [ZXDNetworking GET:uStr parameters:dict success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
@@ -201,10 +230,23 @@
     CGRect labelRect2 = CGRectMake(150, 1, self.view.bounds.size.width-170, 48);
     if (indexPath.section ==1) {
         if (indexPath.row == 0) {
+            
+            [_DayLabel removeFromSuperview];
+            
             _DayLabel = [[UILabel alloc]initWithFrame:labelRect2];
-            _DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
-            _DayLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+            _DayLabel.text = @"";
             [cell addSubview:_DayLabel];
+            if ([[ShareModel shareModel].flag isEqualToString:@"1"]) {
+                _DayLabel.text = [ShareModel shareModel].stringChinese;
+            }else if([[ShareModel shareModel].flag isEqualToString:@"2"])
+            {
+                _DayLabel.text = [ShareModel shareModel].stringGregorian;
+            }else
+            {
+            _DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+            }
+            _DayLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+            
         }else if(indexPath.row == 1){
             UITextField *ageField =[[UITextField alloc]initWithFrame:labelRect2];
             ageField.backgroundColor=[UIColor whiteColor];
@@ -289,17 +331,19 @@
     }
     if (indexPath.section == 1) {
         if (indexPath.row <1) {
-            NSString *str = @"2017年01月01日";
-            
-            if ([_DayLabel.text containsString:@"年"]) {
-                str = _DayLabel.text;
-            }
-            [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
-                _DayLabel.text = pathStr;
-               
-            } cancleAction:^{
-                
-            }];
+//            NSString *str = @"2017年01月01日";
+//            
+//            if ([_DayLabel.text containsString:@"年"]) {
+//                str = _DayLabel.text;
+//            }
+//            [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
+//                _DayLabel.text = pathStr;
+//               
+//            } cancleAction:^{
+//                
+//            }];
+            self.indexPath = indexPath;
+            [self showDatePicker];
             
         }else if (indexPath.row == 2){
 

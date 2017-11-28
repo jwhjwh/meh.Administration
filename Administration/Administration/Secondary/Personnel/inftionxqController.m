@@ -19,6 +19,7 @@
 #import "SJABHelper.h"
 #import "DongImage.h"
 #import "VCAddBrithday.h"
+#import "VCBrithdayDetail.h"
 #define Is_up_Ios_9             [[UIDevice currentDevice].systemVersion floatValue] >= 9.0
 @interface inftionxqController ()<UITableViewDelegate,UITableViewDataSource,alertviewExtensionDelegate,ABNewPersonViewControllerDelegate>
 {
@@ -71,9 +72,28 @@
 
 -(void)addBrithday
 {
-    VCAddBrithday *vc = [[VCAddBrithday alloc]init];
-    vc.dictInfo = self.dicinfo;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if ([self.dicinfo[@"remind"]intValue] ==0) {
+        VCAddBrithday *vc = [[VCAddBrithday alloc]init];
+        vc.dictInfo = self.dicinfo;
+        
+        
+        if ([self.dicinfo[@"solarBirthday"]isKindOfClass:[NSNull class]]&&[self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无生日" andInterval:1.0];
+            return;
+        }else
+        {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else
+    {
+        //跳转生日详情
+        VCBrithdayDetail *vc = [[VCBrithdayDetail alloc]init];
+        vc.remind = [NSString stringWithFormat:@"%@",self.dicinfo[@"remind"]];
+        vc.dictInfo = self.dicinfo;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -136,7 +156,14 @@
     if (indexPath.section==2&&indexPath.row==1) {
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(tableView.frame.size.width-50, 5, 40, 30)];
         [button setTitle:@"提醒" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        if ([[NSString stringWithFormat:@"%@",self.dicinfo[@"remind"]] isEqualToString:@"0"]) {
+            [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        }else
+        {
+            [button setTitleColor:GetColor(229, 126, 0, 1) forState:UIControlStateNormal];
+        }
+        
+        
         [button addTarget:self action:@selector(addBrithday) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:button];
     }
@@ -257,8 +284,28 @@
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
            // model.birthday = [model.birthday substringToIndex:10];
-            if (model.birthday.length!=0) {
-              model.birthday = [model.birthday substringToIndex:10];
+            
+            
+            NSString *brithday = @"";
+            if ([self.dicinfo[@"flag"] intValue]==1) {
+                if ([self.dicinfo[@"solarBirthday"]isKindOfClass:[NSNull class]]) {
+                    model.lunarBirthday = @"";
+                    brithday = @"";
+                }else
+                {
+                    model.lunarBirthday = self.dicinfo[@"solarBirthday"];
+                    brithday = self.dicinfo[@"solarBirthday"];
+                }
+            }else
+            {
+                if ([self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
+                    model.solarBirthday = @"";
+                    brithday = @"";
+                }else
+                {
+                    model.solarBirthday = self.dicinfo[@"lunarBirthday"];
+                    brithday = self.dicinfo[@"lunarBirthday"];
+                }
             }
            // model.birthday = model.birthday;
              _logImage=model.icon;
@@ -267,18 +314,19 @@
             self.userModel = [[EaseUserModel alloc]initWithBuddy:self.dicinfo[@"uuid"]];
             self.userModel.nickname = self.dicinfo[@"name"];
             
+            
             if (![model.LevelName isEqualToString:@""]) {
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"类别",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 
                 NSArray *arr=@[model.account,model.NewName,model.LevelName,model.departmentName];
-                NSArray *arr1=@[model.name,model.birthday,model.age,model.address];
+                NSArray *arr1=@[model.name,brithday,model.age,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];
             }else{
                 _arr=@[@[@"头像"],@[@"账号",@"职位",@"所属部门"],@[@"真实姓名",@"出生日期",@"年龄",@"现住地址"],@[@"手机号",@"微信号",@"QQ号"],@[@"兴趣爱好",@"个人签名"]];
                 NSArray *arr=@[model.account,model.NewName,model.departmentName];
-                NSArray *arr1=@[model.name,model.birthday,model.age,model.address];
+                NSArray *arr1=@[model.name,brithday,model.age,model.address];
                 NSArray *arr2=@[model.account,model.wcode,model.qcode];
                 NSArray *arr3=@[model.interests,model.sdasd];
                 _infoArray = [[NSMutableArray alloc]initWithObjects:arr,arr1,arr2,arr3,nil];

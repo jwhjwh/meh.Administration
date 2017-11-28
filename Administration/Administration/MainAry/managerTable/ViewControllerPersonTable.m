@@ -8,12 +8,18 @@
 
 #import "ViewControllerPersonTable.h"
 #import "ViewControllerPersonTableDetail.h"
+#import "CellTbale.h"
+#import "ViewControllerPersonTableDetail.h"
 #import "VCInsideWeekTable.h"
 #import "VCArtMonthTable.h"
+#import "VCArtMonthSummary.h"
 #import "VCInsideMonthTable.h"
+#import "VCInsideMonthSummary.h"
+#import "VCInsideWeekSummary.h"
+#import "VCBusinessWeekSummary.h"
 #import "VCBusinessWeekTable.h"
 #import "VCWeekTable.h"
-#import "CellTbale.h"
+#import "VCWeekSummaryDetail.h"
 @interface ViewControllerPersonTable ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *array;
@@ -133,11 +139,11 @@
         cell.labelStatus.textColor = GetColor(192, 192, 192, 1);
     }else if ([state isEqualToString:@"1"])
     {
-        cell.labelStatus.text = [NSString stringWithFormat:@"通过:%@",dict[@"updateTime"]];
+        cell.labelStatus.text = [NSString stringWithFormat:@"通过:%@",[dict[@"updateTime"] substringToIndex:16]];
        cell.labelStatus.textColor = GetColor(206, 157, 86, 1);
     }else
     {
-        cell.labelStatus.text = [NSString stringWithFormat:@"驳回:%@",dict[@"updateTime"]];
+        cell.labelStatus.text = [NSString stringWithFormat:@"驳回:%@",[dict[@"updateTime"] substringToIndex:16]];
         cell.labelStatus.textColor = GetColor(246, 0, 49, 1);
     }
     return cell;
@@ -149,129 +155,195 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.array[indexPath.row];
-    NSString *state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+    NSString *newName = [ShareModel shareModel].postionName;
+    NSDictionary *dict = _array[indexPath.row];
     if ([[ShareModel shareModel].sort isEqualToString:@"1"]) {
         ViewControllerPersonTableDetail *vc = [[ViewControllerPersonTableDetail alloc]init];
         vc.stringTitle = dict[@"name"];
-        vc.roleId = self.rid;
-        vc.departmentId = self.departmentId;
-        vc.postionName = self.positionName;
+        // vc.roleId = self.rid;
+        vc.departmentId = self.departmentId
+        
+        ;
+        vc.postionName = newName;
         vc.remark = dict[@"remark"];
-        vc.tableId = dict[@"id"];
+        vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
         vc.num = self.num;
-        vc.state = state;
+        
         //  VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([[ShareModel shareModel].sort isEqualToString:@"2"])
     {
-        if ([self.positionName containsString:@"美导"]||[self.positionName containsString:@"市场"]) {
-            VCWeekTable *vc = [[VCWeekTable alloc]init];
-            vc.stringTitle = dict[@"name"];
-            vc.roleId = self.rid;
-            vc.departmentId = self.departmentId;
-            vc.postionName = self.positionName;
-            vc.remark = dict[@"remark"];
-            vc.state = state;
-            vc.num = self.num;
-            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+        if ([newName containsString:@"美导"]||[newName containsString:@"市场"]||[newName containsString:@"品牌"]) {
             if ([dict[@"code"] intValue]==1) {
+                VCWeekTable *vc = [[VCWeekTable alloc]init];
+                vc.stringTitle = dict[@"name"];
+                //   vc.roleId = self.rid;
+                
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
-            }else
-            {
-                vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                [self.navigationController pushViewController:vc animated:YES];
             }
-            [self.navigationController pushViewController:vc animated:YES];
-        }else if([self.positionName containsString:@"业务"])
+            
+            else
+            {
+                VCWeekSummaryDetail *vc = [[VCWeekSummaryDetail alloc]init];
+                vc.stringTitle = dict[@"name"];
+                //   vc.roleId = self.rid;
+                
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                vc.isSelect = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else if([newName containsString:@"业务"])
         {
-            VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
-            vc.stringTitle = dict[@"name"];
-            vc.roleId = self.rid;
-            vc.departmentId = self.departmentId;
-            vc.postionName = self.positionName;
-            vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
-            vc.num = self.num;
-            vc.state = state;
-            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
+                VCBusinessWeekTable *vc = [[VCBusinessWeekTable alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                // vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
-            }else
-            {
-                vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                [self.navigationController pushViewController:vc animated:YES];
             }
-            [self.navigationController pushViewController:vc animated:YES];
+            else
+            {
+                VCBusinessWeekSummary *vc = [[VCBusinessWeekSummary alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                // vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+                vc.isSelect = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }
         else
         {
-            VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
-            vc.stringTitle = dict[@"name"];
-            vc.roleId = self.rid;
-            vc.departmentId = self.departmentId;
-            vc.postionName = self.positionName;
-            vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
-            vc.num = self.num;
-            vc.state = state;
-            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
+                VCInsideWeekTable *vc = [[VCInsideWeekTable alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                // vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = [ShareModel shareModel].postionName;
+                vc.remark = dict[@"remark"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
-            }else
-            {
-                vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                [self.navigationController pushViewController:vc animated:YES];
             }
-            [self.navigationController pushViewController:vc animated:YES];
+            
+            else
+            {
+                VCInsideWeekSummary *vc = [[VCInsideWeekSummary alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                // vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+                vc.isSelect = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }
     }else
     {
-        if ([self.positionName containsString:@"美导"]||[self.positionName containsString:@"市场"])
+        if ([newName containsString:@"美导"]||[newName containsString:@"市场"])
         {
-            VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
-            vc.stringTitle = dict[@"name"];
-            vc.roleId = self.rid;
-            vc.departmentId = self.departmentId;
-            vc.postionName = self.positionName;
-            vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
-            vc.num = self.num;
-            vc.state = state;
-            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
+                VCArtMonthTable *vc = [[VCArtMonthTable alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                //  vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
-            }else
-            {
-                vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                [self.navigationController pushViewController:vc animated:YES];
             }
-            [self.navigationController pushViewController:vc animated:YES];
+            
+            else
+            {
+                VCArtMonthSummary *vc = [[VCArtMonthSummary alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                //  vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+                vc.isSelect = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }else
         {
-            VCInsideMonthTable *vc = [[VCInsideMonthTable alloc]init];
-            vc.stringTitle = dict[@"name"];
-            vc.roleId = self.rid;
-            vc.departmentId = self.departmentId;
-            vc.postionName = self.positionName;
-            vc.remark = dict[@"remark"];
-            vc.tableId = dict[@"id"];
-            vc.num = self.num;
-            vc.state = state;
-            vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
             if ([dict[@"code"] intValue]==1) {
+                VCInsideMonthTable *vc = [[VCInsideMonthTable alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                //  vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.tableId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
                 vc.isSelect = YES;
-                vc.tableId = dict[@"id"];
-            }else
-            {
-                vc.isSelect = NO;
-                vc.summaryId = dict[@"id"];
+                [self.navigationController pushViewController:vc animated:YES];
             }
-            [self.navigationController pushViewController:vc animated:YES];
+            
+            else
+            {
+                VCInsideMonthSummary *vc = [[VCInsideMonthSummary alloc]init];
+                vc.stringTitle = dict[@"name"];
+                vc.state = [NSString stringWithFormat:@"%@",dict[@"state"]];
+                //  vc.roleId = self.rid;
+                vc.departmentId = self.departmentId;
+                vc.postionName = newName;
+                vc.remark = dict[@"remark"];
+                vc.summaryId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+                vc.num = self.num;
+                vc.codeS = [NSString stringWithFormat:@"%@",dict[@"code"]];
+                vc.isSelect = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }
     }
     

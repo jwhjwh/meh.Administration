@@ -11,6 +11,7 @@
 #import "VCIntentionClientele.h"
 #import "VCGoalClientel.h"
 #import "VCAddAreaPermision.h"
+#import "VCMobaiDepartMent.h"
 @interface VCManagerMobai ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *array;
@@ -91,8 +92,9 @@
     }else
     {
         if (indexPath.section==0) {
-            VCAddAreaPermision *vc = [[VCAddAreaPermision alloc]init];
+            VCMobaiDepartMent *vc = [[VCMobaiDepartMent alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
+            
         }else
         {
             if (indexPath.row==0) {

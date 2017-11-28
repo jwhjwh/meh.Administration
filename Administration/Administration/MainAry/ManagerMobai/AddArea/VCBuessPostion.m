@@ -34,7 +34,7 @@
         
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            self.arrayData = [responseObject valueForKey:@"list"];
+            self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
             [self.tableView reloadData];
             return ;
         }

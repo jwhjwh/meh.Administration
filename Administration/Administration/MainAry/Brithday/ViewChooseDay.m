@@ -12,7 +12,7 @@
 @interface ViewChooseDay ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic,strong)NSArray *arrayTitle;
-
+@property (nonatomic,strong)NSArray *arrayDay;
 @end
 
 @implementation ViewChooseDay
@@ -32,6 +32,8 @@
     self.arrayTitle = @[@[@"生日当天",@"提前1天"],@[@"提前3天",@"提前5天"],@[@"提前7天",@"提前15天"],@[@"提前30天"]];
     
     self.arraySelect = [NSMutableArray array];
+    
+    self.arrayDay = @[@[@"0",@"1"],@[@"3",@"5"],@[@"7",@"15"],@[@"30"]];
     
     UIColor *color = GetColor(126, 127, 128, 1);
     self.backgroundColor = [color colorWithAlphaComponent:0.3];
@@ -125,20 +127,18 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CellSetDay *cell = (CellSetDay *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    NSString *string = [NSString stringWithFormat:@"%ld",indexPath.section*2+1+indexPath.row];
-    
+
     cell.isSelected = !cell.isSelected;
     
     if (cell.isSelected) {
         cell.imageViewSelect.image = [UIImage imageNamed:@"xuanzhong"];
         cell.isSelected = YES;
-        [self.arraySelect addObject:string];
+        [self.arraySelect addObject:self.arrayDay[indexPath.section][indexPath.row]];
     }else
     {
         cell.imageViewSelect.image = [UIImage imageNamed:@"weixuanzhong"];
         cell.isSelected = NO;
-        [self.arraySelect removeObject:string];
+        [self.arraySelect removeObject:self.arrayDay[indexPath.section][indexPath.row]];
     }
 }
 

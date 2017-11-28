@@ -74,6 +74,7 @@
     [self initData];
    //[self addLoop];
     _menuArray=[NSMutableArray array];
+    [self.view endEditing:YES];
     
 }
 

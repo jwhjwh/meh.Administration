@@ -56,6 +56,7 @@
     self.insideMonth = insideMonth;
     
     UITableView *tableView = [[UITableView alloc]init];
+    
     tableView.tableHeaderView = insideMonth;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.delegate = self;
@@ -159,7 +160,7 @@
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
         self.viewPlan.hidden = YES;
-        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
+        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
         self.navigationItem.rightBarButtonItem = nil;
@@ -423,7 +424,7 @@
                     cell.textView.text = self.string1;
                 }
             }
-        }
+        }else{
         switch (indexPath.row) {
             case 0:
                 if (self.string2.length!=0) {
@@ -439,10 +440,12 @@
                 if (self.string4.length!=0) {
                     cell.textView.text = self.string4;
                 }
+                break;
             case 3:
                 if (self.string5.length!=0) {
                     cell.textView.text = self.string5;
                 }
+                break;
             case 4:
                 if (self.string6.length!=0) {
                     cell.textView.text = self.string6;
@@ -451,6 +454,7 @@
                 
             default:
                 break;
+        }
         }
     }
     return cell;

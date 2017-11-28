@@ -41,7 +41,8 @@
     [buttonDelet setTitle:@"删除一项" forState:UIControlStateNormal];
     [buttonDelet setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [buttonDelet addTarget:self action:@selector(delet) forControlEvents:UIControlEventTouchUpInside];
-    [viewFooter addSubview:self.buttonDelet];
+    [viewFooter addSubview:buttonDelet];
+    self.buttonDelet = buttonDelet;
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStyleGrouped];
     tableView.delegate = self;
@@ -57,32 +58,172 @@
     NSMutableArray *array = [NSMutableArray array];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:@"负责人员" forKey:@"charge"];
-    [dict setValue:@"1" forKey:@"state"];
+    [dict setValue:@"1" forKey:@"state"];  //1为完成 ，2为编辑，3为删除
     [dict setValue:@"tj_ico01" forKey:@"icon"];
     [dict setValue:@"" forKey:@"name"];
+    [dict setValue:@"" forKey:@"departmentId"];
     [array addObject:@"负责区域"];
     [array addObject:dict];
     [[ShareModel shareModel].arrayData insertObject:array atIndex:[ShareModel shareModel].arrayData.count];
+    [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+    [self.buttonAdd setTitleColor:GetColor(234, 235, 236,1) forState:UIControlStateNormal];
+    self.buttonAdd.userInteractionEnabled = NO;
+    
+    [self.buttonDelet setImage:[UIImage imageNamed:@"sc_ico02"] forState:UIControlStateNormal];
+    [self.buttonDelet setTitleColor:GetColor(234, 235, 236, 1) forState:UIControlStateNormal];
+    self.buttonDelet.userInteractionEnabled = NO;
+    
     [self.tableView reloadData];
 }
 
 -(void)delet
 {
+    if ([self.buttonDelet.titleLabel.text isEqualToString:@"删除一项"]) {
+        [self.buttonDelet setTitle:@"取消删除" forState:UIControlStateNormal];
+        [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
+        [self.buttonAdd setTitleColor:GetColor(234, 235, 236,1) forState:UIControlStateNormal];
+        self.buttonAdd.userInteractionEnabled = NO;
+        for (int i=0; i<[ShareModel shareModel].arrayData.count; i++) {
+            NSMutableArray *array = [ShareModel shareModel].arrayData[i];
+            NSMutableDictionary *dict = [array[1]mutableCopy];
+            [dict setValue:@"3" forKey:@"state"];
+            [array replaceObjectAtIndex:1 withObject:dict];
+            [[ShareModel shareModel].arrayData replaceObjectAtIndex:i withObject:array];
+        }
+        [self.tableView reloadData];
+    }else
+    {
+        [self.buttonDelet setTitle:@"删除一项" forState:UIControlStateNormal];
+        [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
+        [self.buttonAdd setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        self.buttonAdd.userInteractionEnabled = YES;
+        for (int i=0; i<[ShareModel shareModel].arrayData.count; i++) {
+            NSMutableArray *array = [ShareModel shareModel].arrayData[i];
+            NSMutableDictionary *dict = [array[1]mutableCopy];
+            [dict setValue:@"2" forKey:@"state"];
+            [array replaceObjectAtIndex:1 withObject:dict];
+            [[ShareModel shareModel].arrayData replaceObjectAtIndex:i withObject:array];
+        }
+        [self.tableView reloadData];
+    }
     
 }
 
 -(void)submitData:(UIButton *)button
 {
     
+    NSInteger section = button.tag-10;
+    
+    NSIndexPath *index = [NSIndexPath indexPathForRow:1 inSection:section];
+    NSIndexPath *index2 = [NSIndexPath indexPathForRow:0 inSection:section];
+    
+    CellChargePerson *cell = [self.tableView cellForRowAtIndexPath:index];
+    UITableViewCell *cell2 = [self.tableView cellForRowAtIndexPath:index2];
+    
+    NSMutableArray *array = [[ShareModel shareModel].arrayData[section]mutableCopy];
+    NSMutableDictionary *dictInfo = [array[1]mutableCopy];
+    
+    if ([button.titleLabel.text isEqualToString:@"完成"]) {
+        
+        if ([dictInfo[@"name"]isEqualToString:@""]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"选人啊傻逼" andInterval:1.0];
+            return;
+        }
+    NSString *urlStr =[NSString stringWithFormat:@"%@shop/InsertRegion.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":dictInfo[@"roleId"],
+                           @"DepartmentId":dictInfo[@"departmentId"],
+                           @"Province":[ShareModel shareModel].stringProvince,
+                           @"City":[ShareModel shareModel].stringCity,
+                           @"County":[ShareModel shareModel].stringCountry,
+                           @"userid":dictInfo[@"selectUserId"]
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+
+//            cell.buttonDel.hidden = YES;
+//            cell.buttonDel.userInteractionEnabled = NO;
+//            cell.buttonRed.hidden = YES;
+//            cell.buttonRed.userInteractionEnabled = NO;
+            
+            cell.imageViewAdd.userInteractionEnabled = NO;
+            cell2.userInteractionEnabled = NO;
+            
+            self.buttonAdd.frame = CGRectMake(0, 0, Scree_width/2, 44);
+            [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
+            [self.buttonAdd setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            self.buttonAdd.userInteractionEnabled = YES;
+            
+            self.buttonDelet.frame = CGRectMake(Scree_width/2, 0, Scree_width/2, 44);
+            [self.buttonDelet setImage:[UIImage imageNamed:@"sc_ico01"] forState:UIControlStateNormal];
+            [self.buttonDelet setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            self.buttonDelet.userInteractionEnabled = YES;
+            
+            
+            [dictInfo setValue:@"2" forKey:@"state"];
+            [array replaceObjectAtIndex:1 withObject:dictInfo];
+            [[ShareModel shareModel].arrayData replaceObjectAtIndex:section withObject:array];
+            [self.tableView reloadData];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"非法请求" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+    }else if([button.titleLabel.text isEqualToString:@"编辑"])
+    {
+        cell2.userInteractionEnabled = YES;
+        
+        cell.imageViewAdd.userInteractionEnabled = YES;
+        
+        [dictInfo setValue:@"1" forKey:@"state"];
+        [array replaceObjectAtIndex:1 withObject:dictInfo];
+        [[ShareModel shareModel].arrayData replaceObjectAtIndex:section withObject:array];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationNone];
+        
+    }else
+    {
+        [[ShareModel shareModel].arrayData removeObjectAtIndex:section];
+        [self.tableView reloadData];
+    }
+    
 }
 
--(void)addPerson
+-(void)addPerson:(UITapGestureRecognizer *)ges
 {
+    CGPoint point = [ges locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    [ShareModel shareModel].indexPath = indexPath;
     VCBuessPostion *vc = [[VCBuessPostion alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)showDeletButton
+-(void)showDeletButton:(UIButton *)button
+{
+    
+}
+
+-(void)buttonRed:(UIButton *)button
 {
     
 }
@@ -117,9 +258,10 @@
         if (!cell) {
             cell = [[CellChargePerson alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
-        [cell.buttonAdd addTarget:self action:@selector(addPerson) forControlEvents:UIControlEventTouchUpInside];
-        [cell.buttonDel addTarget:self action:@selector(showDeletButton) forControlEvents:UIControlEventTouchUpInside];
-        [cell.buttonRed addTarget:self action:@selector(delete) forControlEvents:UIControlEventTouchUpInside];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addPerson:)];
+        [cell.imageViewAdd addGestureRecognizer:tap];
+        [cell.buttonDel addTarget:self action:@selector(showDeletButton:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.buttonRed addTarget:self action:@selector(buttonRed) forControlEvents:UIControlEventTouchUpInside];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
          NSDictionary *dcit = array[1];
         cell.dict = dcit;
@@ -147,25 +289,44 @@
     }
     else
     {
-        return 90;
+        return 100;
     }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSArray *array = [ShareModel shareModel].arrayData[section];
+    NSDictionary *dict = array[1];
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
     view.backgroundColor = GetColor(239,239,244, 1);
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(view.frame.size.width-40, 5, 40, 20)];
     button.tag = section+10;
     [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [button setTitle:@"完成" forState:UIControlStateNormal];
+    
+    if ([dict[@"state"]isEqualToString:@"1"]) {
+        [button setTitle:@"完成" forState:UIControlStateNormal];
+    }else if ([dict[@"state"]isEqualToString:@"2"])
+    {
+        [button setTitle:@"编辑" forState:UIControlStateNormal];
+    }else
+    {
+        [button setTitle:@"删除" forState:UIControlStateNormal];
+    }
+    
     [button addTarget:self action:@selector(submitData:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     return view;
 }
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

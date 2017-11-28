@@ -100,7 +100,7 @@
     [tableView1 registerClass:[CellEditInfo class] forCellReuseIdentifier:@"cell2"];
     [self.view addSubview:tableView1];
     [tableView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(kTopHeight);
+        make.top.mas_equalTo(self.view.mas_top);
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
         make.bottom.mas_equalTo(self.view.mas_bottom);

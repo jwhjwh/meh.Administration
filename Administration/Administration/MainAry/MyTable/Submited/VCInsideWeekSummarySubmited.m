@@ -683,6 +683,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.LabelTitle.text = self.arrayContent[indexPath.row];
     cell.textView.placeholder = self.arrayContent[indexPath.row];
+    cell.textView.delegate = self;
     if (self.isSelect) {
         cell.textView.userInteractionEnabled = NO;
         switch (indexPath.row) {
@@ -924,18 +925,18 @@
         case 4:
             self.string5 = textView.text;
             break;
-        case 5:
-            self.string6 = textView.text;
-            break;
-        case 6:
-            self.string7 = textView.text;
-            break;
-        case 7:
-            self.string8 = textView.text;
-            break;
-        case 8:
-            self.string9 = textView.text;
-            break;
+//        case 5:
+//            self.string6 = textView.text;
+//            break;
+//        case 6:
+//            self.string7 = textView.text;
+//            break;
+//        case 7:
+//            self.string8 = textView.text;
+//            break;
+//        case 8:
+//            self.string9 = textView.text;
+//            break;
         default:
             break;
     }
