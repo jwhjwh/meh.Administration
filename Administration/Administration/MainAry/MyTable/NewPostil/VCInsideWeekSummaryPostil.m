@@ -944,6 +944,13 @@
 
 
 #pragma -mark system
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self getHttpData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -958,7 +965,6 @@
     
     self.arraySummary = [NSArray array];
     
-    self.isSelect = YES;
     canEdit = NO;
     
     self.string1=  @"";

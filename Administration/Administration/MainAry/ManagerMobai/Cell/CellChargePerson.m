@@ -30,17 +30,19 @@
     }];
     self.labelTitle = labelTitle;
     
-    UIButton *buttonAdd = [[UIButton alloc]init];
-    buttonAdd.layer.cornerRadius = 20;
-    buttonAdd.layer.masksToBounds = YES;
-    [self.contentView addSubview:buttonAdd];
-    [buttonAdd mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView *imageViewAdd = [[UIImageView alloc]init];
+    imageViewAdd.layer.cornerRadius = 20;
+    imageViewAdd.layer.masksToBounds = YES;
+    imageViewAdd.userInteractionEnabled = YES;
+    imageViewAdd.image = [UIImage imageNamed:@"tj_ico01"];
+    [self.contentView addSubview:imageViewAdd];
+    [imageViewAdd mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).offset(15);
         make.top.mas_equalTo(labelTitle.mas_bottom).offset(5);
         make.width.mas_equalTo(40);
         make.height.mas_equalTo(40);
     }];
-    self.buttonAdd = buttonAdd;
+    self.imageViewAdd = imageViewAdd;
     
     UIButton *buttonDel = [[UIButton alloc]init];
     buttonDel.hidden = YES;
@@ -50,7 +52,7 @@
     [buttonDel setImage:[UIImage imageNamed:@"sc_ico01"] forState:UIControlStateNormal];
     [self.contentView addSubview:buttonDel];
     [buttonDel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(buttonAdd.mas_right).offset(10);
+        make.left.mas_equalTo(imageViewAdd.mas_right).offset(10);
         make.top.mas_equalTo(labelTitle.mas_bottom).offset(5);
         make.height.mas_equalTo(40);
         make.width.mas_equalTo(40);
@@ -63,7 +65,7 @@
     [buttonRed setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
     [self.contentView addSubview:buttonRed];
     [buttonRed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(buttonAdd.mas_right);
+        make.left.mas_equalTo(imageViewAdd.mas_right);
         make.top.mas_equalTo(labelTitle.mas_bottom).offset(3);
         make.width.mas_equalTo(5);
         make.height.mas_equalTo(5);
@@ -74,7 +76,7 @@
     [self.contentView addSubview:labelName];
     [labelName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).offset(8);
-        make.top.mas_equalTo(buttonAdd.mas_bottom).offset(5);
+        make.top.mas_equalTo(imageViewAdd.mas_bottom).offset(5);
         make.height.mas_equalTo(21);
     }];
     self.labelName = labelName;
@@ -84,7 +86,25 @@
 {
     self.labelName.text = dict[@"name"];
     self.labelTitle.text = dict[@"charge"];
-    [self.buttonAdd setImage:[UIImage imageNamed:dict[@"icon"]] forState:UIControlStateNormal];
+    
+    if (![dict[@"icon"]isEqualToString:@"tj_ico01"]) {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]];
+        
+        [self.imageViewAdd sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"banben100"]];
+    }
+    
+//    if (![dict[@"name"] isEqualToString:@""]) {
+//        self.buttonDel.hidden = NO;
+//        self.buttonDel.userInteractionEnabled = YES;
+//    }
+    
+//    if ([dict[@"icon"] isEqualToString:@""]) {
+//        [self.buttonAdd setImage:[UIImage imageNamed:@"banben100"] forState:UIControlStateNormal];
+//    }else
+//    {
+//        [self.buttonAdd.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+//    }
+//    [self.buttonAdd setImage:[UIImage imageNamed:dict[@"icon"]] forState:UIControlStateNormal];
 }
 
 - (void)awakeFromNib {

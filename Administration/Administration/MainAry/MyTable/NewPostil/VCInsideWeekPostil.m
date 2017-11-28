@@ -109,8 +109,8 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [responseObject valueForKey:@"tableInfo"];
             
-            [self.startDate setTitle:self.dict[@"startDate"] forState:UIControlStateNormal];
-            [self.endDate setTitle:self.dict[@"endDate"] forState:UIControlStateNormal];
+            [self.startDate setTitle:[self.dict[@"startDate"]substringToIndex:10] forState:UIControlStateNormal];
+            [self.endDate setTitle:[self.dict[@"endDate"]substringToIndex:10] forState:UIControlStateNormal];
             self.string1 = self.dict[@"monday"];
             self.string2 = self.dict[@"tuesday"];
             self.string3 = self.dict[@"wednesday"];

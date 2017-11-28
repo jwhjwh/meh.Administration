@@ -105,9 +105,11 @@
     [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     NSString *roleId = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     
+    
     if ([dict[@"did"] isKindOfClass:[NSNull class]]) {
         if ([roleId isEqualToString:@"1"]||[roleId isEqualToString:@"7"]) {
             [self.navigationController pushViewController:vc animated:YES];
+            [ShareModel shareModel].departmentID = @"";
         }else
         {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无部门" andInterval:1.0f];
@@ -115,7 +117,9 @@
         }
     }else
     {
-        [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
+        
+        NSArray *arrayDid = [dict[@"did"]componentsSeparatedByString:@","];
+        [ShareModel shareModel].departmentID = arrayDid[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
     

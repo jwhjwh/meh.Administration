@@ -216,13 +216,7 @@
             
         }else if ([button.titleLabel.text isEqualToString:@"完成"])
         {
-            [button setTitle:@"编辑" forState:UIControlStateNormal];
-            [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
-            self.buttonAdd.userInteractionEnabled = YES;
             
-            [self.buttonDel setImage:[UIImage imageNamed:@"sc_ico01"] forState:UIControlStateNormal];
-            self.buttonDel.userInteractionEnabled = YES;
-            [dict setValue:@"A" forKey:@"buttonstate"];
             if (self.string2==nil||[self.string2 isEqualToString:@""]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1];
                 return;
@@ -240,6 +234,13 @@
                 return;
             }
             [self changeDayPlanDetail:dict[@"did"] and:self.dayPlabID];
+            [button setTitle:@"编辑" forState:UIControlStateNormal];
+            [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
+            self.buttonAdd.userInteractionEnabled = YES;
+            
+            [self.buttonDel setImage:[UIImage imageNamed:@"sc_ico01"] forState:UIControlStateNormal];
+            self.buttonDel.userInteractionEnabled = YES;
+            [dict setValue:@"A" forKey:@"buttonstate"];
             
         }else
         {

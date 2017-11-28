@@ -75,10 +75,16 @@
 
 -(void)getCity
 {
-    [self.arrayData addObject:self.chooseCity.stringAll];
-    [ShareModel shareModel].stringProvince = [self.chooseCity.arrayProvince componentsJoinedByString:@"/"];
-    [ShareModel shareModel].stringCity = [self.chooseCity.arrayCity componentsJoinedByString:@"/"];
-    [ShareModel shareModel].stringCountry = [self.chooseCity.arrayCountry componentsJoinedByString:@"/"];
+    if (self.chooseCity.stringAll ==nil) {
+        [self.arrayData addObject:@""];
+    }else
+    {
+        [self.arrayData addObject:self.chooseCity.stringAll];
+    }
+    
+    [ShareModel shareModel].stringProvince = [self.chooseCity.arrayProvince componentsJoinedByString:@","];
+    [ShareModel shareModel].stringCity = [self.chooseCity.arrayCity componentsJoinedByString:@","];
+    [ShareModel shareModel].stringCountry = [self.chooseCity.arrayCountry componentsJoinedByString:@","];
     
     [self.tableView reloadData];
 }

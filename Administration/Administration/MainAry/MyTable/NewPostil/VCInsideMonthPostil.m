@@ -113,7 +113,7 @@
         if ([code isEqualToString:@"0000"]) {
             self.dict = [[responseObject valueForKey:@"tableInfo"]mutableCopy];
             
-            [self.insideMonth.buttonDate setTitle:[[responseObject valueForKey:@"months"]substringToIndex:7] forState:UIControlStateNormal];
+            [self.insideMonth.buttonDate setTitle:[self.dict[@"months"]substringToIndex:7] forState:UIControlStateNormal];
             self.string1 = self.dict[@"workPlan"];
             self.string2 = self.dict[@"firstWeek"];
             self.string3 = self.dict[@"secondWeek"];
@@ -283,7 +283,7 @@
         [self.viewSummary removeFromSuperview];
         [self setSummaryUI];
         self.viewPlan.hidden = YES;
-        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"写阶段个人成长目标规划及方向预设"];
+        self.arryaTitle = @[@"本月工作完成简述",@"本月工作进度及目标达成的分析",@"当前阶段工作方向，整改策略及建议",@"个人心得感悟",@"下阶段个人成长目标规划及方向预设"];
         self.arrayContent = @[@"填写本月工作完成简述",@"填写本月工作进度及目标达成的分析",@"填写签单阶段工作方向，整改策略及建议",@"填写个人心得感悟",@"填写下阶段个人成长目标规划及方向预设"];
         self.isSelect = NO;
         self.navigationItem.rightBarButtonItem = nil;
@@ -807,6 +807,7 @@
 {
     [super viewWillAppear:YES];
     //self.edgesForExtendedLayout = UIRectEdgeNone;
+    [self getHttpData];
 }
 
 - (void)viewDidLoad {

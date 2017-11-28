@@ -14,6 +14,7 @@
 @property (nonatomic,weak)UITableView *tableView2;
 @property (nonatomic,weak)UITableView *tableView3;
 
+@property (nonatomic,strong)NSMutableArray *arrayData;
 @property (nonatomic,strong)NSMutableArray *arrayAll;
 @property (nonatomic,strong)NSMutableArray *arrayP;
 @property (nonatomic,strong)NSMutableArray *arrayC;
@@ -33,13 +34,39 @@
     return self;
 }
 
+-(NSArray *)getList:(NSString *)name
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"province_data" ofType:@"json"];
+    NSData *cityData = [[NSData alloc]initWithContentsOfFile:path];
+    NSDictionary *dictdata = [NSJSONSerialization JSONObjectWithData:cityData options:NSJSONReadingAllowFragments error:nil];
+    
+    NSArray *arrayProvince = dictdata[@"province"];
+    
+    NSArray *array;
+    for (NSDictionary *dict in arrayProvince) {
+        
+        if ([dict[@"name"]isEqualToString:name]) {
+            array = dict[@"city"];
+        }else
+        {
+            NSArray *array1 = dict[@"city"];
+            for (NSDictionary *dict1 in array1) {
+                if ([dict1[@"name"]isEqualToString:name]) {
+                    array =  dict1[@"district"];
+                    
+                }
+            }
+        }
+    }
+    return array;
+}
+
+
 -(void)initData
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"province_data" ofType:@"json"];
     NSData *cityData = [[NSData alloc]initWithContentsOfFile:path];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:cityData options:NSJSONReadingAllowFragments error:nil];
-    
-   
     
     self.arrayP = [dict[@"province"]mutableCopy];
     
@@ -48,7 +75,137 @@
         [dictP setValue:@"1" forKey:@"isSelect"];
         [self.arrayP replaceObjectAtIndex:i withObject:dictP];
     }
-    
+}
+
+-(void)getHttpData
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectRegion.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"DepartmentId":[ShareModel shareModel].departmentID,
+                           @"userid":[USER_DEFAULTS valueForKey:@"userid"]
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            
+            [self.arrayP removeAllObjects];
+            [self.arrayC removeAllObjects];
+            [self.arrayT removeAllObjects];
+            
+            NSArray *array = [responseObject valueForKey:@"list"];
+            
+            
+//            NSDictionary *dictPlist = @{
+//                                        
+//                                        @"province":@[@{@"name":@"河北",
+//                                                        @"city":@[@{@"name":@"保定",
+//                                                                    @"district":@[@{@"name":@"小区",
+//                                                                                   @"zcode":@"0000"}]}]},
+//                                                      @{@"name":@"河北",
+              //                                          @"city":@[@{@"name":@"保定",
+                                                                  //@"district":@[@{@"name":@"小区",
+                                                                                //@"zcode":@"0000"}]}]}],
+//                                        
+//                                        
+//                                        
+//                                        };
+            
+            //按照plist文件格式创建数据源
+            NSMutableDictionary *dictplist = [NSMutableDictionary dictionary];
+            NSMutableArray *arraydata = [NSMutableArray array];
+           
+            for (NSDictionary *dictinfo in array) {
+                
+               NSMutableArray*  province = [[dictinfo[@"province"]componentsSeparatedByString:@","]mutableCopy];
+                
+                for (NSString *string in province) {
+                    if ([string isEqualToString:@""]) {
+                        [province removeObject:string];
+                    }
+                }
+                
+                
+                
+               NSMutableArray* city = [[dictinfo[@"city"]componentsSeparatedByString:@","]mutableCopy];
+                for (NSString *string in city) {
+                    if ([string isEqualToString:@""]) {
+                        [city removeObject:string];
+                    }
+                }
+                
+               NSMutableArray* district = [[dictinfo[@"county"]componentsSeparatedByString:@","]mutableCopy];
+                for (NSString *string in district) {
+                    if ([string isEqualToString:@""]) {
+                        [district removeObject:string];
+                    }
+                }
+                
+                NSMutableArray *array1 = [NSMutableArray array];
+                
+                for (NSString *string1 in district) {
+                    NSMutableDictionary *dictdis = [NSMutableDictionary dictionary];
+                    [dictdis setValue:string1 forKey:@"name"];
+                    [array1 addObject:dictdis];
+                }
+                
+
+                NSMutableArray *array2 = [NSMutableArray array];
+                for (NSString *string in city) {
+                    NSMutableDictionary *dict2 = [NSMutableDictionary dictionary];
+                    [dict2 setValue:string forKey:@"name"];
+                    
+                    
+                    if (district.count==0) {
+                        [dict2 setValue:[self getList:string] forKey:@"district"];
+                    }else
+                    {
+                        [dict2 setValue:array1 forKey:@"district"];
+                    }
+                    
+                    [array2 addObject:dict2];
+                }
+               
+                
+                for (NSString *string in province) {
+                    NSMutableDictionary *dictP = [NSMutableDictionary dictionary];
+                    [dictP setValue:string forKey:@"name"];
+                    
+                    if (city.count==0) {
+                        [dictP setValue:[self getList:string] forKey:@"city"];
+                    }else
+                    {
+                        [dictP setValue:array2 forKey:@"city"];
+                    }
+                    
+                    
+                    [arraydata addObject:dictP];
+                }
+            }
+            
+            [dictplist setValue:arraydata forKey:@"province"];
+            
+            self.arrayP = [dictplist[@"province"]mutableCopy];
+            
+            for (int i=0;i<self.arrayP.count;i++) {
+                NSMutableDictionary *dictP = [self.arrayP[i]mutableCopy];
+                [dictP setValue:@"1" forKey:@"isSelect"];
+                [self.arrayP replaceObjectAtIndex:i withObject:dictP];
+            }
+            
+            [self.tableView1 reloadData];
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self MBPro:YES];
 }
 
 -(void)setUI
@@ -56,6 +213,7 @@
     UIColor *color = GetColor(239, 239, 244, 1);
     self.backgroundColor = [color colorWithAlphaComponent:0.3];
     
+    self.arrayData = [NSMutableArray array];
     self.arrayP = [NSMutableArray array];
     self.arrayC = [NSMutableArray array];
     self.arrayT = [NSMutableArray array];
@@ -67,10 +225,16 @@
     
     [self initData];
     
+    if (![[ShareModel shareModel].roleID isEqualToString:@"1"]||![[ShareModel shareModel].roleID isEqualToString:@"7"]) {
+        
+        [self getHttpData];
+    }
+    
     UITableView *tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width/3, 300)style:UITableViewStylePlain];
     tableView1.delegate = self;
     tableView1.dataSource = self;
     tableView1.showsVerticalScrollIndicator = NO;
+    [ZXDNetworking setExtraCellLineHidden:tableView1];
     [self addSubview:tableView1];
     self.tableView1 = tableView1;
     
@@ -78,6 +242,7 @@
     tableView2.delegate = self;
     tableView2.dataSource = self;
     tableView2.showsVerticalScrollIndicator = NO;
+    [ZXDNetworking setExtraCellLineHidden:tableView2];
     [self addSubview:tableView2];
     self.tableView2 = tableView2;
     
@@ -85,6 +250,7 @@
     tableView3.delegate = self;
     tableView3.dataSource = self;
     tableView3.showsVerticalScrollIndicator = NO;
+    [ZXDNetworking setExtraCellLineHidden:tableView3];
     [self addSubview:tableView3];
     self.tableView3 = tableView3;
 }
@@ -151,9 +317,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if ([tableView isEqual:self.tableView1]) {
         NSMutableDictionary *dict = [self.arrayP[indexPath.row]mutableCopy];
-        
+        [self.arrayCity removeAllObjects];
         if ([dict[@"isSelect"]isEqualToString:@"1"]) {
             [dict setValue:@"2" forKey:@"isSelect"];
             [self.arrayProvince addObject:dict[@"name"]];
@@ -187,6 +354,9 @@
         }else
         {
             [self.arrayC removeAllObjects];
+            [self.arrayT removeAllObjects];
+            [self.tableView2 reloadData];
+            [self.tableView3 reloadData];
         }
         [self.tableView2 reloadData];
         
@@ -194,6 +364,9 @@
     }else if ([tableView isEqual:self.tableView2])
     {
         NSMutableDictionary  *dict = [self.arrayC[indexPath.row]mutableCopy];
+        
+       
+        
         if ([dict[@"isSelect"]isEqualToString:@"1"]) {
             [dict setValue:@"2" forKey:@"isSelect"];
             [self.arrayCity addObject:dict[@"name"]];
@@ -227,6 +400,7 @@
         }else
         {
             [self.arrayT removeAllObjects];
+            [self.tableView3 reloadData];
         }
         [self.tableView3 reloadData];
         

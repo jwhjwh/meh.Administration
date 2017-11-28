@@ -181,6 +181,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     if (self.isSelect) {
+        vc.tableID = self.tableId;
         switch (indexPath.row) {
             case 3:
             {
@@ -226,6 +227,7 @@
         }
     }else
     {
+        vc.tableID = self.summaryId;
         switch (indexPath.row) {
             case 3:
             {
@@ -256,7 +258,6 @@
     }
     vc.departmentID = self.departmentId;
     vc.remark = self.remark;
-    vc.tableID = self.tableId;
     vc.stringName = cell.textView.text;
     vc.num = self.num;
     [self.navigationController pushViewController:vc animated:YES];
@@ -282,7 +283,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row<3) {
-        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+       
         CellInfo *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if (cell==nil) {
             cell = [[CellInfo alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
@@ -537,7 +538,7 @@
     
     if (buttonIndex==1) {
         //审核接口
-        if (alertView.tag == 200) {
+        
             if (alertView.tag == 200) {
                 if (self.isSelect) {
                     dict = @{@"appkey":appKeyStr,
@@ -574,7 +575,7 @@
                              @"DepartmentID":self.departmentId,
                              @"Num":[ShareModel shareModel].num,
                              @"Sort":[ShareModel shareModel].sort,
-                             @"State":@"1",
+                             @"State":@"2",
                              @"code":@"1",
                              @"id":self.tableId};
                 }else
@@ -586,12 +587,12 @@
                              @"DepartmentID":self.departmentId,
                              @"Num":[ShareModel shareModel].num,
                              @"Sort":[ShareModel shareModel].sort,
-                             @"State":@"1",
+                             @"State":@"2",
                              @"code":@"2",
                              @"id":self.summaryId};
                 }
             }
-        }
+        
         
         
         [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {

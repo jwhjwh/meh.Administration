@@ -316,7 +316,7 @@
                     cell.labelInfo.text = [self.dictContent[@"dateLine"]substringToIndex:10];
                     break;
                 case 1:
-                    cell.labelInfo.text = self.postionName;
+                    cell.labelInfo.text = self.dictContent[@"newName"];
                     break;
                 case 2:
                     cell.labelInfo.text = self.dictContent[@"name"];
@@ -620,13 +620,13 @@
            cell.labelTitle.text = self.arrayTitle[indexPath.row];
            switch (indexPath.row) {
                case 0:
-                   cell.labelInfo.text = [self.dictContent[@"dates"] substringToIndex:16];
+                   cell.labelInfo.text = [self.dictContent[@"dates"] substringToIndex:10];
                    break;
                case 1:
                    cell.labelInfo.text = self.dictContent[@"store"];
                    break;
                case 2:
-                   cell.labelInfo.text = self.postionName;
+                   cell.labelInfo.text = self.dictContent[@"newName"];
                    break;
                case 3:
                    cell.labelInfo.text = self.dictContent[@"name"];

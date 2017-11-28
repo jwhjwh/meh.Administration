@@ -29,7 +29,42 @@
 
 -(void)submitData
 {
+    NSIndexPath *index = [NSIndexPath indexPathForRow:3 inSection:0];
+    CellSetBrithday *cell = [self.tableView cellForRowAtIndexPath:index];
     
+    
+    NSString *urlStr =[NSString stringWithFormat:@"%@birthdayReminder/addBirthdayReminder",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *info=@{@"appkey":appKeyStr,
+                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                         @"CompanyInfoId":compid,
+                         @"clientId":[NSString stringWithFormat:@"%@",self.dictInfo[@"usersid"]],
+                         @"name":self.dictInfo[@"name"],
+                         @"lunarDate":self.dictInfo[@"solarBirthday"],
+                         @"solarDate":self.dictInfo[@"lunarBirthday"],
+                         @"flag":[NSString stringWithFormat:@"%@",self.dictInfo[@"flag"]],
+                         @"reminderDay":[self.array componentsJoinedByString:@","],
+                         @"matter":cell.textView.text,
+                         @"belog":@"1"};
+    [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
+        
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+        
+        
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 
 -(void)setUI
@@ -62,6 +97,7 @@
 
 -(void)showChooseDay
 {
+    [self.view endEditing:YES];
     ViewChooseDay *view = [[ViewChooseDay alloc]initWithFrame:self.view.bounds];
     view.delegate =self;
     [self.view.window addSubview:view];
@@ -74,8 +110,6 @@
 -(void)getSelect
 {
     self.array = self.chooseDay.arraySelect;
-    
-    
 }
 
 #pragma -mark tableView
@@ -93,7 +127,6 @@
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textView.delegate = self;
     cell.imageViewHead.image = [UIImage imageNamed:self.arrayImage[indexPath.row]];
     cell.textView.text = self.arrayTitle[indexPath.row];
     
@@ -146,28 +179,6 @@
     }
 }
 
-#pragma -mark textView
--(void)textViewDidChange:(UITextView *)textView
-{
-    CellSetBrithday *cell = (CellSetBrithday *)[textView superview].superview;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
-    self.describ = textView.text;
-    CGRect frame = textView.frame;
-    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
-    CGSize size = [textView sizeThatFits:constraintSize];
-    if (size.height<=frame.size.height) {
-        size.height=frame.size.height;
-    }
-    cell.textView.frame = CGRectMake(frame.origin.x, frame.origin.y,textView.frame.size.width, size.height);
-    
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-    
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
-}
-
-
 #pragma -mark system
 
 -(void)viewWillAppear:(BOOL)animated
@@ -187,11 +198,16 @@
     
     NSString *brithday; ;
     
-    if (self.dictInfo[@"birthday"]) {
-        brithday = [self.dictInfo[@"birthday"] substringToIndex:10];
+    if ([self.dictInfo[@"flag"] intValue]==1) {
+        brithday = self.dictInfo[@"solarBirthday"];
+    }
+    else
+    {
+        brithday = self.dictInfo[@"lunarBirthday"];
     }
     
     self.arrayImage = @[@"yh_ico",@"rl_ico",@"nz_ico",@"ms",@"dx_ico"];
+    
     self.arrayTitle = @[self.dictInfo[@"name"],brithday,@"提醒天数",@"",@"送出祝福"];
 }
 

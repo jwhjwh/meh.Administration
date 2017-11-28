@@ -166,6 +166,8 @@
     if (cell==nil) {
         cell = [[CellSummaryList alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *dict = self.arrayData[indexPath.row];
     [self.remark enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([key isEqualToString:[NSString stringWithFormat:@"%@",dict[@"remark"]]]) {
