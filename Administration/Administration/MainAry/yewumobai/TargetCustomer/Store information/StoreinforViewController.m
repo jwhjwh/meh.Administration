@@ -9,6 +9,7 @@
 #import "StoreinforViewController.h"
 #import "StoresViewController.h"
 #import "BossViewController.h"
+#import "shopAssistantViewController.h"
 @interface StoreinforViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 
@@ -28,10 +29,7 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    
     _nameArrs = @[@"门店信息",@"老板信息",@"店员信息",@"顾客信息"];
     
     [self addViewremind];
@@ -102,9 +100,11 @@
                     [self.navigationController pushViewController:bossVC animated:YES];
                 }
                     break;
-                case 2:
+                case 2:{
                     //店员信息
-                    break;
+                    shopAssistantViewController *SAVC = [[shopAssistantViewController alloc]init];
+                     [self.navigationController pushViewController:SAVC animated:YES];
+                }break;
                 case 3:
                     //顾客信息
                     break;
@@ -128,6 +128,11 @@
                         break;
                     case 2:
                         //店员信息
+                    {
+                        //店员信息
+                        shopAssistantViewController *SAVC = [[shopAssistantViewController alloc]init];
+                        [self.navigationController pushViewController:SAVC animated:YES];
+                    }
                         break;
                     case 3:
                         //顾客信息
@@ -172,9 +177,7 @@
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)rightItemAction{
-    
-}
+
 #pragma mark - 补全分隔线左侧缺失
 - (void)viewDidLayoutSubviews {
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {

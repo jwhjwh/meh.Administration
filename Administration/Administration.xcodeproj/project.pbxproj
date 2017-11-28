@@ -581,6 +581,7 @@
 		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
+		620B71A81FC00AF400117019 /* BossHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 620B71A71FC00AF400117019 /* BossHome.m */; };
 		620B9C711F79051600B24660 /* InterestedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 620B9C701F79051600B24660 /* InterestedModel.m */; };
 		620D3A171ED3CA5900D804A7 /* CreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620D3A161ED3CA5900D804A7 /* CreaViewController.m */; };
 		620E2F991FB0593A002DE6A5 /* CooperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620E2F981FB0593A002DE6A5 /* CooperationViewController.m */; };
@@ -764,6 +765,8 @@
 		62D94D9A1F99A55B00D0BEA6 /* targetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D94D991F99A55B00D0BEA6 /* targetTextField.m */; };
 		62DB23321FABF70200603D00 /* ShareColleagues.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DB23311FABF70200603D00 /* ShareColleagues.m */; };
 		62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 62DEF9C01E8B492B00BC7D0C /* zx_ico.png */; };
+		62E2A8971FBD81C100A08CAB /* DPYJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E2A8961FBD81C100A08CAB /* DPYJViewController.m */; };
+		62E36A691FCD0B2200D68307 /* shopAssistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */; };
 		62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E873B01F74A3C800335A44 /* InterestedsearchViewController.m */; };
 		62E873B41F74A89300335A44 /* InterestedChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E873B31F74A89300335A44 /* InterestedChooseViewController.m */; };
 		62E9C8391FBAD5F2008431A8 /* ActiviTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E9C8381FBAD5F2008431A8 /* ActiviTableViewCell.m */; };
@@ -1885,6 +1888,8 @@
 		6207312A1E5D6F9100BCF51C /* EditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModel.m; sourceTree = "<group>"; };
 		620A8AC91E6575BE005CA222 /* DateEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateEditViewController.h; sourceTree = "<group>"; };
 		620A8ACA1E6575BE005CA222 /* DateEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateEditViewController.m; sourceTree = "<group>"; };
+		620B71A61FC00AF400117019 /* BossHome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BossHome.h; sourceTree = "<group>"; };
+		620B71A71FC00AF400117019 /* BossHome.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BossHome.m; sourceTree = "<group>"; };
 		620B9C6F1F79051600B24660 /* InterestedModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestedModel.h; sourceTree = "<group>"; };
 		620B9C701F79051600B24660 /* InterestedModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestedModel.m; sourceTree = "<group>"; };
 		620D3A151ED3CA5900D804A7 /* CreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreaViewController.h; sourceTree = "<group>"; };
@@ -2181,6 +2186,10 @@
 		62DB23301FABF70200603D00 /* ShareColleagues.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareColleagues.h; sourceTree = "<group>"; };
 		62DB23311FABF70200603D00 /* ShareColleagues.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareColleagues.m; sourceTree = "<group>"; };
 		62DEF9C01E8B492B00BC7D0C /* zx_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zx_ico.png; sourceTree = "<group>"; };
+		62E2A8951FBD81C100A08CAB /* DPYJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPYJViewController.h; sourceTree = "<group>"; };
+		62E2A8961FBD81C100A08CAB /* DPYJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPYJViewController.m; sourceTree = "<group>"; };
+		62E36A671FCD0B2200D68307 /* shopAssistantViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shopAssistantViewController.h; sourceTree = "<group>"; };
+		62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shopAssistantViewController.m; sourceTree = "<group>"; };
 		62E873AF1F74A3C800335A44 /* InterestedsearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestedsearchViewController.h; sourceTree = "<group>"; };
 		62E873B01F74A3C800335A44 /* InterestedsearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterestedsearchViewController.m; sourceTree = "<group>"; };
 		62E873B21F74A89300335A44 /* InterestedChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestedChooseViewController.h; sourceTree = "<group>"; };
@@ -4330,6 +4339,7 @@
 		62246C411FA82BFB003719E2 /* Store information */ = {
 			isa = PBXGroup;
 			children = (
+				62E36A661FCD068E00D68307 /* shopAssistant */,
 				62EA13861FBBE5040064B4FE /* BossVC */,
 				62E9C8361FBAD59E008431A8 /* activityVC */,
 				62246C421FA82C2B003719E2 /* StoreinforViewController.h */,
@@ -5012,6 +5022,15 @@
 			path = Create;
 			sourceTree = "<group>";
 		};
+		62E36A661FCD068E00D68307 /* shopAssistant */ = {
+			isa = PBXGroup;
+			children = (
+				62E36A671FCD0B2200D68307 /* shopAssistantViewController.h */,
+				62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */,
+			);
+			path = shopAssistant;
+			sourceTree = "<group>";
+		};
 		62E873AD1F74A37700335A44 /* Interestedsearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -5050,6 +5069,10 @@
 			children = (
 				62EA13871FBBE52A0064B4FE /* BossViewController.h */,
 				62EA13881FBBE52A0064B4FE /* BossViewController.m */,
+				620B71A61FC00AF400117019 /* BossHome.h */,
+				620B71A71FC00AF400117019 /* BossHome.m */,
+				62E2A8951FBD81C100A08CAB /* DPYJViewController.h */,
+				62E2A8961FBD81C100A08CAB /* DPYJViewController.m */,
 			);
 			path = BossVC;
 			sourceTree = "<group>";
@@ -5307,7 +5330,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = T786R7PE4N;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5653,6 +5676,7 @@
 				1F0952641F3AAEAE00BCD27E /* ShareModel.m in Sources */,
 				1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */,
 				1FDD570A1F7B57290082C519 /* VCArtWeekDrafts.m in Sources */,
+				620B71A81FC00AF400117019 /* BossHome.m in Sources */,
 				1F6211B41E8CFFAF00F50851 /* UIView+MJExtension.m in Sources */,
 				F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */,
 				1FE4FE1E1F69085C0045C8D6 /* CellDetail.m in Sources */,
@@ -5666,6 +5690,7 @@
 				62D94D9A1F99A55B00D0BEA6 /* targetTextField.m in Sources */,
 				1F96D2FD1FA995460041E40B /* VCBrithday.m in Sources */,
 				1F6212011E8CFFB000F50851 /* EaseChatToolbarItem.m in Sources */,
+				62E36A691FCD0B2200D68307 /* shopAssistantViewController.m in Sources */,
 				1F803FE11E52F7CA005F53CE /* AFHTTPSessionManager.m in Sources */,
 				1FF5807C1F8C64D3001C3D40 /* VCArtWeekSummarySubmited.m in Sources */,
 				62F2206F1F905C2E004163A4 /* TargetCustomerViewController.m in Sources */,
@@ -6007,6 +6032,7 @@
 				1F6AB7EF1E8B979F006CB015 /* WFPhotosViewController.m in Sources */,
 				1F6211CC1E8CFFB000F50851 /* UIImageView+EMWebCache.m in Sources */,
 				6205B2891F6F75E9005466FC /* WorshipSearchViewController.m in Sources */,
+				62E2A8971FBD81C100A08CAB /* DPYJViewController.m in Sources */,
 				1FD73DDD1FBAB94C00134079 /* VCAddAreaPermision.m in Sources */,
 				1FD73DD11FBAB8F600134079 /* VCManagerMobai.m in Sources */,
 				62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */,
@@ -6287,7 +6313,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6316,7 +6342,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6335,7 +6361,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6364,7 +6390,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
