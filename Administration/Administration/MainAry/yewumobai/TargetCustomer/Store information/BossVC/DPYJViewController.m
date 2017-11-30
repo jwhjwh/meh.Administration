@@ -24,6 +24,10 @@
             self.title=@"点评建议";
         }
             break;
+        case 7:{
+            self.title=@"综合研判";
+        }
+            break;
         
         default:
             break;

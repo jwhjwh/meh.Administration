@@ -272,7 +272,7 @@ BOOL isend;
            targetVC.dateStr = _ReviewsProposal; //点评建议
             targetVC.modifi = YES;//可否编辑
             targetVC.blcokStr=^(NSString *content,int num){
-                if (num==0) {
+                if (num==8) {
                     if (isend == YES) {
                         _ReviewsProposal = content;
                     }

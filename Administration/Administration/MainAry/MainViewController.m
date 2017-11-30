@@ -430,7 +430,7 @@
             }
         }
         if ([stringCode isEqualToString:@"1001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"重新登录" andInterval:1];
             return;
         }
         if ([stringCode isEqualToString:@"4444"]) {
