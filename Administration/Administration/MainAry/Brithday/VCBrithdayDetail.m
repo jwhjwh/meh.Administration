@@ -10,7 +10,7 @@
 #import "CellSetBrithday.h"
 #import "ViewChooseDay.h"
 #import "VCSendMessage.h"
-@interface VCBrithdayDetail ()<UITableViewDelegate,UITableViewDataSource,ViewChooseDayDelegate>
+@interface VCBrithdayDetail ()<UITableViewDelegate,UITableViewDataSource,ViewChooseDayDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSArray *arrayImage;
@@ -162,15 +162,14 @@
     NSMutableArray*buttons=[[NSMutableArray alloc]initWithCapacity:2];
     
     UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-//    [button1 setImage:[UIImage imageNamed:@"editBrithday"] forState:UIControlStateNormal];
+    [button1 setImage:[UIImage imageNamed:@"bj_ico"] forState:UIControlStateNormal];
     [button1 addTarget:self action:@selector(editBrithday) forControlEvents:UIControlEventTouchUpInside];
-    [button1 setTitle:@"编" forState:UIControlStateNormal];
+    
     [button1 setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     
     UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(31, 0, 25, 25)];
-//    [button2 setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-    [button2 addTarget:self action:@selector(deleteBrithday) forControlEvents:UIControlEventTouchUpInside];
-    [button2 setTitle:@"删" forState:UIControlStateNormal];
+    [button2 setImage:[UIImage imageNamed:@"sc_ico"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(showAlertView) forControlEvents:UIControlEventTouchUpInside];
     [button2 setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     
     UIBarButtonItem *item1 = [[UIBarButtonItem alloc]initWithCustomView:button1];
@@ -192,6 +191,20 @@
     [self.view.window addSubview:view];
     
     self.chooseDay = view;
+}
+
+-(void)showAlertView
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
+#pragma -mark alertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self deleteBrithday];
+    }
 }
 
 #pragma -mark viewChooseDayDelegate

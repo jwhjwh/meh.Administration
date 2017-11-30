@@ -288,23 +288,23 @@
             
             NSString *brithday = @"";
             if ([self.dicinfo[@"flag"] intValue]==1) {
-                if ([self.dicinfo[@"solarBirthday"]isKindOfClass:[NSNull class]]) {
+                if ([self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
                     model.lunarBirthday = @"";
                     brithday = @"";
                 }else
                 {
-                    model.lunarBirthday = self.dicinfo[@"solarBirthday"];
-                    brithday = self.dicinfo[@"solarBirthday"];
+                    model.lunarBirthday = self.dicinfo[@"lunarBirthday"];
+                    brithday = self.dicinfo[@"lunarBirthday"];
                 }
             }else
             {
-                if ([self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
+                if ([self.dicinfo[@"solarBirthday"]isKindOfClass:[NSNull class]]) {
                     model.solarBirthday = @"";
                     brithday = @"";
                 }else
                 {
-                    model.solarBirthday = self.dicinfo[@"lunarBirthday"];
-                    brithday = self.dicinfo[@"lunarBirthday"];
+                    model.solarBirthday = self.dicinfo[@"solarBirthday"];
+                    brithday = self.dicinfo[@"solarBirthday"];
                 }
             }
            // model.birthday = model.birthday;

@@ -36,9 +36,9 @@
             NSArray *array =  [CalendarDisplyManager resultWithLunar:l resultFormat:[NSString stringWithFormat:@"%d",l.lunarYear] Month:[NSString stringWithFormat:@"%d",l.lunarMonth] Day:[NSString stringWithFormat:@"%d",l.lunarDay]];
             
                     NSString *year = [self getCnMoneyByString:array[0]];
-                    [ShareModel shareModel].stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
+                    self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
             
-                    [ShareModel shareModel].stringGregorian = [NSString stringWithFormat:@"%@-%@-%@",cal.year,cal.month,cal.day];
+                    self.stringGregorian = [NSString stringWithFormat:@"%@-%@-%@",cal.year,cal.month,cal.day];
         } else {
             cal=[[IDJChineseCalendar alloc]initWithYearStart:YEAR_START end:YEAR_END];
         }
@@ -68,7 +68,7 @@
             Solar *s = [CalendarDisplyManager obtainSolarFromLunar:l];
             
             
-            [ShareModel shareModel].stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
+            self.stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
             
         }
         [delegate notifyNewCalendar:cal];

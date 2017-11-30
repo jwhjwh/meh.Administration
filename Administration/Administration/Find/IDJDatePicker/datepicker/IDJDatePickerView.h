@@ -30,6 +30,9 @@ enum calendarType {
     id<IDJDatePickerViewDelegate> delegate;
 }
 @property (nonatomic, assign) id<IDJDatePickerViewDelegate> delegate;
+@property (nonatomic,strong)NSString *stringChinese;
+@property (nonatomic,strong)NSString *stringGregorian;
+
 - (id)initWithFrame:(CGRect)frame type:(int)_type;
 @end
 

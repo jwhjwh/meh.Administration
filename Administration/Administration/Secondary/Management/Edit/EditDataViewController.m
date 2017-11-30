@@ -227,10 +227,10 @@
             
             
             if ([[NSString stringWithFormat:@"%@",model.flag] isEqualToString:@"2"]) {
-                brithday = model.lunarBirthday;
+                brithday = model.solarBirthday;
             }else
             {
-                brithday = model.solarBirthday;
+                brithday = model.lunarBirthday;
             }
             [_infoArray addObject:brithday];
             

@@ -42,8 +42,8 @@
                          @"CompanyInfoId":compid,
                          @"clientId":[NSString stringWithFormat:@"%@",self.dictInfo[@"usersid"]],
                          @"name":self.dictInfo[@"name"],
-                         @"lunarDate":self.dictInfo[@"solarBirthday"],
-                         @"solarDate":self.dictInfo[@"lunarBirthday"],
+                         @"lunarDate":self.dictInfo[@"lunarBirthday"],
+                         @"solarDate":self.dictInfo[@"solarBirthday"],
                          @"flag":[NSString stringWithFormat:@"%@",self.dictInfo[@"flag"]],
                          @"reminderDay":[self.array componentsJoinedByString:@","],
                          @"matter":cell.textView.text,
@@ -59,9 +59,6 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
             return;
         }
-        
-        
-        
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -72,8 +69,7 @@
     
     UIView *viewBottom = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 44)];
     [self.view addSubview:viewBottom];
-    
-    
+
     UIButton *buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, Scree_width-20, 44)];
     [buttonSure setTitle:@"确定" forState:UIControlStateNormal];
     [buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -199,11 +195,11 @@
     NSString *brithday; ;
     
     if ([self.dictInfo[@"flag"] intValue]==1) {
-        brithday = self.dictInfo[@"solarBirthday"];
+        brithday = self.dictInfo[@"lunarBirthday"];
     }
     else
     {
-        brithday = self.dictInfo[@"lunarBirthday"];
+        brithday = self.dictInfo[@"solarBirthday"];
     }
     
     self.arrayImage = @[@"yh_ico",@"rl_ico",@"nz_ico",@"ms",@"dx_ico"];

@@ -54,10 +54,13 @@
             [self.arrayData addObject:array2];
             [self.tableView reloadData];
             return ;
-        }
+        }else
+        {
+            [self.tableView reloadData];
         if ([code isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
             return;
+        }
         }
         
         

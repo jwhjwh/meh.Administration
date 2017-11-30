@@ -75,7 +75,6 @@
    //[self addLoop];
     _menuArray=[NSMutableArray array];
     [self.view endEditing:YES];
-    
 }
 
 
@@ -198,9 +197,6 @@
 }
 
 -(void)addLoop {
-    
-
-  
     //轮播图
     self.loop = [[XLsn0wLoop alloc] init];
     self.loop.xlsn0wDelegate = self;

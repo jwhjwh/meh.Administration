@@ -899,7 +899,7 @@
     //
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     
-    self.viewSearch = [[UIView alloc]initWithFrame:CGRectMake(0, 64, Scree_width, 50)];
+    self.viewSearch = [[UIView alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 50)];
     [self.view addSubview:self.viewSearch];
     
     self.searchBar = [[UISearchBar alloc]init];
@@ -930,7 +930,7 @@
         make.bottom.mas_equalTo(self.viewSearch.mas_bottom).offset(-10);
     }];
     
-    self.tableViewMenber = [[UITableView alloc]initWithFrame:CGRectMake(0, 130, Scree_width, Scree_height-140) style:UITableViewStyleGrouped];
+    self.tableViewMenber = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+50, Scree_width, Scree_height-kTopHeight-50) style:UITableViewStyleGrouped];
     self.tableViewMenber.backgroundColor = [UIColor whiteColor];
     self.tableViewMenber.delegate = self;
     self.tableViewMenber.dataSource = self;
