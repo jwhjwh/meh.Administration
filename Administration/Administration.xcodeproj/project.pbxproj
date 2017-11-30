@@ -12,6 +12,8 @@
 		1F063AB21EA4A1E00004F4CE /* DetailsbrandController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F063AB11EA4A1E00004F4CE /* DetailsbrandController.m */; };
 		1F0952641F3AAEAE00BCD27E /* ShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0952631F3AAEAE00BCD27E /* ShareModel.m */; };
 		1F09E88A1EA6121100597075 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F09E8891EA6121100597075 /* bg.png */; };
+		1F0A6C411FCD4AD9009FDB36 /* bj_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A6C3F1FCD4AD9009FDB36 /* bj_ico.png */; };
+		1F0A6C421FCD4AD9009FDB36 /* sc_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A6C401FCD4AD9009FDB36 /* sc_ico.png */; };
 		1F0B2F581EC016E200E3E891 /* scbut.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0B2F571EC016E200E3E891 /* scbut.png */; };
 		1F0DD2B91F4FA89F00465325 /* up_ico02.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0DD2B81F4FA89F00465325 /* up_ico02.png */; };
 		1F14272C1FBAD6E0007F7AEB /* CellChargePerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14272B1FBAD6E0007F7AEB /* CellChargePerson.m */; };
@@ -868,6 +870,8 @@
 		1F0952621F3AAEAE00BCD27E /* ShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareModel.h; sourceTree = "<group>"; };
 		1F0952631F3AAEAE00BCD27E /* ShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareModel.m; sourceTree = "<group>"; };
 		1F09E8891EA6121100597075 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		1F0A6C3F1FCD4AD9009FDB36 /* bj_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bj_ico.png; sourceTree = "<group>"; };
+		1F0A6C401FCD4AD9009FDB36 /* sc_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sc_ico.png; sourceTree = "<group>"; };
 		1F0B2F571EC016E200E3E891 /* scbut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scbut.png; sourceTree = "<group>"; };
 		1F0DD2B81F4FA89F00465325 /* up_ico02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_ico02.png; sourceTree = "<group>"; };
 		1F14272A1FBAD6E0007F7AEB /* CellChargePerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellChargePerson.h; sourceTree = "<group>"; };
@@ -3612,6 +3616,8 @@
 		1FD066161FAACC66003B2466 /* brithday */ = {
 			isa = PBXGroup;
 			children = (
+				1F0A6C3F1FCD4AD9009FDB36 /* bj_ico.png */,
+				1F0A6C401FCD4AD9009FDB36 /* sc_ico.png */,
 				1FD066171FAACC66003B2466 /* dx_ico.png */,
 				1FD066181FAACC66003B2466 /* ms.png */,
 				1FD066191FAACC66003B2466 /* nz_ico.png */,
@@ -5501,7 +5507,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5631,6 +5637,7 @@
 				1F2C3BBD1ED53D6200956009 /* location_ico.png in Resources */,
 				1FDCBAA41E7A1E2A002C80FB /* seach.png in Resources */,
 				624E71001EC404980026C5E9 /* 职位结构5.jpg in Resources */,
+				1F0A6C421FCD4AD9009FDB36 /* sc_ico.png in Resources */,
 				1F3B3DD11E8DF93C00E75027 /* icon_012.gif in Resources */,
 				1FDB4AE11F4AE13900ED2731 /* zw_ico.png in Resources */,
 				627639F31EE93609001146C7 /* tj_ico01.png in Resources */,
@@ -5660,6 +5667,7 @@
 				1F3B3DE21E8DF93C00E75027 /* icon_027_cover.png in Resources */,
 				1FD0661D1FAACC66003B2466 /* ms.png in Resources */,
 				1F3B3DD21E8DF93C00E75027 /* icon_012_cover.png in Resources */,
+				1F0A6C411FCD4AD9009FDB36 /* bj_ico.png in Resources */,
 				62656D5E1E52B5700085A2BD /* quanxian.png in Resources */,
 				624E70FE1EC404980026C5E9 /* 职位结构2.jpg in Resources */,
 				1F5745671E56F45400E4A47C /* tx100.png in Resources */,
@@ -6512,7 +6520,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6541,7 +6549,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6560,7 +6568,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6589,7 +6597,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

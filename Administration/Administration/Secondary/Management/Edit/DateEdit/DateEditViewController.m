@@ -66,7 +66,7 @@
     rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
     
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height+64) style:UITableViewStylePlain];
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
@@ -113,8 +113,8 @@
     NSDictionary *dict=@{@"appkey":apKeyStr,
                          @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
                          @"flag":[ShareModel shareModel].flag,
-                         @"SolarBirthday":[ShareModel shareModel].stringChinese,
-                         @"LunarBirthday":[ShareModel shareModel].stringGregorian,
+                         @"SolarBirthday":[ShareModel shareModel].stringGregorian,
+                         @"LunarBirthday":[ShareModel shareModel].stringChinese,
                          @"Age":_Age,
                          @"Address":_AddLabel.text,
                          @"Wcode":_Wcode,

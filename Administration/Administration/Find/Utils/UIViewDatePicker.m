@@ -12,7 +12,8 @@
 
 @property (nonatomic,weak)UILabel *labelCalender;
 @property (nonatomic,weak)UILabel *labelDate;
-
+@property (nonatomic,strong)NSString *stringChinese;
+@property (nonatomic,strong)NSString *stringGregorian;
 @end
 
 @implementation UIViewDatePicker
@@ -82,7 +83,7 @@
     [view addSubview:buttonSure];
     
     
-    labelDate.text = [ShareModel shareModel].stringChinese;
+    labelDate.text = self.djdateGregorianView.stringGregorian;
     
     [ShareModel shareModel].flag = @"2";
 }
@@ -120,9 +121,9 @@
         
         NSString *year = [self getCnMoneyByString:array[0]];
         
-        [ShareModel shareModel].stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
-        [ShareModel shareModel].stringGregorian = [NSString stringWithFormat:@"%@-%@-%@",cal.year,cal.month,cal.day];
-        self.labelDate.text = [ShareModel shareModel].stringChinese;
+        self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
+        self.stringGregorian = [NSString stringWithFormat:@"%@-%@-%@",cal.year,cal.month,cal.day];
+        self.labelDate.text = self.stringChinese;
         
         
     } else if ([cal isMemberOfClass:[IDJChineseCalendar class]]) {
@@ -137,7 +138,7 @@
         
         NSString *stringDay = _cal.chineseDays[[cal.day intValue]-1];
         
-        [ShareModel shareModel].stringChinese = [NSString stringWithFormat:@"%@年%@%@",stringYear,stringMonth,stringDay];
+        self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",stringYear,stringMonth,stringDay];
         
         NSString *string = [cal.month substringWithRange:NSMakeRange(2, cal.month.length-2)];
         
@@ -146,8 +147,8 @@
         Solar *s = [CalendarDisplyManager obtainSolarFromLunar:l];
         
         
-        [ShareModel shareModel].stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
-        self.labelDate.text = [ShareModel shareModel].stringGregorian;
+        self.stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
+        self.labelDate.text = self.stringGregorian;
         
     }
 }
@@ -161,6 +162,8 @@
 {
     if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
         [self.delegate getChooseDate];
+        [ShareModel shareModel].stringGregorian = self.stringGregorian;
+        [ShareModel shareModel].stringChinese = self.stringChinese;
     }
     [self removeFromSuperview];
 }
