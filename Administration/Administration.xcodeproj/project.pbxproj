@@ -805,6 +805,7 @@
 		62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA25B1E56CBBE00F657DB /* PersonnelViewController.m */; };
 		62EBA26F1E56D1AE00F657DB /* EditDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */; };
 		62EBA2721E56D1C300F657DB /* ManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EBA2711E56D1C300F657DB /* ManagementViewController.m */; };
+		62EFBEAC1FD0E35800880BB9 /* specialty.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EFBEAB1FD0E35800880BB9 /* specialty.m */; };
 		62F02F141F70AE0C00F3A0EF /* ssjl.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F02F131F70AE0C00F3A0EF /* ssjl.png */; };
 		62F19B5E1F7DD90A00025690 /* InterestedInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F19B5D1F7DD90A00025690 /* InterestedInputViewController.m */; };
 		62F2206B1F905AA5004163A4 /* UpdateIntendedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F220691F905AA5004163A4 /* UpdateIntendedViewController.m */; };
@@ -2289,6 +2290,8 @@
 		62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDataViewController.m; sourceTree = "<group>"; };
 		62EBA2701E56D1C300F657DB /* ManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagementViewController.h; sourceTree = "<group>"; };
 		62EBA2711E56D1C300F657DB /* ManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagementViewController.m; sourceTree = "<group>"; };
+		62EFBEAA1FD0E35800880BB9 /* specialty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = specialty.h; sourceTree = "<group>"; };
+		62EFBEAB1FD0E35800880BB9 /* specialty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = specialty.m; sourceTree = "<group>"; };
 		62F02F131F70AE0C00F3A0EF /* ssjl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssjl.png; sourceTree = "<group>"; };
 		62F19B5C1F7DD90A00025690 /* InterestedInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestedInputViewController.h; sourceTree = "<group>"; };
 		62F19B5D1F7DD90A00025690 /* InterestedInputViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestedInputViewController.m; sourceTree = "<group>"; };
@@ -5202,6 +5205,8 @@
 			children = (
 				62FBD0851FCE594E0065CFA2 /* AddAssistant.h */,
 				62FBD0861FCE594F0065CFA2 /* AddAssistant.m */,
+				62EFBEAA1FD0E35800880BB9 /* specialty.h */,
+				62EFBEAB1FD0E35800880BB9 /* specialty.m */,
 				62E36A671FCD0B2200D68307 /* shopAssistantViewController.h */,
 				62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */,
 			);
@@ -5507,7 +5512,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = T786R7PE4N;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5775,6 +5780,7 @@
 				1F6211EE1E8CFFB000F50851 /* EaseLocationViewController.m in Sources */,
 				1FF580831F8C64D3001C3D40 /* VCInsideWeekSubmited.m in Sources */,
 				6266E3431F738EE5002B1303 /* InterestedViewController.m in Sources */,
+				62EFBEAC1FD0E35800880BB9 /* specialty.m in Sources */,
 				1F6211AD1E8CFFAF00F50851 /* MJRefreshGifHeader.m in Sources */,
 				1F1D1F981E6D492E0021B1AD /* LGUIView.m in Sources */,
 				1F6211C91E8CFFB000F50851 /* UIImage+EMMultiFormat.m in Sources */,
@@ -6520,7 +6526,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6549,7 +6555,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6568,7 +6574,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6597,7 +6603,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -14,6 +14,7 @@
 @property (nonatomic,weak)UILabel *labelDate;
 @property (nonatomic,strong)NSString *stringChinese;
 @property (nonatomic,strong)NSString *stringGregorian;
+@property (nonatomic,strong)NSString *flagggg;
 @end
 
 @implementation UIViewDatePicker
@@ -23,6 +24,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setUI];
+        
     }
     return self;
 }
@@ -84,8 +86,15 @@
     
     
     labelDate.text = self.djdateGregorianView.stringGregorian;
+    _flagggg = [[NSString alloc]init];
+    _flagggg = @"2";
+    self.stringGregorian =[[NSString alloc]init];
+    self.stringChinese   =[[NSString alloc]init];
     
-    [ShareModel shareModel].flag = @"2";
+    self.stringGregorian =self.djdateGregorianView.stringGregorian  ;
+    
+    self.stringChinese   =self.djdateChineseView.stringChinese  ;
+    
 }
 
 -(void)switchPress:(UISwitch *)sw
@@ -95,7 +104,7 @@
         self.djdateChineseView.hidden = NO;
         self.labelCalender.text = @"    农历";
         self.labelDate.text = [ShareModel shareModel].stringChinese;
-        [ShareModel shareModel].flag = @"1";
+        _flagggg = @"1";
         
     }else
     {
@@ -103,7 +112,7 @@
         self.djdateGregorianView.hidden = NO;
         self.labelCalender.text = @"    公历";
         self.labelDate.text = [ShareModel shareModel].stringGregorian;
-        [ShareModel shareModel].flag = @"2";
+        _flagggg = @"2";
     }
 }
 
@@ -150,6 +159,7 @@
         self.stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
         self.labelDate.text = self.stringGregorian;
         
+        
     }
 }
 
@@ -160,12 +170,17 @@
 
 -(void)buttonSure
 {
-    if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
-        [self.delegate getChooseDate];
-        [ShareModel shareModel].stringGregorian = self.stringGregorian;
-        [ShareModel shareModel].stringChinese = self.stringChinese;
-    }
+    NSLog(@"1111----%@----%@----%@",self.stringGregorian,self.stringChinese,_flagggg);
+    self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
     [self removeFromSuperview];
+    
+//    if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
+//        [self.delegate getChooseDate];
+//        [ShareModel shareModel].stringGregorian = self.stringGregorian;
+//        [ShareModel shareModel].stringChinese = self.stringChinese;
+//       NSLog(@"%@----%@",self.stringGregorian,self.stringChinese);
+//    }
+//    [self removeFromSuperview];
 }
 
 -(NSString *)getCnMoneyByString:(NSString*)string
