@@ -83,7 +83,7 @@
     [view addSubview:buttonSure];
     
     
-    labelDate.text = self.djdateGregorianView.stringGregorian;
+    labelDate.text = self.djdateGregorianView.stringChinese;
     
     [ShareModel shareModel].flag = @"2";
 }
@@ -94,7 +94,9 @@
         self.djdateGregorianView.hidden  = YES;
         self.djdateChineseView.hidden = NO;
         self.labelCalender.text = @"    农历";
+        
         self.labelDate.text = [ShareModel shareModel].stringChinese;
+        self.labelDate.text = self.djdateGregorianView.stringGregorian;
         [ShareModel shareModel].flag = @"1";
         
     }else
@@ -103,6 +105,7 @@
         self.djdateGregorianView.hidden = NO;
         self.labelCalender.text = @"    公历";
         self.labelDate.text = [ShareModel shareModel].stringGregorian;
+        self.labelDate.text = self.djdateGregorianView.stringChinese;
         [ShareModel shareModel].flag = @"2";
     }
 }

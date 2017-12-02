@@ -6537,7 +6537,7 @@
 					"$(PROJECT_DIR)/Parse",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/jiuweihu/Desktop/Jwh/Administration/Administration/Administration_PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/zhang/Desktop/wode/Administration/Administration/Administration_PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -6585,7 +6585,7 @@
 					"$(PROJECT_DIR)/Parse",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/jiuweihu/Desktop/Jwh/Administration/Administration/Administration_PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/zhang/Desktop/wode/Administration/Administration/Administration_PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

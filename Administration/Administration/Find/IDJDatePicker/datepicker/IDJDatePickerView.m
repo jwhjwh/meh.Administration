@@ -27,16 +27,7 @@
         type=_type;
         if (type==Gregorian1) {
             cal=[[IDJCalendar alloc]initWithYearStart:YEAR_START end:YEAR_END];
-            Solar *s = [[Solar alloc]initWithYear:[cal.year intValue]
-                                         andMonth:[cal.month intValue]
-                                           andDay:[cal.day intValue]];
-            //得出阴历
-            Lunar *l = [CalendarDisplyManager obtainLunarFromSolar:s];
             
-            NSArray *array =  [CalendarDisplyManager resultWithLunar:l resultFormat:[NSString stringWithFormat:@"%d",l.lunarYear] Month:[NSString stringWithFormat:@"%d",l.lunarMonth] Day:[NSString stringWithFormat:@"%d",l.lunarDay]];
-            
-                    NSString *year = [self getCnMoneyByString:array[0]];
-                    self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
             
                     self.stringGregorian = [NSString stringWithFormat:@"%@-%@-%@",cal.year,cal.month,cal.day];
         } else {
@@ -56,6 +47,17 @@
             [picker selectCell:[years indexOfObject:cal.year] inScroll:0];
             [picker selectCell:[months indexOfObject:cal.month] inScroll:1];
             [picker selectCell:[days indexOfObject:cal.day] inScroll:2];
+            
+            Solar *s = [[Solar alloc]initWithYear:[cal.year intValue]
+                                         andMonth:[cal.month intValue]
+                                           andDay:[cal.day intValue]];
+            //得出阴历
+            Lunar *l = [CalendarDisplyManager obtainLunarFromSolar:s];
+            
+            NSArray *array =  [CalendarDisplyManager resultWithLunar:l resultFormat:[NSString stringWithFormat:@"%d",l.lunarYear] Month:[NSString stringWithFormat:@"%d",l.lunarMonth] Day:[NSString stringWithFormat:@"%d",l.lunarDay]];
+            
+            NSString *year = [self getCnMoneyByString:array[0]];
+            self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
         } else if (type==Chinese1) {
             [picker selectCell:[years indexOfObject:[NSString stringWithFormat:@"%@-%@-%@", cal.era, ((IDJChineseCalendar *)cal).jiazi, cal.year]] inScroll:0];
             [picker selectCell:[months indexOfObject:cal.month] inScroll:1];
