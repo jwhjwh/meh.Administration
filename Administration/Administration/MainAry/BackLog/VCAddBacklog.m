@@ -47,7 +47,6 @@
 
 #pragma -mark custem
 
-
 -(void)setUI
 {
     CGRect frameView;
@@ -89,40 +88,6 @@
         make.height.mas_equalTo(44);
     }];
     self.warnDate = wornDate;
-    
-    
-//    
-//    UIButton *notReady = [[UIButton alloc]init];
-//    notReady.tag = 300;
-//    [notReady setBackgroundColor:[UIColor whiteColor]];
-//    [notReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
-//    [notReady setTitle:@"未完成" forState:UIControlStateNormal];
-//    [notReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-//    [notReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
-//    [viewFooter addSubview:notReady];
-//    [notReady mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(viewFooter.mas_left);
-//        make.right.mas_equalTo(viewFooter.mas_centerX);
-//        make.top.mas_equalTo(labelworn.mas_bottom).offset(10);
-//        make.height.mas_equalTo(44);
-//    }];
-//    self.notReady = notReady;
-//    
-//    UIButton *allReady = [[UIButton alloc]init];
-//    allReady.tag = 400;
-//    [allReady setBackgroundColor:[UIColor whiteColor]];
-//    [allReady setImage:[UIImage imageNamed:@"yuanhuan_03"] forState:UIControlStateNormal];
-//    [allReady setTitle:@"已完成" forState:UIControlStateNormal];
-//    [allReady setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
-//    [allReady addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventTouchUpInside];
-//    [viewFooter addSubview:allReady];
-//    [allReady mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(viewFooter.mas_centerX);
-//        make.right.mas_equalTo(viewFooter.mas_right);
-//        make.top.mas_equalTo(labelworn.mas_bottom).offset(10);
-//        make.height.mas_equalTo(44);
-//    }];
-//    self.allReady = allReady;
     
     
     UITableView *tableView = [[UITableView alloc]init];

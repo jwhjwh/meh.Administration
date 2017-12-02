@@ -1,24 +1,24 @@
 //
-//  VCChoosePostion.m
+//  VCTrackChoosePostion.m
 //  Administration
 //
-//  Created by zhang on 2017/9/12.
+//  Created by zhang on 2017/12/1.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "VCChoosePostion.h"
+#import "VCTrackChoosePostion.h"
 #import "CollectionViewCellPosition.h"
-#import "VCMyTable.h"
-#import "VCDepartment.h"
-@interface VCChoosePostion ()<UICollectionViewDelegate,UICollectionViewDataSource>
+#import "VCTrackShopList.h"
+@interface VCTrackChoosePostion ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong)UICollectionView *collectionView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
 @property (nonatomic,strong)NSMutableArray *arrayId;
-@property (nonatomic,strong)NSArray *arrayDid;
+
 @end
 
-@implementation VCChoosePostion
+@implementation VCTrackChoosePostion
 
+#pragma -mark custem
 -(void)getAllPosition
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserPosition.action",KURLHeader];
@@ -90,28 +90,30 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
+    
     return CGSizeMake(200, 200);
+    
 }
 
 //cell的点击事件
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.arrayData[indexPath.section];
-    VCDepartment *vc = [[VCDepartment alloc]init];
-    [ShareModel shareModel].postionName = dict[@"newName"];
-    [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
-    [ShareModel shareModel].num = [NSString stringWithFormat:@"%@",dict[@"num"]];
     
-    if ([dict[@"did"]isKindOfClass:[NSNull class]]) {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无部门" andInterval:1.0];
-        return;
+    VCTrackShopList *vc = [[VCTrackShopList alloc]init];
+    NSDictionary *dict = self.arrayData[indexPath.section];
+    NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
+    
+    [ShareModel shareModel].roleID = roleID;
+    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
+    
+    if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"2"]||[roleID isEqualToString:@"3"]||[roleID isEqualToString:@"4"]||[roleID isEqualToString:@"14"]||[roleID isEqualToString:@"16"]||[roleID isEqualToString:@"17"]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限" andInterval:1];
     }else
     {
-        self.arrayDid = [dict[@"did"]componentsSeparatedByString:@","];
-        [ShareModel shareModel].departmentID = self.arrayDid[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    
 }
 //每一个分组的上左下右间距
 
@@ -133,9 +135,7 @@
     self.arrayData = [NSMutableArray array];
     self.arrayId = [NSMutableArray array];
     
-    
     UILabel * label = [[UILabel alloc]init];
-    
     label.text = @"请选择您要操作的职位";
     label.textColor = [UIColor lightGrayColor];
     [self.view addSubview:label];
@@ -152,16 +152,15 @@
     
     layout.scrollDirection=UICollectionViewScrollDirectionVertical;
     
-    
-   NSString* phoneModel = [UIDevice devicePlatForm];
+    NSString* phoneModel = [UIDevice devicePlatForm];
     if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
         label.frame =CGRectMake(8, 98, Scree_width, 14);
         self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 118, Scree_width, Scree_height) collectionViewLayout:layout];
-         
+        
     }else{
         label.frame =CGRectMake(8, 74, Scree_width, 14);
         self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 94, Scree_width, Scree_height) collectionViewLayout:layout];
-       
+        
     }
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -180,8 +179,8 @@
 {
     [super viewWillAppear:YES];
     [self getAllPosition];
+    self.tabBarController.tabBar.hidden = YES;
 }
-
 /*
 #pragma mark - Navigation
 

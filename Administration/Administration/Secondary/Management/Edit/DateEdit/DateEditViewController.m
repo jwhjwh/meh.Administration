@@ -100,7 +100,6 @@
 -(void)getChooseDate
 {
     [infonTableview reloadData];
-    
 }
 
 -(void)masgegeClick:(NSString *)flag{

@@ -22,7 +22,6 @@
 @property (strong,nonatomic) UIView *view1;//一条线
 @property (strong,nonatomic) UIView *view2;//二条线
 
-
 @end
 
 @implementation ManagementViewController
