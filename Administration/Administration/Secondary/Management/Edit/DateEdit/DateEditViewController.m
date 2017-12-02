@@ -32,6 +32,7 @@
 @property (nonatomic,strong) NSString *Qcode;
 @property (nonatomic,strong) NSString *Interests;
 @property (nonatomic,strong) NSString *SDASD;
+@property (nonatomic,weak) UIViewDatePicker *myDatePick;
 
 @property (nonatomic,strong)NSIndexPath *indexPath;
 @end
@@ -95,6 +96,7 @@
     datePick.delegate = self;
     [self.view endEditing:YES];
     [self.view.window addSubview:datePick];
+    self.myDatePick = datePick;
 }
 
 -(void)getChooseDate
