@@ -18,7 +18,7 @@
 @end
 
 @interface UIViewDatePicker : UIView<IDJDatePickerViewDelegate>
-@property (nonatomic,strong)IDJDatePickerView *djdateGregorianView;
-@property (nonatomic,strong)IDJDatePickerView *djdateChineseView;
+
 @property (nonatomic,assign)id<UIViewDatePickerDelegate>delegate;
+
 @end

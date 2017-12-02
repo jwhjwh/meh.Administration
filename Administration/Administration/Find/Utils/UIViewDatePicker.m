@@ -9,11 +9,13 @@
 #import "UIViewDatePicker.h"
 
 @interface UIViewDatePicker ()
-
-@property (nonatomic,weak)UILabel *labelCalender;
-@property (nonatomic,weak)UILabel *labelDate;
+@property (nonatomic,strong)IDJDatePickerView *djdateGregorianView;
+@property (nonatomic,strong)IDJDatePickerView *djdateChineseView;
 @property (nonatomic,strong)NSString *stringChinese;
 @property (nonatomic,strong)NSString *stringGregorian;
+@property (nonatomic,weak)UILabel *labelCalender;
+@property (nonatomic,weak)UILabel *labelDate;
+
 @end
 
 @implementation UIViewDatePicker
@@ -85,6 +87,10 @@
     
     labelDate.text = self.djdateGregorianView.stringChinese;
     
+    self.stringChinese = self.djdateGregorianView.stringChinese;
+    self.stringGregorian = self.djdateGregorianView.stringGregorian;
+    
+    
     [ShareModel shareModel].flag = @"2";
 }
 
@@ -127,8 +133,6 @@
         self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
         self.stringGregorian = [NSString stringWithFormat:@"%@-%@-%@",cal.year,cal.month,cal.day];
         self.labelDate.text = self.stringChinese;
-        
-        
     } else if ([cal isMemberOfClass:[IDJChineseCalendar class]]) {
         IDJChineseCalendar *_cal=(IDJChineseCalendar *)cal;
         NSLog(@"%@:era=%@, year=%@, month=%@, day=%@, weekday=%@, animal=%@", cal, cal.era, cal.year, cal.month, cal.day, cal.weekday, _cal.animal);
@@ -148,7 +152,6 @@
         Lunar *l = [[Lunar alloc]initWithYear:[cal.year intValue] andMonth:[string intValue] andDay:[cal.day intValue]];
         
         Solar *s = [CalendarDisplyManager obtainSolarFromLunar:l];
-        
         
         self.stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
         self.labelDate.text = self.stringGregorian;
