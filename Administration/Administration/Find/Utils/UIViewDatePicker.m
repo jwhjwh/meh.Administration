@@ -85,6 +85,7 @@
     [view addSubview:buttonSure];
     
     
+
     labelDate.text = self.djdateGregorianView.stringGregorian;
     _flagggg = [[NSString alloc]init];
     _flagggg = @"2";
@@ -94,6 +95,9 @@
     self.stringGregorian =self.djdateGregorianView.stringGregorian  ;
     
     self.stringChinese   =self.djdateChineseView.stringChinese  ;
+
+    labelDate.text = self.djdateGregorianView.stringChinese;
+
     
 }
 
@@ -103,8 +107,14 @@
         self.djdateGregorianView.hidden  = YES;
         self.djdateChineseView.hidden = NO;
         self.labelCalender.text = @"    农历";
+        
         self.labelDate.text = [ShareModel shareModel].stringChinese;
+
         _flagggg = @"1";
+
+        self.labelDate.text = self.djdateGregorianView.stringGregorian;
+        [ShareModel shareModel].flag = @"1";
+
         
     }else
     {
@@ -112,7 +122,12 @@
         self.djdateGregorianView.hidden = NO;
         self.labelCalender.text = @"    公历";
         self.labelDate.text = [ShareModel shareModel].stringGregorian;
+
         _flagggg = @"2";
+
+        self.labelDate.text = self.djdateGregorianView.stringChinese;
+        [ShareModel shareModel].flag = @"2";
+
     }
 }
 

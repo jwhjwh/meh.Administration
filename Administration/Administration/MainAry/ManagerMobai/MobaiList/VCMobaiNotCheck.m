@@ -79,7 +79,10 @@
 -(void)setUI
 {
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(8 , kTopHeight, Scree_width, 21)];
-    label.text = [NSString stringWithFormat:@"未查看（%@）",self.stringCount];
+    label.text = @"未查看";
+    if (self.stringCount!=nil) {
+        label.text = [NSString stringWithFormat:@"未查看（%@）",self.stringCount];
+    }
     [self.view addSubview:label];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+21, Scree_width, Scree_height)];
