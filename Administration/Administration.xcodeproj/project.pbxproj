@@ -815,6 +815,7 @@
 		62F55C2C1EA6EEA30020BD9D /* ReportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F55C2B1EA6EEA30020BD9D /* ReportModel.m */; };
 		62F6CB0A1FB92ED9002E3460 /* activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F6CB091FB92ED9002E3460 /* activity.m */; };
 		62F8CE851FAAFF9F00EEE5FC /* storesActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F8CE841FAAFF9F00EEE5FC /* storesActivity.m */; };
+		62FBD0871FCE59500065CFA2 /* AddAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FBD0861FCE594F0065CFA2 /* AddAssistant.m */; };
 		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
 		F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AB1E5DB9AE00ABA6EF /* MessageView.m */; };
 		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
@@ -2307,6 +2308,8 @@
 		62F6CB091FB92ED9002E3460 /* activity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = activity.m; sourceTree = "<group>"; };
 		62F8CE831FAAFF9F00EEE5FC /* storesActivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = storesActivity.h; sourceTree = "<group>"; };
 		62F8CE841FAAFF9F00EEE5FC /* storesActivity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = storesActivity.m; sourceTree = "<group>"; };
+		62FBD0851FCE594E0065CFA2 /* AddAssistant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddAssistant.h; sourceTree = "<group>"; };
+		62FBD0861FCE594F0065CFA2 /* AddAssistant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddAssistant.m; sourceTree = "<group>"; };
 		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
 		F711583D1E548ED400E0B763 /* UIView+WLFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WLFrame.m"; sourceTree = "<group>"; };
 		F73320AA1E5DB9AE00ABA6EF /* MessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
@@ -5197,6 +5200,8 @@
 		62E36A661FCD068E00D68307 /* shopAssistant */ = {
 			isa = PBXGroup;
 			children = (
+				62FBD0851FCE594E0065CFA2 /* AddAssistant.h */,
+				62FBD0861FCE594F0065CFA2 /* AddAssistant.m */,
 				62E36A671FCD0B2200D68307 /* shopAssistantViewController.h */,
 				62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */,
 			);
@@ -6227,6 +6232,7 @@
 				626480841E9DD73C0090EECB /* ReportPermissionsVC.m in Sources */,
 				1FD975301F70AF3B00D94B78 /* VCArtShopTable.m in Sources */,
 				620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */,
+				62FBD0871FCE59500065CFA2 /* AddAssistant.m in Sources */,
 				1F6AB7EF1E8B979F006CB015 /* WFPhotosViewController.m in Sources */,
 				1F6211CC1E8CFFB000F50851 /* UIImageView+EMWebCache.m in Sources */,
 				6205B2891F6F75E9005466FC /* WorshipSearchViewController.m in Sources */,
@@ -6531,7 +6537,7 @@
 					"$(PROJECT_DIR)/Parse",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/zhang/Desktop/wode/Administration/Administration/Administration_PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/jiuweihu/Desktop/Jwh/Administration/Administration/Administration_PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -6579,7 +6585,7 @@
 					"$(PROJECT_DIR)/Parse",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/zhang/Desktop/wode/Administration/Administration/Administration_PrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/jiuweihu/Desktop/Jwh/Administration/Administration/Administration_PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit";
 				INFOPLIST_FILE = Administration/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
