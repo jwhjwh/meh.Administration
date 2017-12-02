@@ -13,8 +13,12 @@
 @property (nonatomic,strong)IDJDatePickerView *djdateChineseView;
 @property (nonatomic,strong)NSString *stringChinese;
 @property (nonatomic,strong)NSString *stringGregorian;
+
 @property (nonatomic,weak)UILabel *labelCalender;
 @property (nonatomic,weak)UILabel *labelDate;
+
+
+@property (nonatomic,strong)NSString *flagggg;
 
 @end
 
@@ -25,6 +29,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setUI];
+        
     }
     return self;
 }
@@ -85,13 +90,27 @@
     [view addSubview:buttonSure];
     
     
-    labelDate.text = self.djdateGregorianView.stringChinese;
+
+    labelDate.text = self.djdateGregorianView.stringGregorian;
+    _flagggg = [[NSString alloc]init];
+    _flagggg = @"2";
+    self.stringGregorian =[[NSString alloc]init];
+    self.stringChinese   =[[NSString alloc]init];
     
+    self.stringGregorian =self.djdateGregorianView.stringGregorian  ;
+    
+    self.stringChinese   =self.djdateChineseView.stringChinese  ;
+
+    labelDate.text = self.djdateGregorianView.stringChinese;
+
+    
+
     self.stringChinese = self.djdateGregorianView.stringChinese;
     self.stringGregorian = self.djdateGregorianView.stringGregorian;
     
     
     [ShareModel shareModel].flag = @"2";
+
 }
 
 -(void)switchPress:(UISwitch *)sw
@@ -102,8 +121,12 @@
         self.labelCalender.text = @"    农历";
         
         self.labelDate.text = [ShareModel shareModel].stringChinese;
+
+        _flagggg = @"1";
+
         self.labelDate.text = self.djdateGregorianView.stringGregorian;
         [ShareModel shareModel].flag = @"1";
+
         
     }else
     {
@@ -111,8 +134,12 @@
         self.djdateGregorianView.hidden = NO;
         self.labelCalender.text = @"    公历";
         self.labelDate.text = [ShareModel shareModel].stringGregorian;
+
+        _flagggg = @"2";
+
         self.labelDate.text = self.djdateGregorianView.stringChinese;
         [ShareModel shareModel].flag = @"2";
+
     }
 }
 
@@ -156,6 +183,7 @@
         self.stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
         self.labelDate.text = self.stringGregorian;
         
+        
     }
 }
 
@@ -166,6 +194,10 @@
 
 -(void)buttonSure
 {
+   
+//    self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
+    
+    
     if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
         [self.delegate getChooseDate];
         [ShareModel shareModel].stringGregorian = self.stringGregorian;

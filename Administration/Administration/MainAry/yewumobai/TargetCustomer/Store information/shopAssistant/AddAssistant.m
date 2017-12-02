@@ -11,6 +11,7 @@
 #import "DongImage.h"
 #import "UIViewDatePicker.h"
 #import "DPYJViewController.h"
+#import "specialty.h"
 @interface AddAssistant ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIViewDatePickerDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic ,retain)NSMutableArray *nameArrs;
@@ -29,7 +30,7 @@
 @property (nonatomic,strong) NSString *Specialty;//特长
 @property (nonatomic,strong) NSString *OverallMerit;//评价
 
-
+@property (nonatomic,strong) NSString *flaig;//阴--阳---历
 
 @end
 
@@ -94,29 +95,49 @@
     }
     
 }
--(void)showDatePicker
-{
-    UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
-    datePick.delegate = self;
-    [self.view endEditing:YES];
-    [self.view.window addSubview:datePick];
 
-    NSLog(@"----%@-----%@----%@",_DayLabel.text,[ShareModel shareModel].stringChinese,[ShareModel shareModel].stringGregorian);
-}
--(void)getChooseDate
-{
-    [self.tableView reloadData];
-    
-}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
         case 2:
             
-            [self showDatePicker];
-            break;
-        case 6:
+            //[self showDatePicker];
+        {
+             UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+            datePick.delegate = self;
+            [self.view endEditing:YES];
+            [self.view.window addSubview:datePick];
+            datePick.blcokStrrrr = ^(NSString *content, NSString *oldcontent, NSString *flag) {
+                NSLog(@"222---%@----%@----%@",content,oldcontent,flag);
+                _flaig = [[NSString alloc]init];
+                _flaig = flag;
+                if ([_flaig isEqualToString:@"1"]) {
+                    //阴历 == 农历
+                    _DayLabel.text = oldcontent;
+                }else{
+                    //阳历 ==公历
+                    _DayLabel.text = content;
+                }
+            };
             
+        }
+            break;
+        case 6:{
+            specialty *spVC = [[specialty alloc]init];
+            spVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            spVC.modifi = _issssend;
+            spVC.dateStr = _Specialty; //特长
+            spVC.blcokStr = ^(NSString *content,int num) {
+                if (num == 6) {
+                    if (_issssend==YES) {
+                         _Specialty = content;
+                    }
+                   
+                }
+                
+            };
+            [self.navigationController pushViewController:spVC animated:YES];
+        }
             break;
         case 7:
         {
@@ -280,6 +301,7 @@
                 }else if([[ShareModel shareModel].flag isEqualToString:@"2"])
                 {
                     _DayLabel.text = [ShareModel shareModel].stringGregorian;
+                    NSLog(@"%@",_DayLabel.text);
                 }else
                 {
                     //_DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];

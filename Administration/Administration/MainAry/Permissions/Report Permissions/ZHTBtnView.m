@@ -45,18 +45,18 @@
         _NSywjlAry = [[NSMutableArray alloc]init];
         _NSkjAry = [[NSMutableArray alloc]init];
         
-         _NSywoldAry = [[NSArray alloc]init];
-         _NSmdoldAry = [[NSArray alloc]init];
-         _NSwloldAry = [[NSArray alloc]init];
-         _NSkfoldAry = [[NSArray alloc]init];
-         _NSckoldAry = [[NSArray alloc]init];
-         _NScnoldAry = [[NSArray alloc]init];
-         _NScwjloldAry = [[NSArray alloc]init];
-         _NSwljloldAry = [[NSArray alloc]init];
-         _NSkfjloldAry = [[NSArray alloc]init];
-         _NSscjloldAry = [[NSArray alloc]init];
-         _NSywjloldAry = [[NSArray alloc]init];
-         _NSkjoldAry = [[NSArray alloc]init];
+         _NSywoldAry = [[NSMutableArray alloc]init];
+         _NSmdoldAry = [[NSMutableArray alloc]init];
+         _NSwloldAry = [[NSMutableArray alloc]init];
+         _NSkfoldAry = [[NSMutableArray alloc]init];
+         _NSckoldAry = [[NSMutableArray alloc]init];
+         _NScnoldAry =[[NSMutableArray alloc]init];
+         _NScwjloldAry = [[NSMutableArray alloc]init];
+         _NSwljloldAry = [[NSMutableArray alloc]init];
+         _NSkfjloldAry = [[NSMutableArray alloc]init];
+         _NSscjloldAry = [[NSMutableArray alloc]init];
+         _NSywjloldAry = [[NSMutableArray alloc]init];
+         _NSkjoldAry = [[NSMutableArray alloc]init];
         
         
         
