@@ -96,7 +96,6 @@
     
     self.stringChinese   =self.djdateChineseView.stringChinese  ;
 
-    labelDate.text = self.djdateGregorianView.stringChinese;
 
     
 }
@@ -112,8 +111,8 @@
 
         _flagggg = @"1";
 
-        self.labelDate.text = self.djdateGregorianView.stringGregorian;
-        [ShareModel shareModel].flag = @"1";
+    
+      
 
         
     }else
@@ -125,8 +124,7 @@
 
         _flagggg = @"2";
 
-        self.labelDate.text = self.djdateGregorianView.stringChinese;
-        [ShareModel shareModel].flag = @"2";
+       
 
     }
 }
