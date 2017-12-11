@@ -10,6 +10,8 @@
 #import "RecordTableViewCell.h"
 #import "CoperationModel.h"
 #import "StoreinforViewController.h"
+#import "OneStoreinfor.h"
+#import "WorshipSearchViewController.h"//搜索
 @interface CooperationViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
@@ -104,6 +106,11 @@
 }
 -(void)Touchsearch{
 //搜索
+    WorshipSearchViewController *worseaVC = [[WorshipSearchViewController alloc]init];
+    worseaVC.strId = self.strId;
+    worseaVC.intere = @"3";
+    [self.navigationController pushViewController:worseaVC animated:YES];
+    
 }
 -(void)selectTargetVisit{
     NSString *uStr =[NSString stringWithFormat:@"%@shop/selectStoreState.action",KURLHeader];
@@ -182,12 +189,13 @@
 {
     CoperationModel *model=[[CoperationModel alloc]init];
     model = _InterNameAry[indexPath.row];
-    StoreinforViewController *storeVC = [[StoreinforViewController alloc]init];
-    storeVC.shopId =model.shId;
-    storeVC.strId = self.strId;
-    storeVC.isend = NO;
-    storeVC.titleName = model.storeName;
-    [self.navigationController pushViewController:storeVC animated:YES];
+    OneStoreinfor *oneVC = [[OneStoreinfor alloc]init];
+    oneVC.shopId = model.shopId;
+    oneVC.strId = self.strId;
+    oneVC.TargetVisitId= @"1";
+    oneVC.shopname = model.storeName;
+
+    [self.navigationController pushViewController:oneVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

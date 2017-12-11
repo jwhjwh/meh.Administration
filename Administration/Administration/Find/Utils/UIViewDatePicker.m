@@ -97,12 +97,6 @@
     self.stringGregorian =[[NSString alloc]init];
     self.stringChinese   =[[NSString alloc]init];
     
-    self.stringGregorian =self.djdateGregorianView.stringGregorian  ;
-    
-    self.stringChinese   =self.djdateChineseView.stringChinese  ;
-
-
-    
 
     self.stringChinese = self.djdateGregorianView.stringChinese;
     self.stringGregorian = self.djdateGregorianView.stringGregorian;
@@ -193,14 +187,15 @@
 -(void)buttonSure
 {
    
-//    self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
+    self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
     
     
-    if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
-        [self.delegate getChooseDate];
-        [ShareModel shareModel].stringGregorian = self.stringGregorian;
-        [ShareModel shareModel].stringChinese = self.stringChinese;
-    }
+//    if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
+//        [self.delegate getChooseDate];
+//        [ShareModel shareModel].stringGregorian = self.stringGregorian;
+//        [ShareModel shareModel].stringChinese = self.stringChinese;
+//    }
+    NSLog(@"%@---%@---%@",self.stringGregorian,self.stringChinese,_flagggg);
     [self removeFromSuperview];
 }
 

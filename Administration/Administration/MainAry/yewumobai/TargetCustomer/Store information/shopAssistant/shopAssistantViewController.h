@@ -10,4 +10,7 @@
 
 @interface shopAssistantViewController : UIViewController
 @property (strong,nonatomic) NSString *shopid;//门店信息id
+@property (strong,nonatomic) NSString *strId;
+
+@property (strong,nonatomic) NSString *titleStr;
 @end

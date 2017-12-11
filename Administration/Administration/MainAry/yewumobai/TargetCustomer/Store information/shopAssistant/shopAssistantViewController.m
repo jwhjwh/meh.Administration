@@ -8,17 +8,14 @@
 
 #import "shopAssistantViewController.h"
 #import "ZXDChineseString.h"
-#import "Brandmodle.h"
-#import "brandTableViewCell.h"
+#import "shopAssModel.h"
 #import "AddAssistant.h"
-
+#import "shopAssTableViewCell.h"
+#import "AddCustomer.h"
 @interface shopAssistantViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSMutableArray *dataArray;
- 
     UITableView * _tableView;
-   
     NSArray *keys;
-    NSArray *key;
     NSMutableDictionary *dict;
     NSMutableArray *arr;
     UITableView *table;
@@ -34,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"店员信息";
+    self.title = self.titleStr;
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -49,58 +46,75 @@
     UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
     self.navigationItem.rightBarButtonItem = rbuttonItem;
     
-    //[self loadData];
-    
-    //根据Person对象的 name 属性 按中文 对 Person数组 排序
-  
-//
-//    self.indexArray = [ZXDChineseString IndexArray:dataArray];
-//    self.letterResultArr = [ZXDChineseString LetterSortArray:dataArray];
-    
     table = [[UITableView alloc] initWithFrame:self.view.frame];
     table.delegate = self;
     table.dataSource = self;
+    [ZXDNetworking setExtraCellLineHidden:table];
     [self.view addSubview:table];
+    
     [self afnwtworking];
 }
 -(void)loadData{
-    NSArray *stringsToSort=[NSArray arrayWithObjects:
-                            @"李白",@"张三",
-                            @"重庆",@"重量",
-                            @"调节",@"调用",
-                            @"小白",@"小明",@"千珏",
-                            @"黄家驹", @"鼠标",@"hello",@"多美丽",@"肯德基",@"##",
-                            nil];
     
-    //模拟网络请求接收到的数组对象 Person数组
-    dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-  
+    NSMutableArray *aaaa = [NSMutableArray array];
+    dict=[NSMutableDictionary dictionary];
+    for (NSDictionary *dictc in arr) {
+        shopAssModel *model=[[shopAssModel alloc]init];
+        [model setValuesForKeysWithDictionary:dictc];
+        NSString * nameee = [[NSString alloc]init];
+       
+        
+        NSInteger k = [model.flag integerValue];
+        NSString *stringInt = [NSString stringWithFormat:@"%ld",k];
+        if ([stringInt isEqualToString:@"1"]) {
+             nameee = [NSString stringWithFormat:@"%@   %@   %@",model.name,model.lunarBirthday,model.phone];
+        }else{
+           
+             nameee = [NSString stringWithFormat:@"%@   %@   %@",model.name,model.solarBirthday,model.phone];
+        }
+        [dict setObject:model forKey:nameee];
+        [aaaa addObject:dict];
+    }
     
-     arr=[NSMutableArray array];
-     dict=[NSMutableDictionary dictionary];
-     
-     for (NSDictionary *dic in stringsToSort) {
-         Brandmodle *model=[[Brandmodle alloc]init];
-         [model setValuesForKeysWithDictionary:dic];
-         [dict setObject:model forKey:model.finsk];
-     [arr addObject:dict];
-     }
-     for (NSMutableDictionary  *d in arr) {
-     keys = [d allKeys];
-     }
+    for (NSMutableDictionary  *d in aaaa) {
+        keys = [d allKeys];
+    }
+    self.indexArray = [ZXDChineseString IndexArray:keys];
+    self.letterResultArr = [ZXDChineseString LetterSortArray:keys];
     
-        self.indexArray = [ZXDChineseString IndexArray:keys];
-        self.letterResultArr = [ZXDChineseString LetterSortArray:keys];
 }
 -(void)afnwtworking{
     NSString *uStr =[NSString stringWithFormat:@"%@shop/selectstore.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopid,@"store":@"3"};
+    if ([self.titleStr isEqualToString:@"顾客信息"]) {
+         dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopid,@"store":@"4"};
+    }else{
+         dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopid,@"store":@"3"};
+    }
+   
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            
+          
+                NSArray *array=[responseObject valueForKey:@"list"];
+            arr=[NSMutableArray array];
+            dict=[NSMutableDictionary dictionary];
+            self.array = [NSMutableArray array];
+            for (NSDictionary *dic in array) {
+                shopAssModel *model=[[shopAssModel alloc]init];
+                [model setValuesForKeysWithDictionary:dic];
+                [dict setObject:model forKey:model.name];
+                [arr addObject:dict];
+            }
+            for (NSMutableDictionary  *d in arr) {
+                keys = [d allKeys];
+            }
+            self.indexArray = [ZXDChineseString IndexArray:keys];
+            self.array = [ZXDChineseString LetterSortArray:keys];
+           
+            [table reloadData];
+               
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
@@ -136,7 +150,7 @@
 }
 //每组section个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[self.letterResultArr objectAtIndex:section] count];
+    return [[self.array objectAtIndex:section] count];
 }
 //section右侧index数组
 -(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
@@ -148,18 +162,53 @@
 }
 //返回cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    brandTableViewCell *cell = [[brandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+
+    shopAssTableViewCell *cell = [[shopAssTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     if (cell == nil) {
-        cell = [[brandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+        cell = [[shopAssTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.modle=[dict objectForKey: _array[indexPath.section][indexPath.row]];
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%ld %ld",(long)indexPath.section,(long)indexPath.row);
+     shopAssModel *model=[dict objectForKey: _array[indexPath.section][indexPath.row]];
+    NSLog(@"----%@",model.AssustantId);
+    if ([self.title isEqualToString:@"顾客信息"]) {
+        AddCustomer *addvc = [[AddCustomer alloc]init];
+        addvc.issend = NO;
+        addvc.shopid = self.shopid;
+        addvc.strId = self.strId;
+        addvc.StoreClerkId = model.AssustantId;
+        [self.navigationController pushViewController:addvc animated:YES];
+    }else{
+        AddAssistant *addvc = [[AddAssistant alloc]init];
+        addvc.issssend = NO;
+        addvc.shopid = self.shopid;
+        addvc.strId = self.strId;
+        addvc.StoreClerkId = model.AssustantId;
+        [self.navigationController pushViewController:addvc animated:YES];
+    }
+    
+
+}
 -(void)rightItemAction{
-    AddAssistant *addvc = [[AddAssistant alloc]init];
-    addvc.issssend = YES;
-    [self.navigationController pushViewController:addvc animated:YES];
+    if ([self.title isEqualToString:@"顾客信息"]) {
+        AddCustomer *addvc = [[AddCustomer alloc]init];
+        addvc.issend = YES;
+        addvc.shopid = self.shopid;
+        
+       
+        [self.navigationController pushViewController:addvc animated:YES];
+    }else{
+        AddAssistant *addvc = [[AddAssistant alloc]init];
+        addvc.issssend = YES;
+        addvc.shopid = self.shopid;
+        [self.navigationController pushViewController:addvc animated:YES];
+    }
+    
 
 }
 -(void)buLiftItem{
@@ -169,7 +218,22 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+        return 50.0f;
+    
+}
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([table respondsToSelector:@selector(setSeparatorInset:)]) {
+        [table setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([table respondsToSelector:@selector(setLayoutMargins:)])  {
+        [table setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 
 @end

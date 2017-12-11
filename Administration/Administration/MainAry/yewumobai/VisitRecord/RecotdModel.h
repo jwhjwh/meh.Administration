@@ -20,4 +20,10 @@
 @property (strong,nonatomic) NSString *address;//门店地址
 
 @property (strong,nonatomic) NSString *wtime;//门店地址
+
+@property (strong,nonatomic) NSString *State;//阶段
+
+@property (strong,nonatomic) NSString *UserId;//同事
+
+@property (strong,nonatomic) NSString *DepartmentId;//部门
 @end

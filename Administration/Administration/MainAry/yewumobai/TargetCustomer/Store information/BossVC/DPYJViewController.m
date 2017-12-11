@@ -28,6 +28,22 @@
             self.title=@"综合研判";
         }
             break;
+        case 1:{
+            self.title=@"顾客身体情况简介";
+        }
+            break;
+        case 2:{
+            self.title=@"正在做的项目";
+        }
+            break;
+        case 3:{
+            self.title=@"特殊注意说明";
+        }
+            break;
+        case 4:{
+            self.title=@"消费分析";
+        }
+            break;
         
         default:
             break;
@@ -58,8 +74,34 @@
     // 设置颜色
     _textView.backgroundColor = [UIColor whiteColor];
     // 设置提示文字
-    if([_number isEqualToString: @"9"]){
-        _textView.placehoder = @"暂无点评建议";
+    switch (_a) {
+        case 9:{
+           _textView.placehoder =@"暂无点评建议";
+        }
+            break;
+        case 7:{
+            _textView.placehoder =@"暂无综合研判";
+        }
+            break;
+        case 1:{
+            _textView.placehoder =@"暂无顾客身体情况简介";
+        }
+            break;
+        case 2:{
+            _textView.placehoder =@"暂无正在做的项目";
+        }
+            break;
+        case 3:{
+           _textView.placehoder =@"暂无特殊注意说明";
+        }
+            break;
+        case 4:{
+            _textView.placehoder =@"暂无消费分析";
+        }
+            break;
+            
+        default:
+            break;
     }
     
     if (self.dateStr.length>0) {
@@ -84,7 +126,7 @@
     // 添加到视图上
     [_scrollView addSubview:_textView];
     [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(92);
+        make.top.mas_equalTo(self.view.mas_top).offset(95);
         make.left.mas_equalTo(self.view.mas_left).offset(20);
         make.right.mas_equalTo(self.view.mas_right).offset(-20);
         make.height.mas_equalTo(@180);

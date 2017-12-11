@@ -104,10 +104,20 @@
                     //店员信息
                     shopAssistantViewController *SAVC = [[shopAssistantViewController alloc]init];
                     SAVC.shopid = self.shopId;
+                    SAVC.strId = self.strId;
+                    SAVC.titleStr = @"店员信息";
                      [self.navigationController pushViewController:SAVC animated:YES];
                 }break;
                 case 3:
+                {
                     //顾客信息
+                    shopAssistantViewController *SAVC = [[shopAssistantViewController alloc]init];
+                    SAVC.shopid = self.shopId;
+                    SAVC.strId = self.strId;
+                    SAVC.titleStr = @"顾客信息";
+                    [self.navigationController pushViewController:SAVC animated:YES];
+                }
+                    
                     break;
                 default:
                     break;
@@ -133,6 +143,7 @@
                         //店员信息
                         shopAssistantViewController *SAVC = [[shopAssistantViewController alloc]init];
                         SAVC.shopid = self.shopId;
+                        SAVC.strId = self.strId;
                         [self.navigationController pushViewController:SAVC animated:YES];
                     }
                         break;

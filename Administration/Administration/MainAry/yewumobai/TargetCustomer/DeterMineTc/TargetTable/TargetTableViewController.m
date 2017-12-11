@@ -76,7 +76,7 @@
 @property(strong,nonatomic)NSString *payway;//大款方式
 @property(strong,nonatomic)NSString *written;//填表人
 @property(strong,nonatomic)NSString *manager;//经理
-@property(strong,nonatomic)NSString *shopid;//店铺id
+
 @property(strong,nonatomic)NSString *StoreName;//店名
 @property(strong,nonatomic)NSString *targetVisitId;//目标客户id
 @property(strong,nonatomic)NSString *Address;//店铺地址
@@ -96,10 +96,14 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    if([self.oneStore isEqualToString:@"1"] ){
+        
+    }else{
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
     _nameArrs = @[@[@"签到"],@[@"拜访日期",@"拜访时间段",@"拜访次数"],@[@"店名",@"地址",@"负责人",@"职务",@"固话/手机",@"微信号"],@[@"店规模",@"床位",@"美容师人数",@"开店年限",@"主要经营品牌",@"关注品牌"],@[@"目前了解信息:"],@[@"店家问题简述",@"品牌介入策略及跟进规划",@"店家要求事项及解决办法",@"同事协助须知"],@[@"店家预合作时间:",@"执行方案:",@"合约金额:"],@[@"打款方式"]];
     _placeholdernameArrs = @[@[],@[@"选择日期",@"如:10:00点-12:30分",@"选择拜访次数"],@[@"填写店名",@"填写店铺地址",@"填写负责人",@"填写职务",@"填写联系方式",@"填写微信号"],@[@"选择店规模",@"选择床位",@"选择美容师人数",@"选择开店年限",@"填写主要经营品牌",@"填写关注品牌"]];
     _tagnameArrs =@[@[],@[@"",@"12",@""],@[@"21",@"22",@"23",@"24",@"25",@"26"],@[@"31",@"32",@"33",@"34",@"35",@"36"]];
@@ -1060,11 +1064,17 @@
 -(void)selectTargetVisit{
     //数据请求
     if (self.isofyou ==NO) {
-        NSString *uStr =[NSString stringWithFormat:@"%@shop/selectTargetVisit.action",KURLHeader];
+        NSString *uStr =[[NSString alloc]init];
+        NSDictionary *dic = [[NSDictionary alloc]init];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-        NSDictionary *dic = [[NSDictionary alloc]init];
-        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":self.OldTargetVisitId,@"RoleId":self.strId};
+        if ([self.oneStore isEqualToString:@"1"]) {
+            uStr =[NSString stringWithFormat:@"%@shop/getShop.action",KURLHeader];
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":self.shopid,@"Types":@"3"};
+        }else{
+            uStr =[NSString stringWithFormat:@"%@shop/selectTargetVisit.action",KURLHeader];
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":self.OldTargetVisitId,@"RoleId":self.strId};
+        }
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 NSArray *array=[responseObject valueForKey:@"list"];
