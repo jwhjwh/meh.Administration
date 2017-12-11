@@ -111,6 +111,14 @@
             intereVC.strId = self.strId;
             intereVC.TCVC =@"1";
             [self.navigationController pushViewController:intereVC animated:YES];
+        }else if([self.intere isEqualToString:@"3"]){
+            OneDateViewController *OneDate = [[OneDateViewController alloc]init];
+            OneDate.provice =_proviceLabel.text;
+            OneDate.city =_cityLabel.text;
+            OneDate.area =_areaLabel.text;
+            OneDate.strId = self.strId;
+            OneDate.tvvc = @"3";
+            [self.navigationController pushViewController:OneDate animated:YES];
         }else{
             OneDateViewController *OneDate = [[OneDateViewController alloc]init];
             OneDate.provice =_proviceLabel.text;
@@ -259,6 +267,14 @@
         intereVC.strId = self.strId;
         intereVC.TCVC =@"1";
         [self.navigationController pushViewController:intereVC animated:YES];
+    }else if([self.intere isEqualToString:@"3"]){
+        OneDateViewController *OneDate = [[OneDateViewController alloc]init];
+        OneDate.provice =_proviceNameAry[ssbbtn.tag];
+        OneDate.city =_cityNameAry[ssbbtn.tag];
+        OneDate.area =_areaNameAry[ssbbtn.tag];
+        OneDate.strId = self.strId;
+        OneDate.tvvc = @"3";
+        [self.navigationController pushViewController:OneDate animated:YES];
     }else{
         OneDateViewController *OneDate = [[OneDateViewController alloc]init];
         OneDate.provice =_proviceNameAry[ssbbtn.tag];

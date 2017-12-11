@@ -150,6 +150,34 @@
     NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.wtime substringWithRange:NSMakeRange(5, 11)]];
     cell.shijianLabel.text = xxsj;
     
+    if (model.UserId !=nil) {
+        cell.UserIdLabel.text = @"已分享同事";
+        cell.UserIdImage.image = [UIImage imageNamed:@"fx_ico"];
+    }
+    if (model.DepartmentId !=nil) {
+        cell.DepartmentIdLabel.text = @"已分享部门";
+        cell.DepartmentIdImage.image = [UIImage imageNamed:@"fx_icof"];
+    }
+    switch ([model.State integerValue]) {
+        case 1:
+            break;
+        case 2:
+            cell.StateLabel.text= @"已升级为意向客户";
+            cell.StateImage.image = [UIImage imageNamed:@"tj__ico01"];
+            break;
+        case 3:
+            cell.StateLabel.text= @"已升级为目标客户";
+            cell.StateImage.image = [UIImage imageNamed:@"tj__ico02"];
+            break;
+        case 4:
+            cell.StateLabel.text= @"已升级为合作客户";
+            cell.StateImage.image = [UIImage imageNamed:@"tj_ico03"];
+            break;
+            
+        default:
+            break;
+    }
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

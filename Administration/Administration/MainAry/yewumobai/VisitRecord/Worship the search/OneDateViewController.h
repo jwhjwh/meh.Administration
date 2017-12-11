@@ -14,5 +14,5 @@
 @property (nonatomic,strong)NSString *provice;
 @property (nonatomic,strong)NSString *city;
 @property (nonatomic,strong)NSString *area;
-
+@property (nonatomic,strong)NSString *tvvc;
 @end

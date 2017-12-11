@@ -12,25 +12,29 @@
 #import "UIViewDatePicker.h"
 #import "DPYJViewController.h"
 #import "specialty.h"
-@interface AddAssistant ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIViewDatePickerDelegate>
+@interface AddAssistant()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIViewDatePickerDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic ,retain)NSMutableArray *nameArrs;
+
 @property (nonatomic,strong)UIImageView *TXImage;
 @property (nonatomic,strong) NSString *logImage;//头像地址
 @property (nonatomic,strong) UILabel *DayLabel;//出生日期
 @property (nonatomic,strong)NSMutableArray *ligary;
 @property (nonatomic,strong)NSMutableArray *texttagary;
+@property (nonatomic,strong)NSMutableArray *nsmuary;
 
 @property (nonatomic,strong) NSString *namestr;//姓名
 @property (nonatomic,strong) NSString *agestr;//年龄
-@property (nonatomic,strong) NSString *daystr;//生日
+
 @property (nonatomic,strong) NSString *HobbyStr;//爱好
 @property (nonatomic,strong) NSString *FeatureStr;//性格
 @property (nonatomic,strong) NSString *iphonestr;//电话
 @property (nonatomic,strong) NSString *Specialty;//特长
 @property (nonatomic,strong) NSString *OverallMerit;//评价
-
 @property (nonatomic,strong) NSString *flaig;//阴--阳---历
+
+@property (nonatomic,strong) NSString *SolarBirthday;
+@property (nonatomic,strong) NSString *LunarBirthday;
 
 @end
 
@@ -38,7 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"添加店员信息";
+    self.title = @"店员信息";
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -46,11 +50,13 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+      [self nsstringallocinit];
     if (self.issssend == NO) {
         UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
         [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = rightitem;
+        [self AFNetworking];
     }else{
         UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
         rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
@@ -62,8 +68,104 @@
     
    _nameArrs = [[NSMutableArray alloc]initWithObjects:@[@"照片"],@[@"姓名",@"年龄",@"生日",@"爱好",@"性格",@"电话",@"特长",@"综合研判"], nil];
     _ligary = [[NSMutableArray alloc]initWithObjects:@[@""],@[@"填写姓名",@"填写年龄",@"填写生日",@"填写爱好",@"填写性格",@"填写电话"], nil];
-    _texttagary = [[NSMutableArray alloc]initWithObjects:@[@""],@[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8"], nil];
+    _texttagary = [[NSMutableArray alloc]initWithObjects:@[@""],@[@"0",@"1",@"2",@"3",@"4",@"5"], nil];
     [self addViewremind];
+  
+}
+-(void)AFNetworking{
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectstore.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopid,@"store":@"3",@"StoreClerkId":self.StoreClerkId};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            
+            NSArray *array=[responseObject valueForKey:@"list"];
+           _nsmuary = [[NSMutableArray alloc]init];
+            _logImage = [[NSString alloc]init];
+            for (NSDictionary *dict in array) {
+                [_nsmuary addObject:[dict valueForKey:@"name"]];
+                _namestr = [dict valueForKey:@"name"];
+                
+                _agestr = [dict valueForKey:@"age"];
+                if ([_agestr isEqual:[NSNull null]]) {
+                    _agestr=@"";
+                    [_nsmuary addObject:@""];
+                }else{
+                    [_nsmuary addObject:[dict valueForKey:@"age"]];
+                }
+                
+                NSInteger k = [[dict valueForKey:@"flag"] integerValue];
+                NSString *stringInt = [NSString stringWithFormat:@"%ld",k];
+                _flaig = stringInt;
+                _LunarBirthday = [dict valueForKey:@"lunarBirthday"];
+                _SolarBirthday = [dict valueForKey:@"solarBirthday"];
+                if ([stringInt isEqualToString:@"1"]) {
+                    [_nsmuary addObject:[dict valueForKey:@"lunarBirthday"]];
+                }else{
+                    [_nsmuary addObject:[dict valueForKey:@"solarBirthday"]];
+                }
+                _logImage = [dict valueForKey:@"photo"];
+                [_nsmuary addObject:[dict valueForKey:@"hobby"]];
+                _HobbyStr = [dict valueForKey:@"hobby"];
+                [_nsmuary addObject:[dict valueForKey:@"feature"]];
+                _FeatureStr = [dict valueForKey:@"feature"];
+                
+                
+                _iphonestr = [dict valueForKey:@"phone"];
+                if ([_iphonestr isEqual:[NSNull null]]) {
+                    _iphonestr=@"";
+                    [_nsmuary addObject:@""];
+                }else{
+                    [_nsmuary addObject:[dict valueForKey:@"phone"]];
+                }
+                
+                
+                [_nsmuary addObject:[dict valueForKey:@"specialty"]];
+                _Specialty = [dict valueForKey:@"specialty"];
+                [_nsmuary addObject:[dict valueForKey:@"overallMerit"]];
+                _OverallMerit =[dict valueForKey:@"overallMerit"];
+            }
+            [_tableView reloadData];
+            NSLog(@"%@",_nsmuary);
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+-(void)nsstringallocinit{
+    _namestr = [[NSString alloc]init];//姓名
+    _agestr= [[NSString alloc]init];//年龄
+    
+    _logImage = [[NSString alloc]init];
+    _HobbyStr= [[NSString alloc]init];//爱好
+    _FeatureStr= [[NSString alloc]init];//性格
+    _iphonestr= [[NSString alloc]init];//电话
+    _Specialty= [[NSString alloc]init];//特长
+    _OverallMerit= [[NSString alloc]init];//评价
+    _flaig= [[NSString alloc]init];
+    _SolarBirthday = [[NSString alloc]init];
+    _LunarBirthday = [[NSString alloc]init];
+    
 }
 -(void)addViewremind{
     self.tableView= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -85,13 +187,11 @@
         [self.tableView reloadData];
         NSLog(@"编辑");
     }else if ([btn.title isEqualToString:@"完成"]){
-        btn.title =@"编辑";
-        self.issssend = NO;
-        [self.tableView reloadData];
         NSLog(@"完成");
+        [self updateStoreClerk1:btn];
     }else{
         NSLog(@"提交");
-        [self insertStoreClerk];
+        [self insertStoreClerk:btn];
     }
     
 }
@@ -103,7 +203,7 @@
             
             //[self showDatePicker];
         {
-             UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+            UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
             datePick.delegate = self;
             [self.view endEditing:YES];
             [self.view.window addSubview:datePick];
@@ -111,9 +211,12 @@
                 NSLog(@"222---%@----%@----%@",content,oldcontent,flag);
                 _flaig = [[NSString alloc]init];
                 _flaig = flag;
+                _SolarBirthday = content;
+                _LunarBirthday = oldcontent;
                 if ([_flaig isEqualToString:@"1"]) {
                     //阴历 == 农历
                     _DayLabel.text = oldcontent;
+                    
                 }else{
                     //阳历 ==公历
                     _DayLabel.text = content;
@@ -126,7 +229,7 @@
             specialty *spVC = [[specialty alloc]init];
             spVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
             spVC.modifi = _issssend;
-            spVC.dateStr = _Specialty; //特长
+            spVC.dateStr = _nsmuary[indexPath.row]; //特长
             spVC.blcokStr = ^(NSString *content,int num) {
                 if (num == 6) {
                     if (_issssend==YES) {
@@ -143,7 +246,7 @@
         {
             DPYJViewController *targetVC=[[DPYJViewController alloc]init];
             targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-            targetVC.dateStr = _OverallMerit; //点评建议
+            targetVC.dateStr = _nsmuary[indexPath.row]; //点评建议
             targetVC.modifi = _issssend;//可否编辑
             targetVC.blcokStr=^(NSString *content,int num){
                 if (num==7) {
@@ -162,16 +265,17 @@
             break;
     }
 }
--(void)insertStoreClerk{
+
+-(void)insertStoreClerk:(UIBarButtonItem *)btn{
    //NSString * flag = [ShareModel shareModel].flag;
-    NSString *uStr =[NSString stringWithFormat:@"%@user/insertStoreClerk.action",KURLHeader];
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/insertStoreClerk.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dict=@{@"appkey":apKeyStr,
                          @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
-                         @"flag":[ShareModel shareModel].flag,
-                         @"SolarBirthday":[ShareModel shareModel].stringChinese,
-                         @"LunarBirthday":[ShareModel shareModel].stringGregorian,
+                         @"flag":_flaig,
+                         @"SolarBirthday":_SolarBirthday,
+                         @"LunarBirthday":_LunarBirthday,
                          @"Storeid":self.shopid,
                          @"Name":_namestr,
                          @"Age":_agestr,
@@ -276,7 +380,7 @@
         if (_logImage.length<1) {
             _TXImage.image = [UIImage imageNamed:@"tjtx"];
         }else{
-            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
+            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tjtx"]];
         }
         _TXImage.backgroundColor = [UIColor whiteColor];
         _TXImage.layer.masksToBounds = YES;
@@ -292,20 +396,17 @@
         }else{
             if(indexPath.row==2){
                 [_DayLabel removeFromSuperview];
-                
-                _DayLabel = [[UILabel alloc]initWithFrame:CGRectMake(150, 1, self.view.bounds.size.width-170, 48)];
-                _DayLabel.text = @"";
-                [cell addSubview:_DayLabel];
-                if ([[ShareModel shareModel].flag isEqualToString:@"1"]) {
-                    _DayLabel.text = [ShareModel shareModel].stringChinese;
-                }else if([[ShareModel shareModel].flag isEqualToString:@"2"])
-                {
-                    _DayLabel.text = [ShareModel shareModel].stringGregorian;
-                    NSLog(@"%@",_DayLabel.text);
-                }else
-                {
-                    //_DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];
+                _DayLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 1, self.view.bounds.size.width-170, 48)];
+                if (self.StoreClerkId ==nil) {
+                    _DayLabel.text = [NSString stringWithFormat:@"%@",_ligary[indexPath.section][indexPath.row]];
+                    _DayLabel.tintColor = [UIColor lightGrayColor];
+                }else{
+                     _DayLabel.text = _nsmuary[indexPath.row];
                 }
+                
+                [cell addSubview:_DayLabel];
+               
+               
                 _DayLabel.font = [UIFont boldSystemFontOfSize:13.0f];
             }else{
                 //老板姓名
@@ -313,12 +414,38 @@
                 bossname.placeholder = _ligary[indexPath.section][indexPath.row];
                 bossname.font = [UIFont systemFontOfSize:14.0f];
                 placeholder(bossname);
-                bossname.tag = 1;
+                NSInteger k = [_texttagary[indexPath.section][indexPath.row] integerValue];
+                bossname.tag = k;
                 bossname.delegate = self;
                 [bossname addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
                 bossname.enabled = self.issssend;
                 //bossname.text = _InfonAry[indexPath.section][indexPath.row];
                 [cell addSubview:bossname];
+                if (self.StoreClerkId ==nil) {
+                   
+                }else{
+                    if (indexPath.row ==1) {
+                        if ([_agestr isEqual:@""]) {
+                            
+                        }else{
+                            NSInteger k = [_nsmuary[indexPath.row] integerValue];
+                            NSString *stringInt = [NSString stringWithFormat:@"%ld",k];
+                            bossname.text = stringInt;
+                        }
+                    }else if(indexPath.row==5){
+                        if ([_iphonestr isEqual:@""]) {
+                            
+                        }else{
+                            NSInteger k = [_nsmuary[indexPath.row] integerValue];
+                            NSString *stringInt = [NSString stringWithFormat:@"%ld",k];
+                            bossname.text = stringInt;
+                        }
+                        
+                    }else{
+                        bossname.text = _nsmuary[indexPath.row];
+                    }
+                    
+                }
             }
         }
         
@@ -327,16 +454,71 @@
     
     return cell;
 }
--(void)tapPage3:(UITapGestureRecognizer*)sender
-{
-    if (self.issssend==NO) {
-    NSLog(@"头像放大");
-    [DongImage showImage:_TXImage];
-}else{
-    [[ZZYPhotoHelper shareHelper] showImageViewSelcteWithResultBlock:^(id data) {
-        _TXImage.image = (UIImage *)data;
+-(void)updateStoreClerk1:(UIBarButtonItem *)btn{
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStoreClerk1.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dict=@{@"appkey":apKeyStr,
+                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                         @"flag":_flaig,
+                         @"SolarBirthday":_SolarBirthday,
+                         @"LunarBirthday":_LunarBirthday,
+                         @"Storeid":self.shopid,
+                         @"Name":_namestr,
+                         @"Age":_agestr,
+                         @"Hobby":_HobbyStr,
+                         @"Feature":_FeatureStr,
+                         @"Specialty":_Specialty,
+                         @"OverallMerit":_OverallMerit,
+                         @"Phone":_iphonestr,
+                         @"RoleId":self.strId,
+                         @"id":self.StoreClerkId
+                         };
+    NSData *pictureData = UIImagePNGRepresentation(self.TXImage.image);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+    [manager POST:uStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyMMddHHmm";
+        NSString *fileName = [formatter stringFromDate:[NSDate date]];
+        NSString *nameStr = @"file";
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD hideHUDForView: self.view animated:NO];
+        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+        NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
+        
+        if ([status isEqualToString:@"0000"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                btn.title =@"编辑";
+                self.issssend = NO;
+                [self.tableView reloadData];
+            };
+            [alertView showMKPAlertView];
+        } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
     }];
 }
+-(void)tapPage3:(UITapGestureRecognizer*)sender
+{
+        if (self.issssend==NO) {
+            NSLog(@"头像放大");
+            [DongImage showImage:_TXImage];
+    }else{
+        [[ZZYPhotoHelper shareHelper] showImageViewSelcteWithResultBlock:^(id data) {
+        _TXImage.image = (UIImage *)data;
+        }];
+    }
     
 }
 - (void)PersonFieldText:(UITextField *)textField{

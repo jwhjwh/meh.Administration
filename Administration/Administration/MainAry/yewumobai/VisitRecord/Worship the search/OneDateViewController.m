@@ -10,6 +10,7 @@
 #import "OneDateModel.h"
 #import "RecordTableViewCell.h"
 #import "ModifyVisitViewController.h"
+#import "StoreinforViewController.h"
 @interface OneDateViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *infonTableview;
@@ -140,7 +141,13 @@
     cell.RectordLabel.text = [NSString stringWithFormat:@"地址:%@%@%@",model.Province,model.City,model.County];
     cell.RectordLabel.adjustsFontSizeToFitWidth = YES;
     cell.RectordLabel.textAlignment = NSTextAlignmentLeft;
-    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.wtime substringWithRange:NSMakeRange(5, 11)]];
+    NSString *xxsj = [[NSString alloc]init];
+    if ([self.tvvc isEqualToString:@"3"]) {
+        xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
+    }else{
+        xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.wtime substringWithRange:NSMakeRange(5, 11)]];
+    }
+   
     cell.shijianLabel.text = xxsj;
     
     return cell;
@@ -167,7 +174,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)OneDateNetworking :(UIButton*)btn{
-    NSString *uuStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
+    //selectStoreState 公司 selectStoreState
+    
+    NSString *uuStr =[[NSString alloc]init];
+    
+    if ([self.tvvc isEqualToString:@"3"]) {
+          uuStr = [NSString stringWithFormat:@"%@shop/selectStoreState.action",KURLHeader];
+    }else{
+        uuStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
+    }
+    
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
@@ -179,7 +195,12 @@
     [ZXDNetworking GET:uuStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
         //recordInfo
-            NSArray *array=[responseObject valueForKey:@"recordInfo"];
+            NSArray *array=[[NSArray alloc]init];
+            if ([self.tvvc isEqualToString:@"3"]) {
+                array=[responseObject valueForKey:@"list"];
+            }else{
+                array=[responseObject valueForKey:@"recordInfo"];
+            }
             _InterNameAry = [[NSMutableArray alloc]init];
             for (NSDictionary *dic in array) {
                 OneDateModel *model=[[OneDateModel alloc]init];
@@ -235,10 +256,22 @@
 {
     OneDateModel *model=[[OneDateModel alloc]init];
     model = _InterNameAry[indexPath.row];
-    ModifyVisitViewController *modify = [[ModifyVisitViewController alloc]init];
-    modify.ModifyId = model.ShopId;
-    modify.strId = self.strId;
-    [self.navigationController pushViewController:modify animated:YES];
+    
+    if ([self.tvvc isEqualToString:@"3"]) {
+        StoreinforViewController *storeVC = [[StoreinforViewController alloc]init];
+        storeVC.shopId =model.ShopId;
+        storeVC.strId = self.strId;
+        storeVC.isend = NO;
+        storeVC.titleName = model.StoreName;
+        [self.navigationController pushViewController:storeVC animated:YES];
+    }else{
+        ModifyVisitViewController *modify = [[ModifyVisitViewController alloc]init];
+        modify.ModifyId = model.ShopId;
+        modify.strId = self.strId;
+        [self.navigationController pushViewController:modify animated:YES];
+    }
+    
+    
     
 }
 

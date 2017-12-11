@@ -13,4 +13,7 @@
 @property (strong,nonatomic) NSString *strId;
 @property (nonatomic, assign) BOOL isofyou;
 @property (nonatomic, assign) BOOL cellend;
+@property(strong,nonatomic)NSString *shopid;//店铺id
+
+@property (strong,nonatomic) NSString *oneStore;
 @end
