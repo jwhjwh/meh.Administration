@@ -35,4 +35,10 @@
 @property (nonatomic,strong)NSString *stringGregorian; //阳历生日
 @property (nonatomic,strong)NSString *stringChinese;  //阴历生日
 
+/*店家跟踪*/
+
+@property (nonatomic,strong)NSDictionary *dictShop;
+@property (nonatomic,strong)NSString *shopID;
+@property (nonatomic,strong)NSString *storeName;
+
 @end

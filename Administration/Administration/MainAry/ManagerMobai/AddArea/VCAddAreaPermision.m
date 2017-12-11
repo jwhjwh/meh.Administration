@@ -126,7 +126,7 @@
     if ([button.titleLabel.text isEqualToString:@"完成"]) {
         
         if ([dictInfo[@"name"]isEqualToString:@""]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"选人啊傻逼" andInterval:1.0];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请添加人" andInterval:1.0];
             return;
         }
     NSString *urlStr =[NSString stringWithFormat:@"%@shop/InsertRegion.action",KURLHeader];

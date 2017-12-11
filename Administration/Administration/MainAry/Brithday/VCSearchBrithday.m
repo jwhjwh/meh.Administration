@@ -46,7 +46,6 @@
                 }else
                 {
                     [array1 addObject:dict];
-                    
                 }
             }
             [self.arrayData addObject:array1];

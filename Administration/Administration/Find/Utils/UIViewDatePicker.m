@@ -11,14 +11,13 @@
 @interface UIViewDatePicker ()
 @property (nonatomic,strong)IDJDatePickerView *djdateGregorianView;
 @property (nonatomic,strong)IDJDatePickerView *djdateChineseView;
-@property (nonatomic,strong)NSString *stringChinese;
-@property (nonatomic,strong)NSString *stringGregorian;
+
 
 @property (nonatomic,weak)UILabel *labelCalender;
 @property (nonatomic,weak)UILabel *labelDate;
 
 
-@property (nonatomic,strong)NSString *flagggg;
+
 
 @end
 
@@ -107,10 +106,6 @@
 
     self.stringChinese = self.djdateGregorianView.stringChinese;
     self.stringGregorian = self.djdateGregorianView.stringGregorian;
-    
-    
-    [ShareModel shareModel].flag = @"2";
-
 }
 
 -(void)switchPress:(UISwitch *)sw
@@ -120,12 +115,12 @@
         self.djdateChineseView.hidden = NO;
         self.labelCalender.text = @"    农历";
         
-        self.labelDate.text = [ShareModel shareModel].stringChinese;
+        self.labelDate.text = self.stringChinese;
 
         _flagggg = @"1";
 
         self.labelDate.text = self.djdateGregorianView.stringGregorian;
-        [ShareModel shareModel].flag = @"1";
+        
 
         
     }else
@@ -133,12 +128,11 @@
         self.djdateChineseView.hidden = YES;
         self.djdateGregorianView.hidden = NO;
         self.labelCalender.text = @"    公历";
-        self.labelDate.text = [ShareModel shareModel].stringGregorian;
+        self.labelDate.text = self.stringGregorian;
 
         _flagggg = @"2";
 
         self.labelDate.text = self.djdateGregorianView.stringChinese;
-        [ShareModel shareModel].flag = @"2";
 
     }
 }
@@ -200,10 +194,10 @@
     
     if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
         [self.delegate getChooseDate];
-        [ShareModel shareModel].stringGregorian = self.stringGregorian;
-        [ShareModel shareModel].stringChinese = self.stringChinese;
+
     }
     [self removeFromSuperview];
+    
 }
 
 -(NSString *)getCnMoneyByString:(NSString*)string

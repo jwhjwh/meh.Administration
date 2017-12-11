@@ -233,6 +233,8 @@
     UITableView *tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width/3, 300)style:UITableViewStylePlain];
     tableView1.delegate = self;
     tableView1.dataSource = self;
+    tableView1.estimatedRowHeight = 100;
+    tableView1.rowHeight = UITableViewAutomaticDimension;
     tableView1.showsVerticalScrollIndicator = NO;
     [ZXDNetworking setExtraCellLineHidden:tableView1];
     [self addSubview:tableView1];

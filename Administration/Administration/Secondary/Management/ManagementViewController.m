@@ -193,12 +193,26 @@
     if (btn.tag == 2000) {
         [alert removeFromSuperview];
     }else{
-        [[EMClient sharedClient] logout:YES];
-        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-        ViewController *VC= [[ViewController alloc]init];
-        [self presentViewController:VC animated:YES completion:nil];
-        [LVFmdbTool deleteData:nil];
-         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Launch"];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            // 处理耗时操作在此次添加
+            [[EMClient sharedClient] logout:YES];
+            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+            [LVFmdbTool deleteData:nil];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Launch"];
+            
+            //通知主线程刷新
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //在主线程刷新UI
+                ViewController *VC= [[ViewController alloc]init];
+                [self presentViewController:VC animated:YES completion:nil];
+            }); 
+            
+        });
+        
+//        dispatch_queue_t queue = dispatch_get_main_queue();
+//        dispatch_async(queue, ^{
+//            
+//        });
     }
 }
 - (void)didReceiveMemoryWarning {

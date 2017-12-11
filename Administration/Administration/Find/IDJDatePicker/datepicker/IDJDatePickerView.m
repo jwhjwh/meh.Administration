@@ -58,7 +58,7 @@
             
             NSString *year = [self getCnMoneyByString:array[0]];
             self.stringChinese = [NSString stringWithFormat:@"%@年%@%@",year,array[1],array[2]];
-            [ShareModel shareModel].stringChinese = self.stringChinese;
+            
         } else if (type==Chinese1) {
             [picker selectCell:[years indexOfObject:[NSString stringWithFormat:@"%@-%@-%@", cal.era, ((IDJChineseCalendar *)cal).jiazi, cal.year]] inScroll:0];
             [picker selectCell:[months indexOfObject:cal.month] inScroll:1];
@@ -72,7 +72,7 @@
             
             
             self.stringGregorian = [NSString stringWithFormat:@"%d-%d-%d",s.solarYear,s.solarMonth,s.solarDay];
-            [ShareModel shareModel].stringGregorian = self.stringGregorian;
+            
             
         }
         [delegate notifyNewCalendar:cal];

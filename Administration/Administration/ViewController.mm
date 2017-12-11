@@ -320,8 +320,6 @@
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请输入识别码" andInterval:1.0];
         return;
     }else{
-        
-
     NSString *urlStr =[NSString stringWithFormat:@"%@user/login.action",KURLHeader];
     NSString *pastr =[ZXDNetworking encryptStringWithMD5:_passStr];
     NSString *shiStr =[ZXDNetworking encryptStringWithMD5:_shibieStr];

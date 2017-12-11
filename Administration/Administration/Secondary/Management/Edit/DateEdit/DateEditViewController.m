@@ -35,6 +35,10 @@
 @property (nonatomic,weak) UIViewDatePicker *myDatePick;
 
 @property (nonatomic,strong)NSIndexPath *indexPath;
+
+@property (nonatomic,strong)NSString *string1;
+@property (nonatomic,strong)NSString *string2;
+@property (nonatomic,strong)NSString *flag;
 @end
 
 @implementation DateEditViewController
@@ -101,21 +105,23 @@
 
 -(void)getChooseDate
 {
-    [infonTableview reloadData];
+    self.string1 = self.myDatePick.stringChinese;
+    self.string2 = self.myDatePick.stringGregorian;
+    self.flag = self.myDatePick.flagggg;
+    [infonTableview reloadRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)masgegeClick:(NSString *)flag{
 
-    flag = [ShareModel shareModel].flag;
     NSString *uStr =[NSString stringWithFormat:@"%@user/addUserInfo.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSLog(@"%@%@%@%@",_DayLabel.text,_Age,_IdNo,_AddLabel.text);
     NSDictionary *dict=@{@"appkey":apKeyStr,
                          @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
-                         @"flag":[ShareModel shareModel].flag,
-                         @"SolarBirthday":[ShareModel shareModel].stringGregorian,
-                         @"LunarBirthday":[ShareModel shareModel].stringChinese,
+                         @"flag":self.flag,
+                         @"SolarBirthday":self.string2,
+                         @"LunarBirthday":self.string1,
                          @"Age":_Age,
                          @"Address":_AddLabel.text,
                          @"Wcode":_Wcode,
@@ -237,11 +243,11 @@
             _DayLabel = [[UILabel alloc]initWithFrame:labelRect2];
             _DayLabel.text = @"";
             [cell addSubview:_DayLabel];
-            if ([[ShareModel shareModel].flag isEqualToString:@"1"]) {
-                _DayLabel.text = [ShareModel shareModel].stringChinese;
-            }else if([[ShareModel shareModel].flag isEqualToString:@"2"])
+            if ([self.flag isEqualToString:@"1"]) {
+                _DayLabel.text = self.string1;
+            }else if([self.flag isEqualToString:@"2"])
             {
-                _DayLabel.text = [ShareModel shareModel].stringGregorian;
+                _DayLabel.text = self.string2;
             }else
             {
             _DayLabel.text = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.section-1][indexPath.row]];

@@ -9,6 +9,7 @@
 #import "VCTrackChoosePostion.h"
 #import "CollectionViewCellPosition.h"
 #import "VCTrackShopList.h"
+#import "TrackChooseDepartment.h"
 @interface VCTrackChoosePostion ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong)UICollectionView *collectionView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -21,7 +22,7 @@
 #pragma -mark custem
 -(void)getAllPosition
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserPosition.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@stores/selectDepartmentRoleId.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -88,11 +89,8 @@
 //定义每一个cell的大小
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-
 {
-    
     return CGSizeMake(200, 200);
-    
 }
 
 //cell的点击事件
@@ -100,29 +98,30 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    VCTrackShopList *vc = [[VCTrackShopList alloc]init];
+    
     NSDictionary *dict = self.arrayData[indexPath.section];
     NSString *roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     
     [ShareModel shareModel].roleID = roleID;
-    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"did"]];
+    [ShareModel shareModel].departmentID = [NSString stringWithFormat:@"%@",dict[@"departmentId"]];
     
     if ([roleID isEqualToString:@"5"]||[roleID isEqualToString:@"2"]||[roleID isEqualToString:@"3"]||[roleID isEqualToString:@"4"]||[roleID isEqualToString:@"14"]||[roleID isEqualToString:@"16"]||[roleID isEqualToString:@"17"]) {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限" andInterval:1];
+        VCTrackShopList *vc = [[VCTrackShopList alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }else
     {
+        TrackChooseDepartment *vc = [[TrackChooseDepartment alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    
+    
     
 }
 //每一个分组的上左下右间距
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-
 {
-    
     return UIEdgeInsetsMake(5, Scree_width/2-175, 5, 5);
-    
 }
 
 #pragma -mark system

@@ -27,6 +27,7 @@
 #import "positionViewController.h"//多职位-业务膜拜
 #import "VCBrithday.h" //生日提醒
 #import "VCPostionMobai.h"
+#import "VCTrackChoosePostion.h"
 #define MenuH 270
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
@@ -348,8 +349,10 @@
                 break;
             case 9:{
                 //店家跟踪
-                TrackingViewController *traVC = [[TrackingViewController alloc]init];
-                [self.navigationController pushViewController:traVC animated:YES];
+//                TrackingViewController *traVC = [[TrackingViewController alloc]init];
+//                [self.navigationController pushViewController:traVC animated:YES];
+                VCTrackChoosePostion *vc = [[VCTrackChoosePostion alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
                 
             }
                 break;
