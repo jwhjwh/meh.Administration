@@ -13,4 +13,6 @@
 @property (nonatomic,strong) NSString *shopname;
 @property (strong,nonatomic) NSString *strId;
 @property (strong,nonatomic) NSString * shopId;
+@property (strong,nonatomic) NSString *DepartmentName;
+@property (strong,nonatomic) NSString *Storeid;
 @end

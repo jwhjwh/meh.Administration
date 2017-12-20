@@ -51,20 +51,25 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
       [self nsstringallocinit];
-    if (self.issssend == NO) {
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
+    if ([_shopname isEqualToString:@"1"]) {
         [self AFNetworking];
     }else{
-        UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
-        [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-        [rightitem addTarget: self action: @selector(rightItemAction:) forControlEvents: UIControlEventTouchUpInside];
-        UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
-        self.navigationItem.rightBarButtonItem = rbuttonItem;
+        if (self.issssend == NO) {
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+            [self AFNetworking];
+        }else{
+            UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
+            rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
+            [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+            [rightitem addTarget: self action: @selector(rightItemAction:) forControlEvents: UIControlEventTouchUpInside];
+            UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
+            self.navigationItem.rightBarButtonItem = rbuttonItem;
+        }
     }
+    
     
    _nameArrs = [[NSMutableArray alloc]initWithObjects:@[@"照片"],@[@"姓名",@"年龄",@"生日",@"爱好",@"性格",@"电话",@"特长",@"综合研判"], nil];
     _ligary = [[NSMutableArray alloc]initWithObjects:@[@""],@[@"填写姓名",@"填写年龄",@"填写生日",@"填写爱好",@"填写性格",@"填写电话"], nil];
@@ -376,6 +381,7 @@
     [cell addSubview:tlelabel];
     
     if (indexPath.section == 0) {
+        cell.userInteractionEnabled = _issssend;
         _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(120, 15, 50, 50)];
         if (_logImage.length<1) {
             _TXImage.image = [UIImage imageNamed:@"tjtx"];
@@ -388,12 +394,13 @@
         UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPage3:)];
         tapGesturRecognizer.numberOfTapsRequired = 1; //设置单击几次才触发方法
         [_TXImage addGestureRecognizer:tapGesturRecognizer];
-        _TXImage.userInteractionEnabled = YES;
+        _TXImage.userInteractionEnabled = _issssend;
         [cell addSubview:_TXImage];
     }else{
         if (indexPath.row>5) {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
         }else{
+            cell.userInteractionEnabled = _issssend;
             if(indexPath.row==2){
                 [_DayLabel removeFromSuperview];
                 _DayLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 1, self.view.bounds.size.width-170, 48)];

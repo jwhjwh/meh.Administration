@@ -14,4 +14,7 @@
 @property (nonatomic,strong) NSString *SummaryTypeid;
 @property (nonatomic,strong) NSString *shopname;
 @property (strong,nonatomic) NSString *strId;
+
+@property (strong,nonatomic)NSString  *shopInfor;
+
 @end

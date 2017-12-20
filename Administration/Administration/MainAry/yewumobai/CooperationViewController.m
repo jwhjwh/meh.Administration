@@ -182,7 +182,6 @@
 
     NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
     cell.shijianLabel.text = xxsj;
-    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -192,9 +191,10 @@
     OneStoreinfor *oneVC = [[OneStoreinfor alloc]init];
     oneVC.shopId = model.shopId;
     oneVC.strId = self.strId;
+    oneVC.Storeid = model.shId;
     oneVC.TargetVisitId= @"1";
     oneVC.shopname = model.storeName;
-
+    oneVC.DepartmentName = model.DepartmentName;
     [self.navigationController pushViewController:oneVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {

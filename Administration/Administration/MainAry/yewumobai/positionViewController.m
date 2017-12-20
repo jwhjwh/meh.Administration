@@ -9,6 +9,7 @@
 #import "positionViewController.h"
 #import "CollectionViewCellPosition.h"
 #import "businessViewController.h"
+#import "ShopInforViewController.h"
 @interface positionViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong)UICollectionView *collectionView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -23,7 +24,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"选择职位";
-    // [self getAllPosition];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     btn.autoresizesSubviews=NO;
@@ -98,10 +98,10 @@
                 NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
                 [self.arrayData addObject:namestring];
                 NSString *departmentID = [[NSString alloc]init];
-                if (dic[@"departmentIDs"] == nil) {
+                if (dic[@"departmentID"] == nil) {
                     departmentID = @"";
                 }else{
-                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentIDs"]];
+                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentID"]];
 
                 }
                 [self.departmentID addObject:departmentID];
@@ -170,12 +170,21 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    businessViewController *businVC = [[businessViewController alloc]init];
-    businVC.strId = _arrayId[indexPath.section];
-    [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentIDs"];
-    NSLog(@"%@",self.arrayId);
-    NSLog(@"%@",businVC.strId);
-    [self.navigationController showViewController:businVC sender:nil];
+    if ([self.mobaixinxi isEqualToString:@"2"]) {
+        businessViewController *businVC = [[businessViewController alloc]init];
+        businVC.strId = _arrayId[indexPath.section];
+        [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentIDs"];
+        NSLog(@"%@",self.arrayId);
+        NSLog(@"%@",businVC.strId);
+        [self.navigationController showViewController:businVC sender:nil];
+    }else{
+        ShopInforViewController *businVC = [[ShopInforViewController alloc]init];
+        businVC.strId = _arrayId[indexPath.section];
+        [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentIDs"];
+        
+        [self.navigationController showViewController:businVC sender:nil];
+    }
+    
     
 }
 //每一个分组的上左下右间距

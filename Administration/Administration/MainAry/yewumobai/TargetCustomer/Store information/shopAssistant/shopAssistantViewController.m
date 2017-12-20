@@ -39,12 +39,17 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
-    [rightitem setBackgroundImage:[UIImage imageNamed:@"fj_ico"] forState:UIControlStateNormal];
-    [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
-    self.navigationItem.rightBarButtonItem = rbuttonItem;
+    if ([_shopname isEqualToString:@"1"]) {
+        
+    }else{
+        UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
+        [rightitem setBackgroundImage:[UIImage imageNamed:@"fj_ico"] forState:UIControlStateNormal];
+        [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
+        UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
+        self.navigationItem.rightBarButtonItem = rbuttonItem;
+    }
+    
     
     table = [[UITableView alloc] initWithFrame:self.view.frame];
     table.delegate = self;
@@ -67,10 +72,10 @@
         NSInteger k = [model.flag integerValue];
         NSString *stringInt = [NSString stringWithFormat:@"%ld",k];
         if ([stringInt isEqualToString:@"1"]) {
-             nameee = [NSString stringWithFormat:@"%@   %@   %@",model.name,model.lunarBirthday,model.phone];
+             nameee = [NSString stringWithFormat:@"%@    %@",model.name,model.phone];
         }else{
            
-             nameee = [NSString stringWithFormat:@"%@   %@   %@",model.name,model.solarBirthday,model.phone];
+             nameee = [NSString stringWithFormat:@"%@    %@",model.name,model.phone];
         }
         [dict setObject:model forKey:nameee];
         [aaaa addObject:dict];
@@ -182,6 +187,7 @@
         addvc.shopid = self.shopid;
         addvc.strId = self.strId;
         addvc.StoreClerkId = model.AssustantId;
+        addvc.shopname = self.shopname;
         [self.navigationController pushViewController:addvc animated:YES];
     }else{
         AddAssistant *addvc = [[AddAssistant alloc]init];
@@ -189,6 +195,7 @@
         addvc.shopid = self.shopid;
         addvc.strId = self.strId;
         addvc.StoreClerkId = model.AssustantId;
+        addvc.shopname = self.shopname;
         [self.navigationController pushViewController:addvc animated:YES];
     }
     

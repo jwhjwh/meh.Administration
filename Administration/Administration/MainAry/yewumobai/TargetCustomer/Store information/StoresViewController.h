@@ -16,4 +16,6 @@
 
 @property (nonatomic,strong)NSString*isofyou;
 
+@property (nonatomic,strong)NSString *shopname;
+
 @end

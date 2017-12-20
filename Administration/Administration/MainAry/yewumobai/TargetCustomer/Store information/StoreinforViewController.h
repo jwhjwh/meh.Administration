@@ -14,5 +14,9 @@
 @property (nonatomic,strong)NSString *shopId;
 @property (nonatomic, assign) BOOL isend;
 @property (strong,nonatomic) NSString *strId;
+@property (strong,nonatomic) NSString *Storeid;
+@property (strong,nonatomic) NSString *DepartmentName;
+
+@property (strong,nonatomic) NSString *shopname;
 
 @end

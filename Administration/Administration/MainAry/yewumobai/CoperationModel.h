@@ -18,4 +18,5 @@
 @property (nonatomic,strong)NSString *storeName;
 @property (nonatomic,strong)NSString *address;
 @property (nonatomic,strong)NSString *shId;
+@property (strong,nonatomic) NSString *DepartmentName;
 @end

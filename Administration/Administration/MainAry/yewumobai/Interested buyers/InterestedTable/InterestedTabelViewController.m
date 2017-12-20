@@ -21,6 +21,7 @@
 #import "TargetTableViewController.h"
 #import "StoreinforViewController.h"
 #import "businessViewController.h"
+#import "depatementViewController.h"
 @interface InterestedTabelViewController ()<UITableViewDelegate,UITableViewDataSource,XFDaterViewDelegate>
 {
     UITableView *infonTableview;
@@ -58,6 +59,8 @@
 @property (nonatomic,strong)NSString *UsersName;//业务人员名称
 
 @property (nonatomic,strong)NSString *visiId;
+@property (nonatomic,strong)UIView *footView;
+@property (nonatomic,strong)NSString *state;
 //---------
 @end
 
@@ -96,7 +99,7 @@
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-
+   
     [ZXDNetworking setExtraCellLineHidden:infonTableview];
     [self selectworsh];
 }
@@ -124,6 +127,7 @@
     _Address= [[NSString alloc]init];//门店地址
     _ShopName= [[NSString alloc]init];//店铺负责人姓名
     _UsersName= [[NSString alloc]init];//业务人员名称
+    _state = [[NSString alloc]init];
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -193,14 +197,17 @@
             
          }
          return cell;
-     }else
-     {
+     }else{
          FillTableViewCell *cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
          if (cell == nil) {
              cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
          }
-         if (!(indexPath.row==9)) {
-             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+         if ((indexPath.row==9)) {
+            
+         }else if(indexPath.row==13){
+             
+         }else{
+              cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
          }
          if (indexPath.row == 9) {
              if (_InterNameAry.count>0) {
@@ -214,11 +221,84 @@
                  cell.xingLabel.text = _InterNameAry[indexPath.row];
                  cell.userInteractionEnabled = isof;
              }
+         }else if (indexPath.row==13){
+             if (isof ==NO) {
+                 UILabel *dangqian = [[UILabel alloc]init];
+                 UIImageView *tongs = [[UIImageView alloc]init];
+                 UILabel *fents = [[UILabel alloc]init];
+                 UIImageView *fenbm = [[UIImageView alloc]init];
+                 fenbm.image = [UIImage imageNamed:@"fx_icof"];
+                 [cell addSubview:fenbm];
+                 UILabel *fenbmlabel = [[UILabel alloc]init];
+                 fenbmlabel.text = @"已分享部门";
+                 fenbmlabel.font = [UIFont systemFontOfSize:11];
+                 fenbmlabel.textColor = GetColor(113, 180, 114, 1);
+                 [cell addSubview:fenbmlabel];
+                 UIImageView *yishengji = [[UIImageView alloc]init];
+                 UILabel *yisj = [[UILabel alloc]init];
+                 
+                 dangqian.text = _arr[indexPath.row];
+                 dangqian.font = [UIFont systemFontOfSize:12];
+                 [cell addSubview:dangqian];
+                 tongs.image = [UIImage imageNamed:@"fx_ico"];
+                 [cell addSubview:tongs];
+                 fents.text = @"已分享同事";
+                 fents.font = [UIFont systemFontOfSize:11];
+                 fents.textColor = GetColor(230, 165, 108, 1);
+                 [cell addSubview:fents];
+                 yishengji.image = [UIImage imageNamed:@"tj__ico01"];
+                 [cell addSubview:yishengji];
+                 yisj.text = @"以升级目标客户";
+                 yisj.font = [UIFont systemFontOfSize:11];
+                 yisj.textColor =  GetColor(158, 91, 185, 1);
+                 [cell addSubview:yisj];
+                 if (_UserId ==nil) {
+                     if (_DepartmentId   ==nil) {
+                         if (_state ==nil) {
+                         }else{
+                             dangqian.frame = CGRectMake(10, 10, 70, 30);
+                             yishengji.frame =CGRectMake(80, 17.5, 15, 15);
+                             yisj.frame = CGRectMake(100, 10, 90, 30);
+                         }
+                     }else{
+                         dangqian.frame = CGRectMake(10, 10, 70, 30);
+                         fenbm.frame = CGRectMake(80, 17.5, 15, 15);
+                         fenbmlabel.frame = CGRectMake(100, 10, 70, 30);
+                         if (_state ==nil) {
+                         }else{
+                             yishengji.frame =CGRectMake(170, 17.5, 15, 15);
+                             yisj.frame = CGRectMake(190, 10, 90, 30);
+                         }
+                     }
+                 }else{
+                     dangqian.frame = CGRectMake(10, 10, 70, 30);
+                     tongs.frame =CGRectMake(80, 17.5, 15, 15);
+                     fents.frame = CGRectMake(100, 10, 70, 30);
+                     if (_DepartmentId ==nil) {
+                         if (_state ==nil) {
+                         }else{
+                             yishengji.frame =CGRectMake(170, 17.5, 15, 15);
+                             yisj.frame = CGRectMake(190, 10, 90, 30);
+                         }
+                     }else{
+                         fenbm.frame = CGRectMake(170, 17.5, 15, 15);
+                         fenbmlabel.frame = CGRectMake(190, 10, 70, 30);
+                         if (_state ==nil) {
+                         }else{
+                             yishengji.frame =CGRectMake(260, 17.5, 15, 15);
+                             yisj.frame = CGRectMake(280, 10, 90, 30);
+                         }
+                     }
+                 }
+             }
          }
          if (isof == YES) {
               cell.mingLabel.text=_arr[indexPath.section][indexPath.row];
          }else{
-              cell.mingLabel.text=_arr[indexPath.row];
+             if (indexPath.row<13) {
+                 cell.mingLabel.text=_arr[indexPath.row];
+             }
+             
          }
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
          return cell;
@@ -258,8 +338,6 @@
 {
     _Index=indexPath;
     inftionTableViewCell *cella = [tableView cellForRowAtIndexPath:indexPath];
-
-    
         if (indexPath.row == 0) {
             //shopId
             if (isof == YES) {
@@ -403,47 +481,90 @@
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     if (isof == NO) {
         NSArray *zwlbAry = [[NSArray alloc]init];
-        zwlbAry = @[@"编辑意向客户",@"升级为目标客户",@"确定合作",@"分享给同事",@"删除"];
+        if (_state!=nil) {
+            zwlbAry = @[@"分享给同事",@"分享部门",@"删除"];
+        }else{
+            zwlbAry = @[@"编辑意向客户",@"升级为目标客户",@"确定合作",@"分享给同事",@"删除"];
+        }
         [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
-            if (selectIndex == 0) {
-                isof = YES;
-                _arr=@[@[@""],@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"]];
-                [infonTableview reloadData];
-            }else if(selectIndex == 1){
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为目标客户么" sureBtn:@"确认" cancleBtn:@"取消"];
-                alertView.resultIndex = ^(NSInteger index){
-                    NSLog(@"%ld",index);
-                    if(index == 2){
-                        [self InsertTargetVisit];
-                        
-                    }
-                };
-                [alertView showMKPAlertView];
-            }else if(selectIndex == 2){
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定为合作客户" sureBtn:@"确认" cancleBtn:@"取消"];
-                alertView.resultIndex = ^(NSInteger index){
-                    NSLog(@"%ld",index);
-                    if(index == 2){
-                       
-                        StoreinforViewController *storeinforVC = [[StoreinforViewController  alloc]init];
-                        storeinforVC.titleName = _StoreName;
-                        storeinforVC.isend = YES;
-                        storeinforVC.shopId = _ShopId;
-                        [self.navigationController pushViewController:storeinforVC animated:YES];
-                    }
-                };
-                [alertView showMKPAlertView];
-            }else if(selectIndex == 3){
+            if (_state!=nil) {
+                if (selectIndex ==0) {
+                    ShareColleagues *SCVC = [[ShareColleagues alloc]init];
+                    SCVC.shopip = _ShopId;
+                    SCVC.yiandmu = @"2";
+                    SCVC.targetvisitid = _Id;
+                    [self.navigationController pushViewController:SCVC animated:YES];
+                }else if(selectIndex == 1){
+                    depatementViewController *dptmVC = [[depatementViewController alloc]init];
+                    //depaid  shopid  _targetVisitId
+                    dptmVC.shopid = _ShopId;
+                    dptmVC.intendedId = _Id;
+                    dptmVC.tarAndInter = @"1";
+                    
+                    [self.navigationController pushViewController:dptmVC animated:YES];
+                }else{
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定删除" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        NSLog(@"%ld",index);
+                        if(index == 2){
+                            [self deleteShop];
+                            
+                        }
+                    };
+                    [alertView showMKPAlertView];
+                }
                 
-                ShareColleagues *SCVC = [[ShareColleagues alloc]init];
-                SCVC.shopip = _ShopId;
-                SCVC.yiandmu = @"2";
-                SCVC.targetvisitid = _Id;
-                  [self.navigationController pushViewController:SCVC animated:YES];
-            }else {
-                //删除
-                [self deleteShop];
+            }else{
+                if (selectIndex == 0) {
+                    isof = YES;
+                    _arr=@[@[@""],@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"]];
+                    [infonTableview reloadData];
+                }else if(selectIndex == 1){
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为目标客户么" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        NSLog(@"%ld",index);
+                        if(index == 2){
+                            [self InsertTargetVisit];
+                            
+                        }
+                    };
+                    [alertView showMKPAlertView];
+                }else if(selectIndex == 2){
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定为合作客户" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        NSLog(@"%ld",index);
+                        if(index == 2){
+                            
+                            StoreinforViewController *storeinforVC = [[StoreinforViewController  alloc]init];
+                            storeinforVC.titleName = _StoreName;
+                            storeinforVC.isend = YES;
+                            storeinforVC.shopId = _ShopId;
+                            [self.navigationController pushViewController:storeinforVC animated:YES];
+                        }
+                    };
+                    [alertView showMKPAlertView];
+                }else if(selectIndex == 3){
+                    
+                    ShareColleagues *SCVC = [[ShareColleagues alloc]init];
+                    SCVC.shopip = _ShopId;
+                    SCVC.yiandmu = @"2";
+                    SCVC.targetvisitid = _Id;
+                    [self.navigationController pushViewController:SCVC animated:YES];
+                }else {
+                    //删除
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定删除" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        NSLog(@"%ld",index);
+                        if(index == 2){
+                             [self deleteShop];
+                            
+                        }
+                    };
+                    [alertView showMKPAlertView];
+                   
+                }
             }
+            
         } selectValue:^(NSString *selectValue) {
             
         } showCloseButton:NO];
@@ -574,6 +695,26 @@
                  [infonTableview reloadData];
              };
              [alertView showMKPAlertView];
+         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
+             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限修改该记录" andInterval:1.0];
+         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+             alertView.resultIndex = ^(NSInteger index){
+                 [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                 ViewController *loginVC = [[ViewController alloc] init];
+                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                 [self presentViewController:loginNavC animated:YES completion:nil];
+             };
+             [alertView showMKPAlertView];
+         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+             alertView.resultIndex = ^(NSInteger index){
+                 [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                 ViewController *loginVC = [[ViewController alloc] init];
+                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                 [self presentViewController:loginNavC animated:YES completion:nil];
+             };
+             [alertView showMKPAlertView];
          }
     } failure:^(NSError *error) {
         
@@ -602,6 +743,9 @@
                 [model setValuesForKeysWithDictionary:dic];
                 _Id = model.Id;
                 _ShopId = model.shopId;
+                _UserId = model.userId;
+                _state = model.state;
+                _DepartmentId = model.departmentId;
                 _Dates =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(0, 10)]];
                 [_InterNameAry addObject:_Dates];//
                 if (model.usersName ==nil) {
@@ -694,11 +838,12 @@
                     _Comprehensive = model.comprehensive;
                 }
                 [_InterNameAry addObject:_Comprehensive];//店面情况综合分析
-                
-                
-                
-                
-                
+                if (model.userId==nil && model.state ==nil &&model.departmentId ==nil) {
+                    
+                }else{
+                    _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析",@"当前状态:"];
+                    
+                }
             }
             [infonTableview reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {

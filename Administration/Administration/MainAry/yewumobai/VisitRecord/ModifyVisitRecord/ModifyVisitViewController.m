@@ -65,6 +65,9 @@
 
 @property (nonatomic,strong)NSString *visiId;
 
+
+@property (nonatomic,strong)NSString *strea;
+
 @end
 
 @implementation ModifyVisitViewController
@@ -119,8 +122,9 @@
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
-    
     [ZXDNetworking setExtraCellLineHidden:_infonTableview];
+   
+    
 }
 -(void)nssstringalloc{
     _storephone = [[NSString alloc]init];
@@ -136,6 +140,8 @@
     _Berths = [[NSString alloc]init];
     _CreatorId =[[NSString alloc]init];
     _storepersonnel = [[NSString alloc]init];
+    _strea = [[NSString alloc]init];
+    
 }
 
 
@@ -163,7 +169,7 @@
                 ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
                 _CreatorId = model.UsersId;
-                
+                _strea = model.state;
                 _shopid = [[NSString alloc]initWithFormat:@"%@",model.ShopId];//店铺id
                 _sigincity = [[NSString alloc]initWithFormat:@"%@%@%@%@",model.Province,model.City,model.County,model.Address];
                 _storeregion= [[NSString alloc]initWithFormat:@"%@ %@ %@ %@",model.Province,model.City,model.County,model.Address];
@@ -279,7 +285,14 @@
                     _note = model.Modified;
                 [_InterNameAry addObject:_note];
                 }
+                if (model.state ==nil) {
+                    
+                }else{
+                    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注",@"当前状态:"];
+                    
+                }
             }
+            
             [_infonTableview reloadData];
         }
     } failure:^(NSError *error){
@@ -372,7 +385,11 @@
         if (cell == nil) {
             cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
         }
-        if (!(indexPath.row==9)) {
+        if (indexPath.row==9) {
+            
+        }else if(indexPath.row==14){
+            
+        }else{
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
         }
         if (indexPath.row == 9) {
@@ -381,8 +398,39 @@
                 cell.userInteractionEnabled = Modify;
             }
             //
+        }else if (indexPath.row==14){
+            if (Modify ==NO) {
+                UILabel *dangqian = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 70, 30)];
+                UIImageView *yishengji = [[UIImageView alloc]initWithFrame:CGRectMake(85, 17.5, 15, 15)];
+                UILabel *yisj = [[UILabel alloc]initWithFrame:CGRectMake(105, 10, 90, 30)];
+               
+                    if (_strea==nil) {
+                        
+                    }else{
+                        dangqian.text = _arr[indexPath.row];
+                        dangqian.font = [UIFont systemFontOfSize:12];
+                        [cell addSubview:dangqian];
+                        
+                        yishengji.image = [UIImage imageNamed:@"tj__ico01"];
+                        [cell addSubview:yishengji];
+                        
+                        yisj.text = @"以升级目标客户";
+                        yisj.font = [UIFont systemFontOfSize:11];
+                        yisj.textColor =  GetColor(158, 91, 185, 1);
+                        [cell addSubview:yisj];
+                    }
+               
+            }
         }
-        cell.mingLabel.text=_arr[indexPath.row];
+        if (Modify == YES) {
+            cell.mingLabel.text=_arr[indexPath.row];
+        }else{
+            if (indexPath.row<14) {
+                cell.mingLabel.text=_arr[indexPath.row];
+            }
+            
+        }
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -613,6 +661,7 @@
                 if (selectIndex == 0) {
                     Modify = YES;
                     self.moandthe = @"2";
+                    
                     [_infonTableview reloadData];
                 }else if(selectIndex == 1){
                     FillinfoViewController *fillVC = [[FillinfoViewController alloc]init];
@@ -682,11 +731,26 @@
             } showCloseButton:NO];
         }else{
             NSArray *zwlbAry = [[NSArray alloc]init];
-            zwlbAry = @[@"修改陌拜记录",@"填写记录",@"升级为意向客户",@"升级为目标客户",@"删除"];
+            if (_strea!=nil) {
+                if ([_strea intValue] ==2) {
+                    //意向
+                    zwlbAry = @[@"填写记录",@"升级为目标客户",@"删除"];
+                }else if([_strea intValue]==3){
+                 // 目标
+                    zwlbAry = @[@"填写记录",@"删除"];
+                }else if([_strea intValue]==4){
+                    // 目标
+                    zwlbAry = @[@"填写记录",@"删除"];
+                }
+            }else{
+                zwlbAry = @[@"修改陌拜记录",@"填写记录",@"升级为意向客户",@"升级为目标客户",@"删除"];
+            }
+            
             [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
                 NSLog(@"选择了第%ld个",(long)selectIndex);
                 if (selectIndex == 0) {
                     Modify = YES;
+                    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
                     [_infonTableview reloadData];
                 }else if (selectIndex == 1){
                     FillinfoViewController *fillVC = [[FillinfoViewController alloc]init];
@@ -775,8 +839,8 @@
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.strId,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":_shopid,@"CreatorId":_CreatorId};
         [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                
                 Modify = NO;
+                _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注",@"当前状态:"];
                 [_infonTableview reloadData];
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
@@ -797,6 +861,8 @@
                     [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
+            }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
+               [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限修改该记录" andInterval:1.0];
             }
         } failure:^(NSError *error) {
             

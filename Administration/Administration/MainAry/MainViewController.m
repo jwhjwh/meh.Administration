@@ -12,7 +12,6 @@
 #import "PermissionsViewController.h"
 #import "SubmittedViewController.h"//图片报岗
 #import "businessViewController.h"//业务陌拜
-#import "TrackingViewController.h"
 #import "brandViewController.h"
 #import "ViewControllerEmployeeTable.h"//报表管理
 #import "ViewControllerChoosePosition.h"//选择职位
@@ -28,6 +27,7 @@
 #import "VCBrithday.h" //生日提醒
 #import "VCPostionMobai.h"
 #import "VCTrackChoosePostion.h"
+#import "ShopInforViewController.h"//店家信息
 #define MenuH 270
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
 ///头像
@@ -345,7 +345,7 @@
             }
                 break;
             case 8:
-                //店家信息
+                //店家管理
                 break;
             case 9:{
                 //店家跟踪
@@ -374,6 +374,73 @@
             {
                 VCPostionMobai *vc = [[VCPostionMobai alloc]init];
                 [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 13:
+                //店家信息
+            {
+               
+                
+                NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectDepartmentId.action",KURLHeader];
+                NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+                NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+                NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+                NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid};
+                [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+                    NSString *stringCode = [responseObject valueForKey:@"status"];
+                    if ([stringCode isEqualToString:@"0000"]) {
+                        //显示自己担任的所有职位
+                        NSArray *array=[responseObject valueForKey:@"list"];
+                        NSMutableArray* arrayId = [[NSMutableArray alloc]init];
+                        NSMutableArray*arrayData = [[NSMutableArray alloc]init];
+                        NSMutableArray*departmenntID  =[[NSMutableArray alloc]init];
+                        for (NSDictionary *dic in array) {
+                            NSString *string = [NSString stringWithFormat:@"%@",dic[@"roleId"]];
+                            [arrayId addObject:string];
+                            
+                            NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
+                            [arrayData addObject:namestring];
+                            NSString *departmentID = [[NSString alloc]init];
+                            if (dic[@"departmentIDs"] == nil) {
+                                departmentID = @"";
+                                
+                            }else{
+                                departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentIDs"]];
+                                
+                            }
+                            [departmenntID addObject:departmentID];
+                            
+                        }
+                        
+                        if (arrayId.count>1) {
+                            
+                            positionViewController *position = [[positionViewController alloc]init];
+                            position.mobaixinxi = @"1";
+                            [self.navigationController pushViewController:position animated:YES];
+                        }else{
+                            [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentIDs"];
+                            ShopInforViewController *shopinfor= [[ShopInforViewController alloc]init];
+                            shopinfor.strId = [USER_DEFAULTS valueForKey:@"roleId"];
+                            [self.navigationController pushViewController:shopinfor animated:YES];
+                        }
+                    }
+                    if ([stringCode isEqualToString:@"1001"]) {
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"重新登录" andInterval:1];
+                        return;
+                    }
+                    if ([stringCode isEqualToString:@"4444"]) {
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1];
+                        return;
+                    }
+                    if ([stringCode isEqualToString:@"5000"]) {
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
+                        return;
+                    }
+                    
+                } failure:^(NSError *error) {
+                    
+                } view:self.view MBPro:YES];
+                
             }
                 break;
                 
@@ -419,7 +486,7 @@
             if (arrayId.count>1) {
                 
                 positionViewController *position = [[positionViewController alloc]init];
-                
+                position.mobaixinxi = @"2";
                 [self.navigationController pushViewController:position animated:YES];
             }else{
                 [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentIDs"];

@@ -69,18 +69,23 @@ BOOL isend;
     self.tableView.delegate =self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
-    if (isend ==YES) {
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
+    if ([self.shopname isEqualToString:@"1"]) {
+        
     }else{
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
+        if (isend ==YES) {
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+        }else{
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+        }
+        
+        
     }
-    
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -265,12 +270,13 @@ BOOL isend;
             BossHome *bhvc = [[BossHome alloc]init];
             bhvc.bossid = _BossId;
             bhvc.strId = self.strId;
+            bhvc.shopname = self.shopname;
             [self.navigationController pushViewController:bhvc animated:YES];
         }else if (indexPath.row==8){
             DPYJViewController *targetVC=[[DPYJViewController alloc]init];
             targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
            targetVC.dateStr = _ReviewsProposal; //点评建议
-            targetVC.modifi = YES;//可否编辑
+            targetVC.modifi = isend;//可否编辑
             targetVC.blcokStr=^(NSString *content,int num){
                 if (num==8) {
                     if (isend == YES) {
@@ -505,7 +511,12 @@ BOOL isend;
             };
             [alertView showMKPAlertView];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
-            isend = YES;
+            if ([self.shopname isEqualToString:@"1"]) {
+                 isend = NO;
+            }else{
+                isend = YES;
+            }
+           
             [self addViewremind];
             _Name = [[NSString alloc]init];
             _Phone = [[NSString alloc]init];

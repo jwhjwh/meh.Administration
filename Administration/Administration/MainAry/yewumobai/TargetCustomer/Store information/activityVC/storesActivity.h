@@ -11,4 +11,5 @@
 @interface storesActivity : UIViewController
 @property (nonatomic,strong) NSString *shopId;
 @property (strong,nonatomic) NSString *strId;
+@property (strong,nonatomic) NSString *shopname;
 @end

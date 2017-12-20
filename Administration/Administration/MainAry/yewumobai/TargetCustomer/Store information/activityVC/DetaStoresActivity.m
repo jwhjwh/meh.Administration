@@ -283,6 +283,9 @@
         actiVC.SummaryTypeid = self.SummaryTypeid;
         actiVC.strId = self.strId;
         actiVC.modifi = NO;
+        if ([_shopInfor isEqualToString:@"1"]) {
+            actiVC.shopname = @"1";
+        }
         actiVC.strId = self.strId;
         [self.navigationController pushViewController:actiVC animated:YES];
        
@@ -317,10 +320,15 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showEditView)];
-    [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = rightitem;
+    if ([_shopInfor isEqualToString:@"1"]) {
+        
+    }else{
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:(UIBarButtonItemStyleDone) target:self action:@selector(showEditView)];
+        [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightitem;
+    }
+    
     
     self.isDelete = NO;
     

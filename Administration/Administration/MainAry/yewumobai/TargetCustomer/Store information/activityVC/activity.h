@@ -23,5 +23,6 @@
 //Storeid。 门店id
 @property (strong,nonatomic) NSString *strId;
 
+@property (strong,nonatomic) NSString *shopname;
 
 @end

@@ -50,6 +50,7 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
     dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"],@"DepartmentID":[USER_DEFAULTS objectForKey:@"departmentIDs"]};
+    //[USER_DEFAULTS setObject: forKey:@"departmentIDs"];
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             _dataArray = [NSMutableArray array];

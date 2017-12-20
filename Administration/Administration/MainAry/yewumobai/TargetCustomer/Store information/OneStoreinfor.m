@@ -110,7 +110,9 @@
         storeVC.shopId =self.shopId;
         storeVC.strId = self.strId;
         storeVC.isend = NO;
+        storeVC.Storeid = self.Storeid;
         storeVC.titleName = self.shopname;
+        storeVC.DepartmentName = self.DepartmentName;
         [self.navigationController pushViewController:storeVC animated:YES];
     }else if (indexPath.section ==1) {
         NSLog(@"目标客户确立表");

@@ -31,5 +31,5 @@
 @property (nonatomic,strong)NSString *address;//门店地址
 @property (nonatomic,strong)NSString *shopName;//店铺负责人姓名
 @property (nonatomic,strong)NSString *usersName;//业务人员名称
-
+@property (nonatomic,strong)NSString *state;//已升级
 @end

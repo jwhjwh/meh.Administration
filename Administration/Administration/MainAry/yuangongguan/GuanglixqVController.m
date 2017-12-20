@@ -60,6 +60,8 @@
     _infonTableview.delegate =self;
     [ZXDNetworking setExtraCellLineHidden:_infonTableview];
     [self.view addSubview:_infonTableview];
+  
+    
     [self loadData];
 }
 #pragma mark - 网络请求
@@ -342,12 +344,13 @@
     }
     if (section == 2) {
         if (_departarr.count == 0) {
-            return 35;
+            return 15;
         }else{
-            return 25;
+            return 30;
         }
         
     }
+    
     return 15;
 }
 
@@ -432,23 +435,22 @@
                     }
                 }
             }
-            
         }
     }else{
-        if(_copedepar.count>0){
-            
-            if (indexPath.row%2==0) {
-                return 50;
-            }else{
-                id obj = _copedepar[indexPath.row];
-                if([obj isKindOfClass:[NSString class]]){
-                    return 50;
-                }else{//不是字符串
-                    return 50+30*([_copedepar[indexPath.row]count]-1)-5;
-                }
-            }
-        }
-        
+//        if(_copedepar.count>0){
+//
+//            if (indexPath.row%2==0) {
+//                return 50;
+//            }else{
+//                id obj = _copedepar[indexPath.row];
+//                if([obj isKindOfClass:[NSString class]]){
+//                    return 50;
+//                }else{//不是字符串
+//                    return 50+30*([_copedepar[indexPath.row]count]-1)-5;
+//                }
+//            }
+//        }
+        return 50;
     }
     return 50;
 }

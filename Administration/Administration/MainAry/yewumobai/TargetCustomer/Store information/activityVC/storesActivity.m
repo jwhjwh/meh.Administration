@@ -41,12 +41,17 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     //fj_ico
-    UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
-    [rightitem setBackgroundImage:[UIImage imageNamed:@"fj_ico"] forState:UIControlStateNormal];
-    [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
-    self.navigationItem.rightBarButtonItem = rbuttonItem;
+    if ([_shopname isEqualToString:@"1"]) {
+        
+    }else{
+        UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
+        [rightitem setBackgroundImage:[UIImage imageNamed:@"fj_ico"] forState:UIControlStateNormal];
+        [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
+        UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
+        self.navigationItem.rightBarButtonItem = rbuttonItem;
+    }
+    
     
     infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,84, kScreenWidth, kScreenHeight-64)];    
     infonTableview.delegate = self;
@@ -121,6 +126,7 @@
     detaVC.SummaryTypeid =_InteridAry[indexPath.row];
     detaVC.Storeid =self.shopId;
     detaVC.strId = self.strId;
+    detaVC.shopInfor = self.shopname;
     [self.navigationController pushViewController:detaVC animated:YES];
     
 }

@@ -10,6 +10,7 @@
 #import "StoresViewController.h"
 #import "BossViewController.h"
 #import "shopAssistantViewController.h"
+#import "storesDepartment.h"
 @interface StoreinforViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 
@@ -48,7 +49,47 @@
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];
     
-
+    
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 180)];
+    footView.backgroundColor = [UIColor whiteColor];
+    [self.tableView setTableFooterView:footView];
+    UILabel *deparname = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width, 30)];
+    
+    
+    
+    deparname.font = [UIFont systemFontOfSize:14];
+    [footView addSubview:deparname];
+    
+    UIButton *tijiaobm = [[UIButton alloc]initWithFrame:CGRectMake(20, 100, self.view.bounds.size.width-40, 40)];
+    
+    tijiaobm.layer.masksToBounds = YES;
+    [tijiaobm.layer setBorderColor:[UIColor blueColor].CGColor];
+    tijiaobm.layer.cornerRadius = 5.0;
+    tijiaobm.layer.borderWidth = 1.0f;
+      [tijiaobm setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [tijiaobm addTarget:self action:@selector(TouchLog:)forControlEvents: UIControlEventTouchUpInside];
+    
+    if ([self.shopname isEqualToString:@"1"]) {
+        
+    }else{
+        [footView addSubview:tijiaobm];
+        if (self.DepartmentName == nil) {
+            deparname.text = [NSString stringWithFormat:@"当前状态:        未提交部门"];
+            [tijiaobm setTitle:@"提交部门" forState:UIControlStateNormal];
+        }else{
+            deparname.text = [NSString stringWithFormat:@"当前状态:        已提交到%@",self.DepartmentName];
+            [tijiaobm setTitle:@"修改部门" forState:UIControlStateNormal];
+        }
+    }
+    
+}
+-(void)TouchLog:(UIButton *)btn{
+    
+    storesDepartment *storesVC = [[storesDepartment alloc]init];
+    storesVC.shopId = self.shopId;
+    storesVC.Storeid = self.Storeid;
+    [self.navigationController pushViewController:storesVC animated:YES];
+   
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -86,17 +127,25 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row>0) {
-        NSString *storeid = [ShareModel shareModel].StoreId;
-        if (_isend ==NO) {
-            //合作客户---->可以进
-             NSLog(@"asdsa1");
             switch (indexPath.row) {
+                case 0:{
+                    //门店信息
+                   
+                    StoresViewController *storesVC = [[StoresViewController alloc]init];
+                    storesVC.isend = self.isend;
+                    storesVC.shopId = self.shopId;
+                    storesVC.strId = self.strId;
+                    storesVC.isofyou = @"1";
+                    storesVC.shopname = self.shopname;
+                    [self.navigationController pushViewController:storesVC animated:YES];
+                }
+                    break;
                 case 1:{
                     //老板信息
                     BossViewController *bossVC = [[BossViewController alloc]init];
                     bossVC.strId = self.strId;
                     bossVC.Storeid = self.shopId;
+                    bossVC.shopname  = self.shopname;
                     [self.navigationController pushViewController:bossVC animated:YES];
                 }
                     break;
@@ -106,6 +155,7 @@
                     SAVC.shopid = self.shopId;
                     SAVC.strId = self.strId;
                     SAVC.titleStr = @"店员信息";
+                    SAVC.shopname = self.shopname;
                      [self.navigationController pushViewController:SAVC animated:YES];
                 }break;
                 case 3:
@@ -115,6 +165,7 @@
                     SAVC.shopid = self.shopId;
                     SAVC.strId = self.strId;
                     SAVC.titleStr = @"顾客信息";
+                    SAVC.shopname = self.shopname;
                     [self.navigationController pushViewController:SAVC animated:YES];
                 }
                     
@@ -122,70 +173,31 @@
                 default:
                     break;
             }
-        }else {
-            //目标升级合作--->未提交不可进
-            if (storeid ==nil){
-                // 提示先提交门店信息
-            }else{
-                NSLog(@"asdsa3");
-                switch (indexPath.row) {
-                    case 1:{
-                        //老板信息
-                        BossViewController *bossVC = [[BossViewController alloc]init];
-                        bossVC.strId = self.strId;
-                        bossVC.Storeid = self.shopId;
-                        [self.navigationController pushViewController:bossVC animated:YES];
-                    }
-                        break;
-                    case 2:
-                        //店员信息
-                    {
-                        //店员信息
-                        shopAssistantViewController *SAVC = [[shopAssistantViewController alloc]init];
-                        SAVC.shopid = self.shopId;
-                        SAVC.strId = self.strId;
-                        [self.navigationController pushViewController:SAVC animated:YES];
-                    }
-                        break;
-                    case 3:
-                        //顾客信息
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }else{
-        switch (indexPath.row) {
-            case 0:{
-                //门店信息
-                 NSString *storeid = [ShareModel shareModel].StoreId;
-                StoresViewController *storesVC = [[StoresViewController alloc]init];
-                storesVC.isend = self.isend;
-                storesVC.shopId = self.shopId;
-                storesVC.strId = self.strId;
-                if (_isend == NO) {
-                    storesVC.isofyou = @"1";
-                }else{
-                    if (storeid==nil) {
-                         storesVC.isofyou = @"1";
-                    }else{
-                         storesVC.isofyou = @"2";
-                    }
-                   
-                }
-                
-                [self.navigationController pushViewController:storesVC animated:YES];
-            }
-                break;
-            default:
-                break;
-        }
-    }
-    
+        
     
 }
-
+-(void)notpushe{
+    
+//
+//        storesVC.storeName = _StoreName;
+//        storesVC.province = _Province;
+//        storesVC.city =_City;
+//        storesVC.county = _County;
+//        storesVC.address = _Address;
+//        storesVC.rideinfo = _RideInfo;
+//        storesVC.area = _Area;
+//        storesVC.brandbusiness = _BrandBusiness;
+//        storesVC.intentionbrand = _IntentionBrand;
+//        storesVC.berths = _Berths;
+//        storesVC.valinumber = _ValidNumber;
+//        storesVC.staffnumber = _StaffNumber;
+//        storesVC.jobexpires = _JobExpires;
+//        storesVC.problems = _Problems;
+//
+//        storesVC.strId = self.strId;
+//
+    
+}
 
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];
@@ -207,14 +219,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
