@@ -23,5 +23,5 @@ typedef void(^SelectedHandle)(NSString * province, NSString * city, NSString * a
 @property (nonatomic,copy) NSString *storespoince;
 @property (nonatomic,copy) NSString *storesaddes;
 
-
+@property (nonatomic,strong) NSString *shopnanme;
 @end

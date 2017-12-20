@@ -36,14 +36,17 @@
     self.title=@"编辑地址";
     [self InterTableUI];
     self.view.backgroundColor =GetColor(216, 216, 216, 1);
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"完成"
-                                    style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(masgegeClick)];
-    rightButton.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    
+    if ([self.shopnanme isEqualToString:@"1"]) {
+        
+    }else{
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                        initWithTitle:@"完成"
+                                        style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(masgegeClick)];
+        rightButton.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightButton;
+    }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -131,7 +134,9 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
+    if ([_shopnanme isEqualToString:@"1"]) {
+        cell.userInteractionEnabled = NO;
+    }
     if (indexPath.row == 0) {
         CGRect labelRect2 = CGRectMake(20, 0, self.view.bounds.size.width-170, 50);
         _CityLabel = [[UILabel alloc]initWithFrame:labelRect2];

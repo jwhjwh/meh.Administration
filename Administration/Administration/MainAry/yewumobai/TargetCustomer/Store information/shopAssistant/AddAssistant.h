@@ -13,4 +13,5 @@
 @property (strong,nonatomic) NSString *shopid;//门店信息id
 @property (strong,nonatomic) NSString *StoreClerkId;
 @property (strong,nonatomic) NSString *strId;//职位id
+@property (strong,nonatomic) NSString *shopname;
 @end

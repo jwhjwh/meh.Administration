@@ -18,4 +18,10 @@
 @property (strong,nonatomic) NSString *Address;//门店地址
 
 @property (strong,nonatomic) NSString *ShopId;//门店地址
+
+@property (strong,nonatomic) NSString *State;//阶段
+
+@property (strong,nonatomic) NSString *UserId;//同事
+
+@property (strong,nonatomic) NSString *DepartmentId;//部门
 @end

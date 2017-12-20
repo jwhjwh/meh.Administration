@@ -24,18 +24,23 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    if (self.modifi ==YES) {
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
-    }else{
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(bjandrightItemAction:)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    if ([_shopname  isEqualToString:@"1"]) {
         
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
+    }else{
+        if (self.modifi ==YES) {
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+        }else{
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(bjandrightItemAction:)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+        }
     }
+    
     [self UI];
 }
 -(void)UI{

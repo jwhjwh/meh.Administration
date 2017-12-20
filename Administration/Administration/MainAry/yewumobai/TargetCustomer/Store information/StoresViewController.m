@@ -12,7 +12,7 @@
 #import "inftionTableViewCell.h"
 #import "TargetViewController.h"
 #import "CityChooseViewController.h"
-#import "storesDepartment.h"
+
 #import "storesActivity.h"
 @interface StoresViewController ()<UITableViewDataSource,UITableViewDelegate,CLZoomPickerViewDelegate, CLZoomPickerViewDataSource,UITextFieldDelegate>
 @property (nonatomic,retain)UITableView *tableView;
@@ -53,13 +53,17 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    if ([_shopname isEqualToString:@"1"]) {
+        
+    }else{
+        UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
+        [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
+        UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
+        self.navigationItem.rightBarButtonItem = rbuttonItem;
+    }
     
-    UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
-    [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-    [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
-    self.navigationItem.rightBarButtonItem = rbuttonItem;
      _nameArrs = @[@"店名",@"门店地址",@"乘车信息",@"面积",@"其他经营品牌",@"意向品牌",@"床位数",@"有效顾客",@"员工人数",@"员工从业年限",@"存在优势及问题",@"活动概要"];
     _ligtextArrs = @[@"填写店名",@"",@"填写乘车信息",@"填写面积",@"填写其他经营品牌",@"填写意向品牌",@"选择床位数",@"选择有效顾客数量",@"选择员工人数",@"选择员工从业年限"];
     _TexttagArrs = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
@@ -193,7 +197,7 @@
                  cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
             }else{
                 UITextField *inforTextField = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, self.view.frame.size.width-120, 30)];
-               
+                inforTextField.enabled = _isend;
                 inforTextField.font = [UIFont systemFontOfSize:14];
                 NSInteger k = [_TexttagArrs[indexPath.row] integerValue];
                 inforTextField.tag = k;
@@ -216,6 +220,7 @@
                 }
             }
         }else{
+            cell.userInteractionEnabled = _isend;
             if([self.isofyou isEqualToString:@"1"]){
                 NSString *stringInt = [NSString stringWithFormat:@"%@",_InterNameAry[indexPath.row+3]];
                 if ([stringInt isEqualToString:@""]) {
@@ -277,6 +282,7 @@
         case 1:{
             CityChooseViewController *CityVC = [[CityChooseViewController alloc]init];
             CityVC.isfoyou = @"1";
+            CityVC.shopnanme = self.shopname;
             if ([self.isofyou isEqualToString:@"1"]) {
                 CityVC.storespoince = _Province;
                 CityVC.storescity = _City;
@@ -335,6 +341,7 @@
                 storesActivity *storesyear = [[storesActivity alloc]init];
                 storesyear.shopId = self.shopId;
                 storesyear.strId = self.strId;
+                storesyear.shopname = self.shopname;
                 [self.navigationController pushViewController:storesyear animated:YES];
             }else {
                 //目标升级合作--->未提交不可进
@@ -344,6 +351,7 @@
                     storesActivity *storesyear = [[storesActivity alloc]init];
                     storesyear.shopId = self.shopId;
                     storesyear.strId = self.strId;
+                    storesyear.shopname = self.shopname;
                     [self.navigationController pushViewController:storesyear animated:YES];
                 }
             }
@@ -402,7 +410,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)rightItemAction{
-    if ([self.isofyou isEqualToString:@"1"]) {
+   
         NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStore1.action",KURLHeader];
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -437,26 +445,7 @@
         } failure:^(NSError *error) {
             
         } view:self.view MBPro:YES];
-    }else{
-        storesDepartment *storesVC = [[storesDepartment alloc]init];
-        storesVC.storeName = _StoreName;
-        storesVC.province = _Province;
-        storesVC.city =_City;
-        storesVC.county = _County;
-        storesVC.address = _Address;
-        storesVC.rideinfo = _RideInfo;
-        storesVC.area = _Area;
-        storesVC.brandbusiness = _BrandBusiness;
-        storesVC.intentionbrand = _IntentionBrand;
-        storesVC.berths = _Berths;
-        storesVC.valinumber = _ValidNumber;
-        storesVC.staffnumber = _StaffNumber;
-        storesVC.jobexpires = _JobExpires;
-        storesVC.problems = _Problems;
-        storesVC.shopId = self.shopId;
-        storesVC.strId = self.strId;
-        [self.navigationController pushViewController:storesVC animated:YES];
-    }
+    
     
     
 }

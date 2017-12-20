@@ -67,6 +67,12 @@
         make.height.mas_equalTo(30);
         make.width.mas_equalTo(80);
     }];
+    
+    
+    
+    
+    
+    
     [_UserIdLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_shijianLabel.mas_bottom).offset(5);
         make.right.mas_equalTo(self.mas_right).offset(-30);
@@ -74,10 +80,10 @@
         make.width.mas_equalTo(80);
     }];
     [_UserIdImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_shijianLabel.mas_bottom).offset(5);
-        make.right.mas_equalTo(_UserIdLabel.mas_left).offset(5);
-        make.height.mas_offset(20);
-        make.width.mas_offset(20);
+        make.top.mas_equalTo(_shijianLabel.mas_bottom).offset(8);
+        make.right.mas_equalTo(_UserIdLabel.mas_left).offset(-5);
+        make.height.mas_offset(12);
+        make.width.mas_offset(12);
     }];
     
     [_DepartmentIdLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -88,25 +94,37 @@
     }];
     
     [_DepartmentIdImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_UserIdImage.mas_bottom).offset(5);
-        make.right.mas_equalTo(_DepartmentIdLabel.mas_left).offset(5);
-        make.height.mas_offset(20);
-        make.width.mas_offset(20);
+        make.top.mas_equalTo(_UserIdLabel.mas_bottom).offset(8);
+        make.right.mas_equalTo(_DepartmentIdLabel.mas_left).offset(-5);
+        make.height.mas_offset(15);
+        make.width.mas_offset(15);
     }];
     
     [_StateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_DepartmentIdImage.mas_bottom).offset(5);
+        make.top.mas_equalTo(_DepartmentIdLabel.mas_bottom).offset(5);
         make.right.mas_equalTo(self.mas_right).offset(-30);
         make.height.mas_equalTo(20);
         make.width.mas_equalTo(90);
     }];
     
     [_StateImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_DepartmentIdLabel.mas_bottom).offset(5);
-        make.right.mas_equalTo(_StateLabel.mas_left).offset(5);
-        make.height.mas_offset(20);
-        make.width.mas_offset(20);
+        make.top.mas_equalTo(_DepartmentIdLabel.mas_bottom).offset(8);
+        make.right.mas_equalTo(_StateLabel.mas_left).offset(-5);
+        make.height.mas_offset(13);
+        make.width.mas_offset(14);
     }];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     [_dianmingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.mas_top).offset(5);

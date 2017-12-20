@@ -11,4 +11,5 @@
 @interface BossViewController : UIViewController
 @property (strong,nonatomic) NSString *Storeid;//门店信息id
 @property (strong,nonatomic) NSString *strId;//职位id
+@property (strong,nonatomic) NSString *shopname;
 @end

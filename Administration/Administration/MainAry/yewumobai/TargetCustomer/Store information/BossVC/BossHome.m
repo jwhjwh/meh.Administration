@@ -49,7 +49,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"家庭情况";
-    self.isend = NO;
+    //self.isend = NO;
+    if ([self.shopname isEqualToString:@"1"]) {
+        self.isend = NO;
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -108,6 +111,7 @@
     
     
     _tjBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _tjBtn.enabled = _isend;
     [_tjBtn setTitle:@"添加" forState:UIControlStateNormal];
     [_tjBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_tjBtn addTarget:self action:@selector(tjaction_button:) forControlEvents:UIControlEventTouchUpInside];
@@ -140,6 +144,7 @@
     }];
     
     _scBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _scBtn.enabled = _isend;
     [_scBtn setTitle:@"删除" forState:UIControlStateNormal];
     [_scBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_scBtn addTarget:self action:@selector(scaction_button:) forControlEvents:UIControlEventTouchUpInside];
@@ -504,7 +509,7 @@
        
         UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPage3:)];
         [_TXImage addGestureRecognizer:tapGesturRecognizer];
-        _TXImage.userInteractionEnabled = YES;
+        _TXImage.userInteractionEnabled = _isend;
         
         [cell addSubview:_TXImage];
     }
@@ -559,8 +564,12 @@
         [_bjBtnAry addObject:sttt];
         [_bjbuttonAry addObject:_bjbtn];
     }
+    if ([self.shopname isEqualToString:@"1"]) {
+        return nil;
+    }else{
+        return headV;
+    }
     
-    return headV;
 }
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];

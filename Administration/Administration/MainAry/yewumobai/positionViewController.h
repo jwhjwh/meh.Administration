@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface positionViewController : UIViewController
-
+@property (nonatomic,strong)NSString *mobaixinxi;
 @end

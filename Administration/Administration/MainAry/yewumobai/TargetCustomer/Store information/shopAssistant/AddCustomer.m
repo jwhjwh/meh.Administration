@@ -47,20 +47,25 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    if (self.issend == NO) {
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
-        [self AFNetworking];
+    if ([self.shopname isEqualToString:@"1"]) {
+          [self AFNetworking];
     }else{
-        UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
-        [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-        [rightitem addTarget: self action: @selector(rightItemAction:) forControlEvents: UIControlEventTouchUpInside];
-        UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
-        self.navigationItem.rightBarButtonItem = rbuttonItem;
+        if (self.issend == NO) {
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+            [self AFNetworking];
+        }else{
+            UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
+            rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
+            [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+            [rightitem addTarget: self action: @selector(rightItemAction:) forControlEvents: UIControlEventTouchUpInside];
+            UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
+            self.navigationItem.rightBarButtonItem = rbuttonItem;
+        }
     }
+    
     _nameArrs = [[NSMutableArray alloc]initWithObjects:@[@"姓名",@"年龄"],@[@"生日",@"电话",@"QQ",@"微信",@"爱好",@"性格",@"所做品牌"], @[@"顾客身体情况简介",@"正在做的项目",@"特殊注意说明",@"消费分析"],nil];
     _ligary = [[NSMutableArray alloc]initWithObjects:@[@"填写姓名",@"选择年龄"],@[@"填写生日",@"填写电话",@"填写QQ",@"填写微信",@"填写爱好",@"填写性格",@"填写所做品牌"], nil];
     _texttagary = [[NSMutableArray alloc]initWithObjects:@[@"0",@"1"],@[@"2",@"3",@"4",@"5",@"6",@"7",@"8"], nil];
@@ -239,6 +244,7 @@
     tlelabel.font = [UIFont systemFontOfSize:15.0f];
     [cell addSubview:tlelabel];
     if (indexPath.section<2) {
+        cell.userInteractionEnabled = _issend;
         if (indexPath.section==1) {
             if (indexPath.row==0) {
                 [_DayLabel removeFromSuperview];

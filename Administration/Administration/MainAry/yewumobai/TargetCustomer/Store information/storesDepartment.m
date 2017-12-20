@@ -150,12 +150,12 @@
     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:messagestr sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index){
         if (index == 2) {
-            NSString *uStr =[NSString stringWithFormat:@"%@shop/insertStore.action",KURLHeader];
+            NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStoredepartmentId.action",KURLHeader];
             NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
             NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
             NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
             NSDictionary *dic = [[NSDictionary alloc]init];
-            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"StoreName":self.storeName,@"Province":self.province,@"City":self.city,@"County":self.county,@"Address":self.address,@"RideInfo":self.rideinfo,@"Area":self.area,@"BrandBusiness":self.brandbusiness,@"IntentionBrand":self.intentionbrand,@"Berths":self.berths,@"ValidNumber":self.valinumber,@"StaffNumber":self.staffnumber,@"JobExpires":self.jobexpires,@"Problems":self.problems,@"DepartmentId":_ArrID[indexPath.row],@"shopId":self.shopId,@"CompanyInfoId":compid,@"RoleId":self.strId};
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"DepartmentId":_ArrID[indexPath.row],@"Storeid":self.Storeid,@"CompanyInfoId":compid};
             [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"提交成功" sureBtn:@"确认" cancleBtn:nil];
@@ -189,10 +189,7 @@
                     };
                     [alertView showMKPAlertView];
                 }
-                if (self.dataArray.count==0) {
-                    [_tableView addEmptyViewWithImageName:@"" title:@"暂无部门" Size:20.0];
-                    _tableView.emptyView.hidden = NO;
-                }
+                
             } failure:^(NSError *error) {
                 
             } view:self.view MBPro:YES];

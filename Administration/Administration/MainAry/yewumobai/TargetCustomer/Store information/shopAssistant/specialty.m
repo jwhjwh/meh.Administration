@@ -93,6 +93,7 @@
         NSInteger k = [biaoqtagary[i] integerValue];
         if (i<4) {
             UIButton *bqbtn = [[UIButton alloc]initWithFrame:CGRectMake(70+(10+(i*70)), 10, 50, 30)];
+            bqbtn.enabled = _modifi;
             [bqbtn setTitle:biaoqary[i] forState:UIControlStateNormal];
             bqbtn.tag =k;
             bqbtn.backgroundColor = [UIColor colorWithRed:(237/255.0) green:(237/255.0) blue:(237/255.0) alpha:0.4];
@@ -107,6 +108,7 @@
         
         }else if(i<8){
             UIButton *bqbtn = [[UIButton alloc]initWithFrame:CGRectMake(70+(10+((i-4)*70)), 60, 50, 30)];
+             bqbtn.enabled = _modifi;
             [bqbtn setTitle:biaoqary[i] forState:UIControlStateNormal];
             bqbtn.tag = k;
             bqbtn.backgroundColor = [UIColor colorWithRed:(237/255.0) green:(237/255.0) blue:(237/255.0) alpha:0.4];
@@ -120,6 +122,7 @@
             [view addSubview:bqbtn];
         }else if (i<12){
             UIButton *bqbtn = [[UIButton alloc]initWithFrame:CGRectMake(70+(10+((i-8)*70)), 110, 50, 30)];
+             bqbtn.enabled = _modifi;
             [bqbtn setTitle:biaoqary[i] forState:UIControlStateNormal];
             bqbtn.tag = k;
             bqbtn.backgroundColor = [UIColor colorWithRed:(237/255.0) green:(237/255.0) blue:(237/255.0) alpha:0.4];
@@ -133,6 +136,7 @@
             [view addSubview:bqbtn];
         }else{
             UIButton *bqbtn = [[UIButton alloc]initWithFrame:CGRectMake(70+(10+((i-12)*70)), 160, 50, 30)];
+             bqbtn.enabled = _modifi;
             [bqbtn setTitle:biaoqary[i] forState:UIControlStateNormal];
             bqbtn.tag = k;
             bqbtn.backgroundColor = [UIColor colorWithRed:(237/255.0) green:(237/255.0) blue:(237/255.0) alpha:0.4];

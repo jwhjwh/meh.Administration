@@ -12,4 +12,5 @@
 @property (nonatomic, assign)  BOOL isend;
 @property (nonatomic,strong) NSString *bossid;
 @property (strong,nonatomic) NSString *strId;//职位id
+@property (strong,nonatomic) NSString *shopname;
 @end
