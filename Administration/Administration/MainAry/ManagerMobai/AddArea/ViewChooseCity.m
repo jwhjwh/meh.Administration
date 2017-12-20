@@ -101,22 +101,6 @@
             
             NSArray *array = [responseObject valueForKey:@"list"];
             
-            
-//            NSDictionary *dictPlist = @{
-//                                        
-//                                        @"province":@[@{@"name":@"河北",
-//                                                        @"city":@[@{@"name":@"保定",
-//                                                                    @"district":@[@{@"name":@"小区",
-//                                                                                   @"zcode":@"0000"}]}]},
-//                                                      @{@"name":@"河北",
-              //                                          @"city":@[@{@"name":@"保定",
-                                                                  //@"district":@[@{@"name":@"小区",
-                                                                                //@"zcode":@"0000"}]}]}],
-//                                        
-//                                        
-//                                        
-//                                        };
-            
             //按照plist文件格式创建数据源
             NSMutableDictionary *dictplist = [NSMutableDictionary dictionary];
             NSMutableArray *arraydata = [NSMutableArray array];

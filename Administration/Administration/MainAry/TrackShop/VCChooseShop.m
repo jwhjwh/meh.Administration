@@ -8,6 +8,7 @@
 
 #import "VCChooseShop.h"
 #import "CellShop.h"
+#import "VCShopDetail.h"
 @interface VCChooseShop ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -66,6 +67,17 @@
     self.tableView = tableView;
 }
 
+-(void)gotoShopDetail:(UIButton *)button
+{
+    CellShop *cell = (CellShop *)[button superview].superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSDictionary *dict = self.arrayData[indexPath.row];
+    VCShopDetail *vc = [[VCShopDetail alloc]init];
+    vc.stringTitle = dict[@"storeName"];
+    vc.shopID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma -mark tableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -80,6 +92,7 @@
         cell = [[CellShop alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.dict = self.arrayData[indexPath.row];
+    [cell.buttonDetail addTarget:self action:@selector(gotoShopDetail:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

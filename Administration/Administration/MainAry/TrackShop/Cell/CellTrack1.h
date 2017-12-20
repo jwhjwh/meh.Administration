@@ -12,5 +12,6 @@
 
 @property (nonatomic,weak)UIPlaceHolderTextView *textView;
 @property (nonatomic,weak) UILabel *labelTitle;
+@property (nonatomic,weak) UIImageView *imageViewSelect;
 
 @end

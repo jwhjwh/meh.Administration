@@ -21,11 +21,11 @@
 #pragma -mark custem
 -(void)getAllPosition
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@report/queryUserPosition.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectDepartmentId.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid};
+    NSDictionary *dict = @{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS valueForKey:@"userid"],@"CompanyInfoId":compid,@"type":@"2"};
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *stringCode = [responseObject valueForKey:@"status"];
@@ -106,7 +106,7 @@
     NSString *roleId = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
     
     
-    if ([dict[@"did"] isKindOfClass:[NSNull class]]) {
+    if ([dict[@"departmentID"] isEqualToString:@""]) {
         if ([roleId isEqualToString:@"1"]||[roleId isEqualToString:@"7"]) {
             [self.navigationController pushViewController:vc animated:YES];
             [ShareModel shareModel].departmentID = @"";
@@ -118,7 +118,7 @@
     }else
     {
         
-        NSArray *arrayDid = [dict[@"did"]componentsSeparatedByString:@","];
+        NSArray *arrayDid = [dict[@"departmentID"]componentsSeparatedByString:@","];
         [ShareModel shareModel].departmentID = arrayDid[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }

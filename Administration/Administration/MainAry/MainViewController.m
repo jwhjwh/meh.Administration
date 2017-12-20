@@ -25,6 +25,7 @@
 #import "SetModel.h"
 #import "positionViewController.h"//多职位-业务膜拜
 #import "VCBrithday.h" //生日提醒
+#import "ManagerShopPosition.h"//店家管理
 #import "VCPostionMobai.h"
 #import "VCTrackChoosePostion.h"
 #import "ShopInforViewController.h"//店家信息
@@ -345,7 +346,11 @@
             }
                 break;
             case 8:
-                //店家管理
+                //店家信息
+            {
+                ManagerShopPosition *vc = [[ManagerShopPosition alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
                 break;
             case 9:{
                 //店家跟踪

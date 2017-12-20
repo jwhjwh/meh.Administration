@@ -10,6 +10,7 @@
 
 @interface CellShop : UITableViewCell
 
+@property (nonatomic,weak)UIImageView *imageViewSelect;
 @property (nonatomic,weak)UIButton *buttonDetail;
 @property (nonatomic,strong)NSDictionary *dict;
 

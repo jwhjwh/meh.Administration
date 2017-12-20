@@ -29,7 +29,7 @@
 // 添加联系人（联系人名称、号码、号码备注标签）
 - (BOOL)addContactName:(NSString*)name phoneNum:(NSString*)num withLabel:(NSString*)label
 {
-    　　// 创建一条空的联系人
+    　// 创建一条空的联系人
     ABRecordRef record = ABPersonCreate();
     CFErrorRef error;
     　　// 设置联系人的名字

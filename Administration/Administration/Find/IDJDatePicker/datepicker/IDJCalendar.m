@@ -25,11 +25,11 @@
         NSDate 	*currentDate = [NSDate date];
         NSDateComponents *dc = nil;
         dc = [cal components:CALENDAR_UNIT_FLAGS fromDate:currentDate];
-        self.era=[NSString stringWithFormat:@"%d", dc.era];
-        self.year=[NSString stringWithFormat:@"%d", dc.year];
-        self.month=[NSString stringWithFormat:@"%d", dc.month];
-        self.day=[NSString stringWithFormat:@"%d", dc.day];
-        self.weekday=[NSString stringWithFormat:@"%d", dc.weekday];
+        self.era=[NSString stringWithFormat:@"%ld", (long)dc.era];
+        self.year=[NSString stringWithFormat:@"%ld", (long)dc.year];
+        self.month=[NSString stringWithFormat:@"%ld", (long)dc.month];
+        self.day=[NSString stringWithFormat:@"%ld", (long)dc.day];
+        self.weekday=[NSString stringWithFormat:@"%ld", (long)dc.weekday];
     }
     return self;
 }

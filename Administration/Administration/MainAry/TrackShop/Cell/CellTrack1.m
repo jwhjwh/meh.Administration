@@ -21,10 +21,16 @@
 
 -(void)setUI
 {
+    
+    UIImageView *imageViewSelect = [[UIImageView alloc]init];
+    imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+    [self.contentView addSubview:imageViewSelect];
+    self.imageViewSelect = imageViewSelect;
+    
     UILabel *labelTitle = [[UILabel alloc]init];
     [self.contentView addSubview:labelTitle];
     [labelTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo (self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo (imageViewSelect.mas_right).offset(8);
         make.top.mas_equalTo (self.contentView.mas_top).offset(8);
         make.bottom.mas_equalTo (self.contentView.mas_bottom).offset(-8);
         make.width.mas_equalTo(150);
