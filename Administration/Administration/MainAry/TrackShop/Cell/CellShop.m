@@ -30,6 +30,10 @@
 
 -(void)setUI
 {
+    UIImageView *imageVeiwSelect = [[UIImageView alloc]init];
+    imageVeiwSelect.image = [UIImage imageNamed:@"djq_ico"];
+    [self.contentView addSubview:imageVeiwSelect];
+    self.imageViewSelect = imageVeiwSelect;
     
     UIButton *button = [[UIButton alloc]init];
     [button setTitle:@"详情>>" forState:UIControlStateNormal];
@@ -49,7 +53,7 @@
     label1.font = [UIFont systemFontOfSize:17];
     [self.contentView addSubview:label1];
     [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageVeiwSelect.mas_right).offset(8);
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(21);
@@ -71,7 +75,7 @@
     label2.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:label2];
     [label2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageVeiwSelect.mas_right).offset(8);
         make.top.mas_equalTo(label1.mas_bottom).offset(8);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(21);
@@ -93,7 +97,7 @@
     label3.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:label3];
     [label3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageVeiwSelect.mas_right).offset(8);
         make.top.mas_equalTo(label2.mas_bottom).offset(8);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(21);
@@ -115,7 +119,7 @@
     label4.font = [UIFont systemFontOfSize:17];
     [self.contentView addSubview:label4];
     [label4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
+        make.left.mas_equalTo(imageVeiwSelect.mas_right).offset(8);
         make.top.mas_equalTo(label3.mas_bottom).offset(8);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(21);

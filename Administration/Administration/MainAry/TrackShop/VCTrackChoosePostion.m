@@ -167,6 +167,9 @@
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
     
+    [[ShareModel shareModel].arrayData removeAllObjects];
+    [[ShareModel shareModel].arrayArea removeAllObjects];
+    
 }
 
 - (void)didReceiveMemoryWarning {

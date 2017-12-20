@@ -90,7 +90,6 @@
         }
     }else
     {
-        //跳转生日详情
         VCBrithdayDetail *vc = [[VCBrithdayDetail alloc]init];
         vc.remind = [NSString stringWithFormat:@"%@",self.dictInfo[@"remind"]];
         vc.dictInfo = self.dictInfo;
@@ -159,7 +158,7 @@
                     cell.textView.text = self.dictInfo[@"solarBirthday"];
                 }
                 
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(cell.contentView.frame.size.width-30, 10, 30, 20)];
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(cell.contentView.frame.size.width-10, 15, 40, 20)];
                 [button setTitle:@"提醒" forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                 [button addTarget:self action:@selector(gotoAddBrithay) forControlEvents:UIControlEventTouchUpInside];

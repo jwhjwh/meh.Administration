@@ -9,10 +9,12 @@
 #import "VCTrackShopList.h"
 #import "VCAddTrack.h"
 #import "VCTrackDetail.h"
+#import "ZXDChineseString.h"
 @interface VCTrackShopList ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
+@property (nonatomic,strong)NSMutableArray *arrayPinyin;
 @end
 
 @implementation VCTrackShopList
@@ -32,11 +34,80 @@
         
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
+            NSMutableArray *array = [[responseObject valueForKey:@"list"]mutableCopy];
+            
+            NSMutableArray *arrayName = [NSMutableArray array];
+            
+            for (NSDictionary *dictName in array) {
+                [arrayName addObject:dictName[@"storeName"]];
+            }
+            
+            //返回的数据按照店名首字母重新排序
+            for (int i=0;i<array.count;i++) {
+                NSDictionary *dict1 = array[i];
+                NSMutableString *mutableString = [NSMutableString stringWithString:dict1[@"storeName"]];
+                //将汉字转换为拼音(带音标)
+                CFStringTransform((__bridge CFMutableStringRef)mutableString, NULL, kCFStringTransformMandarinLatin, NO);
+                //去掉拼音的音标
+                CFStringTransform((__bridge CFMutableStringRef)mutableString, NULL, kCFStringTransformStripCombiningMarks, NO);
+                NSString *pinYin1 = [[mutableString capitalizedString]substringToIndex:1];
+                for (int j=0; j<i; j++) {
+                    NSDictionary *dict2 = array[j];
+                    NSMutableString *mutableString = [NSMutableString stringWithString:dict2[@"storeName"]];
+                    //将汉字转换为拼音(带音标)
+                    CFStringTransform((__bridge CFMutableStringRef)mutableString, NULL, kCFStringTransformMandarinLatin, NO);
+                    //去掉拼音的音标
+                    CFStringTransform((__bridge CFMutableStringRef)mutableString, NULL, kCFStringTransformStripCombiningMarks, NO);
+                    NSString *pinYin2 = [[mutableString capitalizedString]substringToIndex:1];
+                    if ([pinYin1  compare:pinYin2]==NSOrderedAscending) {
+                        [array exchangeObjectAtIndex:i withObjectAtIndex:j];
+                    }
+                }
+                
+            }
+
+            //名字首字母相同的放在一起
+            NSString *stringtemp;
+            NSDictionary *dictInfo = [NSDictionary dictionary];
+            NSMutableArray *arrNew2;
+            NSMutableArray *arrayPincin = [NSMutableArray array];
+            
+            for (int i=0;i<array.count;i++) {
+                dictInfo = array[i];
+                
+                NSMutableString *mutableString = [NSMutableString stringWithString:dictInfo[@"storeName"]];
+                //将汉字转换为拼音(带音标)
+                CFStringTransform((__bridge CFMutableStringRef)mutableString, NULL, kCFStringTransformMandarinLatin, NO);
+                NSLog(@"%@", mutableString);
+                
+                //去掉拼音的音标
+                CFStringTransform((__bridge CFMutableStringRef)mutableString, NULL, kCFStringTransformStripCombiningMarks, NO);
+                NSLog(@"%@", mutableString);
+                
+                
+                NSString *pinYin = [[mutableString capitalizedString]substringToIndex:1];
+                
+                if (![stringtemp isEqualToString:pinYin]) {
+                    arrNew2 = [NSMutableArray array];
+                    [arrNew2 addObject:dictInfo];
+                    [self.arrayData addObject:arrNew2];
+                    [self.arrayPinyin addObject:pinYin];
+                    //遍历
+                    stringtemp = pinYin;
+                }
+                
+                else
+                {
+                    [arrNew2 addObject:dictInfo];
+                    [arrayPincin addObject:pinYin];
+                }
+                
+            }
+
+            
             [self.tableView reloadData];
             return ;
         }
-        
         if ([code isEqualToString:@"1001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
             return;
@@ -54,7 +125,7 @@
 
 -(void)setUI
 {
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:tableView];
@@ -70,9 +141,14 @@
 
 #pragma -mark tableView
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.arrayData.count;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.arrayData[section]count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,14 +157,14 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    NSDictionary *dict = self.arrayData[indexPath.row];
+    NSDictionary *dict = self.arrayData[indexPath.section][indexPath.row];
     cell.textLabel.text = dict[@"storeName"];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.arrayData[indexPath.row];
+    NSDictionary *dict = self.arrayData[indexPath.section][indexPath.row];
     VCTrackDetail *vc = [[VCTrackDetail alloc]init];
     vc.stringTitle = dict[@"storeName"];
     vc.storeID = [NSString stringWithFormat:@"%@",dict[@"id"]];
@@ -101,6 +177,33 @@
         return;
     }
 }
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.arrayPinyin[section];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1f;
+}
+
+-(NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    NSMutableArray *arrayIndex = [NSMutableArray array];
+    
+    for (int i=65; i<90; i++) {
+        NSString *string = [NSString stringWithFormat:@"%c",i];
+        [arrayIndex addObject:string];
+    }
+    return arrayIndex;
+}
+
 
 #pragma -mark system
 
@@ -116,6 +219,9 @@
     // Do any additional setup after loading the view.
     self.title = @"店家跟踪";
     [self setUI];
+    
+    self.arrayData = [NSMutableArray array];
+    self.arrayPinyin = [NSMutableArray array];
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(gotoAddTrack)];
     

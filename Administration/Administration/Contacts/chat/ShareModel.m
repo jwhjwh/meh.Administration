@@ -11,12 +11,25 @@
 @implementation ShareModel
 +(ShareModel *)shareModel
 {
-    static ShareModel *sharedAccountManagerInstance = nil;
+    static ShareModel *sharMode = nil;
     static dispatch_once_t tooken;
     dispatch_once(&tooken, ^{
-        sharedAccountManagerInstance = [[self alloc] init];
+        
+        sharMode = [[self alloc] init];
+        
+        sharMode.arrayData = [NSMutableArray array];
+        sharMode.arrayArea = [NSMutableArray array];
+        
+        sharMode.jiankeng = @"";
+        sharMode.teshu = @"";
+        sharMode.zaizuo = @"";
+        sharMode.xiaofei = @"";
+        
+        sharMode.techang = @"";
+        sharMode.pingpan = @"";
     });
     
-    return sharedAccountManagerInstance;
+    
+    return sharMode;
 }
 @end

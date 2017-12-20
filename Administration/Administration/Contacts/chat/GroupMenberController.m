@@ -14,7 +14,6 @@
 #import "AddmemberController.h"
 #import "inftionxqController.h"
 #import "CellGroup.h"
-#import "IQKeyboardManager.h"
 @interface GroupMenberController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate,UISearchBarDelegate>
 @property (nonatomic,strong)UITableView *tableViewMenber;
 @property (nonatomic,strong)NSMutableArray *arrayMenber;//源数据
@@ -951,7 +950,6 @@
 {
     [super viewDidAppear:animated];
     //  IQKeyboardManager *manager = [[IQKeyboardManager sharedManager] isEnabled];
-    [[IQKeyboardManager sharedManager] setEnable:NO];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -9,6 +9,8 @@
 #import "TrackAddTrack.h"
 #import "CellTrack2.h"
 #import "ViewDatePick.h"
+#import "TrackAddArea.h"
+#import "TrackSelectShop.h"
 @interface TrackAddTrack ()<UITableViewDataSource,UITableViewDelegate,ViewDatePickerDelegate,UITextViewDelegate>
 
 @property (nonatomic,strong)NSString *string1;
@@ -27,6 +29,7 @@
 @property (nonatomic,weak)UIButton *buttonEnd;
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,weak)ViewDatePick *datePick;
+@property (nonatomic,weak)UITextField *textF;
 
 @end
 
@@ -64,7 +67,7 @@
     [viewTop addSubview:label2];
     
     UIButton *buttonEnd = [[UIButton alloc]initWithFrame:CGRectMake(220, 0, 170, 44)];
-    buttonEnd.tag = 10;
+    buttonEnd.tag = 20;
     [buttonEnd setBackgroundColor:[UIColor whiteColor]];
     [buttonEnd setTitle:@"选择结束日期" forState:UIControlStateNormal];
     [buttonEnd setTitleColor:GetColor(234, 235, 236, 1) forState:UIControlStateNormal];
@@ -74,14 +77,14 @@
     
     UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(0, 45, Scree_width, 44)];
     label3.text = @"  执行人";
-    label3.backgroundColor = [UIColor whiteColor];
+    label3.backgroundColor = [UIColor whiteColor];  
     [viewTop addSubview:label3];
     
     UITextField *textF = [[UITextField alloc]initWithFrame:CGRectMake(0, 89, Scree_width, 44)];
     textF.placeholder = @"  填写执行人";
     textF.backgroundColor = [UIColor whiteColor];
     [viewTop addSubview:textF];
-    
+    self.textF = textF;
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     tableView.delegate = self;
@@ -92,12 +95,80 @@
     [tableView registerClass:[CellTrack2 class] forCellReuseIdentifier:@"cell1"];
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
+    self.tableView = tableView;
     
 }
 
 -(void)submitDate
 {
+    NSString *urlStr =[NSString stringWithFormat:@"%@tracking/insertDMStoreTracking.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
+    NSData *data = [NSJSONSerialization dataWithJSONObject:[ShareModel shareModel].arrayArea
+                                                   options:NSJSONWritingPrettyPrinted
+                                                     error:nil];
+    NSString *string = [[NSString alloc] initWithData:data
+                                             encoding:NSUTF8StringEncoding];
+    
+    if ([self.buttonStart.titleLabel.text isEqualToString:@"选择开始日期"]||
+        [self.buttonEnd.titleLabel.text isEqualToString:@"选择结束日期"]||
+        self.textF.text.length==0||
+        [ShareModel shareModel].arrayArea.count==0||
+        [ShareModel shareModel].arrayData.count==0||
+        [self.string1 isEqualToString:@""]||
+        [self.string2 isEqualToString:@""]||
+        [self.string3 isEqualToString:@""]||
+        [self.string4 isEqualToString:@""]||
+        [self.string5 isEqualToString:@""]||
+        [self.string6 isEqualToString:@""]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写完整内容" andInterval:1.0f];
+        return;
+    }
+    
+    NSMutableArray *arrayName = [NSMutableArray array];
+    for (NSString *name in [ShareModel shareModel].arrayData) {
+        [arrayName addObject:name];
+    }
+    
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"Starttime":self.buttonStart.titleLabel.text,
+                           @"Endtime":self.buttonEnd.titleLabel.text,
+                           @"UsersName":self.textF.text,
+                           @"StoreId":[arrayName componentsJoinedByString:@","],
+                           @"TimePlanning":self.string1,
+                           @"ExpectedTime":self.string2,
+                           @"Question":self.string3,
+                           @"Performance":self.string4,
+                           @"Special":self.string5,
+                           @"Summary":self.string6,
+                           @"DepartmentId":[ShareModel shareModel].departmentID,
+                           @"CompanyInfoId":compid,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"string":string
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 
 -(void)showDatePick:(UIButton *)button
@@ -150,6 +221,7 @@
         }
         cell.labelTitle.text = self.arrayTitle[indexPath.row];
         cell.textView.placeholder = self.arrayPlace[indexPath.row];
+        cell.textView.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         switch (indexPath.row) {
             case 2:
@@ -175,6 +247,25 @@
                 break;
         }
         return cell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        TrackAddArea *vc = [[TrackAddArea alloc]init];
+        vc.showRightItem = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (indexPath.row==1) {
+        if ([ShareModel shareModel].arrayArea.count==0) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无区域" andInterval:1.0];
+            return;
+        }else
+        {
+            TrackSelectShop *vc = [[TrackSelectShop alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 
