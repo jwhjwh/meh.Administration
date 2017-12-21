@@ -1,19 +1,19 @@
 //
-//  VCManagerMold.m
+//  VCPartnerMold.m
 //  Administration
 //
 //  Created by zhang on 2017/12/21.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "VCManagerMold.h"
 #import "VCPartnerMold.h"
-@interface VCManagerMold ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic,weak)UITableView *tableView;
+#import "VCAllShop.h"
+@interface VCPartnerMold ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSArray *arrayData;
+@property (nonatomic,weak)UITableView *tableView;
 @end
 
-@implementation VCManagerMold
+@implementation VCPartnerMold
 
 #pragma -mark custem
 -(void)setUI
@@ -25,7 +25,9 @@
     [self.view addSubview:tableView];
     self.tableView = tableView;
 }
+
 #pragma -mark tableView
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.arrayData.count;
@@ -33,9 +35,10 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    static NSString *identifier = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.textLabel.text = self.arrayData[indexPath.row];
     return cell;
@@ -43,32 +46,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:
-            //跳转合作客户
-        {
-            VCPartnerMold *vc = [[VCPartnerMold alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-            break;
-        case 1:
-            //跳转新合作客户
-            break;
-        case 2:
-            //跳转准客户
-            break;
-            
-        default:
-            break;
-    }
+    VCAllShop *vc = [[VCAllShop alloc]init];
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma -mark system
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setUI];
-    self.arrayData = @[@"合作客户",@"新合作客户",@"准客户"];
+    self.title = @"合作客户";
+    self.arrayData = @[@"所有店家",@"待分配店家",@"待分配人员",@"待审核"];
 }
 
 - (void)didReceiveMemoryWarning {

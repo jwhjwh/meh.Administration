@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface VCAllShop : BaseViewController
-
+@property (nonatomic,strong)NSString *code;
 @end
