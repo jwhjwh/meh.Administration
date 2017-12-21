@@ -84,12 +84,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/TargetCustomer/DeterMineTc/TargetTable/ShareColleagues.m"
-                  timestampString = "535448106.047163"
+                  timestampString = "535453818.874516"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "168"
                   endingLineNumber = "168"
-                  offsetFromSymbolStart = "1696">
+                  offsetFromSymbolStart = "1688">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -99,12 +99,12 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/TargetCustomer/DeterMineTc/TargetTable/ShareColleagues.m"
-                  timestampString = "535448106.049614"
+                  timestampString = "535453818.87662"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "169"
                   endingLineNumber = "169"
-                  offsetFromSymbolStart = "68">
+                  offsetFromSymbolStart = "60">
                </Location>
             </Locations>
          </BreakpointContent>
