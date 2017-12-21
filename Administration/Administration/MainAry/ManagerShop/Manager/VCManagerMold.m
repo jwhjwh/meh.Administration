@@ -7,7 +7,7 @@
 //
 
 #import "VCManagerMold.h"
-
+#import "newCooperation.h"
 @interface VCManagerMold ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *arrayData;
@@ -47,9 +47,11 @@
         case 0:
             //跳转合作客户
             break;
-        case 1:
+        case 1:{
             //跳转新合作客户
-            break;
+            newCooperation *newVC = [[newCooperation alloc]init];
+            [self.navigationController pushViewController:newVC animated:YES];
+        }break;
         case 2:
             //跳转准客户
             break;

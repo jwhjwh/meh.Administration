@@ -659,6 +659,7 @@
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
 		620248361F0B9DA300229CD7 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620248351F0B9DA300229CD7 /* AddressBook.framework */; };
+		6202C1F51FEB45ED00173099 /* newCooperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6202C1F41FEB45ED00173099 /* newCooperation.m */; };
 		62035F4C1E9F133200666399 /* bg_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62035F4B1E9F133200666399 /* bg_mt02.png */; };
 		62056E6F1FE8BCB6004FBC5F /* ShopNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62056E6E1FE8BCB6004FBC5F /* ShopNameViewController.m */; };
 		6205B2891F6F75E9005466FC /* WorshipSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6205B2881F6F75E9005466FC /* WorshipSearchViewController.m */; };
@@ -2129,6 +2130,8 @@
 		6200D6941E5BDF600014F9F3 /* PersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonModel.h; sourceTree = "<group>"; };
 		6200D6951E5BDF600014F9F3 /* PersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonModel.m; sourceTree = "<group>"; };
 		620248351F0B9DA300229CD7 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		6202C1F31FEB45ED00173099 /* newCooperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = newCooperation.h; sourceTree = "<group>"; };
+		6202C1F41FEB45ED00173099 /* newCooperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = newCooperation.m; sourceTree = "<group>"; };
 		62035F4B1E9F133200666399 /* bg_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mt02.png; sourceTree = "<group>"; };
 		62056E6D1FE8BCB6004FBC5F /* ShopNameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShopNameViewController.h; sourceTree = "<group>"; };
 		62056E6E1FE8BCB6004FBC5F /* ShopNameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShopNameViewController.m; sourceTree = "<group>"; };
@@ -4551,6 +4554,8 @@
 				1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */,
 				1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */,
 				1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */,
+				6202C1F31FEB45ED00173099 /* newCooperation.h */,
+				6202C1F41FEB45ED00173099 /* newCooperation.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -6337,6 +6342,7 @@
 				1F6211FC1E8CFFB000F50851 /* EaseBubbleView+Text.m in Sources */,
 				62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */,
 				1F6211D71E8CFFB000F50851 /* PSTGridLayoutInfo.m in Sources */,
+				6202C1F51FEB45ED00173099 /* newCooperation.m in Sources */,
 				1FD73DD91FBAB8F600134079 /* VCSearchMobai.m in Sources */,
 				1FE51A801FD78C7C00E6AA9B /* CellShop.m in Sources */,
 				1FF4BF751FE4FCC600FD0FF6 /* VCCustemInfoM.m in Sources */,
@@ -7075,7 +7081,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7123,7 +7129,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
