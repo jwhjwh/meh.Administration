@@ -428,6 +428,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==2) {
+        
+        if (self.isAddInfo) {
+            [ShareModel shareModel].showRightItem = YES;
+        }else
+        {
+            [ShareModel shareModel].showRightItem = self.canEdit;
+        }
+        
         VCSpecialityManager *vc = [[VCSpecialityManager alloc]init];
         vc.stringTitle = self.arrayTitle[indexPath.section][indexPath.row];
         [ShareModel shareModel].showRightItem = self.canEdit;

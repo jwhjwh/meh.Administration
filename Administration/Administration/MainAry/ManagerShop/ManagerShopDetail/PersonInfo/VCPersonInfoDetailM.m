@@ -13,7 +13,7 @@
 #import "VCAddBrithday.h"
 #import "VCBrithdayDetail.h"
 #import "UIViewDatePicker.h"
-@interface VCPersonInfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIViewDatePickerDelegate>
+@interface VCPersonInfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIViewDatePickerDelegate,UITextViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSMutableDictionary *dictInfo;
 @property (nonatomic,weak)UITableView *tableView;
@@ -121,6 +121,7 @@
     }
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    
     UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 70)];
     viewTop.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:viewTop];
@@ -135,7 +136,12 @@
     imageView.image = [UIImage imageNamed:@"tjtx"];
     imageView.layer.cornerRadius = 30;
     imageView.layer.masksToBounds = YES;
-    imageView.userInteractionEnabled = NO;
+    if (self.isAddInfo) {
+        imageView.userInteractionEnabled = YES;
+    }else
+    {
+        imageView.userInteractionEnabled = NO;
+    }
     [imageView addGestureRecognizer:tap];
     [viewTop addSubview:imageView];
     self.imageView = imageView;
@@ -163,23 +169,57 @@
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
         self.navigationItem.rightBarButtonItem = rightItem;
         self.canEdit = YES;
+        self.imageView.userInteractionEnabled = YES;
         [self.tableView reloadData];
     }
 }
 
 -(void)submitData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@shop/updateStoreBoss1.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,
-                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"Storeid":[ShareModel shareModel].shopID,
-                           @"RoleId":[ShareModel shareModel].roleID,
-                           
-                    
-                           @"id":[NSString stringWithFormat:@"%@",self.dictInfo[@"id"]]
-                           };
+    NSString *urlStr;
+    NSDictionary *dict;
+    if (self.isAddInfo) {
+        urlStr = [NSString stringWithFormat:@"%@shop/insertStoreClerk.action",KURLHeader];
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"Storeid":[ShareModel shareModel].shopID,
+                 @"Name":self.name,
+                 @"Age":self.age,
+                 @"SolarBirthday":self.brithdayGer,
+                 @"LunarBirthday":self.brithdayChinese,
+                 @"flag":self.flag,
+                 @"Hobby":self.hobby,
+                 @"Feature":self.character,
+                 @"Phone":self.phone,
+                 @"Specialty":[ShareModel shareModel].techang,
+                 @"file":self.imageView.image,
+                 @"OverallMerit":[ShareModel shareModel].pingpan
+                 };
+    }else
+    {
+        urlStr = [NSString stringWithFormat:@"%@shop/updateStoreClerk1.action",KURLHeader];
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"Storeid":[ShareModel shareModel].shopID,
+                 @"RoleId":[ShareModel shareModel].roleID,
+                 @"id":[NSString stringWithFormat:@"%@",self.dictInfo[@"id"]],
+                 @"Name":self.name,
+                 @"Age":self.age,
+                 @"SolarBirthday":self.brithdayGer,
+                 @"LunarBirthday":self.brithdayChinese,
+                 @"flag":self.flag,
+                 @"Hobby":self.hobby,
+                 @"Feature":self.character,
+                 @"Phone":self.phone,
+                 @"Specialty":[ShareModel shareModel].techang,
+                 @"file":self.imageView.image,
+                 @"OverallMerit":[ShareModel shareModel].pingpan
+                 };
+    }
+    
+    
     NSData *pictureData = UIImagePNGRepresentation(self.imageView.image);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -220,9 +260,11 @@
 
 -(void)showImage
 {
-    ViewShowImage *showImage =[[ViewShowImage alloc]initWithFrame:CGRectMake(0, 20, Scree_width, Scree_height)];
-    [showImage.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.imageUrl]] placeholderImage:[UIImage imageNamed:@""]];
-    [self.view.window addSubview:showImage];
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"添加照片" message:@"" delegate:self cancelButtonTitle:@"相册" otherButtonTitles:@"拍照", nil];
+    [alert show];
+    
+    
 }
 
 -(void)gotoAddBrithay
@@ -249,13 +291,86 @@
     }
 }
 
+#pragma -mark alertView
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *imagePick = [[UIImagePickerController alloc]init];
+    imagePick.delegate = self;
+    if (buttonIndex==0) {
+        [self.navigationController presentViewController:imagePick animated:YES completion:nil];
+    }else
+    {
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"设备不支持" andInterval:1.0];
+            return;
+        }else
+        {
+            imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+        }
+    }
+}
+
+#pragma -mark textView
+-(void)textViewDidChange:(UITextView *)textView
+{
+    
+    CellTrack1 *cell = (CellTrack1 *)[textView superview].superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    CGRect frame = textView.frame;
+    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+    CGSize size = [textView sizeThatFits:constraintSize];
+    if (size.height<=frame.size.height) {
+        size.height=frame.size.height;
+    }
+    
+    if (indexPath.section==0) {
+        switch (indexPath.row) {
+            case 0:
+                self.name = textView.text;
+                break;
+            case 1:
+                self.age = textView.text;
+                break;
+                
+            default:
+                break;
+        }
+    }else if (indexPath.section==1)
+    {
+         switch (indexPath.row) {
+            case 1:
+                self.hobby = textView.text;
+                break;
+                
+            case 2:
+                self.character = textView.text;
+                break;
+                
+            case 3:
+                self.phone = textView.text;
+                break;
+        
+            default:
+                break;
+        }
+    }
+    
+    
+    cell.textView.frame = CGRectMake(frame.origin.x, frame.origin.y,cell.contentView.frame.size.width, size.height);
+    
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
+}
 #pragma -mark UIViewDatePicker
 -(void)getChooseDate
 {
     self.flag = self.datePick.flagggg;
     self.brithdayChinese = self.datePick.stringChinese;
     self.brithdayGer = self.datePick.stringGregorian;
-    [self.tableView reloadData];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma -mark imagePickController
@@ -295,7 +410,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.labelTitle.text = self.arrayTitle[indexPath.section][indexPath.row];
-    
+    cell.textView.delegate = self;
     if (self.isAddInfo) {
         cell.textView.userInteractionEnabled = YES;
     }else
@@ -371,19 +486,29 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VCSpecialityManager *vc = [[VCSpecialityManager alloc]init];
+    
+    if (self.isAddInfo) {
+        [ShareModel shareModel].showRightItem = YES;
+    }else
+    {
+        [ShareModel shareModel].showRightItem = self.canEdit;
+    }
+    
     if (indexPath.section==1) {
         if (indexPath.row==4) {
             vc.content = self.dictInfo[@"specialty"];
             vc.stringTitle = @"特长";
             vc.state = @"5";
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
     if (indexPath.section==2) {
         vc.content = self.dictInfo[@"overallMerit"];
         vc.stringTitle = @"综合研判";
         vc.state = @"6";
+        [self.navigationController pushViewController:vc animated:YES];
     }
-    [self.navigationController pushViewController:vc animated:YES];
+    
     
 }
 
