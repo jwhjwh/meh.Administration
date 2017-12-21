@@ -185,7 +185,7 @@
 -(void)buttonSure
 {
    
-    self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
+ //   self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
     
     
 

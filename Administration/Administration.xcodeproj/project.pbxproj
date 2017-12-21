@@ -444,6 +444,8 @@
 		1FD73DD91FBAB8F600134079 /* VCSearchMobai.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD73DCB1FBAB8F600134079 /* VCSearchMobai.m */; };
 		1FD73DDD1FBAB94C00134079 /* VCAddAreaPermision.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD73DDC1FBAB94C00134079 /* VCAddAreaPermision.m */; };
 		1FD7BBEE1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD7BBED1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m */; };
+		1FD8A9481FEB3DF6009D98F5 /* VCManagerDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */; };
+		1FD8A94B1FEB435B009D98F5 /* VCManagerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */; };
 		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
 		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
 		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
@@ -1736,6 +1738,10 @@
 		1FD73DDC1FBAB94C00134079 /* VCAddAreaPermision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddAreaPermision.m; sourceTree = "<group>"; };
 		1FD7BBEC1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCMobaiDepartMent.h; sourceTree = "<group>"; };
 		1FD7BBED1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCMobaiDepartMent.m; sourceTree = "<group>"; };
+		1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCManagerDepartment.h; sourceTree = "<group>"; };
+		1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCManagerDepartment.m; sourceTree = "<group>"; };
+		1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCManagerMold.h; sourceTree = "<group>"; };
+		1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCManagerMold.m; sourceTree = "<group>"; };
 		1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekDrafts.h; sourceTree = "<group>"; };
 		1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VCInsideWeekDrafts.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1FD95F721F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekSummaryDrafts.h; sourceTree = "<group>"; };
@@ -4541,6 +4547,10 @@
 		1FF4BF1C1FE4E9AD00FD0FF6 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */,
+				1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */,
+				1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */,
+				1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -6454,6 +6464,7 @@
 				1F4FD9DF1EC1A187005AB739 /* PJSearchBar.m in Sources */,
 				1FFBF9B51FABF6C5003B92C9 /* CellSetBrithday.m in Sources */,
 				62EA13891FBBE52A0064B4FE /* BossViewController.m in Sources */,
+				1FD8A94B1FEB435B009D98F5 /* VCManagerMold.m in Sources */,
 				1F6211E21E8CFFB000F50851 /* NSString+Valid.m in Sources */,
 				1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */,
 				1F803FE51E52F7CA005F53CE /* AFURLResponseSerialization.m in Sources */,
@@ -6747,6 +6758,7 @@
 				1F71B8D61F88A2A700C3638F /* VCInsideMonthUnPassed.m in Sources */,
 				1F6211B71E8CFFAF00F50851 /* MWGridViewController.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
+				1FD8A9481FEB3DF6009D98F5 /* VCManagerDepartment.m in Sources */,
 				1F6211C21E8CFFAF00F50851 /* EMSDWebImageDownloaderOperation.m in Sources */,
 				6223F8261F9DC011005FD217 /* TargetViewController.m in Sources */,
 				1FEDEC021F723CFF00133185 /* ViewChooseScore.m in Sources */,
@@ -6754,7 +6766,6 @@
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
 				1FE20D651F5659840097B976 /* BJZWViewController.m in Sources */,
 				1FEE776E1FDE781500C0E836 /* TrackAddArea.m in Sources */,
-				6252AA291E9CB13E00871377 /* MYPresentedController.m in Sources */,
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				1F2E01AC1EBC67DC00D36C3B /* ItemCell.m in Sources */,
 				1FEE77711FDE7A6D00C0E836 /* UIChooseArea.m in Sources */,
@@ -7064,7 +7075,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7112,7 +7123,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.info;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

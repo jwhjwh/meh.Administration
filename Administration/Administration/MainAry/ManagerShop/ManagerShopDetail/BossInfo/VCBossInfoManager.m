@@ -462,6 +462,11 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (indexPath.row==8) {
+        
+        
+        [ShareModel shareModel].showRightItem = YES;
+        
+        
         VCSpecialityManager *vc = [[VCSpecialityManager alloc]init];
         vc.content = self.dictInfo[@"reviewsProposal"];
         vc.stringTitle = @"点评建议";
