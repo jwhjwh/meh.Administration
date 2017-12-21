@@ -381,7 +381,7 @@
     [cell addSubview:tlelabel];
     
     if (indexPath.section == 0) {
-        cell.userInteractionEnabled = _issssend;
+        
         _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(120, 15, 50, 50)];
         if (_logImage.length<1) {
             _TXImage.image = [UIImage imageNamed:@"tjtx"];
@@ -394,7 +394,7 @@
         UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPage3:)];
         tapGesturRecognizer.numberOfTapsRequired = 1; //设置单击几次才触发方法
         [_TXImage addGestureRecognizer:tapGesturRecognizer];
-        _TXImage.userInteractionEnabled = _issssend;
+        _TXImage.userInteractionEnabled = YES;
         [cell addSubview:_TXImage];
     }else{
         if (indexPath.row>5) {
@@ -502,7 +502,7 @@
         NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
         
         if ([status isEqualToString:@"0000"]) {
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
                 btn.title =@"编辑";
                 self.issssend = NO;
