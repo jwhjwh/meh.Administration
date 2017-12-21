@@ -446,6 +446,7 @@
 		1FD7BBEE1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD7BBED1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m */; };
 		1FD8A9481FEB3DF6009D98F5 /* VCManagerDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */; };
 		1FD8A94B1FEB435B009D98F5 /* VCManagerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */; };
+		1FD8A94F1FEB4F21009D98F5 /* VCPartnerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */; };
 		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
 		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
 		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
@@ -1743,6 +1744,8 @@
 		1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCManagerDepartment.m; sourceTree = "<group>"; };
 		1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCManagerMold.h; sourceTree = "<group>"; };
 		1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCManagerMold.m; sourceTree = "<group>"; };
+		1FD8A94D1FEB4F21009D98F5 /* VCPartnerMold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPartnerMold.h; sourceTree = "<group>"; };
+		1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPartnerMold.m; sourceTree = "<group>"; };
 		1FD95F6F1F7CC8F000CB09AD /* VCInsideWeekDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekDrafts.h; sourceTree = "<group>"; };
 		1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VCInsideWeekDrafts.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1FD95F721F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCInsideWeekSummaryDrafts.h; sourceTree = "<group>"; };
@@ -4039,6 +4042,15 @@
 			path = AddArea;
 			sourceTree = "<group>";
 		};
+		1FD8A94C1FEB4EF0009D98F5 /* Partner */ = {
+			isa = PBXGroup;
+			children = (
+				1FD8A94D1FEB4F21009D98F5 /* VCPartnerMold.h */,
+				1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */,
+			);
+			path = Partner;
+			sourceTree = "<group>";
+		};
 		1FD95F811F7CD71800CB09AD /* NewPostil */ = {
 			isa = PBXGroup;
 			children = (
@@ -4550,6 +4562,7 @@
 		1FF4BF1C1FE4E9AD00FD0FF6 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				1FD8A94C1FEB4EF0009D98F5 /* Partner */,
 				1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */,
 				1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */,
 				1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */,
@@ -6345,6 +6358,7 @@
 				6202C1F51FEB45ED00173099 /* newCooperation.m in Sources */,
 				1FD73DD91FBAB8F600134079 /* VCSearchMobai.m in Sources */,
 				1FE51A801FD78C7C00E6AA9B /* CellShop.m in Sources */,
+				1FD8A94F1FEB4F21009D98F5 /* VCPartnerMold.m in Sources */,
 				1FF4BF751FE4FCC600FD0FF6 /* VCCustemInfoM.m in Sources */,
 				1F0952641F3AAEAE00BCD27E /* ShareModel.m in Sources */,
 				1F6833B71E724FF000F74D50 /* UITableView+WFEmpty.m in Sources */,

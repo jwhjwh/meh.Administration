@@ -9,6 +9,7 @@
 #import "ManagerShopPosition.h"
 #import "CollectionViewCellPosition.h"
 #import "ManagerShop.h"
+#import "VCManagerDepartment.h"
 @interface ManagerShopPosition ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong)UICollectionView *collectionView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -106,6 +107,10 @@
     
     if ([roleID isEqualToString:@"2"]) {
         ManagerShop *vc = [[ManagerShop alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        VCManagerDepartment *vc = [[VCManagerDepartment alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     

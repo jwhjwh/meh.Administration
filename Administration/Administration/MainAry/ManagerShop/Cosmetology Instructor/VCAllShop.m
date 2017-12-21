@@ -31,7 +31,7 @@
                            @"CompanyInfoId":compid,
                            @"DepartmentId":[ShareModel shareModel].departmentID,
                            @"RoleId":[ShareModel shareModel].roleID,
-                           @"code":@"4"};
+                           @"code":self.code};
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         
         NSString *code = [responseObject valueForKey:@"status"];
