@@ -7,7 +7,7 @@
 //
 
 #import "VCManagerDepartment.h"
-#import "VCManagerMold.m"
+#import "VCManagerMold.h"
 @interface VCManagerDepartment ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,weak)UITableView *tableView;

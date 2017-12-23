@@ -1,42 +1,33 @@
 //
-//  VCPersonMobai.m
+//  VCManagerChoosePostion.m
 //  Administration
 //
-//  Created by zhang on 2017/11/9.
+//  Created by zhang on 2017/12/21.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "VCPersonMobai.h"
-#import "CellPerson.h"
-#import "VClistPersonMobai.h"
-@interface VCPersonMobai ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic,weak)UITableView *tableView;
+#import "VCManagerChoosePostion.h"
+#import "VCManagerChoosePerson.h"
+@interface VCManagerChoosePostion ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSMutableArray *arrayData;
-
+@property (nonatomic,weak)UITableView *tableView;
 @end
 
-@implementation VCPersonMobai
+@implementation VCManagerChoosePostion
 
 #pragma -mark custem
-
 -(void)getHttpData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@shop/queryDepartments.action",KURLHeader];
+    NSString *strUrl = [NSString stringWithFormat:@"%@manager/checkPosition.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    
-    NSDictionary *dict = @{@"appkey":appKeyStr,
-                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"CompanyInfoId":compid,
-                           @"DepartmentID":[ShareModel shareModel].departmentID,
-                           @"RoleId":[ShareModel shareModel].roleID
-                           };
-    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+    NSDictionary *dic=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid};
+    [ZXDNetworking GET:strUrl parameters:dic success:^(id responseObject) {
         
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
+            self.arrayData = [[responseObject valueForKey:@"list2"]mutableCopy];
             [self.tableView reloadData];
             return ;
         }
@@ -44,7 +35,10 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
             return;
         }
-        
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
         
     } failure:^(NSError *error) {
         
@@ -56,63 +50,53 @@
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
-    [tableView registerClass:[CellPerson class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
 }
 
 #pragma -mark tableView
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arrayData.count;
+    return  self.arrayData.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CellPerson *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    static NSString *identifier = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[CellPerson alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.dict = self.arrayData[indexPath.row];
+    NSDictionary *dict = self.arrayData[indexPath.row];
+    cell.textLabel.text = dict[@"newName"];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 60;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
-    VClistPersonMobai *vc =[[VClistPersonMobai alloc]init];
-    vc.stringTitle = dict[@"name"];
-    vc.roleID = [NSString stringWithFormat:@"%@",dict[@"roleId"]];
-    vc.userID = [NSString stringWithFormat:@"%@",dict[@"usersid"]];
-    
+    VCManagerChoosePerson *vc = [[VCManagerChoosePerson alloc]init];
+    vc.postionID = [NSString stringWithFormat:@"%@",dict[@"num"]];
+    vc.stringTitle = dict[@"newName"];
+    vc.stringCode = self.stringCode;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma -mark system
-
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear: YES];
+    [super viewWillAppear:YES];
     [self.arrayData removeAllObjects];
     [self getHttpData];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.title = @"指定搜索";
-    
-    self.arrayData = [NSMutableArray array];
-    
+    self.title  = [ShareModel shareModel].storeName;
     [self setUI];
+    self.arrayData = [NSMutableArray array];
 }
 
 - (void)didReceiveMemoryWarning {

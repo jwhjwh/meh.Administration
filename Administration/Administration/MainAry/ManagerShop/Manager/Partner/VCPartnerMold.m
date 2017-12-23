@@ -8,6 +8,7 @@
 
 #import "VCPartnerMold.h"
 #import "VCAllShop.h"
+#import "VCAllotPersonManager.h"
 @interface VCPartnerMold ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSArray *arrayData;
 @property (nonatomic,weak)UITableView *tableView;
@@ -47,8 +48,35 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VCAllShop *vc = [[VCAllShop alloc]init];
+    switch (indexPath.row) {
+        case 0:
+            if ([[ShareModel shareModel].roleID isEqualToString:@"2"]) {
+                vc.code = @"4";
+            }else
+            {
+                vc.code = @"1";
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        case 1:
+            vc.code = @"2";
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        case 2:
+        {
+            VCAllotPersonManager *vc = [[VCAllotPersonManager alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 3:
+            
+            break;
+            
+        default:
+            break;
+    }
     
-    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 #pragma -mark system
@@ -57,6 +85,7 @@
     // Do any additional setup after loading the view.
     self.title = @"合作客户";
     self.arrayData = @[@"所有店家",@"待分配店家",@"待分配人员",@"待审核"];
+    [self setUI];
 }
 
 - (void)didReceiveMemoryWarning {

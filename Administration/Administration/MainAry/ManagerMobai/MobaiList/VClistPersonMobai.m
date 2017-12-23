@@ -27,7 +27,18 @@
 
 -(void)getHttpData:(NSString *)state
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
+    NSString *urlStr ;
+    
+    if ([[ShareModel shareModel].state isEqualToString:@"1"]) {
+        urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
+    }else if ([[ShareModel shareModel].state isEqualToString:@"2"])
+    {
+        urlStr =[NSString stringWithFormat:@"%@shop/selectIntendeds.action",KURLHeader];
+    }else
+    {
+        urlStr =[NSString stringWithFormat:@"%@shop/selectTargetVisits.action",KURLHeader];
+    }
+    
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -42,6 +53,7 @@
                            @"types":state,
                            @"RoleIds":[ShareModel shareModel].roleID,
                            @"nu":[NSString stringWithFormat:@"%ld",(long)self.page],
+                           @"RoleId":self.roleID
                            };
     
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
@@ -192,7 +204,6 @@
         [self.button1 setTitleColor:GetColor(192,192,192,1) forState:UIControlStateNormal];
         self.labelLine.frame = CGRectMake(Scree_width/2, 44, Scree_width/2, 1);
         [self getHttpData:@"2"];
-        
     }
     [self.tableView reloadData];
 }

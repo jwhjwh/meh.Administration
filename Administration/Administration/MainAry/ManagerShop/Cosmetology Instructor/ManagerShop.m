@@ -50,6 +50,12 @@
 {
     
     VCAllShop *vc = [[VCAllShop alloc]init];
+    if (indexPath.row==0) {
+        vc.code = @"4";
+    }else
+    {
+        vc.code = @"3";
+    }
     [self.navigationController pushViewController:vc animated:YES];
     
 }

@@ -21,6 +21,8 @@
 @property (nonatomic,strong)NSString *postionName;//职位名称
 @property (nonatomic,strong)NSString *departmentID;
 
+@property (nonatomic,strong)NSString *state;
+
 
 @property (nonatomic,strong)NSMutableArray *arrayData;
 
