@@ -481,40 +481,13 @@
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     if (isof == NO) {
         NSArray *zwlbAry = [[NSArray alloc]init];
-        if (_state!=nil) {
-            zwlbAry = @[@"分享给同事",@"分享部门",@"删除"];
-        }else{
+        if ([_state intValue] ==2) {
             zwlbAry = @[@"编辑意向客户",@"升级为目标客户",@"确定合作",@"分享给同事",@"删除"];
+        }else{
+            zwlbAry = @[@"分享给同事",@"分享部门",@"删除"];
         }
         [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
-            if (_state!=nil) {
-                if (selectIndex ==0) {
-                    ShareColleagues *SCVC = [[ShareColleagues alloc]init];
-                    SCVC.shopip = _ShopId;
-                    SCVC.yiandmu = @"2";
-                    SCVC.targetvisitid = _Id;
-                    [self.navigationController pushViewController:SCVC animated:YES];
-                }else if(selectIndex == 1){
-                    depatementViewController *dptmVC = [[depatementViewController alloc]init];
-                    //depaid  shopid  _targetVisitId
-                    dptmVC.shopid = _ShopId;
-                    dptmVC.intendedId = _Id;
-                    dptmVC.tarAndInter = @"1";
-                    
-                    [self.navigationController pushViewController:dptmVC animated:YES];
-                }else{
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定删除" sureBtn:@"确认" cancleBtn:@"取消"];
-                    alertView.resultIndex = ^(NSInteger index){
-                        NSLog(@"%ld",index);
-                        if(index == 2){
-                            [self deleteShop];
-                            
-                        }
-                    };
-                    [alertView showMKPAlertView];
-                }
-                
-            }else{
+            if ([_state intValue] ==2) {
                 if (selectIndex == 0) {
                     isof = YES;
                     _arr=@[@[@""],@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"]];
@@ -556,15 +529,39 @@
                     alertView.resultIndex = ^(NSInteger index){
                         NSLog(@"%ld",index);
                         if(index == 2){
-                             [self deleteShop];
+                            [self deleteShop];
                             
                         }
                     };
                     [alertView showMKPAlertView];
-                   
+                }
+            }else{
+                if (selectIndex ==0) {
+                    ShareColleagues *SCVC = [[ShareColleagues alloc]init];
+                    SCVC.shopip = _ShopId;
+                    SCVC.yiandmu = @"2";
+                    SCVC.targetvisitid = _Id;
+                    [self.navigationController pushViewController:SCVC animated:YES];
+                }else if(selectIndex == 1){
+                    depatementViewController *dptmVC = [[depatementViewController alloc]init];
+                    //depaid  shopid  _targetVisitId
+                    dptmVC.shopid = _ShopId;
+                    dptmVC.intendedId = _Id;
+                    dptmVC.tarAndInter = @"1";
+                    
+                    [self.navigationController pushViewController:dptmVC animated:YES];
+                }else{
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定删除" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index){
+                        NSLog(@"%ld",index);
+                        if(index == 2){
+                            [self deleteShop];
+                            
+                        }
+                    };
+                    [alertView showMKPAlertView];
                 }
             }
-            
         } selectValue:^(NSString *selectValue) {
             
         } showCloseButton:NO];
@@ -722,7 +719,7 @@
 }
 -(void)selectworsh{
 //数据请求
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
+    NSString *uStr =[[NSString alloc]init];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
@@ -730,7 +727,7 @@
         uStr = [NSString stringWithFormat:@"%@shop/getShop.action",KURLHeader];
         dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":self.shopId,@"Types":@"2"};
     }else{
-   uStr = [NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
+       uStr = [NSString stringWithFormat:@"%@shop/selectIntended.action",KURLHeader];
         dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"IntendedId":self.intentionId,@"RoleId":self.strId};
     }
     

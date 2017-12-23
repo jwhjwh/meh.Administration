@@ -179,7 +179,6 @@
     }else{
         cell.RectordLabel.text = [NSString stringWithFormat:@"地区:%@%@\n地址:%@",model.province,model.city,model.county];
     }
-
     NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
     cell.shijianLabel.text = xxsj;
     return cell;

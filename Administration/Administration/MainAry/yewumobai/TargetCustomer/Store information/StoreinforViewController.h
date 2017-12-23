@@ -19,4 +19,7 @@
 
 @property (strong,nonatomic) NSString *shopname;
 
+
+@property (strong,nonatomic) NSString *shopifot;//店家管理
+
 @end

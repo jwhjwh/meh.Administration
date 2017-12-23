@@ -7,23 +7,24 @@
 //
 
 #import "VCManagerMold.h"
+#import "newCooperation.h"
 #import "VCPartnerMold.h"
+#import "quasiCooperation.h"
 @interface VCManagerMold ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic,weak)UITableView *tableView;
-@property (nonatomic,strong)NSArray *arrayData;
+@property (nonatomic,strong)UITableView *tableView;
+@property (strong,nonatomic)NSArray *arrayData;
 @end
-
 @implementation VCManagerMold
 
 #pragma -mark custem
 -(void)setUI
 {
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [ZXDNetworking setExtraCellLineHidden:tableView];
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [ZXDNetworking setExtraCellLineHidden:self.tableView];
+    [self.view addSubview:self.tableView];
+    
 }
 #pragma -mark tableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -38,6 +39,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.textLabel.text = self.arrayData[indexPath.row];
+    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     return cell;
 }
 
@@ -51,11 +53,16 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-        case 1:
+        case 1:{
             //跳转新合作客户
-            break;
-        case 2:
-            //跳转准客户
+            newCooperation *newVC = [[newCooperation alloc]init];
+            [self.navigationController pushViewController:newVC animated:YES];
+        }break;
+        case 2:{
+                //跳转准合作客户
+                quasiCooperation *quasiVC = [[quasiCooperation alloc]init];
+                [self.navigationController pushViewController:quasiVC animated:YES];
+            }
             break;
             
         default:
@@ -66,7 +73,6 @@
 #pragma -mark system
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self setUI];
     self.arrayData = @[@"合作客户",@"新合作客户",@"准客户"];
 }
@@ -76,14 +82,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

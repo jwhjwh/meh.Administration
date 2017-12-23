@@ -10,7 +10,7 @@
 #import "VCManagerMold.h"
 @interface VCManagerDepartment ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,weak)UITableView *tableView;
+@property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
 
 @end
@@ -53,12 +53,12 @@
 
 -(void)setUI
 {
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [ZXDNetworking setExtraCellLineHidden:tableView];
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [ZXDNetworking setExtraCellLineHidden:self.tableView];
+    [self.view addSubview:self.tableView];
+   
 }
 
 #pragma -mark tableView

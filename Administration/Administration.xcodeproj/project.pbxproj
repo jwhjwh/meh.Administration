@@ -463,6 +463,7 @@
 		1FD8A95C1FEB8E10009D98F5 /* VCManagerAddPermision.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A95B1FEB8E10009D98F5 /* VCManagerAddPermision.m */; };
 		1FD8A95F1FEBA2A3009D98F5 /* VCManagerChoosePostion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A95E1FEBA2A3009D98F5 /* VCManagerChoosePostion.m */; };
 		1FD8A9621FEBA2C8009D98F5 /* VCManagerChoosePerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9611FEBA2C8009D98F5 /* VCManagerChoosePerson.m */; };
+		1FD8A94F1FEB4F21009D98F5 /* VCPartnerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */; };
 		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
 		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
 		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
@@ -676,6 +677,9 @@
 		6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6200D6901E5BDA760014F9F3 /* PersonneTableViewCell.xib */; };
 		6200D6961E5BDF600014F9F3 /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6200D6951E5BDF600014F9F3 /* PersonModel.m */; };
 		620248361F0B9DA300229CD7 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620248351F0B9DA300229CD7 /* AddressBook.framework */; };
+		6202C1F51FEB45ED00173099 /* newCooperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6202C1F41FEB45ED00173099 /* newCooperation.m */; };
+		6202C1FF1FEB5AA100173099 /* VCManagerDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6202C1FE1FEB5AA000173099 /* VCManagerDepartment.m */; };
+		6202C2011FEB5AAC00173099 /* VCManagerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 6202C2001FEB5AAC00173099 /* VCManagerMold.m */; };
 		62035F4C1E9F133200666399 /* bg_mt02.png in Resources */ = {isa = PBXBuildFile; fileRef = 62035F4B1E9F133200666399 /* bg_mt02.png */; };
 		62056E6F1FE8BCB6004FBC5F /* ShopNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62056E6E1FE8BCB6004FBC5F /* ShopNameViewController.m */; };
 		6205B2891F6F75E9005466FC /* WorshipSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6205B2881F6F75E9005466FC /* WorshipSearchViewController.m */; };
@@ -701,6 +705,7 @@
 		620FC39C1ED035E500C4D8B3 /* ManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FC39B1ED035E500C4D8B3 /* ManageViewController.m */; };
 		620FEF4C1FE35B7800122EAC /* ShopInforViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620FEF4B1FE35B7800122EAC /* ShopInforViewController.m */; };
 		6217BE681F7F2A730039CBCE /* InteredAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6217BE671F7F2A730039CBCE /* InteredAlertView.m */; };
+		621826011FECD66700C844BC /* quasiCooperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 621826001FECD66700C844BC /* quasiCooperation.m */; };
 		6218D0521E4E95FB00299989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0511E4E95FB00299989 /* main.m */; };
 		6218D0551E4E95FB00299989 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0541E4E95FB00299989 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6218D0581E4E95FB00299989 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6218D0571E4E95FB00299989 /* ViewController.mm */; };
@@ -1767,10 +1772,6 @@
 		1FD73DDC1FBAB94C00134079 /* VCAddAreaPermision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddAreaPermision.m; sourceTree = "<group>"; };
 		1FD7BBEC1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCMobaiDepartMent.h; sourceTree = "<group>"; };
 		1FD7BBED1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCMobaiDepartMent.m; sourceTree = "<group>"; };
-		1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCManagerDepartment.h; sourceTree = "<group>"; };
-		1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCManagerDepartment.m; sourceTree = "<group>"; };
-		1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCManagerMold.h; sourceTree = "<group>"; };
-		1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCManagerMold.m; sourceTree = "<group>"; };
 		1FD8A94D1FEB4F21009D98F5 /* VCPartnerMold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPartnerMold.h; sourceTree = "<group>"; };
 		1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPartnerMold.m; sourceTree = "<group>"; };
 		1FD8A95A1FEB8E10009D98F5 /* VCManagerAddPermision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCManagerAddPermision.h; sourceTree = "<group>"; };
@@ -2166,6 +2167,12 @@
 		6200D6941E5BDF600014F9F3 /* PersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonModel.h; sourceTree = "<group>"; };
 		6200D6951E5BDF600014F9F3 /* PersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonModel.m; sourceTree = "<group>"; };
 		620248351F0B9DA300229CD7 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		6202C1F31FEB45ED00173099 /* newCooperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = newCooperation.h; sourceTree = "<group>"; };
+		6202C1F41FEB45ED00173099 /* newCooperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = newCooperation.m; sourceTree = "<group>"; };
+		6202C1F71FEB59F400173099 /* VCManagerDepartment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCManagerDepartment.h; sourceTree = "<group>"; };
+		6202C1F81FEB59F400173099 /* VCManagerMold.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCManagerMold.h; sourceTree = "<group>"; };
+		6202C1FE1FEB5AA000173099 /* VCManagerDepartment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VCManagerDepartment.m; sourceTree = "<group>"; };
+		6202C2001FEB5AAC00173099 /* VCManagerMold.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VCManagerMold.m; sourceTree = "<group>"; };
 		62035F4B1E9F133200666399 /* bg_mt02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_mt02.png; sourceTree = "<group>"; };
 		62056E6D1FE8BCB6004FBC5F /* ShopNameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShopNameViewController.h; sourceTree = "<group>"; };
 		62056E6E1FE8BCB6004FBC5F /* ShopNameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShopNameViewController.m; sourceTree = "<group>"; };
@@ -2213,6 +2220,8 @@
 		620FEF4B1FE35B7800122EAC /* ShopInforViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShopInforViewController.m; sourceTree = "<group>"; };
 		6217BE661F7F2A730039CBCE /* InteredAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteredAlertView.h; sourceTree = "<group>"; };
 		6217BE671F7F2A730039CBCE /* InteredAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InteredAlertView.m; sourceTree = "<group>"; };
+		621825FF1FECD66700C844BC /* quasiCooperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quasiCooperation.h; sourceTree = "<group>"; };
+		621826001FECD66700C844BC /* quasiCooperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = quasiCooperation.m; sourceTree = "<group>"; };
 		6218D04D1E4E95FB00299989 /* Administration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Administration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6218D0511E4E95FB00299989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6218D0531E4E95FB00299989 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -4611,11 +4620,15 @@
 		1FF4BF1C1FE4E9AD00FD0FF6 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				6202C1F71FEB59F400173099 /* VCManagerDepartment.h */,
+				6202C1FE1FEB5AA000173099 /* VCManagerDepartment.m */,
+				6202C1F81FEB59F400173099 /* VCManagerMold.h */,
+				6202C2001FEB5AAC00173099 /* VCManagerMold.m */,
 				1FD8A94C1FEB4EF0009D98F5 /* Partner */,
-				1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */,
-				1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */,
-				1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */,
-				1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */,
+				6202C1F31FEB45ED00173099 /* newCooperation.h */,
+				6202C1F41FEB45ED00173099 /* newCooperation.m */,
+				621825FF1FECD66700C844BC /* quasiCooperation.h */,
+				621826001FECD66700C844BC /* quasiCooperation.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -6306,6 +6319,7 @@
 				1F6211EE1E8CFFB000F50851 /* EaseLocationViewController.m in Sources */,
 				1FF580831F8C64D3001C3D40 /* VCInsideWeekSubmited.m in Sources */,
 				6266E3431F738EE5002B1303 /* InterestedViewController.m in Sources */,
+				6202C1FF1FEB5AA100173099 /* VCManagerDepartment.m in Sources */,
 				62EFBEAC1FD0E35800880BB9 /* specialty.m in Sources */,
 				1F6211AD1E8CFFAF00F50851 /* MJRefreshGifHeader.m in Sources */,
 				1FEE77541FDE1AC600C0E836 /* TrackAdd.m in Sources */,
@@ -6402,6 +6416,7 @@
 				1F6211FC1E8CFFB000F50851 /* EaseBubbleView+Text.m in Sources */,
 				62E873B11F74A3C800335A44 /* InterestedsearchViewController.m in Sources */,
 				1F6211D71E8CFFB000F50851 /* PSTGridLayoutInfo.m in Sources */,
+				6202C1F51FEB45ED00173099 /* newCooperation.m in Sources */,
 				1FD73DD91FBAB8F600134079 /* VCSearchMobai.m in Sources */,
 				1FE51A801FD78C7C00E6AA9B /* CellShop.m in Sources */,
 				1FF4BF751FE4FCC600FD0FF6 /* VCCustemInfoM.m in Sources */,
@@ -6590,6 +6605,7 @@
 				62262C801FE4B49600910154 /* ZoneModel.m in Sources */,
 				6218D0581E4E95FB00299989 /* ViewController.mm in Sources */,
 				1FD320E71F57AE48004643A3 /* CellPerson.m in Sources */,
+				621826011FECD66700C844BC /* quasiCooperation.m in Sources */,
 				1F6211C11E8CFFAF00F50851 /* EMSDWebImageDownloader.m in Sources */,
 				1FF580A51F8C67E0001C3D40 /* VCBuessWeekPostil.m in Sources */,
 				1FD970791FD68C28009BC137 /* CellTrack1.m in Sources */,
@@ -6711,6 +6727,7 @@
 				1FD4EF651F6CAEBC002CD285 /* ViewDatePick.m in Sources */,
 				1F71B8D91F88A2A700C3638F /* VCInsideWeekUnPassed.m in Sources */,
 				1FE8001A1F6A0B55003841E4 /* CellEditTable.m in Sources */,
+				6202C2011FEB5AAC00173099 /* VCManagerMold.m in Sources */,
 				1FB79C2F1F0B424B00753A8D /* UserProfileManager.m in Sources */,
 				1F6211B11E8CFFAF00F50851 /* MJRefreshConst.m in Sources */,
 				62E873B41F74A89300335A44 /* InterestedChooseViewController.m in Sources */,
@@ -6833,7 +6850,6 @@
 				1F71B8D61F88A2A700C3638F /* VCInsideMonthUnPassed.m in Sources */,
 				1F6211B71E8CFFAF00F50851 /* MWGridViewController.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
-				1FD8A9481FEB3DF6009D98F5 /* VCManagerDepartment.m in Sources */,
 				1F6211C21E8CFFAF00F50851 /* EMSDWebImageDownloaderOperation.m in Sources */,
 				1FD8A9621FEBA2C8009D98F5 /* VCManagerChoosePerson.m in Sources */,
 				6223F8261F9DC011005FD217 /* TargetViewController.m in Sources */,
@@ -7136,12 +7152,8 @@
 					"$(PROJECT_DIR)/Administration/Find/BaiduMap_IOSSDK_v3.2.1_Lib",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/HyphenateSDK",
-					"$(PROJECT_DIR)/Administration/Find/AVCloud",
 					"$(PROJECT_DIR)/Administration/Find",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Administration/Find/Core/Data/Parse",
-					"$(PROJECT_DIR)/Administration/Find/Core/Data/Parse",
-					"$(PROJECT_DIR)/Administration/Find/Core/Data",
 					"$(PROJECT_DIR)/Parse",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7156,8 +7168,8 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7184,12 +7196,8 @@
 					"$(PROJECT_DIR)/Administration/Find/BaiduMap_IOSSDK_v3.2.1_Lib",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/HyphenateSDK",
-					"$(PROJECT_DIR)/Administration/Find/AVCloud",
 					"$(PROJECT_DIR)/Administration/Find",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Administration/Find/Core/Data/Parse",
-					"$(PROJECT_DIR)/Administration/Find/Core/Data/Parse",
-					"$(PROJECT_DIR)/Administration/Find/Core/Data",
 					"$(PROJECT_DIR)/Parse",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7204,8 +7212,8 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
