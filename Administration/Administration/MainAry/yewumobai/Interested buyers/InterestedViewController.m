@@ -155,12 +155,6 @@
         cell.DepartmentIdImage.image = [UIImage imageNamed:@"fx_icof"];
     }
     switch ([model.State integerValue]) {
-        case 1:
-            break;
-        case 2:
-            cell.StateLabel.text= @"已升级为意向客户";
-            cell.StateImage.image = [UIImage imageNamed:@"tj__ico01"];
-            break;
         case 3:
             cell.StateLabel.text= @"已升级为目标客户";
             cell.StateImage.image = [UIImage imageNamed:@"tj__ico02"];
@@ -223,10 +217,7 @@
 {
     RecotdModel *model=[[RecotdModel alloc]init];
     model = _InterNameAry[indexPath.row];
-//    InterestedTabelViewController *intabel = [[InterestedTabelViewController alloc]init];
-//    intabel.intentionId = model.Id;
-//    intabel.strId = self.strId;
-//    [self.navigationController pushViewController:intabel animated:YES];
+
     InterestedChooseViewController *intabel = [[InterestedChooseViewController alloc]init];
     intabel.strIdName = model.storeName;
     intabel.strId = self.strId;

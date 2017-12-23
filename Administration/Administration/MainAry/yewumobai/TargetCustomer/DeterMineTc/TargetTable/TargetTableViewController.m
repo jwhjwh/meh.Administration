@@ -1161,7 +1161,13 @@
                     
                 }else if(selectIndex == 3){
                     //分享给部门
+                    depatementViewController *dptmVC = [[depatementViewController alloc]init];
+                    //depaid  shopid  _targetVisitId
+                    dptmVC.shopid = _shopid;
+                    dptmVC.intendedId = _targetVisitId;
+                    dptmVC.tarAndInter = @"2";
                     
+                    [self.navigationController pushViewController:dptmVC animated:YES];
                     
                 }else{
                     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];

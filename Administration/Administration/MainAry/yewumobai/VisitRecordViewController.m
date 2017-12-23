@@ -233,6 +233,12 @@
                     [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
+            }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有陌拜记录" andInterval:1.0];
+                [infonTableview.mj_footer endRefreshingWithNoMoreData];
+                
+                return;
+                
             }
       
 
