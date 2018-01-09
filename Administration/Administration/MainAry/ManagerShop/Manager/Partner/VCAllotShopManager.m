@@ -1,23 +1,24 @@
 //
-//  VCAllShop.m
+//  VCAllotShopManager.m
 //  Administration
 //
-//  Created by zhang on 2017/12/16.
+//  Created by zhang on 2017/12/23.
 //  Copyright © 2017年 九尾狐. All rights reserved.
 //
 
-#import "VCAllShop.h"
+#import "VCAllotShopManager.h"
 #import "ZXDChineseString.h"
-#import "ManagerShopinfo.h"
-@interface VCAllShop ()<UITableViewDelegate,UITableViewDataSource>
+#import "CellChooseShopManager.h"
+@interface VCAllotShopManager ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
+@property (nonatomic,strong)NSMutableArray *arraySelect;
 @property (nonatomic,strong)NSMutableArray *arrayPinyin;
-
+@property (nonatomic,weak)UIView *viewBottom;
 @end
 
-@implementation VCAllShop
+@implementation VCAllotShopManager
 
 #pragma -mark custem
 -(void)getHttpData
@@ -27,28 +28,26 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
-    NSDictionary *dict;
-    if ([[ShareModel shareModel].roleID isEqualToString:@"2"]||[[ShareModel shareModel].roleID isEqualToString:@"6"]) {
-        dict = @{@"appkey":appKeyStr,
-                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                 @"CompanyInfoId":compid,
-                 @"DepartmentId":[ShareModel shareModel].departmentID,
-                 @"RoleId":[ShareModel shareModel].roleID,
-                 @"code":self.code};
-    }else
-    {
-        dict = @{@"appkey":appKeyStr,
-                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                 @"CompanyInfoId":compid,
-                 @"DepartmentId":[ShareModel shareModel].departmentID,
-                 @"RoleId":[ShareModel shareModel].roleID,
-                 };
-    }
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"DepartmentId":[ShareModel shareModel].departmentID,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"code":@"2"
+                           };
+    
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             NSMutableArray *array = [[responseObject valueForKey:@"list"]mutableCopy];
+            
+            for (int i=0; i<array.count; i++) {
+                NSMutableDictionary *dict = [array[i]mutableCopy];
+                [dict setValue:@"1" forKey:@"isSelect"];
+                [array replaceObjectAtIndex:i withObject:dict];
+            }
             
             NSMutableArray *arrayName = [NSMutableArray array];
             
@@ -108,16 +107,12 @@
                     //遍历
                     stringtemp = pinYin;
                 }
-                
                 else
                 {
                     [arrNew2 addObject:dictInfo];
                     [arrayPincin addObject:pinYin];
                 }
-                
             }
-            
-            
             [self.tableView reloadData];
             return ;
         }
@@ -138,14 +133,94 @@
 
 -(void)setUI
 {
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStyleGrouped];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 21)];
+    label.text = @"    请勾选分配的店家";
+    [self.view addSubview:label];
+    
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+21, Scree_width, Scree_height-kTabBarHeight-21) style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
+    [tableView registerClass:[CellChooseShopManager class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
+    
+    UIView *viewBottom = [[UIView alloc]initWithFrame:CGRectMake(0, Scree_height-kTabBarHeight, Scree_width, kTabBarHeight)];
+    viewBottom.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:viewBottom];
+    self.viewBottom = viewBottom;
+    
+    UIButton *buttonAll = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Scree_width/2, kTabBarHeight)];
+    [buttonAll setTitle:@"全选" forState:UIControlStateNormal];
+    [buttonAll setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [buttonAll setBackgroundColor:[UIColor whiteColor]];
+    [buttonAll addTarget:self action:@selector(buttonAll) forControlEvents:UIControlEventTouchUpInside];
+    [viewBottom addSubview:buttonAll];
+    
+    UIButton *buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2+1, 0, Scree_width/2-1, kTabBarHeight)];
+    [buttonSure setTitle:@"确定" forState:UIControlStateNormal];
+    [buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [buttonSure setBackgroundColor:[UIColor whiteColor]];
+    [buttonSure addTarget:self action:@selector(buttonSure) forControlEvents:UIControlEventTouchUpInside];
+    [viewBottom addSubview:buttonSure];
 }
 
+-(void)buttonAll
+{
+    [self.arraySelect removeAllObjects];
+    for (int i=0; i<self.arrayData.count; i++) {
+        NSMutableArray *array = [self.arrayData[i]mutableCopy];
+        for (int j=0; j<array.count; j++) {
+            NSMutableDictionary *dict = [array[j]mutableCopy];
+            [dict setValue:@"2" forKey:@"isSelect"];
+            [array replaceObjectAtIndex:j withObject:dict];
+            [self.arraySelect addObject:dict];
+        }
+        [self.arrayData replaceObjectAtIndex:i withObject:array];
+    }
+    [self.tableView reloadData];
+}
+
+-(void)buttonSure
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (NSDictionary *dict in self.arraySelect) {
+        [array addObject:[NSString stringWithFormat:@"%@",dict[@"id"]]];
+    }
+    
+    NSString *urlStr =[NSString stringWithFormat:@"%@stores/addUsersidstore.action",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"CompanyInfoId":compid,
+                           @"DepartmentId":[ShareModel shareModel].departmentID,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"usersids":self.userid,
+                           @"RoleIds":self.roleID,
+                           @"st":[array componentsJoinedByString:@","],
+                           @"code":self.stringCode
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
 
 #pragma -mark tableView
 
@@ -161,22 +236,30 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    CellChooseShopManager *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[CellChooseShopManager alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     NSDictionary *dict = self.arrayData[indexPath.section][indexPath.row];
-    cell.textLabel.text = dict[@"storeName"];
+    cell.dict = dict;
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.arrayData[indexPath.section][indexPath.row];
-    ManagerShopinfo *vc = [[ManagerShopinfo alloc]init];
-    
-    [ShareModel shareModel].shopID = [NSString stringWithFormat:@"%@",dict[@"id"]];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSMutableArray *array = self.arrayData[indexPath.section];
+    NSMutableDictionary *dict = [array[indexPath.row]mutableCopy];
+    if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+        [dict setValue:@"2" forKey:@"isSelect"];
+        [self.arraySelect addObject:dict];
+    }else
+    {
+        [dict setValue:@"1" forKey:@"isSelect"];
+        [self.arraySelect removeObject:dict];
+    }
+    [array replaceObjectAtIndex:indexPath.row withObject:dict];
+    [self.arrayData replaceObjectAtIndex:indexPath.section withObject:array];
+    [self.tableView reloadData];
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -218,9 +301,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"店家管理";
+    self.title = @"分配店家";
     [self setUI];
     
+    self.arraySelect = [NSMutableArray array];
     self.arrayData = [NSMutableArray array];
     self.arrayPinyin = [NSMutableArray array];
 }

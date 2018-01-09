@@ -76,18 +76,19 @@
         if (indexPath.row==0) {
             //跳转界面
             VCDepartmentMobai *vc = [[VCDepartmentMobai alloc]init];
+            [ShareModel shareModel].state = @"1";
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row==1)
         {
             //跳转界面
             VCIntentionClientele *vc = [[VCIntentionClientele alloc]init];
+            [ShareModel shareModel].state = @"2";
             [self.navigationController pushViewController:vc animated:YES];
         }else
         {
             VCGoalClientel *vc = [[VCGoalClientel alloc]init];
+            [ShareModel shareModel].state = @"3";
             [self.navigationController pushViewController:vc animated:YES];
-            //跳转界面
-            
         }
     }else
     {
@@ -100,15 +101,18 @@
             if (indexPath.row==0) {
                 //跳转界面
                 VCDepartmentMobai *vc = [[VCDepartmentMobai alloc]init];
+                [ShareModel shareModel].state = @"1";
                 [self.navigationController pushViewController:vc animated:YES];
             }else if (indexPath.row==1)
             {
                 //跳转界面
                 VCIntentionClientele *vc = [[VCIntentionClientele alloc]init];
+                [ShareModel shareModel].state = @"2";
                 [self.navigationController pushViewController:vc animated:YES];
             }else
             {
                 VCGoalClientel *vc = [[VCGoalClientel alloc]init];
+                [ShareModel shareModel].state = @"3";
                 [self.navigationController pushViewController:vc animated:YES];
                 //跳转界面
             }
