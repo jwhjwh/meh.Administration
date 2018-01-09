@@ -884,7 +884,10 @@
 		62F77A521FD4D12000CE8D48 /* shopAssModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F77A511FD4D12000CE8D48 /* shopAssModel.m */; };
 		62F77A581FD51FB200CE8D48 /* shopAssTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F77A571FD51FB200CE8D48 /* shopAssTableViewCell.m */; };
 		62F8CE851FAAFF9F00EEE5FC /* storesActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F8CE841FAAFF9F00EEE5FC /* storesActivity.m */; };
+		62FA52861FEE081300F45412 /* ResponsibleArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FA52851FEE081300F45412 /* ResponsibleArea.m */; };
+		62FA52891FEE469F00F45412 /* ChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FA52881FEE469F00F45412 /* ChooseViewController.m */; };
 		62FBD0871FCE59500065CFA2 /* AddAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FBD0861FCE594F0065CFA2 /* AddAssistant.m */; };
+		62FE051520033B55005B4BE8 /* BrandTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FE051420033B55005B4BE8 /* BrandTableViewController.m */; };
 		F711583E1E548ED400E0B763 /* UIView+WLFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = F711583D1E548ED400E0B763 /* UIView+WLFrame.m */; };
 		F73320AC1E5DB9AE00ABA6EF /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AB1E5DB9AE00ABA6EF /* MessageView.m */; };
 		F73320AF1E5DBE7E00ABA6EF /* mesagexqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */; };
@@ -2520,8 +2523,14 @@
 		62F77A571FD51FB200CE8D48 /* shopAssTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shopAssTableViewCell.m; sourceTree = "<group>"; };
 		62F8CE831FAAFF9F00EEE5FC /* storesActivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = storesActivity.h; sourceTree = "<group>"; };
 		62F8CE841FAAFF9F00EEE5FC /* storesActivity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = storesActivity.m; sourceTree = "<group>"; };
+		62FA52841FEE081300F45412 /* ResponsibleArea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResponsibleArea.h; sourceTree = "<group>"; };
+		62FA52851FEE081300F45412 /* ResponsibleArea.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResponsibleArea.m; sourceTree = "<group>"; };
+		62FA52871FEE469F00F45412 /* ChooseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseViewController.h; sourceTree = "<group>"; };
+		62FA52881FEE469F00F45412 /* ChooseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseViewController.m; sourceTree = "<group>"; };
 		62FBD0851FCE594E0065CFA2 /* AddAssistant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddAssistant.h; sourceTree = "<group>"; };
 		62FBD0861FCE594F0065CFA2 /* AddAssistant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddAssistant.m; sourceTree = "<group>"; };
+		62FE051320033B55005B4BE8 /* BrandTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandTableViewController.h; sourceTree = "<group>"; };
+		62FE051420033B55005B4BE8 /* BrandTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandTableViewController.m; sourceTree = "<group>"; };
 		F711583C1E548ED400E0B763 /* UIView+WLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WLFrame.h"; sourceTree = "<group>"; };
 		F711583D1E548ED400E0B763 /* UIView+WLFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WLFrame.m"; sourceTree = "<group>"; };
 		F73320AA1E5DB9AE00ABA6EF /* MessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageView.h; sourceTree = "<group>"; };
@@ -2632,6 +2641,8 @@
 				1F1D1F9A1E6D4B810021B1AD /* brandTableViewCell.m */,
 				1F1D1F961E6D492E0021B1AD /* LGUIView.h */,
 				1F1D1F971E6D492E0021B1AD /* LGUIView.m */,
+				62FE051320033B55005B4BE8 /* BrandTableViewController.h */,
+				62FE051420033B55005B4BE8 /* BrandTableViewController.m */,
 			);
 			name = "pingpaijingying可能被删除内容";
 			path = Permissions/pingpaijingying;
@@ -3464,6 +3475,8 @@
 				6259BC5B1F60CFA7003797E1 /* VisitRecord */,
 				1F6833BD1E72A08700F74D50 /* busableController.h */,
 				1F6833BE1E72A08700F74D50 /* busableController.m */,
+				62FA52871FEE469F00F45412 /* ChooseViewController.h */,
+				62FA52881FEE469F00F45412 /* ChooseViewController.m */,
 			);
 			name = mobao;
 			sourceTree = "<group>";
@@ -3607,6 +3620,8 @@
 			children = (
 				1F71B8901F887E8600C3638F /* FillinfoViewController.h */,
 				1F71B8911F887E8600C3638F /* FillinfoViewController.mm */,
+				62FA52841FEE081300F45412 /* ResponsibleArea.h */,
+				62FA52851FEE081300F45412 /* ResponsibleArea.m */,
 				1F71B8921F887E8600C3638F /* FillTableViewCell.h */,
 				1F71B8931F887E8600C3638F /* FillTableViewCell.m */,
 				1F71B8941F887E8600C3638F /* InputboxController.h */,
@@ -6296,6 +6311,7 @@
 				1FD95FAA1F7CDE1D00CB09AD /* VCBuessWeekDrafts.m in Sources */,
 				1FF580A81F8C67E0001C3D40 /* VCInsideMonthSummaryPostil.m in Sources */,
 				1FF4BF251FE4ECCD00FD0FF6 /* ManagerShopPosition.m in Sources */,
+				62FA52861FEE081300F45412 /* ResponsibleArea.m in Sources */,
 				1FD95F801F7CD25900CB09AD /* VCInsideMonthSummaryDrafts.m in Sources */,
 				1F6211C81E8CFFAF00F50851 /* UIImage+EMGIF.m in Sources */,
 				1FDAAD5A1FBD7AC0003A99F6 /* CellMobaiPerson.m in Sources */,
@@ -6577,6 +6593,7 @@
 				1F803FED1E52F7CA005F53CE /* UIProgressView+AFNetworking.m in Sources */,
 				626610881F62724400D32C67 /* ModifyVisitViewController.m in Sources */,
 				1F6211DF1E8CFFB000F50851 /* EaseUserModel.m in Sources */,
+				62FA52891FEE469F00F45412 /* ChooseViewController.m in Sources */,
 				1F6211F61E8CFFB000F50851 /* EaseMessageCell.m in Sources */,
 				1F6211A21E8CFFAF00F50851 /* MJRefreshAutoFooter.m in Sources */,
 				1F71B8D01F88A2A700C3638F /* VCArtShopUnPassed.m in Sources */,
@@ -6792,6 +6809,7 @@
 				62656C591E529BC10085A2BD /* IQPreviousNextView.m in Sources */,
 				1FE20D651F5659840097B976 /* BJZWViewController.m in Sources */,
 				1FEE776E1FDE781500C0E836 /* TrackAddArea.m in Sources */,
+				62FE051520033B55005B4BE8 /* BrandTableViewController.m in Sources */,
 				624F11FA1E66BBD80089C252 /* CityChooseViewController.m in Sources */,
 				1F2E01AC1EBC67DC00D36C3B /* ItemCell.m in Sources */,
 				1FEE77711FDE7A6D00C0E836 /* UIChooseArea.m in Sources */,

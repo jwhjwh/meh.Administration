@@ -24,7 +24,7 @@
     
     for (int i=0; arr.count>i; i++) {
    
-        _xLabel=[[UILabel alloc]initWithFrame:CGRectMake(120, 15+i*30, Scree_width-130, 20)];
+        _xLabel=[[UILabel alloc]initWithFrame:CGRectMake(170, 15+i*30, Scree_width-170, 20)];
         if (i>=1) {
             UIView *view=[[UIView alloc]initWithFrame:CGRectMake(120,40+(i-1)*25, Scree_width-120, 1)];
             view.backgroundColor = GetColor(230,230,230,1);

@@ -32,15 +32,21 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    _label=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width/2-80, 74,160, 30)];
+    _label=[[UILabel alloc]init];
     _label.text=[NSString stringWithFormat:@"账号状态:%@",_state];
     _label.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:_label];
     _arr = [[NSArray alloc]initWithObjects:@"解冻账号",@"冻结账户",nil];
-    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0,104, kScreenWidth, kScreenHeight-64)];
-    //分割线无
-    //    infonTableview.separatorStyle= UITableViewCellSeparatorStyleNone;
-    //不让滚动
+    infonTableview =[[UITableView alloc]init];
+     NSString* phoneModel = [UIDevice devicePlatForm];
+    
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        _label.frame = CGRectMake(Scree_width/2-80, 94,160, 30);
+       infonTableview.frame = CGRectMake(0,124, kScreenWidth, kScreenHeight-64);
+    }else{
+        _label.frame = CGRectMake(Scree_width/2-80, 74,160, 30);
+        infonTableview.frame = CGRectMake(0,104, kScreenWidth, kScreenHeight-64);
+    }
     infonTableview.scrollEnabled = NO;
     infonTableview.showsVerticalScrollIndicator = NO;
     infonTableview.delegate = self;

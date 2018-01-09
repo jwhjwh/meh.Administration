@@ -32,13 +32,7 @@
     self.title=@"报岗详情";
     [self datenetworking];
     self.view.backgroundColor = [UIColor whiteColor];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"删除"
-                                    style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(delemissClick)];
-    rightButton.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButton;
+    
     self.dataLabel =[NSMutableArray arrayWithObjects:@"时间",@"地点",@"事务概述",@"进展程度", nil];
     self.ligdataLabel =[NSMutableArray arrayWithObjects:@"选择时间",@"填写地点",@"填写事务概述",@"填写进展程度", nil];
 
@@ -122,6 +116,20 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    
+    NSString *usersid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS  objectForKey:@"userid"]];
+    
+    if ([usersid isEqualToString:_pusersid]) {
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                        initWithTitle:@"删除"
+                                        style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(delemissClick)];
+        rightButton.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightButton;
+    }
+    
+    
     
 }
 -(void)buttonLiftItem{

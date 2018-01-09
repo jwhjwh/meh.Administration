@@ -10,7 +10,7 @@
 #import "CodeViewController.h"
 #import "StructureViewController.h"
 #import "SetPosiViewController.h"
-#import "AddBrandViewController.h"
+#import "BrandTableViewController.h"
 #import "ReportPermissionsVC.h"
 #import "DepartController.h"
 
@@ -132,8 +132,10 @@
             break;
         case 2:{
             //品牌设置
-            AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
-            [self.navigationController pushViewController:addBrandVC animated:YES];
+//            AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
+//
+            BrandTableViewController *brandtableVC= [[BrandTableViewController alloc]init];
+            [self.navigationController pushViewController:brandtableVC animated:YES];
         }
             break;
 

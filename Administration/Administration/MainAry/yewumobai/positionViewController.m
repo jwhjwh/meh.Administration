@@ -99,9 +99,10 @@
                 [self.arrayData addObject:namestring];
                 NSString *departmentID = [[NSString alloc]init];
                 if (dic[@"departmentID"] == nil) {
-                    departmentID = @"";
+                   departmentID = @"";
                 }else{
                     departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentID"]];
+                    
 
                 }
                 [self.departmentID addObject:departmentID];
@@ -173,14 +174,14 @@
     if ([self.mobaixinxi isEqualToString:@"2"]) {
         businessViewController *businVC = [[businessViewController alloc]init];
         businVC.strId = _arrayId[indexPath.section];
-        [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentIDs"];
+        [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentID"];
         NSLog(@"%@",self.arrayId);
         NSLog(@"%@",businVC.strId);
         [self.navigationController showViewController:businVC sender:nil];
     }else{
         ShopInforViewController *businVC = [[ShopInforViewController alloc]init];
         businVC.strId = _arrayId[indexPath.section];
-        [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentIDs"];
+        [USER_DEFAULTS  setObject:_departmentID[indexPath.section] forKey:@"departmentID"];
         
         [self.navigationController showViewController:businVC sender:nil];
     }

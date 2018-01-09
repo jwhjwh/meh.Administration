@@ -13,5 +13,5 @@
 @property (nonatomic,strong) NSString *points;
 
 
-
+@property (nonatomic,strong) NSString *depant;
 @end

@@ -143,6 +143,8 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时，请重新登录" andInterval:1.0];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]){
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有权限更改职位" andInterval:1.0];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有可变更的职位" andInterval:1.0];
         }else{
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"网络超时" andInterval:1.0];
         }
