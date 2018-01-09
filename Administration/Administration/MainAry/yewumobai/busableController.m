@@ -10,6 +10,7 @@
 #import "FillinfoViewController.h"
 #import "VisitRecordViewController.h"
 #import "TheDraftViewController.h"
+#import "ChooseViewController.h"
 @interface busableController ()<UITableViewDataSource,UITableViewDelegate>
 
 {
@@ -85,9 +86,19 @@
 {
     switch (indexPath.row) {
         case 0:{//填写新的
-            FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
-            fillVC.points = self.strId;
-            [self.navigationController pushViewController:fillVC animated:YES];
+            NSArray *ary = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsSeparatedByString:@","];
+            if (ary.count>1) {
+                ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
+                chooseVC.strId = self.strId;
+                chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
+                [self.navigationController pushViewController:chooseVC animated:YES];
+            }else{
+                FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
+                fillVC.points = self.strId;
+                fillVC.depant =[USER_DEFAULTS objectForKey:@"departmentID"];
+               [self.navigationController pushViewController:fillVC animated:YES];
+           }
+            
         }
             break;
         case 1:{//已填记录

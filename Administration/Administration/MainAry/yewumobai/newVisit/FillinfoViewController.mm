@@ -28,6 +28,8 @@
 #import<BaiduMapAPI_Map/BMKMapComponent.h>
 
 #import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+
+#import "ResponsibleArea.h"
 @interface FillinfoViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XFDaterViewDelegate>
 {
       XFDaterView*dater;
@@ -247,7 +249,7 @@
     if (cell == nil) {
         cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
     }
-    if (!(indexPath.row==8)) {
+    if (!(indexPath.row==9)) {
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     }
     cell.mingLabel.text=_arr[indexPath.row];
@@ -318,14 +320,19 @@
                 [dater showInView:self.view animated:YES];
                 break;
             case 2:{
-                [self.view endEditing:YES];
-                self.cityChoose = [[CityChoose alloc] init];
-                self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
-                    cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
-                    cell.xingLabel.textColor=[UIColor blackColor];
-                    _storeregion=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
-                };
-                [self.view addSubview:self.cityChoose];
+//                [self.view endEditing:YES];
+//                self.cityChoose = [[CityChoose alloc] init];
+//                self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
+//                    cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+//                    cell.xingLabel.textColor=[UIColor blackColor];
+//                    _storeregion=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+//                };
+               [self.view addSubview:self.cityChoose];
+                ResponsibleArea *resVC = [[ResponsibleArea alloc]init];
+                resVC.points = self.points;
+                resVC.DepartmentId = self.depant;
+                [self.navigationController pushViewController:resVC animated:YES];
+            
             }
                 break;
             case 8:{
@@ -472,7 +479,7 @@
         NSArray *array = [_storeregion componentsSeparatedByString:@" "];
          NSString *RoleId=[NSString stringWithFormat:@"%@",self.points];
         NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
-        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"1",@"CompanyId":compid,@"UsersName":[USER_DEFAULTS objectForKey:@"name"]};
+        NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"1",@"CompanyId":compid,@"UsersName":[USER_DEFAULTS objectForKey:@"name"],@"DepartmentID":self.depant};
         [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];

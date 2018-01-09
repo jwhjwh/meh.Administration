@@ -24,8 +24,51 @@
     //model.dateTimes = //截取掉下标7之后的字符串
     
     
+    NSTimeInterval secondsPerDay = 24 * 60 * 60;
+    NSDate *today = [[NSDate alloc] init];
+    NSDate  *yesterday;
     
-    self.birLabel.text = [model.dates substringToIndex:16];
+   
+    yesterday = [today dateByAddingTimeInterval: -secondsPerDay];
+    
+    NSString * todayString = [[today description] substringToIndex:4];
+    NSString * yesterdayString = [[yesterday description] substringToIndex:4];
+    
+    
+    NSString * dateString = [model.dates substringToIndex:4];
+    
+    if ([dateString isEqualToString:todayString])
+    {
+        NSLog(@"今年") ;
+      
+        NSString *datastr = [model.dates substringFromIndex:5];
+        
+        NSString * todayString1 = [[today description] substringToIndex:10];
+        NSString * yesterdayString1 = [[yesterday description] substringToIndex:10];
+        
+        NSString * dateString1 = [model.dates substringToIndex:10];
+        
+        NSString *sfmstr =[datastr substringFromIndex:6];
+        
+        if ([dateString1 isEqualToString:todayString1])
+        {
+           NSLog(@"今天") ;
+            self.birLabel.text = [NSString stringWithFormat:@"今天 : %@",[sfmstr substringToIndex:5]];
+        } else if ([dateString1 isEqualToString:yesterdayString1])
+        {
+            NSLog(@"昨天") ;
+            self.birLabel.text = [NSString stringWithFormat:@"昨天 : %@",[sfmstr substringToIndex:5]];
+        }else{
+            self.birLabel.text = [datastr substringToIndex:11];
+        }
+    } else if ([dateString isEqualToString:yesterdayString])
+    {
+        self.birLabel.text = [model.dates substringToIndex:16];
+    }
+    
+    
+    
+   
     
     self.submittedLabel.text  = [NSString stringWithFormat:@"时间 %@",[model.dateTimes substringToIndex:10]] ;
     

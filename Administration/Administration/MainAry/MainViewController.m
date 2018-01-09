@@ -406,11 +406,11 @@
                             NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
                             [arrayData addObject:namestring];
                             NSString *departmentID = [[NSString alloc]init];
-                            if (dic[@"departmentIDs"] == nil) {
+                            if (dic[@"departmentID"] == nil) {
                                 departmentID = @"";
                                 
                             }else{
-                                departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentIDs"]];
+                                departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentID"]];
                                 
                             }
                             [departmenntID addObject:departmentID];
@@ -423,7 +423,7 @@
                             position.mobaixinxi = @"1";
                             [self.navigationController pushViewController:position animated:YES];
                         }else{
-                            [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentIDs"];
+                            [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentID"];
                             ShopInforViewController *shopinfor= [[ShopInforViewController alloc]init];
                             shopinfor.strId = [USER_DEFAULTS valueForKey:@"roleId"];
                             [self.navigationController pushViewController:shopinfor animated:YES];
@@ -477,11 +477,11 @@
                 NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
                 [arrayData addObject:namestring];
                 NSString *departmentID = [[NSString alloc]init];
-                if (dic[@"departmentIDs"] == nil) {
+                if (dic[@"departmentID"] == nil) {
                     departmentID = @"";
                     
                 }else{
-                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentIDs"]];
+                    departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentID"]];
                     
                 }
                 [departmenntID addObject:departmentID];
@@ -494,7 +494,7 @@
                 position.mobaixinxi = @"2";
                 [self.navigationController pushViewController:position animated:YES];
             }else{
-                [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentIDs"];
+                [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentID"];
                 businessViewController *busVC = [[businessViewController alloc]init];
                 busVC.strId=[USER_DEFAULTS valueForKey:@"roleId"];
                 [self.navigationController pushViewController:busVC animated:YES];

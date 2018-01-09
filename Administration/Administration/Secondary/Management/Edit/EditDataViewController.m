@@ -27,9 +27,10 @@
 @end
 
 @implementation EditDataViewController
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+
+-(void)viewWillAppear:(BOOL)animated
+{
+   
     self.tabBarController.tabBar.hidden=YES;
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -59,7 +60,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
-    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height-25) style:UITableViewStylePlain];
+    _infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
     _infonTableview.dataSource=self;
     _infonTableview.delegate =self;
     [self.view addSubview:_infonTableview];

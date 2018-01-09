@@ -223,7 +223,7 @@
         _selectTableView.estimatedSectionFooterHeight=0;
         _selectTableView.estimatedSectionHeaderHeight=0;
     }else{
-        self.selectTableView.frame = CGRectMake(0, 40, _alertView.frame.size.width, _alertView.frame.size.height);
+        self.selectTableView.frame = CGRectMake(0, 40, _alertView.frame.size.width, _alertView.frame.size.height-buttonHeight);
         _selectTableView.estimatedRowHeight=0;
         _selectTableView.estimatedSectionFooterHeight=0;
         _selectTableView.estimatedSectionHeaderHeight=0;
