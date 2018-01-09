@@ -20,15 +20,17 @@
 @property (nonatomic,strong)NSMutableArray *arrayC;
 @property (nonatomic,strong)NSMutableArray *arrayT;
 
+@property (nonatomic,strong)NSIndexPath *indexPath;
+@property (nonatomic)BOOL isRequestData;
 @end
 
 @implementation ViewChooseCity
-
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         [self setUI];
     }
     return self;
@@ -41,8 +43,7 @@
     NSDictionary *dictdata = [NSJSONSerialization JSONObjectWithData:cityData options:NSJSONReadingAllowFragments error:nil];
     
     NSArray *arrayProvince = dictdata[@"province"];
-    
-    NSArray *array;
+    NSArray *array = [NSArray array];
     for (NSDictionary *dict in arrayProvince) {
         
         if ([dict[@"name"]isEqualToString:name]) {
@@ -53,8 +54,8 @@
             for (NSDictionary *dict1 in array1) {
                 if ([dict1[@"name"]isEqualToString:name]) {
                     array =  dict1[@"district"];
-                    
                 }
+                
             }
         }
     }
@@ -75,6 +76,8 @@
         [dictP setValue:@"1" forKey:@"isSelect"];
         [self.arrayP replaceObjectAtIndex:i withObject:dictP];
     }
+    
+    [self.tableView1 reloadData];
 }
 
 -(void)getHttpData
@@ -83,14 +86,14 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSDictionary *dict = @{@"appkey":appKeyStr,
+    NSDictionary *dictinfo = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"DepartmentId":[ShareModel shareModel].departmentID,
                            @"userid":[USER_DEFAULTS valueForKey:@"userid"]
                            };
-    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+    [ZXDNetworking GET:urlStr parameters:dictinfo success:^(id responseObject) {
         
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
@@ -101,88 +104,18 @@
             
             NSArray *array = [responseObject valueForKey:@"list"];
             
-            //按照plist文件格式创建数据源
-            NSMutableDictionary *dictplist = [NSMutableDictionary dictionary];
-            NSMutableArray *arraydata = [NSMutableArray array];
-           
-            for (NSDictionary *dictinfo in array) {
-                
-               NSMutableArray*  province = [[dictinfo[@"province"]componentsSeparatedByString:@","]mutableCopy];
-                
-                for (NSString *string in province) {
-                    if ([string isEqualToString:@""]) {
-                        [province removeObject:string];
-                    }
-                }
-                
-                
-                
-               NSMutableArray* city = [[dictinfo[@"city"]componentsSeparatedByString:@","]mutableCopy];
-                for (NSString *string in city) {
-                    if ([string isEqualToString:@""]) {
-                        [city removeObject:string];
-                    }
-                }
-                
-               NSMutableArray* district = [[dictinfo[@"county"]componentsSeparatedByString:@","]mutableCopy];
-                for (NSString *string in district) {
-                    if ([string isEqualToString:@""]) {
-                        [district removeObject:string];
-                    }
-                }
-                
-                NSMutableArray *array1 = [NSMutableArray array];
-                
-                for (NSString *string1 in district) {
-                    NSMutableDictionary *dictdis = [NSMutableDictionary dictionary];
-                    [dictdis setValue:string1 forKey:@"name"];
-                    [array1 addObject:dictdis];
-                }
-                
-
-                NSMutableArray *array2 = [NSMutableArray array];
-                for (NSString *string in city) {
-                    NSMutableDictionary *dict2 = [NSMutableDictionary dictionary];
-                    [dict2 setValue:string forKey:@"name"];
-                    
-                    
-                    if (district.count==0) {
-                        [dict2 setValue:[self getList:string] forKey:@"district"];
-                    }else
-                    {
-                        [dict2 setValue:array1 forKey:@"district"];
-                    }
-                    
-                    [array2 addObject:dict2];
-                }
-               
-                
-                for (NSString *string in province) {
-                    NSMutableDictionary *dictP = [NSMutableDictionary dictionary];
-                    [dictP setValue:string forKey:@"name"];
-                    
-                    if (city.count==0) {
-                        [dictP setValue:[self getList:string] forKey:@"city"];
-                    }else
-                    {
-                        [dictP setValue:array2 forKey:@"city"];
-                    }
-                    
-                    
-                    [arraydata addObject:dictP];
-                }
+            NSMutableArray *arrayArea = [NSMutableArray array];
+            
+            for (NSDictionary *dictArea in array) {
+                NSData *jsonData = [dictArea[@"province"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSError *error;
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+                [arrayArea addObject:dict];
             }
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:arrayArea forKey:@"province"];
             
-            [dictplist setValue:arraydata forKey:@"province"];
-            
-            self.arrayP = [dictplist[@"province"]mutableCopy];
-            
-            for (int i=0;i<self.arrayP.count;i++) {
-                NSMutableDictionary *dictP = [self.arrayP[i]mutableCopy];
-                [dictP setValue:@"1" forKey:@"isSelect"];
-                [self.arrayP replaceObjectAtIndex:i withObject:dictP];
-            }
-            
+            self.arrayP = [dict[@"province"]mutableCopy];
+            self.isRequestData = YES;
             [self.tableView1 reloadData];
             
         }
@@ -209,7 +142,8 @@
     
     [self initData];
     
-    if (![[ShareModel shareModel].roleID isEqualToString:@"1"]||![[ShareModel shareModel].roleID isEqualToString:@"7"]) {
+    
+    if (![[ShareModel shareModel].roleID isEqualToString:@"1"]&&![[ShareModel shareModel].roleID isEqualToString:@"7"]) {
         
         [self getHttpData];
     }
@@ -217,8 +151,6 @@
     UITableView *tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width/3, 300)style:UITableViewStylePlain];
     tableView1.delegate = self;
     tableView1.dataSource = self;
-    tableView1.estimatedRowHeight = 100;
-    tableView1.rowHeight = UITableViewAutomaticDimension;
     tableView1.showsVerticalScrollIndicator = NO;
     [ZXDNetworking setExtraCellLineHidden:tableView1];
     [self addSubview:tableView1];
@@ -264,38 +196,91 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    if (self.isRequestData) {
+        
     if ([tableView isEqual:self.tableView1]) {
         NSDictionary *dict = self.arrayP[indexPath.row];
         
-        cell.labelName.text = dict[@"name"];
+        cell.labelName.text = dict[@"provinceName"];
         
-        if ([dict[@"isSelect"]isEqualToString:@"1"]) {
-            cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
-            
+        if (indexPath==self.indexPath) {
+            cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+            cell.labelLine.backgroundColor = [UIColor blueColor];
         }else
         {
-            cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+            cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+            cell.labelLine.backgroundColor = [UIColor clearColor];
         }
         
     }else if([tableView isEqual:self.tableView2])
     {
         NSDictionary *dict = self.arrayC[indexPath.row];
-        cell.labelName.text = dict[@"name"];
+        cell.labelName.text = dict[@"cityName"];
+        cell.backgroundColor = GetColor(242	,243,244,1);
         if ([dict[@"isSelect"]isEqualToString:@"1"]) {
             cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+            cell.labelLine.backgroundColor = [UIColor clearColor];
         }else
         {
             cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+            cell.labelLine.backgroundColor = [UIColor blueColor];
         }
     }else
     {
         NSDictionary *dict = self.arrayT[indexPath.row];
         cell.labelName.text = dict[@"name"];
+        cell.backgroundColor = GetColor(234,235,236,1);
         if ([dict[@"isSelect"]isEqualToString:@"1"]) {
             cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+            cell.labelLine.backgroundColor = [UIColor clearColor];
         }else
         {
             cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+            cell.labelLine.backgroundColor = [UIColor blueColor];
+        }
+    }
+    }else
+    {
+        if ([tableView isEqual:self.tableView1]) {
+            NSDictionary *dict = self.arrayP[indexPath.row];
+            
+            cell.labelName.text = dict[@"name"];
+            
+            if (indexPath==self.indexPath) {
+                cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+                cell.labelLine.backgroundColor = [UIColor blueColor];
+            }else
+            {
+                cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+                cell.labelLine.backgroundColor = [UIColor clearColor];
+            }
+            
+        }else if([tableView isEqual:self.tableView2])
+        {
+            NSDictionary *dict = self.arrayC[indexPath.row];
+            cell.labelName.text = dict[@"name"];
+            cell.backgroundColor = GetColor(242	,243,244,1);
+            if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+                cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+                cell.labelLine.backgroundColor = [UIColor clearColor];
+            }else
+            {
+                cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+                cell.labelLine.backgroundColor = [UIColor blueColor];
+            }
+        }else
+        {
+            NSDictionary *dict = self.arrayT[indexPath.row];
+            cell.labelName.text = dict[@"name"];
+            cell.backgroundColor = GetColor(234,235,236,1);
+            if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+                cell.imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
+                cell.labelLine.backgroundColor = [UIColor clearColor];
+            }else
+            {
+                cell.imageViewSelect.image = [UIImage imageNamed:@"djh_ico"];
+                cell.labelLine.backgroundColor = [UIColor blueColor];
+            }
         }
     }
     return cell;
@@ -303,122 +288,198 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if ([tableView isEqual:self.tableView1]) {
-        NSMutableDictionary *dict = [self.arrayP[indexPath.row]mutableCopy];
-        [self.arrayCity removeAllObjects];
-        if ([dict[@"isSelect"]isEqualToString:@"1"]) {
-            [dict setValue:@"2" forKey:@"isSelect"];
-            [self.arrayProvince addObject:dict[@"name"]];
-            [self.arrayAll addObject:dict[@"name"]];
+    if (self.isRequestData) {
+        
+        if ([tableView isEqual:self.tableView1]) {
+            NSMutableDictionary *dict = [self.arrayP[indexPath.row]mutableCopy];
+            [self.arrayCity removeAllObjects];
+            self.indexPath = indexPath;
+            [self.arrayProvince removeAllObjects];
+            [self.arrayProvince addObject:dict[@"provinceName"]];
             
-        }else
-        {
-            [dict setValue:@"1" forKey:@"isSelect"];
-            [self.arrayProvince removeObject:dict[@"name"]];
-            [self.arrayAll removeObject:dict[@"name"]];
-        }
-        [self.arrayP replaceObjectAtIndex:indexPath.row withObject:dict];
-       
-        [self.tableView1 reloadData];
-        
-        for (int i=0 ;i<self.arrayP.count;i++) {
-            NSDictionary *dictionary = self.arrayP[i];
-            if ([dictionary[@"isSelect"]isEqualToString:@"2"]) {
-                dict = self.arrayP[i];
-            }
-        }
-        
-        if (self.arrayProvince.count==1) {
-            self.arrayC = [dict[@"city"]mutableCopy];
-            for (int i=0;i<self.arrayC.count;i++) {
-                NSMutableDictionary *dictP = [self.arrayC[i]mutableCopy];
-                [dictP setValue:@"1" forKey:@"isSelect"];
-                [self.arrayC replaceObjectAtIndex:i withObject:dictP];
+            [self.tableView1 reloadData];
+            
+            self.arrayC = [dict[@"cityList"]mutableCopy];
+            
+            for (int i=0; i<self.arrayC.count; i++) {
+                NSMutableDictionary *dictC = [self.arrayC[i]mutableCopy];
+                [dictC setValue:@"1" forKey:@"isSelect"];
+                [self.arrayC replaceObjectAtIndex:i withObject:dictC];
             }
             
-        }else
-        {
-            [self.arrayC removeAllObjects];
+            
             [self.arrayT removeAllObjects];
             [self.tableView2 reloadData];
             [self.tableView3 reloadData];
-        }
-        [self.tableView2 reloadData];
-        
-
-    }else if ([tableView isEqual:self.tableView2])
-    {
-        NSMutableDictionary  *dict = [self.arrayC[indexPath.row]mutableCopy];
-        
-       
-        
-        if ([dict[@"isSelect"]isEqualToString:@"1"]) {
-            [dict setValue:@"2" forKey:@"isSelect"];
-            [self.arrayCity addObject:dict[@"name"]];
-            [self.arrayAll addObject:dict[@"name"]];
             
-        }else
-        {
-            [dict setValue:@"1" forKey:@"isSelect"];
-            [self.arrayCity removeObject:dict[@"name"]];
-            [self.arrayAll removeObject:dict[@"name"]];
-        }
-        
-        [self.arrayC replaceObjectAtIndex:indexPath.row withObject:dict];
-        [self.tableView2 reloadData];
-        
-        //遍历数据源，拿到哪个数据被选中
-        for (int i=0 ;i<self.arrayC.count;i++) {
-            NSDictionary *dictionary = self.arrayC[i];
-            if ([dictionary[@"isSelect"]isEqualToString:@"2"]) {
-                dict = self.arrayC[i];
-            }
-        }
-        if (self.arrayCity.count==1) {
-            self.arrayT = [dict[@"district"]mutableCopy];
+            [self.tableView2 reloadData];
             
-            for (int i=0;i<self.arrayT.count;i++) {
-                NSMutableDictionary *dictP = [self.arrayT[i]mutableCopy];
-                [dictP setValue:@"1" forKey:@"isSelect"];
-                [self.arrayT replaceObjectAtIndex:i withObject:dictP];
-            }
-        }else
+            
+        }else if ([tableView isEqual:self.tableView2])
         {
-            [self.arrayT removeAllObjects];
+            NSMutableDictionary  *dict = [self.arrayC[indexPath.row]mutableCopy];
+            
+            if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+                [dict setValue:@"2" forKey:@"isSelect"];
+                [self.arrayCity addObject:dict[@"cityName"]];
+                [self.arrayAll addObject:dict[@"cityName"]];
+                
+            }else
+            {
+                [dict setValue:@"1" forKey:@"isSelect"];
+                [self.arrayCity removeObject:dict[@"cityName"]];
+                [self.arrayAll removeObject:dict[@"cityName"]];
+            }
+            
+            [self.arrayC replaceObjectAtIndex:indexPath.row withObject:dict];
+            [self.tableView2 reloadData];
+            
+            //遍历数据源，拿到哪个数据被选中
+            for (int i=0 ;i<self.arrayC.count;i++) {
+                NSDictionary *dictionary = self.arrayC[i];
+                if ([dictionary[@"isSelect"]isEqualToString:@"2"]) {
+                    dict = self.arrayC[i];
+                }
+            }
+            
+            
+            if (self.arrayCity.count==1) {
+                self.arrayT = [dict[@"countyList"]mutableCopy];
+                
+                if (self.arrayT.count==0) {
+                    self.arrayT = [[self getList:dict[@"cityName"]]mutableCopy];
+                }
+                
+                for (int i=0;i<self.arrayT.count;i++) {
+                    NSMutableDictionary *dictP = [self.arrayT[i]mutableCopy];
+                    [dictP setValue:@"1" forKey:@"isSelect"];
+                    [self.arrayT replaceObjectAtIndex:i withObject:dictP];
+                }
+            }else
+            {
+                [self.arrayT removeAllObjects];
+                [self.tableView3 reloadData];
+            }
             [self.tableView3 reloadData];
+            
+        }else
+        {
+            NSMutableDictionary  *dict = [self.arrayT[indexPath.row]mutableCopy];
+            if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+                [dict setValue:@"2" forKey:@"isSelect"];
+                [self.arrayCountry addObject:dict[@"name"]];
+                [self.arrayAll addObject:dict[@"name"]];
+                
+            }else
+            {
+                [dict setValue:@"1" forKey:@"isSelect"];
+                [self.arrayCountry removeObject:dict[@"name"]];
+                [self.arrayAll removeObject:dict[@"name"]];
+            }
+            [self.arrayT replaceObjectAtIndex:indexPath.row withObject:dict];
+            [self.tableView3 reloadData];
+            
         }
-        [self.tableView3 reloadData];
-        
+        self.stringAll = [self.arrayAll componentsJoinedByString:@"/"];
     }else
     {
-        NSMutableDictionary  *dict = [self.arrayT[indexPath.row]mutableCopy];
-        if ([dict[@"isSelect"]isEqualToString:@"1"]) {
-            [dict setValue:@"2" forKey:@"isSelect"];
-            [self.arrayCountry addObject:dict[@"name"]];
-            [self.arrayAll addObject:dict[@"name"]];
+        
+        if ([tableView isEqual:self.tableView1]) {
+            NSMutableDictionary *dict = [self.arrayP[indexPath.row]mutableCopy];
+            [self.arrayCity removeAllObjects];
+            self.indexPath = indexPath;
+            [self.arrayProvince removeAllObjects];
+            [self.arrayProvince addObject:dict[@"name"]];
+            
+            [self.tableView1 reloadData];
+            
+            self.arrayC = [dict[@"city"]mutableCopy];
+            
+            for (int i=0; i<self.arrayC.count; i++) {
+                NSMutableDictionary *dictC = [self.arrayC[i]mutableCopy];
+                [dictC setValue:@"1" forKey:@"isSelect"];
+                [self.arrayC replaceObjectAtIndex:i withObject:dictC];
+            }
+            
+            
+            [self.arrayT removeAllObjects];
+            [self.tableView2 reloadData];
+            [self.tableView3 reloadData];
+            
+            [self.tableView2 reloadData];
+            
+            
+        }else if ([tableView isEqual:self.tableView2])
+        {
+            NSMutableDictionary  *dict = [self.arrayC[indexPath.row]mutableCopy];
+            
+            if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+                [dict setValue:@"2" forKey:@"isSelect"];
+                [self.arrayCity addObject:dict[@"name"]];
+                [self.arrayAll addObject:dict[@"name"]];
+                
+            }else
+            {
+                [dict setValue:@"1" forKey:@"isSelect"];
+                [self.arrayCity removeObject:dict[@"name"]];
+                [self.arrayAll removeObject:dict[@"name"]];
+            }
+            
+            [self.arrayC replaceObjectAtIndex:indexPath.row withObject:dict];
+            [self.tableView2 reloadData];
+            
+            //遍历数据源，拿到哪个数据被选中
+            for (int i=0 ;i<self.arrayC.count;i++) {
+                NSDictionary *dictionary = self.arrayC[i];
+                if ([dictionary[@"isSelect"]isEqualToString:@"2"]) {
+                    dict = self.arrayC[i];
+                }
+            }
+            if (self.arrayCity.count==1) {
+                self.arrayT = [dict[@"district"]mutableCopy];
+                
+                for (int i=0;i<self.arrayT.count;i++) {
+                    NSMutableDictionary *dictP = [self.arrayT[i]mutableCopy];
+                    [dictP setValue:@"1" forKey:@"isSelect"];
+                    [self.arrayT replaceObjectAtIndex:i withObject:dictP];
+                }
+            }else
+            {
+                [self.arrayT removeAllObjects];
+                [self.tableView3 reloadData];
+            }
+            [self.tableView3 reloadData];
             
         }else
         {
-            [dict setValue:@"1" forKey:@"isSelect"];
-            [self.arrayCountry removeObject:dict[@"name"]];
-            [self.arrayAll removeObject:dict[@"name"]];
+            NSMutableDictionary  *dict = [self.arrayT[indexPath.row]mutableCopy];
+            if ([dict[@"isSelect"]isEqualToString:@"1"]) {
+                [dict setValue:@"2" forKey:@"isSelect"];
+                [self.arrayCountry addObject:dict[@"name"]];
+                [self.arrayAll addObject:dict[@"name"]];
+                
+            }else
+            {
+                [dict setValue:@"1" forKey:@"isSelect"];
+                [self.arrayCountry removeObject:dict[@"name"]];
+                [self.arrayAll removeObject:dict[@"name"]];
+            }
+            [self.arrayT replaceObjectAtIndex:indexPath.row withObject:dict];
+            [self.tableView3 reloadData];
+            
         }
-        [self.arrayT replaceObjectAtIndex:indexPath.row withObject:dict];
-        [self.tableView3 reloadData];
-
+        self.stringAll = [self.arrayAll componentsJoinedByString:@"/"];
     }
-    self.stringAll = [self.arrayAll componentsJoinedByString:@"/"];
 }
 
 #pragma -mark system
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(void)willMoveToSuperview:(UIView *)newSuperview
 {
     if ([self.delegate respondsToSelector:@selector(getCity)]) {
         [self.delegate getCity];
     }
-    [self removeFromSuperview];
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

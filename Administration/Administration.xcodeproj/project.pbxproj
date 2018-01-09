@@ -38,6 +38,12 @@
 		1F2E01AC1EBC67DC00D36C3B /* ItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E01A91EBC67DC00D36C3B /* ItemCell.m */; };
 		1F2E01AD1EBC67DC00D36C3B /* ItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E01AB1EBC67DC00D36C3B /* ItemModel.m */; };
 		1F2E01B01EBC828200D36C3B /* AddbranTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E01AF1EBC828200D36C3B /* AddbranTableViewCell.m */; };
+		1F314AF81FF324C100C7E2FF /* VCAddPersonSpeciality.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F314AF71FF324C100C7E2FF /* VCAddPersonSpeciality.m */; };
+		1F314AFB1FF34D9C00C7E2FF /* djh_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F314AF91FF34D9C00C7E2FF /* djh_ico.png */; };
+		1F314AFC1FF34D9C00C7E2FF /* djq_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F314AFA1FF34D9C00C7E2FF /* djq_ico.png */; };
+		1F314AFE1FF36BF000C7E2FF /* qd_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F314AFD1FF36BF000C7E2FF /* qd_ico01.png */; };
+		1F314B011FF37B0300C7E2FF /* VCSignInList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F314B001FF37B0300C7E2FF /* VCSignInList.m */; };
+		1F314B041FF3855800C7E2FF /* CellSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F314B031FF3855800C7E2FF /* CellSignIn.m */; };
 		1F33F1191E611528000733F8 /* inftionxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F1181E611528000733F8 /* inftionxqController.m */; };
 		1F33F11C1E6117A0000733F8 /* inftionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11B1E61179F000733F8 /* inftionTableViewCell.m */; };
 		1F33F11F1E613875000733F8 /* AlertViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33F11E1E613875000733F8 /* AlertViewExtension.m */; };
@@ -451,19 +457,17 @@
 		1FD73DD91FBAB8F600134079 /* VCSearchMobai.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD73DCB1FBAB8F600134079 /* VCSearchMobai.m */; };
 		1FD73DDD1FBAB94C00134079 /* VCAddAreaPermision.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD73DDC1FBAB94C00134079 /* VCAddAreaPermision.m */; };
 		1FD7BBEE1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD7BBED1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m */; };
-		1FD8A9481FEB3DF6009D98F5 /* VCManagerDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */; };
 		1FD8A9521FEB594C009D98F5 /* ManagerShop.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF1D1FE4E9CE00FD0FF6 /* ManagerShop.h */; };
 		1FD8A9531FEB5953009D98F5 /* VCAllShop.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF201FE4EB1800FD0FF6 /* VCAllShop.h */; };
 		1FD8A9541FEB5957009D98F5 /* ManagerShopPosition.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF231FE4ECCD00FD0FF6 /* ManagerShopPosition.h */; };
 		1FD8A9551FEB595B009D98F5 /* ManagerShopinfo.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF841FE5056400FD0FF6 /* ManagerShopinfo.h */; };
-		1FD8A9561FEB5968009D98F5 /* VCManagerDepartment.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */; };
-		1FD8A9571FEB5BF1009D98F5 /* VCManagerMold.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */; };
+		1FD8A9561FEB5968009D98F5 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		1FD8A9571FEB5BF1009D98F5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1FD8A9581FEB5D6F009D98F5 /* VCPartnerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */; };
-		1FD8A9591FEB5E8E009D98F5 /* VCManagerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */; };
+		1FD8A9591FEB5E8E009D98F5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1FD8A95C1FEB8E10009D98F5 /* VCManagerAddPermision.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A95B1FEB8E10009D98F5 /* VCManagerAddPermision.m */; };
 		1FD8A95F1FEBA2A3009D98F5 /* VCManagerChoosePostion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A95E1FEBA2A3009D98F5 /* VCManagerChoosePostion.m */; };
 		1FD8A9621FEBA2C8009D98F5 /* VCManagerChoosePerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9611FEBA2C8009D98F5 /* VCManagerChoosePerson.m */; };
-		1FD8A94F1FEB4F21009D98F5 /* VCPartnerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */; };
 		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
 		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
 		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
@@ -1005,6 +1009,15 @@
 		1F2E01AB1EBC67DC00D36C3B /* ItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemModel.m; sourceTree = "<group>"; };
 		1F2E01AE1EBC828200D36C3B /* AddbranTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddbranTableViewCell.h; sourceTree = "<group>"; };
 		1F2E01AF1EBC828200D36C3B /* AddbranTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddbranTableViewCell.m; sourceTree = "<group>"; };
+		1F314AF61FF324C100C7E2FF /* VCAddPersonSpeciality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCAddPersonSpeciality.h; sourceTree = "<group>"; };
+		1F314AF71FF324C100C7E2FF /* VCAddPersonSpeciality.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddPersonSpeciality.m; sourceTree = "<group>"; };
+		1F314AF91FF34D9C00C7E2FF /* djh_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = djh_ico.png; path = ../../MainAry/ManagerMobai/AddArea/djh_ico.png; sourceTree = "<group>"; };
+		1F314AFA1FF34D9C00C7E2FF /* djq_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = djq_ico.png; path = ../../MainAry/ManagerMobai/AddArea/djq_ico.png; sourceTree = "<group>"; };
+		1F314AFD1FF36BF000C7E2FF /* qd_ico01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qd_ico01.png; sourceTree = "<group>"; };
+		1F314AFF1FF37B0300C7E2FF /* VCSignInList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSignInList.h; sourceTree = "<group>"; };
+		1F314B001FF37B0300C7E2FF /* VCSignInList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSignInList.m; sourceTree = "<group>"; };
+		1F314B021FF3855800C7E2FF /* CellSignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSignIn.h; sourceTree = "<group>"; };
+		1F314B031FF3855800C7E2FF /* CellSignIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSignIn.m; sourceTree = "<group>"; };
 		1F33F1171E611528000733F8 /* inftionxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionxqController.h; sourceTree = "<group>"; };
 		1F33F1181E611528000733F8 /* inftionxqController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inftionxqController.m; sourceTree = "<group>"; };
 		1F33F11A1E61179F000733F8 /* inftionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inftionTableViewCell.h; sourceTree = "<group>"; };
@@ -3969,6 +3982,8 @@
 				1FD06CC81FBBEB0300039F20 /* CellCity.m */,
 				1FDAAD581FBD7AC0003A99F6 /* CellMobaiPerson.h */,
 				1FDAAD591FBD7AC0003A99F6 /* CellMobaiPerson.m */,
+				1F314B021FF3855800C7E2FF /* CellSignIn.h */,
+				1F314B031FF3855800C7E2FF /* CellSignIn.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -4036,6 +4051,7 @@
 		1FD73DAF1FBAB8F600134079 /* MobaiList */ = {
 			isa = PBXGroup;
 			children = (
+				1F314AFD1FF36BF000C7E2FF /* qd_ico01.png */,
 				1FD73DB01FBAB8F600134079 /* VCDepartDetailMobai.h */,
 				1FD73DB11FBAB8F600134079 /* VCDepartDetailMobai.m */,
 				1FD73DB21FBAB8F600134079 /* VCDepartmentMobai.h */,
@@ -4052,6 +4068,8 @@
 				1FD73DBD1FBAB8F600134079 /* VCMobaiAllCheck.m */,
 				1FD73DBE1FBAB8F600134079 /* VCMobaiDetail.h */,
 				1FD73DBF1FBAB8F600134079 /* VCMobaiDetail.m */,
+				1F314AFF1FF37B0300C7E2FF /* VCSignInList.h */,
+				1F314B001FF37B0300C7E2FF /* VCSignInList.m */,
 				1FD73DC01FBAB8F600134079 /* VCMobaiNotCheck.h */,
 				1FD73DC11FBAB8F600134079 /* VCMobaiNotCheck.m */,
 				1FD73DC21FBAB8F600134079 /* VCMobaiRemark.h */,
@@ -4675,6 +4693,8 @@
 				1FF4BF811FE4FF9400FD0FF6 /* VCPersonInfoM.m */,
 				1FF4BF651FE4FCC600FD0FF6 /* VCSpecialityManager.h */,
 				1FF4BF661FE4FCC600FD0FF6 /* VCSpecialityManager.m */,
+				1F314AF61FF324C100C7E2FF /* VCAddPersonSpeciality.h */,
+				1F314AF71FF324C100C7E2FF /* VCAddPersonSpeciality.m */,
 			);
 			path = PersonInfo;
 			sourceTree = "<group>";
@@ -5598,6 +5618,8 @@
 				1F3FAA041EB9C2A900162940 /* icow.png */,
 				1F35FDC21EB825AA007DC22F /* ds_ico.png */,
 				1F35FDC31EB825AA007DC22F /* tj_ico.png */,
+				1F314AF91FF34D9C00C7E2FF /* djh_ico.png */,
+				1F314AFA1FF34D9C00C7E2FF /* djq_ico.png */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -6044,7 +6066,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -6115,6 +6137,7 @@
 				6218D05D1E4E95FB00299989 /* Assets.xcassets in Resources */,
 				1F3B3DE71E8DF93C00E75027 /* icon_035.gif in Resources */,
 				1FC936091F8DCACC005AB2A9 /* zt_ico01.png in Resources */,
+				1F314AFC1FF34D9C00C7E2FF /* djq_ico.png in Resources */,
 				1F3B3DE41E8DF93C00E75027 /* icon_029_cover.png in Resources */,
 				624E71051EC404980026C5E9 /* 职位结构9.jpg in Resources */,
 				62656D6D1E52D29D0085A2BD /* 02.png in Resources */,
@@ -6153,6 +6176,7 @@
 				1F3B3DD71E8DF93C00E75027 /* icon_019.gif in Resources */,
 				6200D6921E5BDA760014F9F3 /* PersonneTableViewCell.xib in Resources */,
 				1F767DC71E78F01E00305401 /* message.png in Resources */,
+				1F314AFE1FF36BF000C7E2FF /* qd_ico01.png in Resources */,
 				6262540B1E7293B7000B8F0F /* RectordTableViewCell.xib in Resources */,
 				1FE353BC1FC9579D007D7BCD /* date_selection_left.png in Resources */,
 				62656D4C1E52B5700085A2BD /* Inder4.png in Resources */,
@@ -6195,6 +6219,7 @@
 				62656D6F1E52D29D0085A2BD /* 04.png in Resources */,
 				62656D5B1E52B5700085A2BD /* jingyingpinpai.png in Resources */,
 				1F6211B01E8CFFAF00F50851 /* MJRefresh.bundle in Resources */,
+				1F314AFB1FF34D9C00C7E2FF /* djh_ico.png in Resources */,
 				62AFB92C1F0A1AA2003FCE35 /* sc_ico01.png in Resources */,
 				62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */,
 				62656D5A1E52B5700085A2BD /* gongsigonggao.png in Resources */,
@@ -6471,7 +6496,7 @@
 				1F672ED11E82384300856A9C /* CrowdViewController.m in Sources */,
 				1FC9360F1F8DFFE5005AB2A9 /* ViewChooseState.m in Sources */,
 				1FD8A95F1FEBA2A3009D98F5 /* VCManagerChoosePostion.m in Sources */,
-				1FD8A9591FEB5E8E009D98F5 /* VCManagerMold.m in Sources */,
+				1FD8A9591FEB5E8E009D98F5 /* (null) in Sources */,
 				62E9C8391FBAD5F2008431A8 /* ActiviTableViewCell.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
 				1F62119B1E8CFFAF00F50851 /* amrFileCodec.mm in Sources */,
@@ -6553,6 +6578,7 @@
 				62EA13891FBBE52A0064B4FE /* BossViewController.m in Sources */,
 				1F6211E21E8CFFB000F50851 /* NSString+Valid.m in Sources */,
 				1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */,
+				1F314AF81FF324C100C7E2FF /* VCAddPersonSpeciality.m in Sources */,
 				1F803FE51E52F7CA005F53CE /* AFURLResponseSerialization.m in Sources */,
 				62656B911E5295D70085A2BD /* MASConstraintMaker.m in Sources */,
 				1FD72C7C1FA800270071A4C6 /* CellPermission.m in Sources */,
@@ -6711,7 +6737,7 @@
 				1FDF34081F8B5AEC00E4EB5D /* VCPositil.m in Sources */,
 				1F6211981E8CFFAF00F50851 /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				1F92B4C11FDA5FAC00EB4DA4 /* VCPersonInfo.m in Sources */,
-				1FD8A9571FEB5BF1009D98F5 /* VCManagerMold.h in Sources */,
+				1FD8A9571FEB5BF1009D98F5 /* (null) in Sources */,
 				1F6211BE1E8CFFAF00F50851 /* EMSDImageCache.m in Sources */,
 				1FE353B71FC9579D007D7BCD /* IDJDatePickerView.m in Sources */,
 				1FCEB9401F79EEEB00D8F175 /* ViewInsideMonthTable.m in Sources */,
@@ -6863,6 +6889,7 @@
 				1FEE77711FDE7A6D00C0E836 /* UIChooseArea.m in Sources */,
 				1F6211FA1E8CFFB000F50851 /* EaseBubbleView+Image.m in Sources */,
 				62656C561E529BC10085A2BD /* IQKeyboardReturnKeyHandler.m in Sources */,
+				1F314B011FF37B0300C7E2FF /* VCSignInList.m in Sources */,
 				1FF4BF741FE4FCC600FD0FF6 /* VCCustemIfoDetailM.m in Sources */,
 				62EBA25C1E56CBBE00F657DB /* PersonnelViewController.m in Sources */,
 				1F6211D51E8CFFB000F50851 /* PSTCollectionViewLayout.m in Sources */,
@@ -6871,6 +6898,7 @@
 				1F6211AF1E8CFFAF00F50851 /* MJRefreshStateHeader.m in Sources */,
 				1FE1B6311F2F1178008B8A57 /* ModelArray.m in Sources */,
 				1F6126ED1EBDB4E60031E4C4 /* DirectorController.m in Sources */,
+				1F314B041FF3855800C7E2FF /* CellSignIn.m in Sources */,
 				1FD8A9521FEB594C009D98F5 /* ManagerShop.h in Sources */,
 				1F767DD21E7924DA00305401 /* BuildViewController.m in Sources */,
 				1F6211E41E8CFFB000F50851 /* UIViewController+HUD.m in Sources */,
@@ -6954,7 +6982,7 @@
 				62656BE71E5296390085A2BD /* ELNAlerTool.m in Sources */,
 				6205B2961F6FA238005466FC /* Provice.m in Sources */,
 				1F6211CD1E8CFFB000F50851 /* UIView+EMWebCacheOperation.m in Sources */,
-				1FD8A9561FEB5968009D98F5 /* VCManagerDepartment.h in Sources */,
+				1FD8A9561FEB5968009D98F5 /* (null) in Sources */,
 				625075121F75FCE900E92B50 /* InterestedTabelViewController.m in Sources */,
 				1FDD93021F427B5F002E834B /* ViewControllerChoosePosition.m in Sources */,
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,
@@ -7144,7 +7172,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7169,7 +7197,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7188,7 +7216,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7213,7 +7241,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

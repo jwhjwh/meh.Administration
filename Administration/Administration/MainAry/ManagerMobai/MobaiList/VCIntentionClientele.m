@@ -97,6 +97,7 @@
     
     VCDepartDetailMobai *vc = [[VCDepartDetailMobai alloc]init];
     vc.stringTitle = dict[@"departmentName"];
+    [ShareModel shareModel].shopID = [NSString stringWithFormat:@"%@",dict[@""]];
     [self.navigationController pushViewController:vc animated:YES];
     
 }

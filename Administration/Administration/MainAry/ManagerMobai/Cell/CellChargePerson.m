@@ -22,89 +22,67 @@
 -(void)setUI
 {
     UILabel *labelTitle = [[UILabel alloc]init];
+    labelTitle.text = @"负责区域";
     [self.contentView addSubview:labelTitle];
     [labelTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).offset(10);
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.height.mas_equalTo(21);
     }];
-    self.labelTitle = labelTitle;
     
-    UIImageView *imageViewAdd = [[UIImageView alloc]init];
-    imageViewAdd.layer.cornerRadius = 20;
-    imageViewAdd.layer.masksToBounds = YES;
-    imageViewAdd.userInteractionEnabled = YES;
-    imageViewAdd.image = [UIImage imageNamed:@"tj_ico01"];
-    [self.contentView addSubview:imageViewAdd];
-    [imageViewAdd mas_makeConstraints:^(MASConstraintMaker *make) {
+    UILabel *labelArea = [[UILabel alloc]init];
+    labelArea.numberOfLines = 0;
+    [self.contentView addSubview:labelArea];
+    [labelArea mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).offset(15);
         make.top.mas_equalTo(labelTitle.mas_bottom).offset(5);
-        make.width.mas_equalTo(40);
-        make.height.mas_equalTo(40);
+        make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-8);
     }];
-    self.imageViewAdd = imageViewAdd;
-    
-    UIButton *buttonDel = [[UIButton alloc]init];
-    buttonDel.hidden = YES;
-    buttonDel.userInteractionEnabled = NO;
-    buttonDel.layer.cornerRadius = 20;
-    buttonDel.layer.masksToBounds = YES;
-    [buttonDel setImage:[UIImage imageNamed:@"sc_ico01"] forState:UIControlStateNormal];
-    [self.contentView addSubview:buttonDel];
-    [buttonDel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(imageViewAdd.mas_right).offset(10);
-        make.top.mas_equalTo(labelTitle.mas_bottom).offset(5);
-        make.height.mas_equalTo(40);
-        make.width.mas_equalTo(40);
-    }];
-    self.buttonDel = buttonDel;
-    
-    UIButton *buttonRed = [[UIButton alloc]init];
-    buttonRed.hidden = YES;
-    buttonRed.userInteractionEnabled = NO;
-    [buttonRed setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    [self.contentView addSubview:buttonRed];
-    [buttonRed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(imageViewAdd.mas_right);
-        make.top.mas_equalTo(labelTitle.mas_bottom).offset(3);
-        make.width.mas_equalTo(5);
-        make.height.mas_equalTo(5);
-    }];
-    self.buttonRed = buttonRed;
-    
-    UILabel *labelName = [[UILabel alloc]init];
-    [self.contentView addSubview:labelName];
-    [labelName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_left).offset(8);
-        make.top.mas_equalTo(imageViewAdd.mas_bottom).offset(5);
-        make.height.mas_equalTo(21);
-    }];
-    self.labelName = labelName;
+    self.labelArea = labelArea;
 }
 
 -(void)setDict:(NSDictionary *)dict
 {
-    self.labelName.text = dict[@"name"];
-    self.labelTitle.text = dict[@"charge"];
+    NSArray *array = dict[@"lists"];
     
-    if (![dict[@"icon"]isEqualToString:@"tj_ico01"]) {
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]];
-        
-        [self.imageViewAdd sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"banben100"]];
+    NSMutableArray *arrayArea = [NSMutableArray array];
+    for (NSDictionary *dictinfo in array) {
+        if ([dictinfo[@"province"]isKindOfClass:[NSNull class]]) {
+            self.labelArea.text = @"暂无分配区域";
+            return;
+        }else
+        {
+            NSData *jsonData = [dictinfo[@"province"] dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *err;
+            NSDictionary *province = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                options:NSJSONReadingMutableContainers
+                                                                  error:&err];
+            NSString * stringProvince = [NSString stringWithFormat:@"%@\\",province[@"provinceName"]];
+            NSArray *arrayCity = province[@"cityList"];
+            for (int i=0;i<arrayCity.count;i++) {
+                
+                NSDictionary *dictCity = arrayCity[i];
+                if (i>0) {
+                    stringProvince = [stringProvince stringByAppendingFormat:@"\n        %@\\",dictCity[@"cityName"] ];
+                }else
+                {
+                    stringProvince = [stringProvince stringByAppendingFormat:@"%@\\",dictCity[@"cityName"] ];
+                }
+                
+                NSArray *arrayCountry = dictCity[@"countyList"];
+                stringProvince = [stringProvince stringByAppendingFormat:@"%@",[arrayCountry componentsJoinedByString:@"\\"]];
+                if (arrayCountry.count==0) {
+                    stringProvince = [stringProvince stringByAppendingFormat:@"%@全部",[arrayCountry componentsJoinedByString:@"\\"]];
+                }
+                
+            }
+            [arrayArea addObject:stringProvince];
+            
+        }
     }
     
-//    if (![dict[@"name"] isEqualToString:@""]) {
-//        self.buttonDel.hidden = NO;
-//        self.buttonDel.userInteractionEnabled = YES;
-//    }
-    
-//    if ([dict[@"icon"] isEqualToString:@""]) {
-//        [self.buttonAdd setImage:[UIImage imageNamed:@"banben100"] forState:UIControlStateNormal];
-//    }else
-//    {
-//        [self.buttonAdd.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
-//    }
-//    [self.buttonAdd setImage:[UIImage imageNamed:dict[@"icon"]] forState:UIControlStateNormal];
+    self.labelArea.text = [arrayArea componentsJoinedByString:@"\n"];
 }
 
 - (void)awakeFromNib {

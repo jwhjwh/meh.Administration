@@ -22,7 +22,7 @@
 @property (nonatomic,strong)NSMutableArray *arrayProvince;
 @property (nonatomic,strong)NSMutableArray *arrayCity;
 @property (nonatomic,strong)NSMutableArray *arrayCountry;
-
 @property (nonatomic,strong)NSString *stringAll;
+
 
 @end

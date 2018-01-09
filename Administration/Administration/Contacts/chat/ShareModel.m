@@ -32,4 +32,5 @@
     
     return sharMode;
 }
+
 @end

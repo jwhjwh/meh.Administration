@@ -10,4 +10,5 @@
 
 @interface VCSetArea : BaseViewController
 
+@property (nonatomic,strong)NSDictionary *dictInfo;
 @end
