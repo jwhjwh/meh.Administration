@@ -28,17 +28,17 @@
         }
             
             break;
-        case 10:{
+        case 11:{
             self.title=@"关注项目及所需信息简要";
         }
             
             break;
-        case 11:{
+        case 12:{
             self.title=@"会谈起止时间概要说明";
         }
             
             break;
-        case 12:{
+        case 13:{
             self.title=@"备注";
         }
             break;

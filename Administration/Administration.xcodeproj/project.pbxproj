@@ -451,19 +451,17 @@
 		1FD73DD91FBAB8F600134079 /* VCSearchMobai.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD73DCB1FBAB8F600134079 /* VCSearchMobai.m */; };
 		1FD73DDD1FBAB94C00134079 /* VCAddAreaPermision.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD73DDC1FBAB94C00134079 /* VCAddAreaPermision.m */; };
 		1FD7BBEE1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD7BBED1FBEDDBE00B9FDA3 /* VCMobaiDepartMent.m */; };
-		1FD8A9481FEB3DF6009D98F5 /* VCManagerDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9471FEB3DF6009D98F5 /* VCManagerDepartment.m */; };
 		1FD8A9521FEB594C009D98F5 /* ManagerShop.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF1D1FE4E9CE00FD0FF6 /* ManagerShop.h */; };
 		1FD8A9531FEB5953009D98F5 /* VCAllShop.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF201FE4EB1800FD0FF6 /* VCAllShop.h */; };
 		1FD8A9541FEB5957009D98F5 /* ManagerShopPosition.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF231FE4ECCD00FD0FF6 /* ManagerShopPosition.h */; };
 		1FD8A9551FEB595B009D98F5 /* ManagerShopinfo.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4BF841FE5056400FD0FF6 /* ManagerShopinfo.h */; };
-		1FD8A9561FEB5968009D98F5 /* VCManagerDepartment.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9461FEB3DF6009D98F5 /* VCManagerDepartment.h */; };
-		1FD8A9571FEB5BF1009D98F5 /* VCManagerMold.h in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9491FEB435B009D98F5 /* VCManagerMold.h */; };
+		1FD8A9561FEB5968009D98F5 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		1FD8A9571FEB5BF1009D98F5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1FD8A9581FEB5D6F009D98F5 /* VCPartnerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */; };
-		1FD8A9591FEB5E8E009D98F5 /* VCManagerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94A1FEB435B009D98F5 /* VCManagerMold.m */; };
+		1FD8A9591FEB5E8E009D98F5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1FD8A95C1FEB8E10009D98F5 /* VCManagerAddPermision.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A95B1FEB8E10009D98F5 /* VCManagerAddPermision.m */; };
 		1FD8A95F1FEBA2A3009D98F5 /* VCManagerChoosePostion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A95E1FEBA2A3009D98F5 /* VCManagerChoosePostion.m */; };
 		1FD8A9621FEBA2C8009D98F5 /* VCManagerChoosePerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A9611FEBA2C8009D98F5 /* VCManagerChoosePerson.m */; };
-		1FD8A94F1FEB4F21009D98F5 /* VCPartnerMold.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8A94E1FEB4F21009D98F5 /* VCPartnerMold.m */; };
 		1FD95F711F7CC8F000CB09AD /* VCInsideWeekDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F701F7CC8F000CB09AD /* VCInsideWeekDrafts.m */; };
 		1FD95F741F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F731F7CCD3A00CB09AD /* VCInsideWeekSummaryDrafts.m */; };
 		1FD95F771F7CCDB200CB09AD /* VCArtMonthDrafts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD95F761F7CCDB200CB09AD /* VCArtMonthDrafts.m */; };
@@ -873,6 +871,7 @@
 		62AFB92C1F0A1AA2003FCE35 /* sc_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB92A1F0A1AA2003FCE35 /* sc_ico01.png */; };
 		62D94D9A1F99A55B00D0BEA6 /* targetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D94D991F99A55B00D0BEA6 /* targetTextField.m */; };
 		62DB23321FABF70200603D00 /* ShareColleagues.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DB23311FABF70200603D00 /* ShareColleagues.m */; };
+		62DE94B02005AF4F008E43AF /* DateBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE94AF2005AF4F008E43AF /* DateBrandViewController.m */; };
 		62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 62DEF9C01E8B492B00BC7D0C /* zx_ico.png */; };
 		62E2A8971FBD81C100A08CAB /* DPYJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E2A8961FBD81C100A08CAB /* DPYJViewController.m */; };
 		62E36A691FCD0B2200D68307 /* shopAssistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */; };
@@ -2502,6 +2501,8 @@
 		62D94D991F99A55B00D0BEA6 /* targetTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = targetTextField.m; sourceTree = "<group>"; };
 		62DB23301FABF70200603D00 /* ShareColleagues.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareColleagues.h; sourceTree = "<group>"; };
 		62DB23311FABF70200603D00 /* ShareColleagues.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareColleagues.m; sourceTree = "<group>"; };
+		62DE94AE2005AF4F008E43AF /* DateBrandViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateBrandViewController.h; sourceTree = "<group>"; };
+		62DE94AF2005AF4F008E43AF /* DateBrandViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateBrandViewController.m; sourceTree = "<group>"; };
 		62DEF9C01E8B492B00BC7D0C /* zx_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zx_ico.png; sourceTree = "<group>"; };
 		62E2A8951FBD81C100A08CAB /* DPYJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPYJViewController.h; sourceTree = "<group>"; };
 		62E2A8961FBD81C100A08CAB /* DPYJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPYJViewController.m; sourceTree = "<group>"; };
@@ -2680,6 +2681,8 @@
 				1F1D1F971E6D492E0021B1AD /* LGUIView.m */,
 				62FE051320033B55005B4BE8 /* BrandTableViewController.h */,
 				62FE051420033B55005B4BE8 /* BrandTableViewController.m */,
+				62DE94AE2005AF4F008E43AF /* DateBrandViewController.h */,
+				62DE94AF2005AF4F008E43AF /* DateBrandViewController.m */,
 			);
 			name = "pingpaijingying可能被删除内容";
 			path = Permissions/pingpaijingying;
@@ -6487,7 +6490,7 @@
 				1F672ED11E82384300856A9C /* CrowdViewController.m in Sources */,
 				1FC9360F1F8DFFE5005AB2A9 /* ViewChooseState.m in Sources */,
 				1FD8A95F1FEBA2A3009D98F5 /* VCManagerChoosePostion.m in Sources */,
-				1FD8A9591FEB5E8E009D98F5 /* VCManagerMold.m in Sources */,
+				1FD8A9591FEB5E8E009D98F5 /* (null) in Sources */,
 				62E9C8391FBAD5F2008431A8 /* ActiviTableViewCell.m in Sources */,
 				62656CF61E52AF720085A2BD /* XCQ_tabbarViewController.m in Sources */,
 				1F62119B1E8CFFAF00F50851 /* amrFileCodec.mm in Sources */,
@@ -6543,6 +6546,7 @@
 				1FD321371FECEF3C00A98007 /* CellChargeManager.m in Sources */,
 				1F6211A01E8CFFAF00F50851 /* MBProgressHUD+Add.m in Sources */,
 				1F6211D61E8CFFB000F50851 /* PSTCollectionViewUpdateItem.m in Sources */,
+				62DE94B02005AF4F008E43AF /* DateBrandViewController.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				1FF580791F8C64D3001C3D40 /* VCArtMonthSummarySubmited.m in Sources */,
 				1F6211E11E8CFFB000F50851 /* NSDateFormatter+Category.m in Sources */,
@@ -6728,7 +6732,7 @@
 				1FDF34081F8B5AEC00E4EB5D /* VCPositil.m in Sources */,
 				1F6211981E8CFFAF00F50851 /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				1F92B4C11FDA5FAC00EB4DA4 /* VCPersonInfo.m in Sources */,
-				1FD8A9571FEB5BF1009D98F5 /* VCManagerMold.h in Sources */,
+				1FD8A9571FEB5BF1009D98F5 /* (null) in Sources */,
 				1F6211BE1E8CFFAF00F50851 /* EMSDImageCache.m in Sources */,
 				1FE353B71FC9579D007D7BCD /* IDJDatePickerView.m in Sources */,
 				1FCEB9401F79EEEB00D8F175 /* ViewInsideMonthTable.m in Sources */,
@@ -6972,7 +6976,7 @@
 				62656BE71E5296390085A2BD /* ELNAlerTool.m in Sources */,
 				6205B2961F6FA238005466FC /* Provice.m in Sources */,
 				1F6211CD1E8CFFB000F50851 /* UIView+EMWebCacheOperation.m in Sources */,
-				1FD8A9561FEB5968009D98F5 /* VCManagerDepartment.h in Sources */,
+				1FD8A9561FEB5968009D98F5 /* (null) in Sources */,
 				625075121F75FCE900E92B50 /* InterestedTabelViewController.m in Sources */,
 				1FDD93021F427B5F002E834B /* ViewControllerChoosePosition.m in Sources */,
 				1F803FEF1E52F7CA005F53CE /* UIWebView+AFNetworking.m in Sources */,

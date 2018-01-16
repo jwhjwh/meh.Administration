@@ -1,35 +1,37 @@
 //
-//  AddBrandViewController.m
+//  DateBrandViewController.m
 //  Administration
 //
-//  Created by zhang on 2017/3/8.
-//  Copyright © 2017年 九尾狐. All rights reserved.
+//  Created by 九尾狐 on 2018/1/10.
+//  Copyright © 2018年 九尾狐. All rights reserved.
 //
 
-#import "AddBrandViewController.h"
+#import "DateBrandViewController.h"
 #import "AlertViewExtension.h"
 #import "DongImage.h"
 #import "ZXYAlertView.h"
-@interface AddBrandViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,ZXYAlertViewDelegate,alertviewExtensionDelegate>
+@interface DateBrandViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,ZXYAlertViewDelegate,alertviewExtensionDelegate>
 {
-   
+    
     AlertViewExtension *aler;
- 
+    
     NSDictionary *dic;
-    BOOL _isfanhui;
+    BOOL _issure;
 }
 @property (nonatomic,retain)UITextField *textField;
 @property (nonatomic,retain)UIImageView *imageV;
 @property (nonatomic, strong)UIImage *goodPicture;
 @property (nonatomic,strong)NSString *string;
+
 @end
 
-@implementation AddBrandViewController
+@implementation DateBrandViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title=@"添加品牌";
+    self.title = @"品牌详情";
     self.view.backgroundColor = [UIColor whiteColor];
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
     [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
@@ -37,29 +39,46 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
-    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-    
-    self.navigationItem.rightBarButtonItem = rightitem;
-    
+    if ([self.yesorno isEqualToString:@"1"]) {
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30,30)];
+        button.titleLabel.font = [UIFont systemFontOfSize:20];
+        [button setTitle:@"完成" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(gotoAdd:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        _issure=YES;
+    }else{
+        _issure = NO;
+    }
+    [self getuI];
+}
+-(void)getuI{
     _imageV=[[UIImageView alloc]init];
     _imageV.backgroundColor=GetColor(230, 230, 230, 1);
-    _imageV.userInteractionEnabled = YES;
-    _imageV.image=[UIImage  imageNamed:@"ph_mt02"];
+    
+     NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLHeader,self.dateDic[@"brandLogo"]];
+    
+    [_imageV sd_setImageWithURL:[NSURL URLWithString:imageStr]placeholderImage:[UIImage imageNamed:@"ph_mt02"]];
     [self.view addSubview: _imageV];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(noticeimageTap:)];
     [_imageV addGestureRecognizer:tap];
+    _imageV.userInteractionEnabled=_issure;
+    
+    self.goodPicture = _imageV.image;
+    
     _textField=[[UITextField alloc]init];
     _textField.placeholder=@"请输入品牌名称";
-     placeholder(_textField);
+    _textField.text = self.dateDic[@"finsk"];
+    _string = _textField.text;
+    placeholder(_textField);
     _textField.borderStyle=UITextBorderStyleLine;
     _textField.layer.borderColor = GetColor(230, 230, 230, 1).CGColor;
     _textField.layer.borderWidth = 1.0;
     _textField.delegate = self;
     [_textField addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
     _textField.textAlignment = NSTextAlignmentCenter;
-    _textField.enabled=YES;
+    _textField.enabled=_issure;
     _textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, _textField.frame.size.height)];
     _textField.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:_textField];
@@ -76,52 +95,18 @@
         make.top.mas_equalTo(_imageV.mas_bottom).offset(20);
         make.height.offset(30);
     }];
-  
-}
--(void)rightItemAction:(UIBarButtonItem*)sender{
-    if (_string==nil||[_string isEqualToString:@""]) {
-    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有输入内容" andInterval:1.0];
-        return;
-    }
-    if (self.goodPicture==nil||[[NSString stringWithFormat:@"%@",self.goodPicture]isEqualToString:@""]) {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"您没有选择图片" andInterval:1.0];
-        return;
-    }
-    if(!(_string==nil)&&!(self.goodPicture==nil)&&![_string isEqualToString:@""]){
-        [self lodataimage];
-            return;
-    }
- 
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
--(void)butLiftItem{
-    if ((!(_string==nil)&&![_string isEqualToString:@""])||!(self.goodPicture==nil)) {
-            aler =[[AlertViewExtension alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
-            aler.delegate=self;
-            [aler setbackviewframeWidth:300 Andheight:150];
-            [aler settipeTitleStr:@"退出后，已编辑的内容将会消失确定退出吗？" Andfont:14];
-            [self.view addSubview:aler];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    
 }
 -(void)textFieldChange :(UITextField *)textField{
     _string=textField.text;
 }
 -(void)noticeimageTap:(UITapGestureRecognizer*)sender{
-   
-        ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
-        alert.title = @"请选择照片";
-        alert.buttonArray = @[@"相机",@"相册"];
-        alert.delegate = self;
-        [alert show];
-  
+    
+    ZXYAlertView *alert = [ZXYAlertView alertViewDefault];
+    alert.title = @"请选择照片";
+    alert.buttonArray = @[@"相机",@"相册"];
+    alert.delegate = self;
+    [alert show];
+    
 }
 - (void)alertView:(ZXYAlertView *)alertView clickedCustomButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex==0) {
@@ -147,14 +132,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     _imageV.image=self.goodPicture;
 }
-
--(void)lodataimage{
+-(void)gotoAdd:(UIBarButtonItem*)sender{
+    //finskid
     NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
     NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-  
-    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"str":_string};
+    
+    dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"2",@"str":_string,@"finskid":self.dateDic[@"id"]};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
@@ -173,16 +158,9 @@
         NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
         NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
-        NSLog(@"%@",dict);
         if ([status isEqualToString:@"0000"]) {
-//        self.blcokStr(self.goodPicture,_string,brandId);
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"添加成功" andInterval:1.0];
-            self.goodPicture=nil;
-            _string=@"";
-            _textField.text=@"";
-            _isfanhui=NO;
-            _imageV.image=[UIImage  imageNamed:@"ph_mt02"];
-           
+           [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+            
         } else {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
         }
@@ -190,13 +168,15 @@
         
     }];
 }
--(void)clickBtnSelector:(UIButton *)btn
-{
-    if (btn.tag == 2000) {
-        [aler removeFromSuperview];
-        
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
 }
+-(void)butLiftItem{
+    
+        [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 @end

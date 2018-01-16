@@ -7,6 +7,8 @@
 //
 
 #import "BrandTableViewController.h"
+#import "AddBrandViewController.h"
+#import "DateBrandViewController.h"
 
 @interface BrandTableViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -30,6 +32,19 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     [self BrandUI];
+    
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30,30)];
+    button.titleLabel.font = [UIFont systemFontOfSize:20];
+    [button setTitle:@"+" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(gotoAdd) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+}
+-(void)gotoAdd{
+     AddBrandViewController *addBrandVC=[[AddBrandViewController alloc]init];
+     [self.navigationController pushViewController:addBrandVC animated:YES];
 }
 -(void)BrandUI{
     NSString* phoneModel = [UIDevice devicePlatForm];
@@ -89,12 +104,13 @@
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"nu":pageStr};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            _arr = [NSMutableArray array];
             NSArray *array =[responseObject valueForKey:@"list"];
             for (NSDictionary *dict in array) {
                 [_arr addObject:dict];
             }
             [infonTableview reloadData];
-            //[self.tableView.footer endRefreshing];
+            
             
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -144,26 +160,71 @@
     UITableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell ==nil)
     {
-        
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
+
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //cell.textLabel.text = _arr[indexPath.row];
+    NSDictionary *dic = _arr[indexPath.row];
+    NSLog(@"-----%@------%@",dic,_arr);
+    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLHeader,dic[@"brandLogo"]];
+    UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
+    [image sd_setImageWithURL:[NSURL URLWithString:imageStr]placeholderImage:[UIImage imageNamed:@"head_icon"]];
+    [cell addSubview:image];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, cell.width-60, 40)];
+    label.text = dic[@"finsk"];
+    [cell addSubview:label];
     return cell;
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //添加一个删除按钮
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:(UITableViewRowActionStyleDestructive) title:@"删除" handler: ^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        //self.indexPath = indexPath;
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"真的要删除此品牌么" sureBtn:@"确认" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index){
+            if (index==2) {
+                
+            }
+        };
+        [alertView showMKPAlertView];
+        
+    }];
+    //删除按钮颜色
+    deleteAction.backgroundColor = GetColor(137,52,167,1);
+    //添加一个编辑按钮
+    UITableViewRowAction *topRowAction =[UITableViewRowAction rowActionWithStyle:(UITableViewRowActionStyleDestructive) title:@"编辑" handler:^ (UITableViewRowAction *action, NSIndexPath *indexPath) {
+       // [self gotoEdit:indexPath];
+        NSDictionary *dic =_arr[indexPath.row];
+        DateBrandViewController *date = [[DateBrandViewController alloc]init];
+        date.dateDic = dic;
+        date.yesorno = @"1";
+        [self.navigationController pushViewController:date animated:YES];
+        
+    }];
+    //置顶按钮颜色
+    topRowAction.backgroundColor = GetColor(0, 124, 248, 1);
+    //将设置好的按钮方到数组中返回
+    return @[deleteAction,topRowAction];
+    // return @[deleteAction,topRowAction,collectRowAction];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSDictionary *dic =_arr[indexPath.row];
+    DateBrandViewController *date = [[DateBrandViewController alloc]init];
+    date.dateDic = dic;
+    date.yesorno = @"2";
+    [self.navigationController pushViewController:date animated:YES];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return _arr.count;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  1;
+    return  _arr.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
