@@ -68,7 +68,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/ManagerShopDetail/ShopInfo/VCActListManager.m"
-                  timestampString = "535710226.912461"
+                  timestampString = "537173584.728237"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "143"
@@ -83,7 +83,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/ManagerShopDetail/ShopInfo/VCActListManager.m"
-                  timestampString = "535710226.917017"
+                  timestampString = "537173584.731988"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
@@ -99,92 +99,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/ManagerShop/Manager/Partner/VCPeopleShopManager.m"
-            timestampString = "535705151.557974"
+            filePath = "Administration/MainAry/ManagerMobai/AddArea/VCPostionPerson.m"
+            timestampString = "536637481.512711"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "-buttonSure"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "-getHttpData"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[VCPeopleShopManager buttonSure]"
+                  symbolName = "-[VCPostionPerson getHttpData]"
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/Manager/Partner/VCPeopleShopManager.m"
-                  timestampString = "535710227.080503"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerMobai/AddArea/VCPostionPerson.m"
+                  timestampString = "537173584.738381"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "135"
-                  endingLineNumber = "135"
-                  offsetFromSymbolStart = "1636">
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "929">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__33-[VCPeopleShopManager buttonSure]_block_invoke"
+                  symbolName = "__30-[VCPostionPerson getHttpData]_block_invoke"
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/Manager/Partner/VCPeopleShopManager.m"
-                  timestampString = "535710227.084294"
+                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerMobai/AddArea/VCPostionPerson.m"
+                  timestampString = "537173584.740449"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "136"
-                  endingLineNumber = "136"
-                  offsetFromSymbolStart = "51">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/ManagerShop/Manager/Partner/VCAllotShopManager.m"
-            timestampString = "535706255.832168"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "-buttonSure"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[VCAllotShopManager buttonSure]"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/Manager/Partner/VCAllotShopManager.m"
-                  timestampString = "535710227.106016"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "206"
-                  endingLineNumber = "206"
-                  offsetFromSymbolStart = "1961">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__32-[VCAllotShopManager buttonSure]_block_invoke"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/Manager/Partner/VCAllotShopManager.m"
-                  timestampString = "535710227.109564"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "207"
-                  endingLineNumber = "207"
-                  offsetFromSymbolStart = "51">
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "54">
                </Location>
             </Locations>
          </BreakpointContent>

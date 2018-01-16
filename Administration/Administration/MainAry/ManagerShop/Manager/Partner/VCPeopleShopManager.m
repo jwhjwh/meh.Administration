@@ -120,7 +120,7 @@
         [array addObject:[NSString stringWithFormat:@"%@",dict[@"storeid"]]];
     }
     
-    NSString *urlStr =[NSString stringWithFormat:@"%@stores/selectUsersidStore.action",KURLHeader];
+    NSString *urlStr =[NSString stringWithFormat:@"%@stores/deleteUsersidstore.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     NSDictionary *dict = @{
@@ -130,7 +130,7 @@
                            @"usersids":self.userID,
                            @"RoleIds":self.roleID,
                            @"code":self.stringCode,
-                           @"st":[array componentsJoinedByString:@","]
+                           @"st":[[array componentsJoinedByString:@","]stringByAppendingString:@","]
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
@@ -207,6 +207,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableDictionary *dict = [self.arrayData[indexPath.row]mutableCopy];
+    if (self.isDelete) {
+        
     if ([dict[@"isSelect"]isEqualToString:@"1"]) {
         [dict setValue:@"2" forKey:@"isSelect"];
         [self.arraySelect addObject:dict];
@@ -217,6 +219,7 @@
     }
     [self.arrayData replaceObjectAtIndex:indexPath.row withObject:dict];
     [self.tableView reloadData];
+    }
 }
 
 #pragma -mark system

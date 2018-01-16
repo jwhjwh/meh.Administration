@@ -21,6 +21,16 @@
 
 -(void)setUI
 {
+    UILabel *labelLine = [[UILabel alloc]init];
+    [self.contentView addSubview:labelLine];
+    [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.mas_left);
+        make.top.mas_equalTo(self.contentView.mas_top);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+        make.width.mas_equalTo(1);
+    }];
+    self.labelLine = labelLine;
+    
     UIImageView *imageViewSelect = [[UIImageView alloc]init];
     imageViewSelect.image = [UIImage imageNamed:@"djq_ico"];
     [self.contentView addSubview:imageViewSelect];

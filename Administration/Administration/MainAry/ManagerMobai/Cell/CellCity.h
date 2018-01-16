@@ -12,5 +12,6 @@
 
 @property (nonatomic,weak)UIImageView *imageViewSelect;
 @property (nonatomic,weak)UILabel *labelName;
+@property (nonatomic,weak)UILabel *labelLine;
 @property (nonatomic)BOOL isSelect;
 @end

@@ -25,7 +25,8 @@
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"CompanyInfoId":compid,
-                           @"RoleId":self.postionID
+                           @"RoleId":self.postionID,
+                           @"departmentID":[ShareModel shareModel].departmentID
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         

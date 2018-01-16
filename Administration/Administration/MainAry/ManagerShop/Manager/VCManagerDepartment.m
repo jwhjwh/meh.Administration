@@ -55,6 +55,7 @@
 {
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     self.tableView.delegate = self;
+    
     self.tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:self.tableView];
     [self.view addSubview:self.tableView];

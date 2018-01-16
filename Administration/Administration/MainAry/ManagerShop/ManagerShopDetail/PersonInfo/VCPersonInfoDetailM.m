@@ -13,6 +13,7 @@
 #import "VCAddBrithday.h"
 #import "VCBrithdayDetail.h"
 #import "UIViewDatePicker.h"
+#import "VCAddPersonSpeciality.h"
 @interface VCPersonInfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIViewDatePickerDelegate,UITextViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSMutableDictionary *dictInfo;
@@ -485,7 +486,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VCSpecialityManager *vc = [[VCSpecialityManager alloc]init];
+    
     
     if (self.isAddInfo) {
         [ShareModel shareModel].showRightItem = YES;
@@ -496,13 +497,13 @@
     
     if (indexPath.section==1) {
         if (indexPath.row==4) {
-            vc.content = self.dictInfo[@"specialty"];
-            vc.stringTitle = @"特长";
-            vc.state = @"5";
+            VCAddPersonSpeciality *vc = [[VCAddPersonSpeciality alloc]init];
+            [ShareModel shareModel].techang = self.dictInfo[@"specialty"];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
     if (indexPath.section==2) {
+        VCSpecialityManager *vc = [[VCSpecialityManager alloc]init];
         vc.content = self.dictInfo[@"overallMerit"];
         vc.stringTitle = @"综合研判";
         vc.state = @"6";

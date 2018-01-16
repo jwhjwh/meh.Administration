@@ -200,7 +200,7 @@
                            @"RoleId":[ShareModel shareModel].roleID,
                            @"usersids":self.userid,
                            @"RoleIds":self.roleID,
-                           @"st":[array componentsJoinedByString:@","],
+                           @"st":[[array componentsJoinedByString:@","]stringByAppendingString:@","],
                            @"code":self.stringCode
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {

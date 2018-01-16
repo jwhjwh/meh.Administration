@@ -10,6 +10,7 @@
 #import "CellMobaiDetail.h"
 #import "VCMobaiShopDetail.h"
 #import "VCMobaiRemark.h"
+#import "VCSignInList.h"
 @interface VCMobaiDetail ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)NSDictionary *dictInfo;
@@ -22,7 +23,6 @@
 @implementation VCMobaiDetail
 
 #pragma -mark custem
-
 -(void)getHttpData
 {
     NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
@@ -159,13 +159,36 @@
 
 -(void)setUI
 {
+    
+    UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 44)];
+    [self.view addSubview:viewTop];
+    
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 44)];
+    [button setTitle:@"查看签到记录" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"qd_ico01"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(checkList) forControlEvents:UIControlEventTouchUpInside];
+    [viewTop addSubview:button];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-30, 5, 15, 15)];
+    imageView.image = [UIImage imageNamed:@"jiantou_03"];
+    [button addSubview:imageView];
+    
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.tableHeaderView = viewTop;
     [tableView registerClass:[CellMobaiDetail class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
+}
+
+-(void)checkList
+{
+    VCSignInList *vc = [[VCSignInList alloc]init];
+    [ShareModel shareModel].shopID = [NSString stringWithFormat:@"%@",self.dictInfo[@"shopId"]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma -mark tableView
