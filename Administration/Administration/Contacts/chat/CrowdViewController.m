@@ -205,6 +205,7 @@
     ChatViewController  *chatController = [[ChatViewController alloc] initWithConversationChatter:[NSString stringWithFormat:@"%@",dic[@"groupNumber"]] conversationType:EMConversationTypeGroupChat];
     
     chatController.dictInfo = dic;
+    chatController.isGroup = YES;
     chatController.hidesBottomBarWhenPushed = YES;
     chatController.title = dic[@"name"];
     chatController.groupNmuber = dic[@"groupNumber"];

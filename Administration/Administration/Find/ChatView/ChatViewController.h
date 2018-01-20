@@ -12,4 +12,5 @@
 @property (nonatomic,strong) NSString *number;
 @property (nonatomic,strong) NSDictionary *dictInfo;
 @property (nonatomic,strong) NSString *groupNmuber;
+@property (nonatomic) BOOL isGroup;
 @end

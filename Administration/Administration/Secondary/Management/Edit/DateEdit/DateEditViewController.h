@@ -12,6 +12,8 @@
 
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 
+@property (nonatomic,strong)NSString *flag;
 
+@property (nonatomic,strong)NSDictionary *dictinfo;
 
 @end

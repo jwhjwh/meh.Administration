@@ -56,11 +56,12 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.rowHeight = UITableViewAutomaticDimension;
-    tableView.estimatedRowHeight = 60;
+    tableView.estimatedRowHeight = 100;
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [self.view addSubview:tableView];
     self.tableView = tableView;
 }
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

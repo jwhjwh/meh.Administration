@@ -85,6 +85,7 @@
         make.left.mas_equalTo(label3.mas_right).offset(8);
         make.top.mas_equalTo(labelTime.mas_bottom).offset(8);
         make.right.mas_equalTo(self.contentView.mas_right).offset(-8);
+        make.bottom.mas_equalTo (self.contentView.mas_bottom).offset(-8);
     }];
     self.labelMood = labelMood;
 }
@@ -101,9 +102,11 @@
 
 -(void)setDict:(NSDictionary *)dict
 {
-    self.labelMood.text = @"lkajdflkjadlfkjalkdjfliadjflkadjflkajdflkjadslkfjalkdsjflkajdsflkjadslfkjalkdsjflakjdflkjadsf";
-    self.labelTime.text = @"12-27 12:15";
-    self.labelAddress.text = @"alksdjflkajdsflkajdflkjadlfkjaldjflkadjflkjiovaljda";
+    
+    self.labelMood.text = dict[@"moodDescribe"];
+    self.labelTime.text = [dict[@"dates"]substringWithRange:NSMakeRange(5, 11)];
+    
+    self.labelAddress.text = dict[@"address"];
 }
 
 @end

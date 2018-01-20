@@ -23,6 +23,8 @@
 @property (nonatomic,assign) BOOL Open;
 
 @property (nonatomic,strong) NSMutableArray *theValueAry;
+@property (nonatomic,strong) NSString *flag;
+@property (nonatomic,strong) NSDictionary *dictinfo;
 
 @end
 
@@ -73,6 +75,8 @@
     
     DateEditViewController *DateEditVC = [[DateEditViewController alloc]init];
     DateEditVC.InterNameAry = _theValueAry;
+    DateEditVC.flag= self.flag;
+    DateEditVC.dictinfo = self.dictinfo;
     [self.navigationController showViewController:DateEditVC sender:nil];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -135,6 +139,8 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         _infoArray=[NSMutableArray array];
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            self.flag = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"userInfo"][@"flag"]];
+            self.dictinfo = [responseObject valueForKey:@"userInfo"];
             EditModel *model = [[EditModel alloc]init];
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
             _infoArray = [[NSMutableArray alloc]init];

@@ -152,6 +152,7 @@
     tableView1.delegate = self;
     tableView1.dataSource = self;
     tableView1.showsVerticalScrollIndicator = NO;
+    [tableView1 registerClass:[CellCity class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView1];
     [self addSubview:tableView1];
     self.tableView1 = tableView1;
@@ -160,6 +161,7 @@
     tableView2.delegate = self;
     tableView2.dataSource = self;
     tableView2.showsVerticalScrollIndicator = NO;
+    [tableView1 registerClass:[CellCity class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView2];
     [self addSubview:tableView2];
     self.tableView2 = tableView2;
@@ -168,6 +170,7 @@
     tableView3.delegate = self;
     tableView3.dataSource = self;
     tableView3.showsVerticalScrollIndicator = NO;
+    [tableView1 registerClass:[CellCity class] forCellReuseIdentifier:@"cell"];
     [ZXDNetworking setExtraCellLineHidden:tableView3];
     [self addSubview:tableView3];
     self.tableView3 = tableView3;
@@ -470,6 +473,11 @@
         }
         self.stringAll = [self.arrayAll componentsJoinedByString:@"/"];
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
 }
 
 #pragma -mark system

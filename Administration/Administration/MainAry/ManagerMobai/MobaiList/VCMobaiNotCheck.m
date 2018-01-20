@@ -16,6 +16,7 @@
 
 @property (nonatomic,assign)NSInteger page;
 @property (nonatomic)BOOL isRefreshFooter;
+@property (nonatomic,weak)UILabel *label;
 @property (nonatomic)BOOL isFirstLoad;
 @end
 
@@ -53,6 +54,13 @@
             for (NSDictionary *dict in [responseObject valueForKey:@"recordInfo"]) {
                 [self.arrayData addObject:dict];
             }
+            
+            if (self.arrayData.count==0) {
+                self.label.text = [NSString stringWithFormat:@"未查看"];
+            }else
+            {
+                self.label.text = [NSString stringWithFormat:@"未查看（%ld）",self.arrayData.count];
+            }
             [self.tableView reloadData];
             return ;
         }
@@ -80,10 +88,9 @@
 {
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(8 , kTopHeight, Scree_width, 21)];
     label.text = @"未查看";
-    if (self.stringCount!=nil) {
-        label.text = [NSString stringWithFormat:@"未查看（%@）",self.stringCount];
-    }
+    
     [self.view addSubview:label];
+    self.label = label;
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+21, Scree_width, Scree_height)];
     tableView.delegate = self;
