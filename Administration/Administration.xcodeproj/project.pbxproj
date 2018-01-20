@@ -879,6 +879,7 @@
 		62AFB92C1F0A1AA2003FCE35 /* sc_ico01.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AFB92A1F0A1AA2003FCE35 /* sc_ico01.png */; };
 		62D94D9A1F99A55B00D0BEA6 /* targetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D94D991F99A55B00D0BEA6 /* targetTextField.m */; };
 		62DB23321FABF70200603D00 /* ShareColleagues.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DB23311FABF70200603D00 /* ShareColleagues.m */; };
+		62DE94B02005AF4F008E43AF /* DateBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE94AF2005AF4F008E43AF /* DateBrandViewController.m */; };
 		62DEF9C11E8B492B00BC7D0C /* zx_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 62DEF9C01E8B492B00BC7D0C /* zx_ico.png */; };
 		62E2A8971FBD81C100A08CAB /* DPYJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E2A8961FBD81C100A08CAB /* DPYJViewController.m */; };
 		62E36A691FCD0B2200D68307 /* shopAssistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E36A681FCD0B2200D68307 /* shopAssistantViewController.m */; };
@@ -2521,6 +2522,8 @@
 		62D94D991F99A55B00D0BEA6 /* targetTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = targetTextField.m; sourceTree = "<group>"; };
 		62DB23301FABF70200603D00 /* ShareColleagues.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareColleagues.h; sourceTree = "<group>"; };
 		62DB23311FABF70200603D00 /* ShareColleagues.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareColleagues.m; sourceTree = "<group>"; };
+		62DE94AE2005AF4F008E43AF /* DateBrandViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateBrandViewController.h; sourceTree = "<group>"; };
+		62DE94AF2005AF4F008E43AF /* DateBrandViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateBrandViewController.m; sourceTree = "<group>"; };
 		62DEF9C01E8B492B00BC7D0C /* zx_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zx_ico.png; sourceTree = "<group>"; };
 		62E2A8951FBD81C100A08CAB /* DPYJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPYJViewController.h; sourceTree = "<group>"; };
 		62E2A8961FBD81C100A08CAB /* DPYJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPYJViewController.m; sourceTree = "<group>"; };
@@ -2699,6 +2702,8 @@
 				1F1D1F971E6D492E0021B1AD /* LGUIView.m */,
 				62FE051320033B55005B4BE8 /* BrandTableViewController.h */,
 				62FE051420033B55005B4BE8 /* BrandTableViewController.m */,
+				62DE94AE2005AF4F008E43AF /* DateBrandViewController.h */,
+				62DE94AF2005AF4F008E43AF /* DateBrandViewController.m */,
 			);
 			name = "pingpaijingying可能被删除内容";
 			path = Permissions/pingpaijingying;
@@ -6578,6 +6583,7 @@
 				1FD321371FECEF3C00A98007 /* CellChargeManager.m in Sources */,
 				1F6211A01E8CFFAF00F50851 /* MBProgressHUD+Add.m in Sources */,
 				1F6211D61E8CFFB000F50851 /* PSTCollectionViewUpdateItem.m in Sources */,
+				62DE94B02005AF4F008E43AF /* DateBrandViewController.m in Sources */,
 				1F52C3891E67AA3400AF6180 /* LomapViewController.mm in Sources */,
 				1FF580791F8C64D3001C3D40 /* VCArtMonthSummarySubmited.m in Sources */,
 				1F6211E11E8CFFB000F50851 /* NSDateFormatter+Category.m in Sources */,

@@ -86,18 +86,28 @@
 {
     switch (indexPath.row) {
         case 0:{//填写新的
-            NSArray *ary = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsSeparatedByString:@","];
-            if (ary.count>1) {
+            
+            if ([[USER_DEFAULTS objectForKey:@"departmentID"] isKindOfClass:[NSString class]]) {
                 ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
                 chooseVC.strId = self.strId;
                 chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
                 [self.navigationController pushViewController:chooseVC animated:YES];
             }else{
-                FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
-                fillVC.points = self.strId;
-                fillVC.depant =[USER_DEFAULTS objectForKey:@"departmentID"];
-               [self.navigationController pushViewController:fillVC animated:YES];
-           }
+                NSArray *ary=[USER_DEFAULTS objectForKey:@"departmentID"];
+                if (ary.count>1) {
+                    ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
+                    chooseVC.strId = self.strId;
+                    chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
+                    [self.navigationController pushViewController:chooseVC animated:YES];
+                }else{
+                    FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
+                    fillVC.points = self.strId;
+                    NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
+                    fillVC.depant =string;
+                    [self.navigationController pushViewController:fillVC animated:YES];
+                }
+            }
+            
             
         }
             break;

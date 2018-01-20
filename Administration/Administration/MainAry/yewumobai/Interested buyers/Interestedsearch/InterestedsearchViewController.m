@@ -160,7 +160,7 @@
     return cell;
 }
 -(void)TouchsearchMe:(UIButton *)meBtn{
-    NSLog(@"点我");
+    NSLog(@"点我的");
     meBtn.backgroundColor =GetColor(203, 176, 219, 1);
     _comBtn.backgroundColor = [UIColor whiteColor];
     [self OneDateNetworking:meBtn];

@@ -145,17 +145,7 @@
             [model setValuesForKeysWithDictionary:[NSDictionary changeType:responseObject[@"userInfo"]]];
             _infoArray = [[NSMutableArray alloc]init];
             _arr  =[[NSMutableArray alloc]init];
-//            
-//            if ([model.flag isEqualToString:@"2"]) {
-//                if (model.solarBirthday.length>0) {
-//                    model.solarBirthday = [model.solarBirthday substringToIndex:10];
-//                }
-//            }else
-//            {
-//                if (model.lunarBirthday.length>0) {
-//                    
-//                }
-//            }
+
             
              _logImage=model.icon;
             
@@ -163,70 +153,33 @@
             [_infoArray addObject:@""];
             [_arr addObject:@"账号"];
             [_infoArray addObject:model.account];
-            [_arr addObject:@"职位"];
-            NSArray  *newnamearray = [model.NewName componentsSeparatedByString:@","];
-            if (newnamearray.count>0) {
-                for (int i = 0; i<newnamearray.count; i++) {
-                    
-                    [_infoArray addObject:newnamearray[i]];
-                }
-                for (int y = 0; y<newnamearray.count-1; y++) {
-                    [_arr addObject:@""];
-                    
-                }
-            }
-            
-            NSArray  *levelnamearray = [model.LevelName componentsSeparatedByString:@","];
-            if (levelnamearray.count>0) {
-               
-                if (levelnamearray.count==1) {
-                    if ([levelnamearray[0]isEqualToString:@""]) {
-                        
-                    }else{
-                         [_arr addObject:@"类别"];
-                        for (int i = 0; i<levelnamearray.count; i++) {
-                            
-                            [_infoArray addObject:levelnamearray[i]];
-                        }
-                        for (int y = 0; y<levelnamearray.count-1; y++) {
-                            [_arr addObject:@""];
-                            
-                        }
-                    }
-                }
-                
-                
-            }
             [_arr addObject:@"真实姓名"];
             [_infoArray addObject:model.name];
-            NSArray  *ssbmnamearray = [model.suDepartment componentsSeparatedByString:@","];
-            if (ssbmnamearray.count>0) {
-                [_arr addObject:@"所属部门"];
-                for (int i = 0; i<ssbmnamearray.count; i++) {
-                    
-                    [_infoArray addObject:ssbmnamearray[i]];
+            //--------------------------------
+            NSArray *array=[responseObject[@"userInfo"] valueForKey:@"list"];
+            for (NSDictionary *dic in array) {
+                [_arr addObject:@"职位"];
+                [_infoArray addObject:dic[@"newName"]];
+                if ([dic[@"roleId"]integerValue] == 2||[dic[@"roleId"]integerValue] == 5||[dic[@"roleId"]integerValue] == 3||[dic[@"roleId"]integerValue] == 4||[dic[@"roleId"]integerValue] == 14||[dic[@"roleId"]integerValue] == 16||[dic[@"roleId"]integerValue] == 17) {
+                   [_arr addObject:@"所属部门"];
+                }else{
+                    [_arr addObject:@"管辖部门"];
                 }
-                for (int y = 0; y<ssbmnamearray.count-1; y++) {
-                    [_arr addObject:@""];
-                    
+                if ([dic[@"departmentName"] isKindOfClass:[NSNull class]]) {
+                    [_infoArray addObject:@"暂无部门"];
+                }else{
+                    [_infoArray addObject:dic[@"departmentName"]];
                 }
-            }
-            
-            NSArray  *glbmnamearray = [model.glDepartment componentsSeparatedByString:@","];
-            if (glbmnamearray.count>0) {
-                [_arr addObject:@"管理部门"];
-                for (int i = 0; i<glbmnamearray.count; i++) {
-                   
-                    [_infoArray addObject:glbmnamearray[i]];
-                }
-                for (int y = 0; y<glbmnamearray.count-1; y++) {
-                    [_arr addObject:@""];
-                    
-                }
+                
+                
             }
             
             
             
+            
+            
+            
+            //--------------------------------
             [_arr addObject:@"出生日期"];
             
             

@@ -29,7 +29,7 @@
         
         _cityArray = [self cityArray];
         
-        _areaArray = [self aeraArray];
+        _areaArray = [self areaArray];
         //父类 UIView
         _pickerView = [[UIPickerView alloc]init];
         
@@ -265,7 +265,7 @@
     return cityMutableArray;
 }
 
-- (NSArray *)aeraArray{
+- (NSArray *)areaArray{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
     NSArray *array = [[NSArray alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
     NSMutableArray *areaMutableArray = [NSMutableArray array];
