@@ -17,6 +17,15 @@
 @property (nonatomic,strong)NSMutableArray *arrayP;
 @property (nonatomic,strong)NSMutableArray *arrayC;
 @property (nonatomic,strong)NSMutableArray *arrayT;
+
+
+@property (nonatomic,strong)NSString *isof;
+@property (nonatomic,strong)NSString *iscount;
+
+@property (nonatomic, strong) NSString *province;           /** 省 */
+@property (nonatomic, strong) NSString *city;               /** 市 */
+@property (nonatomic, strong) NSString *town;               /** 县 */
+
 @end
 
 @implementation ResponsibleArea
@@ -57,118 +66,48 @@
             
             provinceName = [[NSMutableArray alloc]init];//
              _dict = [[NSMutableDictionary alloc]init];
+        
             
-            NSMutableArray *cityName = [[NSMutableArray alloc]init];//
-           NSMutableArray *proary =[[NSMutableArray alloc]init];
             for (NSDictionary *dic in array) {
                 NSData *jsonData = [dic[@"province"] dataUsingEncoding:NSUTF8StringEncoding];
                 NSError *err;
                 NSDictionary* dictt= [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
                 [provinceName addObject:dictt];
-                
-               [proary addObject:dictt[@"provinceName"]];
-                
-                [cityName addObject:dictt[@"cityList"]];
-                NSMutableArray *countyList = [[NSMutableArray alloc]init];
-                NSMutableArray *cityNameary = [[NSMutableArray alloc]init];
-                for (int i =0; i<cityName.count; i++) {
-                    NSMutableArray *citymuary = cityName[i];
-                    NSMutableArray *cityoldary = [[NSMutableArray alloc]init];
-                    NSMutableArray *countyary = [[NSMutableArray alloc]init];
-                    for (NSDictionary *dict2 in citymuary) {
-                        [cityoldary addObject:dict2[@"cityName"]];
-                        
-                        [countyary addObject:dict2[@"countyList"]];
-                        
-                    }
-                    [countyList addObject:countyary];
-                    [cityNameary addObject:cityoldary];
-                }
-               
-                
-                
-                NSString *propath = [[NSBundle mainBundle] pathForResource:@"province" ofType:@"plist"];
-                NSArray *proarray1 = [[NSArray alloc] initWithContentsOfURL:[NSURL fileURLWithPath:propath]];
-                NSMutableArray *proviceMutableArray = [NSMutableArray array];
-                NSMutableArray *proviceid = [NSMutableArray array];
-                for (NSDictionary *prodic in proarray1) {
-                    [proviceMutableArray addObject:prodic[@"name"]];
-                    [proviceid addObject:prodic[@"proID"]];
-                }
-                NSString *citypath = [[NSBundle mainBundle] pathForResource:@"city" ofType:@"plist"];
-                NSArray *cityarray1 = [[NSArray alloc] initWithContentsOfURL:[NSURL fileURLWithPath:citypath]];
-                NSMutableArray *cityMutableArray = [NSMutableArray array];
-                NSMutableArray *cityid = [NSMutableArray array];
-                NSMutableArray *cityproid = [NSMutableArray array];
-                for (NSDictionary *citydic in cityarray1) {
-                    [cityMutableArray addObject:citydic[@"name"]];
-                    [cityid addObject:citydic[@"cityID"]];
-                    [cityproid addObject:citydic[@"proID"]];
-                }
-                
-                
-                NSString *areapath = [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
-                 NSArray *areaarray1 = [[NSArray alloc] initWithContentsOfURL:[NSURL fileURLWithPath:areapath]];
-                NSMutableArray *areaMutableArray = [NSMutableArray array];
-                NSMutableArray *areaid = [NSMutableArray array];
-                for (NSDictionary *areadic in areaarray1) {
-                    [areaMutableArray addObject:areadic[@"name"]];
-                    [areaid addObject:areadic[@"cityID"]];
-                }
-                 NSLog(@"%@--%@--%@",provinceName,cityNameary,countyList);
-                
-                
-                /*
-                 proviceMutableArray----省名
-                 proviceid--------------省id
-                 cityMutableArray-------市名
-                 cityid-----------------市id
-                 cityproid--------------市--省id
-                 areaMutableArray-------区名
-                 areaid-----------------区---市id
-                 provinceName-----------请求的省名
-                 cityNameary-----------------市名
-                 countyList------------------区名
-                 */
-                
-                
-                for (int a = 0; a<cityNameary.count; a++) {
-                    NSArray *cityary = cityNameary[a];
-                    
-                    for (int b =0; b<cityary.count; b++) {
-                        if ([cityary[b] isEqualToString:@"全部"]) {
-                            NSString *prostr =proary[a];
-                            //找省的id
-                            for (int c = 0; c<proviceMutableArray.count; c++) {
-                                if ([prostr isEqualToString:proviceMutableArray[c]]) {
-                                    //拿省id
-                                    NSString *proidstr = proviceid[c];
-                                    //根据省id 找全部的市
-                                    for (int d=0; d<cityid.count; d++) {
-                                        NSMutableArray *newcityary = [NSMutableArray array];
-                                        if ([proidstr isEqualToString:cityid[d]]) {
-                                            [newcityary addObject:cityMutableArray[d]];
-                                            
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                        }else{
-                            
-                        }
-                    }
-                }
-
-        
-                
             }
+//
             [_dict setValue:provinceName forKey:@"province"];
             
             self.arrayP = self.dict[@"province"];
-            self.arrayC = self.arrayP[0][@"cityList"];
-            self.arrayT = self.arrayP[0][@"cityList"][0][@"countyList"];
+            if ([self.arrayP[0][@"cityList"][0][@"cityName"] isEqualToString:@"全部"]) {
+                self.arrayC = [[self getList:self.arrayP[0][@"provinceName"]]mutableCopy];
+            }
             
+            self.arrayC = self.arrayP[0][@"cityList"];
+            if ([self.arrayC[0][@"cityName"] isEqualToString:@"全部"]) {
+                self.arrayC = [[self getList:self.arrayP[0][@"cityName"]]mutableCopy];
+            }
+            
+            
+            self.arrayT = self.arrayC[0][@"countyList"];
+//
+//            self.arrayP = self.dict[@"province"];
+//            self.arrayC = self.arrayP[0][@"cityList"];
+//            _isof = [[NSString alloc]init];
+//            _iscount = [[NSString alloc]init];
+//             if ([self.arrayC[0][@"cityList"] isEqualToString:@"全部"]) {
+//              self.arrayC = [[self getList:self.arrayP[0][@"provinceName"]]mutableCopy];
+//                 _isof= @"1";
+//             }else{
+//                 _isof = @"2";
+//             }
+//            self.arrayT = self.arrayP[0][@"cityList"][0][@"countyList"];
+//            if ([self.arrayT[0] isEqualToString:@"全部"]) {
+//                self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+//                _iscount= @"1";
+//            }else{
+//                _iscount = @"2";
+//            }
+//            self.province   = self.arrayP[0][@"provinceName"];
              [self nssUI];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -195,7 +134,30 @@
         
     } view:self.view MBPro:YES];
 }
+-(NSArray *)getList:(NSString *)name{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Respon_date" ofType:@"json"];
+    NSData *cityData = [[NSData alloc]initWithContentsOfFile:path];
+    NSDictionary *dictdata = [NSJSONSerialization JSONObjectWithData:cityData options:NSJSONReadingAllowFragments error:nil];
+    
+    NSArray *arrayProvince = dictdata[@"province"];
+    NSArray *array = [NSArray array];
+    for (NSDictionary *dict in arrayProvince) {
+        
+        if ([dict[@"provinceName"]isEqualToString:name]) {
+            array = dict[@"cityList"];
+        }else{
+            NSArray *array1 = dict[@"cityList"];
+            for (NSDictionary *dict1 in array1) {
+                if ([dict1[@"cityName"]isEqualToString:name]) {
+                    array =  dict1[@"countyList"];
+                }
+                
+            }
+        }
+    }
+    return array;
 
+}
 
 -(void)nssUI{
     NSString* phoneModel = [UIDevice devicePlatForm];
@@ -265,6 +227,20 @@
         return self.arrayT.count;
     }
 }
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    UILabel *lbl = (UILabel *)view;
+    if (lbl == nil) {
+        lbl = [[UILabel alloc]init];
+        lbl.font = [UIFont systemFontOfSize:15];
+        lbl.textAlignment = NSTextAlignmentCenter;
+        [lbl setTextAlignment:0];
+    }
+        [lbl setBackgroundColor:[UIColor clearColor]];
+        lbl.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+        
+        return lbl;
+    
+}
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (component==0) {
@@ -273,27 +249,94 @@
     }else if(component==1)
     {
         NSDictionary *dict = self.arrayC[row];
-        return dict[@"cityName"];
+       
+            return dict[@"cityName"];
+        
+        
+        
     }else
     {
+        if ([_iscount isEqualToString:@"1"]) {
+           return self.arrayT[row][@"name"];
+        }else{
+            return self.arrayT[row];
+        }
         
-        return self.arrayT[row];
+        
     }
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+   
     if (component==0) {
-        
+        self.province   = self.arrayP[row][@"provinceName"];
         self.arrayC = self.arrayP[row][@"cityList"];
-        self.arrayT = self.arrayC[0][@"countyList"];
+        if ([self.arrayP[row][@"cityList"][0][@"cityName"] isEqualToString:@"全部"]) {
+            self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
+            self.arrayT = self.arrayC[0][@"countyList"];
+            
+            self.city       = self.arrayC[0][@"cityName"];
+            _iscount= @"1";
+            self.town       = self.arrayT[0][@"name"];
+        }else{
+            self.arrayC = self.arrayP[0][@"cityList"];
+            self.arrayT = self.arrayC[0][@"countyList"];
+            self.city       = self.arrayC[0][@"cityName"];
+            _iscount= @"2";
+            self.town       = self.arrayT[0];
+        }
+        
+        
         [pickerView reloadComponent:1];
+        [pickerView selectRow:0 inComponent:1 animated:YES];
         [pickerView reloadComponent:2];
-    }else if (component==1)
-    {
+        [pickerView selectRow:0 inComponent:2 animated:YES];
+    }else if (component==1){
+        self.city       = self.arrayC[row][@"cityName"];
         self.arrayT = self.arrayC[row][@"countyList"];
+        
+        if ([self.arrayC[row][@"countyList"][0]isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dict = self.arrayC[row][@"countyList"][0];
+            if ([dict[@"cityName"]isEqualToString:@"全部"]) {
+               self.arrayT = [[self getList:dict[@"cityName"]]mutableCopy];
+            }
+            
+        }else
+        {
+            if ([self.arrayC[row][@"countyList"][0]isEqualToString:@"全部"]) {
+                self.arrayT = [self getList:self.arrayC[row][@"cityName"]];
+            }
+        }
+        
+//       NSString *arcstr = [[NSString alloc]init];
+//        if ([_iscount isEqualToString:@"1"]) {
+//            arcstr = self.arrayC[row][@"countyList"][0][@"name"];
+//        }else{
+//            arcstr =self.arrayC[row][@"countyList"][0];
+//        }
+//
+//            if ([arcstr isEqualToString:@"全部"]) {
+//                self.arrayT = [[self getList:self.arrayC[row][@"cityName"]]mutableCopy];
+//                _iscount= @"1";
+//                self.town       = self.arrayT[row][@"name"];
+//            }else{
+//                _iscount = @"2";
+//                self.town       = self.arrayT[row][@"name"];
+//            }
+//
+
         [pickerView reloadComponent:2];
+     //   [pickerView selectRow:0 inComponent:2 animated:YES];
+    }else if (component == 2){
+//        if([_iscount isEqualToString:@"1"]){
+//             self.town       = self.arrayT[row][@"name"];
+//        }else{
+//             self.town       = self.arrayT[row];
+//        }
+        
     }
+    NSLog(@"%@--%@----%@",self.province,self.city,self.town);
 }
 
 @end

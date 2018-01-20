@@ -321,7 +321,7 @@
                 break;
             case 2:{
 //                [self.view endEditing:YES];
-//                self.cityChoose = [[CityChoose alloc] init];
+            self.cityChoose = [[CityChoose alloc] init];
 //                self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
 //                    cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
 //                    cell.xingLabel.textColor=[UIColor blackColor];

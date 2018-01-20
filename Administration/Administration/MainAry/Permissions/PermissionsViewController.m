@@ -53,17 +53,9 @@
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     infonTableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    
+     [ZXDNetworking setExtraCellLineHidden:infonTableview];
     [self.view addSubview:infonTableview];
-    UIView *view1 = [[UIView alloc]init];
-    view1.backgroundColor = GetColor(201, 201, 201, 1);
-    [infonTableview addSubview:view1];
-    [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(0);
-        make.bottom.equalTo(infonTableview.mas_top).offset(0);
-        make.right.equalTo(self.view.mas_right).offset(0);
-        make.height.mas_equalTo(1);
-    }];
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -71,16 +63,7 @@
     
     return _arr.count;
 }
-- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    
-    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
-    
-    view.backgroundColor =GetColor(201, 201, 201, 1);
-    
-    
-    return view;
-    
-}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 2;
@@ -172,6 +155,24 @@
             break;
     }
 }
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [infonTableview setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
+        [infonTableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 
 @end

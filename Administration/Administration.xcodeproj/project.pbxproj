@@ -700,6 +700,7 @@
 		620731251E5D1DA200BCF51C /* JinnLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731201E5D1DA200BCF51C /* JinnLockViewController.m */; };
 		620731281E5D1DB900BCF51C /* LockSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620731271E5D1DB900BCF51C /* LockSettingViewController.m */; };
 		6207312B1E5D6F9100BCF51C /* EditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6207312A1E5D6F9100BCF51C /* EditModel.m */; };
+		6209FD3C20119EEC00BAACAC /* Respon_date.json in Resources */ = {isa = PBXBuildFile; fileRef = 62EE9F99200EEB990086DFB7 /* Respon_date.json */; };
 		620A8ACB1E6575BE005CA222 /* DateEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620A8ACA1E6575BE005CA222 /* DateEditViewController.m */; };
 		620B71A81FC00AF400117019 /* BossHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 620B71A71FC00AF400117019 /* BossHome.m */; };
 		620B9C711F79051600B24660 /* InterestedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 620B9C701F79051600B24660 /* InterestedModel.m */; };
@@ -2547,6 +2548,7 @@
 		62EBA26E1E56D1AE00F657DB /* EditDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDataViewController.m; sourceTree = "<group>"; };
 		62EBA2701E56D1C300F657DB /* ManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagementViewController.h; sourceTree = "<group>"; };
 		62EBA2711E56D1C300F657DB /* ManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagementViewController.m; sourceTree = "<group>"; };
+		62EE9F99200EEB990086DFB7 /* Respon_date.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Respon_date.json; sourceTree = "<group>"; };
 		62EFBEAA1FD0E35800880BB9 /* specialty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = specialty.h; sourceTree = "<group>"; };
 		62EFBEAB1FD0E35800880BB9 /* specialty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = specialty.m; sourceTree = "<group>"; };
 		62F02F131F70AE0C00F3A0EF /* ssjl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssjl.png; sourceTree = "<group>"; };
@@ -3677,6 +3679,7 @@
 				1F71B8911F887E8600C3638F /* FillinfoViewController.mm */,
 				62FA52841FEE081300F45412 /* ResponsibleArea.h */,
 				62FA52851FEE081300F45412 /* ResponsibleArea.m */,
+				62EE9F99200EEB990086DFB7 /* Respon_date.json */,
 				1F71B8921F887E8600C3638F /* FillTableViewCell.h */,
 				1F71B8931F887E8600C3638F /* FillTableViewCell.m */,
 				1F71B8941F887E8600C3638F /* InputboxController.h */,
@@ -6086,7 +6089,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = T786R7PE4N;
+						DevelopmentTeam = X3D9UD9RUS;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -6139,6 +6142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6209FD3C20119EEC00BAACAC /* Respon_date.json in Resources */,
 				62656D621E52B5700085A2BD /* huilianxiren.png in Resources */,
 				62656D631E52B5700085A2BD /* huishezhi.png in Resources */,
 				624E71041EC404980026C5E9 /* 职位结构7.jpg in Resources */,
@@ -7196,7 +7200,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7221,7 +7225,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7240,7 +7244,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T786R7PE4N;
+				DEVELOPMENT_TEAM = X3D9UD9RUS;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7265,7 +7269,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
