@@ -77,6 +77,20 @@
 //    [self tableViewDidTriggerHeaderRefresh];
    // [LVFmdbTool createTable];
     
+    if (self.isGroup) {
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"详情" style:UIBarButtonItemStyleDone target:self action:@selector(groupDetail)];
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
+    
+}
+
+-(void)groupDetail
+{
+    GroupdetailController *groupDetatil = [[GroupdetailController alloc]init];
+    groupDetatil.groupNum = [NSString stringWithFormat:@"%@",self.dictInfo[@"groupNumber"]];
+    [self.navigationController pushViewController:groupDetatil animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

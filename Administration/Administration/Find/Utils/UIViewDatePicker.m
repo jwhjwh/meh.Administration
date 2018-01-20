@@ -11,7 +11,8 @@
 @interface UIViewDatePicker ()
 @property (nonatomic,strong)IDJDatePickerView *djdateGregorianView;
 @property (nonatomic,strong)IDJDatePickerView *djdateChineseView;
-
+@property (nonatomic,weak)UIButton *buttonSure;
+@property (nonatomic,weak)UIButton *buttonCancle;
 
 @property (nonatomic,weak)UILabel *labelCalender;
 @property (nonatomic,weak)UILabel *labelDate;
@@ -35,38 +36,39 @@
 
 -(void)setUI
 {
-    UIColor *color = [UIColor colorWithRed:234.0f/255.0f green:235.0f/255.0f blue:236.0f/255.0f alpha:1];
+//    UIColor *color = [UIColor colorWithRed:234.0f/255.0f green:235.0f/255.0f blue:236.0f/255.0f alpha:1];
+    UIColor *color = [UIColor blackColor];
     self.backgroundColor = [color colorWithAlphaComponent:0.5];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 300)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 310)];
     view.backgroundColor = [UIColor lightGrayColor];
     view.center = self.center;
     [self addSubview:view];
     
-    UILabel *labelDate = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 21)];
+    UILabel *labelDate = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 31)];
     labelDate.backgroundColor = [UIColor whiteColor];
     labelDate.textAlignment = NSTextAlignmentCenter;
     [view addSubview:labelDate];
     self.labelDate = labelDate;
     
-    self.djdateGregorianView=[[IDJDatePickerView alloc]initWithFrame:CGRectMake(0, 21, 300, 200) type:Gregorian1];
+    self.djdateGregorianView=[[IDJDatePickerView alloc]initWithFrame:CGRectMake(0, 31, 300, 200) type:Gregorian1];
     self.djdateGregorianView.delegate = self;
     [view addSubview:self.djdateGregorianView];
     
     
-    self.djdateChineseView=[[IDJDatePickerView alloc]initWithFrame:CGRectMake(0, 21, 300, 200) type:Chinese1];
+    self.djdateChineseView=[[IDJDatePickerView alloc]initWithFrame:CGRectMake(0, 31, 300, 200) type:Chinese1];
     self.djdateChineseView.delegate = self;
     self.djdateChineseView.hidden = YES;
     [view addSubview:self.djdateChineseView];
     
     
-    UILabel *labelCalender = [[UILabel alloc]initWithFrame:CGRectMake(0,221 , 249, 41)];
+    UILabel *labelCalender = [[UILabel alloc]initWithFrame:CGRectMake(0,231 , 249, 41)];
     labelCalender.backgroundColor = [UIColor whiteColor];
     labelCalender.text = @"  公历";
     [view addSubview:labelCalender];
     self.labelCalender = labelCalender;
     
-    UIView *viewS = [[UIView alloc]initWithFrame:CGRectMake(249, 221, 51, 41)];
+    UIView *viewS = [[UIView alloc]initWithFrame:CGRectMake(249, 231, 51, 41)];
     viewS.backgroundColor = [UIColor whiteColor];
     [view addSubview:viewS];
     
@@ -74,19 +76,21 @@
     [sw addTarget:self action:@selector(switchPress:) forControlEvents:UIControlEventValueChanged];
     [viewS addSubview:sw];
     
-    UIButton *buttonCancle = [[UIButton alloc]initWithFrame:CGRectMake(0, 263, 149, 44)];
+    UIButton *buttonCancle = [[UIButton alloc]initWithFrame:CGRectMake(0, 273, 149, 44)];
     [buttonCancle setTitle:@"取消" forState:UIControlStateNormal];
     [buttonCancle setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [buttonCancle setBackgroundColor:[UIColor whiteColor]];
     [buttonCancle addTarget:self action:@selector(buttonCancled) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:buttonCancle];
+    self.buttonCancle = buttonCancle;
     
-    UIButton *buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(150, 263, 150, 44)];
+    UIButton *buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(150, 273, 150, 44)];
     [buttonSure setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [buttonSure setTitle:@"确定" forState:UIControlStateNormal];
     [buttonSure setBackgroundColor:[UIColor whiteColor]];
-    [buttonSure addTarget:self action:@selector(buttonSure) forControlEvents:UIControlEventTouchUpInside];
+    [buttonSure addTarget:self action:@selector(buttonSurehh) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:buttonSure];
+    self.buttonSure = buttonSure;
     
     
 
@@ -179,15 +183,18 @@
 
 -(void)buttonCancled
 {
+    [self.buttonCancle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.buttonCancle setBackgroundColor:[UIColor purpleColor]];
     [self removeFromSuperview];
 }
 
--(void)buttonSure
+-(void)buttonSurehh
 {
    
  //   self.blcokStrrrr(self.stringGregorian,self.stringChinese,_flagggg);
     
-    
+    [self.buttonSure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.buttonSure setBackgroundColor:[UIColor purpleColor]];
 
     if ([self.delegate respondsToSelector:@selector(getChooseDate)]) {
         [self.delegate getChooseDate];
@@ -199,8 +206,9 @@
 //        [ShareModel shareModel].stringGregorian = self.stringGregorian;
 //        [ShareModel shareModel].stringChinese = self.stringChinese;
 //    }
+    
     NSLog(@"%@---%@---%@",self.stringGregorian,self.stringChinese,_flagggg);
-
+    
     [self removeFromSuperview];
     
 }

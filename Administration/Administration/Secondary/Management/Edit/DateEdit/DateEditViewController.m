@@ -38,7 +38,7 @@
 
 @property (nonatomic,strong)NSString *string1;
 @property (nonatomic,strong)NSString *string2;
-@property (nonatomic,strong)NSString *flag;
+
 @end
 
 @implementation DateEditViewController
@@ -81,6 +81,9 @@
     [btn addTarget: self action: @selector(buttonLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    
+    self.string1 = self.dictinfo[@"lunarBirthday"];
+    self.string2 = self.dictinfo[@"solarBirthday"];
     
 }
 -(void)buttonLiftItem{

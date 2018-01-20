@@ -146,6 +146,10 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
             return;
         }
+        if ([code isEqualToString:@"5000"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            return;
+        }
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];

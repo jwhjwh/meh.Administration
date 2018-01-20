@@ -534,6 +534,7 @@
 		1FE1B6311F2F1178008B8A57 /* ModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1B6301F2F1178008B8A57 /* ModelArray.m */; };
 		1FE20D651F5659840097B976 /* BJZWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE20D641F5659840097B976 /* BJZWViewController.m */; };
 		1FE2379F1F8864E800B2ECA7 /* ViewChooseEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEB9521F7A4E6C00D8F175 /* ViewChooseEdit.m */; };
+		1FE336DF200EDFC800DD988D /* CellPersonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE336DE200EDFC800DD988D /* CellPersonManager.m */; };
 		1FE352C11FC8FC18007D7BCD /* CellBrithday.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE352C01FC8FC18007D7BCD /* CellBrithday.m */; };
 		1FE353AF1FC9579D007D7BCD /* CalendarDisplyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE353871FC9579D007D7BCD /* CalendarDisplyManager.m */; };
 		1FE353B01FC9579D007D7BCD /* Lunar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE3538A1FC9579D007D7BCD /* Lunar.m */; };
@@ -567,6 +568,7 @@
 		1FE5A21E1F90443100C5221A /* VCAddBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A21D1F90443100C5221A /* VCAddBacklog.m */; };
 		1FE5A2231F906B1100C5221A /* CellAddBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2221F906B1100C5221A /* CellAddBacklog.m */; };
 		1FE5A2291F90BCC000C5221A /* ViewChooseBacklog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE5A2281F90BCC000C5221A /* ViewChooseBacklog.m */; };
+		1FE654B9200DE9420006BA16 /* VCSearchPersonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE654B8200DE9420006BA16 /* VCSearchPersonManager.m */; };
 		1FE6718F1FA9676D00372DD3 /* VCChildShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6718E1FA9676D00372DD3 /* VCChildShop.m */; };
 		1FE76A071F78F1D5003E4FA9 /* VCArtFillMonthTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A061F78F1D5003E4FA9 /* VCArtFillMonthTable.m */; };
 		1FE76A0A1F78F1F7003E4FA9 /* ViewArtMonthPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE76A091F78F1F7003E4FA9 /* ViewArtMonthPlan.m */; };
@@ -1909,6 +1911,8 @@
 		1FE1B62F1F2F1178008B8A57 /* ModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelArray.h; sourceTree = "<group>"; };
 		1FE1B6301F2F1178008B8A57 /* ModelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelArray.m; sourceTree = "<group>"; };
 		1FE20D641F5659840097B976 /* BJZWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJZWViewController.m; sourceTree = "<group>"; };
+		1FE336DD200EDFC800DD988D /* CellPersonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPersonManager.h; sourceTree = "<group>"; };
+		1FE336DE200EDFC800DD988D /* CellPersonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellPersonManager.m; sourceTree = "<group>"; };
 		1FE352BF1FC8FC18007D7BCD /* CellBrithday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellBrithday.h; sourceTree = "<group>"; };
 		1FE352C01FC8FC18007D7BCD /* CellBrithday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellBrithday.m; sourceTree = "<group>"; };
 		1FE353861FC9579D007D7BCD /* CalendarDisplyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDisplyManager.h; sourceTree = "<group>"; };
@@ -1968,6 +1972,8 @@
 		1FE5A2221F906B1100C5221A /* CellAddBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellAddBacklog.m; sourceTree = "<group>"; };
 		1FE5A2271F90BCC000C5221A /* ViewChooseBacklog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewChooseBacklog.h; sourceTree = "<group>"; };
 		1FE5A2281F90BCC000C5221A /* ViewChooseBacklog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ViewChooseBacklog.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		1FE654B7200DE9420006BA16 /* VCSearchPersonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSearchPersonManager.h; sourceTree = "<group>"; };
+		1FE654B8200DE9420006BA16 /* VCSearchPersonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSearchPersonManager.m; sourceTree = "<group>"; };
 		1FE6718D1FA9676D00372DD3 /* VCChildShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChildShop.h; sourceTree = "<group>"; };
 		1FE6718E1FA9676D00372DD3 /* VCChildShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChildShop.m; sourceTree = "<group>"; };
 		1FE76A051F78F1D5003E4FA9 /* VCArtFillMonthTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCArtFillMonthTable.h; sourceTree = "<group>"; };
@@ -3726,6 +3732,8 @@
 			children = (
 				620FC39A1ED035E500C4D8B3 /* ManageViewController.h */,
 				620FC39B1ED035E500C4D8B3 /* ManageViewController.m */,
+				1FE654B7200DE9420006BA16 /* VCSearchPersonManager.h */,
+				1FE654B8200DE9420006BA16 /* VCSearchPersonManager.m */,
 				1FEEC5821ED3C9A2006C3523 /* DepalistController.h */,
 				1FEEC5831ED3C9A2006C3523 /* DepalistController.m */,
 				1FEEC5851ED3CC42006C3523 /* secdlistController.h */,
@@ -6005,6 +6013,8 @@
 				F736D1671E589288003A1A39 /* MesgeTableViewCell.m */,
 				F73320AD1E5DBE7E00ABA6EF /* mesagexqCell.h */,
 				F73320AE1E5DBE7E00ABA6EF /* mesagexqCell.m */,
+				1FE336DD200EDFC800DD988D /* CellPersonManager.h */,
+				1FE336DE200EDFC800DD988D /* CellPersonManager.m */,
 				1F3786191E5AE31400CAD616 /* modle */,
 			);
 			path = TableViewCell;
@@ -6598,6 +6608,7 @@
 				1FF5807E1F8C64D3001C3D40 /* VCBuessWeekSubmited.m in Sources */,
 				1F5745651E56C6A400E4A47C /* ZxdObject.m in Sources */,
 				620731241E5D1DA200BCF51C /* JinnLockTool.m in Sources */,
+				1FE336DF200EDFC800DD988D /* CellPersonManager.m in Sources */,
 				1F6211AC1E8CFFAF00F50851 /* MJRefreshBackStateFooter.m in Sources */,
 				1F4FD9DF1EC1A187005AB739 /* PJSearchBar.m in Sources */,
 				1FFBF9B51FABF6C5003B92C9 /* CellSetBrithday.m in Sources */,
@@ -6903,6 +6914,7 @@
 				1F71B8D61F88A2A700C3638F /* VCInsideMonthUnPassed.m in Sources */,
 				1F6211B71E8CFFAF00F50851 /* MWGridViewController.m in Sources */,
 				1F52081F1E5579E7001DE4C2 /* ZJLXRTableViewCell.m in Sources */,
+				1FE654B9200DE9420006BA16 /* VCSearchPersonManager.m in Sources */,
 				1F6211C21E8CFFAF00F50851 /* EMSDWebImageDownloaderOperation.m in Sources */,
 				1FD8A9621FEBA2C8009D98F5 /* VCManagerChoosePerson.m in Sources */,
 				6223F8261F9DC011005FD217 /* TargetViewController.m in Sources */,

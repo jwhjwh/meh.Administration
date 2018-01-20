@@ -1915,8 +1915,11 @@
         message.chatType = EMChatTypeChatRoom;
     }
     
-    [self addMessageToDataSource:message
-                        progress:nil];
+    if (message) {
+        [self addMessageToDataSource:message
+                            progress:nil];
+    }
+    
     
     __weak typeof(self) weakself = self;
     [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {

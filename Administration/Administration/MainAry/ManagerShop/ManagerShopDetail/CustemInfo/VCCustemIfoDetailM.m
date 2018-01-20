@@ -240,6 +240,8 @@
     self.flag = self.datePick.flagggg;
     self.brithdayChinese = self.datePick.stringChinese;
     self.brithdayGer = self.datePick.stringGregorian;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 

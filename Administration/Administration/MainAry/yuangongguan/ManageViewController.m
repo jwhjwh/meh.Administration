@@ -8,7 +8,7 @@
 
 #import "ManageViewController.h"
 #import "GuideTableViewCell.h"
-
+#import "VCSearchPersonManager.h"
 #import "DepalistController.h"
 #import "JoblistController.h"
 
@@ -76,8 +76,10 @@
 
 -(void)Touchsearch{
     //SearchViewController
-    SearchViewController *SearchVC = [[SearchViewController alloc]init];
-    [self.navigationController showViewController:SearchVC sender:nil];
+//    SearchViewController *SearchVC = [[SearchViewController alloc]init];
+//    [self.navigationController showViewController:SearchVC sender:nil];
+    VCSearchPersonManager *vc = [[VCSearchPersonManager alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark - UITableViewDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
