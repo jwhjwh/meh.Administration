@@ -59,7 +59,7 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSDictionary *dic=[[NSDictionary alloc]init];
     
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentId":self.DepartmentId,@"RoleId":RoleId,@"userid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentId":@"242",@"RoleId":RoleId,@"userid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:uwStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"list"];
@@ -86,29 +86,15 @@
             if ([self.arrayC[0][@"cityName"] isEqualToString:@"全部"]) {
                 self.arrayC = [[self getList:self.arrayP[0][@"cityName"]]mutableCopy];
             }
-            
-            
             self.arrayT = self.arrayC[0][@"countyList"];
-//
-//            self.arrayP = self.dict[@"province"];
-//            self.arrayC = self.arrayP[0][@"cityList"];
-//            _isof = [[NSString alloc]init];
-//            _iscount = [[NSString alloc]init];
-//             if ([self.arrayC[0][@"cityList"] isEqualToString:@"全部"]) {
-//              self.arrayC = [[self getList:self.arrayP[0][@"provinceName"]]mutableCopy];
-//                 _isof= @"1";
-//             }else{
-//                 _isof = @"2";
-//             }
-//            self.arrayT = self.arrayP[0][@"cityList"][0][@"countyList"];
-//            if ([self.arrayT[0] isEqualToString:@"全部"]) {
-//                self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
-//                _iscount= @"1";
-//            }else{
-//                _iscount = @"2";
-//            }
-//            self.province   = self.arrayP[0][@"provinceName"];
+            if ([self.arrayC[0][@"countyList"][0] isEqualToString:@"全部"]) {
+                self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+            }
+            
+            
              [self nssUI];
+            
+            
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){
@@ -256,9 +242,10 @@
         
     }else
     {
-        if ([_iscount isEqualToString:@"1"]) {
-           return self.arrayT[row][@"name"];
-        }else{
+        if ([self.arrayT[row]isKindOfClass:[NSDictionary class]]) {
+            return self.arrayT[row][@"name"];
+        }else
+        {
             return self.arrayT[row];
         }
         
@@ -270,21 +257,33 @@
 {
    
     if (component==0) {
-        self.province   = self.arrayP[row][@"provinceName"];
         self.arrayC = self.arrayP[row][@"cityList"];
-        if ([self.arrayP[row][@"cityList"][0][@"cityName"] isEqualToString:@"全部"]) {
+        
+        if (self.arrayC.count==0) {
             self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
-            self.arrayT = self.arrayC[0][@"countyList"];
-            
-            self.city       = self.arrayC[0][@"cityName"];
-            _iscount= @"1";
-            self.town       = self.arrayT[0][@"name"];
-        }else{
-            self.arrayC = self.arrayP[0][@"cityList"];
-            self.arrayT = self.arrayC[0][@"countyList"];
-            self.city       = self.arrayC[0][@"cityName"];
-            _iscount= @"2";
-            self.town       = self.arrayT[0];
+            self.arrayT = self.arrayC[0][@"cityList"];
+        }else
+        {
+            if ([self.arrayC[0]isKindOfClass:[NSDictionary class]]) {
+                if ([self.arrayC[0][@"cityName"]isEqualToString:@"全部"]) {
+                    self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
+                    self.arrayT = self.arrayC[0][@"countyList"];
+                }else
+                {
+                    if ([self.arrayC[0][@"countyList"][0] isEqualToString:@"全部"]) {
+                        self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+                    }else
+                    {
+                        self.arrayT = self.arrayC[0][@"countyList"];
+                    }
+                }
+            }else
+            {
+                if ([self.arrayC[0]isEqualToString:@"全部"]) {
+                    self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
+                    self.arrayT = self.arrayC[0][@"countyList"];
+                }
+            }
         }
         
         
@@ -293,50 +292,18 @@
         [pickerView reloadComponent:2];
         [pickerView selectRow:0 inComponent:2 animated:YES];
     }else if (component==1){
-        self.city       = self.arrayC[row][@"cityName"];
         self.arrayT = self.arrayC[row][@"countyList"];
-        
-        if ([self.arrayC[row][@"countyList"][0]isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dict = self.arrayC[row][@"countyList"][0];
-            if ([dict[@"cityName"]isEqualToString:@"全部"]) {
-               self.arrayT = [[self getList:dict[@"cityName"]]mutableCopy];
-            }
-            
-        }else
-        {
-            if ([self.arrayC[row][@"countyList"][0]isEqualToString:@"全部"]) {
-                self.arrayT = [self getList:self.arrayC[row][@"cityName"]];
-            }
+        if ([self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
+            self.arrayT = [[self getList:self.arrayC[row][@"cityName"]]mutableCopy];
         }
         
-//       NSString *arcstr = [[NSString alloc]init];
-//        if ([_iscount isEqualToString:@"1"]) {
-//            arcstr = self.arrayC[row][@"countyList"][0][@"name"];
-//        }else{
-//            arcstr =self.arrayC[row][@"countyList"][0];
-//        }
-//
-//            if ([arcstr isEqualToString:@"全部"]) {
-//                self.arrayT = [[self getList:self.arrayC[row][@"cityName"]]mutableCopy];
-//                _iscount= @"1";
-//                self.town       = self.arrayT[row][@"name"];
-//            }else{
-//                _iscount = @"2";
-//                self.town       = self.arrayT[row][@"name"];
-//            }
-//
-
         [pickerView reloadComponent:2];
-     //   [pickerView selectRow:0 inComponent:2 animated:YES];
+        [pickerView selectRow:row inComponent:1 animated:YES];
+     
     }else if (component == 2){
-//        if([_iscount isEqualToString:@"1"]){
-//             self.town       = self.arrayT[row][@"name"];
-//        }else{
-//             self.town       = self.arrayT[row];
-//        }
-        
+
+        [pickerView selectRow:row inComponent:2 animated:YES];
     }
-    NSLog(@"%@--%@----%@",self.province,self.city,self.town);
 }
 
 @end
