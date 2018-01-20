@@ -229,7 +229,7 @@
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
             _InterNameAry = [[NSMutableArray alloc]init];
             [infonTableview reloadData];
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该地区无膜拜记录" andInterval:1];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该地区无陌拜记录" andInterval:1];
         }
 
     } failure:^(NSError *error) {
