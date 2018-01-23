@@ -59,7 +59,7 @@
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSDictionary *dic=[[NSDictionary alloc]init];
     
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentId":@"242",@"RoleId":RoleId,@"userid":[USER_DEFAULTS  objectForKey:@"userid"]};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"DepartmentId":self.DepartmentId,@"RoleId":RoleId,@"userid":[USER_DEFAULTS  objectForKey:@"userid"]};
     [ZXDNetworking GET:uwStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"list"];
