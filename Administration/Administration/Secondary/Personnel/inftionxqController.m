@@ -43,6 +43,7 @@
     [super viewWillAppear:animated];
     [self loadDataFromServer];
     self.tabBarController.tabBar.hidden=YES;
+    self.navigationController.navigationBar.hidden = NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -65,26 +66,21 @@
     _infonTableview.estimatedRowHeight = 100;
     _infonTableview.rowHeight = UITableViewAutomaticDimension;
     [self.view addSubview:_infonTableview];
-    
-    
-  
 }
 
 -(void)addBrithday
 {
-    
-    if ([self.dicinfo[@"remind"]intValue] ==0) {
-        VCAddBrithday *vc = [[VCAddBrithday alloc]init];
-        vc.dictInfo = self.dicinfo;
-        
-        
-        if ([self.dicinfo[@"solarBirthday"]isKindOfClass:[NSNull class]]&&[self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无生日" andInterval:1.0];
-            return;
-        }else
-        {
-            [self.navigationController pushViewController:vc animated:YES];
-        }
+    if (![self.dicinfo[@"remind"]isKindOfClass:[NSNull class]]) {
+        if ([self.dicinfo[@"remind"]intValue] ==0) {
+            VCAddBrithday *vc = [[VCAddBrithday alloc]init];
+            vc.dictInfo = self.dicinfo;
+            if ([self.dicinfo[@"solarBirthday"]isKindOfClass:[NSNull class]]&&[self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无生日" andInterval:1.0];
+                return;
+            }else
+            {
+                [self.navigationController pushViewController:vc animated:YES];
+            }
     }else
     {
         //跳转生日详情
@@ -92,6 +88,7 @@
         vc.remind = [NSString stringWithFormat:@"%@",self.dicinfo[@"remind"]];
         vc.dictInfo = self.dicinfo;
         [self.navigationController pushViewController:vc animated:YES];
+    }
     }
     
 }

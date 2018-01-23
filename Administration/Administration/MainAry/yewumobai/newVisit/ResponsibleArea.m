@@ -13,18 +13,10 @@
     NSMutableArray *provinceName;
 }
 @property (nonatomic,strong)NSMutableDictionary *dict;
-
+@property (nonatomic,weak)UIPickerView *pickView;
 @property (nonatomic,strong)NSMutableArray *arrayP;
 @property (nonatomic,strong)NSMutableArray *arrayC;
 @property (nonatomic,strong)NSMutableArray *arrayT;
-
-
-@property (nonatomic,strong)NSString *isof;
-@property (nonatomic,strong)NSString *iscount;
-
-@property (nonatomic, strong) NSString *province;           /** 省 */
-@property (nonatomic, strong) NSString *city;               /** 市 */
-@property (nonatomic, strong) NSString *town;               /** 县 */
 
 @end
 
@@ -145,6 +137,21 @@
 
 }
 
+-(void)initDataFromJson
+{
+
+    NSString *dataString = [[NSBundle mainBundle]pathForResource:@"Respon_date" ofType:@"json"];
+    NSData *data = [[NSData alloc]initWithContentsOfFile:dataString];
+    NSDictionary *dict =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    self.arrayP = dict[@"province"];
+    self.arrayC = self.arrayP[0][@"cityList"];
+    self.arrayT = self.arrayP[0][@"cityList"][0][@"countyList"];
+    [self.pickView reloadAllComponents];
+    [self.pickView selectRow:0 inComponent:0 animated:YES];
+    [self.pickView selectRow:0 inComponent:1 animated:YES];
+    [self.pickView selectRow:0 inComponent:2 animated:YES];
+}
+
 -(void)nssUI{
     NSString* phoneModel = [UIDevice devicePlatForm];
     UILabel *ResLabel = [[UILabel alloc]init];
@@ -169,7 +176,7 @@
     pickView.delegate = self;
     pickView.dataSource = self;
     [ba_ckView addSubview:pickView];
-    
+    self.pickView = pickView;
     
     
     
@@ -185,10 +192,10 @@
 }
 
 -(void)co_deBtn{
-    
+    [self initDataFromJson];
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -258,32 +265,11 @@
    
     if (component==0) {
         self.arrayC = self.arrayP[row][@"cityList"];
+        self.arrayT = self.arrayC[0][@"countyList"];
         
-        if (self.arrayC.count==0) {
+        if ([self.arrayC[0][@"cityName"]isEqualToString:@"全部"]) {
             self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
-            self.arrayT = self.arrayC[0][@"cityList"];
-        }else
-        {
-            if ([self.arrayC[0]isKindOfClass:[NSDictionary class]]) {
-                if ([self.arrayC[0][@"cityName"]isEqualToString:@"全部"]) {
-                    self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
-                    self.arrayT = self.arrayC[0][@"countyList"];
-                }else
-                {
-                    if ([self.arrayC[0][@"countyList"][0] isEqualToString:@"全部"]) {
-                        self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
-                    }else
-                    {
-                        self.arrayT = self.arrayC[0][@"countyList"];
-                    }
-                }
-            }else
-            {
-                if ([self.arrayC[0]isEqualToString:@"全部"]) {
-                    self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
-                    self.arrayT = self.arrayC[0][@"countyList"];
-                }
-            }
+            self.arrayT = self.arrayC[0][@"countyList"];
         }
         
         
@@ -294,7 +280,12 @@
     }else if (component==1){
         self.arrayT = self.arrayC[row][@"countyList"];
         if ([self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
-            self.arrayT = [[self getList:self.arrayC[row][@"cityName"]]mutableCopy];
+            self.arrayT = self.arrayC[row][@"countyList"];
+        }else
+        {
+            if ([self.arrayT[0]isEqualToString:@"全部"]) {
+                self.arrayT = [[self getList: self.arrayC[row][@"countyList"]]mutableCopy];
+            }
         }
         
         [pickerView reloadComponent:2];
