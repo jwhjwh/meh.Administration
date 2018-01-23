@@ -68,6 +68,9 @@
 
 @property (nonatomic,strong)NSString *strea;
 
+@property BOOL qiandao;
+@property (nonatomic,strong)NSString *UserId;//共享人(后台赋值)
+@property (nonatomic,strong)NSString *DepartmentId;//提交的部门
 @end
 
 @implementation ModifyVisitViewController
@@ -90,7 +93,7 @@
     self.title=@"陌拜记录";
     _animdd = [[NSString alloc]init];
     Modify = NO;
-    
+    _qiandao = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame =CGRectMake(0, 0, 28,28);
@@ -142,6 +145,9 @@
     _storepersonnel = [[NSString alloc]init];
     _strea = [[NSString alloc]init];
     
+    _DepartmentId= [[NSString alloc]init];//提交的部门
+    _UserId= [[NSString alloc]init];//共享人(后台赋值)
+   
 }
 
 
@@ -169,7 +175,7 @@
                 ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
                 _CreatorId = model.UsersId;
-                _strea = model.state;
+               
                 _shopid = [[NSString alloc]initWithFormat:@"%@",model.ShopId];//店铺id
                 _sigincity = [[NSString alloc]initWithFormat:@"%@%@%@%@",model.Province,model.City,model.County,model.Address];
                 _storeregion= [[NSString alloc]initWithFormat:@"%@ %@ %@ %@",model.Province,model.City,model.County,model.Address];
@@ -184,7 +190,9 @@
                 _storehead = model.ShopName;
                 _storename = model.StoreName;
                 _storeaddree = model.Address;
-
+                _UserId = model.userId;
+                _strea = model.state;
+                _DepartmentId = model.departmentId;
                 if (model.Iphone ==nil) {
                     //手机
                     _storephone = @"";
@@ -285,14 +293,15 @@
                     _note = model.Modified;
                 [_InterNameAry addObject:_note];
                 }
-                if (model.state ==nil) {
+                if (model.userId==nil && model.state ==nil &&model.departmentId ==nil) {
                     
                 }else{
+                     _strea = model.state;
                     _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注",@"当前状态:"];
                     
                 }
             }
-            
+            _qiandao = YES;
             [_infonTableview reloadData];
         }
     } failure:^(NSError *error){
@@ -400,26 +409,93 @@
             //
         }else if (indexPath.row==14){
             if (Modify ==NO) {
-                UILabel *dangqian = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 70, 30)];
-                UIImageView *yishengji = [[UIImageView alloc]initWithFrame:CGRectMake(85, 17.5, 15, 15)];
-                UILabel *yisj = [[UILabel alloc]initWithFrame:CGRectMake(105, 10, 90, 30)];
-               
-                    if (_strea==nil) {
-                        
-                    }else{
-                        dangqian.text = _arr[indexPath.row];
-                        dangqian.font = [UIFont systemFontOfSize:12];
-                        [cell addSubview:dangqian];
-                        
+                UILabel *dangqian = [[UILabel alloc]init];
+                UIImageView *tongs = [[UIImageView alloc]init];
+                UILabel *fents = [[UILabel alloc]init];
+                UIImageView *fenbm = [[UIImageView alloc]init];
+                fenbm.image = [UIImage imageNamed:@"fx_icof"];
+                [cell addSubview:fenbm];
+                UILabel *fenbmlabel = [[UILabel alloc]init];
+                fenbmlabel.text = @"已分享部门";
+                fenbmlabel.font = [UIFont systemFontOfSize:11];
+                fenbmlabel.textColor = GetColor(113, 180, 114, 1);
+                [cell addSubview:fenbmlabel];
+                UIImageView *yishengji = [[UIImageView alloc]init];
+                UILabel *yisj = [[UILabel alloc]init];
+                
+                dangqian.text = _arr[indexPath.row];
+                dangqian.font = [UIFont systemFontOfSize:12];
+                [cell addSubview:dangqian];
+                tongs.image = [UIImage imageNamed:@"fx_ico"];
+                [cell addSubview:tongs];
+                fents.text = @"已分享同事";
+                fents.font = [UIFont systemFontOfSize:11];
+                fents.textColor = GetColor(230, 165, 108, 1);
+                [cell addSubview:fents];
+                yishengji.image = [UIImage imageNamed:@"tj__ico01"];
+                [cell addSubview:yishengji];
+                yisj.text = @"以升级目标客户";
+                switch ([_strea integerValue]) {
+                    case 1:
+                        break;
+                    case 2:
+                        yisj.text = @"已升级为意向客户";
                         yishengji.image = [UIImage imageNamed:@"tj__ico01"];
-                        [cell addSubview:yishengji];
+                        break;
+                    case 3:
+                        yisj.text = @"已升级为目标客户";
+                        yishengji.image = [UIImage imageNamed:@"tj__ico02"];
+                        break;
+                    case 4:
+                        yisj.text = @"已升级为合作客户";
+                        yishengji.image = [UIImage imageNamed:@"tj_ico03"];
+                        break;
                         
-                        yisj.text = @"以升级目标客户";
-                        yisj.font = [UIFont systemFontOfSize:11];
-                        yisj.textColor =  GetColor(158, 91, 185, 1);
-                        [cell addSubview:yisj];
+                    default:
+                        break;
+                }
+                yisj.font = [UIFont systemFontOfSize:11];
+                yisj.textColor =  GetColor(158, 91, 185, 1);
+                [cell addSubview:yisj];
+                if (_UserId ==nil) {
+                    if (_DepartmentId   ==nil) {
+                        if ([_strea integerValue]==1) {
+                        }else{
+                            dangqian.frame = CGRectMake(10, 10, 70, 30);
+                            yishengji.frame =CGRectMake(80, 17.5, 15, 15);
+                            yisj.frame = CGRectMake(100, 10, 90, 30);
+                        }
+                    }else{
+                        dangqian.frame = CGRectMake(10, 10, 70, 30);
+                        fenbm.frame = CGRectMake(80, 17.5, 15, 15);
+                        fenbmlabel.frame = CGRectMake(100, 10, 70, 30);
+                        if ([_strea integerValue]==1) {
+                        }else{
+                            yishengji.frame =CGRectMake(170, 17.5, 15, 15);
+                            yisj.frame = CGRectMake(190, 10, 90, 30);
+                        }
                     }
-               
+                }else{
+                    dangqian.frame = CGRectMake(10, 10, 70, 30);
+                    tongs.frame =CGRectMake(80, 17.5, 15, 15);
+                    fents.frame = CGRectMake(100, 10, 70, 30);
+                    if (_DepartmentId ==nil) {
+                        if ([_strea integerValue]==1) {
+                        }else{
+                            yishengji.frame =CGRectMake(170, 17.5, 15, 15);
+                            yisj.frame = CGRectMake(190, 10, 90, 30);
+                        }
+                    }else{
+                        fenbm.frame = CGRectMake(170, 17.5, 15, 15);
+                        fenbmlabel.frame = CGRectMake(190, 10, 70, 30);
+                        if ([_strea integerValue]==1) {
+                        }else{
+                            yishengji.frame =CGRectMake(260, 17.5, 15, 15);
+                            yisj.frame = CGRectMake(280, 10, 90, 30);
+                        }
+                    }
+                }
+        
             }
         }
         if (Modify == YES) {
@@ -508,14 +584,17 @@
     _Index=indexPath;
      inftionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.section == 0) {
-        //shopId  
-        SiginViewController *siginVC = [[SiginViewController alloc]init];
-
-        siginVC.shopid =_shopid;
-        siginVC.Address = _sigincity;
-        siginVC.Types = @"1";
-        _animdd = @"2";
-        [self.navigationController pushViewController:siginVC animated:YES];
+        //shopId
+        if(_qiandao ==YES){
+            SiginViewController *siginVC = [[SiginViewController alloc]init];
+            
+            siginVC.shopid =_shopid;
+            siginVC.Address = _sigincity;
+            siginVC.Types = @"1";
+            _animdd = @"2";
+            [self.navigationController pushViewController:siginVC animated:YES];
+        }
+        
     }else{
         switch (indexPath.row) {
             case 0:

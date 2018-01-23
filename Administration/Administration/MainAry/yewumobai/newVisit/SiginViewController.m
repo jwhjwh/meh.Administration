@@ -39,10 +39,21 @@
     [super viewDidLoad];
      self.title=@"签到";
     self.view.backgroundColor = GetColor(237, 237, 237, 1);
-    NSLog(@"shopid:%@ address:%@",self.shopid,self.Address);
+   
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame =CGRectMake(0, 0, 28,28);
+    btn.autoresizesSubviews=NO;
+    [btn setBackgroundImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem=buttonItem;
+    
     [self intdata];
     [self tableViewUI];
     _MoodDescribe = [[NSString alloc]init];
+}
+-(void)buiftItem{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)tableViewUI{
     UIView *topView = [[UIView alloc]init];

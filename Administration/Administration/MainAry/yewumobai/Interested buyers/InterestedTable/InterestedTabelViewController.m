@@ -129,6 +129,8 @@
     _UsersName= [[NSString alloc]init];//业务人员名称
     _state = [[NSString alloc]init];
     
+    
+    
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

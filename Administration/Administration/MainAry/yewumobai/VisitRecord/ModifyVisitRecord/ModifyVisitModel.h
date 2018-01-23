@@ -33,8 +33,9 @@
 @property (nonatomic,strong)NSString *Address;          //门店地址
 @property (nonatomic,strong)NSString *ShopName;         //店铺负责人姓名
 
-@property (nonatomic,strong)NSString *state;   
-
+@property (nonatomic,strong)NSString *state; //已升级
+@property (nonatomic,strong)NSString *userId;//共享人(后台赋
+@property (nonatomic,strong)NSString *departmentId;//提交的部门
 @end
 /*
 

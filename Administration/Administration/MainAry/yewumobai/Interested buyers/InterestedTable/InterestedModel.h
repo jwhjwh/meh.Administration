@@ -33,3 +33,4 @@
 @property (nonatomic,strong)NSString *usersName;//业务人员名称
 @property (nonatomic,strong)NSString *state;//已升级
 @end
+
