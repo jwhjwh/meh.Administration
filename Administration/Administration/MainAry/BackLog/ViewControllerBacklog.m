@@ -212,7 +212,8 @@
     self.arrayData = [NSMutableArray array];
     [self setUI];
     
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:30],NSFontAttributeName ,nil];
+ //   NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"+" style:(UIBarButtonItemStyleDone) target:self action:@selector(gotoAddBacklog)];
     [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;

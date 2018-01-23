@@ -50,6 +50,7 @@
     if (cell==nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.textLabel.text = self.arrayTitle[indexPath.row];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;

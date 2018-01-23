@@ -49,7 +49,7 @@
     labelline.backgroundColor = GetColor(189, 189, 189, 1);
     [self.contentView addSubview:labelline];
     [labelline mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(textView.mas_bottom).offset(5);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
         make.left.mas_equalTo(self.contentView.mas_left);
         make.right.mas_equalTo(self.contentView.mas_right);
         make.height.mas_equalTo(1);

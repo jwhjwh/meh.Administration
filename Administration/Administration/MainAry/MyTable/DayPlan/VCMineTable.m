@@ -234,9 +234,9 @@
     self._isFirstLoadData = NO;
     self._isFooterFresh = NO;
     
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:30],NSFontAttributeName ,nil];
     UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"+" style:(UIBarButtonItemStyleDone) target:self action:@selector(addPlan)];
-    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    [rightitem setTitleTextAttributes:dictionary forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
 }
 

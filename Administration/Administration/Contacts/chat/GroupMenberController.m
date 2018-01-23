@@ -257,7 +257,7 @@
 
 -(void)loadDeletButton
 {
-    self.buttonDelet = [[UIButton alloc]initWithFrame:CGRectMake(0, Scree_height-44, Scree_width, 44)];
+    self.buttonDelet = [[UIButton alloc]initWithFrame:CGRectMake(0, Scree_height-kTabBarHeight, Scree_width, kTabBarHeight)];
     self.buttonDelet.backgroundColor = GetColor(238, 238, 238, 1);
     [self.buttonDelet addTarget:self action:@selector(deleteTip) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonDelet setTitle:@"删除" forState:UIControlStateNormal];
@@ -757,6 +757,7 @@
         }
     }else
     {
+        [self.searchBar resignFirstResponder];
         inftionxqController *controller = [[inftionxqController alloc]init];
         NSDictionary *dict = [NSDictionary dictionary];
         if ([self.searchBar isFirstResponder]) {
@@ -769,7 +770,6 @@
             dict = self.resultArr[indexPath.section][indexPath.row];
         }
         controller.IDStr = dict[@"userId"];
-
         [self.navigationController pushViewController:controller animated:YES];
     }
     
@@ -816,8 +816,6 @@
         }
     }
     
-    // NSExpression *
-    
     [self.tableViewMenber reloadData];
     
 }
@@ -835,42 +833,21 @@
     return YES;
 }
 
-//-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-//{
-//   // [self.searchBar resignFirstResponder];
-//    self.buttonCancel.hidden = NO;
-//    self.searchBar.showsCancelButton = NO;
-//    self.viewSearch.frame = CGRectMake(0, 64, Scree_width, 50);
-//    self.tableViewMenber.frame = CGRectMake(0, 120, Scree_width,Scree_height);
-//    self.searchBar.text = @"";
-//    self.navigationController.navigationBar.hidden = NO;
-//    [self.arraySearch removeAllObjects];
-//    [self.tableViewMenber reloadData];
-//}
-
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
     self.buttonCancel.hidden = NO;
     self.searchBar.showsCancelButton = NO;
-    self.viewSearch.frame = CGRectMake(0, 64, Scree_width, 50);
-    self.tableViewMenber.frame = CGRectMake(0, 120, Scree_width,Scree_height-120);
+    self.viewSearch.frame = CGRectMake(0, kTopHeight, Scree_width, 50);
+    self.tableViewMenber.frame = CGRectMake(0, kTopHeight+50, Scree_width,Scree_height-kTopHeight-50);
     self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
     self.navigationController.navigationBar.hidden = NO;
     [self.arraySearch removeAllObjects];
     [self.tableViewMenber reloadData];
-    
-   // [self.tableViewMenber reloadData];
 }
 
-//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-//{
-//    
-//
-//        [self.tableViewMenber  reloadData];
-//       // [self upDataSearchSpecialOffe];
-//    [searchBar resignFirstResponder];
-//}
+
 
 - (void)commentTableViewTouchInSide{
     [self.searchBar resignFirstResponder];
@@ -901,7 +878,7 @@
     self.viewSearch = [[UIView alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 50)];
     [self.view addSubview:self.viewSearch];
     
-    self.searchBar = [[UISearchBar alloc]init];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, 10, self.viewSearch.frame.size.width-20, self.viewSearch.frame.size.height-20)];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"搜索";
     self.searchBar.backgroundColor = [UIColor lightGrayColor];
@@ -922,12 +899,6 @@
         }
     }
     [self.viewSearch addSubview:self.searchBar];
-    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.viewSearch.mas_left).offset(10);
-        make.right.mas_equalTo(self.viewSearch.mas_right).offset(-10);
-        make.top.mas_equalTo(self.viewSearch.mas_top).offset(10);
-        make.bottom.mas_equalTo(self.viewSearch.mas_bottom).offset(-10);
-    }];
     
     self.tableViewMenber = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+50, Scree_width, Scree_height-kTopHeight-50) style:UITableViewStyleGrouped];
     self.tableViewMenber.backgroundColor = [UIColor whiteColor];
@@ -950,6 +921,14 @@
 {
     [super viewDidAppear:animated];
     //  IQKeyboardManager *manager = [[IQKeyboardManager sharedManager] isEnabled];
+    [self.searchBar resignFirstResponder];
+    self.buttonCancel.hidden = NO;
+    self.searchBar.showsCancelButton = NO;
+    self.viewSearch.frame = CGRectMake(0, kTopHeight, Scree_width, 50);
+    self.tableViewMenber.frame = CGRectMake(0, kTopHeight+50, Scree_width,Scree_height-kTopHeight-50);
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -961,6 +940,10 @@
 {
     [super viewWillAppear:YES];
     [self.arrayMenber removeAllObjects];
+    [self.arraySearch removeAllObjects];
+    [self.resultArr removeAllObjects];
+    [self.tempArray removeAllObjects];
+    [self.arrayName removeAllObjects];
     self.index = @"6";
     [self getGroupMenbers];
 }

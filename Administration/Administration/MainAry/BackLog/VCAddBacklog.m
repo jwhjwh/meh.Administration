@@ -51,7 +51,7 @@
 {
     CGRect frameView;
    
-    frameView = CGRectMake(0, kTopHeight, Scree_width, 55);
+    frameView = CGRectMake(0, kTopHeight, Scree_width, 44);
     
     UIView *viewFooter = [[UIView alloc]initWithFrame:frameView];
     viewFooter.backgroundColor = GetColor(192, 192, 192, 1);
@@ -90,7 +90,7 @@
     self.warnDate = wornDate;
     
     
-    UITableView *tableView = [[UITableView alloc]init];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.rowHeight = UITableViewAutomaticDimension;
@@ -100,12 +100,6 @@
     [tableView registerClass:[CellEditInfo class] forCellReuseIdentifier:@"cell"];
     [tableView registerClass:[CellAddBacklog class] forCellReuseIdentifier:@"cell1"];
     [self.view addSubview:tableView];
-    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left);
-        make.top.mas_equalTo(self.view.mas_top);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.view.mas_bottom);
-    }];
     self.tableView = tableView;
 }
 
