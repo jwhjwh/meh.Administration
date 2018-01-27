@@ -19,7 +19,10 @@
 #import<BaiduMapAPI_Map/BMKMapComponent.h>
 
 #import<BaiduMapAPI_Search/BMKPoiSearchType.h>
-@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+
+
+#import "ViewDatePick.h"
+@interface MySubmittedViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,ViewDatePickerDelegate>
 {
    
     BMKLocationService *_locService;  //定位
@@ -32,6 +35,8 @@
 @property (nonatomic,strong) NSMutableArray *dataLabel;
 @property (nonatomic,strong) NSMutableArray *ligdataLabel;
 @property (nonatomic,strong) NSMutableArray *ligLabelAry;
+
+@property (nonatomic,weak)ViewDatePick *myDatePick;
 
 
 @property (strong,nonatomic) UILabel *ligLabel;
@@ -96,8 +101,7 @@
 }
 -(void)masgegeClick
 {
-    //1501010   //150222222232
-    //picreport/queryPic.action  pageNo
+    
     if (self.goodPicture == nil || _Wcode == nil||[_Wcode isEqualToString:@""]||_Age == nil||_Qcode == nil||_DateTimes == nil) {
         [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写内容" andInterval:1.0];
     }else{
@@ -153,7 +157,7 @@
         make.bottom.equalTo (self.view.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.right.equalTo(self.view.mas_right).offset(0);
-        make.height.mas_equalTo(kHeight*140);
+        make.height.mas_equalTo(kHeight*120);
     }];
     NSString* phoneModel = [UIDevice devicePlatForm];
     
@@ -342,21 +346,28 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        NSString *str = @"2017年01月01日";
-        if ([_subDayLabel.text containsString:@"年"]) {
-            str = _subDayLabel.text;
-        }
-        [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
-            _subDayLabel.text  = pathStr;
-            _DateTimes = [[NSString alloc]init];
-            _DateTimes = _subDayLabel.text;
-        } cancleAction:^{
-            
-        }];
+        
+        [self showMyDatePick];
     }
 }
-
-
+-(void)showMyDatePick
+{
+    ViewDatePick *myDatePick = [[ViewDatePick alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
+    myDatePick.delegate =self;
+    [self.view endEditing:YES];
+    [self.view.window addSubview:myDatePick];
+    self.myDatePick = myDatePick;
+}
+-(void)getDate
+{
+    NSDate *date = self.myDatePick.datePick.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString *stringDate = [formatter stringFromDate:date];
+    _subDayLabel.text  = stringDate;
+    _DateTimes = [[NSString alloc]init];
+    _DateTimes = _subDayLabel.text;
+}
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
     UIView *view = [UIView new];

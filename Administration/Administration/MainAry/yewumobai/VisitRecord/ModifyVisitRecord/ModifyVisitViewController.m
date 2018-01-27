@@ -314,7 +314,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-170, 48);
+    CGRect labelRect2 = CGRectMake(170, 1, self.view.bounds.size.width-170, 48);
     if(indexPath.row<8){
         inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
         if (cell ==nil)

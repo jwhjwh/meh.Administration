@@ -73,28 +73,80 @@
         
     }else{
         
-        if (_proviceNameAry.count>1) {
-            [_proviceNameAry insertObject:_proviceLabel.text atIndex:0];
-            [_cityNameAry insertObject:_cityLabel.text atIndex:0];
-            [_areaNameAry insertObject:_areaLabel.text atIndex:0];
+        if ([_proviceNameAry containsObject: _proviceLabel.text]) {
+            if ([_cityNameAry containsObject: _cityLabel.text]) {
+                 if ([_areaNameAry containsObject: _areaLabel.text]) {
+                     
+                 }else{
+                     if (_proviceNameAry.count>1) {
+                         [_proviceNameAry insertObject:_proviceLabel.text atIndex:0];
+                         [_cityNameAry insertObject:_cityLabel.text atIndex:0];
+                         [_areaNameAry insertObject:_areaLabel.text atIndex:0];
+                     }else{
+                         [_proviceNameAry addObject:_proviceLabel.text];
+                         [_cityNameAry addObject:_cityLabel.text];
+                         [_areaNameAry addObject:_areaLabel.text];
+                     }
+                     
+                     if (_proviceNameAry.count>5) {
+                         [_proviceNameAry removeObjectAtIndex:5];
+                         [_cityNameAry removeObjectAtIndex:5];
+                         [_areaNameAry removeObjectAtIndex:5];
+                     }
+                     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:_proviceNameAry,@"provice",_cityNameAry,@"city",_areaNameAry,@"area",nil];
+                     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+                     [dataDic setObject:dic1 forKey:@"搜索记录"];
+                     [dataDic writeToFile:_filename atomically:YES];
+                 }
+            }else{
+                if (_proviceNameAry.count>1) {
+                    [_proviceNameAry insertObject:_proviceLabel.text atIndex:0];
+                    [_cityNameAry insertObject:_cityLabel.text atIndex:0];
+                    [_areaNameAry insertObject:_areaLabel.text atIndex:0];
+                }else{
+                    [_proviceNameAry addObject:_proviceLabel.text];
+                    [_cityNameAry addObject:_cityLabel.text];
+                    [_areaNameAry addObject:_areaLabel.text];
+                }
+                
+                if (_proviceNameAry.count>5) {
+                    [_proviceNameAry removeObjectAtIndex:5];
+                    [_cityNameAry removeObjectAtIndex:5];
+                    [_areaNameAry removeObjectAtIndex:5];
+                }
+                NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:_proviceNameAry,@"provice",_cityNameAry,@"city",_areaNameAry,@"area",nil];
+                NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+                [dataDic setObject:dic1 forKey:@"搜索记录"];
+                [dataDic writeToFile:_filename atomically:YES];
+            }
         }else{
-            [_proviceNameAry addObject:_proviceLabel.text];
-            [_cityNameAry addObject:_cityLabel.text];
-            [_areaNameAry addObject:_areaLabel.text];
+            if (_proviceNameAry.count>1) {
+                [_proviceNameAry insertObject:_proviceLabel.text atIndex:0];
+                [_cityNameAry insertObject:_cityLabel.text atIndex:0];
+                [_areaNameAry insertObject:_areaLabel.text atIndex:0];
+            }else{
+                [_proviceNameAry addObject:_proviceLabel.text];
+                [_cityNameAry addObject:_cityLabel.text];
+                [_areaNameAry addObject:_areaLabel.text];
+            }
+            
+            if (_proviceNameAry.count>5) {
+                [_proviceNameAry removeObjectAtIndex:5];
+                [_cityNameAry removeObjectAtIndex:5];
+                [_areaNameAry removeObjectAtIndex:5];
+            }
+            NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:_proviceNameAry,@"provice",_cityNameAry,@"city",_areaNameAry,@"area",nil];
+            NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+            [dataDic setObject:dic1 forKey:@"搜索记录"];
+            [dataDic writeToFile:_filename atomically:YES];
         }
-    
-        if (_proviceNameAry.count>5) {
-             [_proviceNameAry removeObjectAtIndex:5];
-             [_cityNameAry removeObjectAtIndex:5];
-             [_areaNameAry removeObjectAtIndex:5];
-        }
-        
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:_proviceNameAry,@"provice",_cityNameAry,@"city",_areaNameAry,@"area",nil];
         
         
-        NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
-        [dataDic setObject:dic1 forKey:@"搜索记录"];
-        [dataDic writeToFile:_filename atomically:YES];
+        
+        
+        
+        
+        
         
         if ([self.intere isEqualToString:@"1"]) {
             InterestedsearchViewController * intereVC = [[InterestedsearchViewController alloc]init];

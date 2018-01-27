@@ -469,14 +469,15 @@
             NSArray *array=[responseObject valueForKey:@"list"];
             NSMutableArray* arrayId = [[NSMutableArray alloc]init];
             NSMutableArray*arrayData = [[NSMutableArray alloc]init];
-            NSMutableArray*departmenntID  =[[NSMutableArray alloc]init];
+            
+            NSString *departmentID = [[NSString alloc]init];
             for (NSDictionary *dic in array) {
                 NSString *string = [NSString stringWithFormat:@"%@",dic[@"roleId"]];
                 [arrayId addObject:string];
                 
                 NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
                 [arrayData addObject:namestring];
-                NSString *departmentID = [[NSString alloc]init];
+                
                 if (dic[@"departmentID"] == nil) {
                     departmentID = @"";
                     
@@ -484,8 +485,7 @@
                     departmentID  = [NSString stringWithFormat:@"%@",dic[@"departmentID"]];
                     
                 }
-                [departmenntID addObject:departmentID];
-                
+   
             }
            
             if (arrayId.count>1) {
@@ -494,7 +494,7 @@
                 position.mobaixinxi = @"2";
                 [self.navigationController pushViewController:position animated:YES];
             }else{
-                [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentID"];
+                [USER_DEFAULTS  setObject:departmentID forKey:@"departmentID"];
                 businessViewController *busVC = [[businessViewController alloc]init];
                 busVC.strId=[USER_DEFAULTS valueForKey:@"roleId"];
                 [self.navigationController pushViewController:busVC animated:YES];

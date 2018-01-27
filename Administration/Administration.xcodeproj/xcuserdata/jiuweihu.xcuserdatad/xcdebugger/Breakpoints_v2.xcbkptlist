@@ -17,13 +17,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yewumobai/newVisit/ResponsibleArea.m"
-            timestampString = "538047143.3689359"
+            filePath = "Administration/MainAry/yewumobai/busableController.m"
+            timestampString = "538651923.430136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
-            landmarkName = "-pickerView:didSelectRow:inComponent:"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

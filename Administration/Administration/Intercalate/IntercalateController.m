@@ -102,11 +102,11 @@
         _TXImage.layer.masksToBounds = YES;
         _TXImage.layer.cornerRadius = 20.0;//设置圆角
         [tableview addSubview:_TXImage];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTap:)];
-        // 允许用户交互
-        _TXImage.userInteractionEnabled = YES;
         
-        [_TXImage addGestureRecognizer:tap];
+       
+       
+        
+       
     };
     return cell;
     
@@ -170,75 +170,8 @@
     
 }
 
-- (void)doTap:(UITapGestureRecognizer*)sender{
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"上传照片" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = sourceType;
-        [self presentViewController:picker animated:YES completion:nil];
-    }];
-    UIAlertAction *libarayAction = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-            picker.delegate = self;
-            picker.allowsEditing = YES;
-            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            [self presentViewController:picker animated:YES completion:nil];
-        }
-        
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    [alertC addAction:photoAction];
-    [alertC addAction:libarayAction];
-    [alertC addAction:cancelAction];
-    [self presentViewController:alertC animated:YES completion:nil];
-    
-}
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-    self.goodPicture = [info objectForKey:UIImagePickerControllerEditedImage];
-      NSData *pictureData = UIImagePNGRepresentation(self.goodPicture);
-    [self dismissViewControllerAnimated:YES completion:nil];
-    NSString *urlStr = [NSString stringWithFormat:@"%@upload/file.action", KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"code":@"1"};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
-    [manager POST:urlStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyMMddHHmm";
-        NSString *fileName = [formatter stringFromDate:[NSDate date]];
-        NSString *nameStr = @"file";
-         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-     [MBProgressHUD hideHUDForView: self.view animated:NO];        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
-        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
-        NSString *status =  [NSString stringWithFormat:@"%@",[dic valueForKey:@"status"]];
-        if ([status isEqualToString:@"0000"]) {
-            NSString *msgStr = [NSString stringWithFormat:@"%@%@",KURLHeader,[dic valueForKey:@"url"] ];
-            NSLog(@"%@",msgStr);
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存头像成功" andInterval:1.0];
-         [USER_DEFAULTS  setObject:msgStr forKey:@"logoImage"];
-            _TXImage.image=self.goodPicture;
-            [tableview reloadData];
-        } else {
-        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"头像上传失败" andInterval:1.0];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
-}
+
+
 
 
 - (void)didReceiveMemoryWarning {
