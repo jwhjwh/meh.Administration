@@ -18,6 +18,11 @@
 @property (nonatomic,strong)NSMutableArray *arrayC;
 @property (nonatomic,strong)NSMutableArray *arrayT;
 
+@property (nonatomic,strong)NSString *prostr;
+@property (nonatomic,strong)NSString *citystr;
+@property (nonatomic,strong)NSString *countstr;
+
+
 @end
 
 @implementation ResponsibleArea
@@ -37,8 +42,11 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = rightitem;
-   
     [self afnetworking];
+    
+    _prostr =[[NSString alloc]init];
+    _citystr =[[NSString alloc]init];
+    _countstr =[[NSString alloc]init];
 }
 
 
@@ -81,7 +89,12 @@
             self.arrayT = self.arrayC[0][@"countyList"];
             if ([self.arrayC[0][@"countyList"][0] isEqualToString:@"全部"]) {
                 self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+                _countstr = self.arrayT[0][@"name"];
+            }else{
+                _countstr = self.arrayT[0];
             }
+            _prostr = self.arrayP[0][@"provinceName"];
+            _citystr = self.arrayC[0][@"cityName"];
             
             
              [self nssUI];
@@ -196,6 +209,9 @@
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     
+    
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -262,14 +278,20 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-   
+    
+    
     if (component==0) {
         self.arrayC = self.arrayP[row][@"cityList"];
         self.arrayT = self.arrayC[0][@"countyList"];
-        
+        _prostr = self.arrayP[row][@"provinceName"];
+        _citystr = self.arrayC[0][@"cityName"];
         if ([self.arrayC[0][@"cityName"]isEqualToString:@"全部"]) {
             self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
             self.arrayT = self.arrayC[0][@"countyList"];
+           _countstr = self.arrayT[0][@"name"];
+        }else{
+            _countstr = self.arrayT[0];
+            
         }
         
         
@@ -277,24 +299,41 @@
         [pickerView selectRow:0 inComponent:1 animated:YES];
         [pickerView reloadComponent:2];
         [pickerView selectRow:0 inComponent:2 animated:YES];
+        
+        
+        
     }else if (component==1){
         self.arrayT = self.arrayC[row][@"countyList"];
+        _citystr = self.arrayC[row][@"cityName"];
         if ([self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
             self.arrayT = self.arrayC[row][@"countyList"];
+            _countstr = self.arrayT[0];
         }else
         {
             if ([self.arrayT[0]isEqualToString:@"全部"]) {
                 self.arrayT = [[self getList: self.arrayC[row][@"countyList"]]mutableCopy];
+                _countstr = self.arrayT[0][@"name"];
+            }else{
+                _countstr = self.arrayT[0];
             }
         }
         
         [pickerView reloadComponent:2];
         [pickerView selectRow:row inComponent:1 animated:YES];
-     
+        [pickerView selectRow:0 inComponent:2 animated:YES];
+        
     }else if (component == 2){
-
+        
         [pickerView selectRow:row inComponent:2 animated:YES];
+        
+        if ([self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
+            _countstr = self.arrayT[row][@"name"];
+        }else{
+            _countstr = self.arrayT[row];
+        }
     }
+    
+    NSLog(@"%@--%@--%@",_prostr,_citystr,_countstr);
 }
 
 @end

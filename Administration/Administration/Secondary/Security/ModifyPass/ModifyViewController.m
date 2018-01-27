@@ -40,7 +40,7 @@
     _hide = NO;
     _Open = NO;
     
-    self.view.backgroundColor =GetColor(230, 230, 230, 1);
+    self.view.backgroundColor =GetColor(254, 255, 255, 1);
     self.title = @"修改密码";
     [self initWithGoin];
     // Do any additional setup after loading the view.

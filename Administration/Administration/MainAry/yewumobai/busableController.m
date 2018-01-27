@@ -86,14 +86,9 @@
 {
     switch (indexPath.row) {
         case 0:{//填写新的
-            
-            if ([[USER_DEFAULTS objectForKey:@"departmentID"] isKindOfClass:[NSString class]]) {
-                ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
-                chooseVC.strId = self.strId;
-                chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
-                [self.navigationController pushViewController:chooseVC animated:YES];
-            }else{
-                NSArray *ary=[USER_DEFAULTS objectForKey:@"departmentID"];
+            NSString *str =[USER_DEFAULTS objectForKey:@"departmentID"];
+            if ([str containsString:@","]) {
+                NSArray  *ary = [str componentsSeparatedByString:@","];
                 if (ary.count>1) {
                     ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
                     chooseVC.strId = self.strId;
@@ -106,7 +101,15 @@
                     fillVC.depant =string;
                     [self.navigationController pushViewController:fillVC animated:YES];
                 }
+            } else {
+                
+                ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
+                chooseVC.strId = self.strId;
+                chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
+                [self.navigationController pushViewController:chooseVC animated:YES];
+                
             }
+            
             
             
         }

@@ -728,7 +728,6 @@
 		621D70101ED2C57400B3DD2E /* yggl_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700D1ED2C57400B3DD2E /* yggl_03.png */; };
 		621D70111ED2C57400B3DD2E /* yggl_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700E1ED2C57400B3DD2E /* yggl_01.png */; };
 		621D70121ED2C57400B3DD2E /* yggl_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D700F1ED2C57400B3DD2E /* yggl_02.png */; };
-		6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6220B6E11E63C2A7007017BA /* EmailViewController.m */; };
 		6223F8261F9DC011005FD217 /* TargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6223F8251F9DC011005FD217 /* TargetViewController.m */; };
 		62246C441FA82C2B003719E2 /* StoreinforViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62246C431FA82C2B003719E2 /* StoreinforViewController.m */; };
 		62262C7A1FE4AF0C00910154 /* QZConditionFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 62262C711FE4ACAB00910154 /* QZConditionFilterView.m */; };
@@ -2271,8 +2270,6 @@
 		621D700D1ED2C57400B3DD2E /* yggl_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yggl_03.png; sourceTree = "<group>"; };
 		621D700E1ED2C57400B3DD2E /* yggl_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yggl_01.png; sourceTree = "<group>"; };
 		621D700F1ED2C57400B3DD2E /* yggl_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yggl_02.png; sourceTree = "<group>"; };
-		6220B6E01E63C2A7007017BA /* EmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailViewController.h; sourceTree = "<group>"; };
-		6220B6E11E63C2A7007017BA /* EmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailViewController.m; sourceTree = "<group>"; };
 		6223F8241F9DC011005FD217 /* TargetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TargetViewController.h; sourceTree = "<group>"; };
 		6223F8251F9DC011005FD217 /* TargetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TargetViewController.m; sourceTree = "<group>"; };
 		62246C421FA82C2B003719E2 /* StoreinforViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreinforViewController.h; sourceTree = "<group>"; };
@@ -5083,15 +5080,6 @@
 			path = WJTextView;
 			sourceTree = "<group>";
 		};
-		6220B6DF1E63C294007017BA /* Email */ = {
-			isa = PBXGroup;
-			children = (
-				6220B6E01E63C2A7007017BA /* EmailViewController.h */,
-				6220B6E11E63C2A7007017BA /* EmailViewController.m */,
-			);
-			path = Email;
-			sourceTree = "<group>";
-		};
 		6220B6E31E6417FE007017BA /* DatePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -5859,7 +5847,6 @@
 		62EBA2491E56CA9000F657DB /* Security */ = {
 			isa = PBXGroup;
 			children = (
-				6220B6DF1E63C294007017BA /* Email */,
 				626D96D11E5FCDEA002208D6 /* ModifyPass */,
 				620731131E5D1D9500BCF51C /* JinnLockExample */,
 				62EBA24E1E56CB4900F657DB /* SecurityViewController.h */,
@@ -6456,7 +6443,6 @@
 				1FF580801F8C64D3001C3D40 /* VCInsideMonthSubmited.m in Sources */,
 				1FE88EA91F62A2040058A41F /* ViewControllerPosition.m in Sources */,
 				1F5D4E541ED9578C002F948F /* FIrstController.m in Sources */,
-				6220B6E21E63C2A7007017BA /* EmailViewController.m in Sources */,
 				1F6AB7FD1E8B9C8A006CB015 /* WBSPopShareView.m in Sources */,
 				1FDD93151F42F4D5002E834B /* CellTbale.m in Sources */,
 				1FE5A2231F906B1100C5221A /* CellAddBacklog.m in Sources */,
