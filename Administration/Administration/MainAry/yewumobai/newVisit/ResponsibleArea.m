@@ -294,13 +294,17 @@
             
         }
         
+        if (![self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
+            if ([self.arrayT[0]isEqualToString:@"全部"]) {
+                self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+            }
+        }
+        
         
         [pickerView reloadComponent:1];
-        [pickerView selectRow:0 inComponent:1 animated:YES];
         [pickerView reloadComponent:2];
+        [pickerView selectRow:0 inComponent:1 animated:YES];
         [pickerView selectRow:0 inComponent:2 animated:YES];
-        
-        
         
     }else if (component==1){
         self.arrayT = self.arrayC[row][@"countyList"];
@@ -311,7 +315,7 @@
         }else
         {
             if ([self.arrayT[0]isEqualToString:@"全部"]) {
-                self.arrayT = [[self getList: self.arrayC[row][@"countyList"]]mutableCopy];
+                self.arrayT = [[self getList: self.arrayC[row][@"cityName"]]mutableCopy];
                 _countstr = self.arrayT[0][@"name"];
             }else{
                 _countstr = self.arrayT[0];
@@ -319,7 +323,6 @@
         }
         
         [pickerView reloadComponent:2];
-        [pickerView selectRow:row inComponent:1 animated:YES];
         [pickerView selectRow:0 inComponent:2 animated:YES];
         
     }else if (component == 2){

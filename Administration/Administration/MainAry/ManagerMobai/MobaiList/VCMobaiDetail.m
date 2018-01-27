@@ -127,9 +127,9 @@
                            @"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Types":@"1",
-                           @"shopId":@"239",
-                           @"Draft":@"3",
-                           @"id":@"231"
+                           @"shopId":[NSString stringWithFormat:@"%@",self.dictInfo[@"shopId"]],
+                           @"Draft":[NSString stringWithFormat:@"%@",self.dictInfo[@"draft"]],
+                           @"id":[NSString stringWithFormat:@"%@",self.dictInfo[@"id"]]
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         

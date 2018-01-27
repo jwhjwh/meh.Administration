@@ -379,7 +379,6 @@
     }
     else
     {
-        
         switch (buttonIndex) {
             case 0:
                 [self.tableViewMenber reloadData];
