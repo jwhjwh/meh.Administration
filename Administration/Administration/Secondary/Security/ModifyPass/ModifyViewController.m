@@ -108,13 +108,17 @@
 }
 - (UITextField *)oldField{
     if (!_oldField) {
-        _oldField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(60), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(355), ADAPTATION_HEIGHT(40))];
+        _oldField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
         _oldField.placeholder = @"6-16个字符，区分大小写";
          placeholder(_oldField);
         _oldField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _oldField.autocapitalizationType = UITextAutocapitalizationTypeNone; //首字母是否大写
         _oldField.secureTextEntry = YES; //安全输入
         _oldField.font = FONT(14);
+        
+       
+        _oldField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _oldField.layer.borderWidth = 1;
         [_oldField addTarget:self action:@selector(action_text) forControlEvents:UIControlEventEditingChanged];
     }
     return _oldField;
@@ -122,13 +126,15 @@
 - (UITextField *)oneField{
     if (!_oneField) {
         
-        _oneField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(60), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(355), ADAPTATION_HEIGHT(40))];
+        _oneField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
         _oneField.placeholder = @"6-16个字符，区分大小写";
          placeholder(_oneField);
         _oneField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _oneField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _oneField.secureTextEntry = YES;
         _oneField.font = FONT(14);
+        _oneField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _oneField.layer.borderWidth = 1;
         [_oneField addTarget:self action:@selector(action_text) forControlEvents:UIControlEventEditingChanged];
     }
     return _oneField;
@@ -136,13 +142,16 @@
 
 - (UITextField *)twoField{
     if (!_twoField) {
-        _twoField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(60), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(355), ADAPTATION_HEIGHT(40))];
+        _twoField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
         _twoField.placeholder = @"6-16个字符，区分大小写";
              placeholder(_twoField);
         _twoField.clearButtonMode = UITextFieldViewModeWhileEditing; //编辑时出现 ×
         _twoField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _twoField.secureTextEntry = YES;
         _twoField.font = FONT(14);
+        _twoField.font = FONT(14);
+        _twoField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _twoField.layer.borderWidth = 1;
         [_twoField addTarget:self action:@selector(action_text) forControlEvents:UIControlEventEditingChanged];
     }
     return _twoField;
