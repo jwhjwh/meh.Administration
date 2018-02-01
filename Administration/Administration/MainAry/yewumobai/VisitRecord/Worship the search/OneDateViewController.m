@@ -268,6 +268,14 @@
         ModifyVisitViewController *modify = [[ModifyVisitViewController alloc]init];
         modify.ModifyId = model.ShopId;
         modify.strId = self.strId;
+        NSString *userid =[USER_DEFAULTS objectForKey:@"userid"];
+        int ivalue = [model.usersId intValue];
+        NSString *modeluserid =[NSString stringWithFormat:@"%d",ivalue];
+        if ([modeluserid isEqualToString:userid]) {
+            
+        }else{
+            modify.andisofyou =@"1";
+        }
         [self.navigationController pushViewController:modify animated:YES];
     }
     

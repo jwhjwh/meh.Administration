@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ResponsibleArea : UIViewController
-
+typedef void (^ReturnTextBlock)(NSString *showText);
 @property (nonatomic,strong) NSString *points;
 @property (nonatomic,strong) NSString *DepartmentId;
+@property (nonatomic, copy) ReturnTextBlock returnTextBlock;
 @end

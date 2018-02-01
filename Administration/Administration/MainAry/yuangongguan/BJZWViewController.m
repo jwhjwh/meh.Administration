@@ -535,17 +535,23 @@
     }else if ([btn.titleLabel.text isEqualToString:@"完成"]){
         //btn.tag = section;
         if (TJorXG ==1 ) {
+            
             if ([_ZWidAry[btn.tag][0] isEqual:@"0"]) {
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请选择职位" andInterval:1.0];
             }else{
+                
                 [self complete:btn zwidary:_ZWidAry zwlbid:_ZWLBidAry deparid:_BMidAry[btn.tag] userid:_usersidAry[0] uuid:_uuidary[0]];
             }
         }else{
             NSMutableArray *updateAry = [[NSMutableArray alloc]init];
             NSMutableDictionary *updateDic = [[NSMutableDictionary alloc]init];
             [updateDic setValue:[NSString stringWithFormat:@"%@",_oldZWID[btn.tag]] forKey:@"oRoleId"];
-            [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldBMID[btn.tag] componentsJoinedByString:@","]]forKey:@"oDepartmentID"];
             
+            if ([_oldBMID[btn.tag][0] isEqualToString:@"0"]) {
+                [updateDic setValue:[NSString stringWithFormat:@" "]forKey:@"oDepartmentID"];
+            }else{
+                [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldBMID[btn.tag] componentsJoinedByString:@","]]forKey:@"oDepartmentID"];
+            }
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_oldJBID[btn.tag] componentsJoinedByString:@","]] forKey:@"oLevelID"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_ZWidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nRoleId"];
             [updateDic setValue:[NSString stringWithFormat:@"%@",[_BMidAry[btn.tag] componentsJoinedByString:@","]] forKey:@"nDepartmentID"];
@@ -1174,7 +1180,7 @@
                         [_SCbtnAry addObject:[[NSMutableArray alloc]init]];
                         
                         [oldddbmid addObject:@"0"];
-                        [_oldBMID addObject:bmnumary];//部门id-----
+                        [_oldBMID addObject:oldddbmid];//部门id-----
                     }else if([_model.departmentName containsString:@","]){
                         NSArray* array = [_model.departmentName componentsSeparatedByString:@","];
                         NSArray* numarray = [_model.departmentID componentsSeparatedByString:@","];

@@ -341,17 +341,7 @@
     }
     if (indexPath.section == 1) {
         if (indexPath.row <1) {
-//            NSString *str = @"2017年01月01日";
-//            
-//            if ([_DayLabel.text containsString:@"年"]) {
-//                str = _DayLabel.text;
-//            }
-//            [self.pickerView appearWithTitle:@"年月日" pickerType:GSPickerTypeDatePicker subTitles:nil selectedStr:str sureAction:^(NSInteger path, NSString *pathStr) {
-//                _DayLabel.text = pathStr;
-//               
-//            } cancleAction:^{
-//                
-//            }];
+
             self.indexPath = indexPath;
             [self showDatePicker];
             

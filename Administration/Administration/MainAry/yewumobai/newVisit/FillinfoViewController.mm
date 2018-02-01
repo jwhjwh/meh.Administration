@@ -320,17 +320,17 @@
                 [dater showInView:self.view animated:YES];
                 break;
             case 2:{
-//                [self.view endEditing:YES];
-            self.cityChoose = [[CityChoose alloc] init];
-//                self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
-//                    cell.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
-//                    cell.xingLabel.textColor=[UIColor blackColor];
-//                    _storeregion=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
-//                };
-               [self.view addSubview:self.cityChoose];
                 ResponsibleArea *resVC = [[ResponsibleArea alloc]init];
                 resVC.points = self.points;
                 resVC.DepartmentId = self.depant;
+                resVC.returnTextBlock = ^(NSString *showText) {
+                    NSLog(@"%@",showText);
+                    NSString *stringWithoutQuotation = [showText
+                                                        stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                    cell.xingLabel.text = [NSString stringWithFormat:@"%@",stringWithoutQuotation];
+                };
+                
+                cell.xingLabel.textColor=[UIColor blackColor];
                 [self.navigationController pushViewController:resVC animated:YES];
             
             }
