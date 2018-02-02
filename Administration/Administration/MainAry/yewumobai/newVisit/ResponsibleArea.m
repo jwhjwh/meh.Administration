@@ -83,16 +83,27 @@
             }
             
             self.arrayC = self.arrayP[0][@"cityList"];
-            if ([self.arrayC[0][@"cityName"] isEqualToString:@"全部"]) {
-                self.arrayC = [[self getList:self.arrayP[0][@"cityName"]]mutableCopy];
+            if (self.arrayC.count==0||[self.arrayC[0][@"cityName"] isEqualToString:@"全部"]) {
+                self.arrayC = [[self getList:self.arrayP[0][@"provinceName"]]mutableCopy];
+                
             }
             self.arrayT = self.arrayC[0][@"countyList"];
-            if ([self.arrayC[0][@"countyList"][0] isEqualToString:@"全部"]) {
-                self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
-                _countstr = self.arrayT[0][@"name"];
-            }else{
-                _countstr = self.arrayT[0];
-            }
+           if (![self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
+               if (self.arrayT.count==0||[self.arrayC[0][@"countyList"][0] isEqualToString:@"全部"]) {
+                   self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+                   _countstr = self.arrayT[0][@"name"];
+               }else{
+                   _countstr = self.arrayT[0];
+               }
+           }else{
+               if (self.arrayT.count==0||[self.arrayC[0][@"countyList"][0][@"cityName"] isEqualToString:@"全部"]) {
+                   self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
+                   _countstr = self.arrayT[0][@"name"];
+               }else{
+                   _countstr = self.arrayT[0];
+               }
+           }
+            
             _prostr = self.arrayP[0][@"provinceName"];
             _citystr = self.arrayC[0][@"cityName"];
             
@@ -119,7 +130,12 @@
             };
             [alertView showMKPAlertView];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
-           
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"没有分配负责区域" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [self nssUI];
+                [self initDataFromJson];
+            };
+            [alertView showMKPAlertView];
         }
     } failure:^(NSError *error) {
         
@@ -159,6 +175,9 @@
     self.arrayP = dict[@"province"];
     self.arrayC = self.arrayP[0][@"cityList"];
     self.arrayT = self.arrayP[0][@"cityList"][0][@"countyList"];
+    _prostr = self.arrayP[0][@"provinceName"];
+    _citystr = self.arrayC[0][@"provinceName"];
+    _countstr = self.arrayT[0][@"name"];
     [self.pickView reloadAllComponents];
     [self.pickView selectRow:0 inComponent:0 animated:YES];
     [self.pickView selectRow:0 inComponent:1 animated:YES];
@@ -208,9 +227,9 @@
     [self initDataFromJson];
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-    
-    
-    
+    NSMutableString  *CityStr = [NSMutableString stringWithFormat:@"%@%@%@",_prostr,_citystr,_countstr];
+     self.returnTextBlock(CityStr);
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -284,18 +303,24 @@
         self.arrayC = self.arrayP[row][@"cityList"];
         self.arrayT = self.arrayC[0][@"countyList"];
         _prostr = self.arrayP[row][@"provinceName"];
-        _citystr = self.arrayC[0][@"cityName"];
-        if ([self.arrayC[0][@"cityName"]isEqualToString:@"全部"]) {
+        
+        if (self.arrayC.count==0||[self.arrayC[0][@"cityName"]isEqualToString:@"全部"]) {
             self.arrayC = [[self getList:self.arrayP[row][@"provinceName"]]mutableCopy];
             self.arrayT = self.arrayC[0][@"countyList"];
            _countstr = self.arrayT[0][@"name"];
+            _citystr = self.arrayC[0][@"cityName"];
         }else{
-            _countstr = self.arrayT[0];
+            if ([self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
+                _countstr = self.arrayT[0][@"name"];//
+            }else{
+                _countstr = self.arrayT[0];
+            }
             
+            _citystr = self.arrayC[0][@"cityName"];
         }
         
         if (![self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
-            if ([self.arrayT[0]isEqualToString:@"全部"]) {
+            if (self.arrayT.count==0||[self.arrayT[0]isEqualToString:@"全部"]) {
                 self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
             }
         }
@@ -311,10 +336,10 @@
         _citystr = self.arrayC[row][@"cityName"];
         if ([self.arrayT[0]isKindOfClass:[NSDictionary class]]) {
             self.arrayT = self.arrayC[row][@"countyList"];
-            _countstr = self.arrayT[0];
+            _countstr = self.arrayT[0][@"name"];
         }else
         {
-            if ([self.arrayT[0]isEqualToString:@"全部"]) {
+            if (self.arrayT.count==0||[self.arrayT[0]isEqualToString:@"全部"]) {
                 self.arrayT = [[self getList: self.arrayC[row][@"cityName"]]mutableCopy];
                 _countstr = self.arrayT[0][@"name"];
             }else{

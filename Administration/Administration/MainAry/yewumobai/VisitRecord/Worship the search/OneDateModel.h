@@ -20,5 +20,5 @@
 
 @property (strong,nonatomic) NSString *dates;
 
-
+@property (strong,nonatomic) NSString *usersId;
 @end

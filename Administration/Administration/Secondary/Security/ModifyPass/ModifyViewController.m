@@ -50,6 +50,9 @@
     [self.view addSubview:self.oldPassword];
     [self.view addSubview:self.onePassword];
     [self.view addSubview:self.twoPassword];
+    
+    
+    
     [self.view addSubview:self.loginButton];
     [self.view addSubview:self.hideButton];
     [self.view addSubview:self.promptLabel];
@@ -75,21 +78,21 @@
 
 - (UIView *)oldPassword{
     if (!_oldPassword) {
-        _oldPassword = [[UIView alloc]initWithFrame:CGRectMake(0, ADAPTATION_HEIGHT(120),ADAPTATION_WIDTH(414), ADAPTATION_HEIGHT(50))];
+        _oldPassword = [[UIView alloc]initWithFrame:CGRectMake(0, ADAPTATION_HEIGHT(120),ADAPTATION_WIDTH(414), ADAPTATION_HEIGHT(40))];
         _oldPassword.backgroundColor = [UIColor whiteColor];
     }
     return _oldPassword;
 }
 - (UIView *)onePassword{
     if (!_onePassword) {
-        _onePassword = [[UIView alloc]initWithFrame:CGRectMake(0, ADAPTATION_HEIGHT(210), ADAPTATION_WIDTH(414), ADAPTATION_HEIGHT(50))];
+        _onePassword = [[UIView alloc]initWithFrame:CGRectMake(0, ADAPTATION_HEIGHT(205), ADAPTATION_WIDTH(414), ADAPTATION_HEIGHT(40))];
         _onePassword.backgroundColor = [UIColor whiteColor];
     }
     return _onePassword;
 }
 - (UIView *)twoPassword{
     if (!_twoPassword) {
-        _twoPassword = [[UIView alloc]initWithFrame:CGRectMake(0, ADAPTATION_HEIGHT(300), ADAPTATION_WIDTH(414), ADAPTATION_HEIGHT(50))];
+        _twoPassword = [[UIView alloc]initWithFrame:CGRectMake(0, ADAPTATION_HEIGHT(290), ADAPTATION_WIDTH(414), ADAPTATION_HEIGHT(40))];
         _twoPassword.backgroundColor = [UIColor whiteColor];
     }
     return _twoPassword;
@@ -98,7 +101,7 @@
 - (void)initWithLable{
     NSArray *array = @[@"请输入原密码：",@"请输入新密码：",@"请输入新密码："];
     for (int i = 0; i < array.count; i ++) {
-        UILabel *labelse = [[UILabel alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(15), ADAPTATION_HEIGHT(90 + i*90), ADAPTATION_WIDTH(200), ADAPTATION_HEIGHT(30))];
+        UILabel *labelse = [[UILabel alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(15), ADAPTATION_HEIGHT(84 + i*84 ), ADAPTATION_WIDTH(200), ADAPTATION_HEIGHT(30))];
         labelse.font = FONT(14);
         labelse.text = array[i];
         labelse.textColor = GetColor(128, 128, 128, 1);
@@ -108,7 +111,7 @@
 }
 - (UITextField *)oldField{
     if (!_oldField) {
-        _oldField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
+        _oldField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(0), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
         _oldField.placeholder = @"6-16个字符，区分大小写";
          placeholder(_oldField);
         _oldField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -126,7 +129,7 @@
 - (UITextField *)oneField{
     if (!_oneField) {
         
-        _oneField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
+        _oneField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(0), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
         _oneField.placeholder = @"6-16个字符，区分大小写";
          placeholder(_oneField);
         _oneField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -142,7 +145,7 @@
 
 - (UITextField *)twoField{
     if (!_twoField) {
-        _twoField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(7.5), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
+        _twoField = [[UITextField alloc]initWithFrame:CGRectMake(ADAPTATION_WIDTH(-1), ADAPTATION_HEIGHT(0), ADAPTATION_WIDTH(415), ADAPTATION_HEIGHT(40))];
         _twoField.placeholder = @"6-16个字符，区分大小写";
              placeholder(_twoField);
         _twoField.clearButtonMode = UITextFieldViewModeWhileEditing; //编辑时出现 ×
@@ -164,21 +167,35 @@
         [_loginButton setTitle:@"确定" forState:UIControlStateNormal];
         _loginButton.layer.cornerRadius = 6;
         _loginButton.layer.masksToBounds = YES;
+     _loginButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+     _loginButton.layer.borderWidth = 1;
         _loginButton.enabled = NO;
-        _loginButton.tintColor = [UIColor whiteColor];
-        _loginButton.backgroundColor = [UIColor lightGrayColor];
+        [_loginButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        
+        
+        
+//
+//
+        
+        _loginButton.backgroundColor = [UIColor whiteColor];
         [_loginButton addTarget:self action:@selector(action_button:) forControlEvents:UIControlEventTouchUpInside];
+        [_loginButton addTarget:self action:@selector(button1BackGroundHighlighted:) forControlEvents:UIControlEventTouchDown];
+        
         
     }
     return _loginButton;
 }
+- (void)button1BackGroundHighlighted:(UIButton *)sender
+{
+    sender.backgroundColor = GetColor(145, 75, 175, 1);
+}
 - (void)action_text{
     if (_oldField.text.length > 0 && _oneField.text.length > 0 && _twoField.text.length >0) {
-        _loginButton.backgroundColor = GetColor(92, 178, 135, 1);
+        
         _loginButton.enabled = YES;
         _Open = YES;
     }else{
-        _loginButton.backgroundColor = [UIColor lightGrayColor];
+        
         _loginButton.enabled = YES;
         _Open = NO;
     }
