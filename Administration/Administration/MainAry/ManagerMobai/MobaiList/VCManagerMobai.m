@@ -33,7 +33,7 @@
 #pragma -mark tableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([[ShareModel shareModel].roleID isEqualToString:@"8"]) {
+    if ([[ShareModel shareModel].roleID isEqualToString:@"5"]) {
         return 1;
     }else
     {
@@ -43,7 +43,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([[ShareModel shareModel].roleID isEqualToString:@"8"]) {
+    if ([[ShareModel shareModel].roleID isEqualToString:@"5"]) {
         return self.array.count;
     }else
     {
@@ -59,7 +59,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    if ([[ShareModel shareModel].roleID isEqualToString:@"8"]) {
+    if ([[ShareModel shareModel].roleID isEqualToString:@"5"]) {
         cell.textLabel.text = self.array[indexPath.row];
     }else
     {
@@ -72,7 +72,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[ShareModel shareModel].roleID isEqualToString:@"8"]) {
+    if ([[ShareModel shareModel].roleID isEqualToString:@"5"]) {
         if (indexPath.row==0) {
             //跳转界面
             VCDepartmentMobai *vc = [[VCDepartmentMobai alloc]init];
@@ -123,7 +123,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if ([[ShareModel shareModel].roleID isEqualToString:@"8"]) {
+    if ([[ShareModel shareModel].roleID isEqualToString:@"5"]) {
         return 0;
     }else
     {
@@ -151,7 +151,7 @@
     
     [self  setUI];
     
-    if ([[ShareModel shareModel].roleID isEqualToString:@"8"]) {
+    if ([[ShareModel shareModel].roleID isEqualToString:@"5"]) {
         self.array = @[@"陌拜记录",@"意向客户",@"目标客户"];
     }else
     {

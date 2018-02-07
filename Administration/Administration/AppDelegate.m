@@ -17,12 +17,37 @@
 //两次提示的默认间隔//两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 2.0;
 
-@interface AppDelegate ()<EMChatManagerDelegate,EMClientDelegate>
+@interface AppDelegate ()<EMChatManagerDelegate,EMClientDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
 @implementation AppDelegate
 
+-(void)getVersion
+{
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    NSString *urlStr =[NSString stringWithFormat:@"%@version/queryNewVersion",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"]
+                           };
+    
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code  = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            NSDictionary *dictinfo = [responseObject valueForKey:@"version"];
+            if (![dictinfo[@"ver"]isEqualToString:version]) {
+                UIAlertView *alertView =[[UIAlertView alloc]initWithTitle:@"提示" message:@"有新版本" delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"更新", nil];
+                [alertView show];
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } view:nil MBPro:YES];
+    
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -64,7 +89,7 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
         [ZxdObject rootController];
         }
    }
-
+    [self getVersion];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     EMOptions *options = [EMOptions optionsWithAppkey:@"1126170609115009#jwhdzkereport"];
@@ -88,7 +113,14 @@ static const CGFloat kDefaultPlaySoundInterval = 2.0;
     return YES;
 }
 
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        //替换ID
+      //  [[UIApplication sharedApplication]openURL:itms-apps://itunes.apple.com/cn/app/id1144816653?mt=8];
+        exit(0);
+    }
+}
 
 -(void)didReceiveMessages:(NSArray *)aMessages{
     

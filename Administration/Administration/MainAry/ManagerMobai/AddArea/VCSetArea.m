@@ -13,10 +13,11 @@
 
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
-@property (nonatomic,weak)ViewChooseCity *chooseCity;
+@property (nonatomic,strong)ViewChooseCity *chooseCity;
 @property (nonatomic,strong)NSMutableDictionary *dictProvince;
 @property (nonatomic,strong)NSString *areaID;
 @property (nonatomic)BOOL isChangeArea;
+@property (nonatomic)BOOL isSelect;
 @end
 
 @implementation VCSetArea
@@ -25,10 +26,16 @@
 
 -(void)showCityView
 {
-    ViewChooseCity *city = [[ViewChooseCity alloc]initWithFrame:CGRectMake(0, kTopHeight+45, Scree_width, Scree_height)];
-    city.delegate = self;
-    [self.view addSubview:city];
-    self.chooseCity = city;
+    self.isSelect = !self.isSelect;
+    if (self.isSelect) {
+        self.chooseCity = [[ViewChooseCity alloc]initWithFrame:CGRectMake(0, kTopHeight+45, Scree_width, Scree_height)];
+        self.chooseCity.delegate = self;
+        [self.view addSubview:self.chooseCity];
+    }else
+    {
+        [self.chooseCity removeFromSuperview];
+    }
+    
 }
 
 -(void)setUI
@@ -172,10 +179,24 @@
     NSMutableArray *arrayCity = [self.chooseCity.arrayCity mutableCopy];
     NSMutableArray *arrayCountry = [self.chooseCity.arrayCountry mutableCopy];
     
+    if (arrayCity.count==0) {
+        [arrayCity addObject:@{@"cityName":@"全部",@"countyList":arrayCountry}];
+    }else
+    {
+        for (int i=0; i<arrayCity.count; i++) {
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:arrayCity[i] forKey:@"cityName"];
+            [arrayCity replaceObjectAtIndex:i withObject:dict];
+        }
+    }
+    
     for (int i=0; i<arrayCity.count; i++) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:arrayCity[i] forKey:@"cityName"];
+        NSMutableDictionary *dict = [arrayCity[i]mutableCopy];
+        if (arrayCountry.count==0||[arrayCountry containsObject:@"全部"]) {
+            [dict setValue:@[@"全部"] forKey:@"countyList"];
+        }else
+        {
         [dict setValue:arrayCountry forKey:@"countyList"];
+        }
         [arrayCity replaceObjectAtIndex:i withObject:dict];
     }
     
@@ -224,7 +245,7 @@
         }
         
         NSArray *arrayCountry = dictCity[@"countyList"];
-        stringProvince = [stringProvince stringByAppendingFormat:@"%@\\",[arrayCountry componentsJoinedByString:@"\\"]];
+        stringProvince = [stringProvince stringByAppendingFormat:@"%@",[arrayCountry componentsJoinedByString:@"\\"]];
     }
     
     cell.textLabel.text = stringProvince;
@@ -241,10 +262,10 @@
     NSDictionary *dict = self.arrayData[indexPath.row];
     self.areaID = [NSString stringWithFormat:@"%@",dict[@"id"]];
     self.isChangeArea = YES;
-    ViewChooseCity *city = [[ViewChooseCity alloc]initWithFrame:CGRectMake(0, kTopHeight+45, Scree_width, Scree_height) ];
-    city.delegate = self;
-    [self.view addSubview:city];
-    self.chooseCity = city;
+    self.chooseCity = [[ViewChooseCity alloc]initWithFrame:CGRectMake(0, kTopHeight+45, Scree_width, Scree_height)];
+    self.chooseCity.delegate = self;
+    [self.view addSubview:self.chooseCity];
+    self.isSelect = YES;
     
 }
 
@@ -271,6 +292,7 @@
     
     self.title = @"负责区域";
     self.isChangeArea = NO;
+    self.isSelect = NO;
     [self setUI];
     self.arrayData = [NSMutableArray array];
     NSDictionary *dict =self.dictInfo[@"lists"][0];
