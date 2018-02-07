@@ -284,6 +284,9 @@
             
             
             NSString *brithday = @"";
+            if (![self.dicinfo[@"flag"] isKindOfClass:[NSNull class]]) {
+                
+            
             if ([self.dicinfo[@"flag"] intValue]==1) {
                 if ([self.dicinfo[@"lunarBirthday"]isKindOfClass:[NSNull class]]) {
                     model.lunarBirthday = @"";
@@ -303,6 +306,7 @@
                     model.solarBirthday = self.dicinfo[@"solarBirthday"];
                     brithday = self.dicinfo[@"solarBirthday"];
                 }
+            }
             }
            // model.birthday = model.birthday;
              _logImage=model.icon;

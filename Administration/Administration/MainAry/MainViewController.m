@@ -30,7 +30,7 @@
 #import "VCTrackChoosePostion.h"
 #import "ShopInforViewController.h"//店家信息
 #define MenuH 270
-@interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate>
+@interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate,UIAlertViewDelegate>
 ///头像
 @property (nonatomic,retain)UIButton *logoImage;
 ///消息按钮
@@ -72,6 +72,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
+    
+    [self getVersion:^{
+        
+    }];
     
     [self initData];
    //[self addLoop];
@@ -115,6 +119,33 @@
     
     [ShareModel shareModel].roleID = [NSString stringWithFormat:@"%@",[USER_DEFAULTS valueForKey:@"roleId"]];
 }
+
+-(void)getVersion:(void(^)(void))over
+{
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    NSString *urlStr =[NSString stringWithFormat:@"%@version/queryNewVersion",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{
+                           @"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"]
+                           };
+    
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code  = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            NSDictionary *dictinfo = [responseObject valueForKey:@"version"];
+            if (![dictinfo[@"ver"]isEqualToString:version]) {
+                UIAlertView *alertView =[[UIAlertView alloc]initWithTitle:@"提示" message:@"有新版本" delegate:self cancelButtonTitle:@"暂不更新" otherButtonTitles:@"更新", nil];
+                [alertView show];
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } view:nil MBPro:YES];
+    
+}
+
 -(void)initData
 {
     
@@ -268,6 +299,15 @@
            
     }];
   
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        //替换ID
+        //  [[UIApplication sharedApplication]openURL:itms-apps://itunes.apple.com/cn/app/id1144816653?mt=8];
+        exit(0);
+    }
 }
 
 

@@ -327,34 +327,34 @@
             
             if ([dict[@"isSelect"]isEqualToString:@"1"]) {
                 [dict setValue:@"2" forKey:@"isSelect"];
-                [self.arrayCity addObject:dict[@"cityName"]];
-                
                 
             }else
             {
                 [dict setValue:@"1" forKey:@"isSelect"];
-                [self.arrayCity removeObject:dict[@"cityName"]];
+                
                 
             }
-            
-            if ([self.arrayCity containsObject:dict[@"cityName"]]) {
-                [self.arrayCity removeAllObjects];
-                [self.arrayCity addObject:dict[@"cityName"]];
-            }
-            
-            
             [self.arrayC replaceObjectAtIndex:indexPath.row withObject:dict];
             [self.tableView2 reloadData];
             
-            //遍历数据源，拿到哪个数据被选中
-            for (int i=0 ;i<self.arrayC.count;i++) {
-                NSDictionary *dictionary = self.arrayC[i];
-                if ([dictionary[@"isSelect"]isEqualToString:@"2"]) {
-                    dict = self.arrayC[i];
+            [self.arrayCity removeAllObjects];
+            for (NSDictionary *dictCity in self.arrayC) {
+                if ([dictCity[@"isSelect"]isEqualToString:@"2"]) {
+                    [self.arrayCity addObject:dictCity[@"cityName"]];
                 }
             }
             
+            
             if (self.arrayCity.count==1) {
+                //遍历数据源，拿到哪个数据被选中
+                for (int i=0 ;i<self.arrayC.count;i++) {
+                    NSDictionary *dictionary = self.arrayC[i];
+                    if ([dictionary[@"isSelect"]isEqualToString:@"2"]) {
+                        dict = self.arrayC[i];
+                    }
+                }
+                
+                
                 self.arrayT = [dict[@"countyList"]mutableCopy];
                 
                 if ([dict[@"countyList"][0]isEqualToString:@"全部"]) {
@@ -390,21 +390,24 @@
             NSMutableDictionary  *dict = [self.arrayT[indexPath.row]mutableCopy];
             if ([dict[@"isSelect"]isEqualToString:@"1"]) {
                 [dict setValue:@"2" forKey:@"isSelect"];
-                [self.arrayCountry addObject:dict[@"name"]];
+                
                 [self.arrayAll addObject:dict[@"name"]];
                 
             }else
             {
                 [dict setValue:@"1" forKey:@"isSelect"];
-                [self.arrayCountry removeObject:dict[@"name"]];
+               
                 [self.arrayAll removeObject:dict[@"name"]];
             }
             
-            if ([self.arrayCountry containsObject:dict[@"cityName"]]) {
-                [self.arrayCountry removeAllObjects];
-                [self.arrayCountry addObject:dict[@"cityName"]];
+            [self.arrayCountry removeAllObjects];
+            for (NSDictionary *dictCity in self.arrayT) {
+                if ([dictCity[@"isSelect"]isEqualToString:@"2"]) {
+                    [self.arrayCountry addObject:dictCity[@"name"]];
+                }
             }
             
+        
             [self.arrayT replaceObjectAtIndex:indexPath.row withObject:dict];
             [self.tableView3 reloadData];
             
