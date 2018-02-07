@@ -10,4 +10,5 @@
 typedef void  (^BAELOCK)(NSString *type,NSString *year,NSString *perpon,NSString *beds);
 @interface StoreprofileController : UIViewController
 @property (nonatomic,copy)BAELOCK blcokString;
+@property(nonatomic,strong)NSMutableArray *strary;
 @end

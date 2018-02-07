@@ -217,9 +217,18 @@
                 _textField.font = [UIFont boldSystemFontOfSize:14.0f];
                 [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                 _textField.tag = indexPath.row;
+               
                 [cell addSubview:_textField];
                 if (indexPath.row==4) {
                     _textField.text=_address;
+                }else if (indexPath.row==3) {
+                    _textField.text=_storename;
+                }else if (indexPath.row==5) {
+                    _textField.text=_storehead;
+                }else if (indexPath.row==6) {
+                    _textField.text=_storephone;
+                }else if (indexPath.row==7) {
+                    _textField.text=_storewxphone;
                 }
                 if((!(indexPath.row==6))&&(!(indexPath.row == 7))){
                     _textField.placeholder=@"必填";
@@ -236,14 +245,17 @@
                 if (indexPath.row==0&&!(_storedate==nil)) {
                     cell.xingLabel.text= _storedate;
                     cell.xingLabel.textColor=[UIColor blackColor];
+                }else if (indexPath.row==2&&!(_storeregion==nil)){
+                    cell.xingLabel.text= _storeregion;
+                    cell.xingLabel.textColor=[UIColor blackColor];
                 }
-            }
+            }//162560558
             cell.mingLabel.text=_arr[indexPath.row];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
     
-    return cell;
+     return cell;
     }else{
     FillTableViewCell *cell = [[FillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FillTableCell"];
     if (cell == nil) {
@@ -323,14 +335,17 @@
                 ResponsibleArea *resVC = [[ResponsibleArea alloc]init];
                 resVC.points = self.points;
                 resVC.DepartmentId = self.depant;
-                resVC.returnTextBlock = ^(NSString *showText) {
-                    NSLog(@"%@",showText);
-                    NSString *stringWithoutQuotation = [showText
+                resVC.returnTextBlock = ^(NSString *prostr, NSString *citystr, NSString *countcity){
+                     NSMutableString  *CityStr = [NSMutableString stringWithFormat:@"%@ %@ %@",prostr,citystr,countcity];
+                    NSString *stringWithoutQuotation = [CityStr
                                                         stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-                    cell.xingLabel.text = [NSString stringWithFormat:@"%@",stringWithoutQuotation];
+                    _storeregion =[NSString stringWithFormat:@"%@",stringWithoutQuotation];
+                    cell.xingLabel.text = _storeregion;
+                    cell.xingLabel.textColor=[UIColor blackColor];
                 };
                 
-                cell.xingLabel.textColor=[UIColor blackColor];
+                
+               
                 [self.navigationController pushViewController:resVC animated:YES];
             
             }
@@ -338,6 +353,7 @@
             case 8:{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.str =_storebrand;
                 inputVC.blcokStr=^(NSString *content,int num){
                     if (num==8) {
                         _storebrand=content;
@@ -360,6 +376,12 @@
                 break;
             case 10:{
                 StoreprofileController *stireVC=[[StoreprofileController alloc]init];
+                NSMutableArray *aryy = [[NSMutableArray alloc]init];
+                [aryy addObject:_stotrType];
+                [aryy addObject:_planDur];
+                [aryy addObject:_brandBusin];
+                [aryy addObject:_Berths];
+                stireVC.strary = aryy;
                 stireVC.blcokString=^(NSString *type,NSString *year,NSString *perpon,NSString *beds){
                     _stotrType=type;
                     _planDur=year;
@@ -373,6 +395,7 @@
             case 11:{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.str =_Abrief;
                 inputVC.blcokStr=^(NSString *content,int num){
                     _Abrief=content;
                     
@@ -383,6 +406,7 @@
             case 12:{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.str =_instructions;
                 inputVC.blcokStr=^(NSString *content,int num){
                     _instructions=content;
                     
@@ -393,6 +417,7 @@
             case 13 :{
                 InputboxController *inputVC=[[InputboxController alloc]init];
                 inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                inputVC.str =_note;
                 inputVC.blcokStr=^(NSString *content,int num){
                     _note=content;
                     
@@ -404,9 +429,6 @@
                 break;
         }
     }
-    
-    
-    
 }
 
 - (void)daterViewDidClicked:(XFDaterView *)daterView{

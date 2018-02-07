@@ -10,5 +10,6 @@
 typedef void  (^BAELOCKck)(NSString *content,int num);
 @interface InputboxController : UIViewController
 @property(nonatomic,strong)NSString *number;
+@property(nonatomic,strong)NSString *str;
 @property (nonatomic,copy)BAELOCKck blcokStr;
 @end

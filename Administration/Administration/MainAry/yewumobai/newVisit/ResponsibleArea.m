@@ -227,8 +227,8 @@
     [self initDataFromJson];
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-    NSMutableString  *CityStr = [NSMutableString stringWithFormat:@"%@%@%@",_prostr,_citystr,_countstr];
-     self.returnTextBlock(CityStr);
+   
+     self.returnTextBlock(_prostr,_citystr,_countstr);
     [self.navigationController popViewControllerAnimated:YES];
     
 }

@@ -87,6 +87,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.mingLabel.text = _InterNameAry[indexPath.row];
+    cell.xingLabel.text = self.strary[indexPath.row];
     return cell;
 }
 
