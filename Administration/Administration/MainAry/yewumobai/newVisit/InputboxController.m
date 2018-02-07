@@ -68,7 +68,7 @@
     if([_number isEqualToString: @"11"]){
         _textView.placehoder = @"必填";
     }
-
+    _textView.text = self.str;
     // 设置提示文字颜色
     _textView.placehoderColor = [UIColor colorWithRed:(188/255.0) green:(176/255.0) blue:(195/255.0) alpha:1];
     // 设置textView的字体
