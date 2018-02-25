@@ -125,6 +125,7 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@shop/updateStoreBoss1.action",KURLHeader];
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    
     NSDictionary *dict = @{@"appkey":appKeyStr,
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Storeid":[ShareModel shareModel].shopID,
@@ -499,12 +500,15 @@
     self.canEdit = NO;
     
     self.arrayPhone = [NSMutableArray array];
-    
+    self.brithdayGer = @"";
+    self.brithdayChines = @"";
+    self.flag = @"";
     self.name = @"";
     self.age = @"";
     self.qq = @"";
     self.wx = @"";
     self.hobby = @"";
+    [ShareModel shareModel].dianping = @"";
     
     
 }
