@@ -254,6 +254,7 @@
     
 }
 -(void)buiftItem{
+    [_conditionFilterView dismiss];
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)getNetworkData{
@@ -302,12 +303,13 @@
             
         }else{
             _provice = source1;
+             [self nfnetworkingcity:source1];
         }
-        
     }else{
         if([source1 isEqualToString: _provice]){
             if (_city==nil) {
                 _city=source2;
+                [self nfnetworkingarea:source2];
             }else{
                 if ([source2 isEqualToString: _city]) {
                     if (_area ==nil) {
@@ -318,73 +320,77 @@
                         }
                     }
                 }else{
-                    _city=source2;
-                    _area = nil;
-                    _selectedDataSource3Ary = @[@"请选择区"];
-                    for (int y =0; y<_cityAry.count; y++) {
-                        if ([source2 isEqualToString:_cityAry[y]]) {
-                            ProvinceModel *ProvinceModel1 = _cityNameidAry[y];
-                            NSString *urlString = [NSString stringWithFormat:@"http://apis.map.qq.com/ws/district/v1/getchildren?&id=%@&key=K3VBZ-M6WWV-PPSPY-UVGGC-DRM2Z-PGBMV", ProvinceModel1];
-                            [ZXDNetworking GET:urlString parameters:nil success:^(id responseObject) {
-                                NSMutableArray *messageData=[responseObject objectForKey:@"result"];
-                                self.areaAry = [[NSMutableArray alloc]init];
-                                for (NSDictionary  *dicc in messageData[0]) {
-                                    ZoneModel *model =[[ZoneModel alloc]init];
-                                    [model setValuesForKeysWithDictionary:dicc];
-                                    [self.areaAry addObject:model.fullname];
-                                    
-                                }
-                                _conditionFilterView.dataAry3 = _areaAry;
-                                [_conditionFilterView reloadInputViews];
-                            } failure:^(NSError *error) {
-                                
-                            } view:self.view MBPro:NO];
-                        }
-                        
-                    }
+                    
+                    [self nfnetworkingarea:source2];
                 }
             }
             
         }else{
-            _provice = source1;
-            _city =nil;
-            _area = nil;
-            _selectedDataSource2Ary = @[@"请选择市"];
-            _conditionFilterView.dataAry2 = nil;
-            _selectedDataSource3Ary = @[@"请选择区"];
-            _conditionFilterView.dataAry3= nil;
-            for (int i =0; i<_proviceAry.count; i++) {
-                if ([source1 isEqualToString:_proviceAry[i]]) {
-                    NSLog(@"%d",i);
-                    ProvinceModel *ProvinceModel1 = _proviceNameidAry[i];
-                    NSString *urlStr=[NSString stringWithFormat:@"http://apis.map.qq.com/ws/district/v1/getchildren?&id=%@&key=K3VBZ-M6WWV-PPSPY-UVGGC-DRM2Z-PGBMV", ProvinceModel1];
-                    [ZXDNetworking GET:urlStr parameters:nil success:^(id responseObject) {
-                        NSMutableArray *messageData=[responseObject objectForKey:@"result"];
-                        self.cityAry=[NSMutableArray array];
-                        self.cityNameidAry=[NSMutableArray array];
-                        for (NSDictionary  *dic in messageData[0]) {
-                            cityModel *model =[[cityModel alloc]init];
-                            [model setValuesForKeysWithDictionary:dic];
-                            [self.cityAry addObject:model.fullname];
-                            [self.cityNameidAry addObject:model.did];
-                            
-                        }
-                        
-                        _conditionFilterView.dataAry2 = _cityAry;
-                        [_conditionFilterView reloadInputViews];
-                        
-                    } failure:^(NSError *error) {
-                        
-                    } view:self.view MBPro:YES];
-                    
-                }
-            }
+            
+            [self nfnetworkingcity:source1];
         }
     }
-    
-   
-    
     NSLog(@"\n第一个条件:%@\n  第二个条件:%@\n  第三个条件:%@\n",_provice,_city,_area);
-    
+}
+-(void)nfnetworkingcity:(NSString *)citystr{
+    _provice = citystr;
+    _city =nil;
+    _area = nil;
+    _selectedDataSource2Ary = @[@"请选择市"];
+    _conditionFilterView.dataAry2 = nil;
+    _selectedDataSource3Ary = @[@"请选择区"];
+    _conditionFilterView.dataAry3= nil;
+    for (int i =0; i<_proviceAry.count; i++) {
+        if ([citystr isEqualToString:_proviceAry[i]]) {
+            NSLog(@"%d",i);
+            ProvinceModel *ProvinceModel1 = _proviceNameidAry[i];
+            NSString *urlStr=[NSString stringWithFormat:@"http://apis.map.qq.com/ws/district/v1/getchildren?&id=%@&key=K3VBZ-M6WWV-PPSPY-UVGGC-DRM2Z-PGBMV", ProvinceModel1];
+            [ZXDNetworking GET:urlStr parameters:nil success:^(id responseObject) {
+                NSMutableArray *messageData=[responseObject objectForKey:@"result"];
+                self.cityAry=[NSMutableArray array];
+                self.cityNameidAry=[NSMutableArray array];
+                for (NSDictionary  *dic in messageData[0]) {
+                    cityModel *model =[[cityModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dic];
+                    [self.cityAry addObject:model.fullname];
+                    [self.cityNameidAry addObject:model.did];
+                    
+                }
+                
+                _conditionFilterView.dataAry2 = _cityAry;
+                [_conditionFilterView reloadInputViews];
+                
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:YES];
+            
+        }
+    }
+}
+-(void)nfnetworkingarea:(NSString *)areastr{
+    _city=areastr;
+    _area = nil;
+    _selectedDataSource3Ary = @[@"请选择区"];
+    for (int y =0; y<_cityAry.count; y++) {
+        if ([areastr isEqualToString:_cityAry[y]]) {
+            ProvinceModel *ProvinceModel1 = _cityNameidAry[y];
+            NSString *urlString = [NSString stringWithFormat:@"http://apis.map.qq.com/ws/district/v1/getchildren?&id=%@&key=K3VBZ-M6WWV-PPSPY-UVGGC-DRM2Z-PGBMV", ProvinceModel1];
+            [ZXDNetworking GET:urlString parameters:nil success:^(id responseObject) {
+                NSMutableArray *messageData=[responseObject objectForKey:@"result"];
+                self.areaAry = [[NSMutableArray alloc]init];
+                for (NSDictionary  *dicc in messageData[0]) {
+                    ZoneModel *model =[[ZoneModel alloc]init];
+                    [model setValuesForKeysWithDictionary:dicc];
+                    [self.areaAry addObject:model.fullname];
+                    
+                }
+                _conditionFilterView.dataAry3 = _areaAry;
+                [_conditionFilterView reloadInputViews];
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:NO];
+        }
+        
+    }
 }
 @end
