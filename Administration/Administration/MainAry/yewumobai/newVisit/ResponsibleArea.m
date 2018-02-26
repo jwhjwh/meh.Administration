@@ -176,7 +176,7 @@
     self.arrayC = self.arrayP[0][@"cityList"];
     self.arrayT = self.arrayP[0][@"cityList"][0][@"countyList"];
     _prostr = self.arrayP[0][@"provinceName"];
-    _citystr = self.arrayC[0][@"provinceName"];
+    _citystr = self.arrayC[0][@"cityName"];
     _countstr = self.arrayT[0][@"name"];
     [self.pickView reloadAllComponents];
     [self.pickView selectRow:0 inComponent:0 animated:YES];

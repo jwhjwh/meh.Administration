@@ -120,6 +120,11 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSLog(@"%@%@%@%@",_DayLabel.text,_Age,_IdNo,_AddLabel.text);
+    
+    if ([self.flag isEqualToString:@"<null>"]) {
+        self.flag = @"0";
+    }
+    
     NSDictionary *dict=@{@"appkey":apKeyStr,
                          @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
                          @"flag":self.flag,
