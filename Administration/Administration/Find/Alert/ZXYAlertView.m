@@ -166,6 +166,7 @@
 - (void)buttonClick:(UIButton *)button {
     if (self.delegate)
     {
+        [button setBackgroundColor:[UIColor redColor]];
         [self.delegate alertView:self clickedCustomButtonAtIndex:button.tag];
     }
     [self removeFromSuperview];

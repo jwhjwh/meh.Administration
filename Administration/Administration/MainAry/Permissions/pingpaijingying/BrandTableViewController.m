@@ -166,7 +166,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *dic = _arr[indexPath.row];
     NSLog(@"-----%@------%@",dic,_arr);
-    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLHeader,dic[@"brandLogo"]];
+    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLImage,dic[@"brandLogo"]];
     UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
     [image sd_setImageWithURL:[NSURL URLWithString:imageStr]placeholderImage:[UIImage imageNamed:@"head_icon"]];
     [cell addSubview:image];

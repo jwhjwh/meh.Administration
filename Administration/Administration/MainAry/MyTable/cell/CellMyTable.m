@@ -92,7 +92,7 @@
 -(void)setDict:(NSDictionary *)dict
 {
     self.labelName.text  = dict[@"name"];
-    [self.imageViewHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    [self.imageViewHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
     self.labelPosition.text = dict[@"newName"];
     if (dict[@"dateLine"]) {
         NSString *stringDate = [dict[@"dateLine"] substringToIndex:10];

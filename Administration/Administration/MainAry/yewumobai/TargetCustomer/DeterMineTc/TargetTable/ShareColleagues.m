@@ -124,7 +124,7 @@
     //设置图形样子
     maskLayer.path = maskPath.CGPath;
     imageVw.layer.mask = maskLayer;
-    [imageVw sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_indexArray[indexPath.row]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [imageVw sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_indexArray[indexPath.row]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     [cell addSubview:imageVw];
     UILabel *namelabel = [[UILabel alloc]initWithFrame:CGRectMake(70, 10, cell.width-70, 30)];
     namelabel.font = [UIFont systemFontOfSize:15];

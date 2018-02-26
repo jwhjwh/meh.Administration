@@ -86,7 +86,7 @@
     NSString *timeStr = [gongModel.time substringWithRange:NSMakeRange(5,11)];
     _timeLabel.text=timeStr;
     _contLabel.text=gongModel.content;
-      [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,gongModel.url]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+      [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,gongModel.url]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     if (gongModel.roleId ==1) {
           _whoLabel.text=@"来自老板";
     } else if (gongModel.roleId == 7){
@@ -103,7 +103,7 @@
     _contLabel.text=dict[@"content"];
     
     if (dict[@"url"]) {
-       [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"url"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]]; 
+       [_logoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"url"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]]; 
     }
     
     

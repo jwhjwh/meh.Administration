@@ -217,7 +217,7 @@
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSDictionary *loadDic = responseObject[@"picReport"];
-            _IMAGESTR = [NSString stringWithFormat:@"%@%@",KURLHeader,loadDic[@"picture"]];
+            _IMAGESTR = [NSString stringWithFormat:@"%@%@",KURLImage,loadDic[@"picture"]];
             NSString *Loadtime = loadDic[@"dateTimes"];
             Loadtime = [Loadtime substringToIndex:10];
             [_dataArray addObject:Loadtime];

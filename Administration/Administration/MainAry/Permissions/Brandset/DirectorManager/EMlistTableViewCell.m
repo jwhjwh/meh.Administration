@@ -88,7 +88,7 @@
     self.NameLabel.text=model.name;
     self.TelLabel.text=model.account;
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.icon]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     self.zhiLabel.text=model.NewName;
 }
 @end

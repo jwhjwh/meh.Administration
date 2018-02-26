@@ -42,7 +42,7 @@
   _titleLabel.text=modle.finsk;
     NSLog(@"%@",modle.brandLogo);
     if ([modle.brandLogo hasPrefix:@"images"]) {
-        [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,modle.brandLogo]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,modle.brandLogo]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     }else{
         if (!(modle.brandLogo==nil)) {
             NSData *_decodedImageData = [[NSData alloc]initWithBase64Encoding:modle.brandLogo];

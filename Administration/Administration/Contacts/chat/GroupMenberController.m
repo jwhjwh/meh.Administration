@@ -481,7 +481,7 @@
             
             cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
             cell.TelLabel.text = dict[@"account"];
-            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLImage,dict[@"img"]];
             [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
             cell.nameLabel.text = dict[@"name"];
             if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
@@ -519,7 +519,7 @@
             }
             NSDictionary *dict = self.arraySearch[indexPath.row];
             cell.TelLabel.text = dict[@"account"];
-            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLImage,dict[@"img"]];
             [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
             NSMutableString *name = [dict[@"name"] mutableCopy];
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:name];
@@ -553,7 +553,7 @@
             NSDictionary *dict = self.resultArr[indexPath.section][indexPath.row];
             cell.selectImage.image = [UIImage imageNamed:@"weixuanzhong"];
             cell.TelLabel.text = dict[@"account"];
-            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLImage,dict[@"img"]];
             [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
             cell.nameLabel.text = dict[@"name"];
             if ([[NSString stringWithFormat:@"%@",dict[@"userId"]]isEqualToString:[USER_DEFAULTS valueForKey:@"userid"]]) {
@@ -595,7 +595,7 @@
             }
             NSDictionary *dict = self.resultArr[indexPath.section][indexPath.row];
             cell.TelLabel.text = dict[@"account"];
-            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+            NSString *stringUlr = [NSString stringWithFormat:@"%@%@",KURLImage,dict[@"img"]];
             [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:stringUlr] placeholderImage:[UIImage imageNamed:@"banben100"]];
             cell.nameLabel.text = dict[@"name"];
             cell.locationButton.hidden = YES;

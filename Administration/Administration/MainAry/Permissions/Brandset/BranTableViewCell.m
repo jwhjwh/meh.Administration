@@ -47,11 +47,11 @@
     [AttributedStr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(branmodel.finsk.length,_str.length)]; //设置字体颜色
     [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0] range:NSMakeRange(branmodel.finsk.length,_str.length)]; //设置字体字号和字体类别
      _titleLabel.attributedText =AttributedStr;
-      [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,branmodel.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+      [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,branmodel.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
 
 }
 -(void)setModel:(branModel *)model{
-         [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+         [_imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

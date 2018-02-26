@@ -57,7 +57,7 @@
     _imageV=[[UIImageView alloc]init];
     _imageV.backgroundColor=GetColor(230, 230, 230, 1);
     
-     NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLHeader,self.dateDic[@"brandLogo"]];
+     NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLImage,self.dateDic[@"brandLogo"]];
     
     [_imageV sd_setImageWithURL:[NSURL URLWithString:imageStr]placeholderImage:[UIImage imageNamed:@"ph_mt02"]];
     [self.view addSubview: _imageV];

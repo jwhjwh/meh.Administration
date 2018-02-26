@@ -112,7 +112,7 @@ BOOL isend;
         if (_logImage.length<1) {
             _TXImage.image = [UIImage imageNamed:@"tjtx"];
         }else{
-            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
+            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
         }
         _TXImage.backgroundColor = [UIColor whiteColor];
         _TXImage.layer.masksToBounds = YES;

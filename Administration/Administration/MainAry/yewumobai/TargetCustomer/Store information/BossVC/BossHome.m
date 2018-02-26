@@ -241,7 +241,7 @@
         _ageStr = _ageAry[bbtn.tag];
         _logImage = _ImageAry[bbtn.tag];
         _twoimage = [[UIImageView alloc]init];
-       [_twoimage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
+       [_twoimage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
       
         
         [_tjBtn setImage:[UIImage imageNamed:@"tj_ico02"] forState:UIControlStateNormal];
@@ -503,7 +503,7 @@
         if (_logImage.length<1) {
             _TXImage.image = [UIImage imageNamed:@"tjtx"];
         }else{
-            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
+            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
         }
         _TXImage.backgroundColor = [UIColor whiteColor];
        

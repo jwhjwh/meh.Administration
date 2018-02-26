@@ -86,7 +86,7 @@
     self.NameLabel.text=model[@"name"];
     self.TelLabel.text=model[@"account"];
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
  //   self.TXImage.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:model[@"image"]]];
     NSString *zhiwei;
     if ([[NSString stringWithFormat:@"%@",model[@"newName"]] containsString:@","]) {
@@ -116,7 +116,7 @@
     self.NameLabel.text=LVmodel.name;
     self.TelLabel.text=LVmodel.Call;
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,LVmodel.image]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,LVmodel.image]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",LVmodel.roleld];
     if ([LVmodel.roleld containsString:@"总监"]||[LVmodel.roleld containsString:@"经理"]) {
         _zhiLabel.textColor=[UIColor whiteColor];

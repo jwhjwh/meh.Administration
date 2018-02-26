@@ -11,13 +11,13 @@
 @implementation SubmittedTableViewCell
 -(void)loadDataFromModel:(SubmittedModel *)model{
     
-    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLHeader,model.icon];
+    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLImage,model.icon];
     [self.txImageView sd_setImageWithURL:[NSURL URLWithString:imageStr]placeholderImage:[UIImage imageNamed:@"head_icon"]];
     self.txImageView.layer.masksToBounds = YES;
     self.txImageView.layer.cornerRadius =21.0f;
     self.nameLabel.text = model.name;
     self.iponeLabel.text = model.account;
-    NSString *Subimagestr = [NSString stringWithFormat:@"%@%@",KURLHeader,model.picture];
+    NSString *Subimagestr = [NSString stringWithFormat:@"%@%@",KURLImage,model.picture];
     [self.submittedImage sd_setImageWithURL:[NSURL URLWithString:Subimagestr]placeholderImage:[UIImage imageNamed:@"ph_mt"]];
     
     

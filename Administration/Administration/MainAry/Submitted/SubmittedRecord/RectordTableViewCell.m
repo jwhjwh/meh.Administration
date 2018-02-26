@@ -13,7 +13,7 @@
 
 
 -(void)loadDataFromModel:(SubmittedModel *)model{
-    NSString *Subimagestr = [NSString stringWithFormat:@"%@%@",KURLHeader,model.picture];
+    NSString *Subimagestr = [NSString stringWithFormat:@"%@%@",KURLImage,model.picture];
     [self.submittedImage sd_setImageWithURL:[NSURL URLWithString:Subimagestr]placeholderImage:[UIImage imageNamed:@"ph_mt"]];
     
     self.dayLabel.text = [model.dates substringToIndex:16];

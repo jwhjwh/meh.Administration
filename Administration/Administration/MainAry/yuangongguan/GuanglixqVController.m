@@ -232,7 +232,7 @@
     }
     if (indexPath.section==0) {
         _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         _TXImage.userInteractionEnabled=YES;
         _TXImage.backgroundColor = [UIColor whiteColor];
         _TXImage.layer.masksToBounds = YES;

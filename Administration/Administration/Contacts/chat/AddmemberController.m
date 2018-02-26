@@ -510,7 +510,7 @@
     //    {
     //        cell.imageViweH.image = [UIImage imageNamed:dict[@"image"]];
     //    }
-    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"image"]];
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLImage,dict[@"image"]];
     [cell.imageViweH sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"]];
     
     return cell;

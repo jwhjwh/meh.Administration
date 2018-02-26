@@ -84,7 +84,7 @@
     NSDictionary *dict = self.arrList[indexPath.section][indexPath.row];
     cell.nameLabel.text = dict[@"name"];
     cell.TelLabel.text = dict[@"account"];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",KURLImage,dict[@"img"]];
     [cell.TXImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"banben100"]];
     return cell;
 }

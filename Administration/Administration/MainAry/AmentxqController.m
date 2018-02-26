@@ -53,7 +53,7 @@
     UIImageView *imageView = [[UIImageView alloc]init];
     imageView.layer.cornerRadius = 25;
     imageView.layer.masksToBounds = YES;
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.dict[@"url"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,self.dict[@"url"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
     [viewHeader addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(viewHeader.mas_left).offset(10);
