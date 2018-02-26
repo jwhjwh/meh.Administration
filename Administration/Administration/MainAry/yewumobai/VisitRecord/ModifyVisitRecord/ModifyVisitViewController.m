@@ -104,7 +104,13 @@
     self.navigationItem.leftBarButtonItem=buttonItem;
     
     _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
-    [self selectworsh];
+    if ([self.andisofyou isEqualToString:@"2"]) {
+        //查看公司如果有权限看不走网络请求
+        
+    }else{
+       [self selectworsh];
+    }
+    
     
    
     _infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -152,7 +158,7 @@
     if ([self.andisofyou isEqualToString:@"1"]) {
         uStr = [NSString stringWithFormat:@"%@shop/getShop.action",KURLHeader];
         dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"shopId":self.shopId,@"Types":@"1"};
-    }else{
+    }else {
         uStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
         dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"WorshipRecordId":self.ModifyId,@"RoleId":self.strId};
     }
