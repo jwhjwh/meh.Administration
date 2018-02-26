@@ -341,7 +341,7 @@
             siginVC.shopid =_ShopId;
             siginVC.Address = [NSString stringWithFormat:@"%@%@%@",_Province,_City,_County];
             siginVC.Types = @"2";
-            
+                siginVC.qubie = _state;
             [self.navigationController pushViewController:siginVC animated:YES];
             }else{
                 dater=[[XFDaterView alloc]initWithFrame:CGRectZero];

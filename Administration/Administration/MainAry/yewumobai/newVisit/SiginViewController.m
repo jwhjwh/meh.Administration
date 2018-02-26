@@ -56,23 +56,23 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)tableViewUI{
+    int ivalue = [self.qubie intValue];
     
-    
-    
+    NSString *string = [NSString stringWithFormat:@"%d",ivalue];
+    NSLog(@"---%@",self.qubie);
     UIView *topView = [[UIView alloc]init];
     topView.backgroundColor = [UIColor whiteColor];
    
-    if ([self.Types isEqualToString:@"1"]) {
+   if ([string isEqualToString:self.Types]) {
          [self.view addSubview:topView];
-    }else{
-        
+        [topView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.view.mas_left);
+            make.right.mas_equalTo(self.view.mas_right);
+            make.top.mas_equalTo(self.view.mas_top).offset(64);
+            make.height.mas_offset(180);
+        }];
     }
-    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
-        make.height.mas_offset(180);
-    }];
+    
     NSDate *date = [NSDate date]; // 获得时间对象
     
     NSDateFormatter *forMatter = [[NSDateFormatter alloc] init];
@@ -90,28 +90,55 @@
     SiginBtn.layer.masksToBounds = YES;
     SiginBtn.layer.cornerRadius = 50.0;//设置圆角
     [SiginBtn addTarget:self action:@selector(SigsingBtn:)forControlEvents: UIControlEventTouchUpInside];
-    [topView addSubview:SiginBtn];
-    [SiginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(topView.mas_centerX);
-        make.centerY.mas_equalTo(topView.mas_centerY);
-        make.width.mas_offset(100);
-        make.height.mas_offset(100);
-    }];
+   if ([string isEqualToString:self.Types]) {
+        [topView addSubview:SiginBtn];
+        [SiginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(topView.mas_centerX);
+            make.centerY.mas_equalTo(topView.mas_centerY);
+            make.width.mas_offset(100);
+            make.height.mas_offset(100);
+        }];
+    }
+    
     UIImageView *sigimage = [[UIImageView alloc]init];
     sigimage.image = [UIImage imageNamed:@"qdjl_ico"];
+    
     [self.view addSubview:sigimage];
+    NSString* phoneModel = [UIDevice devicePlatForm];
     [sigimage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(topView.mas_bottom).offset(10);
-        make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.height.mas_offset(25);
-        make.width.mas_offset(25);
-    }];
+       if ([string isEqualToString:self.Types]) {
+            make.top.mas_equalTo(topView.mas_bottom).offset(10);
+        }else{
+            if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+                make.top.mas_equalTo(self.view.mas_top).offset(94);
+            }else{
+                make.top.mas_equalTo(self.view.mas_top).offset(74);
+            }
+           
+            
+        }
+            make.left.mas_equalTo(self.view.mas_left).offset(10);
+            make.height.mas_offset(25);
+            make.width.mas_offset(25);
+        }];
+    
+    
+    
     UILabel *singlabel = [[UILabel alloc]init];
     singlabel.text = @"签到记录";
     singlabel.textColor = [UIColor lightGrayColor];
     [self.view addSubview:singlabel];
     [singlabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(topView.mas_bottom).offset(10);
+        if ([string isEqualToString:self.Types]) {
+            make.top.mas_equalTo(topView.mas_bottom).offset(10);
+        }else{
+            if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+                make.top.mas_equalTo(self.view.mas_top).offset(94);
+            }else{
+                make.top.mas_equalTo(self.view.mas_top).offset(74);
+            }
+        }
+        
         make.left.mas_equalTo(sigimage.mas_right).offset(10);
         make.height.mas_offset(25);
         make.width.mas_offset(100);
