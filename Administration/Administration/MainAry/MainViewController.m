@@ -29,7 +29,7 @@
 #import "VCPostionMobai.h"
 #import "VCTrackChoosePostion.h"
 #import "ShopInforViewController.h"//店家信息
-#define MenuH 270
+#define MenuH 360
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,XLsn0wLoopDelegate,UIAlertViewDelegate>
 ///头像
 @property (nonatomic,retain)UIButton *logoImage;
@@ -230,6 +230,7 @@
 }
 
 -(void)addLoop {
+    
     //轮播图
     self.loop = [[XLsn0wLoop alloc] init];
     self.loop.xlsn0wDelegate = self;
@@ -238,7 +239,7 @@
     [self.view addSubview:self.loop];
     //主题内容
     _tableView=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.scrollEnabled =NO; //设置tableview 不能滚动
+     _tableView.scrollEnabled =NO; //设置tableview 不能滚动
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;//去掉下滑线
     _tableView.delegate=self;
     _tableView.dataSource=self;
@@ -249,11 +250,16 @@
         make.top.mas_equalTo(self.loop.mas_bottom);
         if(_menuArray.count<5){
             make.height.mas_offset(90);
-        }else if(_menuArray.count>8){
             
-            make.height.mas_equalTo(MenuH);
-        }else{
+        }else if(_menuArray.count<13){
+           
+            make.height.mas_equalTo(270);
+        }else if(_menuArray.count==13){
+            make.height.mas_offset(MenuH);
+           
+        }else if(_menuArray.count<9){
             make.height.mas_offset(180);
+            
         }
         
     }];
@@ -386,7 +392,7 @@
             }
                 break;
             case 8:
-                //店家信息
+                //店家管理
             {
                 ManagerShopPosition *vc = [[ManagerShopPosition alloc]init];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -465,7 +471,7 @@
                         }else{
                             [USER_DEFAULTS  setObject:departmenntID forKey:@"departmentID"];
                             ShopInforViewController *shopinfor= [[ShopInforViewController alloc]init];
-                            shopinfor.strId = [USER_DEFAULTS valueForKey:@"roleId"];
+                            shopinfor.strId = arrayId[0];
                             [self.navigationController pushViewController:shopinfor animated:YES];
                         }
                     }
@@ -536,7 +542,7 @@
             }else{
                 [USER_DEFAULTS  setObject:departmentID forKey:@"departmentID"];
                 businessViewController *busVC = [[businessViewController alloc]init];
-                busVC.strId=[USER_DEFAULTS valueForKey:@"roleId"];
+                busVC.strId=arrayId[0];
                 [self.navigationController pushViewController:busVC animated:YES];
             }
         }

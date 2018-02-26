@@ -113,7 +113,6 @@
         urlStr = [NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
         info=@{@"appkey":appKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"CompanyInfoId":compid,@"Num":_Numstr,@"roleIds":RoleId};
     }
-    
     [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             self.dataArray = [NSMutableArray array];

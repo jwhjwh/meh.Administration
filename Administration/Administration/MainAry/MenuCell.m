@@ -18,7 +18,7 @@
 
 @end
 
-#define MenuH 270
+#define MenuH 360
 #define Num 1
 #define pageH 0
 @implementation MenuCell
@@ -40,16 +40,16 @@
         scrollView.pagingEnabled=YES;
         
         //禁止滑动
-        scrollView.alwaysBounceVertical = NO;
+        scrollView.alwaysBounceVertical = YES;
         scrollView.delegate=self;
-        scrollView.showsHorizontalScrollIndicator=NO;
+        scrollView.showsHorizontalScrollIndicator=YES;
         [scrollView addSubview:_firstVC];
         [scrollView addSubview:_secondVC];
         [self addSubview:scrollView];
         
         for (int i=0;i<menuArray.count;i++) {
             if (i<4) {
-                CGRect frame=CGRectMake(i*Scree_width/4,0,Scree_width/4,MenuH/3);
+                CGRect frame=CGRectMake(i*Scree_width/4,0,Scree_width/4,MenuH/4);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
@@ -63,7 +63,7 @@
             }
             else if (i<8)
             {
-                CGRect frame=CGRectMake((i-4)*Scree_width/4,MenuH/3,Scree_width/4,MenuH/3);
+                CGRect frame=CGRectMake((i-4)*Scree_width/4,MenuH/4,Scree_width/4,MenuH/4);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
@@ -77,7 +77,7 @@
             }
             else if (i<12)
             {
-                CGRect frame=CGRectMake((i-8)*Scree_width/4,(MenuH/3)*2,Scree_width/4,MenuH/3);
+                CGRect frame=CGRectMake((i-8)*Scree_width/4,(MenuH/4)*2,Scree_width/4,MenuH/4);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
@@ -89,9 +89,10 @@
                 UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OnTapBtnView:)];
                 [btnView addGestureRecognizer:tap];
             }
-            else
+            else if(i==12)
             {
-                CGRect frame=CGRectMake((i-12)*Scree_width/4,(MenuH/3)*3,Scree_width/4,MenuH/3);
+                
+                CGRect frame=CGRectMake((i-12)*Scree_width/4,(MenuH/4)*3,Scree_width/4,MenuH/4);
                 ZYJHeadLineModel *model =menuArray[i];
                 NSString *title=model.title;
                 NSString *imageStr=model.type;
@@ -99,9 +100,10 @@
                 int ivalue = [teeg intValue];
                 YHJBtnView *btnView=[[YHJBtnView alloc]initWithFrame:frame title:title imageStr:imageStr];
                 btnView.tag=ivalue;
-                [_secondVC addSubview:btnView];
+                [_firstVC addSubview:btnView];
                 UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OnTapBtnView:)];
                 [btnView addGestureRecognizer:tap];
+
             }
         }
 //        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(Scree_width/2-pageH,MenuH,0,pageH)];

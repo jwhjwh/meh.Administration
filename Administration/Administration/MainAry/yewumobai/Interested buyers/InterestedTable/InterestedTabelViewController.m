@@ -78,14 +78,7 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    if ([_isofyou isEqualToString:@"1"]) {
-        
-    }else{
-        UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = rightitem;
-    }
+    
     
     _InterNameAry = [[NSMutableArray alloc]init];
     _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"];
@@ -845,6 +838,14 @@
                 }
             }
             [infonTableview reloadData];
+            if ([_isofyou isEqualToString:@"1"]) {
+                
+            }else{
+                UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+                NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+                [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+                self.navigationItem.rightBarButtonItem = rightitem;
+            }
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

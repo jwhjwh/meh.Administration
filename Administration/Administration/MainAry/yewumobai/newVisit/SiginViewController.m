@@ -56,6 +56,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)tableViewUI{
+    
+    if ([self.Types isEqualToString:@"1"]) {
+        
+    }else{
+        
+    }
+    
     UIView *topView = [[UIView alloc]init];
     topView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:topView];
@@ -65,8 +72,17 @@
         make.top.mas_equalTo(self.view.mas_top).offset(64);
         make.height.mas_offset(180);
     }];
+    NSDate *date = [NSDate date]; // 获得时间对象
+    
+    NSDateFormatter *forMatter = [[NSDateFormatter alloc] init];
+    
+    [forMatter setDateFormat:@"HH-mm"];
+    
+    NSString *dateStr = [forMatter stringFromDate:date];
+    
+    NSString *qiandaosj = [NSString stringWithFormat:@"签 到\n%@",dateStr];
     UIButton *SiginBtn = [[UIButton alloc]init];
-    [SiginBtn setTitle:@"签 到\n11:25" forState:UIControlStateNormal];
+    [SiginBtn setTitle:qiandaosj forState:UIControlStateNormal];
     SiginBtn.titleLabel.numberOfLines = 2;
     SiginBtn.titleLabel.textAlignment =NSTextAlignmentCenter;
     SiginBtn.backgroundColor = GetColor(23, 137, 251, 1);
@@ -242,7 +258,17 @@
         make.height.mas_offset(15);
     }];
     UILabel *qdsjlabel = [[UILabel alloc]init];
-    qdsjlabel.text = [NSString stringWithFormat:@"签到时间: 11:25"];
+    
+    NSDate *qdsjlabeldate = [NSDate date]; // 获得时间对象
+    
+    NSDateFormatter *qdsjlabelforMatter = [[NSDateFormatter alloc] init];
+    
+    [qdsjlabelforMatter setDateFormat:@"HH-mm-ss yyyy-MM-dd"];
+    
+    NSString *qdsjlabeldateStr = [qdsjlabelforMatter stringFromDate:qdsjlabeldate];
+    
+    
+    qdsjlabel.text = [NSString stringWithFormat:@"签到时间:%@",qdsjlabeldateStr];
     qdsjlabel.textColor = GetColor(150, 150, 150, 1);
     NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:qdsjlabel.text];
     // 需要改变的第一个文字的位置
