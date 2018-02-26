@@ -603,6 +603,8 @@
             siginVC.shopid =_shopid;
             siginVC.Address = _sigincity;
             siginVC.Types = @"1";
+            //_strea
+            siginVC.qubie = _strea;
             _animdd = @"2";
             [self.navigationController pushViewController:siginVC animated:YES];
         }

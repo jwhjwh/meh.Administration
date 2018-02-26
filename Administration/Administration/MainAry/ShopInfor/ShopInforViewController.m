@@ -393,4 +393,10 @@
         
     }
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self getNetworkData];
+    [self provicenfnetworking];
+    self.tabBarController.tabBar.hidden=YES;
+}
 @end

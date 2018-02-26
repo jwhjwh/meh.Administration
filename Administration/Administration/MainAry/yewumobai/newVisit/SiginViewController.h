@@ -16,4 +16,7 @@
 @property (nonatomic,strong) NSString *Types;//1.膜拜记录2.意向客户3.目标客户
 
 
+//------
+@property (nonatomic,strong) NSString *qubie;//1.膜拜记录2.意向客户3.目标客户
+
 @end

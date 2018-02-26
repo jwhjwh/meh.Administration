@@ -306,6 +306,7 @@
                         siginVC.shopid =_ShopId;
                         siginVC.Address = _sigincity;
                         siginVC.Types = @"1";
+                        //siginVC.qubie = @"1";
                         [self.navigationController pushViewController:siginVC animated:YES];
                         
                     }
