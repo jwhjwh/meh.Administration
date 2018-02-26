@@ -263,7 +263,7 @@
         cell = [[SelectAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"selectcell"];
     }
     cell.titleLabel.text = _titles[indexPath.row];
-    NSString *imageurlstr = [NSString stringWithFormat:@"%@%@", KURLHeader,_imageAry[indexPath.row]];
+    NSString *imageurlstr = [NSString stringWithFormat:@"%@%@", KURLImage,_imageAry[indexPath.row]];
 
     // UIImage *urlImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageurlstr]]];
     

@@ -103,7 +103,7 @@
             [cell.contentView addSubview:button];
             
             
-            [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.dictInfo[@"photo"]]] placeholderImage:[UIImage imageNamed:@"tjtx"]];
+            [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,self.dictInfo[@"photo"]]] placeholderImage:[UIImage imageNamed:@"tjtx"]];
             
         }
         if ([code isEqualToString:@"1001"]) {
@@ -228,7 +228,7 @@
     }else
     {
     ViewShowImage *showImage =[[ViewShowImage alloc]initWithFrame:CGRectMake(0, 20, Scree_width, Scree_height)];
-    [showImage.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.imageUrl]] placeholderImage:[UIImage imageNamed:@""]];
+    [showImage.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,self.imageUrl]] placeholderImage:[UIImage imageNamed:@""]];
     [self.view.window addSubview:showImage];
     }
 }

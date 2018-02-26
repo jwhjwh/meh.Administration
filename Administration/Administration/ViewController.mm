@@ -281,7 +281,7 @@
             [ZXDNetworking GET:urlStr parameters:info success:^(id responseObject) {
                 if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                     NSString *LtokenStr=[NSString stringWithFormat:@"%@",[responseObject valueForKey:@"Ltoken"]];
-                    NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,[responseObject valueForKey:@"images"]];
+                    NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLImage,[responseObject valueForKey:@"images"]];
                  
                     [_HeadView sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage  imageNamed:@"tx100"]options:EMSDWebImageRefreshCached];
                     

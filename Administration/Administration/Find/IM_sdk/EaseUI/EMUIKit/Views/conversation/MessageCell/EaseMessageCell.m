@@ -138,7 +138,7 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
     _avatarView.translatesAutoresizingMaskIntoConstraints = NO;
     _avatarView.backgroundColor = [UIColor clearColor];
     _avatarView.clipsToBounds = YES;
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.avatarURLPath]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.avatarURLPath]] placeholderImage:[UIImage imageNamed:@"banben100"]];
     _avatarView.userInteractionEnabled = YES;
     [self.contentView addSubview:_avatarView];
     

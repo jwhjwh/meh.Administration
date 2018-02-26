@@ -166,7 +166,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *dic = _InterNameAry[indexPath.row];
     UIImageView *tximage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 50, 50)];
-    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLHeader,dic[@"icon"]];
+    NSString *imageStr = [NSString stringWithFormat:@"%@%@",KURLImage,dic[@"icon"]];
     [tximage sd_setImageWithURL:[NSURL URLWithString:imageStr]placeholderImage:[UIImage imageNamed:@"head_icon"]];
     tximage.layer.masksToBounds = YES;
     tximage.layer.cornerRadius =25.0f;

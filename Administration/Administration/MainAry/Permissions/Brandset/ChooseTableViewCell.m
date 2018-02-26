@@ -58,7 +58,7 @@
 }
 -(void)setModel:(Brandmodle *)model{
         _titleLabel.text=model.finsk;
-        [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+        [_image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

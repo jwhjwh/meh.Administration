@@ -73,7 +73,7 @@
 
 -(void)setDict:(NSDictionary *)dict
 {
-    [self.imageViewHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+    [self.imageViewHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
     self.labelName.text = dict[@"name"];
     self.labelAccount.text = dict[@"account"];
     self.labelDepartment.text = dict[@"departmentName"];

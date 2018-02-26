@@ -196,26 +196,26 @@
         case 1:{
             branModel *model=_branarr[indexPath.row];
             cell.titleLabel.text =model.finsk;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"tx23"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         case 2:{
             DirtmsnaModel *model= _paleAry[indexPath.row];
             cell.titleLabel.text =model.name;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         case 3:{
             DirtmsnaModel *model= _ManaAry[indexPath.row];
             cell.titleLabel.text =model.name;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         case 4:{
             
             DirtmsnaModel *model= _EmisAry[indexPath.row];
             cell.titleLabel.text =model.name;
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.icon]]placeholderImage:[UIImage imageNamed:@"tx23"]];
         }
             break;
         default:

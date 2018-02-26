@@ -90,7 +90,7 @@
 
 -(void)setDict:(NSDictionary *)dict
 {
-    NSURL *urlIcon = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"icon"]]];
+    NSURL *urlIcon = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"icon"]]];
     [self.imageViewHead sd_setImageWithURL:urlIcon placeholderImage:[UIImage imageNamed:@"banben100"]];
     
     self.labelName.text = dict[@"name"];

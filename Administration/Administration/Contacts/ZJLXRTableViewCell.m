@@ -187,7 +187,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
    self.NameLabel.text=model.name;
    self.TelLabel.text=model.account;
 //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.icon]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.icon]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
    self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",model.NewName];
     if ([model.NewName containsString:@"总监"]||[model.NewName containsString:@"经理"]) {
          _zhiLabel.textColor=[UIColor whiteColor];
@@ -201,7 +201,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
     self.NameLabel.text=LVmodel.name;
     self.TelLabel.text=LVmodel.Call;
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,LVmodel.image]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,LVmodel.image]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     self.zhiLabel.text=[NSString stringWithFormat:@"%@ ",LVmodel.roleld];
     if ([LVmodel.roleld containsString:@"总监"]||[LVmodel.roleld containsString:@"经理"]) {
         _zhiLabel.textColor=[UIColor whiteColor];
@@ -215,7 +215,7 @@ CGFloat const ZJLXRTableViewCellPadding = 10;
     self.NameLabel.text=dict[@"name"];
     self.TelLabel.text=dict[@"account"];
     //   self.TXImage.image=[[UIImage alloc] initWithContentsOfFile:model.icon];
-    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+    [self.TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"image"]]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
     NSString *zhiwei;
     if ([[NSString stringWithFormat:@"%@",dict[@"newName"]] containsString:@","]) {
         for (int i=0;i<[dict[@"newName"]length];i++) {

@@ -130,7 +130,7 @@
         UIImageView *imageView1 = [[UIImageView alloc]initWithFrame:CGRectMake(Scree_width-48, 2, 40, 40)];
         imageView1.layer.cornerRadius = 20;
         imageView1.layer.masksToBounds = YES;
-        [imageView1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,self.dictInfo[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+        [imageView1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,self.dictInfo[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
         [cell.contentView addSubview:imageView1];
     }
     

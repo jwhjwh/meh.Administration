@@ -163,7 +163,7 @@
    // UserCacheInfo * userInfo = [UserCacheManager getById:self.dictInfo[@"id"]];
     cell.nameLabel.text = [NSString stringWithFormat:@"%@",dictInfo[@"name"]];
     [EMSDWebImageDownloader.sharedDownloader setValue:@"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"forHTTPHeaderField:@"Accept"];
-    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLHeader,dictInfo[@"img"]];
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@",KURLImage,dictInfo[@"img"]];
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:stringUrl] placeholderImage:[UIImage imageNamed:@"banben100"] completed:^(UIImage *image, NSError *error, EMSDImageCacheType cacheType, NSURL *imageURL) {
         NSLog(@"error = %@",error);
     }];

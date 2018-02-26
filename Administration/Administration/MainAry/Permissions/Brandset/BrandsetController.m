@@ -154,7 +154,7 @@
     if ([_dataArray[indexPath.row] count]==1) {
      
         for ( branModel *model in  _dataArray[indexPath.row]) {
-            [cell.imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
+            [cell.imageVie sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,model.brandLogo]]placeholderImage:[UIImage imageNamed:@"banben100"]];
         }
     }else if ([_dataArray[indexPath.row] count]==2){
         NSMutableArray *LogoImage=[NSMutableArray array];

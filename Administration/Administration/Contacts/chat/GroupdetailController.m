@@ -93,7 +93,7 @@ typedef void (^finish)(id result);
             self.groupInformation = [responseObject valueForKey:@"groupInformation"];
             self.groupMembers = [responseObject valueForKey:@"groupMembers"] ;
             self.Introduction.text = self.groupInformation[@"introduce"];
-            NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLHeader,self.groupInformation[@"img"]];
+            NSString *logoImage=[NSString stringWithFormat:@"%@%@",KURLImage,self.groupInformation[@"img"]];
             [self.background sd_setImageWithURL:[NSURL URLWithString:logoImage] placeholderImage:[UIImage imageNamed:@""]];
             self.number.text=[NSString stringWithFormat:@"%lu名成员",(unsigned long)self.groupMembers.count];
             
@@ -132,7 +132,7 @@ typedef void (^finish)(id result);
                 dict = self.groupMembers[i];
                 self.gousImage = self.arrayGousImage[i];
                 self.gousImage.backgroundColor = [UIColor blueColor];;
-                NSString *headImage=[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"img"]];
+                NSString *headImage=[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"img"]];
                 [self.gousImage sd_setImageWithURL:[NSURL URLWithString:headImage] placeholderImage:[UIImage imageNamed:@"banben100"]];
                 
                 if (i==1) {

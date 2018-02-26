@@ -109,7 +109,7 @@
     }
     if (indexPath.row==0) {
         UIImageView *TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        [TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        [TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         TXImage.backgroundColor = [UIColor whiteColor];
         TXImage.layer.masksToBounds = YES;
         TXImage.layer.cornerRadius = 20.0;//设置圆角

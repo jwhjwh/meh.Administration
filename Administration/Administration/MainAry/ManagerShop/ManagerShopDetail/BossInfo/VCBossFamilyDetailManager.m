@@ -396,7 +396,7 @@
             
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImage:)];
             UIImageView *imageHead = [[UIImageView alloc]initWithFrame:CGRectMake(150, 10, 50, 50)];
-            [imageHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLHeader,dict[@"photo"]]] placeholderImage:[UIImage imageNamed:@"tjtx"]];
+            [imageHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"photo"]]] placeholderImage:[UIImage imageNamed:@"tjtx"]];
             imageHead.userInteractionEnabled = YES;
             [imageHead addGestureRecognizer:tap];
             [cell.contentView addSubview:imageHead];

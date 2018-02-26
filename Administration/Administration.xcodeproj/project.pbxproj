@@ -6086,7 +6086,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = T786R7PE4N;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -7198,7 +7198,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7223,7 +7223,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7242,7 +7242,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				DEVELOPMENT_TEAM = T786R7PE4N;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7267,7 +7267,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.ad;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
