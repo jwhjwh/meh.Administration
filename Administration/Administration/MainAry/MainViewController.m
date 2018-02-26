@@ -239,7 +239,10 @@
     [self.view addSubview:self.loop];
     //主题内容
     _tableView=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+  //  _tableView.scrollEnabled =NO; //设置tableview 不能滚动
+
      _tableView.scrollEnabled =NO; //设置tableview 不能滚动
+
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;//去掉下滑线
     _tableView.delegate=self;
     _tableView.dataSource=self;
