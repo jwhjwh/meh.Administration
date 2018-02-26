@@ -57,15 +57,16 @@
 }
 -(void)tableViewUI{
     
-    if ([self.Types isEqualToString:@"1"]) {
-        
-    }else{
-        
-    }
+    
     
     UIView *topView = [[UIView alloc]init];
     topView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:topView];
+   
+    if ([self.Types isEqualToString:@"1"]) {
+         [self.view addSubview:topView];
+    }else{
+        
+    }
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
