@@ -22,17 +22,41 @@
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
-    NSString *urlStr = [NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
-    NSDictionary *dict = @{@"appkey":appKeyStr,
-                               @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
-                               @"CompanyInfoId":compid,
-                               @"Num":self.postionID,
-                               @"roleIds":[ShareModel shareModel].roleID
-                               };
+    
+    NSString *urlStr;
+    NSDictionary *dict;
+    if ([self.stringCode isEqualToString:@"2"]) {
+        urlStr = [NSString stringWithFormat:@"%@manager/checkPositionUsers.action",KURLHeader];
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"Num":self.postionID,
+                 @"roleIds":[ShareModel shareModel].roleID
+                 };
+    }else
+    {
+        urlStr = [NSString stringWithFormat:@"%@stores/selectstoretype.action",KURLHeader];
+        dict = @{@"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"DepartmentId":[ShareModel shareModel].departmentID,
+                 @"RoleId":[ShareModel shareModel].roleID,
+                 @"type":@"1",
+                 };
+    }
+    
+    
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
-            NSArray *array = [responseObject valueForKey:@"list"];
+            NSArray *array;
+            if ([self.stringCode isEqualToString:@"2"]) {
+                array = [responseObject valueForKey:@"list"];
+            }else
+            {
+                array = [responseObject valueForKey:@"lists"];
+            }
+            
             for (int i=0; i<array.count; i++) {
                 NSMutableDictionary *dictinfo = [array[i]mutableCopy];
                 [dictinfo setValue:@"1" forKey:@"isSelect"];
@@ -117,6 +141,7 @@
         NSMutableDictionary *dict = [self.arrayData[i]mutableCopy];
         [dict setValue:@"2" forKey:@"isSelect"];
         [self.arrayData replaceObjectAtIndex:i withObject:dict];
+        [self.arraySelect addObject:dict];
     }
     [self.tableView reloadData];
 }

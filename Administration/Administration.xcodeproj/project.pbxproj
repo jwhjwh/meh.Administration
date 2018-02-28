@@ -52,6 +52,7 @@
 		1F35FDC41EB825AA007DC22F /* ds_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F35FDC21EB825AA007DC22F /* ds_ico.png */; };
 		1F35FDC51EB825AA007DC22F /* tj_ico.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F35FDC31EB825AA007DC22F /* tj_ico.png */; };
 		1F37861C1E5AE34400CAD616 /* mesgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F37861B1E5AE34400CAD616 /* mesgeModel.m */; };
+		1F394BCC2044FF1C0034761B /* VCTargetMobaiDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F394BCB2044FF1C0034761B /* VCTargetMobaiDetail.m */; };
 		1F3B3DCB1E8DF93C00E75027 /* icon_002.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B3DAB1E8DF93C00E75027 /* icon_002.gif */; };
 		1F3B3DCC1E8DF93C00E75027 /* icon_002_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B3DAC1E8DF93C00E75027 /* icon_002_cover.png */; };
 		1F3B3DCD1E8DF93C00E75027 /* icon_007.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B3DAD1E8DF93C00E75027 /* icon_007.gif */; };
@@ -1038,6 +1039,8 @@
 		1F35FDC31EB825AA007DC22F /* tj_ico.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tj_ico.png; sourceTree = "<group>"; };
 		1F37861A1E5AE34400CAD616 /* mesgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesgeModel.h; sourceTree = "<group>"; };
 		1F37861B1E5AE34400CAD616 /* mesgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mesgeModel.m; sourceTree = "<group>"; };
+		1F394BCA2044FF1C0034761B /* VCTargetMobaiDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCTargetMobaiDetail.h; sourceTree = "<group>"; };
+		1F394BCB2044FF1C0034761B /* VCTargetMobaiDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTargetMobaiDetail.m; sourceTree = "<group>"; };
 		1F3B3DAB1E8DF93C00E75027 /* icon_002.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon_002.gif; sourceTree = "<group>"; };
 		1F3B3DAC1E8DF93C00E75027 /* icon_002_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_002_cover.png; sourceTree = "<group>"; };
 		1F3B3DAD1E8DF93C00E75027 /* icon_007.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon_007.gif; sourceTree = "<group>"; };
@@ -4096,6 +4099,8 @@
 				1FD73DBD1FBAB8F600134079 /* VCMobaiAllCheck.m */,
 				1FD73DBE1FBAB8F600134079 /* VCMobaiDetail.h */,
 				1FD73DBF1FBAB8F600134079 /* VCMobaiDetail.m */,
+				1F394BCA2044FF1C0034761B /* VCTargetMobaiDetail.h */,
+				1F394BCB2044FF1C0034761B /* VCTargetMobaiDetail.m */,
 				1F314AFF1FF37B0300C7E2FF /* VCSignInList.h */,
 				1F314B001FF37B0300C7E2FF /* VCSignInList.m */,
 				1FD73DC01FBAB8F600134079 /* VCMobaiNotCheck.h */,
@@ -6673,6 +6678,7 @@
 				624610FF1FB6E6E40004B88E /* DetaStoresActivity.m in Sources */,
 				1FD8A95C1FEB8E10009D98F5 /* VCManagerAddPermision.m in Sources */,
 				62656C571E529BC10085A2BD /* IQTextView.m in Sources */,
+				1F394BCC2044FF1C0034761B /* VCTargetMobaiDetail.m in Sources */,
 				1FF5807D1F8C64D3001C3D40 /* VCBuessShopSubmit.m in Sources */,
 				1FE4FE181F68BC070045C8D6 /* CellMyTable.m in Sources */,
 				62656C5B1E529BC10085A2BD /* IQToolbar.m in Sources */,
@@ -7222,6 +7228,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7266,6 +7273,7 @@
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/Administration/Find/IM_sdk/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = zhangde.dddd;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -9,6 +9,7 @@
 #import "VCSearchMobai.h"
 #import "CellMobai.h"
 #import "VCMobaiDetail.h"
+#import "VCTargetMobaiDetail.h"
 @interface VCSearchMobai ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UIButton *buttonStart;
 @property (nonatomic,weak)UIButton *buttonEnd;
@@ -371,10 +372,22 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
-    VCMobaiDetail *vc = [[VCMobaiDetail alloc]init];
-    vc.mobaiID = [NSString stringWithFormat:@"%@",dict[@"id"]];
-    vc.stringTitle = dict[@"storeName"];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (![[ShareModel shareModel].state isEqualToString:@"3"]) {
+        VCMobaiDetail *vc = [[VCMobaiDetail alloc]init];
+        vc.mobaiID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        vc.stringTitle = dict[@"storeName"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        VCTargetMobaiDetail *vc = [[VCTargetMobaiDetail alloc]init];
+        vc.stringTitle = @"目标客户";
+        vc.isofyou = NO;
+        vc.oneStore = @"2";
+        vc.cellend = NO;
+        vc.OldTargetVisitId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+
 }
 
 #pragma -mark system

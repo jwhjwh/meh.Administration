@@ -10,6 +10,7 @@
 #import "VCManagerAddPermision.h"
 #import "VCManagerChoosePostion.h"
 #import "CellChargeManager.h"
+#import "VCManagerChoosePerson.h"
 @interface VCManagerAddPermision ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -84,9 +85,18 @@
 
 -(void)gotoChoosePostion
 {
-    VCManagerChoosePostion *vc = [[VCManagerChoosePostion alloc]init];
-    vc.stringCode = self.stringCode;
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([self.stringCode isEqualToString:@"2"]) {
+        VCManagerChoosePostion *vc = [[VCManagerChoosePostion alloc]init];
+        vc.stringCode = self.stringCode;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        VCManagerChoosePerson *vc = [[VCManagerChoosePerson alloc]init];
+        vc.stringTitle = @"谁负责";
+        vc.stringCode = self.stringCode;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 -(void)deletePerson:(UIButton *)button
@@ -163,6 +173,7 @@
     if (!cell) {
         cell = [[CellChargeManager alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.dict = self.arrayData[indexPath.row];
     cell.labelLine.hidden = NO;
     cell.buttonDel.hidden = NO;

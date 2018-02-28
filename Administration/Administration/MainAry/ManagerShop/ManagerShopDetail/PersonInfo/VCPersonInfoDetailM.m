@@ -379,7 +379,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     self.imageView.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self.navigationController dismissViewControllerAnimated:picker completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma -mark tableView
@@ -520,6 +520,18 @@
     self.title = @"店员信息";
     self.dictInfo = [NSMutableDictionary dictionary];
     self.arrayTitle = @[@[@"姓名",@"年龄"],@[@"生日",@"爱好",@"性格",@"电话",@"特长"],@[@"综合研判"]];
+    
+    self.name = @"";
+    self.age= @"";
+    self.hobby= @"";
+    self.character= @"";
+    self.phone= @"";
+    self.flag= @"";
+    self.brithdayChinese= @"";
+    self.brithdayGer= @"";
+    [ShareModel shareModel].techang = @"";
+    [ShareModel shareModel].pingpan = @"";
+    
     [self setUI];
     if (self.isAddInfo==NO) {
         [self gtHttpData];

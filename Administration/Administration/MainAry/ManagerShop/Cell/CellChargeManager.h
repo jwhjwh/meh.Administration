@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CellChargeManager : UITableViewCell
-@property (nonatomic,weak)UIButton *buttonDel;
+@property (nonatomic,strong)UIButton *buttonDel;
 @property (nonatomic,strong)NSDictionary *dict;
 @property (nonatomic,weak)UIImageView *imageViewSelect;
 @property (nonatomic,weak)UILabel *labelLine;

@@ -9,6 +9,7 @@
 #import "VCMobaiNotCheck.h"
 #import "CellMobai.h"
 #import "VCMobaiDetail.h"
+#import "VCTargetMobaiDetail.h"
 @interface VCMobaiNotCheck ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -26,7 +27,19 @@
 
 -(void)getHttpData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
+    NSString *urlStr;
+    if ([[ShareModel shareModel].state isEqualToString:@"1"]) {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
+    }else if ([[ShareModel shareModel].state isEqualToString:@"2"])
+    {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectIntendeds.action",KURLHeader];
+    }else
+    {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectTargetVisits.action",KURLHeader];
+    }
+    
+    
+    
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -143,10 +156,22 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = self.arrayData[indexPath.row];
-    VCMobaiDetail *vc = [[VCMobaiDetail alloc]init];
-    vc.mobaiID = [NSString stringWithFormat:@"%@",dict[@"id"]];
-    vc.stringTitle = dict[@"storeName"];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (![[ShareModel shareModel].state isEqualToString:@"3"]) {
+        VCMobaiDetail *vc = [[VCMobaiDetail alloc]init];
+        vc.mobaiID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        vc.stringTitle = dict[@"storeName"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        VCTargetMobaiDetail *vc = [[VCTargetMobaiDetail alloc]init];
+        vc.stringTitle = @"目标客户";
+        vc.isofyou = NO;
+        vc.oneStore = @"2";
+        vc.cellend = NO;
+        vc.OldTargetVisitId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+
     
 }
 

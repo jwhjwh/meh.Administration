@@ -20,7 +20,6 @@
 @property (nonatomic,strong)NSDictionary *dictInfo;
 @property (nonatomic,strong)UIImageView *imageView;
 @property (nonatomic,strong)NSString *imageUrl;
-@property (nonatomic,weak)UIImagePickerController *imagePicker;
 @property (nonatomic,weak)UIViewDatePicker *datePick;
 
 @property (nonatomic)BOOL canEdit;
@@ -347,21 +346,24 @@
         
     }else
     {
-    if (buttonIndex==0) {
         UIImagePickerController *imagePick = [[UIImagePickerController alloc]init];
         imagePick.delegate = self;
-        [self.navigationController presentViewController:imagePick animated:YES completion:nil];
-        self.imagePicker = imagePick;
-    }else
-    {
-        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"设备不支持" andInterval:1.0];
-            return;
+        
+        if (buttonIndex==0) {
+            imagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self.navigationController presentViewController:imagePick animated:YES completion:nil];
+            
         }else
         {
-            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"设备不支持" andInterval:1.0];
+                return;
+            }else
+            {
+                imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+                [self.navigationController presentViewController:imagePick animated:YES completion:nil];
+            }
         }
-    }
     }
 }
 
@@ -370,7 +372,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     self.imageView.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self.navigationController dismissViewControllerAnimated:picker completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma -mark tableView
@@ -389,7 +391,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.labelTitle.text = self.arrayTitle[indexPath.row];
-    
+    cell.textView.delegate =self;
     if (self.isEdit) {
         if (self.canEdit) {
             cell.textView.userInteractionEnabled = YES;
@@ -416,6 +418,7 @@
         case 1:
         {
             cell.textView.text = [self.arrayPhone componentsJoinedByString:@"\n"];
+            cell.textView.userActivity = NO;
             UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(tableView.frame.size.width-20, 15, 15, 15)];
             [button setTitle:@"+" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];

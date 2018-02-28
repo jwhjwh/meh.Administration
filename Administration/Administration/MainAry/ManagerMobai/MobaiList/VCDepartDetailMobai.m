@@ -23,7 +23,16 @@
 
 -(void)getHttpDate
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecordcount.action",KURLHeader];
+    NSString *urlStr;
+    if ([[ShareModel shareModel].state isEqualToString:@"1"]) {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectWorshipRecordcount.action",KURLHeader];
+    }else if ([[ShareModel shareModel].state isEqualToString:@"2"])
+    {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectIntendedcount.action",KURLHeader];
+    }else
+    {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectTargetVisitcount.action",KURLHeader];
+    }
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];

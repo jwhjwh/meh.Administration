@@ -66,26 +66,26 @@
     }];
     self.labelPhone = labelPhone;
     
-    UIButton *buttonDel = [[UIButton alloc]init];
-    buttonDel.hidden = YES;
-    buttonDel.userInteractionEnabled = NO;
-    [buttonDel setTitle:@"移除" forState:UIControlStateNormal];
-    [buttonDel setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.contentView addSubview:buttonDel];
-    [buttonDel mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.buttonDel = [[UIButton alloc]init];
+    self.buttonDel.hidden = YES;
+    self.buttonDel.userInteractionEnabled = NO;
+    [self.buttonDel setTitle:@"移除" forState:UIControlStateNormal];
+    [self.buttonDel setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.contentView addSubview:self.buttonDel];
+    [self.buttonDel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.contentView.mas_right).offset(-10);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.width.mas_equalTo(40);
         make.height.mas_equalTo(30);
     }];
-    self.buttonDel = buttonDel;
+//    self.buttonDel = self.buttonDel;
     
     UILabel *labelLine = [[UILabel alloc]init];
     labelLine.hidden = YES;
     labelLine.backgroundColor = GetColor(192, 192, 192, 1);
     [self.contentView addSubview:labelLine];
     [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(buttonDel.mas_left);
+        make.right.mas_equalTo(self.buttonDel.mas_left);
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-8);
         make.width.mas_equalTo(1);

@@ -1,14 +1,14 @@
 //
-//  TargetTableViewController.h
+//  VCTargetMobaiDetail.h
 //  Administration
 //
-//  Created by 九尾狐 on 2017/10/13.
-//  Copyright © 2017年 九尾狐. All rights reserved.
+//  Created by zhang on 2018/2/27.
+//  Copyright © 2018年 九尾狐. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface TargetTableViewController : UIViewController
+@interface VCTargetMobaiDetail : BaseViewController
 @property (nonatomic,strong) NSString *OldTargetVisitId;
 @property (strong,nonatomic) NSString *strId;
 @property (nonatomic, assign) BOOL isofyou;
@@ -18,4 +18,6 @@
 @property (strong,nonatomic) NSString *oneStore;
 
 @property (nonatomic,strong)NSString *stringTitle;
+@property (nonatomic,strong)NSString *mobaiID;
+
 @end

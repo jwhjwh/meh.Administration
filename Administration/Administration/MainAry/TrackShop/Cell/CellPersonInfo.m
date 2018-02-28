@@ -61,12 +61,15 @@
 -(void)setDict:(NSDictionary *)dict
 {
     self.labelName.text = dict[@"name"];
-    if ([dict[@"flag"]intValue]==1) {
-        self.labelBrithday.text = dict[@"lunarBirthday"];
-    }else
-    {
-        self.labelBrithday.text = dict[@"solarBirthday"];
+    if (![dict[@"flag"]isKindOfClass:[NSNull class]]) {
+        if ([dict[@"flag"]intValue]==1) {
+            self.labelBrithday.text = dict[@"lunarBirthday"];
+        }else
+        {
+            self.labelBrithday.text = dict[@"solarBirthday"];
+        }
     }
+    
     
     self.labelAge.text = [NSString stringWithFormat:@"%@",dict[@"age"]];
     self.labelAccount.text = dict[@"phone"];
