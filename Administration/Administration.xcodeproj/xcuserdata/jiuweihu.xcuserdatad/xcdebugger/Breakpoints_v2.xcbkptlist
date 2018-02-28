@@ -4,11 +4,13 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SwiftErrorBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
-            continueAfterRunningActions = "No">
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -17,93 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
-            timestampString = "538885834.289216"
+            filePath = "Administration/MainAry/yewumobai/VisitRecord/ModifyVisitRecord/ModifyVisitViewController.m"
+            timestampString = "541318446.754966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "551"
-            endingLineNumber = "551"
-            landmarkName = "-button1BackGroundNormal:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
-            timestampString = "538885834.309134"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "550"
-            endingLineNumber = "550"
-            landmarkName = "-button1BackGroundNormal:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
-            timestampString = "538885834.3109159"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
-            landmarkName = "-button1BackGroundNormal:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
-            timestampString = "538885834.311704"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "553"
-            endingLineNumber = "553"
-            landmarkName = "-button1BackGroundNormal:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
-            timestampString = "538885834.3121001"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "555"
-            endingLineNumber = "555"
-            landmarkName = "-button1BackGroundNormal:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yuangongguan/BJZWViewController.m"
-            timestampString = "538885834.3125941"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "556"
-            endingLineNumber = "556"
-            landmarkName = "-button1BackGroundNormal:"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "-selectworsh"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -114,13 +36,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Administration/MainAry/yewumobai/VisitRecord/Worship the search/OneDateViewController.m"
-            timestampString = "538994943.142866"
+            timestampString = "541318446.755422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "274"
             endingLineNumber = "274"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Administration/MainAry/yewumobai/VisitRecord/Worship the search/OneDateViewController.m"
+            timestampString = "541318549.90159"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[OneDateViewController tableView:didSelectRowAtIndexPath:]"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/VisitRecord/Worship%20the%20search/OneDateViewController.m"
+                  timestampString = "541318549.909063"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "285"
+                  endingLineNumber = "285"
+                  offsetFromSymbolStart = "2546">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__59-[OneDateViewController tableView:didSelectRowAtIndexPath:]_block_invoke"
+                  moduleName = "Administration"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/VisitRecord/Worship%20the%20search/OneDateViewController.m"
+                  timestampString = "541318549.9118119"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "287"
+                  endingLineNumber = "287"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

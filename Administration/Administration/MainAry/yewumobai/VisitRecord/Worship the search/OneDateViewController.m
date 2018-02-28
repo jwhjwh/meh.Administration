@@ -272,11 +272,55 @@
         int ivalue = [model.usersId intValue];
         NSString *modeluserid =[NSString stringWithFormat:@"%d",ivalue];
         if ([modeluserid isEqualToString:userid]) {
-            
-        }else{
             modify.andisofyou =@"1";
+        }else{
+            //modify.andisofyou =@"2";
+            NSString *uuStr =[[NSString alloc]init];
+            uuStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
+            NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+            NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+            NSDictionary *dic = [[NSDictionary alloc]init];
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Type":@"2",@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"],@"WorshipRecordId":model.ShopId};
+            //[ZXDNetworking GET:uuStr parameters:dic success:^(id responseObject) {
+            [ZXDNetworking GET:uuStr parameters:dic success:^(id responseObject) {
+                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
+                    //recordInfo
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"您没有权限查看该记录" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        
+                    };
+                    [alertView showMKPAlertView];
+                } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                        ViewController *loginVC = [[ViewController alloc] init];
+                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                        [self presentViewController:loginNavC animated:YES completion:nil];
+                    };
+                    [alertView showMKPAlertView];
+                }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                        ViewController *loginVC = [[ViewController alloc] init];
+                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                        [self presentViewController:loginNavC animated:YES completion:nil];
+                    };
+                    [alertView showMKPAlertView];
+                }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+                    _InterNameAry = [[NSMutableArray alloc]init];
+                    [infonTableview reloadData];
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该地区无陌拜记录" andInterval:1];
+                } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                    //有权限查看返回详情
+                    
+                }
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:YES];
         }
-        [self.navigationController pushViewController:modify animated:YES];
+        //[self.navigationController pushViewController:modify animated:YES];
     }
     
     
