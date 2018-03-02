@@ -203,8 +203,8 @@
             //通知主线程刷新
             dispatch_async(dispatch_get_main_queue(), ^{
                 //在主线程刷新UI
-                ViewController *VC= [[ViewController alloc]init];
-                [self presentViewController:VC animated:YES completion:nil];
+                ViewController *vc = [[ViewController alloc]init];
+                [self presentViewController:vc animated:YES completion:nil];
             }); 
             
         });

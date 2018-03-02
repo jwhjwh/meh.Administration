@@ -11,6 +11,7 @@
 #import "CellTrack1.h"
 #import "CellEditTable.h"
 #import "UIPlaceHolderTextView.h"
+#import "CellPhoto.h"
 @interface VCBossFamilyDetailManager ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic,strong)NSMutableArray *arrayList;
 @property (nonatomic,weak)UITableView *tableView;
@@ -21,6 +22,7 @@
 @property (nonatomic,weak) UIView *viewTop;
 @property (nonatomic,strong)NSIndexPath *indexPath;
 @property (nonatomic,weak)UIButton *button;
+@property (nonatomic)BOOL isAddImage;
 @end
 
 @implementation VCBossFamilyDetailManager
@@ -134,12 +136,18 @@
 {
     NSUInteger inter = button.tag-10;
     NSMutableDictionary *dict = [self.arrayList[inter]mutableCopy];
+    self.indexPath = [NSIndexPath indexPathForRow:3 inSection:inter];
     
     if ([dict[@"canEdit"]isEqualToString:@"3"]) {
         [self deleInfo:button];
-    }else
+    }else if([dict[@"canEdit"]isEqualToString:@"2"])
     {
         [self submit:button];
+    }else
+    {
+        [dict setValue:@"2" forKey:@"canEdit"];
+        [self.arrayList replaceObjectAtIndex:inter withObject:dict];
+        [self.tableView reloadData];
     }
 
     [self.buttonAdd setImage:[UIImage imageNamed:@"tj_ico01"] forState:UIControlStateNormal];
@@ -194,7 +202,7 @@
 {
     NSUInteger inter = button.tag-10;
     NSDictionary *dict = self.arrayList[inter];
-    
+    CellPhoto *cell = [self.tableView cellForRowAtIndexPath:self.indexPath];
     NSString *urlStr;
     NSDictionary *dictinfo;
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -208,7 +216,7 @@
                      @"Name":dict[@"name"],
                      @"Relationship":dict[@"relationship"],
                      @"Age":dict[@"age"],
-                     @"file":dict[@"photo"]
+                     @"file":cell.imageViewPhoto.image
                      };
     }else
     {
@@ -220,12 +228,12 @@
                      @"Name":dict[@"name"],
                      @"Relationship":dict[@"relationship"],
                      @"Age":dict[@"age"],
-                     @"file":dict[@"photo"],
+                     @"file":cell.imageViewPhoto.image,
                      @"id":[NSString stringWithFormat:@"%@",dict[@"id"]],
                      @"RoleId":[ShareModel shareModel].roleID
                      };
     }
-    NSData *pictureData = UIImagePNGRepresentation(dict[@"photo"]);
+    NSData *pictureData = UIImagePNGRepresentation(cell.imageViewPhoto.image);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -268,8 +276,9 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIImagePickerController *imagePick = [[UIImagePickerController alloc]init];
+    imagePick.delegate = self;
     if (buttonIndex==0) {
-        imagePick.delegate = self;
+        
         [self.navigationController presentViewController:imagePick animated:YES completion:nil];
     }else
     {
@@ -279,6 +288,7 @@
         }else
         {
             imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self.navigationController presentViewController:imagePick animated:YES completion:nil];
         }
     }
 }
@@ -287,12 +297,11 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    NSMutableDictionary *dict = [self.arrayList[self.indexPath.section]mutableCopy];
-    [dict setValue:[info objectForKey:UIImagePickerControllerOriginalImage] forKey:@"photo"];
-    [self.arrayList replaceObjectAtIndex:self.indexPath.section withObject:dict];
-    [self.navigationController dismissViewControllerAnimated:picker completion:nil];
-//    [self.tableView reloadRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [self submit:self.button];
+    CellPhoto *cell = [self.tableView cellForRowAtIndexPath:self.indexPath];
+
+    cell.imageViewPhoto.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.isAddImage = YES;
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma -mark textView
@@ -362,15 +371,17 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict = self.arrayList[indexPath.section];
+    if (indexPath.row<3) {
+    
     CellEditTable *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell==nil) {
         cell = [[CellEditTable alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    cell.labelTitle.text = self.arrayTitle[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textView.delegate = self;
     cell.textView.editable = YES;
-    NSDictionary *dict = self.arrayList[indexPath.section];
-    
     if ([dict[@"canEdit"]isEqualToString:@"2"]) {
         cell.userInteractionEnabled = YES;
         
@@ -390,27 +401,30 @@
         case 2:
             cell.textView.text = dict[@"relationship"];
             break;
-        case 3 :
-        {
-            [cell.textView removeFromSuperview];
-            
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImage:)];
-            UIImageView *imageHead = [[UIImageView alloc]initWithFrame:CGRectMake(150, 10, 50, 50)];
-            [imageHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"photo"]]] placeholderImage:[UIImage imageNamed:@"tjtx"]];
-            imageHead.userInteractionEnabled = YES;
-            [imageHead addGestureRecognizer:tap];
-            [cell.contentView addSubview:imageHead];
-            
-            break;
-        }
-            
         default:
             break;
     }
-    
-    cell.labelTitle.text = self.arrayTitle[indexPath.row];
-    
-    return cell;
+        return cell;
+    }else
+    {
+        CellPhoto *cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+        if (!cell) {
+            cell = [[CellPhoto alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+        }
+        if ([dict[@"canEdit"]isEqualToString:@"2"]) {
+            cell.userInteractionEnabled = YES;
+            
+        }else
+        {
+            cell.userInteractionEnabled = NO;
+            
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImage:)];
+        [cell.imageViewPhoto sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"photo"]]] placeholderImage:[UIImage imageNamed:@"tjtx"]];
+        [cell.imageViewPhoto addGestureRecognizer:tap];
+        return cell;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -459,8 +473,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self.arrayList removeAllObjects];
-    [self getHttpData];
+    
+    if (!self.isAddImage) {
+        [self.arrayList removeAllObjects];
+        [self getHttpData];
+    }
+    
 }
 
 - (void)viewDidLoad {
@@ -481,8 +499,10 @@
     [dict setValue:@"2" forKey:@"canEdit"];
     [dict setValue:@"" forKey:@"id"];
     [self.arrayList insertObject:dict atIndex:self.arrayList.count];
-    
+    self.isAddImage = NO;
     [self setUI];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

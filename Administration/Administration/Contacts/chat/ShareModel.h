@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ViewController.h"
 @interface ShareModel : NSObject
 +(ShareModel *)shareModel;
+
+@property (nonatomic,strong)ViewController *loginViewController;
+
 @property (nonatomic,strong)UIImage *image;
 @property (nonatomic) BOOL isGroup;
 @property (nonatomic) BOOL isDefaultGroup;

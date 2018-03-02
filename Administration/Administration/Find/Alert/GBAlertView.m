@@ -42,7 +42,7 @@ static NSString *const GBAlertCellID = @"GBAlertCell";
 #pragma mark -- 初始化selectTableView
 - (UITableView *)selectTableView {
     if (!_selectTableView) {
-        _selectTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _selectTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _selectTableView.delegate = self;
         _selectTableView.dataSource = self;
         _selectTableView.scrollEnabled = NO;

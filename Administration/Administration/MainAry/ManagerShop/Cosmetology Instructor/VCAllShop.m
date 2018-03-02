@@ -176,6 +176,13 @@
     ManagerShopinfo *vc = [[ManagerShopinfo alloc]init];
     
     [ShareModel shareModel].shopID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+    if ([dict[@"code"]intValue]==1) {
+        [ShareModel shareModel].showRightItem = YES;
+    }
+    else
+    {
+        [ShareModel shareModel].showRightItem = NO;
+    }
     [self.navigationController pushViewController:vc animated:YES];
 }
 

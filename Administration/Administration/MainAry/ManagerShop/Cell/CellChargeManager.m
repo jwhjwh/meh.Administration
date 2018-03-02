@@ -7,7 +7,6 @@
 //
 
 #import "CellChargeManager.h"
-
 @interface CellChargeManager ()
 
 @property (nonatomic,weak)UIImageView *imageViewHead;
@@ -26,6 +25,7 @@
     }
     return self;
 }
+
 
 -(void)setUI
 {
@@ -66,23 +66,23 @@
     }];
     self.labelPhone = labelPhone;
     
-    self.buttonDel = [[UIButton alloc]init];
-    self.buttonDel.hidden = YES;
-    self.buttonDel.userInteractionEnabled = NO;
-    [self.buttonDel setTitle:@"移除" forState:UIControlStateNormal];
-    [self.buttonDel setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.contentView addSubview:self.buttonDel];
-    [self.buttonDel mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *buttonDel = [[UIButton alloc]init];
+    buttonDel.hidden = YES;
+    buttonDel.userInteractionEnabled = NO;
+    [buttonDel setTitle:@"移除" forState:UIControlStateNormal];
+    [buttonDel setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.contentView addSubview:buttonDel];
+    [buttonDel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.contentView.mas_right).offset(-10);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.width.mas_equalTo(40);
         make.height.mas_equalTo(30);
     }];
-//    self.buttonDel = self.buttonDel;
+    self.buttonDel = buttonDel;
     
     UILabel *labelLine = [[UILabel alloc]init];
     labelLine.hidden = YES;
-    labelLine.backgroundColor = GetColor(192, 192, 192, 1);
+    labelLine.backgroundColor = [UIColor blackColor];
     [self.contentView addSubview:labelLine];
     [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.buttonDel.mas_left);
@@ -105,6 +105,11 @@
     self.labelName.text = dict[@"name"];
     self.labelPhone.text = dict[@"account"];
     [self.imageViewHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+}
+
+-(void)setHidden:(BOOL)hidden
+{
+    self.buttonDel.hidden = hidden;
 }
 
 - (void)awakeFromNib {

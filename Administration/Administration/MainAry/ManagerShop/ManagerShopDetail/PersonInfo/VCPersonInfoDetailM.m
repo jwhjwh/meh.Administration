@@ -113,14 +113,19 @@
         [button setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
         rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = rightItem;
         
     }else
     {
-        rightItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
-        NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-        [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
+        if ([ShareModel shareModel].showRightItem) {
+            rightItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightItem;
+        }
+        
     }
-    self.navigationItem.rightBarButtonItem = rightItem;
+    
     
     
     UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 70)];
@@ -307,6 +312,7 @@
         }else
         {
             imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self.navigationController presentViewController:imagePick animated:YES completion:nil];
         }
     }
 }
@@ -498,13 +504,21 @@
     if (indexPath.section==1) {
         if (indexPath.row==4) {
             VCAddPersonSpeciality *vc = [[VCAddPersonSpeciality alloc]init];
-            [ShareModel shareModel].techang = self.dictInfo[@"specialty"];
+            if (![self.dictInfo[@"specialty"]isKindOfClass:[NSNull class]]) {
+                [ShareModel shareModel].techang = self.dictInfo[@"specialty"];
+            }
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
     if (indexPath.section==2) {
         VCSpecialityManager *vc = [[VCSpecialityManager alloc]init];
-        vc.content = self.dictInfo[@"overallMerit"];
+        if (![self.dictInfo[@"overallMerit"] isKindOfClass:[NSNull class]]) {
+            vc.content = self.dictInfo[@"overallMerit"];
+        }else
+        {
+            vc.content = [ShareModel shareModel].pingpan;
+        }
+        
         vc.stringTitle = @"综合研判";
         vc.state = @"6";
         [self.navigationController pushViewController:vc animated:YES];

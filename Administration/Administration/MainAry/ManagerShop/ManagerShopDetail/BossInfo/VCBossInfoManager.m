@@ -182,6 +182,7 @@
     [viewTop addSubview:label];
     
     UIBarButtonItem *rightItem;
+    
     if (self.isEdit) {
         rightItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -193,7 +194,10 @@
         [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
         rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     }
-    self.navigationItem.rightBarButtonItem = rightItem;
+    if ([ShareModel shareModel].showRightItem) {
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImage)];
     
@@ -418,7 +422,7 @@
         case 1:
         {
             cell.textView.text = [self.arrayPhone componentsJoinedByString:@"\n"];
-            cell.textView.userActivity = NO;
+            cell.textView.userInteractionEnabled = NO;
             UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(tableView.frame.size.width-20, 15, 15, 15)];
             [button setTitle:@"+" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];

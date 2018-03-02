@@ -11,9 +11,10 @@
 #import "VCManagerChoosePostion.h"
 #import "CellChargeManager.h"
 #import "VCManagerChoosePerson.h"
-@interface VCManagerAddPermision ()<UITableViewDelegate,UITableViewDataSource>
+@interface VCManagerAddPermision ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *arrayData;
+@property (nonatomic,strong)NSIndexPath *indexPath;
 @end
 
 @implementation VCManagerAddPermision
@@ -60,6 +61,15 @@
     } view:self.view MBPro:YES];
 }
 
+-(void)showAlertView:(UIButton *)button
+{
+    CellChargeManager *cell = (CellChargeManager *)[button superview].superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    self.indexPath = indexPath;
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否删除人员" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
 -(void)setUI
 {
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 44)];
@@ -74,7 +84,7 @@
     line.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:line];
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45+kTopHeight, Scree_height, Scree_width)];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45+kTopHeight, Scree_width, Scree_height)];
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView registerClass:[CellChargeManager class] forCellReuseIdentifier:@"cell"];
@@ -99,11 +109,9 @@
     
 }
 
--(void)deletePerson:(UIButton *)button
+-(void)deletePerson:(NSIndexPath *)indexPath
 {
-    
-    CellChargeManager *cell = (CellChargeManager *)[button superview].superview;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+   
     NSDictionary *dictinfo = self.arrayData[indexPath.row];
     
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -178,7 +186,7 @@
     cell.labelLine.hidden = NO;
     cell.buttonDel.hidden = NO;
     cell.buttonDel.userInteractionEnabled = YES;
-    [cell.buttonDel addTarget:self action:@selector(deletePerson:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.buttonDel addTarget:self action:@selector(showAlertView:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -186,6 +194,15 @@
 {
     return 60;
 }
+
+#pragma -mark alertViewDelagate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self deletePerson:self.indexPath];
+    }
+}
+
 
 #pragma -mark system
 -(void)viewWillAppear:(BOOL)animated

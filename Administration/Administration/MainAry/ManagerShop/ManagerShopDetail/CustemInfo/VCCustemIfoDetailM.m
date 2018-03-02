@@ -51,7 +51,9 @@
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
         [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
     }
-    self.navigationItem.rightBarButtonItem = rightItem;
+    if ([ShareModel shareModel].showRightItem) {
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStyleGrouped];
     tableView.delegate = self;
@@ -148,7 +150,7 @@
     
     NSRange range = NSMakeRange(arrayKeys.count, 2);
     
-    if (self.personID) {
+    if (![self.personID isEqualToString:@""]) {
         urlStr = [NSString stringWithFormat:@"%@shop/updateStoreCustomer1.action",KURLHeader];
        
         [arrayKeys insertObjects:@[@"RoleId",@"id"] atIndexes:[NSIndexSet indexSetWithIndexesInRange:range]];
