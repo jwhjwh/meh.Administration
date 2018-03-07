@@ -58,10 +58,6 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         
-        if (self.isRefreshFooter==NO) {
-            [self.arrayData removeAllObjects];
-        }
-        
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             for (NSDictionary *dict in [responseObject valueForKey:@"recordInfo"]) {
@@ -72,7 +68,7 @@
                 self.label.text = [NSString stringWithFormat:@"未查看"];
             }else
             {
-                self.label.text = [NSString stringWithFormat:@"未查看（%ld）",self.arrayData.count];
+                self.label.text = [NSString stringWithFormat:@"未查看（%lu）",(unsigned long)self.arrayData.count];
             }
             [self.tableView reloadData];
             return ;
@@ -105,20 +101,22 @@
     [self.view addSubview:label];
     self.label = label;
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+21, Scree_width, Scree_height)];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kTopHeight+21, Scree_width, Scree_height-21-kTopHeight)];
     tableView.delegate = self;
     tableView.dataSource = self;
     [ZXDNetworking setExtraCellLineHidden:tableView];
     [tableView registerClass:[CellMobai class] forCellReuseIdentifier:@"cell"];
     
-    tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+    self.page = 1;
+    tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.isRefreshFooter = NO;
         self.page = 1;
+        [self.arrayData removeAllObjects];
         [self getHttpData];
     }];
     tableView.mj_header.automaticallyChangeAlpha = YES;
     
-    tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
+    tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         self.isRefreshFooter = YES;
         self.page++;
         [self getHttpData];

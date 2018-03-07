@@ -66,7 +66,7 @@
     CellChargeManager *cell = (CellChargeManager *)[button superview].superview;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     self.indexPath = indexPath;
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否删除人员" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否要移除" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alertView show];
 }
 

@@ -12,7 +12,8 @@
 #import "VCAddBrithday.h"
 #import "VCBrithdayDetail.h"
 #import "UIViewDatePicker.h"
-@interface VCCustemIfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIViewDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "UIChooseState.h"
+@interface VCCustemIfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UIViewDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIChooseDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong)NSMutableDictionary *dictInfo;
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,weak)UITableView *tableView;
@@ -47,7 +48,14 @@
        
     }else
     {
-        rightItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
+        NSString *string;
+        if ([[ShareModel shareModel].roleID isEqualToString:@"6"]) {
+            string = @"...";
+        }else
+        {
+            string = @"编辑";
+        }
+        rightItem = [[UIBarButtonItem alloc]initWithTitle:string style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
         [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
     }
@@ -68,6 +76,10 @@
         [self submitData];
     }else
     {
+        if ([[ShareModel shareModel].roleID isEqualToString:@"6"]) {
+            [self showChooseStateView];
+        }else
+        {
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
         [button setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
@@ -75,6 +87,7 @@
         self.navigationItem.rightBarButtonItem = rightItem;
         self.canEdit = YES;
         [self.tableView reloadData];
+        }
     }
 }
 
@@ -138,6 +151,36 @@
     } view:self.view MBPro:YES];
 }
 
+-(void)deleteCustem
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@shop/deleteStore",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"Storeid":[ShareModel shareModel].shopID,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"StoreCustomerId":self.personID
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
+}
+
 -(void)submitData
 {
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -159,7 +202,7 @@
     }
     else
     {
-        urlStr = [NSString stringWithFormat:@"%@shop/ insertStoreCustomer.action",KURLHeader];
+        urlStr = [NSString stringWithFormat:@"%@shop/insertStoreCustomer.action",KURLHeader];
     }
     
     NSDictionary *dict = [NSDictionary dictionaryWithObjects:arrayValues forKeys:arrayKeys];
@@ -218,9 +261,48 @@
     self.datePick = datePick;
 }
 
+-(void)showChooseStateView
+{
+    UIChooseState *stateView = [[UIChooseState alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) withArray:@[@"编辑",@"删除"]];
+    stateView.delegate = self;
+    [self.view.window addSubview:stateView];
+}
+
+-(void)showAlertView
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否删除顾客" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 100;
+    [alert show];
+}
+
+#pragma -mark UIChooseStateDelegate
+-(void)getChooseIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        self.navigationItem.rightBarButtonItem = nil;
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+        [button setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        self.canEdit = YES;
+        [self.tableView reloadData];
+        [self.tableView reloadData];
+    }else if (indexPath.row==1)
+    {
+        [self showAlertView];
+    }
+}
+
 #pragma -mark alertView
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if (alertView.tag==100) {
+        if (buttonIndex==1) {
+            [self deleteCustem];
+        }
+    }else
+    {
     UIImagePickerController *imagePick = [[UIImagePickerController alloc]init];
     if (buttonIndex==0) {
         imagePick.delegate = self;
@@ -234,6 +316,7 @@
         {
             imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
         }
+    }
     }
 }
 #pragma -mark UIViewDatePicker

@@ -67,22 +67,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/ShopInfo/VCShopInfoManager.m"
-            timestampString = "541412299.729292"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-getChoosed:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossFamilyDetailManager.m"
             timestampString = "541585111.158633"
             startingColumnNumber = "9223372036854775807"
@@ -180,7 +164,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossFamilyDetailManager.m"
-                  timestampString = "541646793.078943"
+                  timestampString = "542076182.849342"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "41"
@@ -195,7 +179,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossFamilyDetailManager.m"
-                  timestampString = "541646793.080942"
+                  timestampString = "542076182.852774"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"

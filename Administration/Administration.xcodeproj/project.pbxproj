@@ -415,6 +415,7 @@
 		1FD075EB1F7630F9003E01EB /* ViewBuessWeekSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD075EA1F7630F9003E01EB /* ViewBuessWeekSummary.m */; };
 		1FD154C31FA18D51008F49FA /* VCAddGonggao.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD154C21FA18D51008F49FA /* VCAddGonggao.m */; };
 		1FD154C61FA1907E008F49FA /* CellGonggao.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD154C51FA1907E008F49FA /* CellGonggao.m */; };
+		1FD1553C204D32D900122A22 /* UIChooseState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1553B204D32D900122A22 /* UIChooseState.m */; };
 		1FD1841C1F67C92200FCB30F /* VCChoosePostion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1841B1F67C92200FCB30F /* VCChoosePostion.m */; };
 		1FD215E11F4569940048719A /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD215E01F4569940048719A /* UIPlaceHolderTextView.m */; };
 		1FD320E71F57AE48004643A3 /* CellPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD320E61F57AE48004643A3 /* CellPerson.m */; };
@@ -1712,6 +1713,8 @@
 		1FD154C21FA18D51008F49FA /* VCAddGonggao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCAddGonggao.m; sourceTree = "<group>"; };
 		1FD154C41FA1907E008F49FA /* CellGonggao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellGonggao.h; sourceTree = "<group>"; };
 		1FD154C51FA1907E008F49FA /* CellGonggao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellGonggao.m; sourceTree = "<group>"; };
+		1FD1553A204D32D900122A22 /* UIChooseState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIChooseState.h; sourceTree = "<group>"; };
+		1FD1553B204D32D900122A22 /* UIChooseState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIChooseState.m; sourceTree = "<group>"; };
 		1FD1841A1F67C92200FCB30F /* VCChoosePostion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChoosePostion.h; sourceTree = "<group>"; };
 		1FD1841B1F67C92200FCB30F /* VCChoosePostion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChoosePostion.m; sourceTree = "<group>"; };
 		1FD215DF1F4569940048719A /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
@@ -5176,6 +5179,8 @@
 				1FE353CD1FC95BC0007D7BCD /* UIViewDatePicker.m */,
 				1FC9FBB71FE76FF00060BADA /* UIViewChooseNumber.h */,
 				1FC9FBB81FE76FF00060BADA /* UIViewChooseNumber.m */,
+				1FD1553A204D32D900122A22 /* UIChooseState.h */,
+				1FD1553B204D32D900122A22 /* UIChooseState.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -6906,6 +6911,7 @@
 				1FD73DDD1FBAB94C00134079 /* VCAddAreaPermision.m in Sources */,
 				1FD73DD11FBAB8F600134079 /* VCManagerMobai.m in Sources */,
 				62A0D72A1E6F8F2C003370FA /* MySubmittedViewController.m in Sources */,
+				1FD1553C204D32D900122A22 /* UIChooseState.m in Sources */,
 				6250073C1FA9A58E004208BE /* StoresModel.m in Sources */,
 				6218D0521E4E95FB00299989 /* main.m in Sources */,
 				1FCEB9501F7A2CDC00D8F175 /* VCBuessShopDrafts.m in Sources */,

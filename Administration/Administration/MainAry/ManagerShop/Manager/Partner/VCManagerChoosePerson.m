@@ -196,6 +196,9 @@
     }];
     
     cell.dict = dict;
+    cell.buttonDel.hidden = YES;
+    cell.buttonDel.userInteractionEnabled = NO;
+    cell.labelLine.hidden = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

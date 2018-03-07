@@ -19,6 +19,7 @@
 {
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(8, kTopHeight, Scree_width, 21)];
     label.text = @"请选择送出祝福的方式";
+    label.textColor = [UIColor lightGrayColor];
     [self.view addSubview:label];
     
     CGPoint center = self.view.center;
@@ -27,11 +28,11 @@
     
     UIButton *buttonMessage = [UIButton buttonWithType:UIButtonTypeCustom];
     [buttonMessage addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-    buttonMessage.frame = CGRectMake(100, 100, 80, 90);
+    buttonMessage.frame = CGRectMake(100, 150, 80, 90);
     
     [buttonMessage setImage:[UIImage imageNamed:@"dx_ico1"] forState:0];
     [buttonMessage setTitle:@"短信" forState:0];
-    [buttonMessage setTitleColor:[UIColor blackColor] forState:0];
+    [buttonMessage setTitleColor:[UIColor lightGrayColor] forState:0];
     
     [buttonMessage setTitleEdgeInsets:UIEdgeInsetsMake(70, -buttonMessage.imageView.bounds.size.width-70, 5, 0)];
     [buttonMessage setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 20, 0)];
@@ -43,10 +44,10 @@
     
     UIButton *buttonChat = [UIButton buttonWithType:UIButtonTypeCustom];
     [buttonChat addTarget:self action:@selector(openWeChat) forControlEvents:UIControlEventTouchUpInside];
-    buttonChat.frame = CGRectMake(100, 230, 80, 90);
+    buttonChat.frame = CGRectMake(100, 280, 80, 90);
     [buttonChat setImage:[UIImage imageNamed:@"wx_ico1"] forState:0];
     [buttonChat setTitle:@"微信" forState:0];
-    [buttonChat setTitleColor:[UIColor blackColor] forState:0];
+    [buttonChat setTitleColor:[UIColor lightGrayColor] forState:0];
     
     [buttonChat setTitleEdgeInsets:UIEdgeInsetsMake(70, -buttonChat.imageView.bounds.size.width-70, 5, 0)];
     [buttonChat setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 20, 0)];

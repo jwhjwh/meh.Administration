@@ -14,6 +14,8 @@
 #import "VCAddBrithday.h"
 #import "VCBrithdayDetail.h"
 #import "UIViewDatePicker.h"
+
+
 @interface VCBossInfoManager ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UITextViewDelegate,UIViewDatePickerDelegate>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *arrayTitle;
@@ -288,6 +290,7 @@
 
 -(void)showChooseBrithday
 {
+    [self.view endEditing:YES];
     UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     datePick.delegate = self;
     [self.view addSubview:datePick];

@@ -14,7 +14,8 @@
 #import "VCBrithdayDetail.h"
 #import "UIViewDatePicker.h"
 #import "VCAddPersonSpeciality.h"
-@interface VCPersonInfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIViewDatePickerDelegate,UITextViewDelegate,UIAlertViewDelegate>
+#import "UIChooseState.h"
+@interface VCPersonInfoDetailM ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIViewDatePickerDelegate,UITextViewDelegate,UIAlertViewDelegate,UIChooseDelegate>
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSMutableDictionary *dictInfo;
 @property (nonatomic,weak)UITableView *tableView;
@@ -117,17 +118,18 @@
         
     }else
     {
-        if ([ShareModel shareModel].showRightItem) {
-            rightItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
+            NSString *string;
+            if ([[ShareModel shareModel].roleID isEqualToString:@"6"]) {
+                string = @"...";
+            }else
+            {
+                string = @"编辑";
+            }
+            rightItem = [[UIBarButtonItem alloc]initWithTitle:string style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
             NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
             [rightItem setTitleTextAttributes:dict forState:UIControlStateNormal];
-            self.navigationItem.rightBarButtonItem = rightItem;
-        }
-        
+        self.navigationItem.rightBarButtonItem = rightItem;
     }
-    
-    
-    
     UIView *viewTop = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, 70)];
     viewTop.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:viewTop];
@@ -169,15 +171,49 @@
         [self submitData];
     }else
     {
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
-        [button setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
-        self.navigationItem.rightBarButtonItem = rightItem;
-        self.canEdit = YES;
-        self.imageView.userInteractionEnabled = YES;
-        [self.tableView reloadData];
+        if ([[ShareModel shareModel].roleID isEqualToString:@"6"]) {
+            [self showChooseStateView];
+        }else
+        {
+            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+            [button setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
+            UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+            self.navigationItem.rightBarButtonItem = rightItem;
+            self.canEdit = YES;
+            [self.tableView reloadData];
+        }
     }
+}
+
+-(void)deleteCustem
+{
+    NSString *urlStr =[NSString stringWithFormat:@"%@shop/deleteStore",KURLHeader];
+    NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
+    NSDictionary *dict = @{@"appkey":appKeyStr,
+                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                           @"Storeid":[ShareModel shareModel].shopID,
+                           @"RoleId":[ShareModel shareModel].roleID,
+                           @"StoreClerkId":self.personID
+                           };
+    [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"1001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 
 -(void)submitData
@@ -266,11 +302,15 @@
 
 -(void)showImage
 {
-    
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"添加照片" message:@"" delegate:self cancelButtonTitle:@"相册" otherButtonTitles:@"拍照", nil];
     [alert show];
-    
-    
+}
+
+-(void)showChooseStateView
+{
+    UIChooseState *stateView = [[UIChooseState alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) withArray:@[@"编辑",@"删除"]];
+    stateView.delegate = self;
+    [self.view.window addSubview:stateView];
 }
 
 -(void)gotoAddBrithay
@@ -297,9 +337,42 @@
     }
 }
 
+-(void)showAlertView
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否删除顾客" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 100;
+    [alert show];
+}
+
+#pragma -mark UIChooseStateDelegate
+-(void)getChooseIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        self.navigationItem.rightBarButtonItem = nil;
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+        [button setImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        self.canEdit = YES;
+        [self.tableView reloadData];
+        [self.tableView reloadData];
+    }else if (indexPath.row==1)
+    {
+        [self showAlertView];
+    }
+}
+
 #pragma -mark alertView
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if (alertView.tag==100) {
+        if (buttonIndex==1) {
+            [self deleteCustem];
+        }
+
+    }else
+    {
     UIImagePickerController *imagePick = [[UIImagePickerController alloc]init];
     imagePick.delegate = self;
     if (buttonIndex==0) {
@@ -314,6 +387,7 @@
             imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
             [self.navigationController presentViewController:imagePick animated:YES completion:nil];
         }
+    }
     }
 }
 
