@@ -16,10 +16,20 @@
 }
 @property (strong,nonatomic) NSMutableArray *InterNameAry;
 @property (nonatomic,assign)int pagenum;
-
+//是不是第一次执行请求
+@property (nonatomic)BOOL _isFirstLoadData ;
+//是不是上拉加载数据（脚视图刷新）
+@property (nonatomic)BOOL _isFooterFresh ;
 @end
 
 @implementation quasiCooperation
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.InterNameAry removeAllObjects];
+    [self getNetworkData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,39 +43,55 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     
-    NSString* phoneModel = [UIDevice devicePlatForm];
-    infonTableview =[[UITableView alloc]init];
+    self.InterNameAry = [NSMutableArray array];
+    
+    infonTableview =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) style:UITableViewStylePlain];
     infonTableview.delegate = self;
     infonTableview.dataSource = self;
     [self.view addSubview: infonTableview];
     [ZXDNetworking setExtraCellLineHidden:infonTableview];
     
-    [infonTableview mas_makeConstraints:^(MASConstraintMaker *make) {
-        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
-            make.top.mas_equalTo(self.view.mas_top).offset(94);
-        }else{
-            make.top.mas_equalTo(self.view.mas_top).offset(70);
-        }
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
-    }];
     
-    [self getNetworkData:YES];
-    __weak typeof(self) weakSelf = self;
-    //默认【下拉刷新】
     infonTableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _InterNameAry = [NSMutableArray array];
-        [weakSelf getNetworkData:YES];
-        [infonTableview reloadData];
+        
+        self.pagenum = 1;
+        
+        self._isFooterFresh = NO;
+        [self.InterNameAry removeAllObjects];
+        [self getNetworkData];
+        
     }];
     
-    //默认【上拉加载】
-    infonTableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        //Call this Block When enter the refresh status automatically
-        [weakSelf getNetworkData:NO];
-        //[self.tableView reloadData];
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+    
+    infonTableview.mj_header.automaticallyChangeAlpha = YES;
+    
+    
+    
+    //上拉加载
+    
+    infonTableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        
+        self.pagenum++;
+        
+        self._isFooterFresh = YES;
+        
+        [self getNetworkData];
     }];
+    
+    infonTableview.mj_footer.automaticallyChangeAlpha = YES;
+    
+    
+    self._isFirstLoadData = YES;
+    
+    //不是上拉加载数据
+    
+    self._isFooterFresh = NO;
+    
+    //页码赋初值
+    
+    self.pagenum=1;
+    
 }
 -(void)endRefresh{
     if (_pagenum == 1) {
@@ -75,13 +101,10 @@
     }
     
 }
--(void)getNetworkData:(BOOL)isRefresh{
-    if (isRefresh) {
-        _pagenum = 1;
-    }else{
-        _pagenum++;
-    }
-    NSString *pageStr=[NSString stringWithFormat:@"%d",_pagenum];
+-(void)getNetworkData
+{
+    
+NSString *pageStr=[NSString stringWithFormat:@"%d",_pagenum];
     NSString *uStr =[NSString stringWithFormat:@"%@stores/selectshopDepartmentId.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     
@@ -93,8 +116,9 @@
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"这已经是全部的客户了" andInterval:1.0];
             [infonTableview.mj_footer endRefreshingWithNoMoreData];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
-            _InterNameAry = [[NSMutableArray alloc]init];
-            _InterNameAry=[responseObject valueForKey:@"list"];
+            for (NSDictionary *dict in [responseObject valueForKey:@"list"]) {
+                [_InterNameAry addObject:dict];
+            }
             
             [infonTableview reloadData];
             

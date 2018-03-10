@@ -131,7 +131,19 @@
                            @"TooKeenPlan":[ShareModel shareModel].tuoke,
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
-        
+        NSString *code = [responseObject valueForKey:@"status"];
+        if ([code isEqualToString:@"0000"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return ;
+        }
+        if ([code isEqualToString:@"4444"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"异地登录" andInterval:1.0];
+            return;
+        }
+        if ([code isEqualToString:@"0001"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"失败" andInterval:1.0];
+            return;
+        }
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
@@ -183,7 +195,7 @@
     self.indexPath = indexPath;
     
     BOOL showYear;
-    if (indexPath.row!=9) {
+    if (indexPath.row!=10) {
         showYear = NO;
     }else
     {
@@ -217,6 +229,7 @@
         default:
             break;
     }
+    [self.tableView reloadRowsAtIndexPaths:@[self.indexPath] withRowAnimation:NO];
 }
 
 #pragma -mark textView

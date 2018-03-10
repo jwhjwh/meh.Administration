@@ -36,7 +36,9 @@
             self.arrayData = [[responseObject valueForKey:@"list"]mutableCopy];
             [self.tableView reloadData];
             return ;
-        }
+        }else
+        {
+            [self.tableView reloadData];
         if ([code isEqualToString:@"5000"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0f];
             return;
@@ -44,6 +46,7 @@
         if ([code isEqualToString:@"1001"]) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0f];
             return;
+        }
         }
         
     } failure:^(NSError *error) {

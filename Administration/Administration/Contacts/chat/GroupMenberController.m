@@ -449,7 +449,10 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    self.array = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#"];
+    if (![self.searchBar isFirstResponder]) {
+       self.array = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#"]; 
+    }
+    
     return self.array;
 }
 

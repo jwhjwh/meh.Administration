@@ -7,7 +7,6 @@
 //
 
 #import "CellChargeManager.h"
-
 @interface CellChargeManager ()
 
 @property (nonatomic,weak)UIImageView *imageViewHead;
@@ -26,6 +25,7 @@
     }
     return self;
 }
+
 
 -(void)setUI
 {
@@ -82,10 +82,10 @@
     
     UILabel *labelLine = [[UILabel alloc]init];
     labelLine.hidden = YES;
-    labelLine.backgroundColor = GetColor(192, 192, 192, 1);
+    labelLine.backgroundColor = [UIColor blackColor];
     [self.contentView addSubview:labelLine];
     [labelLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(buttonDel.mas_left);
+        make.right.mas_equalTo(self.buttonDel.mas_left);
         make.top.mas_equalTo(self.contentView.mas_top).offset(8);
         make.bottom.mas_equalTo(self.contentView.mas_bottom).offset(-8);
         make.width.mas_equalTo(1);
@@ -105,6 +105,11 @@
     self.labelName.text = dict[@"name"];
     self.labelPhone.text = dict[@"account"];
     [self.imageViewHead sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,dict[@"icon"]]] placeholderImage:[UIImage imageNamed:@"banben100"]];
+}
+
+-(void)setHidden:(BOOL)hidden
+{
+    self.buttonDel.hidden = hidden;
 }
 
 - (void)awakeFromNib {

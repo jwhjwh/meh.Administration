@@ -10,6 +10,7 @@
 #import "VCSearchMobai.h"
 #import "CellMobai.h"
 #import "VCMobaiDetail.h"
+#import "VCTargetMobaiDetail.h"
 @interface VClistPersonMobai ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)NSMutableArray *arrayData;
@@ -116,7 +117,13 @@
     
     UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Scree_width/2, 44)];
     button1.tag = 100;
-    [button1 setTitle:@"陌拜记录" forState:UIControlStateNormal];
+    if ([[ShareModel shareModel].state isEqualToString:@"3"]) {
+        [button1 setTitle:@"意向记录" forState:UIControlStateNormal];
+    }else
+    {
+        [button1 setTitle:@"陌拜记录" forState:UIControlStateNormal];
+    }
+    
     [button1 setTitleColor:GetColor(141, 57, 165, 1) forState:UIControlStateNormal];
     [button1 addTarget:self action:@selector(getList:) forControlEvents:UIControlEventTouchUpInside];
     [viewBotttom addSubview:button1];
@@ -124,7 +131,12 @@
     
     UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width/2, 0, Scree_width/2, 44)];
     button2.tag = 200;
-    [button2 setTitle:@"已删除记录" forState:UIControlStateNormal];
+    if ([[ShareModel shareModel].state isEqualToString:@"3"]) {
+        [button2 setTitle:@"目标记录" forState:UIControlStateNormal];
+    }else
+    {
+        [button2 setTitle:@"陌拜记录" forState:UIControlStateNormal];
+    }
     [button2 setTitleColor:GetColor(192 , 192, 192, 1) forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(getList:) forControlEvents:UIControlEventTouchUpInside];
     [viewBotttom addSubview:button2];
@@ -232,11 +244,23 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = self.arrayData[indexPath.row];
-    VCMobaiDetail *vc = [[VCMobaiDetail alloc]init];
-    vc.mobaiID = [NSString stringWithFormat:@"%@",dict[@"id"]];
-    vc.stringTitle = dict[@"storeName"];
-    [self.navigationController pushViewController:vc animated:YES];
+     NSDictionary *dict = self.arrayData[indexPath.row];
+    if (![[ShareModel shareModel].state isEqualToString:@"3"]) {
+        VCMobaiDetail *vc = [[VCMobaiDetail alloc]init];
+        vc.mobaiID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        vc.stringTitle = dict[@"storeName"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        VCTargetMobaiDetail *vc = [[VCTargetMobaiDetail alloc]init];
+        vc.stringTitle = @"目标客户";
+        vc.isofyou = NO;
+        vc.oneStore = @"2";
+        vc.cellend = NO;
+        vc.OldTargetVisitId = [NSString stringWithFormat:@"%@",dict[@"id"]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+   
 }
 
 #pragma -mark system

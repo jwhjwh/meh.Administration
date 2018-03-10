@@ -25,26 +25,59 @@
 #pragma -mark custem
 -(void)getHttpData
 {
-    NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
+    NSString *urlStr;
+    NSDictionary *dict;
+    
     NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
     
-    NSDictionary *dict = @{
-                           @"appkey":appKeyStr,
-                           @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
-                           @"CompanyInfoId":compid,
-                           @"DepartmentId":[ShareModel shareModel].departmentID,
-                           @"RoleIds":[ShareModel shareModel].roleID,
-                           @"WorshipRecordId":self.mobaiID
-                           };
+    if ([[ShareModel shareModel].state isEqualToString:@"2"]) {
+        urlStr = [NSString stringWithFormat:@"%@shop/selectIntendeds.action",KURLHeader];
+        dict = @{
+                 @"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"DepartmentId":[ShareModel shareModel].departmentID,
+                 @"RoleIds":[ShareModel shareModel].roleID,
+                 @"IntendedId":self.mobaiID
+                 };
+    }else if([[ShareModel shareModel].state isEqualToString:@"1"])
+    {
+        urlStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecords.action",KURLHeader];
+        dict = @{
+                 @"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"DepartmentId":[ShareModel shareModel].departmentID,
+                 @"RoleIds":[ShareModel shareModel].roleID,
+                 @"WorshipRecordId":self.mobaiID
+                 };
+    }else
+    {
+        urlStr =[NSString stringWithFormat:@"%@shop/selectTargetVisits.action",KURLHeader];
+        dict = @{
+                 @"appkey":appKeyStr,
+                 @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
+                 @"CompanyInfoId":compid,
+                 @"DepartmentId":[ShareModel shareModel].departmentID,
+                 @"RoleIds":[ShareModel shareModel].roleID,
+                 @"TargetVisitId":self.mobaiID
+                 };
+    }
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {
         NSString *code = [responseObject valueForKey:@"status"];
         if ([code isEqualToString:@"0000"]) {
             NSArray *array = [responseObject valueForKey:@"recordInfo"];
             self.dictInfo = array[0];
             
-            [self.arrayContent insertObject:[self.dictInfo[@"dates"] substringToIndex:10] atIndex:0];
+            if ([self.dictInfo[@"dates"] isKindOfClass:[NSNull class]]) {
+                [self.arrayContent insertObject:@"" atIndex:0];
+            }else
+            {
+                [self.arrayContent insertObject:[self.dictInfo[@"dates"] substringToIndex:10] atIndex:0];
+            }
+            
             if (![self.dictInfo[@"usersName"] isKindOfClass:[NSNull class]]) {
                 [self.arrayContent insertObject:self.dictInfo[@"usersName"] atIndex:self.arrayContent.count];
             }else
@@ -64,12 +97,14 @@
             {
                 [self.arrayContent insertObject:@"   " atIndex:self.arrayContent.count];
             }
+            
             if (![self.dictInfo[@"shopName"] isKindOfClass:[NSNull class]]) {
                 [self.arrayContent insertObject:self.dictInfo[@"shopName"] atIndex:self.arrayContent.count];
             }else
             {
                 [self.arrayContent insertObject:@"   " atIndex:self.arrayContent.count];
             }
+            
             if (![self.dictInfo[@"iphone"] isKindOfClass:[NSNull class]]) {
                 [self.arrayContent insertObject:self.dictInfo[@"iphone"] atIndex:self.arrayContent.count];
             }else
@@ -128,7 +163,7 @@
                            @"usersid":[USER_DEFAULTS valueForKey:@"userid"],
                            @"Types":@"1",
                            @"shopId":[NSString stringWithFormat:@"%@",self.dictInfo[@"shopId"]],
-                           @"Draft":[NSString stringWithFormat:@"%@",self.dictInfo[@"draft"]],
+                           @"Draft":@"3",
                            @"id":[NSString stringWithFormat:@"%@",self.dictInfo[@"id"]]
                            };
     [ZXDNetworking GET:urlStr parameters:dict success:^(id responseObject) {

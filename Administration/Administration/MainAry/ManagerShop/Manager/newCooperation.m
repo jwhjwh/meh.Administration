@@ -42,7 +42,7 @@
         if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
             make.top.mas_equalTo(self.view.mas_top).offset(94);
         }else{
-            make.top.mas_equalTo(self.view.mas_top).offset(70);
+            make.top.mas_equalTo(self.view.mas_top).offset(0);
         }
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.right.mas_equalTo(self.view.mas_right).offset(0);
@@ -63,7 +63,7 @@
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
          if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
             [infonTableview addEmptyViewWithImageName:@"" title:@"暂无合作客户" Size:20.0];
-            infonTableview.emptyView.hidden = NO;
+            infonTableview.emptyView.hidden  = NO;
          }else if([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
              _InterNameAry=[responseObject valueForKey:@"list"];
              

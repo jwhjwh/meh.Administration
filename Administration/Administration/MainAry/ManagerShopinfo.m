@@ -12,6 +12,7 @@
 #import "VCPersonInfoM.h"
 #import "VCShopInfoManager.h"
 #import "VCManagerAddPermision.h"
+
 @interface ManagerShopinfo ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 @property (nonatomic,strong)NSArray *array;

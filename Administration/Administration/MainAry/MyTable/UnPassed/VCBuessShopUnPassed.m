@@ -487,6 +487,7 @@
             cell = [[CellEditPlan alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.LabelTitle.text = arrayTitle[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.buttonPostil addTarget:self action:@selector(gotoPositil:) forControlEvents:UIControlEventTouchUpInside];
         switch (indexPath.row) {
               

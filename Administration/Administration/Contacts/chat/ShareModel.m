@@ -7,7 +7,6 @@
 //
 
 #import "ShareModel.h"
-
 @implementation ShareModel
 +(ShareModel *)shareModel
 {
@@ -27,6 +26,8 @@
         
         sharMode.techang = @"";
         sharMode.pingpan = @"";
+        
+        sharMode.loginViewController = [[ViewController alloc]init];
     });
     
     

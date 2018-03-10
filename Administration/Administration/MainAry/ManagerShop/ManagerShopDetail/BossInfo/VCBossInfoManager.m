@@ -14,13 +14,14 @@
 #import "VCAddBrithday.h"
 #import "VCBrithdayDetail.h"
 #import "UIViewDatePicker.h"
+
+
 @interface VCBossInfoManager ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UITextViewDelegate,UIViewDatePickerDelegate>
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,strong)NSArray *arrayTitle;
 @property (nonatomic,strong)NSDictionary *dictInfo;
 @property (nonatomic,strong)UIImageView *imageView;
 @property (nonatomic,strong)NSString *imageUrl;
-@property (nonatomic,weak)UIImagePickerController *imagePicker;
 @property (nonatomic,weak)UIViewDatePicker *datePick;
 
 @property (nonatomic)BOOL canEdit;
@@ -84,6 +85,9 @@
             
             self.name = self.dictInfo[@"name"];
             self.arrayPhone = [[self.dictInfo[@"phone"]componentsSeparatedByString:@","]mutableCopy];
+            if ([self.arrayPhone[0]isEqualToString:@""]) {
+                [self.arrayPhone removeObjectAtIndex:0];
+            }
             self.age = self.dictInfo[@"age"];
             self.qq = self.dictInfo[@"qcode"];
             self.wx = self.dictInfo[@"wcode"];
@@ -183,6 +187,7 @@
     [viewTop addSubview:label];
     
     UIBarButtonItem *rightItem;
+    
     if (self.isEdit) {
         rightItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -194,7 +199,10 @@
         [button addTarget:self action:@selector(submitData) forControlEvents:UIControlEventTouchUpInside];
         rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     }
-    self.navigationItem.rightBarButtonItem = rightItem;
+    if ([ShareModel shareModel].showRightItem) {
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showImage)];
     
@@ -211,7 +219,12 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.tableHeaderView = viewTop;
-    tableView.estimatedRowHeight = 44;
+    if (@available(iOS 11.0, *)) {
+        tableView.estimatedRowHeight = 0;
+    }else
+    {
+        tableView.estimatedRowHeight = 44;
+    }
     tableView.rowHeight = UITableViewAutomaticDimension;
     [tableView registerClass:[CellTrack1 class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:tableView];
@@ -285,6 +298,7 @@
 
 -(void)showChooseBrithday
 {
+    [self.view endEditing:YES];
     UIViewDatePicker *datePick = [[UIViewDatePicker alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height)];
     datePick.delegate = self;
     [self.view addSubview:datePick];
@@ -347,21 +361,24 @@
         
     }else
     {
-    if (buttonIndex==0) {
         UIImagePickerController *imagePick = [[UIImagePickerController alloc]init];
         imagePick.delegate = self;
-        [self.navigationController presentViewController:imagePick animated:YES completion:nil];
-        self.imagePicker = imagePick;
-    }else
-    {
-        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"设备不支持" andInterval:1.0];
-            return;
+        
+        if (buttonIndex==0) {
+            imagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self.navigationController presentViewController:imagePick animated:YES completion:nil];
+            
         }else
         {
-            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"设备不支持" andInterval:1.0];
+                return;
+            }else
+            {
+                imagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+                [self.navigationController presentViewController:imagePick animated:YES completion:nil];
+            }
         }
-    }
     }
 }
 
@@ -370,7 +387,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     self.imageView.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self.navigationController dismissViewControllerAnimated:picker completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma -mark tableView
@@ -389,7 +406,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.labelTitle.text = self.arrayTitle[indexPath.row];
-    
+    cell.textView.delegate =self;
     if (self.isEdit) {
         if (self.canEdit) {
             cell.textView.userInteractionEnabled = YES;
@@ -416,6 +433,7 @@
         case 1:
         {
             cell.textView.text = [self.arrayPhone componentsJoinedByString:@"\n"];
+            cell.textView.userInteractionEnabled = NO;
             UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(tableView.frame.size.width-20, 15, 15, 15)];
             [button setTitle:@"+" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -430,6 +448,7 @@
             cell.textView.text = self.wx;
             break;
         case 4:
+            cell.textView.keyboardType = UIKeyboardTypePhonePad;
             cell.textView.text = self.age;
             break;
         case 5:

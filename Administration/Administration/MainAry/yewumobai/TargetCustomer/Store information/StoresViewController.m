@@ -175,7 +175,9 @@
     if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
         self.tableView.frame =CGRectMake(0,88,self.view.bounds.size.width,self.view.bounds.size.height-90);
     }else{
+
         self.tableView.frame =CGRectMake(0,65,self.view.bounds.size.width,self.view.bounds.size.height-65);
+
     }
     self.tableView.dataSource=self;
     self.tableView.delegate =self;

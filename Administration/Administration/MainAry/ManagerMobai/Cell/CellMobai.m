@@ -78,7 +78,13 @@
 -(void)setDict:(NSDictionary *)dict
 {
     self.labelShop.text = [NSString stringWithFormat:@"店名：%@",dict[@"storeName"]];
-    self.labelDate.text = [NSString stringWithFormat:@"日期：%@",[dict[@"dates"]substringToIndex:10]];
+    if (![[ShareModel shareModel].state isEqualToString:@"3"]) {
+        self.labelDate.text = [NSString stringWithFormat:@"日期：%@",[dict[@"dates"]substringToIndex:10]];
+    }else
+    {
+        self.labelDate.text = [NSString stringWithFormat:@"日期：%@",[dict[@"wtime"]substringToIndex:10]];
+    }
+    
     self.labelArea.text = [NSString stringWithFormat:@"地区：%@%@%@",dict[@"province"],dict[@"city"],dict[@"county"]];
     self.labelAdress.text = [NSString stringWithFormat:@"地址：%@",dict[@"address"]];
     

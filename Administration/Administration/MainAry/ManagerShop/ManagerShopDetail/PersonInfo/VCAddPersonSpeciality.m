@@ -26,8 +26,18 @@
     self.view.backgroundColor = GetColor(235,235,235,1);
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.arrayContent = [NSMutableArray array];
     
-    self.arrayContent = [[[ShareModel shareModel].techang componentsSeparatedByString:@","]mutableCopy];
+    if (![ShareModel shareModel].techang) {
+        [ShareModel shareModel].techang = @"";     
+    }
+    if ([[ShareModel shareModel].techang containsString:@","]) {
+        self.arrayContent = [[[ShareModel shareModel].techang componentsSeparatedByString:@","]mutableCopy];
+    }else
+    {
+        [self.arrayContent addObject:[ShareModel shareModel].techang];
+    }
+    //self.arrayContent = [[[ShareModel shareModel].techang componentsSeparatedByString:@","]mutableCopy];
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(rightItem)];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -77,6 +87,7 @@
 -(void)rightItem
 {
     [ShareModel shareModel].techang = self.textView.text;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)textViewDidChange:(UITextView *)textView

@@ -133,7 +133,7 @@
     self.arrayData = [NSMutableArray array];
     self.arrayId = [NSMutableArray array];
     
-    UILabel * label = [[UILabel alloc]init];
+    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0, kTopHeight, Scree_width, 21)];
     label.text = @"请选择您要操作的职位";
     label.textColor = [UIColor lightGrayColor];
     [self.view addSubview:label];
@@ -150,16 +150,8 @@
     
     layout.scrollDirection=UICollectionViewScrollDirectionVertical;
     
-    NSString* phoneModel = [UIDevice devicePlatForm];
-    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
-        label.frame =CGRectMake(8, 98, Scree_width, 14);
-        self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 118, Scree_width, Scree_height) collectionViewLayout:layout];
-        
-    }else{
-        label.frame =CGRectMake(8, 74, Scree_width, 14);
-        self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 94, Scree_width, Scree_height) collectionViewLayout:layout];
-        
-    }
+    
+    self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, kTopHeight+40, Scree_width, Scree_height) collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.collectionView registerClass:[CollectionViewCellPosition class] forCellWithReuseIdentifier:@"cell"];
