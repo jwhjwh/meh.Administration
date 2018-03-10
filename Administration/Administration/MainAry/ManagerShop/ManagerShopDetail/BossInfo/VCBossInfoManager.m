@@ -85,6 +85,9 @@
             
             self.name = self.dictInfo[@"name"];
             self.arrayPhone = [[self.dictInfo[@"phone"]componentsSeparatedByString:@","]mutableCopy];
+            if ([self.arrayPhone[0]isEqualToString:@""]) {
+                [self.arrayPhone removeObjectAtIndex:0];
+            }
             self.age = self.dictInfo[@"age"];
             self.qq = self.dictInfo[@"qcode"];
             self.wx = self.dictInfo[@"wcode"];
@@ -216,7 +219,12 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.tableHeaderView = viewTop;
-    tableView.estimatedRowHeight = 44;
+    if (@available(iOS 11.0, *)) {
+        tableView.estimatedRowHeight = 0;
+    }else
+    {
+        tableView.estimatedRowHeight = 44;
+    }
     tableView.rowHeight = UITableViewAutomaticDimension;
     [tableView registerClass:[CellTrack1 class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:tableView];
@@ -440,6 +448,7 @@
             cell.textView.text = self.wx;
             break;
         case 4:
+            cell.textView.keyboardType = UIKeyboardTypePhonePad;
             cell.textView.text = self.age;
             break;
         case 5:

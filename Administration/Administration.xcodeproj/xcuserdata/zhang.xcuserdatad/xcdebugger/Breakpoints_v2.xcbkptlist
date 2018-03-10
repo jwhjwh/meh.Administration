@@ -35,38 +35,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossInfoManager.m"
-            timestampString = "541479394.566502"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
-            landmarkName = "-alertView:clickedButtonAtIndex:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossInfoManager.m"
-            timestampString = "541411753.920452"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "-submitData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossFamilyDetailManager.m"
             timestampString = "541585111.158633"
             startingColumnNumber = "9223372036854775807"
@@ -164,7 +132,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossFamilyDetailManager.m"
-                  timestampString = "542076182.849342"
+                  timestampString = "542334951.270179"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "41"
@@ -179,7 +147,7 @@
                   moduleName = "Administration"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/wode/Administration/Administration/MainAry/ManagerShop/ManagerShopDetail/BossInfo/VCBossFamilyDetailManager.m"
-                  timestampString = "542076182.852774"
+                  timestampString = "542334951.2729549"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"
@@ -196,7 +164,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/PersonInfo/VCAddPersonSpeciality.m"
-            timestampString = "541588269.918842"
+            timestampString = "542334939.08016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "90"
@@ -212,7 +180,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Administration/MainAry/ManagerShop/ManagerShopDetail/PersonInfo/VCAddPersonSpeciality.m"
-            timestampString = "541588606.804118"
+            timestampString = "542334939.0812269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
