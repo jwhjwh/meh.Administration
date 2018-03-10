@@ -196,7 +196,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - 补全分隔线左侧缺失
+- (void)viewDidLayoutSubviews {
+    if ([infonTableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [infonTableview setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([infonTableview respondsToSelector:@selector(setLayoutMargins:)])  {
+        [infonTableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 /*
 #pragma mark - Navigation
 

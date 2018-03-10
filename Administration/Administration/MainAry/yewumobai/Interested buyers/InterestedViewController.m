@@ -124,12 +124,11 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier =@"Cell";
-    //定义cell的复用性当处理大量数据时减少内存开销
-    RecordTableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
+    RecordTableViewCell *cell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    
     if (cell ==nil)
     {
-        cell = [[RecordTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        cell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -146,6 +145,7 @@
     
     NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.dates substringWithRange:NSMakeRange(5, 11)]];
     cell.shijianLabel.text = xxsj;
+    NSLog(@"----%@",model.State);
     if (model.UserId !=nil) {
         cell.UserIdLabel.text = @"已分享同事";
         cell.UserIdImage.image = [UIImage imageNamed:@"fx_ico"];

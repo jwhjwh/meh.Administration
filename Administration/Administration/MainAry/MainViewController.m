@@ -434,8 +434,7 @@
                 //店家信息
             {
                
-                
-                NSString *urlStr =[NSString stringWithFormat:@"%@shop/selectDepartmentId.action",KURLHeader];
+                NSString *urlStr =[NSString stringWithFormat:@"%@stores/selectNewName.action",KURLHeader];
                 NSString *appKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
                 NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
                 NSString *appKeyStr=[ZXDNetworking encryptStringWithMD5:appKey];
@@ -449,7 +448,7 @@
                         NSMutableArray*arrayData = [[NSMutableArray alloc]init];
                         NSMutableArray*departmenntID  =[[NSMutableArray alloc]init];
                         for (NSDictionary *dic in array) {
-                            NSString *string = [NSString stringWithFormat:@"%@",dic[@"roleId"]];
+                            NSString *string = [NSString stringWithFormat:@"%@",dic[@"num"]];
                             [arrayId addObject:string];
                             
                             NSString *namestring = [NSString stringWithFormat:@"%@",dic[@"newName"]];
@@ -487,7 +486,7 @@
                         return;
                     }
                     if ([stringCode isEqualToString:@"5000"]) {
-                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"数据空" andInterval:1];
+                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有改功能对应的职位" andInterval:1];
                         return;
                     }
                     

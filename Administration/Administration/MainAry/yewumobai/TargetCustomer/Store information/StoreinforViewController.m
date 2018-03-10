@@ -180,7 +180,7 @@
                    
                     StoresViewController *storesVC = [[StoresViewController alloc]init];
                     storesVC.isend = self.isend;
-                    storesVC.shopId = self.shopId;
+                    storesVC.StoreId = self.Storeid;
                     storesVC.strId = self.strId;
                     storesVC.isofyou = @"1";
                     storesVC.shopname = self.shopname;

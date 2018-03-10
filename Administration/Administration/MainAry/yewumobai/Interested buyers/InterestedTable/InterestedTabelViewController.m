@@ -81,13 +81,18 @@
     
     
     _InterNameAry = [[NSMutableArray alloc]init];
+    NSString* phoneModel = [UIDevice devicePlatForm];
     _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"];
     infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];
     [infonTableview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(64);
+        if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+            make.top.mas_equalTo(self.view.mas_top).offset(88);
+        }else{
+            make.top.mas_equalTo(self.view.mas_top).offset(64);
+        }
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
@@ -152,6 +157,11 @@
                      if (_InterNameAry.count != 0) {
                          cell.xingLabel.text = _InterNameAry[indexPath.row];
                      }
+                 }else if (indexPath.row == 1) {
+                     if (_InterNameAry.count != 0) {
+                         cell.xingLabel.text = _InterNameAry[indexPath.row];
+                     }
+                     
                  }else if (indexPath.row == 2) {
                      cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
                      cell.userInteractionEnabled = isof;
@@ -166,7 +176,7 @@
                              [_textField removeFromSuperview];
                          }
                      }
-                     _textField=[[UITextField alloc]initWithFrame: CGRectMake(120, 1, self.view.bounds.size.width-170, 48)];
+                     _textField=[[UITextField alloc]initWithFrame: CGRectMake(170, 1, self.view.bounds.size.width-170, 48)];
                      _textField.font = [UIFont boldSystemFontOfSize:14.0f];
                      [_textField addTarget:self action:@selector(FieldText:) forControlEvents:UIControlEventEditingChanged];
                      _textField.tag = indexPath.row;
@@ -247,9 +257,12 @@
                  yisj.font = [UIFont systemFontOfSize:11];
                  yisj.textColor =  GetColor(158, 91, 185, 1);
                  [cell addSubview:yisj];
+                 int ivalue = [_state intValue];
+                 NSString *string = [NSString stringWithFormat:@"%d",ivalue];
                  if (_UserId ==nil) {
                      if (_DepartmentId   ==nil) {
-                         if (_state ==nil) {
+                         
+                         if ([string isEqualToString:@"2"]) {
                          }else{
                              dangqian.frame = CGRectMake(10, 10, 70, 30);
                              yishengji.frame =CGRectMake(80, 17.5, 15, 15);
@@ -270,7 +283,7 @@
                      tongs.frame =CGRectMake(80, 17.5, 15, 15);
                      fents.frame = CGRectMake(100, 10, 70, 30);
                      if (_DepartmentId ==nil) {
-                         if (_state ==nil) {
+                         if ([string isEqualToString:@"2"]) {
                          }else{
                              yishengji.frame =CGRectMake(170, 17.5, 15, 15);
                              yisj.frame = CGRectMake(190, 10, 90, 30);
@@ -278,7 +291,7 @@
                      }else{
                          fenbm.frame = CGRectMake(170, 17.5, 15, 15);
                          fenbmlabel.frame = CGRectMake(190, 10, 70, 30);
-                         if (_state ==nil) {
+                         if ([string isEqualToString:@"2"]) {
                          }else{
                              yishengji.frame =CGRectMake(260, 17.5, 15, 15);
                              yisj.frame = CGRectMake(280, 10, 90, 30);
@@ -329,35 +342,52 @@
             break;
     }
 }
+-(void)indexpast:(NSIndexPath *)indexPath{
+    
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _Index=indexPath;
     inftionTableViewCell *cella = [tableView cellForRowAtIndexPath:indexPath];
-        if (indexPath.row == 0) {
+    
+    if (isof==YES) {
+        //可修改
+        if (indexPath.section ==0) {
             //shopId
-            if (isof == YES) {
-            SiginViewController *siginVC = [[SiginViewController alloc]init];
-            
-            siginVC.shopid =_ShopId;
-            siginVC.Address = [NSString stringWithFormat:@"%@%@%@",_Province,_City,_County];
-            siginVC.Types = @"2";
+            if (indexPath.row==0) {
+                SiginViewController *siginVC = [[SiginViewController alloc]init];
+                
+                siginVC.shopid =_ShopId;
+                siginVC.Address = [NSString stringWithFormat:@"%@%@%@",_Province,_City,_County];
+                siginVC.Types = @"2";
                 siginVC.qubie = _state;
-            [self.navigationController pushViewController:siginVC animated:YES];
-            }else{
-                dater=[[XFDaterView alloc]initWithFrame:CGRectZero];
-                dater.delegate=self;
-                [dater showInView:self.view animated:YES];
+                [self.navigationController pushViewController:siginVC animated:YES];
             }
+        
         }else{
             switch (indexPath.row) {
+                case 0:{
+                    dater=[[XFDaterView alloc]initWithFrame:CGRectZero];
+                    dater.delegate=self;
+                    [dater showInView:self.view animated:YES];
+                }
+                    break;
                 case 2:{
                     [self.view endEditing:YES];
                     self.cityChoose = [[CityChoose alloc] init];
                     self.cityChoose.config = ^(NSString *province, NSString *city, NSString *town){
-                        cella.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                       
                         cella.xingLabel.textColor=[UIColor blackColor];
                         if (isof == YES) {
-                            _Address=[NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                            if ([province isEqualToString:city]) {
+                                cella.xingLabel.text = [NSString stringWithFormat:@"%@ %@",province,town];
+                            }else{
+                             cella.xingLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,town];
+                            }
+                            
+                            _Province = province;
+                            _City=city;
+                            _County=town;
                         }
                         //
                     };
@@ -367,12 +397,16 @@
                 case 8:{
                     InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
                     inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    
+                    
+                    
                     inputVC.dateStr = _InterNameAry[indexPath.row];
                     inputVC.modifi = isof;
                     inputVC.blcokStr=^(NSString *content,int num){
                         if (num==8) {
                             if (isof == YES) {
                                 _BrandBusiness=content;
+                                _InterNameAry[indexPath.row] =_BrandBusiness;
                             }
                             //主要经营品牌
                             
@@ -395,14 +429,11 @@
                 }
                     break;
                 case 10:{
-                   
-                    
-                    
                     NSMutableArray *nsmuary = [[NSMutableArray alloc]initWithObjects:@"面部",@"身体",@"美白",@"教育",@"管理",@"拓客",@"模式", nil];
                     [InteredAlertView showWithTitle:@"选择意向" titles:nsmuary isof:_intentary selectIndex:^(NSString *selectIndex) {
                         FillTableViewCell *cell = [infonTableview cellForRowAtIndexPath:_Index];
-//                        cell.xingLabel.text =[_intentary stringByReplacingOccurrencesOfString:@"," withString:@" "];
-                         BOOL isbool = [_intentary containsObject: selectIndex];
+                        //                        cell.xingLabel.text =[_intentary stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                        BOOL isbool = [_intentary containsObject: selectIndex];
                         if (isbool == 1) {
                             NSLog(@"删除了");
                             [_intentary removeObject:selectIndex];
@@ -414,9 +445,9 @@
                             NSString *string = [_intentary componentsJoinedByString:@","];
                             cell.xingLabel.text =[string stringByReplacingOccurrencesOfString:@"," withString:@" "];
                         }
-                       
+                        
                     }];
-
+                    
                 }
                     
                     break;
@@ -429,6 +460,7 @@
                         if (num==11) {
                             if (isof == YES) {
                                 _StoreSituation=content;
+                                _InterNameAry[indexPath.row]=_StoreSituation;
                             }
                             //店面情况简介
                             
@@ -446,6 +478,68 @@
                         if (num==12) {
                             if (isof == YES) {
                                 _Comprehensive=content;
+                                _InterNameAry[indexPath.row] =_Comprehensive;
+                            }
+                            //店面情况综合分析
+                            
+                        }
+                    };
+                    [self.navigationController pushViewController:inputVC animated:YES];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }else{
+        //不可修改
+            switch (indexPath.row) {
+                case 8:{
+                    InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
+                    inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    inputVC.dateStr = _InterNameAry[indexPath.row];
+                    inputVC.modifi = isof;
+                    inputVC.blcokStr=^(NSString *content,int num){
+                        if (num==8) {
+                            if (isof == YES) {
+                                _BrandBusiness=content;
+                                _InterNameAry[indexPath.row] =_BrandBusiness;
+                            }
+                            //主要经营品牌
+                            
+                        }
+                    };
+                    [self.navigationController pushViewController:inputVC animated:YES];
+                }
+                    break;
+                case 11:{
+                    InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
+                    inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    inputVC.dateStr = _InterNameAry[indexPath.row];
+                    inputVC.modifi = isof;
+                    inputVC.blcokStr=^(NSString *content,int num){
+                        if (num==11) {
+                            if (isof == YES) {
+                                _StoreSituation=content;
+                                _InterNameAry[indexPath.row]=_StoreSituation;
+                            }
+                            //店面情况简介
+                            
+                        }
+                    };
+                    [self.navigationController pushViewController:inputVC animated:YES];
+                }
+                    break;
+                case 12:{
+                    InterestedInputViewController *inputVC=[[InterestedInputViewController alloc]init];
+                    inputVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+                    inputVC.dateStr = _InterNameAry[indexPath.row];
+                    inputVC.modifi = isof;
+                    inputVC.blcokStr=^(NSString *content,int num){
+                        if (num==12) {
+                            if (isof == YES) {
+                                _Comprehensive=content;
+                                _InterNameAry[indexPath.row] =_Comprehensive;
                             }
                             //店面情况综合分析
                             
@@ -477,7 +571,7 @@
     if (isof == NO) {
         NSArray *zwlbAry = [[NSArray alloc]init];
         if ([_state intValue] ==2) {
-            zwlbAry = @[@"编辑意向客户",@"升级为目标客户",@"确定合作",@"分享给同事",@"删除"];
+            zwlbAry = @[@"编辑意向客户",@"升级为目标客户",@"确定合作",@"分享给同事",@"分享部门",@"删除"];
         }else{
             zwlbAry = @[@"分享给同事",@"分享部门",@"删除"];
         }
@@ -518,6 +612,15 @@
                     SCVC.yiandmu = @"2";
                     SCVC.targetvisitid = _Id;
                     [self.navigationController pushViewController:SCVC animated:YES];
+                }else if(selectIndex == 4){
+                    //分享给部门
+                    depatementViewController *dptmVC = [[depatementViewController alloc]init];
+                    //depaid  shopid  _targetVisitId
+                    dptmVC.shopid = _ShopId;
+                    dptmVC.intendedId = _Id;
+                    dptmVC.tarAndInter = @"1";
+                    
+                    [self.navigationController pushViewController:dptmVC animated:YES];
                 }else {
                     //删除
                     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定删除" sureBtn:@"确认" cancleBtn:@"取消"];
@@ -677,7 +780,7 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
     NSString *intentar = [_intentary componentsJoinedByString:@","];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"intendedId":self.intentionId,@"Iphone":_Iphone,@"Wcode":_Wcode,@"BrandBuiness":_BrandBusiness,@"StoreLevel":_StoreLevel,@"intentionName":intentar,@"StoreSituation":_StoreSituation,@"Comprehensive":_Comprehensive,@"RoleId":self.strId,@"Provice":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"StoreName":_StoreName,@"Name":_ShopName,@"shopId":_ShopId};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"intendedId":self.intentionId,@"Iphone":_Iphone,@"Wcode":_Wcode,@"BrandBusiness":_BrandBusiness,@"StoreLevel":_StoreLevel,@"intentionName":intentar,@"StoreSituation":_StoreSituation,@"Comprehensive":_Comprehensive,@"RoleId":self.strId,@"Province":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"StoreName":_StoreName,@"Name":_ShopName,@"shopId":_ShopId};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
          if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
              PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
@@ -685,6 +788,7 @@
                  isof = NO;
                  _arr=@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"];
                  [infonTableview reloadData];
+                 [self selectworsh];
              };
              [alertView showMKPAlertView];
          }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
@@ -862,6 +966,12 @@
                 ViewController *loginVC = [[ViewController alloc] init];
                 UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"没有填写意向客户表" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                 [self.navigationController popViewControllerAnimated:YES];
             };
             [alertView showMKPAlertView];
         }

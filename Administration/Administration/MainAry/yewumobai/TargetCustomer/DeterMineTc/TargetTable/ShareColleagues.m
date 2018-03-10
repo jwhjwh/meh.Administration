@@ -38,7 +38,15 @@
 }
 -(void)InterTableUI
 {
-    infonTableview= [[UITableView alloc]initWithFrame:CGRectMake(0,20,self.view.bounds.size.width,self.view.bounds.size.height) style:UITableViewStylePlain];
+    
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    
+    infonTableview= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        infonTableview.frame =CGRectMake(0,88,self.view.bounds.size.width,self.view.bounds.size.height-88);
+    }else{
+        infonTableview.frame =CGRectMake(0,65,self.view.bounds.size.width,self.view.bounds.size.height-65);
+    }
     infonTableview.dataSource=self;
     infonTableview.delegate =self;
     [self.view addSubview:infonTableview];

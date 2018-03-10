@@ -135,7 +135,7 @@
                          @"Wcode":_Wcode,
                          @"Qcode":_Qcode,
                          @"Interests":_Interests,
-                         @"SDASD":_SDASD,
+                         @"sdasd":_SDASD,
                          @"phone":self.phone};
     [ZXDNetworking GET:uStr parameters:dict success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){

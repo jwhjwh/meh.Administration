@@ -773,9 +773,11 @@
     zwlbAry = @[@"保养",@"功效",@"修复",@"美容"];
     [SelectAlert showWithTitle:@"选择类型" titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
         
+        int count=(int)selectIndex + 1;
+        _brandpos = [NSString stringWithFormat:@"%d",count];
     } selectValue:^(NSString *selectValue) {
         [textfield setTitle:selectValue forState:UIControlStateNormal];
-        _brandpos = selectValue;
+        
         
     } showCloseButton:NO];
 }
@@ -846,6 +848,7 @@
             break;
         case 35:
             _brandbusiness = textfield.text;//主要经营品牌
+            NSLog(@"%@--%@",textfield.text,_brandbusiness);
             break;
         case 36:
             _followbrand = textfield.text;//关注品牌
@@ -1715,7 +1718,7 @@
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":_targetVisitId,@"Time":_time,@"MeeTime":_meettime,@"Num":_num,@"Principal":_principal,@"Post":_post,@"Iphone":_iphone,@"Qcode":_qcode,@"StoreLevel":_storelevel,@"Berths":_berths,@"Beautician":_beautician,@"PlantingDuration":_plantingduration,@"BarndBusiness":_brandbusiness,@"FollowBrand":_followbrand,@"CustomerNum":_customernum,@"ValidNum":_validnum,@"BrandPos":_brandpos,@"OtherPos":_otherpos,@"SinglePrice":_singleprice,@"BoxPrice":_boxprice,@"CardPrice":_cardprice,@"PackPrice":_packprice,@"Flag":_flag,@"ActiveName":_activename,@"DealMoney":_dealmoney,@"LeastMoney":_leastmoney,@"DealRate":_dealmoney,@"Demand":_demand,@"ShopQuestion":_shopquestion,@"Plans":_plans,@"Requirement":_requirement,@"Notic":_notic,@"PartnerTime":_partnertime,@"Schene":_scheme,@"Amount":_amount,@"PayWay":_payway,@"written":_written,@"Manager":_manager,@"ShopId":_shopid,@"UsersID":[USER_DEFAULTS objectForKey:@"userid"],@"Province":_Province,@"City":_City,@"County":_County,@"StoreName":_StoreName,@"Address":_Address};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"TargetVisitId":_targetVisitId,@"Time":_time,@"MeetTime":_meettime,@"Num":_num,@"Principal":_principal,@"Post":_post,@"Iphone":_iphone,@"Qcode":_qcode,@"StoreLevel":_storelevel,@"Berths":_berths,@"Beautician":_beautician,@"PlantingDuration":_plantingduration,@"BrandBusiness":_brandbusiness,@"FollowBrand":_followbrand,@"CustomerNum":_customernum,@"ValidNum":_validnum,@"BrandPos":_brandpos,@"OtherPos":_otherpos,@"SinglePrice":_singleprice,@"BoxPrice":_boxprice,@"CardPrice":_cardprice,@"PackPrice":_packprice,@"Flag":_flag,@"ActiveName":_activename,@"DealMoney":_dealmoney,@"LeastMoney":_leastmoney,@"DealRate":_dealmoney,@"Demand":_demand,@"ShopQuestion":_shopquestion,@"Plans":_plans,@"Requirement":_requirement,@"Notic":_notic,@"PartnerTime":_partnertime,@"Scheme":_scheme,@"Amount":_amount,@"PayWay":_payway,@"written":_written,@"Manager":_manager,@"ShopId":_shopid,@"UsersID":[USER_DEFAULTS objectForKey:@"userid"],@"Province":_Province,@"City":_City,@"County":_County,@"StoreName":_StoreName,@"Address":_Address};
     [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"提交成功!" sureBtn:@"确认" cancleBtn:nil];

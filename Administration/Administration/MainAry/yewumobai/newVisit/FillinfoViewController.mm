@@ -39,29 +39,29 @@
     BOOL Upload;
 }
 @property (nonatomic, strong) CityChoose *cityChoose;/** 城市选择 */
-@property (nonatomic,retain)UITableView *infonTableview;
-@property (nonatomic,retain)NSArray *arr;
-@property (nonatomic,retain)UILabel *rxLbale;
+@property (nonatomic,strong)UITableView *infonTableview;
+@property (nonatomic,strong)NSArray *arr;
+@property (nonatomic,strong)UILabel *rxLbale;
 @property (nonatomic,strong) UITextField *textField;
-@property (nonatomic,retain) NSString *address;
-@property (nonatomic,retain)NSIndexPath *Index;
-@property (nonatomic,retain)NSString *storedate;//日期
-@property (nonatomic,retain)NSString *storepersonnel;//人员
-@property (nonatomic,retain)NSString *storeregion;//地区
-@property (nonatomic,retain)NSString *storename;//店名
-@property (nonatomic,retain)NSString *storeaddree;//地址
-@property (nonatomic,retain)NSString *storehead;//负责人
-@property (nonatomic,retain)NSString *storephone;//手机
-@property (nonatomic,retain)NSString *storewxphone;//微信
-@property (nonatomic,retain)NSString *storebrand;//品牌
-@property (nonatomic,retain)NSString *clascation;//分类
-@property (nonatomic,retain)NSString *stotrType;//门店类型
-@property (nonatomic,retain)NSString *Abrief;//简要
-@property (nonatomic,retain)NSString *instructions;//说明
-@property (nonatomic,retain)NSString *note;//备注
-@property (nonatomic,retain)NSString *brandBusin;//美容师人数
-@property (nonatomic,retain)NSString *planDur;//经营年限
-@property (nonatomic,retain)NSString *Berths;//床位
+@property (nonatomic,strong) NSString *address;
+@property (nonatomic,strong)NSIndexPath *Index;
+@property (nonatomic,strong)NSString *storedate;//日期
+@property (nonatomic,strong)NSString *storepersonnel;//人员
+@property (nonatomic,strong)NSString *storeregion;//地区
+@property (nonatomic,strong)NSString *storename;//店名
+@property (nonatomic,strong)NSString *storeaddree;//地址
+@property (nonatomic,strong)NSString *storehead;//负责人
+@property (nonatomic,strong)NSString *storephone;//手机
+@property (nonatomic,strong)NSString *storewxphone;//微信
+@property (nonatomic,strong)NSString *storebrand;//品牌
+@property (nonatomic,strong)NSString *clascation;//分类
+@property (nonatomic,strong)NSString *stotrType;//门店类型
+@property (nonatomic,strong)NSString *Abrief;//简要
+@property (nonatomic,strong)NSString *instructions;//说明
+@property (nonatomic,strong)NSString *note;//备注
+@property (nonatomic,strong)NSString *brandBusin;//美容师人数
+@property (nonatomic,strong)NSString *planDur;//经营年限
+@property (nonatomic,strong)NSString *Berths;//床位
 
 @property (nonatomic, strong) CLGeocoder *geoC;
 
@@ -101,7 +101,7 @@
 -(void)NSStringalloc{
     _sigincity = [[NSString alloc]init];
     _ShopId = [[NSString alloc]init];
-
+    _ModifyId = [[NSString alloc]init];
     _storephone = [[NSString alloc]init];
     _storephone = @"";
     _storewxphone = [[NSString alloc]init];
@@ -198,7 +198,7 @@
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{     CGRect labelRect2 = CGRectMake(120, 1, self.view.bounds.size.width-170, 48);
+{     CGRect labelRect2 = CGRectMake(170, 1, self.view.bounds.size.width-170, 48);
    
     if(indexPath.row<8){
     inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
@@ -273,11 +273,57 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
  
     return cell;
+    }
+    
 }
+-(void)twosing:(NSString *)draft{
+    //第二次签到 [self UploadInformation:@"1"];
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/insertShop.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSArray *array = [_storeregion componentsSeparatedByString:@" "];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.points,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":_ShopId,@"CreatorId":_CreatorId};
+    [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+            SiginViewController *siginVC = [[SiginViewController alloc]init];
+            Upload = YES;
+            siginVC.shopid =_ShopId;
+            siginVC.Address = _sigincity;
+            siginVC.Types = @"1";
+            siginVC.qubie = @"1";
+            [self.navigationController pushViewController:siginVC animated:YES];
+        } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限修改该记录" andInterval:1.0];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view];
+    
+    
     
 }
 -(void)SigintNetWorking{
-    
+    //第一次签到 
         NSArray *array = [_storeregion componentsSeparatedByString:@" "];
         if (_storedate == nil) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写时间" andInterval:1.0];
@@ -303,17 +349,15 @@
                         SiginViewController *siginVC = [[SiginViewController alloc]init];
                         Upload = YES;
                         _ShopId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"ShopId"]];
+                        _ModifyId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"WorshipRecordId"]];
+                        _CreatorId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"UserId"]];
                         siginVC.shopid =_ShopId;
                         siginVC.Address = _sigincity;
                         siginVC.Types = @"1";
-                        //siginVC.qubie = @"1";
+                        siginVC.qubie = @"1";
                         [self.navigationController pushViewController:siginVC animated:YES];
                         
                     }
-                    
-                    
-                    //ShopId = 10;  WorshipRecordId = 1;
-                    
                 } failure:^(NSError *error) {
                     
                 } view:self.view];
@@ -323,6 +367,7 @@
 
     
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   _Index=indexPath;
     inftionTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -330,7 +375,7 @@
     if (indexPath.section == 0) {
         if (Upload ==YES) {
             //走修改接口
-             [self UploadInformation:@"1"];
+            [self twosing:@"1"];
         }else{
             [self SigintNetWorking];
         }
@@ -346,11 +391,21 @@
                 resVC.points = self.points;
                 resVC.DepartmentId = self.depant;
                 resVC.returnTextBlock = ^(NSString *prostr, NSString *citystr, NSString *countcity){
-                     NSMutableString  *CityStr = [NSMutableString stringWithFormat:@"%@ %@ %@",prostr,citystr,countcity];
+                    NSMutableString  *CityStr = [[NSMutableString alloc]init];
+                    
+                    CityStr =[NSMutableString stringWithFormat:@"%@ %@ %@",prostr,citystr,countcity];
+                    
                     NSString *stringWithoutQuotation = [CityStr
-                                                        stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                                                        stringByReplacingOccurrencesOfString:@"(null)" withString:prostr];
                     _storeregion =[NSString stringWithFormat:@"%@",stringWithoutQuotation];
-                    cell.xingLabel.text = _storeregion;
+                    
+                    if (citystr==nil) {
+                        NSString *nsmustr= [NSString stringWithFormat:@"%@ %@",prostr,countcity];
+                        cell.xingLabel.text = nsmustr;
+                    }else{
+                        cell.xingLabel.text = _storeregion;
+                    }
+                    
                     cell.xingLabel.textColor=[UIColor blackColor];
                 };
                 [self.navigationController pushViewController:resVC animated:YES];
@@ -384,16 +439,31 @@
             case 10:{
                 StoreprofileController *stireVC=[[StoreprofileController alloc]init];
                 NSMutableArray *aryy = [[NSMutableArray alloc]init];
+                
+                
                 [aryy addObject:_stotrType];
                 [aryy addObject:_planDur];
                 [aryy addObject:_brandBusin];
                 [aryy addObject:_Berths];
                 stireVC.strary = aryy;
                 stireVC.blcokString=^(NSString *type,NSString *year,NSString *perpon,NSString *beds){
-                    _stotrType=type;
-                    _planDur=year;
-                    _brandBusin=perpon;
-                    _Berths=beds;
+                    if (type!=nil) {
+                        _stotrType=type;
+                    }
+                    if (year!=nil) {
+                        _planDur=year;
+                    }
+                    if (perpon!=nil) {
+                        _brandBusin=perpon;
+                    }
+                    if (beds!=nil) {
+                         _Berths=beds;
+                    }
+                    
+                    
+                    
+                    
+                   
                     
                 };
                 [self.navigationController pushViewController:stireVC animated:YES];
@@ -488,7 +558,6 @@
             //判断是否提交
             if (Upload ==YES) {
                 //走修改接口
-                
                 [self UploadInformation:@"1"];
             }else{
                [self UploadInformation];
@@ -526,15 +595,19 @@
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
         NSArray *array = [_storeregion componentsSeparatedByString:@" "];
-         NSString *RoleId=[NSString stringWithFormat:@"%@",self.points];
+        NSString *RoleId=[NSString stringWithFormat:@"%@",self.points];
         NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"1",@"CompanyId":compid,@"UsersName":[USER_DEFAULTS objectForKey:@"name"],@"DepartmentID":self.depant};
         [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 _CreatorId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"UserId"]];
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
+                _ShopId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"ShopId"]];
+                _ModifyId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"WorshipRecordId"]];
                 _islode=NO;
                 Upload= YES;
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
+                
+               
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
                 alertView.resultIndex = ^(NSInteger index){
@@ -646,8 +719,7 @@
     NSArray *array = [_storeregion componentsSeparatedByString:@" "];
     NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
     
-    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.points,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":
-                            _ShopId,@"CreatorId":_CreatorId};
+    NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.points,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":_ShopId,@"CreatorId":_CreatorId};
     [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             _islode=NO;

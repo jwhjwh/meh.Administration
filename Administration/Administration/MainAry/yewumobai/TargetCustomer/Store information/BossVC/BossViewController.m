@@ -11,7 +11,7 @@
 #import "DPYJViewController.h"
 #import "BossHome.h"
 #import "DongImage.h"
-@interface BossViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface BossViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 @property (nonatomic,retain)UITableView *tableView;
 @property (nonatomic,strong) NSString *logImage;//头像地址
 
@@ -57,6 +57,8 @@ BOOL isend;
     _texttagary = [[NSMutableArray alloc]initWithObjects:@[@""],@[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8"], nil];
     [self AFnetworking];
 }
+
+
 -(void)addViewremind{
     self.tableView= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     NSString* phoneModel = [UIDevice devicePlatForm];
@@ -90,11 +92,14 @@ BOOL isend;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifi = @"gameeCell";
-   UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (!cell) {
-       cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifi];
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    
+    if (cell ==nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
    
     UILabel *tlelabel = [[UILabel alloc]init];
@@ -110,9 +115,14 @@ BOOL isend;
     if (indexPath.section == 0) {
         _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(120, 15, 50, 50)];
         if (_logImage.length<1) {
-            _TXImage.image = [UIImage imageNamed:@"tjtx"];
+            if (isend==YES) {
+                _TXImage.image = [UIImage imageNamed:@"tjtx"];
+            }else{
+                _TXImage.image = [UIImage imageNamed:@"tx100"];
+            }
+            
         }else{
-            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"hp_ico"]];
+            [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,_logImage]] placeholderImage:[UIImage  imageNamed:@"tx100"]];
         }
         _TXImage.backgroundColor = [UIColor whiteColor];
         _TXImage.layer.masksToBounds = YES;
@@ -139,19 +149,17 @@ BOOL isend;
             
             if (_iphoneAry.count>1) {
                 for (int i= 0; i<_iphoneAry.count; i++) {
-                    UILabel *iphonelabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 5+(i*20), Scree_width-120-80, 19)];
+                    UILabel *iphonelabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 5+(i*21), Scree_width-120-80, 19)];
                     iphonelabel.text = [NSString stringWithFormat:@"电话%d     %@",i+1,_iphoneAry[i]];
                     iphonelabel.font = [UIFont systemFontOfSize:14];
                     [cell addSubview:iphonelabel];
-                    UIView *whiview =[[UIView alloc]initWithFrame:CGRectMake(120, i*(5+20), Scree_width-120-100, 1)];
+                    UIView *whiview =[[UIView alloc]initWithFrame:CGRectMake(120, 5+(i*20), Scree_width-120-100, 1)];
                     whiview.backgroundColor = [UIColor lightGrayColor];
                     if (i>0) {
                          [cell addSubview:whiview];
                     }
-                   
-                    
                     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(Scree_width-80, 5+(i*20), 19, 19)];
-                    [button setImage:[UIImage imageNamed:@"xx_ico02"] forState:UIControlStateNormal];
+                    [button setImage:[UIImage imageNamed:@"xx_ico01"] forState:UIControlStateNormal];
                      [button addTarget: self action: @selector(deleiphone) forControlEvents: UIControlEventTouchUpInside];
                     button.enabled = isend;
                     button.hidden = isend;
@@ -162,7 +170,6 @@ BOOL isend;
                     
                 }else{
                     UILabel *iphonelabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 10, cell.width-120-80,30)];
-                   
                     if ([_iphoneAry[0]isEqualToString:@""]) {
                         
                     }else{
@@ -220,7 +227,30 @@ BOOL isend;
     //删除电话
 }
 -(void)addiphone{
-    //添加电话
+    UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"添加老板电话" message:nil
+                                                     delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alerView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alerView show];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        UITextField *textF = [alertView textFieldAtIndex:0];
+        if (textF.text.length==0) {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"输入内容不能为空" andInterval:1.0];
+            return;
+        }else
+        {
+            [_iphoneAry addObject:textF.text];
+            //刷新cell
+            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:1];
+            [self.tableView beginUpdates];
+            
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView endUpdates];
+ 
+        }
+    }
 }
 - (void)PersonFieldText:(UITextField *)textField{
     switch (textField.tag) {
@@ -321,8 +351,14 @@ BOOL isend;
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
     if (isend==YES) {
+        if (_BossId==nil) {
+            //添加老板信息
+            [self addupdateBoss:sender];
+        }else{
+            //修改老板信息
+            [self updeteBoss:sender];
+        }
         
-        [self addupdateBoss:sender];
         
     }else{
         isend = YES;
@@ -396,6 +432,7 @@ BOOL isend;
             _Hobby = [[NSString alloc]init];
             _ReviewsProposal = [[NSString alloc]init];
             _BossId = [[NSString alloc]init];
+            _iphoneAry = [[NSMutableArray alloc]init];
             
           NSDictionary *dict =[responseObject valueForKey:@"Boss"];
             NSMutableArray *infr= [NSMutableArray array];
@@ -409,21 +446,29 @@ BOOL isend;
           
             if (_Name ==nil) {
                 [infr addObject:@""];
+                _Name = @"";
             }else{
                 [infr addObject:_Name];
             }
+            
+            
+            
+//----------------------------------------
                 _Phone           = [dict valueForKey:@"Phone"];
             if (_Phone ==nil) {
+                _Phone = @"";
                 [infr addObject:@""];
             }else{
                 [infr addObject:_Phone];
             }
             NSArray *array = [[NSArray alloc]init];
             array =[_Phone componentsSeparatedByString:@","];
+            
             for (int i = 0; i<array.count; i++) {
                 [_iphoneAry addObject:array[i]];
             }
             
+//------------
             
                 _QCode           =[dict valueForKey:@"qcode"];
             if ([_QCode isKindOfClass:[NSNull class]]) {
@@ -437,6 +482,7 @@ BOOL isend;
            
             if ([_WCode isKindOfClass:[NSNull class]]) {
                 [infr addObject:@""];
+                _WCode = @"";
             }else{
                 [infr addObject:_WCode];
             }
@@ -450,9 +496,13 @@ BOOL isend;
             }
             
              _flag            = [dict valueForKey:@"flag"];
+            if ([_ReviewsProposal isKindOfClass:[NSNull class]]) {
+                _flag = @"";
+            }
             _SolarBirthday   =  [dict valueForKey:@"solarBirthday"];
             _LunarBirthday   = [dict valueForKey:@"lunarBirthday"];
             if ([_flag isKindOfClass:[NSNull class]] ) {
+                _flag = @"";
                 [infr addObject:@""];
             }else{
                 if ([_flag isEqualToString:@"1"]) {
@@ -530,6 +580,7 @@ BOOL isend;
             _Hobby = [[NSString alloc]init];
             _ReviewsProposal = [[NSString alloc]init];
             _BossId = [[NSString alloc]init];
+            _iphoneAry = [[NSMutableArray alloc]init];
         }
     } failure:^(NSError *error) {
         
@@ -564,7 +615,7 @@ BOOL isend;
         NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
         
         if ([status isEqualToString:@"0000"]) {
-            // [self dismissViewControllerAnimated:YES completion:nil];
+            
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"上传成功" andInterval:1.0];
             isend = NO; 
            [sender setTitle:@"编辑"];
@@ -580,17 +631,46 @@ BOOL isend;
     }];
 
 }
--(void)updeteBoss{
+-(void)updeteBoss:(UIBarButtonItem*)sender{
     //修改老板信息
     NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStoreBoss1.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.Storeid,@"store":@"2"};
-    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.Storeid,@"store":@"2",@"Name":_Name,@"Phone":_Phone,@"QCode":_QCode,@"Wcode":_WCode,@"Age":_Age,@"SolarBirthday":_SolarBirthday,@"LunarBirthday":_LunarBirthday,@"flag":_flag,@"Hobby":_Hobby,@"ReviewsProposal":_ReviewsProposal,@"id":_BossId};
+    NSData *pictureData = UIImagePNGRepresentation(self.TXImage.image);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+    [manager POST:uStr parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyMMddHHmm";
+        NSString *fileName = [formatter stringFromDate:[NSDate date]];
+        NSString *nameStr = @"file";
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-    } failure:^(NSError *error) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD hideHUDForView: self.view animated:NO];
+        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+        NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
         
-    } view:self.view MBPro:YES];
+        if ([status isEqualToString:@"0000"]) {
+            isend = NO;
+            [sender setTitle:@"编辑"];
+            
+            [self.tableView reloadData];
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改成功" andInterval:1.0];
+            
+            
+        } else {
+            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"图片上传失败" andInterval:1.0];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 @end

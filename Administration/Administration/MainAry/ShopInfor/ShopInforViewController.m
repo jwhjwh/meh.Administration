@@ -245,6 +245,10 @@
     shopname.City = self.city;
     shopname.County = self.area;
     shopname.strId = self.strId;
+    self.StoreName = @"";
+    self.provice = @"";
+    self.city = @"";
+    self.area = @"";
     [self.navigationController pushViewController:shopname animated:YES];
     
     

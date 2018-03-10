@@ -100,7 +100,7 @@
                    self.arrayT = [[self getList:self.arrayC[0][@"cityName"]]mutableCopy];
                    _countstr = self.arrayT[0][@"name"];
                }else{
-                   _countstr = self.arrayT[0];
+                   _countstr = self.arrayT[0][@"name"];
                }
            }
             

@@ -119,7 +119,10 @@
     
     NSString *usersid = [NSString stringWithFormat:@"%@",[USER_DEFAULTS  objectForKey:@"userid"]];
     
-    if ([usersid isEqualToString:_pusersid]) {
+    int ivalue = [_pusersid intValue];
+    NSString *string = [NSString stringWithFormat:@"%d",ivalue];
+    
+    if ([usersid isEqualToString:string]) {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
                                         initWithTitle:@"删除"
                                         style:UIBarButtonItemStylePlain

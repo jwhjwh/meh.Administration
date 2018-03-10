@@ -133,12 +133,11 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier =@"Cell";
-    //定义cell的复用性当处理大量数据时减少内存开销
-    RecordTableViewCell *cell = [infonTableview  dequeueReusableCellWithIdentifier:CellIdentifier];
+    RecordTableViewCell *cell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    
     if (cell ==nil)
     {
-        cell = [[RecordTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
+        cell = [[RecordTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;//右箭头
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -158,6 +157,8 @@
         cell.DepartmentIdLabel.text = @"已分享部门";
         cell.DepartmentIdImage.image = [UIImage imageNamed:@"fx_icof"];
     }
+    NSLog(@"%ld------=====%@",(long)indexPath.row,model.State);
+    
     switch ([model.State integerValue]) {
         case 1:
             break;

@@ -66,7 +66,7 @@
     }
     _timeArray=[NSArray arrayWithArray:array];
     
-
+    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -189,6 +189,22 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)rightItemAction{
+    if (_type ==nil) {
+        _type = [[NSString alloc]init];
+        _type = @"";
+    }
+    if (_year==nil) {
+        _year= [[NSString alloc]init];
+        _year = @"";
+    }
+    if (_prepen==nil) {
+        _prepen= [[NSString alloc]init];
+        _prepen = @"";
+    }
+    if (_beds ==nil) {
+        _beds= [[NSString alloc]init];
+        _prepen = @"";
+    }
     self.blcokString(_type,_year,_prepen,_beds);
     [self.navigationController popViewControllerAnimated:YES];
 }

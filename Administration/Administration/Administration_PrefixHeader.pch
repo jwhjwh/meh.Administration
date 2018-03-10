@@ -96,7 +96,7 @@
 #define kHeight [UIScreen mainScreen].bounds.size.height / 1334
 
 //请求图片接口
-#define KURLImage @"http://192.168.1.252:8080/images/"
+#define KURLImage @"http://192.168.1.250:8080/images/"
 //后台本地接口
 #define KURLHeader @"http://192.168.1.252:8080/ReportManagement/"
 //服务器接口

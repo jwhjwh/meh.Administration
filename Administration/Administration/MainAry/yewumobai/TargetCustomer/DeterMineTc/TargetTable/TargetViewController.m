@@ -40,6 +40,15 @@
         case 10:
             self.title= @"存在优势及问题";
             break;
+        case 11:
+            self.title= @"经营状况";
+            break;
+        case 12:
+            self.title= @"常到顾客";
+            break;
+        case 13:
+            self.title= @"拓客计划";
+            break;
         default:
             break;
     }

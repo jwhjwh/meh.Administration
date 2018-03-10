@@ -38,7 +38,9 @@
 @property (nonatomic,strong)NSString *StaffNumber;//员工人数
 @property (nonatomic,strong)NSString *JobExpires;//员工从业年限
 @property (nonatomic,strong)NSString *Problems;//存在的优势问题
-
+@property (nonatomic,strong)NSString *RunStatus;//经营状况
+@property (nonatomic,strong)NSString *Oftencustomers;//常到顾客
+@property (nonatomic,strong)NSString *TooKeenPlan;//拓客计划
 @end
 
 @implementation StoresViewController
@@ -53,18 +55,14 @@
     [btn addTarget: self action: @selector(buLiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
-    if ([_shopname isEqualToString:@"1"]) {
-        
-    }else{
-        UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
-        [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
-        [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
-        UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
-        self.navigationItem.rightBarButtonItem = rbuttonItem;
-    }
     
-     _nameArrs = @[@"店名",@"门店地址",@"乘车信息",@"面积",@"其他经营品牌",@"意向品牌",@"床位数",@"有效顾客",@"员工人数",@"员工从业年限",@"存在优势及问题",@"活动概要"];
+    UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(buringItem)];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightitem;
+    
+    
+     _nameArrs = @[@"店名",@"门店地址",@"乘车信息",@"面积",@"其他经营品牌",@"意向品牌",@"床位数",@"有效顾客",@"员工人数",@"员工从业年限",@"存在优势及问题",@"经营状况",@"常到顾客",@"拓客计划",@"活动概要"];
     _ligtextArrs = @[@"填写店名",@"",@"填写乘车信息",@"填写面积",@"填写其他经营品牌",@"填写意向品牌",@"选择床位数",@"选择有效顾客数量",@"选择员工人数",@"选择员工从业年限"];
     _TexttagArrs = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
     [self nsstingalloc];
@@ -77,15 +75,28 @@
     if ([_isofyou isEqualToString:@"1"]) {
          [self networking];
         //说明已提交店铺
+        
     }
    
+}
+-(void)buringItem{
+    if (_isend==YES) {
+        _isend= NO;
+        
+        [self.tableView reloadData];
+    }else{
+        _isend= YES;
+        
+        [self.tableView reloadData];
+    }
+    
 }
 -(void)networking{
     NSString *uStr =[NSString stringWithFormat:@"%@shop/selectstore.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopId,@"store":@"1",@"RoleId":self.strId};
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.StoreId,@"store":@"1",@"RoleId":self.strId};
     [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             NSArray *array=[responseObject valueForKey:@"list"];
@@ -99,6 +110,8 @@
                 [self nstingallocinit:model];
                 
             }
+            
+            _isend= NO;
             [self.tableView reloadData];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -118,6 +131,18 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            
+                UIButton *rightitem = [UIButton buttonWithType:UIButtonTypeCustom];
+                rightitem.frame =CGRectMake(self.view.frame.size.width-30, 0, 28,28);
+                [rightitem setBackgroundImage:[UIImage imageNamed:@"submit_ico01"] forState:UIControlStateNormal];
+                [rightitem addTarget: self action: @selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
+                UIBarButtonItem *rbuttonItem=[[UIBarButtonItem alloc]initWithCustomView:rightitem];
+                self.navigationItem.rightBarButtonItem = rbuttonItem;
+                _isend= YES;
+            
+            [self.tableView reloadData];
+            
         }
     } failure:^(NSError *error) {
         
@@ -140,15 +165,17 @@
    _JobExpires= [[NSString alloc]init];//员工从业年限
    _Problems= [[NSString alloc]init];//存在的优势问题
     
-    
+    _RunStatus= [[NSString alloc]init];//经营状况
+    _Oftencustomers= [[NSString alloc]init];//常到顾客
+    _TooKeenPlan= [[NSString alloc]init];//拓客计划
 }
 -(void)addViewremind{
     self.tableView= [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     NSString* phoneModel = [UIDevice devicePlatForm];
     if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
-        self.tableView.frame =CGRectMake(0,88,self.view.bounds.size.width,self.view.bounds.size.height-50);
+        self.tableView.frame =CGRectMake(0,88,self.view.bounds.size.width,self.view.bounds.size.height-90);
     }else{
-        self.tableView.frame =CGRectMake(0,65,self.view.bounds.size.width,self.view.bounds.size.height-50);
+        self.tableView.frame =CGRectMake(0,65,self.view.bounds.size.width,self.view.bounds.size.height-65);
     }
     self.tableView.dataSource=self;
     self.tableView.delegate =self;
@@ -176,10 +203,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    static NSString *identifi = @"gameCell";
-    inftionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifi];
-    if (!cell) {
-        cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+    inftionTableViewCell *cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+
+    if (cell ==nil)
+    {
+        cell = [[inftionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     /**
      *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
@@ -334,6 +362,58 @@
             //存在优势及问题
             break;
         case 11:{
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _RunStatus;
+            targetVC.modifi = _isend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==10) {
+                    if(_isend == YES) {
+                        _RunStatus = content;
+                    }
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+            
+            
+            
+            
+        }
+            break;
+        case 12:{
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _Oftencustomers;
+            targetVC.modifi = _isend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==10) {
+                    if(_isend == YES) {
+                        _Oftencustomers = content;
+                    }
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+        }
+            break;
+        case 13:{
+            TargetViewController *targetVC=[[TargetViewController alloc]init];
+            targetVC.number=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            targetVC.dateStr = _TooKeenPlan;
+            targetVC.modifi = _isend;
+            targetVC.blcokStr=^(NSString *content,int num){
+                if (num==10) {
+                    if(_isend == YES) {
+                        _TooKeenPlan = content;
+                    }
+                    
+                }
+            };
+            [self.navigationController pushViewController:targetVC animated:YES];
+        }
+            break;
+        case 14:{
             //活动概要
             NSString *storeid = [ShareModel shareModel].StoreId;
             if ([self.isofyou isEqualToString:@"1"]) {
@@ -355,9 +435,6 @@
                     [self.navigationController pushViewController:storesyear animated:YES];
                 }
             }
-            
-            
-            
         }
             break;
         default:
@@ -415,7 +492,7 @@
         NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
         NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
         NSDictionary *dic = [[NSDictionary alloc]init];
-        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.shopId,@"RoleId":self.strId,@"StoreName":_StoreName,@"Province":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"RideInfo":_RideInfo,@"Area":_Area,@"BrandBusiness":_BrandBusiness,@"IntentionBrand":_IntentionBrand,@"Berths":_Berths,@"ValidNumber":_ValidNumber,@"StaffNumber":_StaffNumber,@"JobExpires":_JobExpires,@"Problems":_Problems};
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.StoreId,@"RoleId":self.strId,@"StoreName":_StoreName,@"Province":_Province,@"City":_City,@"County":_County,@"Address":_Address,@"RideInfo":_RideInfo,@"Area":_Area,@"BrandBusiness":_BrandBusiness,@"IntentionBrand":_IntentionBrand,@"Berths":_Berths,@"ValidNumber":_ValidNumber,@"StaffNumber":_StaffNumber,@"JobExpires":_JobExpires,@"Problems":_Problems};
         [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];

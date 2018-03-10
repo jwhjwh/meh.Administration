@@ -179,7 +179,7 @@
     NSString *uuStr =[[NSString alloc]init];
     
     if ([self.tvvc isEqualToString:@"3"]) {
-          uuStr = [NSString stringWithFormat:@"%@shop/selectStoreState.action",KURLHeader];
+        uuStr = [NSString stringWithFormat:@"%@shop/selectStoreState.action",KURLHeader];
     }else{
         uuStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
     }
@@ -188,9 +188,9 @@
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
     if ([btn.titleLabel.text isEqualToString:@"我的"]) {
-       dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Type":@"1"};
+       dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Types":@"1"};
     }else{
-        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Type":@"2",@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
+        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Types":@"2",@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
     }
     [ZXDNetworking GET:uuStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
@@ -272,9 +272,10 @@
         int ivalue = [model.usersId intValue];
         NSString *modeluserid =[NSString stringWithFormat:@"%d",ivalue];
         if ([modeluserid isEqualToString:userid]) {
-            modify.andisofyou =@"1";
+            
+            [self.navigationController pushViewController:modify animated:YES];
         }else{
-            //modify.andisofyou =@"2";
+            //
             NSString *uuStr =[[NSString alloc]init];
             uuStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
             NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
@@ -314,13 +315,20 @@
                     [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该地区无陌拜记录" andInterval:1];
                 } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                     //有权限查看返回详情
-                    
+                     NSArray *arry=[responseObject valueForKey:@"recordInfo"];
+                    modify.one_arry = arry;
+                    modify.andisofyou =@"2";
+                    NSString *stringInt=[responseObject valueForKey:@"Authority"];
+                    int ivalue = [stringInt intValue];
+                    NSString *string = [NSString stringWithFormat:@"%d",ivalue];
+                    modify.one_Authority =string;
+                    [self.navigationController pushViewController:modify animated:YES];
                 }
             } failure:^(NSError *error) {
                 
             } view:self.view MBPro:YES];
         }
-        //[self.navigationController pushViewController:modify animated:YES];
+        //
     }
     
     

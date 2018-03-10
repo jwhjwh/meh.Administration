@@ -106,7 +106,12 @@
     _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
     if ([self.andisofyou isEqualToString:@"2"]) {
         //查看公司如果有权限看不走网络请求
-        
+        _InterNameAry = [[NSMutableArray alloc]init];
+        for (NSDictionary *dic in self.one_arry) {
+            ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
+            [model setValuesForKeysWithDictionary:dic];
+            [self modell:model];
+        }
     }else{
        [self selectworsh];
     }
@@ -172,143 +177,9 @@
             for (NSDictionary *dic in arry) {
                 ModifyVisitModel *model=[[ModifyVisitModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-                _CreatorId = model.UsersId;
-               
-                _shopid = [[NSString alloc]initWithFormat:@"%@",model.ShopId];//店铺id
-                _sigincity = [[NSString alloc]initWithFormat:@"%@%@%@%@",model.Province,model.City,model.County,model.Address];
-                _storeregion= [[NSString alloc]initWithFormat:@"%@ %@ %@ %@",model.Province,model.City,model.County,model.Address];
-                NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Dates substringWithRange:NSMakeRange(0, 10)]];
-                [_InterNameAry addObject:xxsj];//日期
-                _storedate = xxsj;
-                [_InterNameAry addObject:model.UsersName];
-                [_InterNameAry addObject:[NSString stringWithFormat:@"%@%@%@",model.Province,model.City,model.County]];//省市县
-                [_InterNameAry addObject:model.StoreName]; //店名
-                [_InterNameAry addObject:model.Address];//门店地址
-                [_InterNameAry addObject:model.ShopName];//店铺负责人姓名
-                _storehead = model.ShopName;
-                _storename = model.StoreName;
-                _storeaddree = model.Address;
-                _UserId = model.userId;
-                _strea = model.state;
-                _DepartmentId = model.departmentId;
-                if (model.Iphone ==nil) {
-                    //手机
-                    _storephone = @"";
-                     [_InterNameAry addObject:_storephone];
-                }else{
-                    _storephone = model.Iphone;
-                    [_InterNameAry addObject:_storephone];
-                    
-                }
-                if (model.Wcode ==nil) {
-                    //微信
-                     _storewxphone = @"";
-                    [_InterNameAry addObject:_storewxphone];
-                    
-                }else{
-                    _storewxphone = model.Wcode;
-                    [_InterNameAry addObject:_storewxphone];
-                }
+                [self modell:model];
                 
-                if (model.BrandBusiness ==nil) {
-                    //经营品牌
-                    _storebrand = @"";
-                    [_InterNameAry addObject:_storebrand];
-                    
-                }else{
-                    _storebrand =model.BrandBusiness;
-                    [_InterNameAry addObject:_storebrand];
-                    
-                }
-                
-                if (model.StoreLevel ==nil) {
-                    //门店档次分类
-                    _clascation = @"";
-                    [_InterNameAry addObject:_clascation];
-                    
-                }else{
-                    _clascation = model.StoreLevel;
-                    [_InterNameAry addObject:_clascation];
-                    
-                }
-                
-                NSMutableArray *dianmianAry = [[NSMutableArray alloc]init];
-                if (model.StoreType == nil) {
-                    //门店类型
-                    _stotrType = @"";
-                    [dianmianAry addObject:_stotrType];
-                }else{
-                    _stotrType = model.StoreType;
-                    [dianmianAry addObject:_stotrType];
-                }
-                if (model.PlantingDuration==nil) {
-                    //经营年限
-                    _planDur = @"";
-                    [dianmianAry addObject:_planDur];
-                }else{
-                    _planDur = model.PlantingDuration;
-                    [dianmianAry addObject:_planDur];
-                }
-                if (model.BeauticianNU==nil) {
-                    //美容师人数
-                    _brandBusin = @"";
-                    [dianmianAry addObject:_brandBusin];
-                }else{
-                    _brandBusin = model.BeauticianNU;
-                    [dianmianAry addObject: _brandBusin];
-                }
-                if (model.Berths == nil) {
-                    //床位数
-                    _Berths = @"";
-                    [dianmianAry addObject:_Berths];
-                }else{
-                    _Berths = model.Berths;
-                    [dianmianAry addObject:_Berths];
-                }
-                [_InterNameAry addObject:dianmianAry];
-                
-                if (model.ProjectBrief == nil) {
-                    //关注项目及所需要信息简要
-                    _Abrief = @"";
-                    [_InterNameAry addObject:_Abrief];
-                }else{
-                    _Abrief = model.ProjectBrief;
-                    [_InterNameAry addObject:_Abrief];
-                }
-                if (model.MeetingTime==nil) {
-                    //会谈时间
-                    _instructions = @"";
-                    [_InterNameAry addObject:_instructions];
-                }else{
-                    _instructions = model.MeetingTime;
-                    [_InterNameAry addObject:_instructions];
-                }
-                if (model.Modified == nil) {
-                    //备注
-                    _note = @"";
-                    [_InterNameAry addObject:_note];
-                }else{
-                    _note = model.Modified;
-                [_InterNameAry addObject:_note];
-                }
-                if (model.userId==nil && model.state ==nil &&model.departmentId ==nil) {
-                    
-                }else{
-                     _strea = model.state;
-                    _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注",@"当前状态:"];
-                    
-                }
-            }
-            _qiandao = YES;
-            [_infonTableview reloadData];
-            if ([self.andisofyou isEqualToString:@"1"]) {
-                
-            }else{
-                UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
-                NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-                [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
-                self.navigationItem.rightBarButtonItem = rightitem;
-                
+            
             }
         }
     } failure:^(NSError *error){
@@ -316,7 +187,150 @@
     } view:self.view MBPro:YES];
     
 }
-
+-(void)modell:(ModifyVisitModel *)model{
+    _CreatorId = model.UsersId;
+    
+    _shopid = [[NSString alloc]initWithFormat:@"%@",model.ShopId];//店铺id
+    _sigincity = [[NSString alloc]initWithFormat:@"%@%@%@%@",model.Province,model.City,model.County,model.Address];
+    _storeregion= [[NSString alloc]initWithFormat:@"%@ %@ %@ %@",model.Province,model.City,model.County,model.Address];
+    NSString *xxsj =  [[NSString alloc]initWithFormat:@"%@", [model.Dates substringWithRange:NSMakeRange(0, 10)]];
+    [_InterNameAry addObject:xxsj];//日期
+    _storedate = xxsj;
+    [_InterNameAry addObject:model.UsersName];
+    [_InterNameAry addObject:[NSString stringWithFormat:@"%@%@%@",model.Province,model.City,model.County]];//省市县
+    [_InterNameAry addObject:model.StoreName]; //店名
+    [_InterNameAry addObject:model.Address];//门店地址
+    [_InterNameAry addObject:model.ShopName];//店铺负责人姓名
+    _storehead = model.ShopName;
+    _storename = model.StoreName;
+    _storeaddree = model.Address;
+    _UserId = model.userId;
+    _strea = model.state;
+    _DepartmentId = model.departmentId;
+    if (model.Iphone ==nil) {
+        //手机
+        _storephone = @"";
+        [_InterNameAry addObject:_storephone];
+    }else{
+        _storephone = model.Iphone;
+        [_InterNameAry addObject:_storephone];
+        
+    }
+    if (model.Wcode ==nil) {
+        //微信
+        _storewxphone = @"";
+        [_InterNameAry addObject:_storewxphone];
+        
+    }else{
+        _storewxphone = model.Wcode;
+        [_InterNameAry addObject:_storewxphone];
+    }
+    
+    if (model.BrandBusiness ==nil) {
+        //经营品牌
+        _storebrand = @"";
+        [_InterNameAry addObject:_storebrand];
+        
+    }else{
+        _storebrand =model.BrandBusiness;
+        [_InterNameAry addObject:_storebrand];
+        
+    }
+    
+    if (model.StoreLevel ==nil) {
+        //门店档次分类
+        _clascation = @"";
+        [_InterNameAry addObject:_clascation];
+        
+    }else{
+        _clascation = model.StoreLevel;
+        [_InterNameAry addObject:_clascation];
+        
+    }
+    
+    NSMutableArray *dianmianAry = [[NSMutableArray alloc]init];
+    if (model.StoreType == nil) {
+        //门店类型
+        _stotrType = @"";
+        [dianmianAry addObject:_stotrType];
+    }else{
+        _stotrType = model.StoreType;
+        [dianmianAry addObject:_stotrType];
+    }
+    if (model.PlantingDuration==nil) {
+        //经营年限
+        _planDur = @"";
+        [dianmianAry addObject:_planDur];
+    }else{
+        _planDur = model.PlantingDuration;
+        [dianmianAry addObject:_planDur];
+    }
+    if (model.BeauticianNU==nil) {
+        //美容师人数
+        _brandBusin = @"";
+        [dianmianAry addObject:_brandBusin];
+    }else{
+        _brandBusin = model.BeauticianNU;
+        [dianmianAry addObject: _brandBusin];
+    }
+    if (model.Berths == nil) {
+        //床位数
+        _Berths = @"";
+        [dianmianAry addObject:_Berths];
+    }else{
+        _Berths = model.Berths;
+        [dianmianAry addObject:_Berths];
+    }
+    [_InterNameAry addObject:dianmianAry];
+    
+    if (model.ProjectBrief == nil) {
+        //关注项目及所需要信息简要
+        _Abrief = @"";
+        [_InterNameAry addObject:_Abrief];
+    }else{
+        _Abrief = model.ProjectBrief;
+        [_InterNameAry addObject:_Abrief];
+    }
+    if (model.MeetingTime==nil) {
+        //会谈时间
+        _instructions = @"";
+        [_InterNameAry addObject:_instructions];
+    }else{
+        _instructions = model.MeetingTime;
+        [_InterNameAry addObject:_instructions];
+    }
+    if (model.Modified == nil) {
+        //备注
+        _note = @"";
+        [_InterNameAry addObject:_note];
+    }else{
+        _note = model.Modified;
+        [_InterNameAry addObject:_note];
+    }
+    if (model.userId==nil && model.state ==nil &&model.departmentId ==nil) {
+        
+    }else{
+        _strea = model.state;
+        _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注",@"当前状态:"];
+        
+    }
+    _qiandao = YES;
+    [_infonTableview reloadData];
+    if ([self.andisofyou isEqualToString:@"1"]) {
+        
+    }else{
+        if ([_one_Authority isEqualToString:@"3"]) {
+            
+        }else{
+            UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"···" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+            [rightitem setTitleTextAttributes:dict forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = rightitem;
+        }
+        
+        
+    }
+}
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -552,16 +566,6 @@
     }
 
 }
-
-
-
-
-
-
-
-
-
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
@@ -840,17 +844,10 @@
         }else{
             NSArray *zwlbAry = [[NSArray alloc]init];
            
-                if ([_strea intValue] ==2) {
-                    //意向
-                    zwlbAry = @[@"填写记录",@"删除"];
-                }else if([_strea intValue]==3){
-                 // 目标
-                    zwlbAry = @[@"填写记录",@"删除"];
-                }else if([_strea intValue]==4){
-                    // 合作
-                    zwlbAry = @[@"填写记录",@"删除"];
-                }else{
+                if([_strea intValue]==1){
                     zwlbAry = @[@"修改陌拜记录",@"填写记录",@"升级为意向客户",@"升级为目标客户",@"删除"];
+                }else{
+                    zwlbAry = @[@"填写记录",@"删除"];
                 }
             [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
                 if ([_strea intValue] ==1) {
@@ -864,7 +861,6 @@
                         _animdd = @"2";
                         NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
                         fillVC.depant =string;
-                        
                         [self.navigationController pushViewController:fillVC animated:YES];
                     }else if(selectIndex == 2){
                         //升级意向客户
@@ -884,96 +880,21 @@
                             if (index == 2) {
                                 //确定
                                 [self InsertTargetVisitNetWorking];
-                                
                             }
                         };
                         [alertView showMKPAlertView];
                         
                     }else if(selectIndex == 4){
-                        //删除
-                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
-                        alertView.resultIndex = ^(NSInteger index) {
-                            if (index == 2) {
-                                NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
-                                NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-                                NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-                                NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid,@"Draft":@"2"};
-                                [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-                                    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];
-                                        alertView.resultIndex = ^(NSInteger index){
-                                            [self.navigationController popViewControllerAnimated:YES];
-                                        };
-                                        [alertView showMKPAlertView];
-                                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-                                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
-                                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-                                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
-                                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-                                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                                        alertView.resultIndex = ^(NSInteger index){
-                                            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                                            ViewController *loginVC = [[ViewController alloc] init];
-                                            UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                                            [self presentViewController:loginNavC animated:YES completion:nil];
-                                        };
-                                        [alertView showMKPAlertView];
-                                        
-                                    }
-                                } failure:^(NSError *error) {
-                                    
-                                } view:self.view MBPro:YES];
-                            }
-                        };
-                        [alertView showMKPAlertView];
-                        
+                       
+                        [self didsminss];
                     }
                 }else {
                     //目标 意向 合作一样
                     if (selectIndex == 0) {
-                        FillinfoViewController *fillVC = [[FillinfoViewController alloc]init];
-                        fillVC.points = self.strId;
-                        _animdd = @"2";
-                        NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
-                        fillVC.depant =string;
-                        [self.navigationController pushViewController:fillVC animated:YES];
+                        [self updateViewColler];
                     }else{
-                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
-                        alertView.resultIndex = ^(NSInteger index) {
-                            if (index == 2) {
-                                NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
-                                NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-                                NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-                                NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid,@"Draft":@"2"};
-                                [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
-                                    if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];
-                                        alertView.resultIndex = ^(NSInteger index){
-                                            [self.navigationController popViewControllerAnimated:YES];
-                                        };
-                                        [alertView showMKPAlertView];
-                                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
-                                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
-                                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
-                                        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
-                                    }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
-                                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
-                                        alertView.resultIndex = ^(NSInteger index){
-                                            [USER_DEFAULTS  setObject:@"" forKey:@"token"];
-                                            ViewController *loginVC = [[ViewController alloc] init];
-                                            UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-                                            [self presentViewController:loginNavC animated:YES completion:nil];
-                                        };
-                                        [alertView showMKPAlertView];
-                                        
-                                    }
-                                } failure:^(NSError *error) {
-                                    
-                                } view:self.view MBPro:YES];
-                            }
-                        };
-                        [alertView showMKPAlertView];
-                        
+                        //删除
+                        [self didsminss];
                     }
                 }
             } selectValue:^(NSString *selectValue) {
@@ -982,8 +903,52 @@
         }
 
     }
-    
-    
+}
+-(void)updateViewColler{
+    //跳转---填写新的
+    FillinfoViewController *fillVC = [[FillinfoViewController alloc]init];
+    fillVC.points = self.strId;
+    _animdd = @"2";
+    NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
+    fillVC.depant =string;
+    [self.navigationController pushViewController:fillVC animated:YES];
+}
+-(void)didsminss{
+    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
+    alertView.resultIndex = ^(NSInteger index) {
+        if (index == 2) {
+            NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
+            NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+            NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+            NSDictionary *dic= @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"id":self.ModifyId,@"Types":@"1",@"shopId":_shopid,@"Draft":@"2"};
+            [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+                if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"删除成功" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [self.navigationController popViewControllerAnimated:YES];
+                    };
+                    [alertView showMKPAlertView];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"0001"]) {
+                    [ELNAlerTool showAlertMassgeWithController:self andMessage:@"删除失败" andInterval:1.0];
+                }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]) {
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+                    alertView.resultIndex = ^(NSInteger index){
+                        [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                        ViewController *loginVC = [[ViewController alloc] init];
+                        UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                        [self presentViewController:loginNavC animated:YES completion:nil];
+                    };
+                    [alertView showMKPAlertView];
+                    
+                }
+            } failure:^(NSError *error) {
+                
+            } view:self.view MBPro:YES];
+        }
+    };
+    [alertView showMKPAlertView];
 }
 -(void)UploadInformation :(NSString *)draft{
         NSString *uStr =[NSString stringWithFormat:@"%@shop/insertShop.action",KURLHeader];
@@ -997,7 +962,8 @@
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
                 Modify = NO;
                 _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注",@"当前状态:"];
-                [_infonTableview reloadData];
+                //[_infonTableview reloadData];
+                [self selectworsh];
                 [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -1046,6 +1012,8 @@
                     ttvc.cellend = NO;
                     [self.navigationController pushViewController:ttvc animated:YES];
 
+                }else{
+                    [self selectworsh];
                 }
             };
             [yishengji showMKPAlertView];
@@ -1098,6 +1066,8 @@
                     NSLog(@"%@,%@",_visiId,_strId);
                     [self.navigationController pushViewController:intabel animated:YES];
 
+                }else{
+                    [self selectworsh];
                 }
             };
             [yishengji showMKPAlertView];

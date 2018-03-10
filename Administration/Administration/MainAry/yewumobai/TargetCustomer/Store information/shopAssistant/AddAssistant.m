@@ -100,14 +100,21 @@
                 }else{
                     [_nsmuary addObject:[dict valueForKey:@"age"]];
                 }
-                
-                NSInteger k = [[dict valueForKey:@"flag"] integerValue];
+                NSInteger k ;
+                if ([[dict valueForKey:@"flag"]isEqual:[NSNull null]]) {
+                    k=0;
+                }else{
+                    k=  [[dict valueForKey:@"flag"] integerValue];
+                }
+               
                 NSString *stringInt = [NSString stringWithFormat:@"%ld",k];
                 _flaig = stringInt;
                 _LunarBirthday = [dict valueForKey:@"lunarBirthday"];
                 _SolarBirthday = [dict valueForKey:@"solarBirthday"];
                 if ([stringInt isEqualToString:@"1"]) {
                     [_nsmuary addObject:[dict valueForKey:@"lunarBirthday"]];
+                }else if ([stringInt isEqualToString:@"0"]){
+                     [_nsmuary addObject:@""];
                 }else{
                     [_nsmuary addObject:[dict valueForKey:@"solarBirthday"]];
                 }
@@ -272,56 +279,62 @@
 }
 
 -(void)insertStoreClerk:(UIBarButtonItem *)btn{
-   //NSString * flag = [ShareModel shareModel].flag;
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/insertStoreClerk.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dict=@{@"appkey":apKeyStr,
-                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
-                         @"flag":_flaig,
-                         @"SolarBirthday":_SolarBirthday,
-                         @"LunarBirthday":_LunarBirthday,
-                         @"Storeid":self.shopid,
-                         @"Name":_namestr,
-                         @"Age":_agestr,
-                         @"Hobby":_HobbyStr,
-                         @"Feature":_FeatureStr,
-                         @"Specialty":_Specialty,
-                         @"OverallMerit":_OverallMerit,
-                         @"Phone":_iphonestr};
-    NSData *pictureData = UIImagePNGRepresentation(self.TXImage.image);
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
-    [manager POST:uStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyMMddHHmm";
-        NSString *fileName = [formatter stringFromDate:[NSDate date]];
-        NSString *nameStr = @"file";
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    if ([_namestr isEqualToString:@""]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写姓名" andInterval:1.0];
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [MBProgressHUD hideHUDForView: self.view animated:NO];
-        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
-        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
-        NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
-        
-        if ([status isEqualToString:@"0000"]) {
-           
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"上传成功" andInterval:1.0];
+    }else{
+        NSString *uStr =[NSString stringWithFormat:@"%@shop/insertStoreClerk.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dict=@{@"appkey":apKeyStr,
+                             @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                             @"flag":_flaig,
+                             @"SolarBirthday":_SolarBirthday,
+                             @"LunarBirthday":_LunarBirthday,
+                             @"Storeid":self.shopid,
+                             @"Name":_namestr,
+                             @"Age":_agestr,
+                             @"Hobby":_HobbyStr,
+                             @"Feature":_FeatureStr,
+                             @"Specialty":_Specialty,
+                             @"OverallMerit":_OverallMerit,
+                             @"Phone":_iphonestr};
+        NSData *pictureData = UIImagePNGRepresentation(self.TXImage.image);
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+        [manager POST:uStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyMMddHHmm";
+            NSString *fileName = [formatter stringFromDate:[NSDate date]];
+            NSString *nameStr = @"file";
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
             
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUDForView: self.view animated:NO];
+            NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+            NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+            NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
             
-            [self.tableView reloadData];
+            if ([status isEqualToString:@"0000"]) {
+                
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"上传成功" andInterval:1.0];
+                
+                
+                [self.tableView reloadData];
+                
+            } else {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"上传失败" andInterval:1.0];
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-        } else {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"上传失败" andInterval:1.0];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+        }];
+    }
+    
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -462,59 +475,64 @@
     return cell;
 }
 -(void)updateStoreClerk1:(UIBarButtonItem *)btn{
-    NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStoreClerk1.action",KURLHeader];
-    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
-    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
-    NSDictionary *dict=@{@"appkey":apKeyStr,
-                         @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
-                         @"flag":_flaig,
-                         @"SolarBirthday":_SolarBirthday,
-                         @"LunarBirthday":_LunarBirthday,
-                         @"Storeid":self.shopid,
-                         @"Name":_namestr,
-                         @"Age":_agestr,
-                         @"Hobby":_HobbyStr,
-                         @"Feature":_FeatureStr,
-                         @"Specialty":_Specialty,
-                         @"OverallMerit":_OverallMerit,
-                         @"Phone":_iphonestr,
-                         @"RoleId":self.strId,
-                         @"id":self.StoreClerkId
-                         };
-    NSData *pictureData = UIImagePNGRepresentation(self.TXImage.image);
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
-    [manager POST:uStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyMMddHHmm";
-        NSString *fileName = [formatter stringFromDate:[NSDate date]];
-        NSString *nameStr = @"file";
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [MBProgressHUD hideHUDForView: self.view animated:NO];
-        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
-        NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
-        NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
-        
-        if ([status isEqualToString:@"0000"]) {
-        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
-            alertView.resultIndex = ^(NSInteger index){
-                btn.title =@"编辑";
-                self.issssend = NO;
-                [self.tableView reloadData];
-            };
-            [alertView showMKPAlertView];
-        } else {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    if ([_namestr isEqualToString:@""]) {
+        [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请填写姓名" andInterval:1.0];
+    }else{
+        NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStoreClerk1.action",KURLHeader];
+        NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+        NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+        NSDictionary *dict=@{@"appkey":apKeyStr,
+                             @"usersid":[USER_DEFAULTS  objectForKey:@"userid"],
+                             @"flag":_flaig,
+                             @"SolarBirthday":_SolarBirthday,
+                             @"LunarBirthday":_LunarBirthday,
+                             @"Storeid":self.shopid,
+                             @"Name":_namestr,
+                             @"Age":_agestr,
+                             @"Hobby":_HobbyStr,
+                             @"Feature":_FeatureStr,
+                             @"Specialty":_Specialty,
+                             @"OverallMerit":_OverallMerit,
+                             @"Phone":_iphonestr,
+                             @"RoleId":self.strId,
+                             @"id":self.StoreClerkId
+                             };
+        NSData *pictureData = UIImagePNGRepresentation(self.TXImage.image);
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",@"image/jpeg",@"image/png",@"image/gif",@"image/tiff",@"application/octet-stream",@"text/json",nil];
+        [manager POST:uStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyMMddHHmm";
+            NSString *fileName = [formatter stringFromDate:[NSDate date]];
+            NSString *nameStr = @"file";
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [formData appendPartWithFileData:pictureData name:nameStr fileName:[NSString stringWithFormat:@"%@.png", fileName] mimeType:@"image/png"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUDForView: self.view animated:NO];
+            NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+            NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSUTF8StringEncoding error:nil];
+            NSString *status =  [NSString stringWithFormat:@"%@",[dict valueForKey:@"status"]];
+            
+            if ([status isEqualToString:@"0000"]) {
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    btn.title =@"编辑";
+                    self.issssend = NO;
+                    [self.tableView reloadData];
+                };
+                [alertView showMKPAlertView];
+            } else {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"修改失败" andInterval:1.0];
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
+    
 }
 -(void)tapPage3:(UITapGestureRecognizer*)sender
 {

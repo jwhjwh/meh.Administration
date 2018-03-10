@@ -21,4 +21,6 @@
 
 @property (nonatomic,strong)NSString *shopId;
 
+@property (nonatomic,strong)NSArray *one_arry;
+@property (nonatomic,strong)NSString *one_Authority;
 @end
