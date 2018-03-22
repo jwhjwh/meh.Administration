@@ -148,6 +148,9 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工" Size:20.0];
+            _tableView.emptyView.hidden = NO;
         }
         if (self.dataArray.count==0) {
             [_tableView addEmptyViewWithImageName:@"" title:@"暂无员工" Size:20.0];

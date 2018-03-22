@@ -87,7 +87,7 @@
             [self.proviceAry addObject:model.fullname];
             [self.proviceNameidAry addObject:model.mid];
         }
-        NSLog(@"%@",self.proviceAry);
+       
         
         [self ui];
     } failure:^(NSError *error) {
@@ -148,10 +148,7 @@
     
     
     
-    
-    
-    
-    
+    [self nsstingalloc];
     
     UILabel *ssjlLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,_conditionFilterView.bottom+80, [UIScreen mainScreen].bounds.size.width, 30)];
     ssjlLabel.font = [UIFont systemFontOfSize:14];
@@ -238,7 +235,12 @@
 
 }
 -(void)rightItemAction:(UIBarButtonItem*)sender{
-
+    
+    NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:_provice,@"provice",_city,@"city",_area,@"area",nil];
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    [dataDic setObject:dic1 forKey:@"搜索记录"];
+    [dataDic writeToFile:_filename atomically:YES];
+    
     ShopNameViewController *shopname= [[ShopNameViewController alloc]init];
     shopname.StoreName = self.StoreName;
     shopname.Province = self.provice;
@@ -265,7 +267,7 @@
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *path=[paths objectAtIndex:0];
     NSLog(@"path = %@",path);
-    _filename=[path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",self.strId]];
+    _filename=[path stringByAppendingPathComponent:[NSString stringWithFormat:@"店家信息搜索记录.plist"]];
     //读文件
     NSDictionary* dic2 = [NSDictionary dictionaryWithContentsOfFile:_filename];
     if(dic2 == nil)
@@ -286,9 +288,9 @@
         _areaNameAry = [[NSMutableArray alloc]init];
         NSDictionary *dic = [[NSDictionary alloc]init];
         dic = dataDictionary[@"搜索记录"];
-        _proviceNameAry =dic[@"provice"];
-        _cityNameAry =dic[@"city"];
-        _areaNameAry =dic[@"area"];
+        [_proviceNameAry addObject: dic[@"provice"]];
+        [_cityNameAry addObject:dic[@"city"]];
+        [_areaNameAry addObject:dic[@"area"]];
         [infonTableview reloadData];
         
     }

@@ -133,9 +133,10 @@
             [self endRefresh];
             
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有店家" andInterval:1.0];
             [infonTableview.mj_footer endRefreshingWithNoMoreData];
-            [self endRefresh];
+            [infonTableview addEmptyViewWithImageName:@"" title:@"该区域没有店家" Size:20.0];
+            infonTableview.emptyView.hidden = NO;
+             [self endRefresh];
             return;
             
         }

@@ -235,8 +235,9 @@
                 };
                 [alertView showMKPAlertView];
             }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有陌拜记录" andInterval:1.0];
                 [infonTableview.mj_footer endRefreshingWithNoMoreData];
+                [infonTableview addEmptyViewWithImageName:@"" title:@"暂无陌拜记录" Size:20.0];
+                infonTableview.emptyView.hidden = NO;
                 
                 return;
                 

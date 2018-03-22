@@ -15,11 +15,17 @@
 @property (nonatomic,retain)UITableView *tableView;
 
 @property (nonatomic ,retain)NSArray *nameArrs;
-
+@property (nonatomic ,retain)NSString *selfnewcview;
 
 @end
 
 @implementation StoreinforViewController
+-(void)viewWillAppear:(BOOL)animated{
+    if ([_selfnewcview isEqualToString:@"1"]) {
+         [self selfnewview];
+    }
+   
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = _titleName;
@@ -31,7 +37,7 @@
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
     _nameArrs = @[@"门店信息",@"老板信息",@"店员信息",@"顾客信息"];
-    
+    _selfnewcview = [[NSString alloc]init];
     if ([_shopifot isEqualToString:@"1"]) {
         UIBarButtonItem *rightitem = [[UIBarButtonItem alloc] initWithTitle:@"合作" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightItemAction:)];
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -39,6 +45,40 @@
         self.navigationItem.rightBarButtonItem = rightitem;
     }
     [self addViewremind];
+}
+-(void)selfnewview{
+    NSString *uStr =[NSString stringWithFormat:@"%@shop/selectStoredepartmentId.action",KURLHeader];
+    NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
+    NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    NSString *compid=[NSString stringWithFormat:@"%@",[USER_DEFAULTS objectForKey:@"companyinfoid"]];
+    dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"Storeid":self.Storeid,@"CompanyInfoId":compid};
+    [ZXDNetworking GET:uStr parameters:dic success:^(id responseObject) {
+        if([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]){
+            self.DepartmentName = [responseObject valueForKey:@"DepartmentName"];
+            [self.tableView reloadData];
+        }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"1001"]){
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"登录超时,请重新登录" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                [USER_DEFAULTS  setObject:@"" forKey:@"token"];
+                ViewController *loginVC = [[ViewController alloc] init];
+                UINavigationController *loginNavC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                [self presentViewController:loginNavC animated:YES completion:nil];
+            };
+            [alertView showMKPAlertView];
+        }
+    } failure:^(NSError *error) {
+        
+    } view:self.view MBPro:YES];
 }
 -(void)rightItemAction:(UIBarButtonItem *)btn{
     PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定为合作" sureBtn:@"确认" cancleBtn:@"取消"];
@@ -102,8 +142,6 @@
     [self.tableView setTableFooterView:footView];
     UILabel *deparname = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width, 30)];
     
-    
-    
     deparname.font = [UIFont systemFontOfSize:14];
     [footView addSubview:deparname];
     
@@ -131,7 +169,7 @@
     
 }
 -(void)TouchLog:(UIButton *)btn{
-    
+    _selfnewcview = @"1";
     storesDepartment *storesVC = [[storesDepartment alloc]init];
     storesVC.shopId = self.shopId;
     storesVC.Storeid = self.Storeid;
@@ -155,10 +193,10 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifi = @"gameCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifi];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"bcCell"];
     }
     /**
      *  单元格的选中类型一定不能设置为 UITableViewCellSelectionStyleNone，如果加上这一句，全选勾选不出来
@@ -223,28 +261,7 @@
         
     
 }
--(void)notpushe{
-    
-//
-//        storesVC.storeName = _StoreName;
-//        storesVC.province = _Province;
-//        storesVC.city =_City;
-//        storesVC.county = _County;
-//        storesVC.address = _Address;
-//        storesVC.rideinfo = _RideInfo;
-//        storesVC.area = _Area;
-//        storesVC.brandbusiness = _BrandBusiness;
-//        storesVC.intentionbrand = _IntentionBrand;
-//        storesVC.berths = _Berths;
-//        storesVC.valinumber = _ValidNumber;
-//        storesVC.staffnumber = _StaffNumber;
-//        storesVC.jobexpires = _JobExpires;
-//        storesVC.problems = _Problems;
-//
-//        storesVC.strId = self.strId;
-//
-    
-}
+
 
 -(void)buLiftItem{
     [self.navigationController popViewControllerAnimated:YES];

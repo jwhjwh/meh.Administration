@@ -22,6 +22,7 @@
 @property (nonatomic,strong)UIButton*comBtn;
 @property (nonatomic,strong)UIButton*meBtn;
 @property (nonatomic,strong)NSMutableArray* InterNameAry;
+@property (nonatomic,assign)int pagenum;
 @end
 
 @implementation OneDateViewController
@@ -38,6 +39,14 @@
     [btn addTarget: self action: @selector(buiftItem) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem=[[UIBarButtonItem alloc]initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem=buttonItem;
+    
+}
+-(void)endRefresh{
+    if (_pagenum == 1) {
+        [infonTableview.mj_header endRefreshing];
+    }else{
+        [infonTableview.mj_footer endRefreshing];
+    }
     
 }
 -(void)worshipSearchUI{
@@ -122,6 +131,20 @@
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);
     }];
     [self OneDateNetworking:_meBtn];
+    __weak typeof(self) weakSelf = self;
+    //默认【下拉刷新】
+    infonTableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        //_dataArray = [NSMutableArray array];
+        [weakSelf getNetworkData:YES];
+        [infonTableview reloadData];
+    }];
+    
+    //默认【上拉加载】
+    infonTableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        //Call this Block When enter the refresh status automatically
+        [weakSelf getNetworkData:NO];
+        //[self.tableView reloadData];
+    }];
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -157,6 +180,7 @@
     NSLog(@"点我");
     meBtn.backgroundColor =GetColor(203, 176, 219, 1);
     _comBtn.backgroundColor = [UIColor whiteColor];
+    _pagenum = 1;
     [self OneDateNetworking:meBtn];
 }
 
@@ -173,6 +197,14 @@
 -(void)buiftItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
+-(void)getNetworkData:(BOOL)isRefresh{
+    if (isRefresh) {
+        _pagenum = 1;
+    }else{
+        _pagenum++;
+    }
+    [self OneDateNetworking:_meBtn];
+}
 -(void)OneDateNetworking :(UIButton*)btn{
     //selectStoreState 公司 selectStoreState
     
@@ -183,15 +215,26 @@
     }else{
         uuStr =[NSString stringWithFormat:@"%@shop/selectWorshipRecord.action",KURLHeader];
     }
-    
+    NSString *pageStr=[NSString stringWithFormat:@"%d",_pagenum];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
     NSDictionary *dic = [[NSDictionary alloc]init];
-    if ([btn.titleLabel.text isEqualToString:@"我的"]) {
-       dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Types":@"1"};
+    if ([self.tvvc isEqualToString:@"3"]) {
+        //确定合作客户
+        if ([btn.titleLabel.text isEqualToString:@"我的"]) {
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"types":@"1",@"nu":pageStr};
+        }else{
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"types":@"2",@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"],@"nu":pageStr};
+        }
     }else{
-        dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Types":@"2",@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"]};
+        //陌拜记录
+        if ([btn.titleLabel.text isEqualToString:@"我的"]) {
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Types":@"1",@"nu":pageStr};
+        }else{
+            dic = @{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS objectForKey:@"userid"],@"RoleId":self.strId,@"province":self.provice,@"city":self.city,@"county":self.area,@"Types":@"2",@"CompanyInfoId":[USER_DEFAULTS objectForKey:@"companyinfoid"],@"nu":pageStr};
+        }
     }
+    
     [ZXDNetworking GET:uuStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
         //recordInfo
@@ -227,9 +270,11 @@
             };
             [alertView showMKPAlertView];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
-            _InterNameAry = [[NSMutableArray alloc]init];
-            [infonTableview reloadData];
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"该地区无陌拜记录" andInterval:1];
+            
+            [infonTableview.mj_footer endRefreshingWithNoMoreData];
+            [infonTableview addEmptyViewWithImageName:@"" title:@"该地区暂无客户" Size:20.0];
+            infonTableview.emptyView.hidden = NO;
+        
         }
 
     } failure:^(NSError *error) {

@@ -97,7 +97,7 @@
     maskLayer.path = maskPath.CGPath;
     _logoImage.layer.mask = maskLayer;
      NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
-   [_logoImage sd_setBackgroundImageWithURL:[NSURL URLWithString:logoStr] forState:UIControlStateNormal placeholderImage:[UIImage  imageNamed:@"tx23"]options:EMSDWebImageRefreshCached];
+   [_logoImage sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,logoStr]] forState:UIControlStateNormal placeholderImage:[UIImage  imageNamed:@"tx23"]options:EMSDWebImageRefreshCached];
     [_logoImage addTarget:self action:@selector(xinxiTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:_logoImage];
    

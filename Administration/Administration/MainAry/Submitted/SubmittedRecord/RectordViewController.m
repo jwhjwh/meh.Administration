@@ -120,7 +120,13 @@
                 [self presentViewController:loginNavC animated:YES completion:nil];
             };
             [alertView showMKPAlertView];
-        }    } failure:^(NSError *error) {
+        }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            [self.tableView addEmptyViewWithImageName:@"" title:@"暂无图片报岗" Size:20.0];
+            self.tableView.emptyView.hidden = NO;
+        }
+        
+    } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
     

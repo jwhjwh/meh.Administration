@@ -143,7 +143,7 @@ BOOL isend;
             bossname.delegate = self;
             [bossname addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
             bossname.enabled = isend;
-            bossname.text = _InfonAry[indexPath.section][indexPath.row];
+            bossname.text = _Name;
             [cell addSubview:bossname];
         }else if (indexPath.row == 1){
             
@@ -198,10 +198,19 @@ BOOL isend;
             bossname.delegate = self;
             [bossname addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
             bossname.enabled = isend;
-            bossname.text =_InfonAry[indexPath.section][indexPath.row];
+           
             [cell addSubview:bossname];
-            if (indexPath.row ==4) {
+            if (indexPath.row ==5) {
                 //生日提醒
+            }else if(indexPath.row ==2){
+                //qq
+                bossname.text = _QCode;
+            }else if(indexPath.row ==3){
+                //微信
+                bossname.text = _WCode;
+            }else if(indexPath.row ==4){
+                //年龄
+                bossname.text = _Age;
             }
         }else if (indexPath.row ==7){
             //老板爱好
@@ -214,7 +223,7 @@ BOOL isend;
             bossname.delegate = self;
             [bossname addTarget:self action:@selector(PersonFieldText:) forControlEvents:UIControlEventEditingChanged];
             bossname.enabled = isend;
-            bossname.text = _InfonAry[indexPath.section][indexPath.row];
+            bossname.text = _Hobby;
             [cell addSubview:bossname];
 
         }else{
@@ -256,23 +265,24 @@ BOOL isend;
     switch (textField.tag) {
         case 1:
             _Name = textField.text;
-            NSLog(@"_Name:%@",_Name);
+            _InfonAry[2][textField.tag] = _Name;
             break;
         case 2:
             _QCode =textField.text;
              NSLog(@"_QCode:%@",_QCode);
+            _InfonAry[2][textField.tag] = _QCode;
             break;
         case 3:
             _WCode =textField.text;
-             NSLog(@"_WCode:%@",_WCode);
+             _InfonAry[2][textField.tag] = _WCode;
             break;
         case 4:
             _Age = textField.text;
-             NSLog(@"_Age:%@",_Age);
+             _InfonAry[2][textField.tag] = _Age;
             break;
         case 7:
             _Hobby = textField.text;
-             NSLog(@"_Hobby:%@",_Hobby);
+             _InfonAry[2][textField.tag] = _Hobby;
             break;
         
         default:
@@ -296,7 +306,9 @@ BOOL isend;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==1) {
-        if (indexPath.row ==6) {
+        if (indexPath.row ==5) {
+            //生日
+        }else if (indexPath.row ==6) {
             BossHome *bhvc = [[BossHome alloc]init];
             bhvc.bossid = _BossId;
             bhvc.strId = self.strId;
@@ -569,6 +581,7 @@ BOOL isend;
            
             [self addViewremind];
             _Name = [[NSString alloc]init];
+            _Name = @"";
             _Phone = [[NSString alloc]init];
             _QCode = [[NSString alloc]init];
             _WCode = [[NSString alloc]init];

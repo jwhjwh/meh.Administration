@@ -110,6 +110,7 @@
         storeVC.shopId =self.shopId;
         storeVC.strId = self.strId;
         storeVC.isend = NO;
+        
         storeVC.Storeid = self.Storeid;
         storeVC.titleName = self.shopname;
         storeVC.DepartmentName = self.DepartmentName;

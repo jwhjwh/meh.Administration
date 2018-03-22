@@ -55,11 +55,22 @@
     [button addTarget:self action:@selector(gotoAdd) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = nil;
-    NSString *roleID = [USER_DEFAULTS valueForKey:@"roleId"];
-    if ([roleID isEqualToString:@"1"]||[roleID isEqualToString:@"7"]) {
-        self.navigationItem.rightBarButtonItem = rightItem;
-    }
+    NSString *roleID = [USER_DEFAULTS valueForKey:@"roleIds"];
+    NSArray  *array = [roleID componentsSeparatedByString:@","];
     
+    
+     BOOL isbool = [array containsObject: @"1"];
+    if (isbool==0) {
+        //有
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }else{
+        //没有
+        BOOL twobool =[array containsObject: @"7"];
+        if (twobool==0) {
+            //有
+             self.navigationItem.rightBarButtonItem = rightItem;
+        }
+    }
     
     self.tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     self.tableView .delegate = self;

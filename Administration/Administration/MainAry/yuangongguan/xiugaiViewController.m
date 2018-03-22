@@ -32,7 +32,14 @@
                                     action:@selector(tijiaoClick)];
     rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(Scree_width/2-50, 74,100, 30)];
+    NSString* phoneModel = [UIDevice devicePlatForm];
+    
+    UILabel *label=[[UILabel alloc]init];
+    if ([phoneModel isEqualToString:@"iPhone Simulator"]||[phoneModel isEqualToString:@"iPhone X"]) {
+        label.frame =CGRectMake(Scree_width/2-50, 90,100, 30);
+    }else{
+         label.frame =CGRectMake(Scree_width/2-50, 74,100, 30);
+    }
     label.text=@"重置新密码";
     label.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:label];
@@ -90,6 +97,8 @@
                     [self presentViewController:loginNavC animated:YES completion:nil];
                 };
                 [alertView showMKPAlertView];
+            } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"0003"]) {
+                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有权限重置该员工密码" andInterval:1.0];
             }
         }failure:^(NSError *error) {
             

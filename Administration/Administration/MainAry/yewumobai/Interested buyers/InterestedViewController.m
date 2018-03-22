@@ -206,10 +206,11 @@
             };
             [alertView showMKPAlertView];
         }else if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有意向客户表" andInterval:1.0];
+           
             [infonTableview.mj_footer endRefreshingWithNoMoreData];
+            [infonTableview addEmptyViewWithImageName:@"" title:@"暂无意向客户" Size:20.0];
+            infonTableview.emptyView.hidden = NO;
             
-            return;
             
         }
         

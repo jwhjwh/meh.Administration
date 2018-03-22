@@ -3527,8 +3527,8 @@
 				1F6833BB1E72966700F74D50 /* businessViewController.m */,
 				620E2F971FB0593A002DE6A5 /* CooperationViewController.h */,
 				620E2F981FB0593A002DE6A5 /* CooperationViewController.m */,
-				620ED3FD1FB2AA84003945A5 /* CoperationModel.h */,
 				620ED3FE1FB2AA84003945A5 /* CoperationModel.m */,
+				620ED3FD1FB2AA84003945A5 /* CoperationModel.h */,
 				62F2206C1F905BFE004163A4 /* TargetCustomer */,
 				1F71B88F1F887E8600C3638F /* newVisit */,
 				6266E3401F738ED5002B1303 /* Interested buyers */,
@@ -6101,7 +6101,7 @@
 				TargetAttributes = {
 					6218D04C1E4E95FA00299989 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = X3D9UD9RUS;
+						DevelopmentTeam = 9L2NSSHB4V;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -7216,7 +7216,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9L2NSSHB4V;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7242,7 +7243,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.date;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ASDF;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7261,7 +7262,8 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = X3D9UD9RUS;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9L2NSSHB4V;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7287,7 +7289,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = jwh.date;
+				PRODUCT_BUNDLE_IDENTIFIER = jwh.ASDF;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

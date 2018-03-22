@@ -149,6 +149,7 @@
             };
             [alertView showMKPAlertView];
         }else if([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]){
+            [infonTableview.mj_footer endRefreshingWithNoMoreData];
             [infonTableview addEmptyViewWithImageName:@"" title:@"暂无合作客户" Size:20.0];
             infonTableview.emptyView.hidden = NO;
         }

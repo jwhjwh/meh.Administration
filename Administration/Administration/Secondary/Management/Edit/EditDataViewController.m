@@ -148,7 +148,7 @@
 
             
              _logImage=model.icon;
-            
+            [USER_DEFAULTS  setObject:_logImage forKey:@"logoImage"];
             [_arr addObject:@"头像"];
             [_infoArray addObject:@""];
             [_arr addObject:@"账号"];

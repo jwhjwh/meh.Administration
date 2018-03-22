@@ -235,7 +235,7 @@
         NSString *logoStr = [USER_DEFAULTS  objectForKey:@"logoImage"];
         
        _TXImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-80, 20, 40, 40)];
-        [_TXImage sd_setImageWithURL:[NSURL URLWithString:logoStr] placeholderImage:[UIImage  imageNamed:@"tx23"]];
+        [_TXImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURLImage,logoStr]] placeholderImage:[UIImage  imageNamed:@"tx23"]];
         _TXImage.backgroundColor = [UIColor whiteColor];
         _TXImage.layer.masksToBounds = YES;
         _TXImage.layer.cornerRadius = 20.0;//设置圆角

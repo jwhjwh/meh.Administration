@@ -14,7 +14,7 @@
 #import "XFDaterView.h"
 #import "CityChoose.h"
 #import "SelectAlert.h"
-
+#import "busableController.h"
 #import "SiginViewController.h"
 
 #import<BaiduMapAPI_Map/BMKMapView.h>
@@ -232,6 +232,7 @@
                     _textField.text=_storehead;
                 }else if (indexPath.row==6) {
                     _textField.text=_storephone;
+                    _textField.keyboardType = UIKeyboardTypeNumberPad;
                 }else if (indexPath.row==7) {
                     _textField.text=_storewxphone;
                 }
@@ -374,7 +375,7 @@
     
     if (indexPath.section == 0) {
         if (Upload ==YES) {
-            //走修改接口
+            //走修改接口 第二次签到
             [self twosing:@"1"];
         }else{
             [self SigintNetWorking];
@@ -600,13 +601,17 @@
         NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":RoleId,@"Draft":@"1",@"CompanyId":compid,@"UsersName":[USER_DEFAULTS objectForKey:@"name"],@"DepartmentID":self.depant};
         [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
             if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-                _CreatorId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"UserId"]];
-                _ShopId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"ShopId"]];
-                _ModifyId = [NSString stringWithFormat:@"%@",[responseObject valueForKey:@"WorshipRecordId"]];
-                _islode=NO;
-                Upload= YES;
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"提交成功" andInterval:1.0];
                 
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"提交成功" sureBtn:@"确认" cancleBtn:nil];
+                alertView.resultIndex = ^(NSInteger index){
+                    
+                    for (busableController *controller in self.navigationController.viewControllers) {
+                        if ([controller isKindOfClass:[busableController class]]) {
+                            [self.navigationController popToViewController:controller animated:YES];
+                        }
+                    }
+                };
+                [alertView showMKPAlertView];
                
             } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
                 PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
@@ -636,7 +641,6 @@
     
     }
 }
-
 -(void)Savetodraftbox{
     //草稿箱
     if (_islode==YES) {
@@ -722,9 +726,16 @@
     NSDictionary *dic=@{@"appkey":apKeyStr,@"usersid":[USER_DEFAULTS  objectForKey:@"userid"],@"Dates":_storedate,@"Name":_storehead,@"Province":array[0],@"City":array[1],@"County":array[2],@"StoreName":_storename,@"Address":_storeaddree,@"Iphone":_storephone,@"Wcode":_storewxphone,@"BrandBusiness":_storebrand,@"StoreLevel":_clascation,@"StoreType":_stotrType,@"PlantingDuration":_planDur,@"BeauticianNU":_brandBusin,@"Berths":_Berths,@"ProjectBrief":_Abrief,@"MeetingTime":_instructions,@"Modified":_note,@"RoleId":self.points,@"Draft":draft,@"CompanyId":compid,@"WorshipRecordId":self.ModifyId,@"ShopId":_ShopId,@"CreatorId":_CreatorId};
     [ZXDNetworking POST:uStr parameters:dic success:^(id responseObject) {
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
-            _islode=NO;
-            [_infonTableview reloadData];
-           [ELNAlerTool showAlertMassgeWithController:self andMessage:@"保存成功" andInterval:1.0];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"修改成功" sureBtn:@"确认" cancleBtn:nil];
+            alertView.resultIndex = ^(NSInteger index){
+                
+                for (busableController *controller in self.navigationController.viewControllers) {
+                    if ([controller isKindOfClass:[busableController class]]) {
+                        [self.navigationController popToViewController:controller animated:YES];
+                    }
+                }
+            };
+            [alertView showMKPAlertView];
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

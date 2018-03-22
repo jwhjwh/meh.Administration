@@ -291,7 +291,7 @@
     
     NSDateFormatter *qdsjlabelforMatter = [[NSDateFormatter alloc] init];
     
-    [qdsjlabelforMatter setDateFormat:@"HH-mm-ss yyyy-MM-dd"];
+    [qdsjlabelforMatter setDateFormat:@" yyyy-MM-dd"];
     
     NSString *qdsjlabeldateStr = [qdsjlabelforMatter stringFromDate:qdsjlabeldate];
     
@@ -380,7 +380,9 @@
             };
             [alertView showMKPAlertView];
         } else  if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"没有搜索到更多品牌信息" andInterval:1.0];
+            [infonTableview.mj_footer endRefreshingWithNoMoreData];
+            [infonTableview addEmptyViewWithImageName:@"" title:@"暂无签到记录" Size:20.0];
+            infonTableview.emptyView.hidden = NO;
         } else if ([[responseObject valueForKey:@"status"]isEqualToString:@"4444"]) {
             PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"异地登陆,请重新登录" sureBtn:@"确认" cancleBtn:nil];
             alertView.resultIndex = ^(NSInteger index){

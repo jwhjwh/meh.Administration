@@ -19,6 +19,7 @@
 #import "InterestedTabelViewController.h"
 #import "FillinfoViewController.h"//填写新的纪录
 #import "TargetTableViewController.h"
+#import "ChooseViewController.h"
 @interface ModifyVisitViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,XFDaterViewDelegate>
 {
     
@@ -856,12 +857,38 @@
                         _arr=@[@"日期",@"业务人员",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"店面情况简介",@"关注项目及所需信息简要",@"会谈起止时间概要说明(必填)",@"备注"];
                         [_infonTableview reloadData];
                     }else if (selectIndex == 1){
-                        FillinfoViewController *fillVC = [[FillinfoViewController alloc]init];
-                        fillVC.points = self.strId;
+//                        FillinfoViewController *fillVC = [[FillinfoViewController alloc]init];
+//                        fillVC.points = self.strId;
+//
+//                        NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
+//                        fillVC.depant =string;
+//                        [self.navigationController pushViewController:fillVC animated:YES];
                         _animdd = @"2";
-                        NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
-                        fillVC.depant =string;
-                        [self.navigationController pushViewController:fillVC animated:YES];
+                        NSString *str =[USER_DEFAULTS objectForKey:@"departmentID"];
+                        if ([str containsString:@","]) {
+                            NSArray  *ary = [str componentsSeparatedByString:@","];
+                            if (ary.count>1) {
+                                ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
+                                chooseVC.strId = self.strId;
+                                chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
+                                [self.navigationController pushViewController:chooseVC animated:YES];
+                            }else{
+                                FillinfoViewController *fillVC=[[FillinfoViewController alloc]init];
+                                fillVC.points = self.strId;
+                                NSString *string = [[USER_DEFAULTS objectForKey:@"departmentID"] componentsJoinedByString:@","];
+                                fillVC.depant =string;
+                                [self.navigationController pushViewController:fillVC animated:YES];
+                            }
+                        
+                        }else {
+                            
+                            ChooseViewController *chooseVC = [[ChooseViewController alloc]init];
+                            chooseVC.strId = self.strId;
+                            chooseVC.DepartmentID =[USER_DEFAULTS objectForKey:@"departmentID"];
+                            [self.navigationController pushViewController:chooseVC animated:YES];
+                            
+                        }
+                        
                     }else if(selectIndex == 2){
                         //升级意向客户
                         PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为意向客户吗?" sureBtn:@"确认" cancleBtn:@"取消"];
