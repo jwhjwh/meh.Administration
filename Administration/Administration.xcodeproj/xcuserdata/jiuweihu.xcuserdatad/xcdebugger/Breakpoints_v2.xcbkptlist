@@ -57,8 +57,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1722"
             endingLineNumber = "1722"
-            landmarkName = "-upadatetarget"
-            landmarkType = "7">
+            landmarkName = "TargetTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -75,54 +75,6 @@
             endingLineNumber = "864"
             landmarkName = "-FieldText:"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Administration/MainAry/yewumobai/VisitRecord/Worship the search/OneDateViewController.m"
-            timestampString = "543313042.012659"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "-OneDateNetworking:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[OneDateViewController OneDateNetworking:]"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/VisitRecord/Worship%20the%20search/OneDateViewController.m"
-                  timestampString = "543313042.104342"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "238"
-                  endingLineNumber = "238"
-                  offsetFromSymbolStart = "3845">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__43-[OneDateViewController OneDateNetworking:]_block_invoke"
-                  moduleName = "Administration"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jiuweihu/Desktop/Jwh/Administration/Administration/MainAry/yewumobai/VisitRecord/Worship%20the%20search/OneDateViewController.m"
-                  timestampString = "543313042.107056"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "239"
-                  endingLineNumber = "239"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

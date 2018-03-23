@@ -185,12 +185,28 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *depmandname = [NSString stringWithFormat:@"是否将此内容分享到%@",_InterNameAry[indexPath.row]];
     if ([self.tarAndInter isEqualToString:@"1"]) {
         //意向
-        [self updateIntended:_InterNameidAry[indexPath.row]];
+        
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:depmandname sureBtn:@"确认" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index){
+            if (index ==2) {
+                [self updateIntended:_InterNameidAry[indexPath.row]];
+            }
+        };
+        [alertView showMKPAlertView];
+        
     }else{
         //目标
-         [self UpdateTargetVisitDepartmentId:_InterNameidAry[indexPath.row]];
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:depmandname sureBtn:@"确认" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index){
+            if (index ==2) {
+                [self UpdateTargetVisitDepartmentId:_InterNameidAry[indexPath.row]];
+            }
+        };
+        [alertView showMKPAlertView];
+        
     }
     NSLog(@"分享给了:%@",_InterNameAry[indexPath.row]);
 }

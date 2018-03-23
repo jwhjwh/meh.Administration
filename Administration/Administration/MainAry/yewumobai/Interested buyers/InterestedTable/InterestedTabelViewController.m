@@ -582,7 +582,7 @@
                     _arr=@[@[@""],@[@"日期",@"洽谈人",@"地区",@"店名",@"店铺地址",@"负责人",@"手机",@"微信",@"主要经营品牌",@"店面评估档次分类",@"意向选择",@"店面情况简介",@"店家情况综合分析"]];
                     [infonTableview reloadData];
                 }else if(selectIndex == 1){
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为目标客户么" sureBtn:@"确认" cancleBtn:@"取消"];
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定升级为目标客户吗？" sureBtn:@"确认" cancleBtn:@"取消"];
                     alertView.resultIndex = ^(NSInteger index){
                         NSLog(@"%ld",index);
                         if(index == 2){
@@ -669,7 +669,15 @@
         [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
             if (selectIndex == 0) {
                 //提交到上级
-                [self updateIntended];
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"内容已修改，提交将覆盖是否提交？" sureBtn:@"确认" cancleBtn:@"取消"];
+                alertView.resultIndex = ^(NSInteger index) {
+                    if (index == 2) {
+                        //确定
+                         [self updateIntended];
+                    }
+                };
+                [alertView showMKPAlertView];
+              
             }else{
                 //提交到品牌部
                 UpdateIntendedViewController *upadateBM = [[UpdateIntendedViewController alloc]init];
@@ -730,7 +738,7 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             _visiId = [[NSString alloc]init];
             _visiId =[responseObject valueForKey:@"TargetVisitId"];
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"现在该客户已升级为目标客户,现在去填写目标客户确立表?" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级，现在去填写目标客户确立表？" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
             alertView.resultIndex = ^(NSInteger index){
                 NSLog(@"%ld",index);
                 if(index == 1){

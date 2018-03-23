@@ -782,7 +782,7 @@
                     fillVC.depant =string;
                     [self.navigationController pushViewController:fillVC animated:YES];
                 }else{
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除？" sureBtn:@"确认" cancleBtn:@"取消"];
                     alertView.resultIndex = ^(NSInteger index) {
                         if (index == 2) {
                             NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
@@ -833,7 +833,15 @@
             [SelectAlert showWithTitle:nil titles:zwlbAry selectIndex:^(NSInteger selectIndex) {
                 NSLog(@"选择了第%ld个",(long)selectIndex);
                 if (selectIndex == 0) {
-                    [self UploadInformation:@"1"];
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"内容已修改，提交将覆盖是否提交？" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index) {
+                        if (index == 2) {
+                            //确定
+                           [self UploadInformation:@"1"];
+                        }
+                    };
+                    [alertView showMKPAlertView];
+                    
                     
                 }else{
                     [self UploadInformation:@"0"];
@@ -891,7 +899,7 @@
                         
                     }else if(selectIndex == 2){
                         //升级意向客户
-                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为意向客户吗?" sureBtn:@"确认" cancleBtn:@"取消"];
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定升级为意向客户吗？" sureBtn:@"确认" cancleBtn:@"取消"];
                         alertView.resultIndex = ^(NSInteger index) {
                             if (index == 2) {
                                 //确定
@@ -902,7 +910,7 @@
                         [alertView showMKPAlertView];
                     }else if(selectIndex == 3){
                         //升级为目标客户
-                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要升级该客户为目标客户吗?" sureBtn:@"确认" cancleBtn:@"取消"];
+                        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"确定升级为目标客户吗？" sureBtn:@"确认" cancleBtn:@"取消"];
                         alertView.resultIndex = ^(NSInteger index) {
                             if (index == 2) {
                                 //确定
@@ -941,7 +949,7 @@
     [self.navigationController pushViewController:fillVC animated:YES];
 }
 -(void)didsminss{
-    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
+    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除" sureBtn:@"确认" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index) {
         if (index == 2) {
             NSString *uStr =[NSString stringWithFormat:@"%@shop/deleteShop.action",KURLHeader];
@@ -1028,7 +1036,7 @@
         if ([[responseObject valueForKey:@"status"]isEqualToString:@"0000"]) {
             _visiId = [[NSString alloc]init];
             _visiId =[responseObject valueForKey:@"TargetVisitId"];
-            PWAlertView *yishengji = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级,现在去填写目标客户表" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
+            PWAlertView *yishengji = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"已升级，现在去填写目标客户确立表？" sureBtn:@"以后再说" cancleBtn:@"现在就去"];
             yishengji.resultIndex = ^(NSInteger index) {
                 if (index == 1) {
                  

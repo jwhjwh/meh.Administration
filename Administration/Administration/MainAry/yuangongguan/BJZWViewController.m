@@ -573,7 +573,7 @@
         if (_ZWidAry.count==1) {
             [ELNAlerTool showAlertMassgeWithController:self andMessage:@"员工必须要保留一个职位" andInterval:1.0];
         }else{
-            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" sureBtn:@"确认" cancleBtn:@"取消"];
+            PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除？" sureBtn:@"确认" cancleBtn:@"取消"];
             alertView.resultIndex = ^(NSInteger index){
                 if (index == 2) {
                     NSString *stt = [NSString stringWithFormat:@"%ld",(long)btn.tag];

@@ -75,27 +75,7 @@
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.height.mas_offset(1);
     }];
-    UILabel *zuijinlabel = [[UILabel alloc]init];
-    zuijinlabel.text = @"最近的陌拜记录";
-    zuijinlabel.font = [UIFont systemFontOfSize:14];
-    zuijinlabel.textColor = [UIColor lightGrayColor];
-    [self.view addSubview:zuijinlabel];
-    [zuijinlabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(view1.mas_bottom).offset(0);
-        make.left.mas_equalTo(self.view.mas_left).offset(10);
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.height.mas_equalTo(30);
-    }];
     
-    UIView *view2 = [[UIView alloc]init];
-    view2.backgroundColor  = [UIColor lightGrayColor];
-    [self.view addSubview:view2];
-    [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(zuijinlabel.mas_bottom).offset(0);
-        make.right.mas_equalTo(self.view.mas_right).offset(0);
-        make.left.mas_equalTo(self.view.mas_left).offset(0);
-        make.height.mas_offset(1);
-    }];
     infonTableview =[[UITableView alloc]init];
     infonTableview.delegate = self;
     infonTableview.dataSource = self;
@@ -103,7 +83,7 @@
     [ZXDNetworking setExtraCellLineHidden:infonTableview];
     
     [infonTableview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(view2.mas_bottom).offset(0);
+        make.top.mas_equalTo(view1.mas_bottom).offset(0);
         make.left.mas_equalTo(self.view.mas_left).offset(0);
         make.right.mas_equalTo(self.view.mas_right).offset(0);
         make.bottom.mas_equalTo(self.view.mas_bottom).offset(0);

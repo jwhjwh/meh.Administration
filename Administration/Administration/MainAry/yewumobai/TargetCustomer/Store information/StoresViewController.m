@@ -79,8 +79,7 @@
     }
    
 }
--(void)rightItemAction:(UIBarButtonItem*)sender{
-    
+-(void)updateStore1:(UIBarButtonItem*)sender{
     NSString *uStr =[NSString stringWithFormat:@"%@shop/updateStore1.action",KURLHeader];
     NSString *apKey=[NSString stringWithFormat:@"%@%@",logokey,[USER_DEFAULTS objectForKey:@"token"]];
     NSString *apKeyStr=[ZXDNetworking encryptStringWithMD5:apKey];
@@ -117,9 +116,20 @@
     } failure:^(NSError *error) {
         
     } view:self.view MBPro:YES];
+}
+-(void)rightItemAction:(UIBarButtonItem*)sender{
     
-    
-    
+    if([sender.title isEqualToString:@"完成"]){
+        PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"提示" message:@"内容已修改，提交将覆盖是否提交？" sureBtn:@"确认" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index){
+            if (index == 2) {
+            [self updateStore1:sender];
+            }
+        };
+        [alertView showMKPAlertView];
+    }else{
+        [self updateStore1:sender];
+    }
 }
 -(void)buringItem:(UIBarButtonItem*)sender{
     if (_isend==YES) {
@@ -130,10 +140,6 @@
         _isend= YES;
         [sender setTitle:@"完成"];
         [self.tableView reloadData];
-        
-        
-       
-        
     }
 }
 -(void)networking{

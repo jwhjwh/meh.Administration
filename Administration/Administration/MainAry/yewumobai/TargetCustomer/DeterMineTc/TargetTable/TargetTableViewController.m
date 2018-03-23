@@ -1051,7 +1051,7 @@
                     
                     [self.navigationController pushViewController:dptmVC animated:YES];
                 }else{//删除
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除？" sureBtn:@"确认" cancleBtn:@"取消"];
                     alertView.resultIndex = ^(NSInteger index){
                         NSLog(@"%ld",index);
                         if(index == 2){
@@ -1169,7 +1169,7 @@
                     [self.navigationController pushViewController:dptmVC animated:YES];
                     
                 }else{
-                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除？" sureBtn:@"确认" cancleBtn:@"取消"];
                     alertView.resultIndex = ^(NSInteger index){
                         NSLog(@"%ld",index);
                         if(index == 2){
@@ -1219,7 +1219,7 @@
         NSArray *zwlbAry = [[NSArray alloc]init];
         zwlbAry = @[@"提交到上级"];
         [SelectAlert showWithTitle:nil titles:zwlbAry  selectIndex:^(NSInteger selectIndex) {
-                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要提交此项内容?" sureBtn:@"确认" cancleBtn:@"取消"];
+                PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"内容已修改，提交将覆盖是否提交？" sureBtn:@"确认" cancleBtn:@"取消"];
                 alertView.resultIndex = ^(NSInteger index){
                     NSLog(@"%ld",index);
                     if(index == 2){

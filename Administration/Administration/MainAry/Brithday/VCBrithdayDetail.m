@@ -195,7 +195,7 @@
 
 -(void)showAlertView
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要删除此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
 }
 
