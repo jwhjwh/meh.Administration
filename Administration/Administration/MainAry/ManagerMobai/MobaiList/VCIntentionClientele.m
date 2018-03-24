@@ -52,7 +52,9 @@
             return ;
         }
         if ([code isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height-104) Title:@"无法填写总结"];
+            [self.view addSubview:resultView];
             return;
         }
         

@@ -91,7 +91,8 @@
 
         }
         if ([stringCode isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1];
+            UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) Title:@"暂无数据"];
+            [self.view addSubview:resultView];
             return;
         }
         if ([stringCode isEqualToString:@"1001"]) {

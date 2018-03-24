@@ -148,6 +148,8 @@
     }
     else
     {
+        UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 104, Scree_width, Scree_height-104) Title:@"无法填写总结"];
+        [self.view addSubview:resultView];
         self.labelLine.frame = CGRectMake(Scree_width/2, 104, Scree_width/2, 1);
         [button setTitleColor:GetColor(152, 71, 187, 1) forState:UIControlStateNormal];
         [self.buttonPlan setTitleColor:GetColor(192, 192, 192, 1) forState:UIControlStateNormal];
