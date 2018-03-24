@@ -21,10 +21,10 @@
 
 -(void)setUI:(NSString *)string
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor yellowColor];
     
-    UIView *viewCenter = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200)];
-    viewCenter.center = self.center;
+    UIView *viewCenter = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height/2-100, self.frame.size.width, 200)];
+    viewCenter.backgroundColor = [UIColor redColor];
     [self addSubview:viewCenter];
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width/2-75, 0, 150, 120)];
