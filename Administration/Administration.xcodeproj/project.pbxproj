@@ -85,6 +85,7 @@
 		1F3B3DE81E8DF93C00E75027 /* icon_035_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B3DC81E8DF93C00E75027 /* icon_035_cover.png */; };
 		1F3B3DE91E8DF93C00E75027 /* icon_040.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B3DC91E8DF93C00E75027 /* icon_040.gif */; };
 		1F3B3DEA1E8DF93C00E75027 /* icon_040_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B3DCA1E8DF93C00E75027 /* icon_040_cover.png */; };
+		1F3E1F702065017500E5F0A3 /* UINoResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E1F6F2065017400E5F0A3 /* UINoResultView.m */; };
 		1F3E7BC41E5BD6B1005E5A45 /* GongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */; };
 		1F3E7BC71E5BED7F005E5A45 /* AmentxqController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E7BC61E5BED7F005E5A45 /* AmentxqController.m */; };
 		1F3FAA001EB9891700162940 /* JobcatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3FA9FF1EB9891700162940 /* JobcatController.m */; };
@@ -1075,6 +1076,8 @@
 		1F3B3DC81E8DF93C00E75027 /* icon_035_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_035_cover.png; sourceTree = "<group>"; };
 		1F3B3DC91E8DF93C00E75027 /* icon_040.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon_040.gif; sourceTree = "<group>"; };
 		1F3B3DCA1E8DF93C00E75027 /* icon_040_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_040_cover.png; sourceTree = "<group>"; };
+		1F3E1F6E2065017300E5F0A3 /* UINoResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UINoResultView.h; sourceTree = "<group>"; };
+		1F3E1F6F2065017400E5F0A3 /* UINoResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UINoResultView.m; sourceTree = "<group>"; };
 		1F3E7BC21E5BD6B1005E5A45 /* GongModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GongModel.h; sourceTree = "<group>"; };
 		1F3E7BC31E5BD6B1005E5A45 /* GongModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GongModel.m; sourceTree = "<group>"; };
 		1F3E7BC51E5BED7F005E5A45 /* AmentxqController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmentxqController.h; sourceTree = "<group>"; };
@@ -5181,6 +5184,8 @@
 				1FC9FBB81FE76FF00060BADA /* UIViewChooseNumber.m */,
 				1FD1553A204D32D900122A22 /* UIChooseState.h */,
 				1FD1553B204D32D900122A22 /* UIChooseState.m */,
+				1F3E1F6E2065017300E5F0A3 /* UINoResultView.h */,
+				1F3E1F6F2065017400E5F0A3 /* UINoResultView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -7013,6 +7018,7 @@
 				1F71B8D41F88A2A700C3638F /* VCBuessWeekUnPassed.m in Sources */,
 				620731231E5D1DA200BCF51C /* JinnLockSudoko.m in Sources */,
 				1F19ACED1FDBCB17003C236D /* VCBossFamilyDetail.m in Sources */,
+				1F3E1F702065017500E5F0A3 /* UINoResultView.m in Sources */,
 				1F4FD9DC1EC1A177005AB739 /* EmistController.m in Sources */,
 				1F71B8AC1F88849200C3638F /* VCChooseDepartment.m in Sources */,
 				1FF4BF861FE5056400FD0FF6 /* ManagerShopinfo.m in Sources */,
