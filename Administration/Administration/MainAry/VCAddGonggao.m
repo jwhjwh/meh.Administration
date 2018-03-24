@@ -30,7 +30,7 @@
     self.tableView  = tableVeiw;
 }
 
--(void)submitData
+-(void)showTips
 {
     
     NSString *urlStr =[NSString stringWithFormat:@"%@adminNotice/addNotice",KURLHeader];
@@ -63,22 +63,6 @@
     } view:self.view MBPro:YES];
     
 }
-
--(void)showTips
-{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要发布此项内容" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [alertView show];
-}
-
-#pragma -mark alertView
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex==1) {
-        [self submitData];
-    }
-}
-
 #pragma -mark tableView
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

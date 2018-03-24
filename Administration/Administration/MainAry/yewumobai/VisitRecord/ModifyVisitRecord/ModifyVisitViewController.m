@@ -844,7 +844,19 @@
                     
                     
                 }else{
-                    [self UploadInformation:@"0"];
+                    PWAlertView *alertView = [[PWAlertView alloc]initWithTitle:@"温馨提示" message:@"是否保存至草稿箱？" sureBtn:@"确认" cancleBtn:@"取消"];
+                    alertView.resultIndex = ^(NSInteger index) {
+                        if (index == 2) {
+                            //确定
+                           [self UploadInformation:@"0"];
+                            
+                        }
+                    };
+                    [alertView showMKPAlertView];
+                    
+                    
+                    
+                   
                 }
                 
             } selectValue:^(NSString *selectValue) {
