@@ -41,6 +41,11 @@
             return;
             
         }
+        if ([[responseObject valueForKey:@"status"]isEqualToString:@"5000"]) {
+            UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) Title:@"暂无数据"];
+            [self.view addSubview:resultView];
+            return;
+        }
         
     } failure:^(NSError *error) {
         

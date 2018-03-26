@@ -40,7 +40,9 @@
         {
             [self.tableView reloadData];
         if ([code isEqualToString:@"5000"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0f];
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0f];
+            UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) Title:@"暂无顾客"];
+            [self.view addSubview:resultView];
             return;
         }
         if ([code isEqualToString:@"1001"]) {

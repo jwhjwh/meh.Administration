@@ -69,7 +69,9 @@
         }
         if ([code isEqualToString:@"5000"]) {
             [self.tableView reloadData];
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+//            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height-104) Title:@"暂无待办事项"];
+            [self.view addSubview:resultView];
             return;
         }
         

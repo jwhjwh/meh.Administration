@@ -41,7 +41,9 @@
             return;
         }
         if ([code isEqualToString:@"1001"]) {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+          //  [ELNAlerTool showAlertMassgeWithController:self andMessage:@"请求超时" andInterval:1.0];
+            UINoResultView *view = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 0, Scree_width, Scree_height) Title:@"暂无签到记录"];
+            [self.view addSubview:view];
             return;
         }
         

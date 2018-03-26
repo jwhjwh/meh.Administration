@@ -47,7 +47,9 @@
                 [self.tableView reloadData];
             }else
             {
-                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+//                [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+                UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 94, Scree_width, Scree_height-94) Title:@"暂无总结"];
+                [self.view addSubview:resultView];
                 self.navigationItem.rightBarButtonItem = nil;
                 self.havePermission = NO;
                 [self.tableView reloadData];
@@ -56,7 +58,9 @@
             
         }else
         {
-            [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
+            UINoResultView *resultView = [[UINoResultView alloc]initWithFrame:CGRectMake(0, 94, Scree_width, Scree_height-94) Title:@"暂无总结"];
+            [self.view addSubview:resultView];
+          //  [ELNAlerTool showAlertMassgeWithController:self andMessage:@"暂无数据" andInterval:1.0];
             self.navigationItem.rightBarButtonItem = nil;
             self.havePermission = NO;
             [self.tableView reloadData];
